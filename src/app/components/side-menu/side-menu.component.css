@@ -1,0 +1,33 @@
+.sidenav-container {
+    height: 100%;
+    width: 100%; 
+    
+  }
+  .sidenav {
+    width:300px;
+  }
+  .mat-sidenav {
+    width: 300px;
+    border-style: none;
+  }
+
+  .component-content {
+    display: flex;
+    margin-left: 50px;
+   
+  }
+
+
+.arrow {
+
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  margin-top: 20px;
+}
+
+
+
+
+

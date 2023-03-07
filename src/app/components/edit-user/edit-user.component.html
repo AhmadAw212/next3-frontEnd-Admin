@@ -1,0 +1,82 @@
+<ul class="nav nav-tabs" style="border-style: none">
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      data-toggle="tab"
+      routerLink="/addUser"
+      style="color: rgb(6, 94, 246)"
+      >Edit User Permissions</a
+    >
+  </li>
+</ul>
+
+<div class="form-tab">
+  <div class="form-container">
+    <div class="user-inputs">
+      <label for="user-code">User Code:</label>
+
+      <!-- or you can user [(ngModel)]="userCode" -->
+      <input type="text" id="user-code" name="user-code" #userCodeInput />
+
+      <label for="user-name">Display Name : </label>
+      <input type="text" id="user-name" name="user-name" #displayNameInput />
+
+      <button
+        type="button"
+        (click)="userSearch(userCodeInput.value, displayNameInput.value)"
+      >
+        Search
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Edit Data</th>
+          <th>Code</th>
+          <th>Display Name</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Active</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td></td>
+          <td (click)="openDialog(user)"><mat-icon>edit</mat-icon></td>
+          <td>{{ user.userName }}</td>
+          <td>{{ user.displayName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.companyDescription }}</td>
+          <td>
+            <input type="checkbox" [checked]="user.active" />
+          </td>
+          <td>
+            <button
+              type="submit"
+              class="table-btn"
+              (click)="editUserStatus(user.userName, user.active)"
+              *ngIf="user.active == 1; else activateUser"
+            >
+              Deactivate User
+            </button>
+            <ng-template #activateUser
+              ><button
+                type="submit"
+                class="table-btn"
+                (click)="editUserStatus(user.userName, user.active)"
+              >
+                Re-Activate User
+              </button></ng-template
+            >
+          </td>
+          <td>
+            <button type="submit" class="table-btn">Reset Password</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

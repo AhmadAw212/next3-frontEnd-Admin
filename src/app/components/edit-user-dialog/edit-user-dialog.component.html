@@ -1,0 +1,193 @@
+<div class="form-container">
+  <form [formGroup]="editForm" (ngSubmit)="editUser()">
+    <legend><h2>User Info</h2></legend>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [value]="usersInfo.userName"
+          disabled
+        />
+      </div>
+      <div class="form-group">
+        <label for="displayName">Display Name:</label>
+        <input
+          type="text"
+          id="displayName"
+          name="displayName"
+          placeholder="Enter a display name"
+          required
+          formControlName="displayName"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter a email address"
+          required
+          formControlName="email"
+        />
+      </div>
+    </div>
+    <div class="form-row"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userLimitTaxiFees">Taxi Limit:</label>
+        <input
+          type="text"
+          id="userLimitTaxiFees"
+          name="userLimitTaxiFees"
+          placeholder="Enter taxi limit"
+          required
+          formControlName="userLimitTaxiFees"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitSurveyFees">Survey Limit:</label>
+        <input
+          type="text"
+          id="userLimitSurveyFees"
+          name="userLimitSurveyFees"
+          placeholder="Enter survey limit"
+          required
+          formControlName="userLimitSurveyFees"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="exceedPercentage"> Percentage Limit:</label>
+        <input
+          type="text"
+          id="exceedPercentage"
+          name="exceedPercentage"
+          placeholder="Enter percentage limit"
+          required
+          formControlName="userLimitExceedPercentage"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitLawyerFees">Lawyer Limit:</label>
+        <input
+          type="text"
+          id="userLimitLawyerFees"
+          name="userLimitLawyerFees"
+          placeholder="Enter lawyer limit"
+          required
+          formControlName="userLimitLawyerFees"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="companyId">Company:</label>
+        <!-- <input
+          type="text"
+          id="companyId"
+          name="companyId"
+          placeholder="Enter company"
+          formControlName="companyId"
+        /> -->
+        <select [disabled]="isDisabled">
+          <option
+            *ngFor="let company of companyBranchService.companyList"
+            [value]="company.companyId"
+            [selected]="this.usersInfo.companyId === company.companyId"
+          >
+            {{ company.companyName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="branchId">Branch:</label>
+        <select
+          id="branchId"
+          name="branchId"
+          required
+          formControlName="branchId"
+        >
+          <option
+            *ngFor="let branch of companyBranchService.branchList"
+            [ngValue]="branch.code"
+            [selected]="this.usersInfo.branchId === branch.code"
+          >
+            {{ branch.description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="recoverLimit">Recover Limit :</label>
+        <input
+          type="text"
+          id="recoverLimit"
+          name="recoverLimit"
+          placeholder="Enter recover limit"
+          required
+          formControlName="recoverLimit"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitDoctorFees">Doctor Limit:</label>
+        <input
+          type="text"
+          id="userLimitDoctorFees"
+          name="userLimitDoctorFees"
+          placeholder="Enter doctor limit"
+          required
+          formControlName="userLimitDoctorFees"
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="paymentLimit">Payment Limit :</label>
+        <input
+          type="text"
+          id="paymentLimit"
+          name="paymentLimit"
+          required
+          placeholder="Enter payment limit"
+          formControlName="paymentLimit"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitExpertFees"> Expert Fees:</label>
+        <input
+          type="text"
+          id="userLimitExpertFees"
+          name="userLimitExpertFees"
+          required
+          placeholder="Enter Expert Limit"
+          formControlName="userLimitExpertFees"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="userLimitHospitalFees"> Hospital Fees:</label>
+        <input
+          type="text"
+          id="userLimitHospitalFees"
+          name="userLimitHospitalFees"
+          placeholder="Enter Hospital Fee"
+          required
+          formControlName="userLimitHospitalFees"
+        />
+      </div>
+    </div>
+    <div class="button-row">
+      <button type="submit" class="btn">Update</button>
+      <button type="button" class="btn" (click)="Cancle()">Cancel</button>
+    </div>
+  </form>
+</div>

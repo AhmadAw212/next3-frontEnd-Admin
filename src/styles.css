@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~alertifyjs/build/css/alertify.min.css";
+@import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.navbar-brand {
+    color: white;
+    font-weight: bold;
+    /* margin-top: -15px; */
+}
+
+.navbar {
+    margin-top: 50px;
+    margin-left: 2px;
+    margin-right: 10px;
+    background-color: #0674CB;
+
+}
+
+.Background {
+    background-color: #e7e7e7;
+    height: 100vh;
+}
+
+.btn {
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.DateTime{
+    margin-left: 1150px;
+    margin-top: -30px;
+}
+
+.row{
+    background-color: rgb(237, 243, 245);
+    width: 270px;
+    height: fit-content;
+}
+
+.col{
+    margin-top: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.rounded{
+    font-weight: bold;
+    color: black;
+}
+
+.B1{
+    height: 30px;
+    background-color: white;
+    margin-left: 290px;
+    margin-top: -70px;
+    margin-right: 10px;
+}
+.B{
+    height: 25px;
+    width: fit-content;
+    background-color: rgb(237, 243, 245);
+    margin-left: 280px;
+    margin-top: -110px;
+    
+}
+
