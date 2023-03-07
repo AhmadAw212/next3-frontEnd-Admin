@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CoreUser } from 'src/app/model/core-user';
 import { AlertifyService } from 'src/app/shared/alertify.service';
 import { CompanyBranchService } from 'src/app/shared/company-branch.service';
 
@@ -14,9 +15,9 @@ import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.co
 })
 export class EditUserComponent implements OnInit {
   users?: any[] = [];
-  branchId?: any;
-  isChecked: any;
-  selectedUser?: any;
+  branchId?: string[];
+  isChecked?: boolean;
+  selectedUser?: CoreUser[];
 
   constructor(
     private dataService: DataServiceService,
@@ -29,7 +30,7 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDialog(selectedUser: string): void {
+  openDialog(selectedUser: CoreUser[]): void {
     this.selectedUser = selectedUser;
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       data: {
@@ -40,7 +41,6 @@ export class EditUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.companyBranchService.getBranchId(result);
       this.companyBranchService.getCompanyId();
-      console.log(result);
     });
   }
 
@@ -71,7 +71,8 @@ export class EditUserComponent implements OnInit {
     this.dataService.editUserStatus(userId, activeStat).subscribe({
       next: (res) => {
         this.alertify.success(res.title!);
-        window.console.log(res);
+        this.userSearch(userId, '');
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);

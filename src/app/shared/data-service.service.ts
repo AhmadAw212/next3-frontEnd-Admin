@@ -26,10 +26,6 @@ export class DataServiceService {
     );
   }
 
-  // getUsers(): Observable<ApiResponse> {
-  // return this.http.get<ApiResponse>(`${this.userUrl}/user/all`);
-  // }
-
   userSearch(username: string, name: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/user/userSearch?username=${username}&name=${name}`

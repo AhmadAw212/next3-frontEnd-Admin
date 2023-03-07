@@ -29,7 +29,7 @@ export class EditUserDialogComponent implements OnInit {
     private alertify: AlertifyService
   ) {
     this.usersInfo = data.users;
-    console.log(this.usersInfo);
+    // console.log(this.usersInfo);
 
     this.editForm = this.fb.group({
       userName: [
@@ -90,13 +90,13 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   editUser() {
-    console.log(this.editForm.value);
-
+    // console.log(this.editForm.value);
     this.dataService.editUser(this.editForm.value).subscribe({
       next: (res) => {
         this.alertify.success(res.message!);
         this.dataService.getUsers.next(res.data);
-        console.log(res.data);
+
+        // console.log(res.data);
       },
       error: (err) => {
         console.log(err);

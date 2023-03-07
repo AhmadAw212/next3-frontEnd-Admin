@@ -14,7 +14,7 @@ export class CompanyBranchService {
     this.dataService.getCompanyId().subscribe({
       next: (res) => {
         this.companyList = res.data.companyList;
-        console.log(this.companyList);
+        // console.log(this.companyList);
       },
       error: (err) => {
         console.log(err);
