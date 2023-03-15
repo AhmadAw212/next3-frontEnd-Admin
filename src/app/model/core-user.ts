@@ -1,6 +1,6 @@
 export class CoreUser {
   displayName?: string;
-  userName?: string;
+  userName: string;
   email?: string;
   userLimitDoctorFees?: number;
   userLimitTaxiFees?: number;

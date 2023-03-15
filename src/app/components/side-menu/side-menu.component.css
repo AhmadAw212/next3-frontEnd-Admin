@@ -4,16 +4,16 @@
     
   }
   .sidenav {
-    width:300px;
+    width:280px;
   }
   .mat-sidenav {
-    width: 300px;
+    width: 280px;
     border-style: none;
   }
 
   .component-content {
     display: flex;
-    margin-left: 50px;
+    margin-left: 40px;
    
   }
 
@@ -24,7 +24,7 @@
   align-items: center;
   height: 40px;
   width: 40px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 

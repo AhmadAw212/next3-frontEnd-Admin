@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, Subject, tap } from 'rxjs';
 import { ApiResponse } from '../model/api-response';
 import { CoreUser } from '../model/core-user';
+import { Profiles } from '../model/profiles';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,37 @@ export class DataServiceService {
       `${this.userUrl}/user/update-user-status?userId=${userId}&active=${status}`,
       null,
       { responseType: 'json' }
+    );
+  }
+
+  getUserProfiles(userId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/user/${userId}/profiles`
+    );
+  }
+
+  getNonGrantedUserProfiles(userId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/user/${userId}/addProfiles`
+    );
+  }
+
+  grantProfileToUser(userId: string, profId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/user/grant/${userId}/${profId}`
+    );
+  }
+
+  updateRoles(userId: string, profile: Profiles): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/user/${userId}/update-roles`,
+      profile
+    );
+  }
+
+  deleteProfile(userId: string, profileId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/user/delete/${userId}/${profileId}`
     );
   }
 }

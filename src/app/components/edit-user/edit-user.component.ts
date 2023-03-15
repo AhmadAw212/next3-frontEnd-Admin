@@ -1,11 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreUser } from 'src/app/model/core-user';
 import { AlertifyService } from 'src/app/shared/alertify.service';
 import { CompanyBranchService } from 'src/app/shared/company-branch.service';
-
 import { DataServiceService } from 'src/app/shared/data-service.service';
-
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 
 @Component({
@@ -13,12 +11,14 @@ import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.co
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css'],
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent {
   users?: any[] = [];
   branchId?: string[];
   isChecked?: boolean;
-  selectedUser?: CoreUser[];
-
+  selectedUser?: CoreUser;
+  showProfileList = false;
+  p: number = 1;
+  maxSizeValue = 5;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -28,13 +28,16 @@ export class EditUserComponent implements OnInit {
     this.subscribedUsers();
   }
 
-  ngOnInit(): void {}
+  showProfList(selectedUser: CoreUser) {
+    this.selectedUser = selectedUser;
+    this.showProfileList = true;
+  }
 
-  openDialog(selectedUser: CoreUser[]): void {
+  openDialog(selectedUser: CoreUser): void {
     this.selectedUser = selectedUser;
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       data: {
-        users: this.selectedUser,
+        selectedUser: this.selectedUser,
       },
     });
 
@@ -47,10 +50,9 @@ export class EditUserComponent implements OnInit {
   subscribedUsers() {
     this.dataService.getUsers.subscribe({
       next: (data) => {
-        const userName = data.userName;
-        const displayName = data.displayName;
-        // console.log(data);
-        this.userSearch(userName!, displayName!);
+        const userName = data.userName!;
+        const displayName = data.displayName!;
+        this.userSearch(userName, displayName);
       },
     });
   }
@@ -72,7 +74,6 @@ export class EditUserComponent implements OnInit {
       next: (res) => {
         this.alertify.success(res.title!);
         this.userSearch(userId, '');
-        // console.log(res);
       },
       error: (err) => {
         console.log(err);

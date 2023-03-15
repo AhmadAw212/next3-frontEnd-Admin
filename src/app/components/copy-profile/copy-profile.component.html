@@ -1,0 +1,30 @@
+<div class="container">
+  <span class="close-btn" (click)="closeDialog()">&#x2716;</span>
+  <h2>Copy Profile</h2>
+  <hr />
+  <div>
+    <label for="fromUser">From User:</label>
+    <div>
+      <ng-select
+        appendTo="body"
+        [(ngModel)]="selectedUserName"
+        (change)="getUserProfiles(selectedUserName!)"
+      >
+        <ng-option *ngFor="let user of users" [value]="user.userName">{{
+          user.displayName
+        }}</ng-option>
+      </ng-select>
+    </div>
+  </div>
+  <div>
+    <label for="profile">Profile:</label>
+    <ng-select appendTo="body" [multiple]="true">
+      <ng-option *ngFor="let profile of selectedUserProfiles"
+        >{{ profile.description }}
+      </ng-option>
+    </ng-select>
+  </div>
+  <div>
+    <button class="save-btn">Save</button>
+  </div>
+</div>

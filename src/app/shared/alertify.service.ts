@@ -16,6 +16,32 @@ export class AlertifyService {
     });
   }
 
+  confirmDialog(
+    message: string,
+    okCallBack: () => any,
+    header: string = 'Confirmation'
+  ) {
+    alertify
+      .confirm()
+      .setHeader(header)
+      .setting({
+        message: message,
+        onok: okCallBack,
+      })
+      .show();
+  }
+
+  dialogAlert(message: string) {
+    alertify
+      .alert()
+      .setHeader('Response')
+      .setting({
+        closable: true,
+        message: message,
+      })
+      .show();
+  }
+
   success(message: string) {
     alertify.success(message);
   }

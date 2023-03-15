@@ -22,6 +22,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
+import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { AddProfileDialogComponent } from './components/add-profile-dialog/add-profile-dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CopyProfileComponent } from './components/copy-profile/copy-profile.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +37,10 @@ import { CommonModule } from '@angular/common';
     AddUserComponent,
     EditUserComponent,
     EditUserDialogComponent,
+    UserProfilesComponent,
+    UserRolesComponent,
+    AddProfileDialogComponent,
+    CopyProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +58,8 @@ import { CommonModule } from '@angular/common';
     MatDialogModule,
     MatPaginatorModule,
     MatTableModule,
+    NgSelectModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -19,9 +19,6 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompanyId();
-
-    // this.companyBranchService.getCompanyId();
-    // this.getBranchId('10');
   }
 
   getCompanyId() {
@@ -79,38 +76,15 @@ export class AddUserComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  // getCompanyId() {
-  //   this.dataService.getCompanyId().subscribe({
-  //     next: (res) => {
-  //       this.companyList = res.data.companyList;
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
-
-  // getBranchId() {
-  //   const companyId = this.userForm.get('companyId')!.value;
-  //   this.dataService.getBranchId(companyId).subscribe({
-  //     next: (res) => {
-  //       this.branchList = res.data.map((branch: any) => branch);
-  //       // console.log(this.branchList);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
-
   addUser(): void {
     if (this.userForm.valid) {
       // console.log(this.userForm.value);
       this.dataService.addUser(this.userForm.value).subscribe({
         next: (res: ApiResponse) => {
           if (res.statusCode === 1) {
-            this.alertify.success(res.message!);
-            console.log(res);
+            // this.alertify.success(res.message!);
+            this.alertify.dialogAlert('User Added Successfully');
+            // console.log(res);
           } else this.alertify.error(res.message!);
         },
         error: (err) => {

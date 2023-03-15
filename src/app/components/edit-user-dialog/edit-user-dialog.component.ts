@@ -28,8 +28,7 @@ export class EditUserDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<EditUserDialogComponent>,
     private alertify: AlertifyService
   ) {
-    this.usersInfo = data.users;
-    // console.log(this.usersInfo);
+    this.usersInfo = data.selectedUser;
 
     this.editForm = this.fb.group({
       userName: [
@@ -90,13 +89,10 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   editUser() {
-    // console.log(this.editForm.value);
     this.dataService.editUser(this.editForm.value).subscribe({
       next: (res) => {
         this.alertify.success(res.message!);
         this.dataService.getUsers.next(res.data);
-
-        // console.log(res.data);
       },
       error: (err) => {
         console.log(err);

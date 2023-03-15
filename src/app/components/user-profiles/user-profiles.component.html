@@ -1,0 +1,41 @@
+<div class="user-permissions-list">
+  <div class="buttons-container">
+    <button
+      class="add-remove-profile-btn"
+      aria-label="Add Profile"
+      (click)="openProfileDialog()"
+    >
+      Add Profile
+    </button>
+    <button
+      class="copy-profile-btn"
+      aria-label="Copy Profile"
+      (click)="CopyProfileDialog()"
+    >
+      Copy Profile
+    </button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Profile {{ selectedUser?.displayName }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let profile of profiles">
+        <td (click)="RoleList(profile)">{{ profile.description }}</td>
+        <td>
+          <mat-icon (click)="deleteProfile(profile.id!)">delete</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="role-list-container" *ngIf="showRoleList">
+  <app-user-roles
+    [profiles]="profiles"
+    [selectedProfile]="selectedProfile"
+    [selectedUser]="selectedUser"
+  ></app-user-roles>
+</div>

@@ -1,0 +1,17 @@
+<div id="dialog">
+  <h3>Add Profile For {{ data.selectedUser.displayName }}</h3>
+  <select id="dropdown" [(ngModel)]="selectedProfile">
+    <option *ngFor="let profile of nonGrantedProfile" [value]="profile.code">
+      {{ profile.description }}
+    </option>
+  </select>
+  <div class="buttons">
+    <button
+      id="save-btn"
+      (click)="addProfile(selectedUserId!, selectedProfile!)"
+    >
+      Save
+    </button>
+    <button id="cancel-btn" (click)="onCancel()">Cancel</button>
+  </div>
+</div>

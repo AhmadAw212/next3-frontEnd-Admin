@@ -1,0 +1,72 @@
+.user-permissions-list {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-top: 15px;
+  width: 300px;
+  height: auto;
+  float: left;
+  background-color: rgb(230, 235, 243);
+}
+
+tr:nth-child(even) {
+  background-color: #fffafaae;
+}
+tr:nth-child(odd) {
+  background-color: rgba(184, 181, 181, 0.634);
+}
+
+.user-permissions-list table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.user-permissions-list th {
+  background-color: #025696;
+  color: white;
+  padding: 8px;
+  text-align: left;
+  /* border: 1px solid black; */
+}
+
+
+.user-permissions-list td {
+  padding: 8px;
+  text-align: left;
+}
+
+.add-remove-profile-btn {
+  background-color: #1884d7;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  margin: 10px 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.copy-profile-btn {
+  background-color: #1884d7;
+  color: white;
+  border: none;
+  margin-left: 15px;
+  padding: 8px 10px;
+  margin: 10px 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-remove-profile-btn:hover,
+.copy-profile-btn:hover {
+  background-color: #0d6efd;
+}
+
+.add-remove-profile-btn:focus,
+.copy-profile-btn:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px 0px rgba(24, 132, 215, 0.5);
+}
+
+.add-remove-profile-btn:active,
+.copy-profile-btn:active {
+  transform: translateY(1px);
+}
