@@ -28,6 +28,8 @@ import { AddProfileDialogComponent } from './components/add-profile-dialog/add-p
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CopyProfileComponent } from './components/copy-profile/copy-profile.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +62,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatTableModule,
     NgSelectModule,
     NgxPaginationModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

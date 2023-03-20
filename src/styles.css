@@ -3,7 +3,8 @@
 @import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
 .navbar-brand {
     color: white;
     font-weight: bold;
@@ -28,16 +29,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: bold;
     font-style: italic;
 }
-
+/* 
 .DateTime{
     margin-left: 1150px;
     margin-top: -30px;
-}
+} */
 
 .row{
     background-color: rgb(237, 243, 245);
-    width: 270px;
-    height: fit-content;
+    /* width: 270px; */
+    /* height: fit-content; */
 }
 
 .col{
@@ -51,19 +52,70 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: black;
 }
 
-.B1{
-    height: 30px;
-    background-color: white;
-    margin-left: 290px;
-    margin-top: -70px;
-    margin-right: 10px;
-}
-.B{
-    height: 25px;
-    width: fit-content;
-    background-color: rgb(237, 243, 245);
-    margin-left: 280px;
-    margin-top: -110px;
-    
-}
 
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .page-size-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+  
+  .page-size-wrapper label {
+    margin-right: 10px;
+  }
+  
+  .paginator-wrapper {
+    padding: 0 10px;
+    margin-top: 10px;
+  }
+  
+  .pagination-previous,
+  .pagination-next,
+  .pagination-page,
+  .pagination-first,
+  .pagination-last {
+    margin: 0 5px;
+    padding: 3px 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+  }
+  
+  .pagination-previous,
+  .pagination-next {
+    font-weight: bold;
+  }
+  
+  .pagination-page.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .pagination-page.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  #max-size-select {
+    border-radius: 3px;
+  }
+  
+  #max-size-select option:checked {
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+  }

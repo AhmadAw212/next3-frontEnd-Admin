@@ -1,4 +1,5 @@
 export class CoreUser {
+  active?: number;
   displayName?: string;
   userName: string;
   email?: string;
@@ -13,9 +14,10 @@ export class CoreUser {
   userLimitHospitalFees?: number;
   paymentLimit?: number;
   userLimitExpertFees?: number;
-  companyDescription?: number;
+  companyDescription?: string;
 
   constructor(
+    active: number,
     displayName: string,
     userName: string,
     email: string,
@@ -30,8 +32,9 @@ export class CoreUser {
     userLimitHospitalFees: number,
     paymentLimit: number,
     userLimitExpertFees: number,
-    companyDescription: number
+    companyDescription: string
   ) {
+    this.active = active;
     (this.displayName = displayName),
       (this.userName = userName),
       (this.email = email),
@@ -53,6 +56,7 @@ export class CoreUser {
     let companyId = parseInt(json.companyId);
     let branchId = parseInt(json.branchId);
     return new CoreUser(
+      json.active,
       json.displayName,
       json.userName,
       json.email,

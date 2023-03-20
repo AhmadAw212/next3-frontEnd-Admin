@@ -6,17 +6,16 @@
   }
   
   .form-tab {
-    /* border: 1px solid #ccc; */
+    border: 1px solid #ccc;
     padding: 10px;
     background-color: #fff;
   }
   
-  .form-tab h3 {
+  /* .form-tab h3 {
     display: block;
-    font-size: 20px;
     border:  1px solid #ccc;
 
-  }
+  } */
   .user-inputs {
     display: flex;
     justify-content:space-around;
@@ -72,6 +71,7 @@
   th:not(:first-child) {
     border-left: 1px solid #ddd;
   }
+  
 
   .user-inputs button {
     background-color: #1884d7;

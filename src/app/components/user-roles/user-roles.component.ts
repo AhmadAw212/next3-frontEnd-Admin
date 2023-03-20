@@ -24,8 +24,10 @@ export class UserRolesComponent implements OnChanges {
     private dataService: DataServiceService,
     private alertify: AlertifyService
   ) {}
+
   ngOnChanges() {
-    this.getUserRoles(this.selectedProfile!);
+    const selectedProfile = this.selectedProfile!;
+    this.getUserRoles(selectedProfile);
   }
 
   getUserRoles(profileId: Profiles) {
@@ -44,9 +46,9 @@ export class UserRolesComponent implements OnChanges {
   }
 
   updateRoles() {
-    const userId = this.selectedUser?.userName;
-    const profileId = this.selectedProfile;
-    this.dataService.updateRoles(userId!, profileId!).subscribe({
+    const userId = this.selectedUser?.userName!;
+    const profileId = this.selectedProfile!;
+    this.dataService.updateRoles(userId, profileId).subscribe({
       next: (roles) => {
         console.log(roles);
       },
@@ -54,5 +56,39 @@ export class UserRolesComponent implements OnChanges {
         console.log(err);
       },
     });
+  }
+
+  getProfileDefaultAccessRoles() {
+    const profile = this.selectedProfile?.code!;
+    const userName = this.selectedUser?.userName!;
+    const companyId = this.selectedUser?.companyId!;
+
+    this.alertify.confirmDialog(
+      'Are you sure you want to override the existing roles ?',
+      () => {
+        this.dataService
+          .getProfileDefaultAccessRoles(userName, companyId, profile)
+          .subscribe({
+            next: (defaultRoles) => {
+              const fullRoles = this.roles?.map((role) => {
+                const matchingRole = defaultRoles.find(
+                  (defaultRole) => defaultRole.id === role.id
+                );
+                if (matchingRole) {
+                  role.granted = true;
+                } else {
+                  role.granted = false;
+                }
+                return role;
+              });
+              this.roles = fullRoles;
+              this.updateRoles();
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+      }
+    );
   }
 }

@@ -64,6 +64,16 @@
     padding: 8px;
     text-align: left;
   }
+
+  .role-list tr:nth-child(even):hover {
+    background-color: #e5e1e1c3;
+  
+  }
+  
+  .role-list tr:nth-child(odd):hover {
+    background-color: #a19e9ec3
+  }
+  
   
   .role-list tr:nth-child(even) {
     background-color: #fffafaae;
@@ -110,70 +120,4 @@
     transform: translateY(1px);
   }
 
-  .pagination-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  .page-size-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    font-size: 14px;
-  }
-  
-  .page-size-wrapper label {
-    margin-right: 10px;
-  }
-  
-  .paginator-wrapper {
-    padding: 0 10px;
-    margin-top: 10px;
-  }
-  
-  .pagination-previous,
-  .pagination-next,
-  .pagination-page,
-  .pagination-first,
-  .pagination-last {
-    margin: 0 5px;
-    padding: 3px 8px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 3px;
-  }
-  
-  .pagination-previous,
-  .pagination-next {
-    font-weight: bold;
-  }
-  
-  .pagination-page.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .pagination-page.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  #max-size-select {
-    border-radius: 3px;
-  }
-  
-  #max-size-select option:checked {
-    font-weight: bold;
-    background-color: #007bff;
-    color: #fff;
-  }
   

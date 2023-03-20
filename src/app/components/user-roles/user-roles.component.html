@@ -1,6 +1,10 @@
 <div class="role-list">
   <div class="buttons-container">
-    <button class="default-access-btn" aria-label="Copy Profile">
+    <button
+      class="default-access-btn"
+      aria-label="Copy Profile"
+      (click)="getProfileDefaultAccessRoles()"
+    >
       Default Access
     </button>
     <button
@@ -51,11 +55,7 @@
         <td>{{ role.id }}</td>
         <td>{{ role.description }}</td>
         <td>
-          <input
-            type="checkbox"
-            [checked]="role.granted"
-            [(ngModel)]="role.granted"
-          />
+          <input type="checkbox" [(ngModel)]="role.granted" />
         </td>
       </tr>
     </tbody>

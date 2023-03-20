@@ -12,9 +12,7 @@ import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.co
   styleUrls: ['./edit-user.component.css'],
 })
 export class EditUserComponent {
-  users?: any[] = [];
-  branchId?: string[];
-  isChecked?: boolean;
+  users?: CoreUser[] = [];
   selectedUser?: CoreUser;
   showProfileList = false;
   p: number = 1;
@@ -61,6 +59,7 @@ export class EditUserComponent {
     this.dataService.userSearch(username, name).subscribe({
       next: (res) => {
         this.users = res.data;
+        console.log(this.users);
       },
       error: (err) => {
         console.log(err);

@@ -8,6 +8,16 @@
   background-color: rgb(230, 235, 243);
 }
 
+
+tr:nth-child(even):hover {
+  background-color: #e5e1e1c3;
+
+}
+
+tr:nth-child(odd):hover {
+  background-color: #a19e9ec3
+}
+
 tr:nth-child(even) {
   background-color: #fffafaae;
 }

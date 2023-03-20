@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject, tap } from 'rxjs';
 import { ApiResponse } from '../model/api-response';
+import { CopyProfile } from '../model/copy-profile';
 import { CoreUser } from '../model/core-user';
 import { Profiles } from '../model/profiles';
+import { Role } from '../model/role';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +79,20 @@ export class DataServiceService {
   deleteProfile(userId: string, profileId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/user/delete/${userId}/${profileId}`
+    );
+  }
+
+  // copyProfilesFromUser(copyProfile:CopyProfile[]): Observable<ApiResponse> {
+  //   return this.http.post<ApiResponse>(`$`)
+  // }
+
+  getProfileDefaultAccessRoles(
+    userName: string,
+    companyId: number,
+    profile: string
+  ): Observable<Role[]> {
+    return this.http.get<Role[]>(
+      `${this.userUrl}/user/getProfileDefaultAccessRoles?username=${userName}&companyId=${companyId}&profile=${profile}`
     );
   }
 }

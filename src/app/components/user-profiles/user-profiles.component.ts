@@ -47,6 +47,7 @@ export class UserProfilesComponent implements OnChanges {
     this.dataService.getUserProfiles(userName).subscribe({
       next: (res: ApiResponse) => {
         this.profiles = res.data;
+        console.log(this.profiles);
       },
       error: (err) => {
         console.log(err);

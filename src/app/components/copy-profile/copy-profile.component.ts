@@ -4,6 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 
@@ -13,7 +14,7 @@ import { DataServiceService } from 'src/app/shared/data-service.service';
   styleUrls: ['./copy-profile.component.css'],
 })
 export class CopyProfileComponent implements OnInit {
-  users?: any[];
+  users?: CoreUser[];
   selectedUserName?: string;
   selectedUserProfiles?: Profiles[];
   constructor(
