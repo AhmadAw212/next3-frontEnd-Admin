@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
 import { Role } from 'src/app/model/role';
@@ -17,7 +24,7 @@ export class UserRolesComponent implements OnChanges {
   roles?: Role[];
   roleCodeFilter: string = '';
   roleDescFilter: string = '';
-  p: number = 1;
+  rolesPage: number = 1;
   maxSizeValue = 5;
 
   constructor(
@@ -45,12 +52,19 @@ export class UserRolesComponent implements OnChanges {
     );
   }
 
+  // oncheckboxchange(role: Role) {
+  //   const roles = (role.granted = role.granted);
+  //   console.log(roles);
+  // }
+
   updateRoles() {
     const userId = this.selectedUser?.userName!;
     const profileId = this.selectedProfile!;
     this.dataService.updateRoles(userId, profileId).subscribe({
       next: (roles) => {
-        console.log(roles);
+        this.alertify.dialogAlert(roles.message!);
+
+        console.log(roles.data);
       },
       error: (err) => {
         console.log(err);
@@ -71,16 +85,18 @@ export class UserRolesComponent implements OnChanges {
           .subscribe({
             next: (defaultRoles) => {
               const fullRoles = this.roles?.map((role) => {
-                const matchingRole = defaultRoles.find(
+                const matchingRoles = defaultRoles.find(
                   (defaultRole) => defaultRole.id === role.id
                 );
-                if (matchingRole) {
+
+                if (matchingRoles) {
                   role.granted = true;
                 } else {
                   role.granted = false;
                 }
                 return role;
               });
+
               this.roles = fullRoles;
               this.updateRoles();
             },

@@ -47,7 +47,7 @@
             | paginate
               : {
                   itemsPerPage: maxSizeValue,
-                  currentPage: p,
+                  currentPage: rolesPage,
                   totalItems: filteredRoles?.length
                 }
         "
@@ -55,7 +55,11 @@
         <td>{{ role.id }}</td>
         <td>{{ role.description }}</td>
         <td>
-          <input type="checkbox" [(ngModel)]="role.granted" />
+          <input
+            type="checkbox"
+            [(ngModel)]="role.granted"
+            (change)="(role.granted)"
+          />
         </td>
       </tr>
     </tbody>
@@ -75,12 +79,7 @@
     </div>
     <div class="paginator-wrapper">
       <pagination-controls
-        (pageChange)="p = $event"
-        screenReaderPaginationLabel="Pagination"
-        aria-label="Pagination controls"
-        role="navigation"
-        [maxSize]="maxSizeValue"
-        [autoHide]="true"
+        (pageChange)="rolesPage = $event"
       ></pagination-controls>
     </div>
   </div>

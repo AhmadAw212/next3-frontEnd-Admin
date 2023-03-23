@@ -15,8 +15,7 @@ export class EditUserComponent {
   users?: CoreUser[] = [];
   selectedUser?: CoreUser;
   showProfileList = false;
-  p: number = 1;
-  maxSizeValue = 5;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,

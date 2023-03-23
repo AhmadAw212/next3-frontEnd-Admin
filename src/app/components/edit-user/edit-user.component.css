@@ -39,29 +39,29 @@
 
   td {
     text-align: left;
-    padding: 10px;
-    /* border-bottom: 1px solid #ddd; */
-    
+    padding: 12px;
   }
-
-  th{
-    background-color: #025696 ;
+  
+  th {
+    background-color: #025696;
     color: white;
     font-weight: normal;
-    padding: 10px;
+    padding: 12px;
     margin: 5px;
-   
-    /* margin: 5px; */
+    font-size: 16px;
+    text-align: left;
   }
-
+  
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
   tr:hover {
     background-color: #e5e1e1c3;
   }
-
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
   
+  tr:nth-child(even) {
+    background-color: #f5f5f5;
   }
 
   tr:nth-child(even):hover {
@@ -71,7 +71,7 @@
   th:not(:first-child) {
     border-left: 1px solid #ddd;
   }
-  
+
 
   .user-inputs button {
     background-color: #1884d7;

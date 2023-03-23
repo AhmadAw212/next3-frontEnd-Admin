@@ -18,13 +18,15 @@
   </div>
   <div>
     <label for="profile">Profile:</label>
-    <ng-select appendTo="body" [multiple]="true">
-      <ng-option *ngFor="let profile of selectedUserProfiles"
+    <ng-select appendTo="body" [multiple]="true" [(ngModel)]="userProfiles">
+      <ng-option
+        *ngFor="let profile of selectedUserProfiles"
+        [value]="profile.id"
         >{{ profile.description }}
       </ng-option>
     </ng-select>
   </div>
   <div>
-    <button class="save-btn">Save</button>
+    <button class="save-btn" (click)="copyProfile()">Save</button>
   </div>
 </div>

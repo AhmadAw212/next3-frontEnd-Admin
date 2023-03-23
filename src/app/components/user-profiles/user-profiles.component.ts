@@ -1,12 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { DialogRef } from '@angular/cdk/dialog';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiResponse } from 'src/app/model/api-response';
 import { CoreUser } from 'src/app/model/core-user';
@@ -39,7 +32,9 @@ export class UserProfilesComponent implements OnChanges {
 
   RoleList(selectedProfile: Profiles) {
     this.selectedProfile = selectedProfile;
-    this.showRoleList = true;
+    if (selectedProfile === this.selectedProfile) {
+      this.showRoleList = true;
+    }
   }
 
   getProfiles() {
@@ -47,7 +42,6 @@ export class UserProfilesComponent implements OnChanges {
     this.dataService.getUserProfiles(userName).subscribe({
       next: (res: ApiResponse) => {
         this.profiles = res.data;
-        console.log(this.profiles);
       },
       error: (err) => {
         console.log(err);
@@ -90,6 +84,12 @@ export class UserProfilesComponent implements OnChanges {
   }
 
   CopyProfileDialog() {
-    this.dialog.open(CopyProfileComponent, { data: this.profiles });
+    const dialogRef = this.dialog.open(CopyProfileComponent, {
+      data: { profiles: this.profiles, selectedUser: this.selectedUser },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getProfiles();
+    });
   }
 }

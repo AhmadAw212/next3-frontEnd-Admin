@@ -13,6 +13,7 @@ import { Role } from '../model/role';
 export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
   getUsers = new Subject<CoreUser>();
+
   constructor(private http: HttpClient) {}
 
   addUser(user: ApiResponse): Observable<ApiResponse> {
@@ -82,9 +83,12 @@ export class DataServiceService {
     );
   }
 
-  // copyProfilesFromUser(copyProfile:CopyProfile[]): Observable<ApiResponse> {
-  //   return this.http.post<ApiResponse>(`$`)
-  // }
+  copyProfiles(copyProfile: CopyProfile): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/user/cloneProfile`,
+      copyProfile
+    );
+  }
 
   getProfileDefaultAccessRoles(
     userName: string,
