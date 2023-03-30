@@ -1,0 +1,9 @@
+<div class="container">
+  <div
+    class="profile-box"
+    *ngFor="let profiles of userProfiles"
+    (click)="redirectToProfile(profiles)"
+  >
+    <h2>{{ profiles.description }}</h2>
+  </div>
+</div>

@@ -30,8 +30,7 @@ export class CopyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   getUsers() {
@@ -46,7 +45,7 @@ export class CopyProfileComponent implements OnInit {
     this.dataService.getUserProfiles(userName).subscribe({
       next: (profiles) => {
         this.selectedUserProfiles = profiles.data;
-        console.log(profiles);
+        // console.log(profiles);
       },
     });
   }
@@ -61,6 +60,7 @@ export class CopyProfileComponent implements OnInit {
     this.dataService.copyProfiles(copyProfile).subscribe({
       next: (res) => {
         this.alertify.dialogAlert(res.title!);
+        this.dialogRef.close();
       },
       error: (err) => {
         console.log(err);

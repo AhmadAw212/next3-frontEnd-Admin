@@ -15,7 +15,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { EditUserDialogComponent } from './components/edit-user-dialog/edit-user-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -29,6 +29,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CopyProfileComponent } from './components/copy-profile/copy-profile.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
+import { AuthInterceptorInterceptor } from './shared/auth-interceptor.interceptor';
+import { DataServiceService } from './shared/data-service.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     UserRolesComponent,
     AddProfileDialogComponent,
     CopyProfileComponent,
+    LoginPageComponent,
+    AdminPageComponent,
+    ProfilesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +72,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgxPaginationModule,
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true,
+    },
+    DataServiceService,
+  ],
   bootstrap: [AppComponent],
 
   entryComponents: [EditUserDialogComponent],

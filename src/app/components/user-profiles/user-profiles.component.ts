@@ -28,13 +28,12 @@ export class UserProfilesComponent implements OnChanges {
 
   ngOnChanges() {
     this.getProfiles();
+    this.showRoleList = false;
   }
 
   RoleList(selectedProfile: Profiles) {
     this.selectedProfile = selectedProfile;
-    if (selectedProfile === this.selectedProfile) {
-      this.showRoleList = true;
-    }
+    this.showRoleList = true;
   }
 
   getProfiles() {
@@ -88,7 +87,7 @@ export class UserProfilesComponent implements OnChanges {
       data: { profiles: this.profiles, selectedUser: this.selectedUser },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getProfiles();
     });
   }

@@ -1,10 +1,13 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" routerLink="/editUser"
+    <a
+      class="nav-link active"
+      data-toggle="tab"
+      routerLink="/editUser"
+      style="margin-top: 20px"
       >Edit User Permissions</a
     >
   </li>
-
   <div class="form-tab">
     <div class="form-container">
       <div class="user-inputs">
@@ -20,25 +23,29 @@
           type="button"
           (click)="userSearch(userCodeInput.value, displayNameInput.value)"
         >
-          Search
+          {{ dico.BASIC_LABEL_SEARCH }}
         </button>
       </div>
       <table>
         <thead>
           <tr>
             <th></th>
-            <th>Edit Data</th>
+            <th>{{ dico.BASIC_EDIT }}</th>
             <th>Code</th>
             <th>Display Name</th>
-            <th>Email</th>
-            <th>Company</th>
-            <th>Active</th>
+            <th>{{ dico.dico_email }}</th>
+            <th>{{ dico.dico_company }}</th>
+            <th>{{ dico.dico_active }}</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody *ngIf="users!.length > 0; else noData">
-          <tr *ngFor="let user of users!">
+          <tr
+            *ngFor="let user of users!"
+            (click)="selectedUser = user"
+            [class.selected]="user === selectedUser"
+          >
             <td>
               <span class="material-icons" (click)="showProfList(user)"
                 >arrow_circle_down</span
@@ -74,13 +81,15 @@
               >
             </td>
             <td>
-              <button type="submit" class="table-btn">Reset Password</button>
+              <button type="submit" class="table-btn" (click)="resetPassword()">
+                Reset Password
+              </button>
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">No data to display</td>
+            <td colspan="9">{{ dico.BASIC_NO_DATA_TO_DISPLAY }}</td>
           </tr>
         </ng-template>
       </table>

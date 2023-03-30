@@ -55,11 +55,7 @@
         <td>{{ role.id }}</td>
         <td>{{ role.description }}</td>
         <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="role.granted"
-            (change)="(role.granted)"
-          />
+          <input type="checkbox" [(ngModel)]="role.granted" />
         </td>
       </tr>
     </tbody>

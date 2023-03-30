@@ -1,0 +1,42 @@
+<div class="login-container">
+  <h2>Login</h2>
+  <form>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        required
+        [(ngModel)]="userName"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        [(ngModel)]="password"
+      />
+    </div>
+    <div class="form-group">
+      <select
+        id="language"
+        name="language"
+        [(ngModel)]="selectedLanguage"
+        (change)="Dico(selectedLanguage!)"
+      >
+        <option
+          *ngFor="let lang of languages"
+          [value]="lang.key"
+          selected="defaultLang"
+        >
+          {{ lang.value }}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="login-button" (click)="login()">Login</button>
+  </form>
+</div>

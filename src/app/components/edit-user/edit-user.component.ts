@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreUser } from 'src/app/model/core-user';
 import { AlertifyService } from 'src/app/shared/alertify.service';
@@ -11,18 +11,22 @@ import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.co
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css'],
 })
-export class EditUserComponent {
+export class EditUserComponent implements OnInit {
   users?: CoreUser[] = [];
   selectedUser?: CoreUser;
   showProfileList = false;
+  dico?: any = '';
 
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertify: AlertifyService,
     public companyBranchService: CompanyBranchService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.subscribedUsers();
+    this.getDico();
   }
 
   showProfList(selectedUser: CoreUser) {
@@ -58,7 +62,7 @@ export class EditUserComponent {
     this.dataService.userSearch(username, name).subscribe({
       next: (res) => {
         this.users = res.data;
-        console.log(this.users);
+        // console.log(this.users);
       },
       error: (err) => {
         console.log(err);
@@ -72,6 +76,37 @@ export class EditUserComponent {
       next: (res) => {
         this.alertify.success(res.title!);
         this.userSearch(userId, '');
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  resetPassword() {
+    const userName = this.selectedUser?.userName!;
+    this.alertify.confirmDialog(
+      `Are You sure you want to reset user ${userName} password`,
+      () => {
+        this.dataService.resetPassword(userName).subscribe({
+          next: (res) => {
+            this.alertify.dialogAlert(res.title!);
+            console.log(res);
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      }
+    );
+  }
+
+  getDico() {
+    const language = localStorage.getItem('selectedLanguage')!;
+    this.dataService.Dico(language).subscribe({
+      next: (language) => {
+        this.dico = language.data;
+        // console.log(language.data);
       },
       error: (err) => {
         console.log(err);

@@ -21,7 +21,7 @@ export class UserRolesComponent implements OnChanges {
   @Input() profiles?: Profiles[];
   @Input() selectedProfile?: Profiles;
   @Input() selectedUser?: CoreUser;
-  roles?: Role[];
+  roles?: Role[] = [];
   roleCodeFilter: string = '';
   roleDescFilter: string = '';
   rolesPage: number = 1;
@@ -38,8 +38,8 @@ export class UserRolesComponent implements OnChanges {
   }
 
   getUserRoles(profileId: Profiles) {
-    const role = this.profiles?.find((role) => role.id === profileId.id);
-    this.roles = role?.profileRoles;
+    const selected_profile = this.profiles?.find((p) => p.id === profileId.id);
+    this.roles = selected_profile?.profileRoles;
   }
 
   get filteredRoles() {
@@ -52,10 +52,10 @@ export class UserRolesComponent implements OnChanges {
     );
   }
 
-  // oncheckboxchange(role: Role) {
-  //   const roles = (role.granted = role.granted);
-  //   console.log(roles);
-  // }
+  oncheckboxchange(role: Role) {
+    const roles = (role.granted = role.granted);
+    console.log(roles);
+  }
 
   updateRoles() {
     const userId = this.selectedUser?.userName!;

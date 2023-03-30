@@ -23,7 +23,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let profile of profiles">
+      <tr
+        *ngFor="let profile of profiles"
+        (click)="selectedProfile = profile"
+        [class.selected]="profile === selectedProfile"
+      >
         <td (click)="RoleList(profile)">{{ profile.description }}</td>
         <td>
           <mat-icon (click)="deleteProfile(profile.id!)">delete</mat-icon>

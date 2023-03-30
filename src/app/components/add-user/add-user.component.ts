@@ -78,13 +78,10 @@ export class AddUserComponent implements OnInit {
 
   addUser(): void {
     if (this.userForm.valid) {
-      // console.log(this.userForm.value);
       this.dataService.addUser(this.userForm.value).subscribe({
         next: (res: ApiResponse) => {
           if (res.statusCode === 1) {
-            // this.alertify.success(res.message!);
             this.alertify.dialogAlert('User Added Successfully');
-            // console.log(res);
           } else this.alertify.error(res.message!);
         },
         error: (err) => {

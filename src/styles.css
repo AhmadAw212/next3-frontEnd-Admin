@@ -11,6 +11,11 @@ html, body { height: 100%; }
     /* margin-top: -15px; */
 }
 
+tr.selected {
+  background-color: #e0f2db;
+}
+
+
 .navbar {
     margin-top: 50px;
     margin-left: 2px;
