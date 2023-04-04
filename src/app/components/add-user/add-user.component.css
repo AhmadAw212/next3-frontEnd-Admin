@@ -2,7 +2,7 @@
     background-color: #f2f2f2;
     border: 1px solid #ccc;
     padding: 20px;
-    width: 1150px;
+    width: 1000px;
   }
   
   form label {
@@ -71,7 +71,7 @@
     .invalid-feedback {
       position: absolute;
       top: 50%;
-      margin-left: 200px;
+      margin-left: 150px;
       color: red;
       font-size: 12px;
     }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiResponse } from 'src/app/model/api-response';
 import { AlertifyService } from 'src/app/shared/alertify.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { CompanyBranchService } from 'src/app/shared/company-branch.service';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 
@@ -26,7 +27,8 @@ export class EditUserDialogComponent implements OnInit {
     private fb: FormBuilder,
     public companyBranchService: CompanyBranchService,
     public dialogRef: MatDialogRef<EditUserDialogComponent>,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService
   ) {
     this.usersInfo = data.selectedUser;
 
@@ -93,9 +95,14 @@ export class EditUserDialogComponent implements OnInit {
       next: (res) => {
         this.alertify.success(res.message!);
         this.dataService.getUsers.next(res.data);
+        this.dialogRef.close();
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.dialogRef.close();
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }

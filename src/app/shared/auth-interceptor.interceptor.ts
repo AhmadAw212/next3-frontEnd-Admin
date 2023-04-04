@@ -14,16 +14,16 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
-    const lang = localStorage.getItem('selectedLanguage')!;
+
     // const credentials = localStorage.getItem('credentials');
     if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          language: lang,
         },
       });
     }
+
     return next.handle(request);
   }
 }

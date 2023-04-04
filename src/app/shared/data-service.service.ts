@@ -18,14 +18,14 @@ import { Role } from '../model/role';
 export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
   getUsers = new Subject<CoreUser>();
+  getUserRole = new Subject<Role>();
   constructor(private http: HttpClient) {}
 
   validateUser(name: string, password: string): Observable<ApiResponse> {
     const authData = btoa(`${name}:${password}`);
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic ' + authData
-    );
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic ' + authData)
+      .append('X-Requested-With', 'XMLHttpRequest'); // Add this line;
     return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/validate`, {
       headers: headers,
       withCredentials: true,
@@ -33,13 +33,12 @@ export class DataServiceService {
   }
   Dico(local: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/constant/getLabelByLocal?local=${local}`,
-      { withCredentials: true }
+      `${this.userUrl}/constant/getLabelByLocal?local=${local}`
     );
   }
 
-  getUserRoles(profileId: string) {
-    return this.http.get(`${this.userUrl}/roles/${profileId}`);
+  getUserRoles(profileId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/roles/${profileId}`);
   }
 
   getUserListProfiles(): Observable<ApiResponse> {
@@ -141,6 +140,17 @@ export class DataServiceService {
     return this.http.put<ApiResponse>(
       `${this.userUrl}/user/reset-password?username=${userName}`,
       userName
+    );
+  }
+
+  changePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Observable<ApiResponse> {
+    const newPass = { currentPassword, newPassword };
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/user/change-password`,
+      newPass
     );
   }
 }

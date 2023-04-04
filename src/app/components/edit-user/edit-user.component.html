@@ -22,6 +22,8 @@
         <button
           type="button"
           (click)="userSearch(userCodeInput.value, displayNameInput.value)"
+          [disabled]="hasPermission('systemAdmin')"
+          [ngClass]="{ 'is-disabled': hasPermission('systemAdmin') }"
         >
           {{ dico.BASIC_LABEL_SEARCH }}
         </button>

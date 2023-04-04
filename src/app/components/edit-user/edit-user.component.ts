@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { CoreUser } from 'src/app/model/core-user';
+import { Role } from 'src/app/model/role';
 import { AlertifyService } from 'src/app/shared/alertify.service';
 import { CompanyBranchService } from 'src/app/shared/company-branch.service';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -15,18 +19,44 @@ export class EditUserComponent implements OnInit {
   users?: CoreUser[] = [];
   selectedUser?: CoreUser;
   showProfileList = false;
+  rolesSubscribtion?: Subscription;
   dico?: any = '';
+  userRoles?: Role[];
+  roleNames?: string[] = [];
 
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertify: AlertifyService,
-    public companyBranchService: CompanyBranchService
+    public companyBranchService: CompanyBranchService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
+    this.getUserRoles();
+  }
+  hasPermission(roleName: string) {
+    const index = this.roleNames?.indexOf(roleName);
+    return index === -1;
+  }
+
+  getUserRoles() {
+    const selectedProfile = localStorage.getItem('selectedProfile');
+
+    this.dataService.getUserRoles(selectedProfile!).subscribe({
+      next: (res) => {
+        // this.userRoles = res.data;
+        res.data?.forEach((res: any) => {
+          this.roleNames?.push(res.id!);
+        });
+        // console.log(this.roleNames);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   showProfList(selectedUser: CoreUser) {
@@ -65,7 +95,10 @@ export class EditUserComponent implements OnInit {
         // console.log(this.users);
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -78,7 +111,10 @@ export class EditUserComponent implements OnInit {
         this.userSearch(userId, '');
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -94,7 +130,10 @@ export class EditUserComponent implements OnInit {
             console.log(res);
           },
           error: (err) => {
-            console.log(err);
+            if (err.error === 'Token Expired') {
+              this.authService.logout();
+              console.log(err.error);
+            }
           },
         });
       }
@@ -109,7 +148,10 @@ export class EditUserComponent implements OnInit {
         // console.log(language.data);
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }

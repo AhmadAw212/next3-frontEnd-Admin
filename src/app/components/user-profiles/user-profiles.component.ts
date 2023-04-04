@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/shared/alertify.service';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 import { AddProfileDialogComponent } from '../add-profile-dialog/add-profile-dialog.component';
 import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-user-profiles',
@@ -23,7 +24,8 @@ export class UserProfilesComponent implements OnChanges {
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService
   ) {}
 
   ngOnChanges() {
@@ -43,7 +45,10 @@ export class UserProfilesComponent implements OnChanges {
         this.profiles = res.data;
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -75,7 +80,10 @@ export class UserProfilesComponent implements OnChanges {
             this.profiles = res.data;
           },
           error: (err) => {
-            console.log(err);
+            if (err.error === 'Token Expired') {
+              this.authService.logout();
+              console.log(err.error);
+            }
           },
         });
       }

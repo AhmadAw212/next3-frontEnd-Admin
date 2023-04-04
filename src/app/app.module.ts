@@ -34,6 +34,8 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
 import { AuthInterceptorInterceptor } from './shared/auth-interceptor.interceptor';
 import { DataServiceService } from './shared/data-service.service';
+import { LoginNavComponent } from './components/login-nav/login-nav.component';
+import { ChangePassDialogComponent } from './components/change-pass-dialog/change-pass-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { DataServiceService } from './shared/data-service.service';
     LoginPageComponent,
     AdminPageComponent,
     ProfilesPageComponent,
+    LoginNavComponent,
+    ChangePassDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 .form-container {
     border: 1px solid #ccc;
     padding: 10px;
-    /* margin: 5px; */
-    width: 1150px;
+    margin: 5px;
+    width: 1000px
 
 
   }
@@ -49,12 +49,14 @@
   th {
     background-color: #025696;
     color: white;
-    font-weight: normal;
-    padding: 12px;
-    margin: 5px;
-    font-size: 16px;
-    text-align: left;
+    /* font-weight: normal; */
+    padding: 10px;
+    margin: 15px;
+    /* font-size: 16px; */
+    text-align: center;
   }
+
+
   
   tr {
     border-bottom: 1px solid #ddd;
@@ -87,6 +89,10 @@
   th:not(:first-child) {
     border-left: 1px solid #ddd;
   }
+  button.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
   .user-inputs button {
     background-color: #1884d7;
@@ -99,7 +105,8 @@
     background-color: #1884d7;
     color: white;
     border: none;
-
+    padding: 1px;
+    /* margin: 1px; */
   }
   
   

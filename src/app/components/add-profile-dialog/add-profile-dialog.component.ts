@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Profiles } from 'src/app/model/profiles';
 import { AlertifyService } from 'src/app/shared/alertify.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class AddProfileDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<AddProfileDialogComponent>,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService
   ) {}
 
   getNonGrantedUserProfiles() {
@@ -37,7 +39,10 @@ export class AddProfileDialogComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -50,7 +55,10 @@ export class AddProfileDialogComponent implements OnInit {
         this.dialogRef.close(res.data);
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }

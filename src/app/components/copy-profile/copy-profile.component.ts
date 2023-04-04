@@ -8,6 +8,7 @@ import { CopyProfile } from 'src/app/model/copy-profile';
 import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
 import { AlertifyService } from 'src/app/shared/alertify.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/shared/data-service.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class CopyProfileComponent implements OnInit {
     private dialogRef: MatDialogRef<CopyProfileComponent>,
     private dataService: DataServiceService,
     private alertify: AlertifyService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -38,6 +40,12 @@ export class CopyProfileComponent implements OnInit {
       next: (users) => {
         this.users = users.data;
       },
+      error: (err) => {
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
+      },
     });
   }
 
@@ -46,6 +54,12 @@ export class CopyProfileComponent implements OnInit {
       next: (profiles) => {
         this.selectedUserProfiles = profiles.data;
         // console.log(profiles);
+      },
+      error: (err) => {
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -63,7 +77,10 @@ export class CopyProfileComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }

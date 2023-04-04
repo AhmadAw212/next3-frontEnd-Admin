@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -13,25 +13,30 @@ interface language {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
   languages?: language[];
   selectedLanguage?: string;
-  userName?: string = '';
-  password?: string = '';
+  userName: string = '';
+  password: string = '';
   subscription?: Subscription;
   message?: string;
-  defaultLang?: string = 'en';
+  defaultLang: string = 'en';
   constructor(
     private authService: AuthService,
     private dataService: DataServiceService,
     private route: Router,
     private activatedRoute: ActivatedRoute
-  ) {
-    this.getLanguages();
+  ) {}
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
     this.authenticateUser();
+    this.getLanguages();
     this.Dico(this.defaultLang!);
     this.clearData();
   }
@@ -39,20 +44,10 @@ export class LoginPageComponent implements OnInit {
   authenticateUser() {
     this.subscription = this.authService.authenticationResultEvent.subscribe(
       (result) => {
-        if (result) {
-          // alert('here' + JSON.stringify(result));
-          // const url = this.activatedRoute.snapshot.queryParams['redirect'];
-          // this.authService.isAuthenticated = true;
-          // if (url == null) {
-          //   this.route.navigateByUrl('profiles-main');
-          // } else {
-          //   this.route.navigateByUrl(url);
-          // }
-          console.log(result);
-        } else {
-          this.message =
-            'Your username or password was not recognised - try again.';
-        }
+        console.log(result);
+
+        this.message =
+          'Your username or password was not recognised - try again.';
       },
       (error: any) => {
         this.message =
@@ -68,13 +63,10 @@ export class LoginPageComponent implements OnInit {
       return;
     }
   }
-  clearData() {
-    localStorage.clear();
-  }
+
   getLanguages() {
     this.dataService.getLanguages().subscribe({
       next: (res) => {
-        // console.log(res);
         this.languages = res.data;
       },
       error: (err) => {
@@ -94,5 +86,9 @@ export class LoginPageComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  clearData() {
+    localStorage.clear();
   }
 }
