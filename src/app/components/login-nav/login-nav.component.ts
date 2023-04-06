@@ -5,6 +5,8 @@ import { ChangePassDialogComponent } from '../change-pass-dialog/change-pass-dia
 // import { AuthService } from 'src/app/shared/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { LoginInfo } from 'src/app/model/login-info';
 
 @Component({
   selector: 'app-login-nav',
@@ -13,13 +15,16 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginNavComponent {
   userName?: string;
+  loginInfo?: LoginInfo;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dataService: DataServiceService
   ) {
-    this.userName = localStorage.getItem('username')!;
+    this.loginUserInfo();
   }
 
   logout(): void {
@@ -30,7 +35,19 @@ export class LoginNavComponent {
 
   openChangePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePassDialogComponent, {
-      width: '25%',
+      width: '20%',
+    });
+  }
+
+  loginUserInfo() {
+    this.dataService.loginUserInfo().subscribe({
+      next: (data) => {
+        this.loginInfo = data.data;
+        // console.log(data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 }

@@ -31,6 +31,10 @@ export class DataServiceService {
       withCredentials: true,
     });
   }
+
+  loginUserInfo(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/loginInfo`);
+  }
   Dico(local: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/constant/getLabelByLocal?local=${local}`
