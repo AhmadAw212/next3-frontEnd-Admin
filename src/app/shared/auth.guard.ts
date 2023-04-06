@@ -7,10 +7,11 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+// import { AuthService } from './auth.service';
 import jwt_decode from 'jwt-decode';
-import { AlertifyService } from './alertify.service';
+import { AlertifyService } from '../services/alertify.service';
 import { TokenPayload } from '../model/token-payload';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,8 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('token');
     const payload = jwt_decode(token!) as TokenPayload;
     const expiredDate = payload.exp < Date.now() / 1000;
-
+    const username = payload.user;
+    localStorage.setItem('username', username);
     if (!token || expiredDate) {
       this.alertifyService.dialogAlert('Session Expired');
       this.authService.logout();

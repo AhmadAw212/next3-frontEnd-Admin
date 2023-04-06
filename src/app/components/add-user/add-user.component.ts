@@ -1,11 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/model/api-response';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { AuthService } from 'src/app/shared/auth.service';
-import { CompanyBranchService } from 'src/app/shared/company-branch.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+// import { CompanyBranchService } from 'src/app/shared/company-branch.service';
 
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { CompanyBranchService } from 'src/app/services/company-branch.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-user',

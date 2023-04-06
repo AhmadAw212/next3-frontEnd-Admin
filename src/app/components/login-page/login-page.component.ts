@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { AuthService } from 'src/app/services/auth.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 interface language {
   key: string;
@@ -19,7 +20,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   userName: string = '';
   password: string = '';
   subscription?: Subscription;
-  message?: string;
+  // message?: string;
   defaultLang: string = 'en';
   constructor(
     private authService: AuthService,
@@ -35,26 +36,26 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authenticateUser();
+    // this.authenticateUser();
     this.getLanguages();
     this.Dico(this.defaultLang!);
     this.clearData();
   }
 
-  authenticateUser() {
-    this.subscription = this.authService.authenticationResultEvent.subscribe(
-      (result) => {
-        console.log(result);
+  // authenticateUser() {
+  //   this.subscription = this.authService.authenticationResultEvent.subscribe(
+  //     (result) => {
+  //       console.log(result);
 
-        this.message =
-          'Your username or password was not recognised - try again.';
-      },
-      (error: any) => {
-        this.message =
-          'Your username or password was not recognised - try again.';
-      }
-    );
-  }
+  //       this.message =
+  //         'Your username or password was not recognised - try again.';
+  //     },
+  //     (error: any) => {
+  //       this.message =
+  //         'Your username or password was not recognised - try again.';
+  //     }
+  //   );
+  // }
 
   login() {
     if (this.userName && this.password) {

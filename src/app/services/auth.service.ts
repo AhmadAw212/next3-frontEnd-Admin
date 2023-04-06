@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { CoreProfile } from '../model/core-profile';
 import { DataServiceService } from './data-service.service';
 import { AlertifyService } from './alertify.service';
+// import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { AlertifyService } from './alertify.service';
 export class AuthService {
   // isAuthenticated?: boolean;
   // login_user?: string;
-  authenticationResultEvent = new EventEmitter<boolean>();
+  // authenticationResultEvent = new EventEmitter<boolean>();
   userProfiles?: CoreProfile[];
   constructor(
     private dataService: DataServiceService,

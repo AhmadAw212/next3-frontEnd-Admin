@@ -4,11 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiResponse } from 'src/app/model/api-response';
 import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddProfileDialogComponent } from '../add-profile-dialog/add-profile-dialog.component';
 import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
-import { AuthService } from 'src/app/shared/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+// import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-user-profiles',

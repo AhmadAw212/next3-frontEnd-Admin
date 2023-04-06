@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { Role } from 'src/app/model/role';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
   selector: 'app-admin-page',

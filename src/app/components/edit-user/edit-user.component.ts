@@ -3,12 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { CoreUser } from 'src/app/model/core-user';
 import { Role } from 'src/app/model/role';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { CompanyBranchService } from 'src/app/shared/company-branch.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth.service';
+import { CompanyBranchService } from 'src/app/services/company-branch.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,6 @@ export class EditUserComponent implements OnInit {
   showProfileList = false;
   rolesSubscribtion?: Subscription;
   dico?: any = '';
-  userRoles?: Role[];
   roleNames?: string[] = [];
 
   constructor(
@@ -29,34 +29,19 @@ export class EditUserComponent implements OnInit {
     private dialog: MatDialog,
     private alertify: AlertifyService,
     public companyBranchService: CompanyBranchService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private userRolesService: UsersRolesService
+  ) {
+    this.userRolesService.getUserRoles();
+  }
 
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
-    this.getUserRoles();
-  }
-  hasPermission(roleName: string) {
-    const index = this.roleNames?.indexOf(roleName);
-    return index === -1;
   }
 
-  getUserRoles() {
-    const selectedProfile = localStorage.getItem('selectedProfile');
-
-    this.dataService.getUserRoles(selectedProfile!).subscribe({
-      next: (res) => {
-        // this.userRoles = res.data;
-        res.data?.forEach((res: any) => {
-          this.roleNames?.push(res.id!);
-        });
-        // console.log(this.roleNames);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
 
   showProfList(selectedUser: CoreUser) {

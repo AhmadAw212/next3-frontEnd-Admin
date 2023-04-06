@@ -2,11 +2,12 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
-import { AuthService } from 'src/app/shared/auth.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 import jwtDecode from 'jwt-decode';
 import { TokenPayload } from 'src/app/model/token-payload';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',

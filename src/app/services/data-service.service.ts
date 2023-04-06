@@ -25,7 +25,7 @@ export class DataServiceService {
     const authData = btoa(`${name}:${password}`);
     const headers = new HttpHeaders()
       .append('Authorization', 'Basic ' + authData)
-      .append('X-Requested-With', 'XMLHttpRequest'); // Add this line;
+      .append('X-Requested-With', 'XMLHttpRequest');
     return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/validate`, {
       headers: headers,
       withCredentials: true,

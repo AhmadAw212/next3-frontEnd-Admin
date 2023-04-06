@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { AuthService } from 'src/app/shared/auth.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-change-pass-dialog',
