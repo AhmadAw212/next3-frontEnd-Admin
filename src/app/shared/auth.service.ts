@@ -22,7 +22,7 @@ export class AuthService {
       next: (result) => {
         const token = result.data.token;
         const profiles = result.data.profiles;
-
+        
         localStorage.setItem('token', token);
 
         if (token) {
@@ -36,8 +36,9 @@ export class AuthService {
         }
       },
       error: (err) => {
+        // alert(JSON.stringify(err, null, 2));
         // this.isAuthenticated = false;
-        // this.authenticationResultEvent.emit(false);
+        this.authenticationResultEvent.emit(false);
         this.router.navigate(['/login']);
         console.log(err);
       },

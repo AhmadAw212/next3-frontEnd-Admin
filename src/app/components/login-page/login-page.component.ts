@@ -39,7 +39,8 @@ export class LoginPageComponent implements OnInit {
   authenticateUser() {
     this.subscription = this.authService.authenticationResultEvent.subscribe(
       (result) => {
-        if (result) {
+      
+        // if (result) {
           // alert('here' + JSON.stringify(result));
           // const url = this.activatedRoute.snapshot.queryParams['redirect'];
           // this.authService.isAuthenticated = true;
@@ -48,13 +49,16 @@ export class LoginPageComponent implements OnInit {
           // } else {
           //   this.route.navigateByUrl(url);
           // }
-          console.log(result);
-        } else {
-          this.message =
-            'Your username or password was not recognised - try again.';
-        }
+          // console.log(result);
+        // } else {
+          // alert('in else ::: => result value: ' + result);
+        //   this.message =
+        //     'Your username or password was not recognised - try again.';
+        // if(result)
+        // }
       },
       (error: any) => {
+        alert('show error message');
         this.message =
           'Your username or password was not recognised - try again.';
       }
