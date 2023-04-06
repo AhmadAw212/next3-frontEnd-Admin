@@ -1,0 +1,22 @@
+<h2>Change Password</h2>
+<form class="change-password-form" (ngSubmit)="changePassword()">
+  <div>
+    <label for="current-password">Current Password</label>
+    <input
+      type="password"
+      id="current-password"
+      name="current-password"
+      [(ngModel)]="currentPassword"
+    />
+  </div>
+  <div>
+    <label for="new-password">New Password</label>
+    <input
+      type="password"
+      id="new-password"
+      name="new-password"
+      [(ngModel)]="newPassword"
+    />
+  </div>
+  <button type="submit">Change Password</button>
+</form>

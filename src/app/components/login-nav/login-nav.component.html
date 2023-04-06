@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a routerLink="/profiles-main"
+      ><img src="assets/images/basicLogo.jpg" alt="Logo"
+    /></a>
+  </div>
+  <div class="navbar-right">
+    <span class="navbar-date">March 31, 2023</span>
+    <div class="navbar-dropdown">
+      <button class="navbar-username">
+        <img src="assets/images/cs.png" alt="Avatar" />
+        {{ userName }}
+      </button>
+      <div class="navbar-dropdown-content">
+        <a (click)="openChangePasswordDialog()">Change Password</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,10 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/model/api-response';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { CompanyBranchService } from 'src/app/shared/company-branch.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+// import { CompanyBranchService } from 'src/app/shared/company-branch.service';
 
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { CompanyBranchService } from 'src/app/services/company-branch.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-user',
@@ -29,7 +32,8 @@ export class AddUserComponent implements OnInit {
     private fb: FormBuilder,
     private dataService: DataServiceService,
     private alertify: AlertifyService,
-    public companyBranchService: CompanyBranchService
+    public companyBranchService: CompanyBranchService,
+    private authService: AuthService
   ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -85,7 +89,10 @@ export class AddUserComponent implements OnInit {
           } else this.alertify.error(res.message!);
         },
         error: (err) => {
-          console.log(err);
+          if (err.error === 'Token Expired') {
+            this.authService.logout();
+            console.log(err.error);
+          }
         },
       });
     }

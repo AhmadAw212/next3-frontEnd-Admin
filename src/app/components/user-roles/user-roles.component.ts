@@ -9,8 +9,10 @@ import {
 import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
 import { Role } from 'src/app/model/role';
-import { AlertifyService } from 'src/app/shared/alertify.service';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
+// import { AuthService } from 'src/app/shared/auth.service';
+import { DataServiceService } from 'src/app/services/data-service.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-roles',
@@ -29,7 +31,8 @@ export class UserRolesComponent implements OnChanges {
 
   constructor(
     private dataService: DataServiceService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService
   ) {}
 
   ngOnChanges() {
@@ -67,7 +70,10 @@ export class UserRolesComponent implements OnChanges {
         console.log(roles.data);
       },
       error: (err) => {
-        console.log(err);
+        if (err.error === 'Token Expired') {
+          this.authService.logout();
+          console.log(err.error);
+        }
       },
     });
   }
@@ -101,7 +107,10 @@ export class UserRolesComponent implements OnChanges {
               this.updateRoles();
             },
             error: (err) => {
-              console.log(err);
+              if (err.error === 'Token Expired') {
+                this.authService.logout();
+                console.log(err.error);
+              }
             },
           });
       }

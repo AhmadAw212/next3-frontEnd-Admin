@@ -7,42 +7,37 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
 import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
-import { AuthGuardGuard } from './shared/auth-guard.guard';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: '', component: LoginPageComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   {
     path: 'profiles-main',
     component: ProfilesPageComponent,
-    canActivate: [AuthGuardGuard],
-    children: [
-      {
-        path: ':description',
-        component: ProfilesPageComponent,
-        canActivate: [AuthGuardGuard],
-      },
-    ],
+    canActivate: [AuthGuard],
   },
   {
     path: 'Administrator',
     component: AdminPageComponent,
-    canActivate: [AuthGuardGuard],
+    canActivate: [AuthGuard],
+    data: {
+      authorities: ['Admin'],
+    },
     children: [
-      { path: 'addUser', component: AddUserComponent },
-      { path: 'editUser', component: EditUserComponent },
+      {
+        path: 'addUser',
+        component: AddUserComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'editUser',
+        component: EditUserComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
-  // {
-  //   path: 'Administrator',
-  //   component: AdminPageComponent,
-  //   canActivate: [AuthGuardGuard],
-  //   children: [
-  //     { path: 'addUser', component: AddUserComponent },
-  //     { path: 'editUser', component: EditUserComponent },
-  //   ],
-  // },
 ];
 
 @NgModule({

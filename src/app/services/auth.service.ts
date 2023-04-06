@@ -2,20 +2,22 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { CoreProfile } from '../model/core-profile';
-import { DataServiceService } from '../services/data-service.service';
-// import { DataServiceService } from './data-service.service';
+import { DataServiceService } from './data-service.service';
+import { AlertifyService } from './alertify.service';
+// import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isAuthenticated?: boolean;
-  login_user?: string;
-  authenticationResultEvent = new EventEmitter<boolean>();
+  // isAuthenticated?: boolean;
+  // login_user?: string;
+  // authenticationResultEvent = new EventEmitter<boolean>();
   userProfiles?: CoreProfile[];
   constructor(
     private dataService: DataServiceService,
-    private router: Router
+    private router: Router,
+    private alertifyService: AlertifyService
   ) {}
 
   authenticate(name: string, password: string) {
@@ -23,12 +25,13 @@ export class AuthService {
       next: (result) => {
         const token = result.data.token;
         const profiles = result.data.profiles;
-
+        
         localStorage.setItem('token', token);
 
         if (token) {
           this.router.navigate(['/profiles-main']);
           this.userProfiles = profiles;
+          console.log(result.data);
           // console.log(this.userProfiles?.map((res) => res.description));
           // this.isAuthenticated = true;
           // this.authenticationResultEvent.emit(true);
@@ -37,12 +40,24 @@ export class AuthService {
         }
       },
       error: (err) => {
-        // alert(JSON.stringify(err, null, 2));
+        let errorMessage = 'An error occurred';
+        if (err.status === 401) {
+          errorMessage = 'Incorrect username or password';
+        } else if (err.status === 500) {
+          errorMessage = 'An error occurred. Please try again later.';
+        }
+        this.alertifyService.error(errorMessage);
         // this.isAuthenticated = false;
         // this.authenticationResultEvent.emit(false);
-        this.router.navigate(['/login']);
-        console.log(err);
+        // this.router.navigate(['/login']);
+        // console.log(err.error.message);
       },
     });
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.alertifyService.dialogAlert('Session Expired');
+    this.router.navigate(['/login']);
   }
 }

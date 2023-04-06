@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
-import { DataServiceService } from 'src/app/shared/data-service.service';
+import { Role } from 'src/app/model/role';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -11,20 +12,24 @@ import { DataServiceService } from 'src/app/shared/data-service.service';
 })
 export class AdminPageComponent implements OnInit {
   userProfiles?: CoreProfile;
-  constructor(
-    private router: Router,
-    private dataService: DataServiceService,
-    private route: ActivatedRoute
-  ) {}
+  userRoles?: Role;
+  constructor(private dataService: DataServiceService) {}
 
   ngOnInit(): void {
-    this.getUserRoles();
+    // this.getUserRoles();
   }
 
-  getUserRoles() {
-    const selectedProfile = localStorage.getItem('selectedProfile');
-    this.dataService
-      .getUserRoles(selectedProfile!)
-      .subscribe((data) => console.log(data));
-  }
+  // getUserRoles() {
+  //   const selectedProfile = localStorage.getItem('selectedProfile');
+  //   this.dataService.getUserRoles(selectedProfile!).subscribe({
+  //     next: (res) => {
+  //       this.dataService.getUserRole.next(res.data);
+
+  //       // console.log(res);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 }

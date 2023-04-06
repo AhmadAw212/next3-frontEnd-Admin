@@ -4,23 +4,18 @@
       <div class="col">Menu</div>
 
       <div class="rounded mt-3">
-        <fa-icon
-          class="fa-2x"
-          style="margin-left: 15px; color: rgb(96, 153, 239)"
-          [icon]="searchIcon"
-        ></fa-icon>
-        <span style="margin-left: 10px; font-size: medium">Taskflows</span>
-
         <hr class="hr" />
       </div>
 
       <mat-nav-list class="btn-group-vertical">
-        <a mat-list-item routerLink="/Administrator/addUser" class="btn"
-          >Add User</a
-        >
-        <a mat-list-item routerLink="/Administrator/editUser" class="btn"
-          >Edit User</a
-        >
+        <a mat-list-item routerLink="/Administrator/addUser" class="btn">
+          <!-- <i class="fas fa-user-plus"></i> -->
+          <span>Add User</span>
+        </a>
+        <a mat-list-item routerLink="/Administrator/editUser" class="btn">
+          <!-- <i class="fas fa-user-edit"></i> -->
+          <span>Edit User</span>
+        </a>
       </mat-nav-list>
     </div>
   </mat-sidenav>
