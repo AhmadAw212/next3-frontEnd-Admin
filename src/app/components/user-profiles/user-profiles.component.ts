@@ -81,9 +81,9 @@ export class UserProfilesComponent implements OnChanges {
             this.profiles = res.data;
           },
           error: (err) => {
-            if (err.error === 'Token Expired') {
+            if (err.status === 401 || err.status === 500) {
               this.authService.logout();
-              console.log(err.error);
+              this.alertify.dialogAlert('Error');
             }
           },
         });

@@ -28,14 +28,22 @@ export class LoginNavComponent {
   }
 
   logout(): void {
-    this.alertifyService.dialogAlert('User logged out successfully');
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.dataService.logout().subscribe({
+      next: (response) => {
+        this.alertifyService.dialogAlert(response.message!);
+        localStorage.clear();
+        this.router.navigate(['/login']);
+        console.log(response);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   openChangePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePassDialogComponent, {
-      width: '20%',
+      width: '25%',
     });
   }
 
@@ -43,10 +51,13 @@ export class LoginNavComponent {
     this.dataService.loginUserInfo().subscribe({
       next: (data) => {
         this.loginInfo = data.data;
-        // console.log(data);
+        // console.log(data.data);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }

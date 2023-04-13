@@ -8,25 +8,51 @@
       </div>
 
       <mat-nav-list class="btn-group-vertical">
-        <a mat-list-item routerLink="/Administrator/addUser" class="btn">
-          <!-- <i class="fas fa-user-plus"></i> -->
-          <span>Add User</span>
-        </a>
-        <a mat-list-item routerLink="/Administrator/editUser" class="btn">
-          <!-- <i class="fas fa-user-edit"></i> -->
-          <span>Edit User</span>
-        </a>
+        <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>User</mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="/Administrator/addUser" class="btn">
+            <!-- <i class="fas fa-user-plus"></i> -->
+            <span>Add User</span>
+          </a>
+          <a mat-list-item routerLink="/Administrator/editUser" class="btn">
+            <!-- <i class="fas fa-user-edit"></i> -->
+            <span>Edit User</span>
+          </a>
+        </mat-expansion-panel>
+        <hr class="hr" />
+
+        <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>Cars</mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="/Administrator/" class="btn">
+            <!-- <i class="fas fa-user-plus"></i> -->
+            <span>Add Car</span>
+          </a>
+          <a mat-list-item routerLink="/Administrator/" class="btn">
+            <!-- <i class="fas fa-user-edit"></i> -->
+            <span>Edit Car</span>
+          </a>
+        </mat-expansion-panel>
+        <hr class="hr" />
+        <a mat-list-item routerLink="/Administrator/coreConfig">
+          Core Configuration</a
+        >
       </mat-nav-list>
     </div>
   </mat-sidenav>
-  <div class="arrow">
-    <i
-      class="fa fa-caret-left"
-      style="font-size: 20px"
-      (click)="toggleMenu()"
-    ></i>
-  </div>
-  <div class="component-content">
-    <router-outlet></router-outlet>
-  </div>
+  <mat-sidenav-content>
+    <div class="arrow">
+      <i
+        class="fa fa-caret-left"
+        style="font-size: 20px"
+        (click)="toggleMenu()"
+      ></i>
+    </div>
+    <div class="component-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

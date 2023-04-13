@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ChangePassDialogComponent {
   currentPassword?: string;
   newPassword?: string;
-
+  confirmPassword?: string;
   constructor(
     private dialogRef: MatDialogRef<ChangePassDialogComponent>,
     private dataService: DataServiceService,
@@ -26,6 +26,7 @@ export class ChangePassDialogComponent {
   changePassword() {
     const currentPassword = this.currentPassword!;
     const newPassword = this.newPassword!;
+
     this.alertify.confirmDialog(
       'Are you sure you want to change your password',
       () => {
@@ -43,10 +44,9 @@ export class ChangePassDialogComponent {
               }
             },
             error: (err) => {
-              if (err.error === 'Token Expired') {
-                this.dialogRef.close();
+              if (err.status === 401 || err.status === 500) {
                 this.authService.logout();
-                console.log(err.error);
+                this.alertify.dialogAlert('Error');
               }
             },
           });

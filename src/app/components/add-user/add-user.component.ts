@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CompanyBranchList } from 'src/app/model/company-branch-list';
 
 @Component({
   selector: 'app-add-user',
@@ -16,7 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AddUserComponent implements OnInit {
   userForm: FormGroup;
-  companyList?: any;
+  // companyList?: CompanyBranchList;
 
   branchList: any[] = [];
 
@@ -25,7 +26,7 @@ export class AddUserComponent implements OnInit {
   }
 
   getCompanyId() {
-    this.companyBranchService.getCompanyId();
+    return this.companyBranchService.getCompanyId();
   }
 
   constructor(
@@ -89,9 +90,9 @@ export class AddUserComponent implements OnInit {
           } else this.alertify.error(res.message!);
         },
         error: (err) => {
-          if (err.error === 'Token Expired') {
+          if (err.status === 401 || err.status === 500) {
             this.authService.logout();
-            console.log(err.error);
+            this.alertify.dialogAlert('Error');
           }
         },
       });

@@ -36,7 +36,8 @@ import { AuthInterceptorInterceptor } from './shared/auth-interceptor.intercepto
 import { DataServiceService } from './services/data-service.service';
 import { LoginNavComponent } from './components/login-nav/login-nav.component';
 import { ChangePassDialogComponent } from './components/change-pass-dialog/change-pass-dialog.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { ChangePassDialogComponent } from './components/change-pass-dialog/chang
     ProfilesPageComponent,
     LoginNavComponent,
     ChangePassDialogComponent,
+    CoreConfigurationComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +76,7 @@ import { ChangePassDialogComponent } from './components/change-pass-dialog/chang
     MatTableModule,
     NgSelectModule,
     NgxPaginationModule,
+    MatExpansionModule,
     FontAwesomeModule,
   ],
   providers: [

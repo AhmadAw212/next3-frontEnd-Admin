@@ -42,9 +42,9 @@ export class CopyProfileComponent implements OnInit {
         this.users = users.data;
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });
@@ -57,9 +57,9 @@ export class CopyProfileComponent implements OnInit {
         // console.log(profiles);
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });
@@ -78,9 +78,9 @@ export class CopyProfileComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });

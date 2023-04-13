@@ -5,6 +5,7 @@
     *ngFor="let profiles of userProfiles"
     (click)="redirectToProfile(profiles)"
   >
+    <img [src]="profiles.logo" class="profile-img" />
     <h2>{{ profiles.description }}</h2>
   </div>
 </div>

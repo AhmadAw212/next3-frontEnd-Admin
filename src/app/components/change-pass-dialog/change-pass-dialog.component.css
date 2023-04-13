@@ -40,7 +40,19 @@ h2 {
     border-radius: 4px;
     cursor: pointer;
   }
+
   
   button[type="submit"]:hover {
     background-color: #1976d2;
+  }
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .error {
+    color: red;
+    /* font-size: 0.8rem; */
+    margin-top: 0.2rem;
+
   }

@@ -47,41 +47,7 @@
     border: 1px solid #ccc;
   }
   
-  .role-list table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .role-list th {
-    background-color: #025696;
-    color: white;
-    padding: 8px;
-    text-align: left;
-    border: 1px solid black;
-  }
-  
-  .role-list td {
-    padding: 8px;
-    text-align: left;
-  }
 
-  .role-list tr:nth-child(even):hover {
-    background-color: #e5e1e1c3;
-  
-  }
-  
-  .role-list tr:nth-child(odd):hover {
-    background-color: #a19e9ec3
-  }
-  
-  
-  .role-list tr:nth-child(even) {
-    background-color: #fffafaae;
-  }
-  
-  .role-list tr:nth-child(odd) {
-    background-color: rgba(184, 181, 181, 0.634);
-  }
 
   .add-remove-role-btn {
     background-color: #1884d7;

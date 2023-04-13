@@ -35,6 +35,7 @@ export class DataServiceService {
   loginUserInfo(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/loginInfo`);
   }
+
   Dico(local: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/constant/getLabelByLocal?local=${local}`
@@ -156,5 +157,9 @@ export class DataServiceService {
       `${this.userUrl}/user/change-password`,
       newPass
     );
+  }
+
+  logout(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/logout`);
   }
 }

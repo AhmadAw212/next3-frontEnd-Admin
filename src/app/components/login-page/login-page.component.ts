@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -14,7 +15,7 @@ interface language {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
 })
-export class LoginPageComponent implements OnInit, OnDestroy {
+export class LoginPageComponent implements OnInit {
   languages?: language[];
   selectedLanguage?: string;
   userName: string = '';
@@ -26,42 +27,22 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dataService: DataServiceService,
     private route: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  ngOnInit(): void {
-    // this.authenticateUser();
+    private activatedRoute: ActivatedRoute,
+    private alertify: AlertifyService
+  ) {
     this.getLanguages();
     this.Dico(this.defaultLang!);
     this.clearData();
   }
 
-  // authenticateUser() {
-  //   this.subscription = this.authService.authenticationResultEvent.subscribe(
-  //     (result) => {
-  //       console.log(result);
-
-  //       this.message =
-  //         'Your username or password was not recognised - try again.';
-  //     },
-  //     (error: any) => {
-  //       this.message =
-  //         'Your username or password was not recognised - try again.';
-  //     }
-  //   );
-  // }
+  ngOnInit(): void {}
 
   login() {
     if (this.userName && this.password) {
       this.authService.authenticate(this.userName, this.password);
     } else {
-      return;
+      this.alertify.error('Please enter your username and password');
+      // return;
     }
   }
 
