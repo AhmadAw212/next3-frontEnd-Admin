@@ -5,11 +5,11 @@
     /></a>
   </div>
   <div class="navbar-right">
-    <span class="navbar-date">March 31, 2023</span>
+    <span class="navbar-date">{{ loginInfo?.sysCreatedDate }}</span>
     <div class="navbar-dropdown">
       <button class="navbar-username">
         <img src="assets/images/cs.png" alt="Avatar" />
-        {{ userName }}
+        {{ loginInfo?.coreUserId }}
       </button>
       <div class="navbar-dropdown-content">
         <a (click)="openChangePasswordDialog()">Change Password</a>

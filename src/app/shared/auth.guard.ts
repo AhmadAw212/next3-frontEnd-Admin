@@ -33,10 +33,7 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('token');
     const payload = jwt_decode(token!) as TokenPayload;
     const expiredDate = payload.exp < Date.now() / 1000;
-    const username = payload.user;
-    localStorage.setItem('username', username);
-
-    
+   
     if (!token || expiredDate) {
       this.alertifyService.dialogAlert('Session Expired');
       this.authService.logout();
