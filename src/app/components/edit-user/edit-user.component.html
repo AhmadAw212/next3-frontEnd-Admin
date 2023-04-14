@@ -12,7 +12,9 @@
   <div class="form-tab">
     <div class="form-container">
       <div class="user-inputs">
-        <form>
+        <form
+          (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
+        >
           <label for="user-code">User Code:</label>
 
           <!-- or you can user [(ngModel)]="userCode" -->
@@ -27,8 +29,7 @@
           />
 
           <button
-            type="button"
-            (click)="userSearch(userCodeInput.value, displayNameInput.value)"
+            type="submit"
             [disabled]="hasPerm('systemAdmin')"
             [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
           >

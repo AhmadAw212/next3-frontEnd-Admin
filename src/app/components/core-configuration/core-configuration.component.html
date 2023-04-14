@@ -1,15 +1,23 @@
 <div class="container">
   <div class="row">
     <div class="user-inputs">
-      <form>
+      <form (ngSubmit)="coreConfigSearch()">
         <label for="inputId">ID:</label>
-        <input type="text" id="inputId" />
+        <input type="text" id="inputId" [(ngModel)]="id" name="id" />
 
         <label for="inputDescription">Description:</label>
-        <input type="text" id="inputDescription" />
+        <input
+          type="text"
+          id="inputDescription"
+          [(ngModel)]="description"
+          name="description"
+        />
 
-        <button type="submit" class="">Search</button>
+        <button type="submit">Search</button>
       </form>
+      <button type="button" (click)="openCoreConfigDialog()">
+        Open Dialog
+      </button>
     </div>
   </div>
   <div class="row mt-4">
@@ -23,8 +31,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
+          <tr *ngFor="let config of configData">
+            <td>{{ config.id }}</td>
+            <td>{{ config.configValue }}</td>
+            <td>{{ config.description }}</td>
           </tr>
         </tbody>
       </table>

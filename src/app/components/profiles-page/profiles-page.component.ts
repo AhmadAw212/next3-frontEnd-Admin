@@ -40,7 +40,7 @@ export class ProfilesPageComponent implements OnInit {
       next: (profiles) => {
         this.userProfiles = profiles.data;
         this.userProfiles = profiles.data.map((profile: CoreProfile) => {
-          console.log(`data:image/jpeg;base64,${profile.logo}`);
+          // console.log(`data:image/jpeg;base64,${profile.logo}`);
           return {
             ...profile,
             logo: `data:image/jpeg;base64,${profile.logo}`,

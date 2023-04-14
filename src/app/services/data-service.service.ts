@@ -162,4 +162,10 @@ export class DataServiceService {
   logout(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/logout`);
   }
+
+  coreConfigSearch(id: string, desc: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/searchConfig?id=${id}&description=${desc}`
+    );
+  }
 }

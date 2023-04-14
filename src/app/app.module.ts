@@ -38,6 +38,7 @@ import { LoginNavComponent } from './components/login-nav/login-nav.component';
 import { ChangePassDialogComponent } from './components/change-pass-dialog/change-pass-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
+import { AddConfigDialogComponent } from './components/add-config-dialog/add-config-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { CoreConfigurationComponent } from './components/core-configuration/core
     LoginNavComponent,
     ChangePassDialogComponent,
     CoreConfigurationComponent,
+    AddConfigDialogComponent,
   ],
   imports: [
     BrowserModule,

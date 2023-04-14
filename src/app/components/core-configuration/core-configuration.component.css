@@ -3,37 +3,5 @@
     padding: 20px;
     margin: 20px;
     width: 1100px;
-  }
-  
-  /* Style the search form container */
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
-  /* Style the search button */
-  .btn-primary {
-    margin-top: 10px;
-  }
-  
-  /* Style the table */
-  .table {
-    background-color: #fff;
-    border: 1px solid #ccc;
-  }
-  
-  /* Style the table headers */
-  .table thead th {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    font-weight: bold;
-  }
-  
-  /* Style the table rows */
-  .table tbody td {
-    border: 1px solid #ccc;
-  }
-  
-  /* Style the table row hover effect */
-  .table tbody tr:hover {
-    background-color: #f5f5f5;
+    border: 1px solid gray
   }
