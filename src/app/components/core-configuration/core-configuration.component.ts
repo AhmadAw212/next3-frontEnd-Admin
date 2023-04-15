@@ -17,7 +17,10 @@ export class CoreConfigurationComponent {
     private dataService: DataServiceService,
     private dialog: MatDialog
   ) {}
-
+  onTdDoubleClick(event: MouseEvent) {
+    const tdElement = event.target as HTMLTableCellElement;
+    tdElement.focus();
+  }
   coreConfigSearch() {
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {

@@ -22,7 +22,7 @@
   }
   
   .dialog button {
-    background-color: #4CAF50;
+    background-color: #1884d7;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -31,5 +31,5 @@
   }
   
   .dialog button:hover {
-    background-color: #3e8e41;
+    background-color: #4da9f0;
   }

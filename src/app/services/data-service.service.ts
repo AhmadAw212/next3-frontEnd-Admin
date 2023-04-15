@@ -11,6 +11,7 @@ import { CoreProfile } from '../model/core-profile';
 import { CoreUser } from '../model/core-user';
 import { Profiles } from '../model/profiles';
 import { Role } from '../model/role';
+import { ConfigData } from '../model/config-data';
 
 @Injectable({
   providedIn: 'root',
@@ -168,4 +169,15 @@ export class DataServiceService {
       `${this.userUrl}/coreConfiguration/searchConfig?id=${id}&description=${desc}`
     );
   }
+
+  addConfig(configData: ConfigData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/addConfig`,
+      { ...configData }
+    );
+  }
+
+  // editOnfig(configData: ConfigData): Observable<ApiResponse>{
+  //   return this.http.post<ApiResponse>(`${this.userUrl}/coreConfiguration/edit`)
+  // }
 }
