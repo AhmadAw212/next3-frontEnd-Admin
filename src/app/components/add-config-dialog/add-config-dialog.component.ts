@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ConfigData } from 'src/app/model/config-data';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -17,7 +18,8 @@ export class AddConfigDialogComponent {
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<AddConfigDialogComponent>
   ) {}
 
   addConfiguration() {
@@ -30,6 +32,7 @@ export class AddConfigDialogComponent {
     this.dataService.addConfig(configData).subscribe({
       next: (data) => {
         this.alertifyService.dialogAlert(data.title!);
+        this.dialogRef.close();
         console.log(data);
       },
       error: (err) => {

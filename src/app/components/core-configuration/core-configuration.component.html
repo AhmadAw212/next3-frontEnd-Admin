@@ -20,7 +20,9 @@
       <button type="button" (click)="openCoreConfigDialog()">
         Add Configuration
       </button>
-      <button type="button" style="margin-left: 8px">Update</button>
+      <button type="button" style="margin-left: 8px" (click)="editConfig()">
+        Update
+      </button>
     </div>
   </div>
   <div class="row mt-4">
@@ -31,19 +33,34 @@
             <th>Id</th>
             <th>Config Value</th>
             <th>Description</th>
+            <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="configData!.length > 0; else noData">
           <tr *ngFor="let config of configData">
             <td>{{ config.id }}</td>
-            <td contenteditable="true" (dblclick)="onTdDoubleClick($event)">
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, config, 'configValue')"
+            >
               {{ config.configValue }}
             </td>
-            <td contenteditable="true" (dblclick)="onTdDoubleClick($event)">
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, config, 'description')"
+            >
               {{ config.description }}
+            </td>
+            <td>
+              <mat-icon (click)="deleteConfig(config.id!)">delete</mat-icon>
             </td>
           </tr>
         </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">No data to display</td>
+          </tr>
+        </ng-template>
       </table>
     </div>
   </div>

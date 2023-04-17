@@ -177,7 +177,17 @@ export class DataServiceService {
     );
   }
 
-  // editOnfig(configData: ConfigData): Observable<ApiResponse>{
-  //   return this.http.post<ApiResponse>(`${this.userUrl}/coreConfiguration/edit`)
-  // }
+  editConfig(configData: ConfigData[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/editConfig`,
+      configData
+    );
+  }
+
+  deleteConfig(configData: string[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/deleteConfig`,
+      configData
+    );
+  }
 }
