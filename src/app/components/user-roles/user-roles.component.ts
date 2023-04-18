@@ -70,10 +70,14 @@ export class UserRolesComponent implements OnChanges {
         console.log(roles.data);
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
-          this.authService.logout();
-          console.log(err.error);
+        let errorMessage = 'An error occurred';
+        if (err.status === 401) {
+          errorMessage = 'Incorrect username or password';
+        } else if (err.status === 500) {
+          errorMessage = 'An error occurred. Please try again later.';
         }
+
+        this.alertify.error(errorMessage);
       },
     });
   }
@@ -107,9 +111,9 @@ export class UserRolesComponent implements OnChanges {
               this.updateRoles();
             },
             error: (err) => {
-              if (err.error === 'Token Expired') {
+              if (err.status === 401 || err.status === 500) {
                 this.authService.logout();
-                console.log(err.error);
+                this.alertify.dialogAlert('Error');
               }
             },
           });

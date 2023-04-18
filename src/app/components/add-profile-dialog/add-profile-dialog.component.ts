@@ -26,7 +26,7 @@ export class AddProfileDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<AddProfileDialogComponent>,
-    private alertify: AlertifyService,
+    private alertifyService: AlertifyService,
     private authService: AuthService
   ) {}
 
@@ -40,9 +40,9 @@ export class AddProfileDialogComponent implements OnInit {
         }
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertifyService.dialogAlert('Error');
         }
       },
     });
@@ -52,13 +52,13 @@ export class AddProfileDialogComponent implements OnInit {
     this.dataService.grantProfileToUser(userId, profId).subscribe({
       next: (res) => {
         this.selectedProfile = profId;
-        this.alertify.dialogAlert('Profile Added Successfully');
+        this.alertifyService.dialogAlert('Profile Added Successfully');
         this.dialogRef.close(res.data);
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertifyService.dialogAlert('Error');
         }
       },
     });

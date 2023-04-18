@@ -8,25 +8,33 @@
       >Edit User Permissions</a
     >
   </li>
+
   <div class="form-tab">
     <div class="form-container">
       <div class="user-inputs">
-        <label for="user-code">User Code:</label>
+        <form>
+          <label for="user-code">User Code:</label>
 
-        <!-- or you can user [(ngModel)]="userCode" -->
-        <input type="text" id="user-code" name="user-code" #userCodeInput />
+          <!-- or you can user [(ngModel)]="userCode" -->
+          <input type="text" id="user-code" name="user-code" #userCodeInput />
 
-        <label for="user-name">Display Name : </label>
-        <input type="text" id="user-name" name="user-name" #displayNameInput />
+          <label for="user-name">Display Name : </label>
+          <input
+            type="text"
+            id="user-name"
+            name="user-name"
+            #displayNameInput
+          />
 
-        <button
-          type="button"
-          (click)="userSearch(userCodeInput.value, displayNameInput.value)"
-          [disabled]="hasPerm('systemAdmin')"
-          [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
-        >
-          {{ dico.BASIC_LABEL_SEARCH }}
-        </button>
+          <button
+            type="button"
+            (click)="userSearch(userCodeInput.value, displayNameInput.value)"
+            [disabled]="hasPerm('systemAdmin')"
+            [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
+          >
+            {{ dico.dico_search }}
+          </button>
+        </form>
       </div>
       <table>
         <thead>

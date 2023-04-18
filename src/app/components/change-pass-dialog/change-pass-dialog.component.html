@@ -18,5 +18,19 @@
       [(ngModel)]="newPassword"
     />
   </div>
-  <button type="submit">Change Password</button>
+  <div>
+    <label for="confirm-password">Confirm Password</label>
+    <input
+      type="password"
+      id="confirm-password"
+      name="confirm-password"
+      [(ngModel)]="confirmPassword"
+    />
+  </div>
+  <div class="error" *ngIf="newPassword !== confirmPassword">
+    Passwords do not match
+  </div>
+  <button type="submit" [disabled]="newPassword !== confirmPassword">
+    Change Password
+  </button>
 </form>

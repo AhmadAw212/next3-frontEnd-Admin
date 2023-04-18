@@ -8,6 +8,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
 import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
 import { AuthGuard } from './shared/auth.guard';
+import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -34,6 +35,11 @@ const routes: Routes = [
       {
         path: 'editUser',
         component: EditUserComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'coreConfig',
+        component: CoreConfigurationComponent,
         canActivate: [AuthGuard],
       },
     ],

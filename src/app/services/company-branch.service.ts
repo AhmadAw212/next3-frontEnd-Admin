@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { DataServiceService } from './data-service.service';
+import { AuthService } from './auth.service';
+import { CompanyBranchList } from '../model/company-branch-list';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyBranchService {
-  companyList: any;
+  companyList?: CompanyBranchList[];
   branchList: any;
 
-  constructor(private dataService: DataServiceService) {}
+  constructor(
+    private dataService: DataServiceService,
+    private authService: AuthService
+  ) {}
 
   getCompanyId() {
     this.dataService.getCompanyId().subscribe({
@@ -17,7 +22,9 @@ export class CompanyBranchService {
         // console.log(this.companyList);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+        }
       },
     });
   }
@@ -30,7 +37,9 @@ export class CompanyBranchService {
         // filter the branch list based on the selected company ID
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+        }
       },
     });
   }

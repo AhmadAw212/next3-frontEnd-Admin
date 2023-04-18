@@ -3,7 +3,7 @@
 @import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 html, body { height: 100%; }
-/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+body { margin: 0; font-family:'Times New Roman', Times, serif; }
 
 .navbar-brand {
     color: white;
@@ -15,6 +15,41 @@ tr.selected {
   background-color: #e0f2db;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #025696;
+  color: white;
+  padding: 8px;
+  text-align: left;
+  border: 1px solid black;
+  font-weight: normal;
+}
+
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even):hover {
+  background-color: #e5e1e1c3;
+
+}
+
+ tr:nth-child(odd):hover {
+  background-color: #a19e9ec3
+}
+
+tr:nth-child(even) {
+  background-color: #fffafaae;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(184, 181, 181, 0.634);
+}
 
 .navbar {
     margin-top: 50px;
@@ -23,10 +58,35 @@ tr.selected {
     background-color: #0674CB;
 
 }
+.user-inputs {
+  display: flex;
+  justify-content:space-around;
+  margin-bottom: 10px;
+}
 
+.user-inputs label {
+  margin-right: 5px;
+}
+
+.user-inputs input {
+  margin-right: 5px;
+}
+
+.user-inputs button {
+  background-color: #1884d7;
+  color: white;
+  border: none;
+  padding: 5px 16px;
+}
+
+
+.user-inputs button:hover {
+  background-color: #278bd8;
+}
 .Background {
-    background-color: #e7e7e7;
-    height: 100vh;
+  background-color: #e7e7e7;
+  height: 100%
+
 }
 
 .btn {
@@ -40,17 +100,13 @@ tr.selected {
     margin-top: -30px;
 } */
 
-.row{
-    background-color: rgb(237, 243, 245);
-    /* width: 270px; */
-    /* height: fit-content; */
+
+button.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.col{
-    margin-top: 20px;
-    margin-left: 10px;
-    font-weight: bold;
-}
+
 
 /* .rounded{
     font-weight: bold;

@@ -1,13 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-
-import jwtDecode from 'jwt-decode';
-import { TokenPayload } from 'src/app/model/token-payload';
 import { AuthService } from 'src/app/services/auth.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',
@@ -21,7 +18,8 @@ export class ProfilesPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private dataService: DataServiceService
+    private dataService: DataServiceService,
+    private alertifyService: AlertifyService
   ) {}
 
   ngOnInit(): void {
@@ -41,11 +39,18 @@ export class ProfilesPageComponent implements OnInit {
     this.dataService.getUserListProfiles().subscribe({
       next: (profiles) => {
         this.userProfiles = profiles.data;
+        this.userProfiles = profiles.data.map((profile: CoreProfile) => {
+          console.log(`data:image/jpeg;base64,${profile.logo}`);
+          return {
+            ...profile,
+            logo: `data:image/jpeg;base64,${profile.logo}`,
+          };
+        });
       },
-      error: (error) => {
-        if (error.error === 'Token Expired') {
+      error: (err) => {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(error.error);
+          this.alertifyService.dialogAlert('Error');
         }
       },
     });

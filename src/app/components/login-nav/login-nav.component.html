@@ -5,7 +5,9 @@
     /></a>
   </div>
   <div class="navbar-right">
-    <span class="navbar-date">{{ loginInfo?.sysCreatedDate }}</span>
+    <span class="navbar-date"
+      >Last login :{{ loginInfo?.sysCreatedDate | date : "medium" }}</span
+    >
     <div class="navbar-dropdown">
       <button class="navbar-username">
         <img src="assets/images/cs.png" alt="Avatar" />

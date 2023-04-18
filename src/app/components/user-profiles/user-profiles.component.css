@@ -8,51 +8,9 @@
   background-color: rgb(230, 235, 243);
 }
 
-
-tr:nth-child(even):hover {
-  background-color: #e5e1e1c3;
-  
-
-}
-
-tr:nth-child(odd):hover {
-  background-color: #a19e9ec3
-}
-
-tr:nth-child(even) {
-  background-color: #fffafaae;
-  cursor: pointer;
-}
-tr:nth-child(odd) {
-  background-color: rgba(184, 181, 181, 0.634);
-  cursor: pointer;
-}
 tr.selected {
   background-color: #e0f2db;
 }
-tr.selected:hover {
-  background-color: #e0f2db;
-}
-
-.user-permissions-list table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.user-permissions-list th {
-  background-color: #025696;
-  color: white;
-  padding: 8px;
-  text-align: left;
-  /* border: 1px solid black; */
-}
-
-
-.user-permissions-list td {
-  padding: 8px;
-  text-align: left;
-}
-
 .add-remove-profile-btn {
   background-color: #1884d7;
   color: white;

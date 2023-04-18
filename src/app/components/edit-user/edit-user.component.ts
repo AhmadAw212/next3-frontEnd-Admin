@@ -55,6 +55,8 @@ export class EditUserComponent implements OnInit {
       data: {
         selectedUser: this.selectedUser,
       },
+      maxWidth: '100vw',
+      maxHeight: '100vh',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -70,6 +72,12 @@ export class EditUserComponent implements OnInit {
         const displayName = data.displayName!;
         this.userSearch(userName, displayName);
       },
+      error: (err) => {
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertify.dialogAlert('Error');
+        }
+      },
     });
   }
 
@@ -80,9 +88,9 @@ export class EditUserComponent implements OnInit {
         // console.log(this.users);
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });
@@ -96,9 +104,9 @@ export class EditUserComponent implements OnInit {
         this.userSearch(userId, '');
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });
@@ -115,9 +123,9 @@ export class EditUserComponent implements OnInit {
             console.log(res);
           },
           error: (err) => {
-            if (err.error === 'Token Expired') {
+            if (err.status === 401 || err.status === 500) {
               this.authService.logout();
-              console.log(err.error);
+              this.alertify.dialogAlert('Error');
             }
           },
         });
@@ -133,9 +141,9 @@ export class EditUserComponent implements OnInit {
         // console.log(language.data);
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertify.dialogAlert('Error');
         }
       },
     });
