@@ -39,6 +39,7 @@ import { ChangePassDialogComponent } from './components/change-pass-dialog/chang
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
 import { AddConfigDialogComponent } from './components/add-config-dialog/add-config-dialog.component';
+import { AddLanguageComponent } from './components/add-language/add-language.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { AddConfigDialogComponent } from './components/add-config-dialog/add-con
     ChangePassDialogComponent,
     CoreConfigurationComponent,
     AddConfigDialogComponent,
+    AddLanguageComponent,
   ],
   imports: [
     BrowserModule,

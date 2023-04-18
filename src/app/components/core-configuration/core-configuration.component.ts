@@ -4,6 +4,7 @@ import { ConfigData } from 'src/app/model/config-data';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddConfigDialogComponent } from '../add-config-dialog/add-config-dialog.component';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-core-configuration',
@@ -18,7 +19,8 @@ export class CoreConfigurationComponent {
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private authService: AuthService
   ) {}
 
   onTdBlur(
@@ -49,7 +51,10 @@ export class CoreConfigurationComponent {
           console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
         },
       });
     }
@@ -67,7 +72,10 @@ export class CoreConfigurationComponent {
             console.log(res);
           },
           error: (err) => {
-            console.log(err);
+            if (err.status === 401 || err.status === 500) {
+              this.authService.logout();
+              this.alertifyService.dialogAlert('Error');
+            }
           },
         });
       }
@@ -80,8 +88,11 @@ export class CoreConfigurationComponent {
         this.configData = data.data;
         console.log(data.data);
       },
-      error: (error) => {
-        console.log(error);
+      error: (err) => {
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }

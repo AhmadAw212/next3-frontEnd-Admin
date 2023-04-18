@@ -33,6 +33,8 @@
             <th>Id</th>
             <th>Config Value</th>
             <th>Description</th>
+            <th>sysCreatedDate</th>
+            <th>sysUpdatedDate</th>
             <th></th>
           </tr>
         </thead>
@@ -51,6 +53,8 @@
             >
               {{ config.description }}
             </td>
+            <td>{{ config.sysCreatedDate | date : "medium" }}</td>
+            <td>{{ config.sysUpdatedDate | date : "medium" }}</td>
             <td>
               <mat-icon (click)="deleteConfig(config.id!)">delete</mat-icon>
             </td>
