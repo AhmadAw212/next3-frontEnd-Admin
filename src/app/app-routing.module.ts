@@ -9,6 +9,7 @@ import { ProfilesPageComponent } from './components/profiles-page/profiles-page.
 import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
 import { AuthGuard } from './shared/auth.guard';
 import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
+import { AddLanguageComponent } from './components/add-language/add-language.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -40,6 +41,11 @@ const routes: Routes = [
       {
         path: 'coreConfig',
         component: CoreConfigurationComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addLanguage',
+        component: AddLanguageComponent,
         canActivate: [AuthGuard],
       },
     ],

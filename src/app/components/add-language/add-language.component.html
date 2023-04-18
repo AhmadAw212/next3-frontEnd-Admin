@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="user-inputs">
+      <form>
+        <label for="inputId">ID:</label>
+        <input type="text" id="inputId" name="id" />
+
+        <label for="inputDescription">Description:</label>
+        <input type="text" id="inputDescription" name="description" />
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="button">
+      <button type="button">Add Language</button>
+      <button type="button" style="margin-left: 8px">Update</button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>LOCALE</th>
+            <th>Resource Key</th>
+            <th>Resource value</th>
+            <th>sysUpdatedDate</th>
+            <th>sysCreatedDate</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td contenteditable="true"></td>
+            <td contenteditable="true"></td>
+            <td></td>
+            <td></td>
+            <td>
+              <!-- <mat-icon>delete</mat-icon> -->
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">No data to display</td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+</div>

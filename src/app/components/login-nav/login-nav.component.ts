@@ -36,7 +36,10 @@ export class LoginNavComponent {
         console.log(response);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }
