@@ -11,6 +11,7 @@ import { CoreProfile } from '../model/core-profile';
 import { CoreUser } from '../model/core-user';
 import { Profiles } from '../model/profiles';
 import { Role } from '../model/role';
+import { ConfigData } from '../model/config-data';
 
 @Injectable({
   providedIn: 'root',
@@ -161,5 +162,32 @@ export class DataServiceService {
 
   logout(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/logout`);
+  }
+
+  coreConfigSearch(id: string, desc: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/searchConfig?id=${id}&description=${desc}`
+    );
+  }
+
+  addConfig(configData: ConfigData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/addConfig`,
+      { ...configData }
+    );
+  }
+
+  editConfig(configData: ConfigData[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/editConfig`,
+      configData
+    );
+  }
+
+  deleteConfig(configData: string[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/deleteConfig`,
+      configData
+    );
   }
 }

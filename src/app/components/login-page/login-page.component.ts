@@ -30,15 +30,16 @@ export class LoginPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alertify: AlertifyService
   ) {
-    this.getLanguages();
-    this.Dico(this.defaultLang!);
     this.clearData();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getLanguages();
+    this.Dico(this.defaultLang!);
+  }
 
   login() {
-    if (this.userName && this.password) {
+    if (this.userName && this.password && this.languages) {
       this.authService.authenticate(this.userName, this.password);
     } else {
       this.alertify.error('Please enter your username and password');

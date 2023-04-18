@@ -79,7 +79,12 @@ tr:nth-child(odd) {
   padding: 5px 16px;
 }
 
-
+ button {
+  background-color: #1884d7;
+  color: white;
+  border: none;
+  padding: 5px 16px;
+}
 .user-inputs button:hover {
   background-color: #278bd8;
 }

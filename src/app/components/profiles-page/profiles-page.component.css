@@ -29,7 +29,7 @@
     cursor: pointer;
   }
   .profile-box h2 {
-    margin-top: 60px;
+    margin-top: 30px;
   }
   
   @media (max-width: 767px) {
