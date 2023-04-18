@@ -16,6 +16,8 @@ export class CoreConfigurationComponent {
   id: string = '';
   configData?: ConfigData[] = [];
   updatedConfigValues?: ConfigData[] = [];
+  page = 1;
+  pageSize = 10;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,

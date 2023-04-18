@@ -23,7 +23,6 @@ export class EditUserComponent implements OnInit {
   rolesSubscribtion?: Subscription;
   dico?: any = '';
   roleNames?: string[] = [];
-
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
