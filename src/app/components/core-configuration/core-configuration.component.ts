@@ -17,7 +17,7 @@ export class CoreConfigurationComponent implements OnInit {
   id: string = '';
   configData?: ConfigData[] = [];
   updatedConfigValues?: ConfigData[] = [];
-  
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -34,7 +34,7 @@ export class CoreConfigurationComponent implements OnInit {
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
-      this.reportDateTime = this.dateFormatService.reportDateTime;
+      // this.reportDateTime = this.dateFormatService.reportDateTime;
     });
   }
 
