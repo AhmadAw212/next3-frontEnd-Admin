@@ -2,13 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/model/api-response';
 import { AlertifyService } from 'src/app/services/alertify.service';
-// import { AuthService } from 'src/app/shared/auth.service';
-// import { CompanyBranchService } from 'src/app/shared/company-branch.service';
-
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
+import { BranchList } from 'src/app/model/branch-list';
 
 @Component({
   selector: 'app-add-user',
@@ -17,16 +15,25 @@ import { CompanyBranchList } from 'src/app/model/company-branch-list';
 })
 export class AddUserComponent implements OnInit {
   userForm: FormGroup;
-  // companyList?: CompanyBranchList;
-
-  branchList: any[] = [];
+  companyList?: CompanyBranchList[];
+  branchList?: BranchList[];
 
   ngOnInit(): void {
+    this.companyBranchService.getCompanyId();
     this.getCompanyId();
+    this.getBranchList();
   }
 
   getCompanyId() {
-    return this.companyBranchService.getCompanyId();
+    this.companyBranchService.company.subscribe(
+      () => (this.companyList = this.companyBranchService.companyList)
+    );
+  }
+
+  getBranchList() {
+    this.companyBranchService.branch.subscribe(
+      () => (this.branchList = this.companyBranchService.branchList)
+    );
   }
 
   constructor(

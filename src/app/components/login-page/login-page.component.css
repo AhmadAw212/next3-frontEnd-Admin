@@ -14,7 +14,7 @@
 .login-background {
   background-image: url("/assets/images/basicBg.jpg");
   background-size: cover;
-  background-position: center;
+  /* background-position: center; */
 }
 
   h2 {

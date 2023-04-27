@@ -2,13 +2,22 @@
 @import "~alertifyjs/build/css/alertify.min.css";
 @import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
 html, body { height: 100%; }
-body { margin: 0; font-family:'Times New Roman', Times, serif; }
+body { margin: 0; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif }
 
 .navbar-brand {
     color: white;
     font-weight: bold;
     /* margin-top: -15px; */
+}
+.form-tab {
+  border: 1px solid #ccc;
+  /* padding: 10px; */
+  background-color: #fff;
+  margin-top:25px;
+
 }
 
 tr.selected {
@@ -50,7 +59,53 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: rgba(184, 181, 181, 0.634);
 }
+.admin-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin: 20px;
+  /* width: auto; */
+  border: 1px solid gray
+}
+.admin-button {
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 8px;
+}
+.dialog {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
+.dialog label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.dialog input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.dialog button {
+  background-color: #1884d7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dialog button:hover {
+  background-color: #4da9f0;
+}
 .navbar {
     margin-top: 50px;
     margin-left: 2px;
@@ -85,7 +140,7 @@ tr:nth-child(odd) {
   border: none;
   padding: 5px 16px;
 }
-.user-inputs button:hover {
+ button:hover {
   background-color: #278bd8;
 }
 .Background {

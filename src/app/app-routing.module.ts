@@ -9,10 +9,13 @@ import { ProfilesPageComponent } from './components/profiles-page/profiles-page.
 import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
 import { AuthGuard } from './shared/auth.guard';
 import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
+import { LanguageConfigComponent } from './components/language-config/language-config.component';
+import { CoreDocumentComponent } from './components/core-document/core-document.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: LoginPageComponent },
+  // { path: '**', redirectTo: 'login', pathMatch: 'full' },
 
   {
     path: 'profiles-main',
@@ -40,6 +43,16 @@ const routes: Routes = [
       {
         path: 'coreConfig',
         component: CoreConfigurationComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'languageConfig',
+        component: LanguageConfigComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'coreDocument',
+        component: CoreDocumentComponent,
         canActivate: [AuthGuard],
       },
     ],

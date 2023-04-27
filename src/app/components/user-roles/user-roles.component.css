@@ -1,18 +1,17 @@
 
 .role-list {
-    width:680px;
+    width:780px;
     height: auto;
     float: left;
     margin: 15px;
     padding: 15px;
     border: 1px solid #ccc;
-
     background-color: rgb(230, 235, 243);
   }
 
   .search-container {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     margin-bottom: 10px;
   }
   

@@ -6,7 +6,9 @@
   </div>
   <div class="navbar-right">
     <span class="navbar-date"
-      >Last login :{{ loginInfo?.sysCreatedDate | date : "medium" }}</span
+      >Last login :{{
+        loginInfo?.sysCreatedDate | date : reportDateTimeFormat
+      }}</span
     >
     <div class="navbar-dropdown">
       <button class="navbar-username">

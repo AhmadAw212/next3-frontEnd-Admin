@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfigData } from 'src/app/model/config-data';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddConfigDialogComponent } from '../add-config-dialog/add-config-dialog.component';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 
 @Component({
   selector: 'app-core-configuration',
   templateUrl: './core-configuration.component.html',
   styleUrls: ['./core-configuration.component.css'],
 })
-export class CoreConfigurationComponent {
+export class CoreConfigurationComponent implements OnInit {
   description: string = '';
   id: string = '';
   configData?: ConfigData[] = [];
@@ -19,8 +21,22 @@ export class CoreConfigurationComponent {
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private authService: AuthService,
+    private dateFormatService: DateFormatterService
   ) {}
+
+  ngOnInit(): void {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
+  }
+
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+      this.reportDateTime = this.dateFormatService.reportDateTime;
+    });
+  }
 
   onTdBlur(
     event: FocusEvent,
@@ -46,11 +62,14 @@ export class CoreConfigurationComponent {
     if (this.updatedConfigValues?.length) {
       this.dataService.editConfig(this.updatedConfigValues).subscribe({
         next: (res) => {
-          this.alertifyService.dialogAlert(res.title!);
+          this.alertifyService.success(res.title!);
           console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
         },
       });
     }
@@ -63,12 +82,16 @@ export class CoreConfigurationComponent {
         const config = [configId];
         this.dataService.deleteConfig(config).subscribe({
           next: (res) => {
+            ``;
             this.alertifyService.dialogAlert(res.title!);
             this.coreConfigSearch();
             console.log(res);
           },
           error: (err) => {
-            console.log(err);
+            if (err.status === 401 || err.status === 500) {
+              this.authService.logout();
+              this.alertifyService.dialogAlert('Error');
+            }
           },
         });
       }
@@ -79,10 +102,13 @@ export class CoreConfigurationComponent {
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {
         this.configData = data.data;
-        console.log(data.data);
+        console.log(this.configData);
       },
-      error: (error) => {
-        console.log(error);
+      error: (err) => {
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }

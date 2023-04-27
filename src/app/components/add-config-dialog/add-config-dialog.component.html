@@ -1,12 +1,17 @@
 <div class="dialog">
-  <label for="id">ID:</label>
-  <input type="text" id="id" [(ngModel)]="configId" />
+  <form (ngSubmit)="addConfiguration()">
+    <label for="id">ID:</label>
+    <input type="text" id="id" [(ngModel)]="configId" name="id" />
 
-  <label for="configValue">Config Value:</label>
-  <input type="text" id="configValue" [(ngModel)]="configValue" />
+    <label for="configValue">Config Value:</label>
+    <input type="text" [(ngModel)]="configValue" name="configValue" />
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" [(ngModel)]="configDescription" />
-
-  <button (click)="addConfiguration()">Save</button>
+    <label for="description">Description:</label>
+    <input
+      type="text"
+      [(ngModel)]="configDescription"
+      name="configDescription "
+    />
+    <button type="submit">Save</button>
+  </form>
 </div>
