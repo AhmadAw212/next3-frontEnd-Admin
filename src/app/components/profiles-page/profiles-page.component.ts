@@ -38,7 +38,7 @@ export class ProfilesPageComponent implements OnInit {
   getUserProfiles() {
     this.dataService.getUserListProfiles().subscribe({
       next: (profiles) => {
-        this.userProfiles = profiles.data;
+        // this.userProfiles = profiles.data;
         this.userProfiles = profiles.data.map((profile: CoreProfile) => {
           // console.log(`data:image/jpeg;base64,${profile.logo}`);
           return {

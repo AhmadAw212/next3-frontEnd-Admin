@@ -29,11 +29,10 @@ export class LoginPageComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private alertify: AlertifyService
-  ) {
-    this.clearData();
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.clearData();
     this.getLanguages();
     this.Dico(this.defaultLang!);
   }

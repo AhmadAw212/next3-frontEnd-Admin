@@ -1,22 +1,16 @@
 
-.form-container {
+/* .form-container {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px ;
     width: 1100px
-  }
+  } */
 
 
   tr.selected {
     background-color: #e0f2db;
   }
   
-  .form-tab {
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #fff;
-    margin-top:25px 
-  }
 
    .table-btn{
     background-color: #1884d7;
@@ -26,12 +20,12 @@
     /* margin: 1px; */
   }
   
-   .form-tab h3 {
+   /* .form-tab h3 {
     display: block;
     border:  1px solid #ccc;
 
   } 
- 
+  */
   @media (min-width: 768px) {
     .nav-link-edit {
       display: inline-block;

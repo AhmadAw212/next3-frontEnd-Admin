@@ -41,6 +41,8 @@ import { CoreConfigurationComponent } from './components/core-configuration/core
 import { AddConfigDialogComponent } from './components/add-config-dialog/add-config-dialog.component';
 import { LanguageConfigComponent } from './components/language-config/language-config.component';
 import { AddLanguageComponent } from './components/add-language/add-language.component';
+import { CoreDocumentComponent } from './components/core-document/core-document.component';
+import { AddDocumentDialogComponent } from './components/add-document-dialog/add-document-dialog.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { AddLanguageComponent } from './components/add-language/add-language.com
     AddConfigDialogComponent,
     LanguageConfigComponent,
     AddLanguageComponent,
+    CoreDocumentComponent,
+    AddDocumentDialogComponent,
   ],
   imports: [
     BrowserModule,

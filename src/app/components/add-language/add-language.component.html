@@ -1,13 +1,17 @@
 <div class="dialog">
-  <form>
+  <form (ngSubmit)="addResource()">
     <label for="id">LOCALE:</label>
-    <input type="text" id="locale" name="locale" />
-
+    <!-- <input type="text" id="locale" name="locale" /> -->
+    <ng-select appendTo="body" [(ngModel)]="locale" name="locale">
+      <ng-option *ngFor="let lang of languages" [value]="lang.key">{{
+        lang.value
+      }}</ng-option>
+    </ng-select>
     <label for="resourceKey"> Resource Key:</label>
-    <input type="text" name="resourceKey" />
+    <input type="text" name="resourceKey" [(ngModel)]="key" />
 
     <label for="resourceValue"> Resource value:</label>
-    <input type="text" name="resourceValue " />
+    <input type="text" name="resourceValue " [(ngModel)]="value" />
     <button type="submit">Save</button>
   </form>
 </div>

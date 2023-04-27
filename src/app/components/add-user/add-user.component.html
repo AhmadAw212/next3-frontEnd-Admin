@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" style="border-style: none">
+<!-- <ul class="nav nav-tabs" style="border-style: none">
   <li class="nav-item">
     <a
       class="nav-link active"
@@ -8,9 +8,9 @@
       >Add New User</a
     >
   </li>
-</ul>
+</ul> -->
 <div class="form-tab">
-  <div class="form-container">
+  <div class="admin-container">
     <form [formGroup]="userForm" (ngSubmit)="addUser()">
       <div class="form-row">
         <div class="form-group">
@@ -195,7 +195,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="phone">Survey Fee Limit:</label>
+          <label for="userLimitSurveyFees">Survey Fee Limit:</label>
           <input
             type="text"
             id="userLimitSurveyFees"
@@ -222,7 +222,9 @@
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label for="phone">Exceed Percentage Limit:</label>
+          <label for="userLimitExceedPercentage"
+            >Exceed Percentage Limit:</label
+          >
           <input
             type="text"
             id="userLimitExceedPercentage"
@@ -249,7 +251,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="phone">Lawyer Fee Limit:</label>
+          <label for="userLimitLawyerFees">Lawyer Fee Limit:</label>
           <input
             type="text"
             id="userLimitLawyerFees"
@@ -278,13 +280,12 @@
         <div class="form-group">
           <label for="companyId">Company ID:</label>
           <select
+            #companyIdSelect
             formControlName="companyId"
-            (change)="
-              companyBranchService.getBranchId(userForm.get('companyId')?.value)
-            "
+            (change)="companyBranchService.getBranchId(companyIdSelect.value)"
           >
             <option
-              *ngFor="let company of companyBranchService.companyList"
+              *ngFor="let company of companyList"
               [value]="company.companyId"
             >
               {{ company.companyName }}
@@ -305,10 +306,7 @@
         <div class="form-group">
           <label for="branchId">Branch ID:</label>
           <select formControlName="branchId">
-            <option
-              *ngFor="let branch of companyBranchService.branchList"
-              [value]="branch.code"
-            >
+            <option *ngFor="let branch of branchList" [value]="branch.code">
               {{ branch.description }}
             </option>
           </select>

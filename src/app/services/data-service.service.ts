@@ -12,6 +12,8 @@ import { CoreUser } from '../model/core-user';
 import { Profiles } from '../model/profiles';
 import { Role } from '../model/role';
 import { ConfigData } from '../model/config-data';
+import { ResourceBundle } from '../model/resource-bundle';
+import { CoreDocument } from '../model/core-document';
 
 @Injectable({
   providedIn: 'root',
@@ -188,6 +190,53 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/coreConfiguration/deleteConfig`,
       configData
+    );
+  }
+
+  resourceBundleSearch(key: string, value: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/resource-bundle/search?key=${key}&value=${value}`
+    );
+  }
+
+  addResouce(resourceData: ResourceBundle) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/resource-bundle/new`,
+      resourceData
+    );
+  }
+
+  deleteResource(id: string) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/resource-bundle/delete?id=${id}`,
+      id
+    );
+  }
+
+  editResource(resourceData: ResourceBundle[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/resource-bundle/update`,
+      resourceData
+    );
+  }
+
+  coreDocSearch(fileName: string, path: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/core-document/search?fileName=${fileName}&path=${path}`
+    );
+  }
+
+  addDocument(newDocument: CoreDocument) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-document/new`,
+      newDocument
+    );
+  }
+
+  deleteDocument(id: string) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-document/delete?id=${id}`,
+      id
     );
   }
 }

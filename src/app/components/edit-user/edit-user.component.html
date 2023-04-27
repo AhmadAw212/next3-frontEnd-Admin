@@ -1,5 +1,5 @@
-<ul class="nav nav-tabs">
-  <!-- <li class="nav-item">
+<!-- <ul class="nav nav-tabs"> -->
+<!-- <li class="nav-item">
     <a
       class="nav-link active"
       data-toggle="tab"
@@ -8,9 +8,9 @@
       >Edit User Permissions</a
     >
   </li> -->
-
-  <div class="form-tab">
-    <div class="form-container">
+<div class="form-tab">
+  <div class="admin-container">
+    <div class="row">
       <div class="user-inputs">
         <form
           (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
@@ -105,8 +105,10 @@
         </ng-template>
       </table>
     </div>
-    <div class="profile-list-container" *ngIf="showProfileList">
-      <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
-    </div>
   </div>
-</ul>
+</div>
+<div *ngIf="showProfileList">
+  <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+</div>
+
+<!-- </ul> -->
