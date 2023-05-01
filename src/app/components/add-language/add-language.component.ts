@@ -44,14 +44,18 @@ export class AddLanguageComponent implements OnInit {
     };
     this.dataService.addResouce(Resource).subscribe({
       next: (res) => {
-        this.alertifyService.dialogAlert(res.message!);
-        this.dialogRef.close();
-        // console.log(res);
+        if (res.statusCode === 201) {
+          this.alertifyService.success(res.message!);
+          this.dialogRef.close();
+          console.log(res);
+        }
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
+        } else if (err.status === 409) {
+          this.alertifyService.error('ID exist');
         }
       },
     });

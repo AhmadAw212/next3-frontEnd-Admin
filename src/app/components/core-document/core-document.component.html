@@ -33,6 +33,7 @@
               <th>File Name</th>
               <th>Path</th>
               <th style="width: 150px">Content-Type</th>
+              <th>Content</th>
               <th>sysCreatedDate</th>
               <th>sysCreatedBy</th>
               <th>sysUpdatedDate</th>
@@ -40,13 +41,24 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="docData?.length! > 0; else noData">
             <tr *ngFor="let document of docData">
               <td>{{ document.id }}</td>
               <td>{{ document.fileName }}</td>
               <td contenteditable="true">{{ document.filePath }}</td>
               <td contenteditable="true" style="max-width: 200px">
                 {{ document.contentType }}
+              </td>
+              <td
+                *ngIf="isImage(document.contentType!)"
+                (click)="openImageDialog(document)"
+              >
+                <img [src]="document.content" class="document-img" />
+              </td>
+              <td *ngIf="!isImage(document.contentType!)">
+                <a [href]="document.content" target="_blank">{{
+                  document.fileName
+                }}</a>
               </td>
               <td>{{ document.createdDate | date : reportDateTimeFormat }}</td>
               <td>{{ document.createdBy }}</td>

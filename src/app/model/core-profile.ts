@@ -5,5 +5,5 @@ export interface CoreProfile {
   description?: string;
   name?: string;
   userCode?: string;
-  logo: any;
+  logo: File;
 }

@@ -1,0 +1,17 @@
+<div class="dialog">
+  <form (ngSubmit)="addNewDomain()">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" [(ngModel)]="id" />
+
+    <label for="id">Code:</label>
+    <input type="text" id="code" name="code" [(ngModel)]="code" />
+
+    <label for="description">description:</label>
+    <input type="text" name="description" [(ngModel)]="description" />
+
+    <label for="preference_code">preference_code:</label>
+    <input type="text" name="preference_code" [(ngModel)]="preferenceCode" />
+
+    <button type="submit">Save</button>
+  </form>
+</div>

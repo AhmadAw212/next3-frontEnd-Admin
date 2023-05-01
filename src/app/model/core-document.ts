@@ -4,6 +4,7 @@ export interface CoreDocument {
   contentType?: string;
   fileName?: string;
   filePath?: string;
+  content?: File;
   createdDate?: Date;
   createdBy?: string;
   updateDate?: Date;

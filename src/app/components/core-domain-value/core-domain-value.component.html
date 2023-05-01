@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="user-inputs">
+    <form>
+      <label for="code">Code:</label>
+      <input type="text" id="code" name="code" />
+
+      <label for="inputDescription">Description:</label>
+      <input type="text" id="value" name="value" />
+
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <div class="admin-button">
+    <button type="button" (click)="openAddDomainValueDialog()">
+      Add Domain Value
+    </button>
+    <button
+      type="button"
+      style="margin-left: 8px"
+      (click)="updateDomainValue()"
+    >
+      Update
+    </button>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-md-12">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>CODE</th>
+          <th>DESCRIPTION</th>
+          <th>VAL1</th>
+          <th>VAL2</th>
+          <th>VAL3</th>
+          <th>VAL4</th>
+          <th>VAL5</th>
+          <th>VAL6</th>
+          <th>VAL7</th>
+          <th>VAL8</th>
+          <th>VAL9</th>
+          <th>VAL10</th>
+          <th>CORE_DOMAIN_ID</th>
+          <th>SYS_CREATED_DATE</th>
+          <th>SYS_CREATED_BY</th>
+          <th>SYS_UPDATED_DATE</th>
+          <th>SYS_UPDATED_BY</th>
+          <th>sysActiveFlag</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="domainValues?.length! > 0; else noData">
+        <tr *ngFor="let domain of domainValues">
+          <td>{{ domain.id }}</td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'code')">
+            {{ domain.code }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, domain, 'description')"
+          >
+            {{ domain.description }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val1')">
+            {{ domain.val1 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val2')">
+            {{ domain.val2 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val3')">
+            {{ domain.val3 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val4')">
+            {{ domain.val4 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val5')">
+            {{ domain.val5 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val6')">
+            {{ domain.val6 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val7')">
+            {{ domain.val7 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val8')">
+            {{ domain.val8 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val9')">
+            {{ domain.val9 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val10')">
+            {{ domain.val10 }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, domain, 'coreDomainId')"
+          >
+            {{ domain.coreDomainId }}
+          </td>
+          <td>{{ domain.sysCreatedDate }}</td>
+          <td>{{ domain.sysCreatedBy }}</td>
+          <td>{{ domain.sysUpdatedDate }}</td>
+          <td>{{ domain.sysUpdatedBy }}</td>
+
+          <td>
+            <input
+              type="checkbox"
+              name="active"
+              id="active"
+              [(ngModel)]="domain.sysActiveFlag"
+              (change)="onCheckboxChange(domain)"
+            />
+          </td>
+          <td>
+            <mat-icon (click)="deleteDomainValue(domain.id!)">delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">No data to display</td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</div>

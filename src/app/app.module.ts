@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { EditUserDialogComponent } from './components/edit-user-dialog/edit-user-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
@@ -43,6 +43,14 @@ import { LanguageConfigComponent } from './components/language-config/language-c
 import { AddLanguageComponent } from './components/add-language/add-language.component';
 import { CoreDocumentComponent } from './components/core-document/core-document.component';
 import { AddDocumentDialogComponent } from './components/add-document-dialog/add-document-dialog.component';
+import { CoreDomainComponent } from './components/core-domain/core-domain.component';
+import { AddDomainDialogComponent } from './components/add-domain-dialog/add-domain-dialog.component';
+import { CoreDomainValueComponent } from './components/core-domain-value/core-domain-value.component';
+
+import { AddDomainValueDialogComponent } from './components/add-domain-value-dialog/add-domain-value-dialog.component';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
+import { CarsBrandComponent } from './components/cars-brand/cars-brand.component';
+import { AddCarBrandDialogComponent } from './components/add-car-brand-dialog/add-car-brand-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +76,14 @@ import { AddDocumentDialogComponent } from './components/add-document-dialog/add
     AddLanguageComponent,
     CoreDocumentComponent,
     AddDocumentDialogComponent,
+    CoreDomainComponent,
+    AddDomainDialogComponent,
+    CoreDomainValueComponent,
+
+    AddDomainValueDialogComponent,
+      ImageDialogComponent,
+      CarsBrandComponent,
+      AddCarBrandDialogComponent,
   ],
   imports: [
     BrowserModule,

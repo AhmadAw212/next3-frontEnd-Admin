@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Image Preview/Edit</h2>
+<div>
+  <img
+    [src]="document.content"
+    style="
+      max-width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      margin-left: 50px;
+    "
+  />
+</div>
+<div mat-dialog-content>
+  <input type="file" matInput class="mat-input-element file-input" />
+</div>
+<div mat-dialog-actions>
+  <button mat-button>Cancel</button>
+  <button mat-raised-button color="primary">Save</button>
+</div>

@@ -14,11 +14,10 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 export class AddDocumentDialogComponent implements OnInit {
   id?: string;
   fileName?: string;
-  path?: string;
+  filePath?: string;
   contentType?: string;
   company?: string;
-  selectedFile?: File;
-  file?: string;
+  file?: File;
   companyList?: CompanyBranchList[];
   constructor(
     private dataService: DataServiceService,
@@ -36,30 +35,30 @@ export class AddDocumentDialogComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    this.selectedFile = file;
-    this.contentType = this.selectedFile?.type;
-    this.fileName = this.selectedFile?.name;
-    this.path = event.target.value;
-    console.log(this.selectedFile);
+    this.file = file;
+    this.contentType = file.type;
+    this.fileName = file.name;
+    this.filePath = event.target.value;
   }
-
   addDocument() {
-    const newDocument: CoreDocument = {
-      id: this.id,
-      fileName: this.fileName,
-      contentType: this.contentType,
-      filePath: this.path,
-      company: this.company,
-    };
-    this.dataService.addDocument(newDocument).subscribe({
-      next: (res) => {
-        this.alertifyService.success(res.message!);
-        this.dialogRef.close();
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.dataService
+      .addDocument(
+        this.id!,
+        this.fileName!,
+        this.filePath!,
+        this.contentType!,
+        this.company!,
+        this.file!
+      )
+      .subscribe({
+        next: (res) => {
+          this.dialogRef.close();
+          this.alertifyService.success(res.message!);
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

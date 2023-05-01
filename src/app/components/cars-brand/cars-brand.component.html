@@ -1,0 +1,73 @@
+<div class="form-tab">
+  <div class="admin-container">
+    <div class="row">
+      <div class="user-inputs">
+        <form (ngSubmit)="carsBrandSearch()">
+          <label for="code">Code:</label>
+          <input type="text" id="code" name="code" [(ngModel)]="code" />
+
+          <label for="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            [(ngModel)]="description"
+          />
+
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div class="admin-button">
+        <button type="button" (click)="openAddCarBrandDialog()">Add Car</button>
+        <button type="button" style="margin-left: 8px">Update Car</button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <th>Brand Id</th>
+              <th>Brand Code</th>
+              <th>Brand Description</th>
+              <th>Car Logo</th>
+              <th>sysCreatedDate</th>
+              <th>sysCreatedBy</th>
+              <th>sysUpdatedDate</th>
+              <th>sysUpdatedBy</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cars of carsBrandData">
+              <td>{{ cars.carBrandId }}</td>
+              <td contenteditable="true">{{ cars.carBrandCode }}</td>
+              <td contenteditable="true">{{ cars.carBrandDescription }}</td>
+              <td>
+                <img
+                  [src]="cars.content"
+                  style="max-height: 70px; max-width: 70px"
+                />
+              </td>
+              <td>{{ cars.sysCreatedDate }}</td>
+              <td>{{ cars.sysCreatedBy }}</td>
+              <td>{{ cars.sysUpdatedDate }}</td>
+              <td>{{ cars.sysUpdatedBy }}</td>
+
+              <td>
+                <mat-icon (click)="deleteCarBrand(cars.carBrandCode!)"
+                  >delete</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">No data to display</td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

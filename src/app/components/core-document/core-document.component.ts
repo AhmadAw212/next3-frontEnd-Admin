@@ -5,6 +5,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddDocumentDialogComponent } from '../add-document-dialog/add-document-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { CoreProfile } from 'src/app/model/core-profile';
+import { ImageDialogComponent } from 'src/app/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-core-document',
@@ -14,9 +16,10 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class CoreDocumentComponent implements OnInit {
   fileName: string = '';
   path: string = '';
-  docData?: CoreDocument[];
+  docData?: CoreDocument[] = [];
   reportDateTimeFormat?: string;
   updatedDocValues?: CoreDocument[] = [];
+  coreDocument?: CoreDocument;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -29,36 +32,25 @@ export class CoreDocumentComponent implements OnInit {
     this.dateFormatterService();
   }
 
-  // onTdBlur(
-  //   event: FocusEvent,
-  //   document: CoreDocument,
-  //   property: 'configValue' | 'description'
-  // ) {
-  //   const tdElement = event.target as HTMLTableCellElement;
-  //   const oldValue = document[property];
-  //   const newValue = tdElement.innerText.trim();
-
-  //   if (oldValue !== newValue) {
-  //     document[property] = newValue;
-  //     this.updatedDocValues?.push({
-  //       id: config.id,
-  //       configValue: config.configValue,
-  //       description: config.description,
-  //     });
-  //     console.log(this.updatedConfigValues);
-  //   }
-  // }
-
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
+  isImage(contentType: string): boolean {
+    return contentType.startsWith('image/');
+  }
   coreDocSearch() {
     this.dataService.coreDocSearch(this.fileName, this.path).subscribe({
       next: (res) => {
         this.docData = res.data;
-        console.log(res);
+        this.docData = res.data.map((res: CoreDocument) => {
+          // console.log(`data:image/jpeg;base64,${res.content}`);
+          return {
+            ...res,
+            content: `data:image/jpeg;base64,${res.content}`,
+          };
+        });
       },
       error: (err) => {
         console.log(err);
@@ -86,5 +78,9 @@ export class CoreDocumentComponent implements OnInit {
 
   openCoreDocDialog() {
     this.dialog.open(AddDocumentDialogComponent);
+  }
+
+  openImageDialog(document: CoreDocument) {
+    this.dialog.open(ImageDialogComponent, { data: document });
   }
 }

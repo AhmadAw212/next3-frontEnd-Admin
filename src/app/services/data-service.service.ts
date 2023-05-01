@@ -1,7 +1,9 @@
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpEvent,
   HttpHeaders,
+  HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, Subject, throwError } from 'rxjs';
@@ -14,6 +16,8 @@ import { Role } from '../model/role';
 import { ConfigData } from '../model/config-data';
 import { ResourceBundle } from '../model/resource-bundle';
 import { CoreDocument } from '../model/core-document';
+import { CoreDomain } from '../model/core-domain';
+import { CoreDomainValue } from '../model/core-domain-value';
 
 @Injectable({
   providedIn: 'root',
@@ -226,17 +230,111 @@ export class DataServiceService {
     );
   }
 
-  addDocument(newDocument: CoreDocument) {
-    return this.http.post<ApiResponse>(
-      `${this.userUrl}/core-document/new`,
-      newDocument
-    );
+  addDocument(
+    id: string,
+    fileName: string,
+    filePath: string,
+    contentType: string,
+    company: string,
+    file: File
+  ): Observable<ApiResponse> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const url = `${
+      this.userUrl
+    }/core-document/new?id=${id}&fileName=${encodeURIComponent(
+      fileName
+    )}&filePath=${encodeURIComponent(
+      filePath
+    )}&contentType=${contentType}&company=${company}`;
+
+    return this.http.post<ApiResponse>(url, formData);
   }
 
   deleteDocument(id: string) {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/core-document/delete?id=${id}`,
       id
+    );
+  }
+
+  coreDomainSearch(code: string, description: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/core-domain/search?code=${code}&description=${description}`
+    );
+  }
+
+  addDomain(newDomain: CoreDomain) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-domain/new`,
+      newDomain
+    );
+  }
+
+  deleteDomain(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/core-domain/delete?id=${id}`
+    );
+  }
+
+  updateDomain(domainData: CoreDomain[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-domain/update`,
+      domainData
+    );
+  }
+
+  coreDomainValue(id: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/core-domain-value/${id}`
+    );
+  }
+
+  addDomainValue(id: string, domainValue: CoreDomainValue) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-domain-value/${id}/new`,
+      domainValue
+    );
+  }
+
+  deleteDomainValue(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/core-domain-value/delete?id=${id}`
+    );
+  }
+
+  updateCoreDomainValue(
+    domainValue: CoreDomainValue[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/core-domain-value/update`,
+      domainValue
+    );
+  }
+
+  carsBrandSearch(code: string, description: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/carBrand/searchCarBrand?code=${code}&description=${description}`
+    );
+  }
+
+  addCarBrand(
+    code: string,
+    description: string,
+    file: File
+  ): Observable<ApiResponse> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const url = `${this.userUrl}/carBrand/saveCarBrand?carBrandCode=${code}&carBrandDescription=${description}`;
+
+    return this.http.post<ApiResponse>(url, formData);
+  }
+
+  deleteCarBrand(code: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/carBrand/deleteBrand?carBrandCode=${code}`
     );
   }
 }

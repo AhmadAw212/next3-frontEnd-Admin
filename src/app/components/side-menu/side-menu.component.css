@@ -6,11 +6,16 @@
   /* .sidenav {
     width: 260px;
   } */
-
+  @media only screen and (max-width: 600px) {
+    .mat-sidenav {
+      /* display: none; */
+      width: 50px;
+    }
+  }
 .mat-sidenav {
   width: 280px;
   border-style: none;
-  height: auto;
+  /* height: auto; */
 }
 .row{
   background-color: rgb(237, 243, 245);
