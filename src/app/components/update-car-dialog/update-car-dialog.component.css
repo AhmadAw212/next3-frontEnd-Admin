@@ -1,0 +1,96 @@
+.dialog-container {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  width: 400px;
+  height: auto;
+}
+
+.dialog-header {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.dialog-body {
+  padding: 20px;
+}
+
+.logo-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.car-logo {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+.upload-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-button {
+  background-color: #0077cc;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 20px;
+  margin-right: 10px;
+}
+
+.upload-button:hover {
+  background-color: #005fa3;
+}
+
+#logo-upload-input {
+  display: none;
+}
+
+form > * {
+  margin-bottom: 10px;
+}
+
+input {
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+}
+
+.dialog-footer {
+  background-color: #f2f2f2;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.dialog-button {
+  background-color: #0077cc;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 10px 20px;
+}
+
+.dialog-button:hover:not([type="submit"]) {
+  background-color: #ccc;
+  color: #fff;
+}
+
+.dialog-button:hover {
+  background-color: #005fa3;
+}

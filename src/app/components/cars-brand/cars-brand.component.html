@@ -19,7 +19,7 @@
       </div>
       <div class="admin-button">
         <button type="button" (click)="openAddCarBrandDialog()">Add Car</button>
-        <button type="button" style="margin-left: 8px">Update Car</button>
+        <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
       </div>
     </div>
     <div class="row mt-4">
@@ -47,6 +47,8 @@
                 <img
                   [src]="cars.content"
                   style="max-height: 70px; max-width: 70px"
+                  class="car-logo"
+                  (click)="openPreviewImageDialog(cars)"
                 />
               </td>
               <td>{{ cars.sysCreatedDate }}</td>

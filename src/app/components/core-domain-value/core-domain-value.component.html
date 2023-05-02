@@ -1,11 +1,11 @@
 <div class="row">
   <div class="user-inputs">
-    <form>
+    <form (ngSubmit)="domainValueSearch()">
       <label for="code">Code:</label>
-      <input type="text" id="code" name="code" />
+      <input type="text" id="code" name="code" [(ngModel)]="code" />
 
       <label for="inputDescription">Description:</label>
-      <input type="text" id="value" name="value" />
+      <input type="text" id="value" name="value" [(ngModel)]="description" />
 
       <button type="submit">Search</button>
     </form>

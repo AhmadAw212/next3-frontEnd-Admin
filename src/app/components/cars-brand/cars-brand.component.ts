@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarBrandDialogComponent } from '../add-car-brand-dialog/add-car-brand-dialog.component';
+import { UpdateCarDialogComponent } from '../update-car-dialog/update-car-dialog.component';
 
 @Component({
   selector: 'app-cars-brand',
@@ -16,6 +17,7 @@ export class CarsBrandComponent {
   description: string = '';
   code: string = '';
   carsBrandData?: CarsBrand[];
+  file?: File;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -65,7 +67,29 @@ export class CarsBrandComponent {
     );
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    this.file = file;
+  }
+  updateCarBrand() {
+    this.dataService
+      .addCarBrand(this.code!, this.description!, this.file!)
+      .subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
   openAddCarBrandDialog() {
     this.dialog.open(AddCarBrandDialogComponent);
+  }
+
+  openPreviewImageDialog(car: CarsBrand) {
+    const dialogRef = this.dialog.open(UpdateCarDialogComponent, { data: car });
   }
 }

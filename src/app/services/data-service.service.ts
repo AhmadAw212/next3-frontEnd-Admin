@@ -18,6 +18,7 @@ import { ResourceBundle } from '../model/resource-bundle';
 import { CoreDocument } from '../model/core-document';
 import { CoreDomain } from '../model/core-domain';
 import { CoreDomainValue } from '../model/core-domain-value';
+import { CarsBrand } from '../model/cars-brand';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
+  getCarsBrand = new Subject<CarsBrand>();
   constructor(private http: HttpClient) {}
 
   validateUser(name: string, password: string): Observable<ApiResponse> {
@@ -288,6 +290,12 @@ export class DataServiceService {
   coreDomainValue(id: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/core-domain-value/${id}`
+    );
+  }
+
+  coreDomainValueSearch(id: string, code: string, description: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/core-domain-value/${id}/search?code=${code}&description=${description}`
     );
   }
 

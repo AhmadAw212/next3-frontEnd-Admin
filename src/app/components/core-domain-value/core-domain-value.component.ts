@@ -16,12 +16,29 @@ export class CoreDomainValueComponent {
   @Input() domainValues?: CoreDomainValue[];
   @Input() domain?: CoreDomain;
   updatedDomainValues?: CoreDomainValue[] = [];
+  code: string = '';
+  description: string = '';
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService
   ) {}
+
+  domainValueSearch() {
+    const id = this.domain?.id!;
+    this.dataService
+      .coreDomainValueSearch(id, this.code!, this.description!)
+      .subscribe({
+        next: (res) => {
+          this.domainValues = res.data;
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
 
   onTdBlur(
     event: FocusEvent,

@@ -51,6 +51,7 @@ import { AddDomainValueDialogComponent } from './components/add-domain-value-dia
 import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 import { CarsBrandComponent } from './components/cars-brand/cars-brand.component';
 import { AddCarBrandDialogComponent } from './components/add-car-brand-dialog/add-car-brand-dialog.component';
+import { UpdateCarDialogComponent } from './components/update-car-dialog/update-car-dialog.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { AddCarBrandDialogComponent } from './components/add-car-brand-dialog/ad
       ImageDialogComponent,
       CarsBrandComponent,
       AddCarBrandDialogComponent,
+      UpdateCarDialogComponent,
   ],
   imports: [
     BrowserModule,

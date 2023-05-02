@@ -1,0 +1,10 @@
+.car-logo {
+  max-height: 70px;
+  max-width: 70px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.car-logo:hover {
+  transform: scale(1.2);
+}
