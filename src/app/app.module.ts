@@ -52,6 +52,12 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 import { CarsBrandComponent } from './components/cars-brand/cars-brand.component';
 import { AddCarBrandDialogComponent } from './components/add-car-brand-dialog/add-car-brand-dialog.component';
 import { UpdateCarDialogComponent } from './components/update-car-dialog/update-car-dialog.component';
+import { CarTrademarkComponent } from './components/car-trademark/car-trademark.component';
+import { AddTrademarkDialogComponent } from './components/add-trademark-dialog/add-trademark-dialog.component';
+import { UpdateTrademarkDialogComponent } from './components/update-trademark-dialog/update-trademark-dialog.component';
+import { CarShapeComponent } from './components/car-shape/car-shape.component';
+import { AddShapeDialogComponent } from './components/add-shape-dialog/add-shape-dialog.component';
+import { UpdateShapeDialogComponent } from './components/update-shape-dialog/update-shape-dialog.component';
 
 @NgModule({
   declarations: [
@@ -82,10 +88,16 @@ import { UpdateCarDialogComponent } from './components/update-car-dialog/update-
     CoreDomainValueComponent,
 
     AddDomainValueDialogComponent,
-      ImageDialogComponent,
-      CarsBrandComponent,
-      AddCarBrandDialogComponent,
-      UpdateCarDialogComponent,
+    ImageDialogComponent,
+    CarsBrandComponent,
+    AddCarBrandDialogComponent,
+    UpdateCarDialogComponent,
+    CarTrademarkComponent,
+    AddTrademarkDialogComponent,
+    UpdateTrademarkDialogComponent,
+    CarShapeComponent,
+    AddShapeDialogComponent,
+    UpdateShapeDialogComponent,
   ],
   imports: [
     BrowserModule,

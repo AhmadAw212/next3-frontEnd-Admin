@@ -1,0 +1,86 @@
+<div class="form-tab">
+  <div class="admin-container" style="height: 200px">
+    <div class="row">
+      <div class="user-inputs">
+        <form (ngSubmit)="carTrademarkSearch()">
+          <label for="code">Code:</label>
+          <input type="text" id="code" name="code" [(ngModel)]="code" />
+
+          <label for="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            [(ngModel)]="description"
+          />
+
+          <button type="submit">Search</button>
+        </form>
+        <div class="admin-button">
+          <button type="button" (click)="openAddCarTrademarkDialog()">
+            Add Trademark
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <th>Trademark Id</th>
+              <th>Trademark Code</th>
+              <th>Trademark Description</th>
+              <th>Brand</th>
+              <th>Logo</th>
+              <th>sysCreatedDate</th>
+              <th>sysCreatedBy</th>
+              <th>sysUpdatedDate</th>
+              <th>sysUpdatedBy</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let trademark of carTrademark"
+              (click)="searchCarShape(trademark.id, trademark)"
+            >
+              <td>{{ trademark.id }}</td>
+              <td>{{ trademark.code }}</td>
+              <td>{{ trademark.description }}</td>
+              <td>{{ trademark.carBrandId }}</td>
+              <td><img [src]="trademark.logo" class="car-logo" /></td>
+              <td>{{ trademark.created_date }}</td>
+              <td>{{ trademark.createdBy }}</td>
+              <td>{{ trademark.updated_date }}</td>
+              <td>{{ trademark.updatedBy }}</td>
+              <td>
+                <mat-icon (click)="deleteTrademark(trademark.id)"
+                  >delete</mat-icon
+                >
+              </td>
+              <td>
+                <mat-icon (click)="updateTrademarkDialog(trademark)"
+                  >edit</mat-icon
+                >
+              </td>
+            </tr>
+
+            <ng-template #noData>
+              <tr>
+                <td colspan="5">No data to display</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showCarShape">
+  <app-car-shape
+    [carShape]="carShape"
+    [selectedTrademark]="selectedTrademark"
+  ></app-car-shape>
+</div>

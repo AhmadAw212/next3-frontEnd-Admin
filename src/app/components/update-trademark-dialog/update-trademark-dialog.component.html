@@ -1,11 +1,10 @@
 <div class="dialog-container">
-  <div class="dialog-header">Preview Logo</div>
+  <div class="dialog-header">Preview/Update Logo</div>
   <div class="dialog-body">
-    <form class="logo-form" (ngSubmit)="updateCarBrand()">
+    <form class="logo-form" (ngSubmit)="saveTrademark()">
       <div class="logo-preview-container">
-        <img [src]="car.content" alt="Preview Logo" class="preview-logo" />
+        <img [src]="file" alt="Preview Logo" class="preview-logo" />
       </div>
-
       <input
         id="logo-upload-input"
         type="file"
@@ -17,10 +16,10 @@
         <input
           id="code"
           type="input"
-          [(ngModel)]="code"
           name="code"
           class="input"
           readonly
+          [(ngModel)]="code"
         />
       </div>
 
@@ -29,9 +28,9 @@
         <input
           id="description"
           type="input"
-          [(ngModel)]="description"
           name="description"
           class="input"
+          [(ngModel)]="description"
         />
       </div>
 

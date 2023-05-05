@@ -49,20 +49,5 @@ export class UpdateCarDialogComponent {
           console.log(err);
         },
       });
-    // } else {
-    //   const carImage = this.car.content;
-    //   this.dataService
-    //     .addCarBrand(this.code!, this.description!, carImage!)
-    //     .subscribe({
-    //       next: (res) => {
-    //         this.dialogRef.close();
-    //         this.alertifyService.success(res.title!);
-
-    //         console.log(res);
-    //       },
-    //       error: (err) => {
-    //         console.log(err);
-    //       },
-    //     });
   }
 }

@@ -7,6 +7,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarBrandDialogComponent } from '../add-car-brand-dialog/add-car-brand-dialog.component';
 import { UpdateCarDialogComponent } from '../update-car-dialog/update-car-dialog.component';
+import { CarTrademark } from 'src/app/model/car-trademark';
 
 @Component({
   selector: 'app-cars-brand',
@@ -18,6 +19,9 @@ export class CarsBrandComponent {
   code: string = '';
   carsBrandData?: CarsBrand[];
   file?: File;
+  carBrandData?: CarsBrand;
+  carTrademark?: CarTrademark[];
+  showTrademark = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -25,6 +29,8 @@ export class CarsBrandComponent {
     private authService: AuthService,
     private dateFormatService: DateFormatterService
   ) {}
+
+  showTrademarkList() {}
 
   carsBrandSearch() {
     this.dataService.carsBrandSearch(this.code, this.description).subscribe({
@@ -42,6 +48,24 @@ export class CarsBrandComponent {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
+      },
+    });
+  }
+
+  carsTrademarkSearch(id: string, brand: CarsBrand) {
+    this.showTrademark = true;
+    this.carBrandData = brand;
+    this.dataService.carsTrademarkByCarId(id).subscribe({
+      next: (res) => {
+        this.carTrademark = res.data.map((res: CarTrademark) => {
+          return {
+            ...res,
+            logo: `data:image/jpeg;base64,${res.logo}`,
+          };
+        });
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }
@@ -71,25 +95,14 @@ export class CarsBrandComponent {
     const file = event.target.files[0];
     this.file = file;
   }
-  updateCarBrand() {
-    this.dataService
-      .addCarBrand(this.code!, this.description!, this.file!)
-      .subscribe({
-        next: (res) => {
-          this.alertifyService.success(res.message!);
-          console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-  }
-
   openAddCarBrandDialog() {
     this.dialog.open(AddCarBrandDialogComponent);
   }
 
-  openPreviewImageDialog(car: CarsBrand) {
+  updateCarBrandDialog(car: CarsBrand) {
     const dialogRef = this.dialog.open(UpdateCarDialogComponent, { data: car });
+    dialogRef.afterClosed().subscribe(() => {
+      this.carsBrandSearch();
+    });
   }
 }

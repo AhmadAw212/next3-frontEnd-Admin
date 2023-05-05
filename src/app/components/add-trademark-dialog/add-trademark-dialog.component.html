@@ -1,0 +1,19 @@
+<div class="dialog">
+  <form (ngSubmit)="saveTrademark()">
+    <label for="file">File:</label>
+    <input type="file" name="file" (change)="onFileSelected($event)" />
+
+    <label for="code">Code:</label>
+    <input type="text" id="code" [(ngModel)]="code" name="code" />
+
+    <label for="description">Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      [(ngModel)]="description"
+    />
+
+    <button type="submit">Save</button>
+  </form>
+</div>

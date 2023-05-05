@@ -83,7 +83,10 @@ export class AddUserComponent implements OnInit {
       ],
     });
   }
-
+  togglePasswordVisibility(passwordInput: HTMLInputElement) {
+    passwordInput.type =
+      passwordInput.type === 'password' ? 'text' : 'password';
+  }
   get form() {
     return this.userForm.controls;
   }
