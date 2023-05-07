@@ -52,7 +52,7 @@
               </td>
               <td
                 *ngIf="isImage(document.contentType!)"
-                (click)="openImageDialog(document)"
+                (click)="openUpdateDocumentDialog(document)"
               >
                 <img [src]="document.content" class="document-img" />
               </td>

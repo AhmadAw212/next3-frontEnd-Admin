@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarsBrand } from 'src/app/model/cars-brand';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -14,7 +14,7 @@ import { CarTrademark } from 'src/app/model/car-trademark';
   templateUrl: './cars-brand.component.html',
   styleUrls: ['./cars-brand.component.css'],
 })
-export class CarsBrandComponent {
+export class CarsBrandComponent implements OnInit {
   description: string = '';
   code: string = '';
   carsBrandData?: CarsBrand[];
@@ -22,6 +22,7 @@ export class CarsBrandComponent {
   carBrandData?: CarsBrand;
   carTrademark?: CarTrademark[];
   showTrademark = false;
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -30,9 +31,21 @@ export class CarsBrandComponent {
     private dateFormatService: DateFormatterService
   ) {}
 
-  showTrademarkList() {}
+  ngOnInit(): void {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
+  }
+
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
+
+  // showTrademarkList() {}
 
   carsBrandSearch() {
+    this.showTrademark = false;
     this.dataService.carsBrandSearch(this.code, this.description).subscribe({
       next: (data) => {
         this.carsBrandData = data.data.map((res: CarsBrand) => {

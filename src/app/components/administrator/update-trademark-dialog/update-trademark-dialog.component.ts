@@ -19,7 +19,7 @@ export class UpdateTrademarkDialogComponent {
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<UpdateTrademarkDialogComponent>
   ) {
-    console.log(trademark);
+    // console.log(trademark);
     this.code = trademark.code;
     this.description = trademark.description;
     this.file = trademark.logo;

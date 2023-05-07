@@ -1,10 +1,8 @@
 <div class="form-tab">
-  <div class="admin-container" style="height: 200px">
+  <div class="admin-container">
     <div class="row">
       <div class="admin-button">
-        <button type="button" (click)="openAddCarShapeDialog()">
-          Add car shape
-        </button>
+        <button type="button">Add car shape</button>
       </div>
     </div>
     <div class="row mt-2">
@@ -25,24 +23,22 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carShape?.length! > 0; else noData">
-            <tr *ngFor="let shape of carShape">
-              <td>{{ shape.carShapeId }}</td>
-              <td>{{ shape.carShapeCode }}</td>
-              <td>{{ shape.carShapeDescription }}</td>
-              <td>{{ shape.carTrademarkId }}</td>
-              <td><img [src]="shape.logo" class="car-logo" /></td>
-              <td>{{ shape.created_date }}</td>
-              <td>{{ shape.createdBy }}</td>
-              <td>{{ shape.updated_date }}</td>
-              <td>{{ shape.updatedBy }}</td>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><img class="car-logo" /></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
-                <mat-icon (click)="deleteCarShape(shape.carShapeId)"
-                  >delete</mat-icon
-                >
+                <mat-icon>delete</mat-icon>
               </td>
               <td>
-                <mat-icon (click)="updateShapeDialog(shape)">edit</mat-icon>
+                <mat-icon>edit</mat-icon>
               </td>
             </tr>
           </tbody>

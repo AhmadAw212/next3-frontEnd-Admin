@@ -23,6 +23,7 @@ export class CarTrademarkComponent implements OnInit {
   selectedTrademark?: CarTrademark;
   carShape?: CarShape[];
   showCarShape = false;
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -31,14 +32,22 @@ export class CarTrademarkComponent implements OnInit {
     private dateFormatService: DateFormatterService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
+  }
 
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
   searchCarShape(trademarkId: string, tradeMark: CarTrademark) {
     this.showCarShape = true;
     this.selectedTrademark = tradeMark;
     this.dataService.searchCarShape(trademarkId).subscribe({
       next: (res) => {
-        this.carShape = res.data.map((res: CarTrademark) => {
+        this.carShape = res.data.map((res: CarShape) => {
           return {
             ...res,
             logo: `data:image/jpeg;base64,${res.logo}`,
@@ -53,6 +62,7 @@ export class CarTrademarkComponent implements OnInit {
   }
 
   carTrademarkSearch() {
+    this.showCarShape = false;
     const id = this.carBrand?.carBrandId!;
     this.dataService
       .searchCarTrademarks(id, this.code!, this.description!)

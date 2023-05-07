@@ -20,6 +20,7 @@ import { CoreDomain } from '../model/core-domain';
 import { CoreDomainValue } from '../model/core-domain-value';
 import { CarsBrand } from '../model/cars-brand';
 import { CarTrademark } from '../model/car-trademark';
+import { CarInfo } from '../model/car-info';
 
 @Injectable({
   providedIn: 'root',
@@ -360,7 +361,7 @@ export class DataServiceService {
 
   deleteCarTrademark(id: string) {
     return this.http.delete<ApiResponse>(
-      `${this.userUrl}/carTrademark/delete?id=${id}`
+      `${this.userUrl}/carTrademark/delete?id=${encodeURIComponent(id)}`
     );
   }
 
@@ -374,14 +375,22 @@ export class DataServiceService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const url = `${this.userUrl}/carTrademark/update?id=${id}&code=${code}&description=${description}&carBrandId=${carBrandId}`;
+    const url = `${this.userUrl}/carTrademark/update?id=${encodeURIComponent(
+      id
+    )}&code=${encodeURIComponent(
+      code
+    )}&description=${description}&carBrandId=${carBrandId}`;
 
     return this.http.post<ApiResponse>(url, formData);
   }
 
   searchCarShape(trademarkId: string) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/carShape/searchCarShape?carsTradeMarkId=${trademarkId}`
+      `${
+        this.userUrl
+      }/carShape/searchCarShape?carsTradeMarkId=${encodeURIComponent(
+        trademarkId
+      )}`
     );
   }
 
@@ -395,14 +404,59 @@ export class DataServiceService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const url = `${this.userUrl}/carShape/saveCarShape?code=${code}&description=${description}&tradeMarkId=${tradeMarkId}&id=${id}`;
+    const url = `${
+      this.userUrl
+    }/carShape/saveCarShape?code=${code}&description=${description}&tradeMarkId=${encodeURIComponent(
+      tradeMarkId
+    )}&id=${encodeURIComponent(id)}`;
 
     return this.http.post<ApiResponse>(url, formData);
   }
 
   deleteCarShape(id: string) {
     return this.http.delete<ApiResponse>(
-      `${this.userUrl}/carShape/deleteCarShape?id=${id}`
+      `${this.userUrl}/carShape/deleteCarShape?id=${encodeURIComponent(id)}`
+    );
+  }
+
+  getcarInfo(shapeId: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-info/${encodeURIComponent(shapeId)}`
+    );
+  }
+
+  carInfoDoors() {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getDoors`);
+  }
+
+  carInfoGetVehicleSize() {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getVehicleSize`
+    );
+  }
+
+  carInfoGetOldBodyType() {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getOldBodyType`
+    );
+  }
+
+  carInfoGetNewBodyType() {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getNewBodyType`
+    );
+  }
+
+  addCarInfo(shapeId: string, carInfo: CarInfo): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-info/${shapeId}/new`,
+      carInfo
+    );
+  }
+
+  deleteCarInfo(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-info/delete?id=${id}`
     );
   }
 }

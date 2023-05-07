@@ -51,9 +51,13 @@
               <td>{{ trademark.description }}</td>
               <td>{{ trademark.carBrandId }}</td>
               <td><img [src]="trademark.logo" class="car-logo" /></td>
-              <td>{{ trademark.created_date }}</td>
+              <td>
+                {{ trademark.created_date | date : reportDateTimeFormat }}
+              </td>
               <td>{{ trademark.createdBy }}</td>
-              <td>{{ trademark.updated_date }}</td>
+              <td>
+                {{ trademark.updated_date | date : reportDateTimeFormat }}
+              </td>
               <td>{{ trademark.updatedBy }}</td>
               <td>
                 <mat-icon (click)="deleteTrademark(trademark.id)"

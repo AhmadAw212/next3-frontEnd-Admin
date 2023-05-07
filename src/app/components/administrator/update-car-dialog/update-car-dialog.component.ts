@@ -42,7 +42,6 @@ export class UpdateCarDialogComponent {
         next: (res) => {
           this.dialogRef.close();
           this.alertifyService.success(res.title!);
-
           console.log(res);
         },
         error: (err) => {

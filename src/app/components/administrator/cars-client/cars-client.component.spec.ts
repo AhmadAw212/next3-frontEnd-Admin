@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageDialogComponent } from './image-dialog.component';
+import { CarsClientComponent } from './cars-client.component';
 
-describe('ImageDialogComponent', () => {
-  let component: ImageDialogComponent;
-  let fixture: ComponentFixture<ImageDialogComponent>;
+describe('CarsClientComponent', () => {
+  let component: CarsClientComponent;
+  let fixture: ComponentFixture<CarsClientComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImageDialogComponent ]
+      declarations: [ CarsClientComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ImageDialogComponent);
+    fixture = TestBed.createComponent(CarsClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

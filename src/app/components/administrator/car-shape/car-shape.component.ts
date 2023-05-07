@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarShape } from 'src/app/model/car-shape';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -8,16 +8,20 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddShapeDialogComponent } from '../add-shape-dialog/add-shape-dialog.component';
 import { UpdateShapeDialogComponent } from '../update-shape-dialog/update-shape-dialog.component';
 import { CarTrademark } from 'src/app/model/car-trademark';
+import { CarInfo } from 'src/app/model/car-info';
 
 @Component({
   selector: 'app-car-shape',
   templateUrl: './car-shape.component.html',
   styleUrls: ['./car-shape.component.css'],
 })
-export class CarShapeComponent {
+export class CarShapeComponent implements OnInit {
   @Input() carShape?: CarShape[];
-  @Input() carTradeMark?: CarTrademark;
   @Input() selectedTrademark?: CarTrademark;
+  carInfo?: CarInfo[];
+  selectedShape?: CarShape;
+  reportDateTimeFormat?: string;
+  showCarInfo = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -25,6 +29,31 @@ export class CarShapeComponent {
     private authService: AuthService,
     private dateFormatService: DateFormatterService
   ) {}
+
+  ngOnInit(): void {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
+  }
+
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
+
+  searchCarInfo(shapeId: string, selectedCarShapeId: CarShape) {
+    this.selectedShape = selectedCarShapeId;
+    this.showCarInfo = true;
+    this.dataService.getcarInfo(shapeId).subscribe({
+      next: (res) => {
+        this.carInfo = res.data;
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   searchCarShape() {
     const trademarkId = this.selectedTrademark?.id!;
@@ -36,7 +65,7 @@ export class CarShapeComponent {
             logo: `data:image/jpeg;base64,${res.logo}`,
           };
         });
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);

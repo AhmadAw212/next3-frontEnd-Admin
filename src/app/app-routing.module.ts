@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { AdminPageComponent } from './components/admin-page/admin-page.component';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { HomeComponent } from './components/home/home.component';
+import { AddUserComponent } from './components/administrator/add-user/add-user.component';
+import { AdminPageComponent } from './components/administrator/admin-page/admin-page.component';
+import { EditUserComponent } from './components/administrator/edit-user/edit-user.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
-import { UserProfilesComponent } from './components/user-profiles/user-profiles.component';
 import { AuthGuard } from './shared/auth.guard';
-import { CoreConfigurationComponent } from './components/core-configuration/core-configuration.component';
-import { LanguageConfigComponent } from './components/language-config/language-config.component';
-import { CoreDocumentComponent } from './components/core-document/core-document.component';
-import { CoreDomainComponent } from './components/core-domain/core-domain.component';
-import { CarsBrandComponent } from './components/cars-brand/cars-brand.component';
+import { CoreConfigurationComponent } from './components/administrator/core-configuration/core-configuration.component';
+import { LanguageConfigComponent } from './components/administrator/language-config/language-config.component';
+import { CoreDocumentComponent } from './components/administrator/core-document/core-document.component';
+import { CoreDomainComponent } from './components/administrator/core-domain/core-domain.component';
+import { CarsBrandComponent } from './components/administrator/cars-brand/cars-brand.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },

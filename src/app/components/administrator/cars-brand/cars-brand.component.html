@@ -50,9 +50,9 @@
             <td>
               <img [src]="cars.content" class="car-logo" />
             </td>
-            <td>{{ cars.sysCreatedDate }}</td>
+            <td>{{ cars.sysCreatedDate | date : reportDateTimeFormat }}</td>
             <td>{{ cars.sysCreatedBy }}</td>
-            <td>{{ cars.sysUpdatedDate }}</td>
+            <td>{{ cars.sysUpdatedDate | date : reportDateTimeFormat }}</td>
             <td>{{ cars.sysUpdatedBy }}</td>
 
             <td>

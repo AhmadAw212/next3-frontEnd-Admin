@@ -1,0 +1,68 @@
+<div class="form-tab">
+  <div class="admin-container" style="height: 200px">
+    <div class="row">
+      <div class="admin-button">
+        <button type="button" (click)="openAddCarShapeDialog()">
+          Add car shape
+        </button>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <th>Car shape id</th>
+              <th>Shape Code</th>
+              <th>Shape description</th>
+              <th>Car trademark Id</th>
+              <th>Shape logo</th>
+              <th>sysCreatedDate</th>
+              <th>sysCreatedBy</th>
+              <th>sysUpdatedDate</th>
+              <th>sysUpdatedBy</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="carShape?.length! > 0; else noData">
+            <tr
+              *ngFor="let shape of carShape"
+              (click)="searchCarInfo(shape.carShapeId, shape)"
+            >
+              <td>{{ shape.carShapeId }}</td>
+              <td>{{ shape.carShapeCode }}</td>
+              <td>{{ shape.carShapeDescription }}</td>
+              <td>{{ shape.carTrademarkId }}</td>
+              <td><img [src]="shape.logo" class="car-logo" /></td>
+              <td>{{ shape.created_date }}</td>
+              <td>{{ shape.createdBy }}</td>
+              <td>{{ shape.updated_date }}</td>
+              <td>{{ shape.updatedBy }}</td>
+              <td>
+                <mat-icon (click)="deleteCarShape(shape.carShapeId)"
+                  >delete</mat-icon
+                >
+              </td>
+              <td>
+                <mat-icon (click)="updateShapeDialog(shape)">edit</mat-icon>
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="5">No data to display</td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showCarInfo">
+  <app-car-info
+    [carInfo]="carInfo"
+    [selectedShape]="selectedShape"
+  ></app-car-info>
+</div>

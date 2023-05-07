@@ -6,7 +6,6 @@ import { AddDocumentDialogComponent } from '../add-document-dialog/add-document-
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CoreProfile } from 'src/app/model/core-profile';
-import { ImageDialogComponent } from 'src/app/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-core-document',
@@ -80,7 +79,7 @@ export class CoreDocumentComponent implements OnInit {
     this.dialog.open(AddDocumentDialogComponent);
   }
 
-  openImageDialog(document: CoreDocument) {
-    this.dialog.open(ImageDialogComponent, { data: document });
+  openUpdateDocumentDialog(document: CoreDocument) {
+    // this.dialog.open();
   }
 }
