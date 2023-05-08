@@ -15,13 +15,13 @@ interface carInfoList {
   styleUrls: ['./add-car-info.component.css'],
 })
 export class AddCarInfoComponent {
-  doors!: carInfoList[];
+  doors: carInfoList[];
   vehicleSize!: carInfoList[];
   oldBodyType!: carInfoList[];
   newBodyType!: carInfoList[];
-  bodyTypeCode?: string;
-  fromYear?: number;
-  toYear?: number;
+  bodyTypeCode!: string;
+  fromYear!: number;
+  toYear!: number;
   door?: string;
   size?: string;
   bodyTypeNew?: string;

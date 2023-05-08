@@ -449,7 +449,7 @@ export class DataServiceService {
 
   addCarInfo(shapeId: string, carInfo: CarInfo): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
-      `${this.userUrl}/car-info/${shapeId}/new`,
+      `${this.userUrl}/car-info/${encodeURIComponent(shapeId)}/new`,
       carInfo
     );
   }
@@ -457,6 +457,13 @@ export class DataServiceService {
   deleteCarInfo(id: string) {
     return this.http.delete<ApiResponse>(
       `${this.userUrl}/car-info/delete?id=${id}`
+    );
+  }
+
+  updateCarInfo(carInfo: CarInfo[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-info/update`,
+      carInfo
     );
   }
 }

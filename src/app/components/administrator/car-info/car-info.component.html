@@ -5,6 +5,13 @@
         <button type="button" (click)="openAddCarInfoDialog()">
           Add Car Info
         </button>
+        <button
+          type="button"
+          style="margin-left: 5px"
+          (click)="updateCarInfo()"
+        >
+          Update Car Info
+        </button>
       </div>
     </div>
     <div class="row mt-2">
@@ -31,13 +38,26 @@
           <tbody>
             <tr *ngFor="let carInfo of carInfo">
               <td>{{ carInfo.id }}</td>
-              <td>{{ carInfo.fromYear }}</td>
-              <td>{{ carInfo.toYear }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, carInfo, 'fromYear')"
+              >
+                {{ carInfo.fromYear }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, carInfo, 'toYear')"
+              >
+                {{ carInfo.toYear }}
+              </td>
               <td>
                 <select
                   [(ngModel)]="carInfo.bodyType_lov_new_code"
                   id="bodyTypeNew"
                   name="bodyTypeNew"
+                  (change)="
+                    onDropdownChange($event, carInfo, 'bodyType_lov_new_code')
+                  "
                 >
                   <option
                     *ngFor="let bodyType of bodyTypeNew"
@@ -52,6 +72,9 @@
                   [(ngModel)]="carInfo.bodyType_lov_old_code"
                   id="bodyType"
                   name="bodyType"
+                  (change)="
+                    onDropdownChange($event, carInfo, 'bodyType_lov_old_code')
+                  "
                 >
                   <option
                     *ngFor="let bodyType of bodyType"
@@ -66,6 +89,7 @@
                   [(ngModel)]="carInfo.doors_lov_code"
                   id="door"
                   name="door"
+                  (change)="onDropdownChange($event, carInfo, 'doors_lov_code')"
                 >
                   <option *ngFor="let door of doors" [value]="door.code">
                     {{ door.description }}
@@ -77,13 +101,21 @@
                   [(ngModel)]="carInfo.vehicle_size_lov_code"
                   id="size"
                   name="size"
+                  (change)="
+                    onDropdownChange($event, carInfo, 'vehicle_size_lov_code')
+                  "
                 >
                   <option *ngFor="let size of vehicleSize" [value]="size.code">
                     {{ size.description }}
                   </option>
                 </select>
               </td>
-              <td>{{ carInfo.bodyTypeCode }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, carInfo, 'bodyTypeCode')"
+              >
+                {{ carInfo.bodyTypeCode }}
+              </td>
               <td>{{ carInfo.created_date | date : reportDateTimeFormat }}</td>
               <td>{{ carInfo.createdBy }}</td>
               <td>{{ carInfo.updated_date | date : reportDateTimeFormat }}</td>
@@ -94,6 +126,7 @@
                   name="denting"
                   id="denting"
                   [(ngModel)]="carInfo.denting"
+                  (change)="onCheckboxChange(carInfo)"
                 />
               </td>
               <td>

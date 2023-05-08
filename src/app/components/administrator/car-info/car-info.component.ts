@@ -26,6 +26,7 @@ export class CarInfoComponent implements OnInit {
   bodyTypeNew?: carInfoList[];
   @Input() selectedShape?: CarShape;
   reportDateTimeFormat?: string;
+  updatedCarInfoVal?: CarInfo[] = [];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -46,6 +47,124 @@ export class CarInfoComponent implements OnInit {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
+  }
+
+  onTdBlur(
+    event: FocusEvent,
+    carInfo: CarInfo,
+    property: 'fromYear' | 'toYear' | 'bodyTypeCode'
+  ) {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = carInfo[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedCarInfoVal = this.updatedCarInfoVal ?? [];
+
+    const index = updatedCarInfoVal.findIndex((item) => item.id === carInfo.id);
+    if (index !== -1) {
+      updatedCarInfoVal.splice(index, 1);
+    }
+
+    const denting = carInfo.denting ?? false;
+    if (oldValue !== newValue) {
+      carInfo[property] = this.convertValue(newValue, property);
+      this.updatedCarInfoVal?.push({
+        id: carInfo.id,
+        fromYear: carInfo.fromYear,
+        toYear: carInfo.toYear,
+        bodyTypeCode: carInfo.bodyTypeCode,
+        bodyType_lov_new_code: carInfo.bodyType_lov_new_code,
+        bodyType_lov_old_code: carInfo.bodyType_lov_old_code,
+        vehicle_size_lov_code: carInfo.vehicle_size_lov_code,
+        doors_lov_code: carInfo.doors_lov_code,
+        // hp: carInfo.hp,
+        hp: 0,
+        denting,
+      });
+      console.log(this.updatedCarInfoVal);
+    }
+  }
+
+  onCheckboxChange(carInfo: CarInfo) {
+    const denting = carInfo.denting ?? false;
+    const updatedDomainValues = this.updatedCarInfoVal ?? [];
+    const index = updatedDomainValues.findIndex(
+      (item) => item.id === carInfo.id
+    );
+    if (index !== -1) {
+      updatedDomainValues.splice(index, 1);
+    }
+    this.updatedCarInfoVal?.push({
+      id: carInfo.id,
+      fromYear: carInfo.fromYear,
+      toYear: carInfo.toYear,
+      bodyTypeCode: carInfo.bodyTypeCode,
+      bodyType_lov_new_code: carInfo.bodyType_lov_new_code,
+      bodyType_lov_old_code: carInfo.bodyType_lov_old_code,
+      vehicle_size_lov_code: carInfo.vehicle_size_lov_code,
+      doors_lov_code: carInfo.doors_lov_code,
+      // hp: carInfo.hp,
+      hp: 0,
+      denting,
+    });
+    console.log(this.updatedCarInfoVal);
+  }
+
+  convertValue(
+    value: string,
+    property: 'fromYear' | 'toYear' | 'bodyTypeCode'
+  ): any {
+    if (property === 'fromYear' || property === 'toYear') {
+      return parseInt(value, 10); // Convert the value to a number
+    }
+    return value;
+  }
+
+  onDropdownChange(
+    event: Event,
+    carInfo: CarInfo,
+    property:
+      | 'bodyType_lov_new_code'
+      | 'bodyType_lov_old_code'
+      | 'doors_lov_code'
+      | 'vehicle_size_lov_code'
+  ) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const updatedCarInfoVal = this.updatedCarInfoVal ?? [];
+    const index = updatedCarInfoVal.findIndex((item) => item.id === carInfo.id);
+    if (index !== -1) {
+      updatedCarInfoVal.splice(index, 1);
+    }
+    this.updatedCarInfoVal?.push({
+      id: carInfo.id,
+      fromYear: carInfo.fromYear,
+      toYear: carInfo.toYear,
+      bodyTypeCode: carInfo.bodyTypeCode,
+      bodyType_lov_new_code: carInfo.bodyType_lov_new_code,
+      bodyType_lov_old_code: carInfo.bodyType_lov_old_code,
+      vehicle_size_lov_code: carInfo.vehicle_size_lov_code,
+      doors_lov_code: carInfo.doors_lov_code,
+      // hp: carInfo.hp,
+      hp: 0,
+      denting: carInfo.denting ?? false,
+    });
+    console.log(this.updatedCarInfoVal);
+  }
+  updateCarInfo() {
+    if (this.updatedCarInfoVal?.length) {
+      this.dataService.updateCarInfo(this.updatedCarInfoVal).subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          this.updatedCarInfoVal = [];
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
   }
 
   getDoors() {
