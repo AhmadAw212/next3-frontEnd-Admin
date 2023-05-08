@@ -1,8 +1,21 @@
+<h3 class="h3-header">Cars Clients</h3>
 <div class="form-tab">
   <div class="admin-container">
     <div class="row">
-      <div class="admin-button">
-        <button type="button">Add car shape</button>
+      <div class="user-inputs">
+        <form>
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" />
+
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" />
+
+          <button type="submit">Search</button>
+        </form>
+        <div class="admin-button">
+          <button type="button">Add Client</button>
+          <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -10,16 +23,27 @@
         <table>
           <thead>
             <tr>
-              <th>Car shape id</th>
-              <th>Shape Code</th>
-              <th>Shape description</th>
-              <th>Car trademark Id</th>
-              <th>Shape logo</th>
-              <th>sysCreatedDate</th>
-              <th>sysCreatedBy</th>
-              <th>sysUpdatedDate</th>
-              <th>sysUpdatedBy</th>
-              <th></th>
+              <th>ID</th>
+              <th>Insurance ID</th>
+              <th>NUM_1</th>
+              <th>NUM_2</th>
+              <th>Family name</th>
+              <th>Prefix family</th>
+              <th>First Name</th>
+              <th>Father Name</th>
+              <th>Bus Phone</th>
+              <th>Mobile Phone</th>
+              <th>Titre</th>
+              <th>Gender</th>
+              <th>Broker</th>
+              <th>INDIC1</th>
+              <th>INDIC2</th>
+              <th>VIP</th>
+              <th>DESCRIPTION</th>
+              <th>SYS CREATED DATE</th>
+              <th>SYS CREATED BY</th>
+              <th>SYS UPDATED DATE</th>
+              <th>SYS UPDATED BY</th>
               <th></th>
             </tr>
           </thead>
@@ -34,11 +58,20 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
                 <mat-icon>delete</mat-icon>
-              </td>
-              <td>
-                <mat-icon>edit</mat-icon>
               </td>
             </tr>
           </tbody>
