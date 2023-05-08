@@ -35,9 +35,9 @@
               <td>{{ shape.carShapeDescription }}</td>
               <td>{{ shape.carTrademarkId }}</td>
               <td><img [src]="shape.logo" class="car-logo" /></td>
-              <td>{{ shape.created_date }}</td>
+              <td>{{ shape.created_date | date : reportDateTimeFormat }}</td>
               <td>{{ shape.createdBy }}</td>
-              <td>{{ shape.updated_date }}</td>
+              <td>{{ shape.updated_date | date : reportDateTimeFormat }}</td>
               <td>{{ shape.updatedBy }}</td>
               <td>
                 <mat-icon (click)="deleteCarShape(shape.carShapeId)"

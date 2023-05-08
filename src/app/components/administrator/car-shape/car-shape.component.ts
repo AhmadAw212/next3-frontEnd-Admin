@@ -42,8 +42,8 @@ export class CarShapeComponent implements OnInit {
   }
 
   searchCarInfo(shapeId: string, selectedCarShapeId: CarShape) {
-    this.selectedShape = selectedCarShapeId;
     this.showCarInfo = true;
+    this.selectedShape = selectedCarShapeId;
     this.dataService.getcarInfo(shapeId).subscribe({
       next: (res) => {
         this.carInfo = res.data;

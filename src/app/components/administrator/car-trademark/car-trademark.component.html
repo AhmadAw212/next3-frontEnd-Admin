@@ -41,7 +41,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="carTrademark?.length! > 0; else noData">
             <tr
               *ngFor="let trademark of carTrademark"
               (click)="searchCarShape(trademark.id, trademark)"
@@ -70,14 +70,13 @@
                 >
               </td>
             </tr>
-
-            <ng-template #noData>
-              <tr>
-                <td colspan="5">No data to display</td>
-              </tr>
-            </ng-template>
           </tbody>
         </table>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">No data to display</td>
+          </tr>
+        </ng-template>
       </div>
     </div>
   </div>

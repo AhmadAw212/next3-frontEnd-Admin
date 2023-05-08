@@ -7,37 +7,62 @@
       id="bodyTypeCode"
       name="bodyTypeCode"
       [(ngModel)]="bodyTypeCode"
+      required
     />
 
     <label for="fromYear">From Year:</label>
-    <input type="text" id="fromYear" name="fromYear" [(ngModel)]="fromYear" />
+    <input
+      type="text"
+      id="fromYear"
+      name="fromYear"
+      [(ngModel)]="fromYear"
+      required
+      pattern="[0-9]+"
+    />
 
     <label for="toYear">To Year:</label>
-    <input type="text" id="toYear" name="toYear" [(ngModel)]="toYear" />
+    <input
+      type="text"
+      id="toYear"
+      name="toYear"
+      [(ngModel)]="toYear"
+      required
+      pattern="[0-9]+"
+    />
 
     <label for="Doors">Doors:</label>
-    <select id="door" name="door" [(ngModel)]="door">
+    <select id="door" name="door" [(ngModel)]="door" required>
       <option *ngFor="let door of doors" [value]="door.code">
         {{ door.description }}
       </option>
     </select>
 
     <label for="size">Size:</label>
-    <select id="size" name="size" [(ngModel)]="size">
+    <select id="size" name="size" [(ngModel)]="size" required>
       <option *ngFor="let size of vehicleSize" [value]="size.code">
         {{ size.description }}
       </option>
     </select>
 
     <label for="bodyTypeNew">Body Type New:</label>
-    <select id="bodyTypeNew" name="bodyTypeNew" [(ngModel)]="bodyTypeNew">
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      [(ngModel)]="bodyTypeNew"
+      required
+    >
       <option *ngFor="let bodyType of newBodyType" [value]="bodyType.code">
         {{ bodyType.description }}
       </option>
     </select>
 
     <label for="bodyTypeOld">Body Type Old:</label>
-    <select id="bodyTypeOld" name="bodyTypeOld" [(ngModel)]="bodyTypeOld">
+    <select
+      id="bodyTypeOld"
+      name="bodyTypeOld"
+      [(ngModel)]="bodyTypeOld"
+      required
+    >
       <option *ngFor="let bodyType of oldBodyType" [value]="bodyType.code">
         {{ bodyType.description }}
       </option>

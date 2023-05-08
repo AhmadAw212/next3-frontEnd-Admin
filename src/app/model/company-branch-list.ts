@@ -1,4 +1,4 @@
 export interface CompanyBranchList {
-  companyId: number;
+  companyId: string;
   companyName: string;
 }

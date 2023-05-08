@@ -60,6 +60,8 @@ import { UpdateShapeDialogComponent } from './components/administrator/update-sh
 import { CarInfoComponent } from './components/administrator/car-info/car-info.component';
 import { CarsClientComponent } from './components/administrator/cars-client/cars-client.component';
 import { AddCarInfoComponent } from './components/administrator/add-car-info/add-car-info.component';
+import { CarsCoverComponent } from './components/administrator/cars-cover/cars-cover.component';
+import { AddCarCoverComponent } from './components/administrator/add-car-cover/add-car-cover.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,8 @@ import { AddCarInfoComponent } from './components/administrator/add-car-info/add
     CarInfoComponent,
     CarsClientComponent,
     AddCarInfoComponent,
+    CarsCoverComponent,
+    AddCarCoverComponent,
   ],
   imports: [
     BrowserModule,
