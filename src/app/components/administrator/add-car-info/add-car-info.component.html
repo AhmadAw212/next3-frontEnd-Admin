@@ -1,0 +1,47 @@
+<h2 style="margin: 10px; font-size: large">Add Car Info</h2>
+<div class="dialog">
+  <form (ngSubmit)="addCarInfo()">
+    <label for="bodyTypeCode">Body Type Code:</label>
+    <input
+      type="text"
+      id="bodyTypeCode"
+      name="bodyTypeCode"
+      [(ngModel)]="bodyTypeCode"
+    />
+
+    <label for="fromYear">From Year:</label>
+    <input type="text" id="fromYear" name="fromYear" [(ngModel)]="fromYear" />
+
+    <label for="toYear">To Year:</label>
+    <input type="text" id="toYear" name="toYear" [(ngModel)]="toYear" />
+
+    <label for="Doors">Doors:</label>
+    <select id="door" name="door" [(ngModel)]="door">
+      <option *ngFor="let door of doors" [value]="door.code">
+        {{ door.description }}
+      </option>
+    </select>
+
+    <label for="size">Size:</label>
+    <select id="size" name="size" [(ngModel)]="size">
+      <option *ngFor="let size of vehicleSize" [value]="size.code">
+        {{ size.description }}
+      </option>
+    </select>
+
+    <label for="bodyTypeNew">Body Type New:</label>
+    <select id="bodyTypeNew" name="bodyTypeNew" [(ngModel)]="bodyTypeNew">
+      <option *ngFor="let bodyType of newBodyType" [value]="bodyType.code">
+        {{ bodyType.description }}
+      </option>
+    </select>
+
+    <label for="bodyTypeOld">Body Type Old:</label>
+    <select id="bodyTypeOld" name="bodyTypeOld" [(ngModel)]="bodyTypeOld">
+      <option *ngFor="let bodyType of oldBodyType" [value]="bodyType.code">
+        {{ bodyType.description }}
+      </option>
+    </select>
+    <button type="submit">Save</button>
+  </form>
+</div>

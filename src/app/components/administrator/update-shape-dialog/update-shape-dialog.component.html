@@ -1,0 +1,45 @@
+<div class="dialog-container">
+  <div class="dialog-header">Preview/Update Logo</div>
+  <div class="dialog-body">
+    <form class="logo-form" (ngSubmit)="updateCarShape()">
+      <div class="logo-preview-container">
+        <img alt="Preview Logo" [src]="file" class="preview-logo" />
+      </div>
+      <input
+        id="logo-upload-input"
+        type="file"
+        (change)="onFileSelected($event)"
+      />
+
+      <div class="form-group">
+        <label for="code" class="label">Code:</label>
+        <input
+          id="code"
+          type="input"
+          name="code"
+          class="input"
+          readonly
+          [(ngModel)]="code"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="label">Description:</label>
+        <input
+          id="description"
+          type="input"
+          name="description"
+          class="input"
+          [(ngModel)]="description"
+        />
+      </div>
+
+      <div class="dialog-footer">
+        <button class="dialog-button save-button" type="submit">Save</button>
+        <button class="dialog-button cancel-button" type="button">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
