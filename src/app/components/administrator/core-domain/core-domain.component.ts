@@ -22,6 +22,7 @@ export class CoreDomainComponent implements OnInit {
   updatedDomainValues?: CoreDomain[] = [];
   domain?: CoreDomain;
   domainValuesList?: CoreDomainValue[];
+  showDomainValue?: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -93,6 +94,7 @@ export class CoreDomainComponent implements OnInit {
 
   getDomainValuesData(id: string, domain: CoreDomain) {
     // console.log(domain);
+    this.showDomainValue = true;
     this.domain = domain;
     this.dataService.coreDomainValue(id).subscribe({
       next: (res) => {

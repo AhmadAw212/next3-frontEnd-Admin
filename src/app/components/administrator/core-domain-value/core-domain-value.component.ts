@@ -6,24 +6,37 @@ import { AddDomainValueDialogComponent } from '../add-domain-value-dialog/add-do
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 
 @Component({
   selector: 'app-core-domain-value',
   templateUrl: './core-domain-value.component.html',
   styleUrls: ['./core-domain-value.component.css'],
 })
-export class CoreDomainValueComponent {
+export class CoreDomainValueComponent implements OnInit {
   @Input() domainValues?: CoreDomainValue[];
   @Input() domain?: CoreDomain;
   updatedDomainValues?: CoreDomainValue[] = [];
   code: string = '';
   description: string = '';
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dateFormatService: DateFormatterService
   ) {}
+
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
+  ngOnInit(): void {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
+  }
 
   domainValueSearch() {
     const id = this.domain?.id!;

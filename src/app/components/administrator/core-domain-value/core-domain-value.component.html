@@ -98,9 +98,9 @@
           >
             {{ domain.coreDomainId }}
           </td>
-          <td>{{ domain.sysCreatedDate }}</td>
+          <td>{{ domain.sysCreatedDate | date : reportDateTimeFormat }}</td>
           <td>{{ domain.sysCreatedBy }}</td>
-          <td>{{ domain.sysUpdatedDate }}</td>
+          <td>{{ domain.sysUpdatedDate | date : reportDateTimeFormat }}</td>
           <td>{{ domain.sysUpdatedBy }}</td>
 
           <td>
