@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 export class CompanyBranchService {
   companyList?: CompanyBranchList[];
   branchList?: BranchList[];
-  private companyListSubject = new Subject<CompanyBranchList[]>();
+  private companyListSubject = new Subject<any>();
   company = this.companyListSubject.asObservable();
   private branchListSubject = new Subject<BranchList[]>();
   branch = this.branchListSubject.asObservable();
@@ -21,9 +21,9 @@ export class CompanyBranchService {
   ) {}
 
   getCompanyId() {
-    this.dataService.getCompanyId().subscribe({
+    this.dataService.getCompaniesListByCurrentUser().subscribe({
       next: (res) => {
-        this.companyList = res.data.companyList;
+        this.companyList = res.companyList;
         this.companyListSubject.next(this.companyList!);
         // console.log(res.data);
       },
