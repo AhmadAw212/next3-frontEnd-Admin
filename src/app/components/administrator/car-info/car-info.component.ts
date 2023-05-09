@@ -80,7 +80,7 @@ export class CarInfoComponent implements OnInit {
         hp: 0,
         denting,
       });
-      console.log(this.updatedCarInfoVal);
+      // console.log(this.updatedCarInfoVal);
     }
   }
 
@@ -106,7 +106,7 @@ export class CarInfoComponent implements OnInit {
       hp: 0,
       denting,
     });
-    console.log(this.updatedCarInfoVal);
+    // console.log(this.updatedCarInfoVal);
   }
 
   convertValue(
@@ -147,7 +147,7 @@ export class CarInfoComponent implements OnInit {
       hp: 0,
       denting: carInfo.denting ?? false,
     });
-    console.log(this.updatedCarInfoVal);
+    // console.log(this.updatedCarInfoVal);
   }
   updateCarInfo() {
     if (this.updatedCarInfoVal?.length) {

@@ -1,4 +1,4 @@
-<h3 class="h3-header">Cars Configuration</h3>
+<h3 class="h3-header">Cars Brand</h3>
 <div class="admin-container" style="height: 200px">
   <div class="row">
     <div class="user-inputs">
@@ -39,7 +39,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="carsBrandData?.length! > 0; else noData">
           <tr
             *ngFor="let cars of carsBrandData"
             (click)="carsTrademarkSearch(cars.carBrandId!, cars)"

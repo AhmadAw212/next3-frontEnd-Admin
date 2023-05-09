@@ -21,6 +21,8 @@ import { CoreDomainValue } from '../model/core-domain-value';
 import { CarsBrand } from '../model/cars-brand';
 import { CarTrademark } from '../model/car-trademark';
 import { CarInfo } from '../model/car-info';
+import { CompanyBranchList } from '../model/company-branch-list';
+import { CarCover } from '../model/car-cover';
 
 @Injectable({
   providedIn: 'root',
@@ -464,6 +466,47 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/car-info/update`,
       carInfo
+    );
+  }
+
+  getCompaniesListByCurrentUser(): Observable<any> {
+    return this.http.get<any>(
+      `${this.userUrl}/constant/companiesListByCurrentUser`
+    );
+  }
+
+  findCarCoverListByInsuranceId(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-cover/${insuranceId}`
+    );
+  }
+  searchCarCover(insuranceId: string, code: string, description: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-cover/${insuranceId}/search?code=${code}&description=${description}`
+    );
+  }
+
+  getCoverTypes(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/coverTypes`);
+  }
+
+  addCarCover(carCover: CarCover) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-cover/new`,
+      carCover
+    );
+  }
+
+  deleteCarCover(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-cover/delete?id=${id}`
+    );
+  }
+
+  updateCarCover(carCover: CarCover[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-cover/update`,
+      carCover
     );
   }
 }

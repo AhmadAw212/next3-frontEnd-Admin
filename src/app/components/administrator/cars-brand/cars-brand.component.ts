@@ -66,7 +66,9 @@ export class CarsBrandComponent implements OnInit {
   }
 
   carsTrademarkSearch(id: string, brand: CarsBrand) {
-    this.showTrademark = true;
+    if (brand.carBrandId !== this.carBrandData?.carBrandId) {
+      this.showTrademark = false;
+    }
     this.carBrandData = brand;
     this.dataService.carsTrademarkByCarId(id).subscribe({
       next: (res) => {
@@ -76,6 +78,9 @@ export class CarsBrandComponent implements OnInit {
             logo: `data:image/jpeg;base64,${res.logo}`,
           };
         });
+        if (brand.carBrandId === this.carBrandData?.carBrandId) {
+          this.showTrademark = true;
+        }
       },
       error: (err) => {
         console.log(err);

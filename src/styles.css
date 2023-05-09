@@ -186,6 +186,21 @@ tr:nth-child(odd) {
   margin-bottom: 20px;
 }
 
+.company-select{
+  padding: 6px;
+  margin: 5px;
+  border: 1px solid #ccc;
+
+}
+.select-container {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  margin-right: 60px;
+
+  float: right;
+}
 .dialog select option {
   padding: 8px;
 }

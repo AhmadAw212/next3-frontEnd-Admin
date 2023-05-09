@@ -12,6 +12,7 @@ import { CoreDocumentComponent } from './components/administrator/core-document/
 import { CoreDomainComponent } from './components/administrator/core-domain/core-domain.component';
 import { CarsBrandComponent } from './components/administrator/cars-brand/cars-brand.component';
 import { CarsClientComponent } from './components/administrator/cars-client/cars-client.component';
+import { CarsCoverComponent } from './components/administrator/cars-cover/cars-cover.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -69,6 +70,11 @@ const routes: Routes = [
       {
         path: 'carsClient',
         component: CarsClientComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carsCover',
+        component: CarsCoverComponent,
         canActivate: [AuthGuard],
       },
     ],
