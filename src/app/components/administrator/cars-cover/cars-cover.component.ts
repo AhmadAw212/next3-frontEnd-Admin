@@ -23,6 +23,8 @@ export class CarsCoverComponent implements OnInit {
   code: string = '';
   description: string = '';
   coverTypes?: type[];
+  updatedCoverValues?: CarCover[] = [];
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -34,8 +36,14 @@ export class CarsCoverComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.getCoverTypes();
+    this.dateFormatService.dateFormatter();
+    this.dateFormatterService();
   }
-
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({
       next: (res) => {
@@ -61,17 +69,67 @@ export class CarsCoverComponent implements OnInit {
     });
   }
 
-  // findCarCoverListByInsuranceId() {
-  //   this.dataService.findCarCoverListByInsuranceId(this.company!).subscribe({
-  //     next: (res) => {
-  //       this.carCover = res.data;
-  //       console.log(res);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
+  onTdBlur(
+    event: FocusEvent,
+    cover: CarCover,
+    property: 'code' | 'description'
+  ) {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = cover[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedCoverValues = this.updatedCoverValues ?? [];
+
+    const index = updatedCoverValues.findIndex((item) => item.id === cover.id);
+    if (index !== -1) {
+      updatedCoverValues.splice(index, 1);
+    }
+    if (oldValue !== newValue) {
+      cover[property] = newValue;
+      this.updatedCoverValues?.push({
+        id: cover.id,
+        insuranceId: cover.insuranceId,
+        code: cover.code,
+        description: cover.description,
+        type: cover.type,
+      });
+      console.log(this.updatedCoverValues);
+    }
+  }
+
+  onDropdownChange(event: Event, cover: CarCover, property: 'type') {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const updatedCarInfoVal = this.updatedCoverValues ?? [];
+    const index = updatedCarInfoVal.findIndex((item) => item.id === cover.id);
+    if (index !== -1) {
+      updatedCarInfoVal.splice(index, 1);
+    }
+    this.updatedCoverValues?.push({
+      id: cover.id,
+      insuranceId: cover.insuranceId,
+      code: cover.code,
+      description: cover.description,
+      type: cover.type,
+    });
+    console.log(this.updatedCoverValues);
+  }
+
+  updateCarInfo() {
+    if (this.updatedCoverValues?.length) {
+      this.dataService.updateCarCover(this.updatedCoverValues).subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          this.updatedCoverValues = [];
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
+  }
 
   searchCarCover() {
     this.dataService
@@ -94,6 +152,7 @@ export class CarsCoverComponent implements OnInit {
         this.dataService.deleteCarCover(id).subscribe({
           next: (data) => {
             this.alertifyService.error(data.message!);
+            this.searchCarCover();
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
@@ -107,11 +166,14 @@ export class CarsCoverComponent implements OnInit {
   }
 
   openAddCoverDialog() {
-    this.dialog.open(AddCarCoverComponent, {
+    const dialogRef = this.dialog.open(AddCarCoverComponent, {
       data: {
         types: this.coverTypes,
         insuranceId: this.company,
       },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.searchCarCover();
     });
   }
 }

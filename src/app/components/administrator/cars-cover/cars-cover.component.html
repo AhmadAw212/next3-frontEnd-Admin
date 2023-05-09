@@ -1,30 +1,32 @@
 <h3 class="h3-header">Cars Cover</h3>
-<select
-  id="bodyTypeNew"
-  name="bodyTypeNew"
-  required
-  class="company-select"
-  [(ngModel)]="company"
-  *ngIf="companies?.length! > 1; else oneResult"
->
-  <option *ngFor="let company of companies" [value]="company.companyId">
-    {{ company.companyName }}
-  </option>
-</select>
-
-<ng-template #oneResult>
+<div class="select-container">
+  <span>Company</span>
   <select
     id="bodyTypeNew"
     name="bodyTypeNew"
     required
     class="company-select"
-    disabled
+    [(ngModel)]="company"
+    *ngIf="companies?.length! > 1; else oneResult"
   >
     <option *ngFor="let company of companies" [value]="company.companyId">
       {{ company.companyName }}
     </option>
   </select>
-</ng-template>
+  <ng-template #oneResult>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      disabled
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </ng-template>
+</div>
 
 <div class="form-tab">
   <div class="admin-container">
@@ -49,7 +51,13 @@
             Add Cover
           </button>
 
-          <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
+          <button
+            type="button"
+            style="margin-left: 8px"
+            (click)="updateCarInfo()"
+          >
+            Update Cover
+          </button>
         </div>
       </div>
     </div>
@@ -70,11 +78,21 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="carCover?.length! > 0; else noData">
             <tr *ngFor="let cover of carCover">
               <td>{{ cover.id }}</td>
-              <td>{{ cover.code }}</td>
-              <td>{{ cover.description }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, cover, 'code')"
+              >
+                {{ cover.code }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, cover, 'description')"
+              >
+                {{ cover.description }}
+              </td>
               <td>
                 <select
                   id="bodyTypeNew"
@@ -82,6 +100,7 @@
                   required
                   [(ngModel)]="cover.type"
                   style="width: 120px"
+                  (change)="onDropdownChange($event, cover, 'type')"
                 >
                   <option *ngFor="let type of coverTypes" [value]="type.code">
                     {{ type.description }}
@@ -89,9 +108,9 @@
                 </select>
               </td>
 
-              <td>{{ cover.sysCreatedDate }}</td>
+              <td>{{ cover.sysCreatedDate | date : reportDateTimeFormat }}</td>
               <td>{{ cover.sysCreatedBy }}</td>
-              <td>{{ cover.sysUpdatedDate }}</td>
+              <td>{{ cover.sysUpdatedDate | date : reportDateTimeFormat }}</td>
               <td>{{ cover.sysUpdatedBy }}</td>
 
               <td>
@@ -99,12 +118,12 @@
               </td>
             </tr>
           </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="5">No data to display</td>
-            </tr>
-          </ng-template>
         </table>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">No data to display</td>
+          </tr>
+        </ng-template>
       </div>
     </div>
   </div>

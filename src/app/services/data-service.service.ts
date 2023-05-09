@@ -502,4 +502,11 @@ export class DataServiceService {
       `${this.userUrl}/car-cover/delete?id=${id}`
     );
   }
+
+  updateCarCover(carCover: CarCover[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-cover/update`,
+      carCover
+    );
+  }
 }
