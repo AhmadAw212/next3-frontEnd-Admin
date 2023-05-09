@@ -19,11 +19,11 @@
     background-color: #1884d7;
     color: white;
     border: none;
-    padding: 8px 10px;
-    margin: 43px 0 5px 0;
+    padding: 8px ;
+    margin:5px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    float: right;
+    float: left;
   }
   
   .save-role-btn:hover {

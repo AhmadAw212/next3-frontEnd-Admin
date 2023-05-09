@@ -7,13 +7,6 @@
     >
       Default Access
     </button>
-    <button
-      class="save-role-btn"
-      aria-label="Save Changes"
-      (click)="updateRoles()"
-    >
-      Save Changes
-    </button>
   </div>
   <div class="search-container">
     <input
@@ -59,7 +52,15 @@
         </td>
       </tr>
     </tbody>
+    <button
+      class="save-role-btn"
+      aria-label="Save Changes"
+      (click)="updateRoles()"
+    >
+      Save Changes
+    </button>
   </table>
+
   <div class="pagination-wrapper">
     <div class="page-size-wrapper">
       <label for="max-size-select">Max Size:</label>
