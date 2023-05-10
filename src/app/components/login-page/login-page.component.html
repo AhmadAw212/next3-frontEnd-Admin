@@ -28,6 +28,7 @@
           name="language"
           [(ngModel)]="selectedLanguage"
           (change)="Dico(selectedLanguage!)"
+          disabled
         >
           <option
             *ngFor="let lang of languages"

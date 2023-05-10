@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -14,7 +14,6 @@ export class AddCarBrandDialogComponent {
   code?: string;
   description?: string;
   file?: File;
-
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,

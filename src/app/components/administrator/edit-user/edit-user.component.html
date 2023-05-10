@@ -108,10 +108,8 @@
     </div>
   </div>
 </div>
-<div class="admin-container">
-  <div *ngIf="showProfileList">
-    <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
-  </div>
+<div class="admin-container" *ngIf="showProfileList">
+  <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
 </div>
 
 <!-- </ul> -->

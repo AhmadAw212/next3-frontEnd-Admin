@@ -29,7 +29,10 @@ export class AddDomainValueDialogComponent {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddDomainValueDialogComponent>
-  ) {}
+  ) {
+    this.coreDomainId = domainValues.domainId;
+    console.log(this.domainValues);
+  }
 
   getDomainValuesData(id: string) {
     this.dataService.coreDomainValue(id).subscribe({

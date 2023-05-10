@@ -1,0 +1,24 @@
+<h2 style="margin: 10px; font-size: large">Add Car Cover</h2>
+<div class="dialog">
+  <form (ngSubmit)="updateCarCover()">
+    <label for="code"> Code:</label>
+    <input type="text" id="code" name="code" required [(ngModel)]="code" />
+
+    <label for="description"> Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      required
+      [(ngModel)]="description"
+    />
+
+    <label for="type">Type</label>
+    <select id="Type" name="Type" required [(ngModel)]="type">
+      <option *ngFor="let type of types" [value]="type.code">
+        {{ type.description }}
+      </option>
+    </select>
+    <button type="submit">Save</button>
+  </form>
+</div>

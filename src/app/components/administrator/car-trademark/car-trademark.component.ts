@@ -6,8 +6,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddTrademarkDialogComponent } from '../add-trademark-dialog/add-trademark-dialog.component';
-import { UpdateTrademarkDialogComponent } from '../update-trademark-dialog/update-trademark-dialog.component';
+import { AddTrademarkDialogComponent } from '../add-dialogs/add-trademark-dialog/add-trademark-dialog.component';
+import { UpdateTrademarkDialogComponent } from '../update-dialogs/update-trademark-dialog/update-trademark-dialog.component';
 import { CarShape } from 'src/app/model/car-shape';
 
 @Component({

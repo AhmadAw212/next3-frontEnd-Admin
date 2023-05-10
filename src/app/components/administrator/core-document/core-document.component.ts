@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CoreDocument } from 'src/app/model/core-document';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddDocumentDialogComponent } from '../add-document-dialog/add-document-dialog.component';
+import { AddDocumentDialogComponent } from '../add-dialogs/add-document-dialog/add-document-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CoreProfile } from 'src/app/model/core-profile';

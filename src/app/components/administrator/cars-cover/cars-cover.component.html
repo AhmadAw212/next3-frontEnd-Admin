@@ -1,6 +1,6 @@
 <h3 class="h3-header">Cars Cover</h3>
 <div class="select-container">
-  <span>Company</span>
+  <span>Company:</span>
   <select
     id="bodyTypeNew"
     name="bodyTypeNew"
@@ -51,13 +51,13 @@
             Add Cover
           </button>
 
-          <button
+          <!-- <button
             type="button"
             style="margin-left: 8px"
             (click)="updateCarInfo()"
           >
             Update Cover
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -76,21 +76,16 @@
               <th>Sys_Updated_Date</th>
               <th>Sys_Updated_By</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody *ngIf="carCover?.length! > 0; else noData">
             <tr *ngFor="let cover of carCover">
               <td>{{ cover.id }}</td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, cover, 'code')"
-              >
+              <td>
                 {{ cover.code }}
               </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, cover, 'description')"
-              >
+              <td>
                 {{ cover.description }}
               </td>
               <td>
@@ -99,8 +94,8 @@
                   name="bodyTypeNew"
                   required
                   [(ngModel)]="cover.type"
-                  style="width: 120px"
-                  (change)="onDropdownChange($event, cover, 'type')"
+                  style="width: 150px"
+                  disabled
                 >
                   <option *ngFor="let type of coverTypes" [value]="type.code">
                     {{ type.description }}
@@ -115,6 +110,9 @@
 
               <td>
                 <mat-icon (click)="deleteCarCover(cover.id!)">delete</mat-icon>
+              </td>
+              <td>
+                <mat-icon (click)="updateCarCoverDialog(cover)">edit</mat-icon>
               </td>
             </tr>
           </tbody>

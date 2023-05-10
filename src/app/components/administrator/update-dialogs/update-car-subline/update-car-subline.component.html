@@ -1,0 +1,21 @@
+<h2 style="margin: 10px; font-size: large">Add Car Subline</h2>
+<div class="dialog">
+  <form (ngSubmit)="updateCarSubline()">
+    <label for="code"> Code:</label>
+    <input type="text" id="code" name="code" required [(ngModel)]="code" />
+
+    <label for="description"> Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      required
+      [(ngModel)]="description"
+    />
+
+    <label for="notes">Notes:</label>
+    <input type="text" id="notes" name="notes" required [(ngModel)]="notes" />
+
+    <button type="submit">Save</button>
+  </form>
+</div>

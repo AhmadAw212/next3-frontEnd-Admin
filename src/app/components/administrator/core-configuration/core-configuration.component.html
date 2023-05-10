@@ -21,9 +21,9 @@
           <button type="button" (click)="openCoreConfigDialog()">
             Add Configuration
           </button>
-          <button type="button" style="margin-left: 8px" (click)="editConfig()">
+          <!-- <button type="button" style="margin-left: 8px" (click)="editConfig()">
             Update
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -40,21 +40,16 @@
               <th>sysUpdatedDate</th>
               <th>sysUpdatedBy</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody *ngIf="configData!.length > 0; else noData">
             <tr *ngFor="let config of configData!">
               <td>{{ config.id }}</td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, config, 'configValue')"
-              >
+              <td>
                 {{ config.configValue }}
               </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, config, 'description')"
-              >
+              <td>
                 {{ config.description }}
               </td>
               <td>{{ config.sysCreatedDate | date : reportDateTimeFormat }}</td>
@@ -64,6 +59,12 @@
 
               <td>
                 <mat-icon (click)="deleteConfig(config.id!)">delete</mat-icon>
+              </td>
+
+              <td>
+                <mat-icon (click)="updateCoreConfigDialog(config)"
+                  >edit</mat-icon
+                >
               </td>
             </tr>
           </tbody>

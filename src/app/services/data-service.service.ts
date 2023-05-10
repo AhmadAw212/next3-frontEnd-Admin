@@ -23,6 +23,8 @@ import { CarTrademark } from '../model/car-trademark';
 import { CarInfo } from '../model/car-info';
 import { CompanyBranchList } from '../model/company-branch-list';
 import { CarCover } from '../model/car-cover';
+import { CarProducts } from '../model/car-products';
+import { CarSublines } from '../model/car-sublines';
 
 @Injectable({
   providedIn: 'root',
@@ -507,6 +509,62 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/car-cover/update`,
       carCover
+    );
+  }
+
+  searchCarProducts(insuranceId: string, code: string, description: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-products/${insuranceId}/search?code=${code}&description=${description}`
+    );
+  }
+
+  getCarProductsTypes() {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/productTypes`);
+  }
+
+  addCarProduct(carCover: CarProducts) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-products/new`,
+      carCover
+    );
+  }
+
+  deleteCarProduct(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-products/delete?id=${id}`
+    );
+  }
+
+  updateCarProduct(carProduct: CarProducts[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-products/update`,
+      carProduct
+    );
+  }
+
+  searchCarSublines(insuranceId: string, code: string, description: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-subline/${insuranceId}/search?code=${code}&description=${description}`
+    );
+  }
+
+  addCarSubline(carSubline: CarSublines) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-subline/new`,
+      carSubline
+    );
+  }
+
+  deleteCarSubline(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-subline/delete?id=${id}`
+    );
+  }
+
+  updateCarSubline(carSubline: CarSublines[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-subline/update`,
+      carSubline
     );
   }
 }

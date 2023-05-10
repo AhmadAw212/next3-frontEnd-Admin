@@ -6,7 +6,7 @@ import { CoreUser } from 'src/app/model/core-user';
 import { Profiles } from 'src/app/model/profiles';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { AddProfileDialogComponent } from '../add-profile-dialog/add-profile-dialog.component';
+import { AddProfileDialogComponent } from '../add-dialogs/add-profile-dialog/add-profile-dialog.component';
 import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
 import { AuthService } from 'src/app/services/auth.service';
 // import { AuthService } from 'src/app/shared/auth.service';
