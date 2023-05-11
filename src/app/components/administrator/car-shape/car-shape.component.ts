@@ -5,8 +5,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddShapeDialogComponent } from '../add-shape-dialog/add-shape-dialog.component';
-import { UpdateShapeDialogComponent } from '../update-shape-dialog/update-shape-dialog.component';
+import { AddShapeDialogComponent } from '../add-dialogs/add-shape-dialog/add-shape-dialog.component';
+import { UpdateShapeDialogComponent } from '../update-dialogs/update-shape-dialog/update-shape-dialog.component';
 import { CarTrademark } from 'src/app/model/car-trademark';
 import { CarInfo } from 'src/app/model/car-info';
 

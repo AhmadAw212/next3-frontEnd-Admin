@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddLanguageComponent } from '../add-language/add-language.component';
+import { AddLanguageComponent } from '../add-dialogs/add-language/add-language.component';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { ResourceBundle } from 'src/app/model/resource-bundle';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';

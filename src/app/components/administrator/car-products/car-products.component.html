@@ -1,0 +1,130 @@
+<h3 class="h3-header">Cars Products</h3>
+<div class="select-container">
+  <span>Company:</span>
+  <select
+    id="bodyTypeNew"
+    name="bodyTypeNew"
+    required
+    class="company-select"
+    [(ngModel)]="company"
+    *ngIf="companies?.length! > 1; else oneResult"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+  <ng-template #oneResult>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      disabled
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </ng-template>
+</div>
+
+<div class="form-tab">
+  <div class="admin-container">
+    <div class="row">
+      <div class="user-inputs">
+        <form (ngSubmit)="searchCarProducts()">
+          <label for="code">Code:</label>
+          <input type="text" id="code" name="code" [(ngModel)]="code" />
+
+          <label for="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            [(ngModel)]="description"
+          />
+
+          <button type="submit">Search</button>
+        </form>
+        <div class="admin-button">
+          <button type="button" (click)="openAddProductDialog()">
+            Add Product
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Tarif</th>
+              <th>LOB</th>
+              <th>Sys_Created_Date</th>
+              <th>Sys_Created_By</th>
+              <th>Sys_Updated_Date</th>
+              <th>Sys_Updated_By</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of carProducts">
+              <td>{{ product.id }}</td>
+              <td>{{ product.code }}</td>
+              <td>{{ product.description }}</td>
+              <td>
+                <select
+                  id="type"
+                  name="type"
+                  required
+                  style="width: 150px"
+                  [(ngModel)]="product.type"
+                  disabled
+                >
+                  <option
+                    *ngFor="let type of productsTypes"
+                    [value]="type.code"
+                  >
+                    {{ type.description }}
+                  </option>
+                </select>
+              </td>
+
+              <td>{{ product.tarif }}</td>
+              <td>{{ product.lob }}</td>
+              <td>
+                {{ product.sysCreatedDate | date : reportDateTimeFormat }}
+              </td>
+              <td>{{ product.sysCreatedBy }}</td>
+              <td>
+                {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
+              </td>
+              <td>{{ product.sysUpdatedBy }}</td>
+
+              <td>
+                <mat-icon (click)="deleteCarCover(product.id!)"
+                  >delete</mat-icon
+                >
+              </td>
+              <td>
+                <mat-icon (click)="updateCarProductDialog(product)"
+                  >edit</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">No data to display</td>
+          </tr>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

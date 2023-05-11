@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CoreDomain } from 'src/app/model/core-domain';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddDomainDialogComponent } from '../add-domain-dialog/add-domain-dialog.component';
+import { AddDomainDialogComponent } from '../add-dialogs/add-domain-dialog/add-domain-dialog.component';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreDomainValue } from 'src/app/model/core-domain-value';

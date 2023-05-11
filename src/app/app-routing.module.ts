@@ -13,6 +13,8 @@ import { CoreDomainComponent } from './components/administrator/core-domain/core
 import { CarsBrandComponent } from './components/administrator/cars-brand/cars-brand.component';
 import { CarsClientComponent } from './components/administrator/cars-client/cars-client.component';
 import { CarsCoverComponent } from './components/administrator/cars-cover/cars-cover.component';
+import { CarProductsComponent } from './components/administrator/car-products/car-products.component';
+import { CarSublinesComponent } from './components/administrator/car-sublines/car-sublines.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -73,8 +75,18 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'carsCover',
+        path: 'carCovers',
         component: CarsCoverComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carProducts',
+        component: CarProductsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carSublines',
+        component: CarSublinesComponent,
         canActivate: [AuthGuard],
       },
     ],

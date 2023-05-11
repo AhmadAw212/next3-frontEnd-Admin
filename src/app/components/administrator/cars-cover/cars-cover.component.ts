@@ -6,7 +6,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddCarCoverComponent } from '../add-car-cover/add-car-cover.component';
+import { AddCarCoverComponent } from '../add-dialogs/add-car-cover/add-car-cover.component';
+import { UpdateCarCoverComponent } from '../update-dialogs/update-car-cover/update-car-cover.component';
 interface type {
   code: string;
   description: string;
@@ -69,68 +70,6 @@ export class CarsCoverComponent implements OnInit {
     });
   }
 
-  onTdBlur(
-    event: FocusEvent,
-    cover: CarCover,
-    property: 'code' | 'description'
-  ) {
-    const tdElement = event.target as HTMLTableCellElement;
-    const oldValue = cover[property];
-    const newValue = tdElement.innerText.trim();
-    const updatedCoverValues = this.updatedCoverValues ?? [];
-
-    const index = updatedCoverValues.findIndex((item) => item.id === cover.id);
-    if (index !== -1) {
-      updatedCoverValues.splice(index, 1);
-    }
-    if (oldValue !== newValue) {
-      cover[property] = newValue;
-      this.updatedCoverValues?.push({
-        id: cover.id,
-        insuranceId: cover.insuranceId,
-        code: cover.code,
-        description: cover.description,
-        type: cover.type,
-      });
-      console.log(this.updatedCoverValues);
-    }
-  }
-
-  onDropdownChange(event: Event, cover: CarCover, property: 'type') {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-    const updatedCarInfoVal = this.updatedCoverValues ?? [];
-    const index = updatedCarInfoVal.findIndex((item) => item.id === cover.id);
-    if (index !== -1) {
-      updatedCarInfoVal.splice(index, 1);
-    }
-    this.updatedCoverValues?.push({
-      id: cover.id,
-      insuranceId: cover.insuranceId,
-      code: cover.code,
-      description: cover.description,
-      type: cover.type,
-    });
-    console.log(this.updatedCoverValues);
-  }
-
-  updateCarInfo() {
-    if (this.updatedCoverValues?.length) {
-      this.dataService.updateCarCover(this.updatedCoverValues).subscribe({
-        next: (res) => {
-          this.alertifyService.success(res.message!);
-          this.updatedCoverValues = [];
-          console.log(res);
-        },
-        error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
-        },
-      });
-    }
-  }
-
   searchCarCover() {
     this.dataService
       .searchCarCover(this.company!, this.code!, this.description!)
@@ -176,4 +115,74 @@ export class CarsCoverComponent implements OnInit {
       this.searchCarCover();
     });
   }
+
+  updateCarCoverDialog(carCover: CarCover) {
+    const dialogRef = this.dialog.open(UpdateCarCoverComponent, {
+      data: { carCover: carCover, type: this.coverTypes },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.searchCarCover();
+    });
+  }
+  // onTdBlur(
+  //   event: FocusEvent,
+  //   cover: CarCover,
+  //   property: 'code' | 'description'
+  // ) {
+  //   const tdElement = event.target as HTMLTableCellElement;
+  //   const oldValue = cover[property];
+  //   const newValue = tdElement.innerText.trim();
+  //   const updatedCoverValues = this.updatedCoverValues ?? [];
+
+  //   const index = updatedCoverValues.findIndex((item) => item.id === cover.id);
+  //   if (index !== -1) {
+  //     updatedCoverValues.splice(index, 1);
+  //   }
+  //   if (oldValue !== newValue) {
+  //     cover[property] = newValue;
+  //     this.updatedCoverValues?.push({
+  //       id: cover.id,
+  //       insuranceId: cover.insuranceId,
+  //       code: cover.code,
+  //       description: cover.description,
+  //       type: cover.type,
+  //     });
+  //     console.log(this.updatedCoverValues);
+  //   }
+  // }
+
+  // onDropdownChange(event: Event, cover: CarCover, property: 'type') {
+  //   const selectedValue = (event.target as HTMLSelectElement).value;
+  //   const updatedCarInfoVal = this.updatedCoverValues ?? [];
+  //   const index = updatedCarInfoVal.findIndex((item) => item.id === cover.id);
+  //   if (index !== -1) {
+  //     updatedCarInfoVal.splice(index, 1);
+  //   }
+  //   this.updatedCoverValues?.push({
+  //     id: cover.id,
+  //     insuranceId: cover.insuranceId,
+  //     code: cover.code,
+  //     description: cover.description,
+  //     type: cover.type,
+  //   });
+  //   console.log(this.updatedCoverValues);
+  // }
+
+  // updateCarInfo() {
+  //   if (this.updatedCoverValues?.length) {
+  //     this.dataService.updateCarCover(this.updatedCoverValues).subscribe({
+  //       next: (res) => {
+  //         this.alertifyService.success(res.message!);
+  //         this.updatedCoverValues = [];
+  //         console.log(res);
+  //       },
+  //       error: (err) => {
+  //         if (err.status === 401 || err.status === 500) {
+  //           this.authService.logout();
+  //           this.alertifyService.dialogAlert('Error');
+  //         }
+  //       },
+  //     });
+  //   }
+  // }
 }

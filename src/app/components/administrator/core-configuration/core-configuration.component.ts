@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfigData } from 'src/app/model/config-data';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { AddConfigDialogComponent } from '../add-config-dialog/add-config-dialog.component';
+import { AddConfigDialogComponent } from '../add-dialogs/add-config-dialog/add-config-dialog.component';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { UpdateCoreConfigurationComponent } from '../update-dialogs/update-core-configuration/update-core-configuration.component';
 
 @Component({
   selector: 'app-core-configuration',
@@ -114,6 +115,17 @@ export class CoreConfigurationComponent implements OnInit {
   }
 
   openCoreConfigDialog() {
-    this.dialog.open(AddConfigDialogComponent);
+    const dialogRef = this.dialog.open(AddConfigDialogComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.coreConfigSearch();
+    });
+  }
+  updateCoreConfigDialog(coreConfig: ConfigData) {
+    const dialogRef = this.dialog.open(UpdateCoreConfigurationComponent, {
+      data: coreConfig,
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.coreConfigSearch();
+    });
   }
 }

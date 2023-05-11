@@ -5,8 +5,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddCarBrandDialogComponent } from '../add-car-brand-dialog/add-car-brand-dialog.component';
-import { UpdateCarDialogComponent } from '../update-car-dialog/update-car-dialog.component';
+import { AddCarBrandDialogComponent } from '../add-dialogs/add-car-brand-dialog/add-car-brand-dialog.component';
+import { UpdateCarDialogComponent } from '../update-dialogs/update-car-dialog/update-car-dialog.component';
 import { CarTrademark } from 'src/app/model/car-trademark';
 
 @Component({
@@ -118,7 +118,9 @@ export class CarsBrandComponent implements OnInit {
   }
 
   updateCarBrandDialog(car: CarsBrand) {
-    const dialogRef = this.dialog.open(UpdateCarDialogComponent, { data: car });
+    const dialogRef = this.dialog.open(UpdateCarDialogComponent, {
+      data: car,
+    });
     dialogRef.afterClosed().subscribe(() => {
       this.carsBrandSearch();
     });

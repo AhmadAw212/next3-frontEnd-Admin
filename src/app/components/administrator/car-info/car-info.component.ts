@@ -5,7 +5,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { AddCarInfoComponent } from '../add-car-info/add-car-info.component';
+import { AddCarInfoComponent } from '../add-dialogs/add-car-info/add-car-info.component';
 import { CarShape } from 'src/app/model/car-shape';
 
 interface carInfoList {

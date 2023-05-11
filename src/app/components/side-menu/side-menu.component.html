@@ -10,7 +10,7 @@
       <mat-nav-list class="btn-group-vertical">
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title>User</mat-panel-title>
+            <mat-panel-title>User Management</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/addUser" class="btn">
             <!-- <i class="fas fa-user-plus"></i> -->
@@ -24,7 +24,7 @@
         <hr class="hr" />
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title>Configuration</mat-panel-title>
+            <mat-panel-title>System Configuration</mat-panel-title>
           </mat-expansion-panel-header>
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreConfig">
@@ -52,11 +52,15 @@
           <a mat-list-item routerLink="/Administrator/carsBrand">
             Cars Brand
           </a>
-          <a mat-list-item routerLink="/Administrator/carsClient">
-            Cars Client
-          </a>
-          <a mat-list-item routerLink="/Administrator/carsCover">
+          <a mat-list-item routerLink="/Administrator/carCovers">
             Cars Cover
+          </a>
+          <a mat-list-item routerLink="/Administrator/carsClient"> Client</a>
+          <a mat-list-item routerLink="/Administrator/carProducts">
+            Car products
+          </a>
+          <a mat-list-item routerLink="/Administrator/carSublines">
+            Car sublines
           </a>
         </mat-expansion-panel>
       </mat-nav-list>

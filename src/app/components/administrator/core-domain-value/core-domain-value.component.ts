@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CoreDomain } from 'src/app/model/core-domain';
 import { CoreDomainValue } from 'src/app/model/core-domain-value';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { AddDomainValueDialogComponent } from '../add-domain-value-dialog/add-domain-value-dialog.component';
+import { AddDomainValueDialogComponent } from '../add-dialogs/add-domain-value-dialog/add-domain-value-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
