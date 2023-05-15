@@ -30,27 +30,25 @@
 
 <div class="form-tab">
   <div class="admin-container">
-    <div class="row">
-      <div class="user-inputs">
-        <form (ngSubmit)="searchCarProducts()">
-          <label for="code">Code:</label>
-          <input type="text" id="code" name="code" [(ngModel)]="code" />
+    <div class="user-inputs">
+      <form (ngSubmit)="searchCarProducts()">
+        <label for="code">Code:</label>
+        <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-          <label for="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            [(ngModel)]="description"
-          />
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+        />
 
-          <button type="submit">Search</button>
-        </form>
-        <div class="admin-button">
-          <button type="button" (click)="openAddProductDialog()">
-            Add Product
-          </button>
-        </div>
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="openAddProductDialog()">
+          Add Product
+        </button>
       </div>
     </div>
     <div class="row mt-2">
@@ -72,7 +70,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="carProducts?.length! > 0; else noData">
             <tr *ngFor="let product of carProducts">
               <td>{{ product.id }}</td>
               <td>{{ product.code }}</td>
@@ -118,12 +116,12 @@
               </td>
             </tr>
           </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="5">No data to display</td>
+            </tr>
+          </ng-template>
         </table>
-        <ng-template #noData>
-          <tr>
-            <td colspan="5">No data to display</td>
-          </tr>
-        </ng-template>
       </div>
     </div>
   </div>

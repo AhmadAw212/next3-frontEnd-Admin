@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { EditUserDialogComponent } from './components/administrator/edit-user-dialog/edit-user-dialog.component';
+import { EditUserDialogComponent } from './components/administrator/update-dialogs/edit-user-dialog/edit-user-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -70,6 +70,11 @@ import { CarSublinesComponent } from './components/administrator/car-sublines/ca
 import { AddCarSublineComponent } from './components/administrator/add-dialogs/add-car-subline/add-car-subline.component';
 import { UpdateCarSublineComponent } from './components/administrator/update-dialogs/update-car-subline/update-car-subline.component';
 import { UpdateCoreConfigurationComponent } from './components/administrator/update-dialogs/update-core-configuration/update-core-configuration.component';
+import { AddCarClientComponent } from './components/administrator/add-dialogs/add-car-client/add-car-client.component';
+import { CarsReportListComponent } from './components/administrator/cars-report-list/cars-report-list.component';
+import { AddReportListComponent } from './components/administrator/add-dialogs/add-report-list/add-report-list.component';
+import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
+import { UpdateCarSuppFormComponent } from './components/administrator/update-car-supp-form/update-car-supp-form.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +125,11 @@ import { UpdateCoreConfigurationComponent } from './components/administrator/upd
     AddCarSublineComponent,
     UpdateCarSublineComponent,
     UpdateCoreConfigurationComponent,
+    AddCarClientComponent,
+    CarsReportListComponent,
+    AddReportListComponent,
+    CarsSupplierComponent,
+    UpdateCarSuppFormComponent,
   ],
   imports: [
     BrowserModule,

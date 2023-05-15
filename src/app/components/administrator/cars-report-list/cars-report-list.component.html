@@ -1,0 +1,138 @@
+<h3 class="h3-header">Cars Report List</h3>
+<div class="admin-container">
+  <div class="user-inputs">
+    <form (ngSubmit)="searchCarReport()">
+      <label for="role">Role:</label>
+      <input type="text" id="role" name="role" [(ngModel)]="role" />
+
+      <label for="sql">SQL:</label>
+      <input type="text" id="sql" name="sql" [(ngModel)]="sql" />
+
+      <button type="submit">Search</button>
+    </form>
+    <div class="admin-button">
+      <button type="button" (click)="openAddReportListDialog()">
+        Add Report
+      </button>
+      <button
+        type="button"
+        style="margin-left: 8px"
+        (click)="updateReportList()"
+      >
+        Update ReportList
+      </button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <table class="sql-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Report</th>
+            <th>Role</th>
+            <th>SQL</th>
+            <th>Sheet</th>
+            <th>Order</th>
+            <th>File</th>
+            <th>File_Extension</th>
+            <th>Directory</th>
+            <th>Email</th>
+            <th>Email_Done</th>
+            <th>Notes</th>
+            <th>sysCreatedDate</th>
+            <th>sysCreatedBy</th>
+            <th>sysUpdatedDate</th>
+            <th>sysUpdatedBy</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of carReport">
+            <td>{{ report.id }}</td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'report')"
+            >
+              {{ report.report }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'role')"
+            >
+              {{ report.role }}
+            </td>
+            <td contenteditable="true" (blur)="onTdBlur($event, report, 'sql')">
+              {{ report.sql }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'sheet')"
+            >
+              {{ report.sheet }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'order')"
+            >
+              {{ report.order }}
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                [(ngModel)]="report.file"
+                (change)="onCheckboxChange(report)"
+              />
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'fileExtension')"
+            >
+              {{ report.fileExtension }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'directory')"
+            >
+              {{ report.directory }}
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                [(ngModel)]="report.email"
+                (change)="onCheckboxChange(report)"
+              />
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                [(ngModel)]="report.emailDone"
+                (change)="onCheckboxChange(report)"
+              />
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, report, 'notes')"
+            >
+              {{ report.notes }}
+            </td>
+            <td>{{ report.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>{{ report.sysCreatedBy }}</td>
+            <td>{{ report.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>{{ report.sysUpdatedBy }}</td>
+            <td>
+              <mat-icon (click)="deleteCarReportList(report.id!)"
+                >delete</mat-icon
+              >
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">No data to display</td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+</div>

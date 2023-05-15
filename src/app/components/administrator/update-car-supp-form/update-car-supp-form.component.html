@@ -1,0 +1,223 @@
+<h5>Update Supplier Information</h5>
+<hr />
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="supplierNum">Supplier Number:</label>
+      <input type="text" id="supplierNum" name="supplierNum" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierTitre">Supplier Title:</label>
+      <input type="text" id="supplierTitre" name="supplierTitre" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierPrefixFam">Supplier Prefix Family:</label>
+      <input
+        type="text"
+        id="supplierPrefixFam"
+        name="supplierPrefixFam"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierFamilyName">Supplier Family Name:</label>
+      <input
+        type="text"
+        id="supplierFamilyName"
+        name="supplierFamilyName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierFirstName">Supplier First Name:</label>
+      <input
+        type="text"
+        id="supplierFirstName"
+        name="supplierFirstName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierFatherName">Supplier Father Name:</label>
+      <input
+        type="text"
+        id="supplierFatherName"
+        name="supplierFatherName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierHomeBldg">Supplier Home Building:</label>
+      <input
+        type="text"
+        id="supplierHomeBldg"
+        name="supplierHomeBldg"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="supplierHomeStreet">Supplier Home Street:</label>
+      <input
+        type="text"
+        id="supplierHomeStreet"
+        name="supplierHomeStreet"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierHomePhone">Supplier Home Phone:</label>
+      <input
+        type="text"
+        id="supplierHomePhone"
+        name="supplierHomePhone"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierBusStreet">Supplier Business Street:</label>
+      <input
+        type="text"
+        id="supplierBusStreet"
+        name="supplierBusStreet"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierBusPhone">Supplier Business Phone:</label>
+      <input
+        type="text"
+        id="supplierBusPhone"
+        name="supplierBusPhone"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierMobilePhone">Supplier Mobile Phone:</label>
+      <input
+        type="text"
+        id="supplierMobilePhone"
+        name="supplierMobilePhone"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierFax">Supplier Fax:</label>
+      <input type="text" id="supplierFax" name="supplierFax" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierArabicName">Supplier Arabic Name:</label>
+      <input
+        type="text"
+        id="supplierArabicName"
+        name="supplierArabicName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierSMS">Supplier SMS:</label>
+      <input type="text" id="supplierSMS" name="supplierSMS" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierIncludeApp">Supplier Include App:</label>
+      <input
+        type="text"
+        id="supplierIncludeApp"
+        name="supplierIncludeApp"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="supplierID">Supplier ID:</label>
+      <input type="text" id="supplierID" name="supplierID" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierHomeID">Supplier Home ID:</label>
+      <input type="text" id="supplierHomeID" name="supplierHomeID" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierBusID">Supplier Business ID:</label>
+      <input type="text" id="supplierBusID" name="supplierBusID" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierGradeID">Supplier Grade ID:</label>
+      <select
+        id="supplierGradeID"
+        name="supplierGradeID"
+        class="input-dropdown"
+        [(ngModel)]="GradeId"
+      >
+        <option *ngFor="let grade of suppGrade" [value]="grade.code">
+          {{ grade.description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="supplierShowInList">Supplier Show in List:</label>
+      <input
+        type="text"
+        id="supplierShowInList"
+        name="supplierShowInList"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierName">Supplier Name:</label>
+      <input type="text" id="supplierName" name="supplierName" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierOutNetwork">Supplier Out Network:</label>
+      <input
+        type="text"
+        id="supplierOutNetwork"
+        name="supplierOutNetwork"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierFDate">Supplier FDate:</label>
+      <input type="date" id="supplierFDate" name="supplierFDate" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierInactD">Supplier Inactive Date:</label>
+      <input type="date" id="supplierInactD" name="supplierInactD" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierEmail">Supplier Email:</label>
+      <input type="text" id="supplierEmail" name="supplierEmail" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierInitialCount">Supplier Initial Count:</label>
+      <input
+        type="text"
+        id="supplierInitialCount"
+        name="supplierInitialCount"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierRegNum">Supplier Registration Number:</label>
+      <input type="text" id="supplierRegNum" name="supplierRegNum" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierTVANum">Supplier TVA Number:</label>
+      <input type="text" id="supplierTVANum" name="supplierTVANum" required />
+    </div>
+    <div class="form-group">
+      <label for="supplierType">Supplier Type:</label>
+      <select
+        id="type"
+        name="type"
+        class="input-dropdown"
+        [(ngModel)]="selectedSuppType"
+      >
+        <option *ngFor="let type of supplierType" [value]="type.code">
+          {{ type.description }}
+        </option>
+      </select>
+    </div>
+    <input type="submit" value="Submit" />
+  </form>
+</div>

@@ -1,0 +1,17 @@
+.updated-row {
+    background-color: rgba(193, 255, 155, 0.542);
+    
+  }
+
+  /* .updated-row:hover {
+    background-color: rgba(193, 255, 155, 0.542);
+  } */
+
+  .invalid-input {
+    border: 2px solid red;
+    background-color: white;
+  }
+  .disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

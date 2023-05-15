@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { CoreProfile } from '../model/core-profile';
 import { DataServiceService } from './data-service.service';
 import { AlertifyService } from './alertify.service';
+import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,8 @@ export class AuthService {
   constructor(
     private dataService: DataServiceService,
     private router: Router,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dialog: MatDialog
   ) {}
 
   authenticate(name: string, password: string) {
@@ -22,13 +25,15 @@ export class AuthService {
           const token = result.data.token;
           const profiles = result.data.profiles;
           localStorage.setItem('token', token);
-          if (token) {
+          if (token && result.data.firstLogin === false) {
             this.router.navigate(['/profiles-main']);
             this.userProfiles = profiles;
+          } else if (token && result.data.firstLogin === true) {
+            this.openChangePasswordDialog();
           }
-        } else if (result.statusCode === 423)
+        } else if (result.statusCode === 423) {
           this.alertifyService.dialogAlert(result.message!);
-        // console.log(result.message);
+        }
       },
       error: (err) => {
         let errorMessage = 'An error occurred';
@@ -40,6 +45,19 @@ export class AuthService {
 
         this.alertifyService.error(errorMessage);
       },
+    });
+  }
+  openChangePasswordDialog() {
+    const dialogRef = this.dialog.open(ChangePassDialogComponent, {
+      width: '300px',
+      // Add any additional configuration for the dialog
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // Handle any logic after the change password dialog is closed
+      if (result) {
+        this.router.navigate(['/profiles-main']);
+      }
     });
   }
 

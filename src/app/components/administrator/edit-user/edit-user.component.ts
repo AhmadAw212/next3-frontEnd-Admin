@@ -5,7 +5,7 @@ import { CoreUser } from 'src/app/model/core-user';
 import { Role } from 'src/app/model/role';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
+import { EditUserDialogComponent } from '../update-dialogs/edit-user-dialog/edit-user-dialog.component';
 import { Router } from '@angular/router';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';

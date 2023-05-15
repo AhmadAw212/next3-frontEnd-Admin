@@ -1,0 +1,107 @@
+<h2 style="margin: 10px; font-size: large">Add Car ReportList</h2>
+<div class="dialog">
+  <form [formGroup]="form" (ngSubmit)="addReportList()">
+    <label for="report"> Report:</label>
+    <input
+      type="text"
+      id="report"
+      name="report"
+      required
+      formControlName="report"
+    />
+
+    <label for="role"> role:</label>
+    <input type="text" id="role" name="role" required formControlName="role" />
+
+    <label for="sql"> SQL:</label>
+    <input type="text" id="sql" name="sql" required formControlName="sql" />
+
+    <label for="sheet"> Sheet:</label>
+    <input
+      type="text"
+      id="sheet"
+      name="sheet"
+      required
+      formControlName="sheet"
+    />
+
+    <label for="order"> Order:</label>
+    <input
+      type="text"
+      id="order"
+      name="order"
+      required
+      formControlName="order"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['order'].errors &&
+        (formControl['order'].dirty || formControl['order'].touched)
+      "
+    >
+      <div *ngIf="formControl['order']?.errors?.['required']">
+        order is required
+      </div>
+      <div *ngIf="formControl['order']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="file"> file:</label>
+    <select id="file" name="file" required formControlName="file">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+
+    <label for="fileExtension"> File_Extension:</label>
+    <input
+      type="text"
+      id="fileExtension"
+      name="fileExtension"
+      required
+      formControlName="fileExtension"
+    />
+
+    <label for="directory"> Directory:</label>
+    <input
+      type="text"
+      id="directory"
+      name="directory"
+      required
+      formControlName="directory"
+    />
+
+    <label for="email"> Email:</label>
+    <select id="email" name="email" required formControlName="email">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+
+    <label for="emailDone"> Email_Done:</label>
+    <select
+      id="emailDone"
+      name="emailDone"
+      required
+      formControlName="emailDone"
+    >
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+    <label for="notes"> Notes:</label>
+    <input
+      type="text"
+      id="notes"
+      name="notes"
+      required
+      formControlName="notes"
+    />
+
+    <button
+      type="submit"
+      [disabled]="!form.valid"
+      [ngClass]="{ 'disabled-button': !form.valid }"
+    >
+      Save
+    </button>
+  </form>
+</div>
