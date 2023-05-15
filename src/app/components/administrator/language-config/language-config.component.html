@@ -1,29 +1,27 @@
 <h3 class="h3-header">Language Configuration</h3>
 <div class="form-tab">
   <div class="admin-container">
-    <div class="row">
-      <div class="user-inputs">
-        <form (ngSubmit)="resourceBundleSearch()">
-          <label for="inputId">Resource Key:</label>
-          <input type="text" id="key" name="key" [(ngModel)]="key" />
+    <div class="user-inputs">
+      <form (ngSubmit)="resourceBundleSearch()">
+        <label for="inputId">Resource Key:</label>
+        <input type="text" id="key" name="key" [(ngModel)]="key" />
 
-          <label for="inputDescription">Resource Value:</label>
-          <input type="text" id="value" name="value" [(ngModel)]="value" />
+        <label for="inputDescription">Resource Value:</label>
+        <input type="text" id="value" name="value" [(ngModel)]="value" />
 
-          <button type="submit">Search</button>
-        </form>
-        <div class="admin-button">
-          <button type="button" (click)="openCoreConfigDialog()">
-            Add Language
-          </button>
-          <button
-            type="button"
-            (click)="updateResouce()"
-            style="margin-left: 8px"
-          >
-            Update
-          </button>
-        </div>
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="openCoreConfigDialog()">
+          Add Language
+        </button>
+        <button
+          type="button"
+          (click)="updateResouce()"
+          style="margin-left: 8px"
+        >
+          Update
+        </button>
       </div>
     </div>
     <div class="row mt-4">

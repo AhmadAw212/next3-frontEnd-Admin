@@ -1,26 +1,24 @@
 <div class="form-tab">
   <div class="admin-container" style="height: 200px">
-    <div class="row">
-      <div class="user-inputs">
-        <form (ngSubmit)="carTrademarkSearch()">
-          <label for="code">Code:</label>
-          <input type="text" id="code" name="code" [(ngModel)]="code" />
+    <div class="user-inputs">
+      <form (ngSubmit)="carTrademarkSearch()">
+        <label for="code">Code:</label>
+        <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-          <label for="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            [(ngModel)]="description"
-          />
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+        />
 
-          <button type="submit">Search</button>
-        </form>
-        <div class="admin-button">
-          <button type="button" (click)="openAddCarTrademarkDialog()">
-            Add Trademark
-          </button>
-        </div>
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="openAddCarTrademarkDialog()">
+          Add Trademark
+        </button>
       </div>
     </div>
     <div class="row mt-4">

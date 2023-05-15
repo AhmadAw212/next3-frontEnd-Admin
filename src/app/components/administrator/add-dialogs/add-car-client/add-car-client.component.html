@@ -1,0 +1,335 @@
+<h2 style="margin: 10px; font-size: large">Add Client</h2>
+<div class="dialog">
+  <form [formGroup]="form" (ngSubmit)="addCarClient()">
+    <label for="num1">NUM_1:</label>
+    <input
+      type="text"
+      id="num1"
+      name="num1"
+      required
+      formControlName="num1"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['num1'].errors &&
+        (formControl['num1'].dirty || formControl['num1'].touched)
+      "
+    >
+      <div *ngIf="formControl['num1']?.errors?.['required']">
+        num1 is required
+      </div>
+      <div *ngIf="formControl['num1']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="num2">NUM_2:</label>
+    <input
+      type="text"
+      id="num2"
+      name="num2"
+      required
+      formControlName="num2"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['num2'].errors &&
+        (formControl['num2'].dirty || formControl['num2'].touched)
+      "
+    >
+      <div *ngIf="formControl['num2']?.errors?.['required']">
+        num2 is required
+      </div>
+      <div *ngIf="formControl['num2']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="firstName">First name:</label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      required
+      formControlName="firstName"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['firstName'].errors &&
+        (formControl['firstName'].dirty || formControl['firstName'].touched)
+      "
+    >
+      <div *ngIf="formControl['firstName']?.errors?.['required']">
+        firstName is required
+      </div>
+    </div>
+    <label for="lastName">Family name:</label>
+    <input
+      type="text"
+      id="lastName"
+      name="lastName"
+      required
+      formControlName="lastName"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['lastName'].errors &&
+        (formControl['lastName'].dirty || formControl['lastName'].touched)
+      "
+    >
+      <div *ngIf="formControl['lastName']?.errors?.['required']">
+        Family Name is required
+      </div>
+    </div>
+    <label for="fatherName">Father Name:</label>
+    <input
+      type="text"
+      id="fatherName"
+      name="fatherName"
+      required
+      formControlName="fatherName"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['fatherName'].errors &&
+        (formControl['fatherName'].dirty || formControl['fatherName'].touched)
+      "
+    >
+      <div *ngIf="formControl['fatherName']?.errors?.['required']">
+        father Name is required
+      </div>
+    </div>
+    <label for="prefixFamily">Prefix Family:</label>
+    <input
+      type="text"
+      id="prefixFamily"
+      name="prefixFamily"
+      required
+      formControlName="prefixFamily"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['prefixFamily'].errors &&
+        (formControl['prefixFamily'].dirty ||
+          formControl['prefixFamily'].touched)
+      "
+    >
+      <div *ngIf="formControl['prefixFamily']?.errors?.['required']">
+        Prefix Family is required
+      </div>
+    </div>
+    <label for="busPhone">Bus Phone:</label>
+    <input
+      type="text"
+      id="busPhone"
+      name="busPhone"
+      required
+      formControlName="busPhone"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['busPhone'].errors &&
+        (formControl['busPhone'].dirty || formControl['busPhone'].touched)
+      "
+    >
+      <div *ngIf="formControl['busPhone']?.errors?.['required']">
+        busPhone is required
+      </div>
+    </div>
+    <label for="mobilePhone">Mobile Phone:</label>
+    <input
+      type="text"
+      id="mobilePhone"
+      name="mobilePhone"
+      required
+      formControlName="mobilePhone"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['mobilePhone'].errors &&
+        (formControl['mobilePhone'].dirty || formControl['mobilePhone'].touched)
+      "
+    >
+      <div *ngIf="formControl['mobilePhone']?.errors?.['required']">
+        Mobile Phone is required
+      </div>
+    </div>
+    <label for="titre">Titre:</label>
+    <input
+      type="text"
+      id="titre"
+      name="titre"
+      required
+      formControlName="titre"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['titre'].errors &&
+        (formControl['titre'].dirty || formControl['titre'].touched)
+      "
+    >
+      <div *ngIf="formControl['titre']?.errors?.['required']">
+        titre is required
+      </div>
+
+      <div *ngIf="formControl['titre']?.errors?.['maxlength']">
+        maximum length exceeded
+      </div>
+    </div>
+    <label for="gender">Gender:</label>
+    <input
+      type="text"
+      id="gender"
+      name="gender"
+      required
+      formControlName="gender"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['gender'].errors &&
+        (formControl['gender'].dirty || formControl['gender'].touched)
+      "
+    >
+      <div *ngIf="formControl['gender']?.errors?.['required']">
+        gender is required
+      </div>
+      <div *ngIf="formControl['gender']?.errors?.['maxlength']">
+        maximum length exceeded
+      </div>
+    </div>
+    <label for="broker">Broker:</label>
+    <input
+      type="text"
+      id="broker"
+      name="broker"
+      required
+      formControlName="broker"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['broker'].errors &&
+        (formControl['broker'].dirty || formControl['broker'].touched)
+      "
+    >
+      <div *ngIf="formControl['broker']?.errors?.['required']">
+        broker is required
+      </div>
+      <div *ngIf="formControl['broker']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="indic1">INDIC1:</label>
+    <input
+      type="text"
+      id="indic1"
+      name="indic1"
+      required
+      formControlName="indic1"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['indic1'].errors &&
+        (formControl['indic1'].dirty || formControl['indic1'].touched)
+      "
+    >
+      <div *ngIf="formControl['indic1']?.errors?.['required']">
+        indic1 is required
+      </div>
+      <div *ngIf="formControl['indic1']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="indic2">INDIC2:</label>
+    <input
+      type="text"
+      id="indic2"
+      name="indic2"
+      required
+      formControlName="indic2"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['indic2'].errors &&
+        (formControl['indic2'].dirty || formControl['indic2'].touched)
+      "
+    >
+      <div *ngIf="formControl['indic2']?.errors?.['required']">
+        indic2 is required
+      </div>
+      <div *ngIf="formControl['indic2']?.errors?.['pattern']">
+        number is required
+      </div>
+    </div>
+    <label for="vip">VIP:</label>
+    <input
+      type="text"
+      id="vip"
+      name="vip"
+      required
+      formControlName="clientVip"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['clientVip'].errors &&
+        (formControl['clientVip'].dirty || formControl['clientVip'].touched)
+      "
+    >
+      <div *ngIf="formControl['clientVip']?.errors?.['required']">
+        clientVip is required
+      </div>
+    </div>
+    <label for="description">Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      required
+      formControlName="description"
+      style="margin-bottom: 10px"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['description'].errors &&
+        (formControl['description'].dirty || formControl['description'].touched)
+      "
+    >
+      <div *ngIf="formControl['description']?.errors?.['required']">
+        description is required
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!form.valid"
+      [ngClass]="{ 'disabled-button': !form.valid }"
+    >
+      Save
+    </button>
+  </form>
+</div>

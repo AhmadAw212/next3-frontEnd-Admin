@@ -25,6 +25,8 @@ import { CompanyBranchList } from '../model/company-branch-list';
 import { CarCover } from '../model/car-cover';
 import { CarProducts } from '../model/car-products';
 import { CarSublines } from '../model/car-sublines';
+import { CarClients } from '../model/car-clients';
+import { CarsReportList } from '../model/cars-report-list';
 
 @Injectable({
   providedIn: 'root',
@@ -548,7 +550,7 @@ export class DataServiceService {
     );
   }
 
-  addCarSubline(carSubline: CarSublines) {
+  addCarSubline(carSubline: CarSublines): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/car-subline/new`,
       carSubline
@@ -566,5 +568,74 @@ export class DataServiceService {
       `${this.userUrl}/car-subline/update`,
       carSubline
     );
+  }
+
+  searchCarClient(
+    insuranceId: string,
+    fName: string,
+    lName: string,
+    num1: string,
+    description: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-clients/${insuranceId}/search?fname=${fName}&lName=${lName}&num1=${num1}&description=${description}`
+    );
+  }
+
+  addCarClient(client: CarClients): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-clients/new`,
+      client
+    );
+  }
+
+  deleteCarClient(id: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-clients/delete?id=${id}`
+    );
+  }
+
+  updateCarClient(carClient: CarClients[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-clients/update`,
+      carClient
+    );
+  }
+
+  searchCarReportList(role: string, sql: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-reportList/search?role=${role}&sql=${sql}`
+    );
+  }
+  addCarReportList(reportList: CarsReportList): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-reportList/new`,
+      reportList
+    );
+  }
+  deleteCarReportList(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-reportList/delete?id=${id}`
+    );
+  }
+
+  updateCarReportList(reportList: CarsReportList[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-reportList/update`,
+      reportList
+    );
+  }
+
+  getSupplierType(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/supplier-interm`
+    );
+  }
+
+  getSupplierGrade() {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/garage-grade`);
+  }
+  getHomeRegions() {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getRegionsLov`);
   }
 }

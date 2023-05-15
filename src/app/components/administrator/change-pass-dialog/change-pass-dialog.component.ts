@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './change-pass-dialog.component.html',
   styleUrls: ['./change-pass-dialog.component.css'],
 })
-export class ChangePassDialogComponent {
+export class ChangePassDialogComponent implements OnInit {
   currentPassword?: string;
   newPassword?: string;
   confirmPassword?: string;
@@ -22,6 +22,10 @@ export class ChangePassDialogComponent {
     private router: Router,
     private authService: AuthService
   ) {}
+
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   changePassword() {
     const currentPassword = this.currentPassword!;
@@ -38,6 +42,7 @@ export class ChangePassDialogComponent {
                 this.alertify.dialogAlert(res.title!);
                 this.router.navigate(['/login']);
                 this.dialogRef.close();
+                localStorage.removeItem('token');
                 console.log(res);
               } else {
                 this.alertify.error(res.title!);

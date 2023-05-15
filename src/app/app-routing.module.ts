@@ -15,6 +15,8 @@ import { CarsClientComponent } from './components/administrator/cars-client/cars
 import { CarsCoverComponent } from './components/administrator/cars-cover/cars-cover.component';
 import { CarProductsComponent } from './components/administrator/car-products/car-products.component';
 import { CarSublinesComponent } from './components/administrator/car-sublines/car-sublines.component';
+import { CarsReportListComponent } from './components/administrator/cars-report-list/cars-report-list.component';
+import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -87,6 +89,16 @@ const routes: Routes = [
       {
         path: 'carSublines',
         component: CarSublinesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carReportList',
+        component: CarsReportListComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carSupplier',
+        component: CarsSupplierComponent,
         canActivate: [AuthGuard],
       },
     ],

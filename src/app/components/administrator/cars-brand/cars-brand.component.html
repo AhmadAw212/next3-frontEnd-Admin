@@ -1,25 +1,23 @@
 <h3 class="h3-header">Cars Brand</h3>
 <div class="admin-container" style="height: 200px">
-  <div class="row">
-    <div class="user-inputs">
-      <form (ngSubmit)="carsBrandSearch()">
-        <label for="code">Code:</label>
-        <input type="text" id="code" name="code" [(ngModel)]="code" />
+  <div class="user-inputs">
+    <form (ngSubmit)="carsBrandSearch()">
+      <label for="code">Code:</label>
+      <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <label for="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          [(ngModel)]="description"
-        />
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        [(ngModel)]="description"
+      />
 
-        <button type="submit">Search</button>
-      </form>
-      <div class="admin-button">
-        <button type="button" (click)="openAddCarBrandDialog()">Add Car</button>
-        <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
-      </div>
+      <button type="submit">Search</button>
+    </form>
+    <div class="admin-button">
+      <button type="button" (click)="openAddCarBrandDialog()">Add Car</button>
+      <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
     </div>
   </div>
   <div class="row mt-4">
