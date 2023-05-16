@@ -7,7 +7,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarClientComponent } from '../add-dialogs/add-car-client/add-car-client.component';
-
+interface type {
+  code: string;
+  description: string;
+}
 @Component({
   selector: 'app-cars-client',
   templateUrl: './cars-client.component.html',
@@ -23,6 +26,8 @@ export class CarsClientComponent implements OnInit {
   carClients?: CarClients[];
   reportDateTimeFormat?: string;
   updatedCarClientVal: CarClients[] = [];
+  titleLov?: type[];
+  genderList?: type[];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -35,6 +40,8 @@ export class CarsClientComponent implements OnInit {
     this.getCompaniesPerUser();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getTitleLov();
+    this.getGenderList();
   }
 
   dateFormatterService() {
@@ -53,6 +60,40 @@ export class CarsClientComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+  onDropdownChange(
+    event: Event,
+    client: CarClients,
+    property: 'titre' | 'gender'
+  ) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const updatedCarClientVal = this.updatedCarClientVal ?? [];
+    const index = updatedCarClientVal.findIndex(
+      (item) => item.id === client.id
+    );
+    if (index !== -1) {
+      updatedCarClientVal.splice(index, 1);
+    }
+    this.updatedCarClientVal?.push({
+      id: client.id,
+      insuranceId: client.insuranceId,
+      firstName: client.firstName,
+      lastName: client.lastName,
+      prefixFamily: client.prefixFamily,
+      fatherName: client.fatherName,
+      busPhone: client.busPhone,
+      mobilePhone: client.mobilePhone,
+      num1: client.num1,
+      num2: client.num2,
+      indic1: client.indic1,
+      indic2: client.indic2,
+      titre: client.titre,
+      description: client.description,
+      gender: client.gender,
+      broker: client.broker,
+      clientVip: client.clientVip,
+    });
+    console.log(this.updatedCarClientVal);
   }
 
   onTdBlur(
@@ -101,18 +142,6 @@ export class CarsClientComponent implements OnInit {
         } else {
           client[property] = parseInt(newValue);
         }
-      } else if (property === 'titre') {
-        if (newValue.length > 2) {
-          isValid = false;
-        } else {
-          client[property] = newValue;
-        }
-      } else if (property === 'gender') {
-        if (newValue.length > 1) {
-          isValid = false;
-        } else {
-          client[property] = newValue;
-        }
       } else {
         client[property] = newValue;
       }
@@ -124,6 +153,9 @@ export class CarsClientComponent implements OnInit {
         tdElement.classList.remove('invalid-input');
         tdElement.removeAttribute('title');
       }
+
+      // Change background color of the modified field
+      tdElement.classList.add('modified-field');
 
       if (isValid) {
         updatedCarClientVal.push({
@@ -173,6 +205,28 @@ export class CarsClientComponent implements OnInit {
       });
     }
   }
+
+  getGenderList() {
+    this.dataService.getGenderList().subscribe({
+      next: (res) => {
+        this.genderList = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  getTitleLov() {
+    this.dataService.gettitleLov().subscribe({
+      next: (res) => {
+        this.titleLov = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   searchCarClients() {
     this.dataService
       .searchCarClient(
@@ -215,7 +269,11 @@ export class CarsClientComponent implements OnInit {
 
   openAddClientDialog() {
     this.dialog.open(AddCarClientComponent, {
-      data: { insuranceId: this.company },
+      data: {
+        insuranceId: this.company,
+        title: this.titleLov,
+        gender: this.genderList,
+      },
       maxHeight: '600px',
     });
   }

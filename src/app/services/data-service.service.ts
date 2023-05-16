@@ -631,11 +631,17 @@ export class DataServiceService {
       `${this.userUrl}/constant/supplier-interm`
     );
   }
-
+  gettitleLov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/titleLov`);
+  }
   getSupplierGrade() {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/garage-grade`);
   }
   getHomeRegions() {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/getRegionsLov`);
+  }
+
+  getGenderList() {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getGenderList`);
   }
 }

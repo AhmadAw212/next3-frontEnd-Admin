@@ -98,7 +98,7 @@
               <th>Father_Name</th>
               <th>Bus_Phone</th>
               <th>Mobile_Phone</th>
-              <th>Titre</th>
+              <th>Title</th>
               <th>Gender</th>
               <th>Broker</th>
               <th>INDIC1</th>
@@ -112,7 +112,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="carClients?.length! > 0; else noData">
             <tr *ngFor="let client of carClients">
               <td>{{ client.id }}</td>
               <td
@@ -163,17 +163,32 @@
               >
                 {{ client.mobilePhone }}
               </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'titre')"
-              >
-                {{ client.titre }}
+              <td>
+                <select
+                  name="title"
+                  id="title"
+                  [(ngModel)]="client.titre"
+                  (change)="onDropdownChange($event, client, 'titre')"
+                >
+                  <option [value]="title.code" *ngFor="let title of titleLov">
+                    {{ title.description }}
+                  </option>
+                </select>
               </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'gender')"
-              >
-                {{ client.gender }}
+              <td>
+                <select
+                  name="gender"
+                  id="gender"
+                  [(ngModel)]="client.gender"
+                  (change)="onDropdownChange($event, client, 'gender')"
+                >
+                  <option
+                    [value]="gender.code"
+                    *ngFor="let gender of genderList"
+                  >
+                    {{ gender.description }}
+                  </option>
+                </select>
               </td>
               <td
                 contenteditable="true"

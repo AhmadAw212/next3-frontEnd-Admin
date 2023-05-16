@@ -128,7 +128,8 @@
           name="password"
           required
           formControlName="password"
-          #passwordInput
+          [readonly]="true"
+          style="opacity: 0.5"
         />
         <!-- <mat-icon (click)="togglePasswordVisibility(passwordInput)"
           >remove_red_eye</mat-icon
