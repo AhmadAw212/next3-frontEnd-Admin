@@ -26,6 +26,7 @@ export class CarProductsComponent implements OnInit {
   productsTypes?: type[];
   companies?: CompanyBranchList[];
   carProducts?: CarProducts[];
+  updatedCarProduct?: CarProducts[] = [];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -104,6 +105,53 @@ export class CarProductsComponent implements OnInit {
       }
     );
   }
+  onDropdownChange(event: Event, product: CarProducts, property: 'type') {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const updatedCarProduct = this.updatedCarProduct ?? [];
+    const index = updatedCarProduct.findIndex((item) => item.id === product.id);
+    if (index !== -1) {
+      updatedCarProduct.splice(index, 1);
+    }
+    this.updatedCarProduct?.push({
+      id: product.id,
+      insuranceId: product.insuranceId,
+      code: product.code,
+      description: product.description,
+      type: product.type,
+      tarif: product.tarif,
+      lob: product.lob,
+    });
+    console.log(this.updatedCarProduct);
+  }
+
+  onTdBlur(
+    event: FocusEvent,
+    product: CarProducts,
+    property: 'code' | 'description' | 'tarif' | 'lob'
+  ) {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = product[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedCarProduct = this.updatedCarProduct ?? [];
+
+    const index = updatedCarProduct.findIndex((item) => item.id === product.id);
+    if (index !== -1) {
+      updatedCarProduct.splice(index, 1);
+    }
+    if (oldValue !== newValue) {
+      updatedCarProduct.push({
+        id: product.id,
+        insuranceId: product.insuranceId,
+        code: product.code,
+        description: product.description,
+        type: product.type,
+        tarif: product.tarif,
+        lob: product.lob,
+      });
+    }
+
+    console.log(updatedCarProduct);
+  }
 
   openAddProductDialog() {
     const dialogRef = this.dialog.open(AddCarProductComponent, {
@@ -118,7 +166,24 @@ export class CarProductsComponent implements OnInit {
       this.searchCarProducts();
     });
   }
+  updateCarProduct() {
+    if (this.updatedCarProduct?.length) {
+      this.dataService.updateCarProduct(this.updatedCarProduct).subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          this.updatedCarProduct = [];
 
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
+  }
   updateCarProductDialog(carProduct: CarProducts) {
     const dialogRef = this.dialog.open(UpdateCarProductComponent, {
       data: { carProduct: carProduct, type: this.productsTypes },

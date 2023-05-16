@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AddCarClientComponent implements OnInit {
   form!: FormGroup;
   insuranceId!: string;
+  titleLov?: any;
+  genderList?: any;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -22,7 +24,8 @@ export class AddCarClientComponent implements OnInit {
     private authService: AuthService
   ) {
     this.insuranceId = this.data.insuranceId;
-
+    this.titleLov = this.data.title;
+    this.genderList = this.data.gender;
     console.log(data);
   }
 

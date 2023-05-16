@@ -49,6 +49,13 @@
         <button type="button" (click)="openAddProductDialog()">
           Add Product
         </button>
+        <button
+          type="button"
+          style="margin-left: 8px"
+          (click)="updateCarProduct()"
+        >
+          Update Car Product
+        </button>
       </div>
     </div>
     <div class="row mt-2">
@@ -73,8 +80,18 @@
           <tbody *ngIf="carProducts?.length! > 0; else noData">
             <tr *ngFor="let product of carProducts">
               <td>{{ product.id }}</td>
-              <td>{{ product.code }}</td>
-              <td>{{ product.description }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, product, 'code')"
+              >
+                {{ product.code }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, product, 'description')"
+              >
+                {{ product.description }}
+              </td>
               <td>
                 <select
                   id="type"
@@ -82,7 +99,7 @@
                   required
                   style="width: 150px"
                   [(ngModel)]="product.type"
-                  disabled
+                  (change)="onDropdownChange($event, product, 'type')"
                 >
                   <option
                     *ngFor="let type of productsTypes"
@@ -93,8 +110,18 @@
                 </select>
               </td>
 
-              <td>{{ product.tarif }}</td>
-              <td>{{ product.lob }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, product, 'tarif')"
+              >
+                {{ product.tarif }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, product, 'lob')"
+              >
+                {{ product.lob }}
+              </td>
               <td>
                 {{ product.sysCreatedDate | date : reportDateTimeFormat }}
               </td>
@@ -109,11 +136,11 @@
                   >delete</mat-icon
                 >
               </td>
-              <td>
+              <!-- <td>
                 <mat-icon (click)="updateCarProductDialog(product)"
                   >edit</mat-icon
                 >
-              </td>
+              </td> -->
             </tr>
           </tbody>
           <ng-template #noData>

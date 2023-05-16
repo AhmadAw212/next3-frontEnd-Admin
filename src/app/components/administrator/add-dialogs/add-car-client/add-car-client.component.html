@@ -168,15 +168,21 @@
         Mobile Phone is required
       </div>
     </div>
-    <label for="titre">Titre:</label>
-    <input
+    <!-- dico_title -->
+    <label for="titre">Title:</label>
+    <select name="title" id="title" formControlName="titre">
+      <option [value]="title.code" *ngFor="let title of titleLov">
+        {{ title.description }}
+      </option>
+    </select>
+    <!-- <input
       type="text"
       id="titre"
       name="titre"
       required
       formControlName="titre"
       style="margin-bottom: 10px"
-    />
+    /> -->
     <div
       style="color: red"
       *ngIf="
@@ -193,14 +199,17 @@
       </div>
     </div>
     <label for="gender">Gender:</label>
-    <input
-      type="text"
-      id="gender"
+    <select
       name="gender"
-      required
+      id="gender"
       formControlName="gender"
       style="margin-bottom: 10px"
-    />
+    >
+      <option [value]="gender.code" *ngFor="let gender of genderList">
+        {{ gender.description }}
+      </option>
+    </select>
+
     <div
       style="color: red"
       *ngIf="
