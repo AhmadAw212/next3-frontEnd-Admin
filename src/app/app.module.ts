@@ -75,6 +75,7 @@ import { CarsReportListComponent } from './components/administrator/cars-report-
 import { AddReportListComponent } from './components/administrator/add-dialogs/add-report-list/add-report-list.component';
 import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
 import { UpdateCarSuppFormComponent } from './components/administrator/update-car-supp-form/update-car-supp-form.component';
+import { AddCarSupplierComponent } from './components/administrator/add-dialogs/add-car-supplier/add-car-supplier.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +131,7 @@ import { UpdateCarSuppFormComponent } from './components/administrator/update-ca
     AddReportListComponent,
     CarsSupplierComponent,
     UpdateCarSuppFormComponent,
+    AddCarSupplierComponent,
   ],
   imports: [
     BrowserModule,

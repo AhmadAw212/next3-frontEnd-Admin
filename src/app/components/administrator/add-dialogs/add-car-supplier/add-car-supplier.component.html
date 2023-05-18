@@ -1,29 +1,6 @@
-<h5>Update Supplier Information</h5>
-<hr />
-<div class="container">
-  <form [formGroup]="carSupplierForm" (ngSubmit)="updateCarSupplier()">
-    <div class="form-group">
-      <label for="supplierID">Supplier ID:</label>
-      <input
-        type="text"
-        id="supplierID"
-        name="supplierID"
-        [readOnly]="true"
-        style="opacity: 0.7"
-        formControlName="id"
-      />
-    </div>
-    <div class="form-group">
-      <label for="supplierNum">Supplier Number:</label>
-      <input
-        type="text"
-        id="supplierNum"
-        name="supplierNum"
-        [readOnly]="true"
-        formControlName="number"
-        style="opacity: 0.7"
-      />
-    </div>
+<h2 style="margin: 10px; font-size: large">Add Car Cover</h2>
+<div class="dialog">
+  <form [formGroup]="carSupplierForm" (ngSubmit)="addCarSupplier()">
     <div class="form-group">
       <label for="supplierType">Supplier Type:</label>
       <select
@@ -156,20 +133,10 @@
         class="input-dropdown"
         formControlName="grade_id"
       >
-        <option *ngFor="let grade of suppGrade" [value]="grade.code">
+        <option *ngFor="let grade of supplierGrade" [value]="grade.code">
           {{ grade.description }}
         </option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label for="supplierName">Supplier Name:</label>
-      <input
-        type="text"
-        id="supplierName"
-        name="supplierName"
-        formControlName="fullName"
-      />
     </div>
 
     <div class="form-group">
@@ -198,17 +165,6 @@
         name="supplierEmail"
         formControlName="email"
       />
-      <div
-        style="color: red"
-        *ngIf="
-          formControl['email'].errors &&
-          (formControl['email'].dirty || formControl['email'].touched)
-        "
-      >
-        <div *ngIf="formControl['email']?.errors?.['email']">
-          Enter a valid email address
-        </div>
-      </div>
     </div>
     <div class="form-group">
       <label for="supplierInitialCount">Supplier Initial Count:</label>
@@ -218,19 +174,6 @@
         name="supplierInitialCount"
         formControlName="initialCount"
       />
-
-      <div
-        style="color: red"
-        *ngIf="
-          formControl['initialCount'].errors &&
-          (formControl['initialCount'].dirty ||
-            formControl['initialCount'].touched)
-        "
-      >
-        <div *ngIf="formControl['initialCount']?.errors?.['pattern']">
-          Number is required
-        </div>
-      </div>
     </div>
     <div class="form-group">
       <label for="supplierRegNum">Supplier Registration Number:</label>
@@ -250,43 +193,47 @@
         formControlName="tva_number"
       />
     </div>
-    <div class="form-group">
-      <label for="supplierIncludeApp">Supplier Include App:</label>
+    <div class="form-group" style="flex-direction: row">
+      <label for="supplierIncludeApp"> Include App:</label>
       <input
         type="checkbox"
         id="supplierIncludeApp"
         name="supplierIncludeApp"
         formControlName="include_app"
+        style="margin-left: 30px"
       />
     </div>
 
-    <div class="form-group">
-      <label for="supplierSMS">Supplier SMS:</label>
+    <div class="form-group" style="flex-direction: row">
+      <label for="supplierSMS">SMS:</label>
       <input
         type="checkbox"
         id="supplierSMS"
         name="supplierSMS"
         formControlName="sms"
+        style="margin-left: 85px"
       />
     </div>
-    <div class="form-group">
-      <label for="supplierOutNetwork">Supplier Out Network:</label>
+    <div class="form-group" style="flex-direction: row">
+      <label for="supplierOutNetwork"> Out Network:</label>
       <input
         type="checkbox"
         id="supplierOutNetwork"
         name="supplierOutNetwork"
         formControlName="out_network"
+        style="margin-left: 25px"
       />
     </div>
-    <div class="form-group">
-      <label for="supplierShowInList">Supplier Show in List:</label>
+    <div class="form-group" style="flex-direction: row">
+      <label for="supplierShowInList"> Show in List:</label>
       <input
         type="checkbox"
         id="supplierShowInList"
         name="supplierShowInList"
         formControlName="show_in_list"
+        style="margin-left: 30px"
       />
     </div>
-    <input type="submit" value="Save" />
+    <button type="submit">Submit</button>
   </form>
 </div>

@@ -27,6 +27,7 @@ import { CarProducts } from '../model/car-products';
 import { CarSublines } from '../model/car-sublines';
 import { CarClients } from '../model/car-clients';
 import { CarsReportList } from '../model/cars-report-list';
+import { CarSupplier } from '../model/car-supplier';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
+  updatedCarSupp = new Subject<CarSupplier>();
   constructor(private http: HttpClient) {}
 
   validateUser(name: string, password: string): Observable<ApiResponse> {
@@ -643,5 +645,40 @@ export class DataServiceService {
 
   getGenderList() {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/getGenderList`);
+  }
+
+  findCarSupplier(
+    insuranceId: string,
+    nameSubstring: string,
+    interm_code: string
+  ) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/${insuranceId}/search?nameSubstring=${nameSubstring}&interm_code=${interm_code}`
+    );
+  }
+
+  getAddresses(address: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/searchAddress?addressName=${address}`
+    );
+  }
+
+  updateCarSupplier(supplier: CarSupplier[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-supplier/update`,
+      supplier
+    );
+  }
+
+  deleteCarSupplier(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-supplier/delete?id=${id}`
+    );
+  }
+  addCarSupplier(supplier: CarSupplier) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-supplier/new`,
+      supplier
+    );
   }
 }
