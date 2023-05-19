@@ -71,10 +71,10 @@
               <th>Sys_Created_By</th>
               <th>Sys_Updated_Date</th>
               <th>Sys_Updated_By</th>
-              <th></th>
+              <th>Deactivate User</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="carSupplier?.length! > 0; else noData">
             <tr *ngFor="let supplier of carSupplier">
               <td>
                 <span class="material-icons" (click)="showSuppList(supplier)"
@@ -102,6 +102,7 @@
               <td>{{ supplier.bus_phone }}</td>
               <td>{{ supplier.mobile_number }}</td>
               <td>{{ supplier.tva_number }}</td>
+
               <td>
                 <select
                   id="supplierGradeID"
@@ -115,6 +116,7 @@
                   </option>
                 </select>
               </td>
+
               <td>
                 {{ supplier.sysCreatedDate | date : reportDateTimeFormat }}
               </td>
@@ -124,9 +126,7 @@
               </td>
               <td>{{ supplier.sysUpdatedBy }}</td>
               <td>
-                <mat-icon (click)="deleteCarSupplier(supplier.id)"
-                  >delete</mat-icon
-                >
+                <button>Deactivate</button>
               </td>
             </tr>
           </tbody>

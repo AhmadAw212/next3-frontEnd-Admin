@@ -93,11 +93,11 @@ export class CarsSupplierComponent implements OnInit {
     this.carSupplier = event;
     // console.log(this.selectedSupplier);
   }
-  deleteCarSupplier(id: string) {
+  deactivateUser(id: string) {
     this.alertifyService.confirmDialog(
       'Are you sure you want to delete this resource',
       () => {
-        this.dataService.deleteCarSupplier(id).subscribe({
+        this.dataService.deactivateUser(id).subscribe({
           next: (data) => {
             this.alertifyService.error(data.message);
             this.searchCarSupplier();

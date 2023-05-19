@@ -670,9 +670,9 @@ export class DataServiceService {
     );
   }
 
-  deleteCarSupplier(id: string): Observable<ApiResponse> {
+  deactivateUser(id: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(
-      `${this.userUrl}/cars-supplier/delete?id=${id}`
+      `${this.userUrl}/cars-supplier/deactivate?id=${id}`
     );
   }
   addCarSupplier(supplier: CarSupplier) {
