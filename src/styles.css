@@ -41,7 +41,7 @@ table {
 th {
   background-color: #025696;
   color: white;
-  padding: 3px;
+  /* padding: 3px; */
   text-align: left;
   border: 1px solid black;
   /* font-size:medium ; */
@@ -82,9 +82,9 @@ th {
 }
 
 td {
-  padding: 2px;
+  /* padding: 2px; */
   text-align: left;
-  width: 100px;
+  /* width: 100px; */
   border: 1px solid rgb(237, 220, 220); /* Add this line */
 }
 tr:hover {
@@ -391,7 +391,7 @@ tr:nth-child(odd) {
   
   tr {
     display: inline-block;
-    width: 100%;
+    /* width: 100%; */
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
     vertical-align: top;
@@ -399,7 +399,7 @@ tr:nth-child(odd) {
   
   td {
     display: block;
-    width: 100%;
+    /* width: 100%; */
     text-align: left;
     padding: 10px;
   }
