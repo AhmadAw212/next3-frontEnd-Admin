@@ -10,6 +10,7 @@ body { margin: 0; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman'
 .navbar-brand {
     color: white;
     font-weight: bold;
+
     /* margin-top: -15px; */
 }
 
