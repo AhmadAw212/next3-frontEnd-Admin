@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './change-pass-dialog.component.html',
   styleUrls: ['./change-pass-dialog.component.css'],
 })
-export class ChangePassDialogComponent implements OnInit {
+export class ChangePassDialogComponent {
   currentPassword?: string;
   newPassword?: string;
   confirmPassword?: string;
@@ -22,31 +22,25 @@ export class ChangePassDialogComponent implements OnInit {
     private router: Router,
     private authService: AuthService
   ) {}
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-
   changePassword() {
     const currentPassword = this.currentPassword!;
     const newPassword = this.newPassword!;
-
     this.alertify.confirmDialog(
-      'Are you sure you want to change your password',
+      'Are you sure you want to change your password ? ',
       () => {
         this.dataService
           .changePassword(currentPassword, newPassword)
           .subscribe({
             next: (res) => {
-              if (res.statusCode === 200) {
-                this.alertify.dialogAlert(res.title!);
+              if (res.statusCode === 505) {
+                this.alertify.error(res.title);
+              } else if (res.statusCode === 200 || res.statusCode === 201) {
+                this.alertify.dialogAlert(res.title);
                 this.router.navigate(['/login']);
-                this.dialogRef.close();
                 localStorage.removeItem('token');
-                console.log(res);
-              } else {
-                this.alertify.error(res.title!);
+                this.dialogRef.close();
               }
+              // console.log(res);
             },
             error: (err) => {
               if (err.status === 401 || err.status === 500) {

@@ -1,57 +1,46 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CarSupplier } from 'src/app/model/car-supplier';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { DateFormatterService } from 'src/app/services/date-formatter.service';
 
 @Component({
-  selector: 'app-update-car-supp-form',
-  templateUrl: './update-car-supp-form.component.html',
-  styleUrls: ['./update-car-supp-form.component.css'],
+  selector: 'app-add-car-supplier',
+  templateUrl: './add-car-supplier.component.html',
+  styleUrls: ['./add-car-supplier.component.css'],
 })
-export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
-  suppGrade?: any;
-  GradeId?: string;
-  @Input() supplierType?: type[];
-  selectedSuppType?: string;
-  @Input() selectedSupplier?: CarSupplier;
-  carSupplierForm!: FormGroup;
+export class AddCarSupplierComponent implements OnInit {
+  supplierType?: type[];
+  supplierGrade?: type[];
+  companyId?: string;
   titleLov?: type[];
   addressLov?: type[];
   addressName?: string = '';
-  @Output() supplierUpdated: EventEmitter<CarSupplier> =
-    new EventEmitter<CarSupplier>();
+  carSupplierForm!: FormGroup;
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
-    private alertifyService: AlertifyService
-  ) {}
-
+    private alertifyService: AlertifyService,
+    private dialogRef: MatDialogRef<AddCarSupplierComponent>
+  ) {
+    this.supplierType = this.data.types;
+    this.supplierGrade = this.data.grades;
+    this.companyId = this.data.company;
+    console.log(data);
+  }
   ngOnInit(): void {
-    this.getSupplierGrade();
+    this.buildForm();
     this.getTitleLov();
     this.getAddressLov();
-    this.buildForm();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedSupplier'] && this.carSupplierForm) {
-      this.carSupplierForm.patchValue(changes['selectedSupplier'].currentValue);
-    }
-  }
+
   buildForm(): void {
     this.carSupplierForm = this.formBuilder.group({
       id: ['', Validators.required],
-      companyId: ['', Validators.required],
+      companyId: this.companyId,
       interm: [''],
       number: ['', Validators.pattern(/^\d+$/)],
       titre: [''],
@@ -86,24 +75,6 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       registration_number: [''],
       tva_number: [''],
     });
-
-    if (this.carSupplierForm) {
-      this.carSupplierForm.patchValue(this.selectedSupplier!);
-    }
-  }
-  get formControl() {
-    return this.carSupplierForm.controls;
-  }
-  getSupplierGrade() {
-    this.dataService.getSupplierGrade().subscribe({
-      next: (res) => {
-        this.suppGrade = res.data;
-        // console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
   }
   getTitleLov() {
     this.dataService.gettitleLov().subscribe({
@@ -120,7 +91,6 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     this.dataService.getAddresses(this.addressName!).subscribe({
       next: (res) => {
         this.addressLov = res.data;
-        this.selectedSupplier = res.data[0];
         // console.log(res);
       },
       error: (err) => {
@@ -128,13 +98,13 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       },
     });
   }
-  updateCarSupplier() {
-    this.dataService.updateCarSupplier([this.carSupplierForm.value]).subscribe({
+
+  addCarSupplier() {
+    this.dataService.addCarSupplier(this.carSupplierForm.value).subscribe({
       next: (res) => {
-        const updatedSupplier: CarSupplier = res.data;
-        this.supplierUpdated.emit(updatedSupplier); // Emit the updated data
+        this.dialogRef.close();
         this.alertifyService.success(res.message);
-        // console.log(res);
+        console.log(res);
       },
       error: (err) => {
         console.log(err);

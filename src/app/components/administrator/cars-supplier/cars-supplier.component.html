@@ -1,12 +1,39 @@
 <h3 class="h3-header">Car Supplier</h3>
 <button type="button" style="margin: 6px 10px">Export to Excel</button>
-
+<div class="select-container">
+  <span>Company:</span>
+  <select
+    id="bodyTypeNew"
+    name="bodyTypeNew"
+    required
+    class="company-select"
+    [(ngModel)]="company"
+    *ngIf="companies?.length! > 1; else oneResult"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+  <ng-template #oneResult>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      disabled
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </ng-template>
+</div>
 <div class="form-tab">
   <div class="admin-container" style="height: 250px">
     <div class="user-inputs">
-      <form>
+      <form (ngSubmit)="searchCarSupplier()">
         <label for="name">Supplier Name:</label>
-        <input type="text" id="name" name="name" />
+        <input type="text" id="name" name="name" [(ngModel)]="name" />
 
         <label for="type">Type:</label>
         <select
@@ -22,7 +49,9 @@
         <button type="submit">Search</button>
       </form>
       <div class="admin-button">
-        <button type="button">Add Supplier</button>
+        <button type="button" (click)="openAddSupplierDialog()">
+          Add Supplier
+        </button>
       </div>
     </div>
     <div class="row mt-2">
@@ -30,48 +59,74 @@
         <table id="table">
           <thead>
             <tr>
-              <th></th>
-              <th>ID</th>
+              <th>Details</th>
               <th>NAME</th>
               <th>INTERM</th>
               <th>NUM</th>
-              <th>HOME_PHONE</th>
               <th>BUS_PHONE</th>
               <th>MOBILE_PHONE</th>
               <th>TVA_NUM</th>
-              <th>TYPE</th>
               <th>Grade</th>
               <th>Sys_Created_Date</th>
               <th>Sys_Created_By</th>
               <th>Sys_Updated_Date</th>
               <th>Sys_Updated_By</th>
-              <th></th>
+              <th>Deactivate User</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody *ngIf="carSupplier?.length! > 0; else noData">
+            <tr *ngFor="let supplier of carSupplier">
               <td>
-                <span class="material-icons" (click)="showProfList()"
+                <span class="material-icons" (click)="showSuppList(supplier)"
                   >arrow_circle_down</span
                 >
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+
+              <td>{{ supplier.fullName }}</td>
+              <td>
+                <select
+                  id="type"
+                  name="type"
+                  class="input-dropdown"
+                  [(ngModel)]="supplier.interm"
+                  disabled
+                >
+                  <option *ngFor="let type of suppType" [value]="type.code">
+                    {{ type.description }}
+                  </option>
+                </select>
+              </td>
+
+              <td>{{ supplier.number }}</td>
+
+              <td>{{ supplier.bus_phone }}</td>
+              <td>{{ supplier.mobile_number }}</td>
+              <td>{{ supplier.tva_number }}</td>
 
               <td>
-                <mat-icon>delete</mat-icon>
+                <select
+                  id="supplierGradeID"
+                  name="supplierGradeID"
+                  class="input-dropdown"
+                  [(ngModel)]="supplier.grade_id"
+                  disabled
+                >
+                  <option *ngFor="let grade of suppGrade" [value]="grade.code">
+                    {{ grade.description }}
+                  </option>
+                </select>
+              </td>
+
+              <td>
+                {{ supplier.sysCreatedDate | date : reportDateTimeFormat }}
+              </td>
+              <td>{{ supplier.sysCreatedBy }}</td>
+              <td>
+                {{ supplier.sysUpdatedDate | date : reportDateTimeFormat }}
+              </td>
+              <td>{{ supplier.sysUpdatedBy }}</td>
+              <td>
+                <button>Deactivate</button>
               </td>
             </tr>
           </tbody>
@@ -89,5 +144,7 @@
 <div class="admin-container" style="height: 350px" *ngIf="showMoreInfo">
   <app-update-car-supp-form
     [supplierType]="suppType"
+    [selectedSupplier]="selectedSupplier"
+    (supplierUpdated)="handleSupplierUpdated($event)"
   ></app-update-car-supp-form>
 </div>
