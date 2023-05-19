@@ -67,7 +67,7 @@ export class LoginNavComponent implements OnInit {
     this.dataService.loginUserInfo().subscribe({
       next: (data) => {
         this.loginInfo = data.data;
-        // console.log(data.data);
+        console.log(data.data);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
