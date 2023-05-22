@@ -21,6 +21,7 @@ export class CarSublinesComponent implements OnInit {
   companies?: CompanyBranchList[];
   carSubline?: CarSublines[];
   reportDateTimeFormat?: string;
+  updatedSublineValue?: CarSublines[] = [];
   selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
@@ -61,7 +62,34 @@ export class CarSublinesComponent implements OnInit {
       },
     });
   }
+  onTdBlur(
+    event: FocusEvent,
+    subline: CarSublines,
+    property: 'code' | 'description' | 'notes'
+  ) {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = subline[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedCoverValues = this.updatedSublineValue ?? [];
 
+    const index = updatedCoverValues.findIndex(
+      (item) => item.id === subline.id
+    );
+    if (index !== -1) {
+      updatedCoverValues.splice(index, 1);
+    }
+    if (oldValue !== newValue) {
+      subline[property] = newValue;
+      this.updatedSublineValue?.push({
+        id: subline.id,
+        insuranceId: subline.insuranceId,
+        code: subline.code,
+        description: subline.description,
+        notes: subline.notes,
+      });
+      console.log(this.updatedSublineValue);
+    }
+  }
   searchCarSublines() {
     this.dataService
       .searchCarSublines(this.company!, this.code!, this.description!)
@@ -75,7 +103,24 @@ export class CarSublinesComponent implements OnInit {
         },
       });
   }
-
+  updateCarSubline() {
+    if (this.updatedSublineValue?.length) {
+      this.dataService.updateCarSubline(this.updatedSublineValue).subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          this.updatedSublineValue = [];
+          this.searchCarSublines();
+          // console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
+  }
   deleteCarSubline(id: string) {
     this.alertifyService.confirmDialog(
       'Are you sure you want to delete this resource',
@@ -109,13 +154,13 @@ export class CarSublinesComponent implements OnInit {
     });
   }
 
-  updateCarSublineDialog(carSubline: CarSublines) {
-    const dialogRef = this.dialog.open(UpdateCarSublineComponent, {
-      data: { carSubline: carSubline },
-      width: '350px',
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.searchCarSublines();
-    });
-  }
+  // updateCarSublineDialog(carSubline: CarSublines) {
+  //   const dialogRef = this.dialog.open(UpdateCarSublineComponent, {
+  //     data: { carSubline: carSubline },
+  //     width: '350px',
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //     this.searchCarSublines();
+  //   });
+  // }
 }

@@ -253,8 +253,8 @@ tr:nth-child(odd) {
 }
 
 .company-select{
-  padding: 6px;
-  margin: 5px;
+  padding: 5px;
+  /* margin: 5px; */
   border: 1px solid #ccc;
 
 }

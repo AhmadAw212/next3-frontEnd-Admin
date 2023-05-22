@@ -46,7 +46,7 @@ export class LoginNavComponent implements OnInit {
         this.alertifyService.dialogAlert(response.message!);
         localStorage.clear();
         this.router.navigate(['/login']);
-        console.log(response);
+        // console.log(response);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
@@ -67,7 +67,7 @@ export class LoginNavComponent implements OnInit {
     this.dataService.loginUserInfo().subscribe({
       next: (data) => {
         this.loginInfo = data.data;
-        console.log(data.data);
+        // console.log(data.data);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {

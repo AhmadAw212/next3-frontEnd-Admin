@@ -662,6 +662,11 @@ export class DataServiceService {
       `${this.userUrl}/constant/searchAddress?addressName=${address}`
     );
   }
+  getSingleAddressRecord(addressId: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/address-location?addressId=${addressId}`
+    );
+  }
 
   updateCarSupplier(supplier: CarSupplier[]): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(

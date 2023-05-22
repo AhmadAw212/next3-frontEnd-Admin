@@ -10,21 +10,25 @@
       <mat-nav-list>
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title>User Management</mat-panel-title>
+            <mat-panel-title class="list-class"
+              >User Management</mat-panel-title
+            >
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/addUser" class="btn">
             <!-- <i class="fas fa-user-plus"></i> -->
-            <span>{{ dico.dico_add_user }}</span>
+            {{ dico.dico_add_user }}
           </a>
           <a mat-list-item routerLink="/Administrator/editUser" class="btn">
             <!-- <i class="fas fa-user-edit"></i> -->
-            <span>{{ dico.dico_edit_user }}</span>
+            {{ dico.dico_edit_user }}
           </a>
         </mat-expansion-panel>
         <hr class="hr" />
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title>System Configuration</mat-panel-title>
+            <mat-panel-title class="list-class"
+              >System Configuration</mat-panel-title
+            >
           </mat-expansion-panel-header>
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreConfig">
@@ -47,7 +51,7 @@
         <hr class="hr" />
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title>Tables</mat-panel-title>
+            <mat-panel-title class="list-class">Tables</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/carsBrand">
             {{ dico.dico_car_brand }}
