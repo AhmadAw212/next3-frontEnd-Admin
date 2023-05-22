@@ -23,6 +23,7 @@ export class CoreDomainComponent implements OnInit {
   domain?: CoreDomain;
   domainValuesList?: CoreDomainValue[];
   showDomainValue?: boolean = false;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -30,7 +31,16 @@ export class CoreDomainComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService
   ) {}
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
@@ -108,6 +118,7 @@ export class CoreDomainComponent implements OnInit {
   }
 
   coreDomainSearch() {
+    this.showDomainValue = false;
     this.dataService.coreDomainSearch(this.code, this.description).subscribe({
       next: (res) => {
         this.domainData = res.data;

@@ -22,6 +22,7 @@ export class CarShapeComponent implements OnInit {
   selectedShape?: CarShape;
   reportDateTimeFormat?: string;
   showCarInfo = false;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -40,7 +41,16 @@ export class CarShapeComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   searchCarInfo(shapeId: string, selectedCarShapeId: CarShape) {
     this.showCarInfo = true;
     this.selectedShape = selectedCarShapeId;

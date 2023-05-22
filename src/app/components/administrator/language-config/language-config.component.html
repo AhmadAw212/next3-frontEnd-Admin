@@ -40,7 +40,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="resourceData!.length > 0; else noData">
+          <tbody
+            *ngIf="resourceData!.length > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let resource of resourceData">
               <td>{{ resource.id }}</td>
               <td>

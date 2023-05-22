@@ -81,6 +81,7 @@ export class EditUserComponent implements OnInit {
   }
 
   userSearch(username: string, name: string) {
+    this.showProfileList = false;
     this.dataService.userSearch(username, name).subscribe({
       next: (res) => {
         this.users = res.data;

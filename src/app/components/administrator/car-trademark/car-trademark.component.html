@@ -39,7 +39,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carTrademark?.length! > 0; else noData">
+          <tbody
+            *ngIf="carTrademark?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr
               *ngFor="let trademark of carTrademark"
               (click)="searchCarShape(trademark.id, trademark)"
@@ -48,7 +51,14 @@
               <td>{{ trademark.code }}</td>
               <td>{{ trademark.description }}</td>
               <td>{{ trademark.carBrandId }}</td>
-              <td><img [src]="trademark.logo" class="car-logo" /></td>
+              <td>
+                <div class="car-logo-container">
+                  <img [src]="trademark.logo" class="car-logo" />
+                  <div class="car-logo-dialog">
+                    <img [src]="trademark.logo" class="car-logo-dialog-image" />
+                  </div>
+                </div>
+              </td>
               <td>
                 {{ trademark.created_date | date : reportDateTimeFormat }}
               </td>

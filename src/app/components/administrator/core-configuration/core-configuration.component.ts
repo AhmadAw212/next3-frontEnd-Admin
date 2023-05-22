@@ -19,6 +19,9 @@ export class CoreConfigurationComponent implements OnInit {
   configData?: ConfigData[] = [];
   updatedConfigValues?: ConfigData[] = [];
   reportDateTimeFormat?: string;
+  selectedConfigId?: string;
+  selectedRow!: HTMLElement;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -26,12 +29,20 @@ export class CoreConfigurationComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService
   ) {}
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
-
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
@@ -120,12 +131,12 @@ export class CoreConfigurationComponent implements OnInit {
       this.coreConfigSearch();
     });
   }
-  updateCoreConfigDialog(coreConfig: ConfigData) {
-    const dialogRef = this.dialog.open(UpdateCoreConfigurationComponent, {
-      data: coreConfig,
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.coreConfigSearch();
-    });
-  }
+  // updateCoreConfigDialog(coreConfig: ConfigData) {
+  //   const dialogRef = this.dialog.open(UpdateCoreConfigurationComponent, {
+  //     data: coreConfig,
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //     this.coreConfigSearch();
+  //   });
+  // }
 }

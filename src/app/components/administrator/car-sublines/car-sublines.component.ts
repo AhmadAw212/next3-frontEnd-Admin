@@ -21,6 +21,7 @@ export class CarSublinesComponent implements OnInit {
   companies?: CompanyBranchList[];
   carSubline?: CarSublines[];
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -33,7 +34,16 @@ export class CarSublinesComponent implements OnInit {
     this.dateFormatterService();
     this.getCompaniesPerUser();
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

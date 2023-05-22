@@ -1,6 +1,6 @@
 .login-container {
-  width:450px;
-  height: 400px;
+  width:400px;
+  height: 350px;
   margin: 0 auto;
   opacity: 0.9;
   padding: 20px;
@@ -40,28 +40,27 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 2px;
-    font-size: 16px;
+    font-size: 11px;
   }
 
   select{
     width: 30%;
-    padding: 7px;
-    margin: 6px 0 15px 0;
-    float: right;
+    padding: 5px;
+    /* margin: 6px 0 15px 0; */
+    /* float: right; */
     border: 1px solid #ccc;
     border-radius: 2px;
-    font-size: 15px;
+    font-size: 11px;
 
   }
   
   button[type="submit"] {
     display: block;
     width: 100%;
-
     padding: 10px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 11px;
     font-weight: bold;
     background-color: #007bff;
     color: #fff;

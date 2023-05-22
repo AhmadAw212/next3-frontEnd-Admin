@@ -20,6 +20,7 @@ export class CoreDomainValueComponent implements OnInit {
   code: string = '';
   description: string = '';
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -27,7 +28,16 @@ export class CoreDomainValueComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService
   ) {}
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

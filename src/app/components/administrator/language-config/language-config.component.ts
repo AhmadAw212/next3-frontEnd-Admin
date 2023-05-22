@@ -19,6 +19,7 @@ export class LanguageConfigComponent implements OnInit {
   reportDateTimeFormat?: string;
   reportDateTime?: string;
   updatedResourceValues?: ResourceBundle[] = [];
+  selectedRow!: HTMLElement;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -31,7 +32,16 @@ export class LanguageConfigComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   onTdBlur(
     event: FocusEvent,
     resource: ResourceBundle,
@@ -103,7 +113,7 @@ export class LanguageConfigComponent implements OnInit {
     if (this.updatedResourceValues?.length) {
       this.dataService.editResource(this.updatedResourceValues).subscribe({
         next: (res) => {
-          this.alertifyService.dialogAlert(res.title!);
+          this.alertifyService.success(res.message);
           console.log(res);
         },
         error: (err) => {

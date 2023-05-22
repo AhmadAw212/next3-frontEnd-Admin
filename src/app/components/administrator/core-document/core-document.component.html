@@ -40,7 +40,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="docData?.length! > 0; else noData">
+          <tbody
+            *ngIf="docData?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let document of docData">
               <td>{{ document.id }}</td>
               <td>{{ document.fileName }}</td>
@@ -48,11 +51,16 @@
               <td contenteditable="true" style="max-width: 200px">
                 {{ document.contentType }}
               </td>
-              <td
-                *ngIf="isImage(document.contentType!)"
-                (click)="openUpdateDocumentDialog(document)"
-              >
-                <img [src]="document.content" class="document-img" />
+              <td *ngIf="isImage(document.contentType!)">
+                <div class="car-logo-container">
+                  <img [src]="document.content" class="car-logo" />
+                  <div class="car-logo-dialog">
+                    <img
+                      [src]="document.content"
+                      class="car-logo-dialog-image"
+                    />
+                  </div>
+                </div>
               </td>
               <td *ngIf="!isImage(document.contentType!)">
                 <a [href]="document.content" target="_blank">{{

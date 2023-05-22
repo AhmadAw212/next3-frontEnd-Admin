@@ -77,7 +77,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carProducts?.length! > 0; else noData">
+          <tbody
+            *ngIf="carProducts?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let product of carProducts">
               <td>{{ product.id }}</td>
               <td

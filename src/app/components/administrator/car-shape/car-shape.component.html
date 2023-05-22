@@ -5,7 +5,7 @@
         Add car shape
       </button>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-3">
       <div class="col-md-12">
         <table>
           <thead>
@@ -23,7 +23,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carShape?.length! > 0; else noData">
+          <tbody
+            *ngIf="carShape?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr
               *ngFor="let shape of carShape"
               (click)="searchCarInfo(shape.carShapeId, shape)"
@@ -32,7 +35,14 @@
               <td>{{ shape.carShapeCode }}</td>
               <td>{{ shape.carShapeDescription }}</td>
               <td>{{ shape.carTrademarkId }}</td>
-              <td><img [src]="shape.logo" class="car-logo" /></td>
+              <td>
+                <div class="car-logo-container">
+                  <img [src]="shape.logo" class="car-logo" />
+                  <div class="car-logo-dialog">
+                    <img [src]="shape.logo" class="car-logo-dialog-image" />
+                  </div>
+                </div>
+              </td>
               <td>{{ shape.created_date | date : reportDateTimeFormat }}</td>
               <td>{{ shape.createdBy }}</td>
               <td>{{ shape.updated_date | date : reportDateTimeFormat }}</td>

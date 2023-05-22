@@ -25,6 +25,7 @@ export class CarsSupplierComponent implements OnInit {
   selectedSupplier?: CarSupplier;
   reportDateTimeFormat?: string;
   suppGrade?: type[];
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -32,7 +33,16 @@ export class CarsSupplierComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog
   ) {}
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   showSuppList(selectedSupplier: CarSupplier) {
     this.selectedSupplier = selectedSupplier;
     this.showMoreInfo = true;

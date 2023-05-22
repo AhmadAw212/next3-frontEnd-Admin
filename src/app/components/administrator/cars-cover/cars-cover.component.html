@@ -63,7 +63,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carCover?.length! > 0; else noData">
+          <tbody
+            *ngIf="carCover?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let cover of carCover">
               <td>{{ cover.id }}</td>
               <td

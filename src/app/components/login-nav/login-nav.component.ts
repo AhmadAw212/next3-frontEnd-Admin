@@ -59,7 +59,7 @@ export class LoginNavComponent implements OnInit {
 
   openChangePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePassDialogComponent, {
-      width: '25%',
+      width: '300px',
     });
   }
 

@@ -28,6 +28,7 @@ export class CarsClientComponent implements OnInit {
   updatedCarClientVal: CarClients[] = [];
   titleLov?: type[];
   genderList?: type[];
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -48,6 +49,17 @@ export class CarsClientComponent implements OnInit {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
+  }
+
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
+
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
   }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({

@@ -15,3 +15,7 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  tr.highlight{
+    background-color: #e0f2db;
+  }
