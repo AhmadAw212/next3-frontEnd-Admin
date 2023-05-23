@@ -40,6 +40,7 @@
           <th>VAL8</th>
           <th>VAL9</th>
           <th>VAL10</th>
+          <th>VAL11</th>
           <th>CORE_DOMAIN_ID</th>
           <th>SYS_CREATED_DATE</th>
           <th>SYS_CREATED_BY</th>
@@ -93,6 +94,9 @@
           </td>
           <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val10')">
             {{ domain.val10 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val11')">
+            {{ domain.val11 }}
           </td>
           <td>
             {{ domain.coreDomainId }}

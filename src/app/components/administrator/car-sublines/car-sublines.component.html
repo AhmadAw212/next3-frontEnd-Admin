@@ -47,6 +47,13 @@
       </form>
       <div class="admin-button">
         <button type="button" (click)="openAddCarSubline()">Add Subline</button>
+        <button
+          type="button"
+          style="margin-left: 8px"
+          (click)="updateCarSubline()"
+        >
+          Update Cover
+        </button>
       </div>
     </div>
     <div class="row mt-2">
@@ -62,8 +69,6 @@
               <th>Sys_Created_By</th>
               <th>Sys_Updated_Date</th>
               <th>Sys_Updated_By</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody
@@ -72,9 +77,24 @@
           >
             <tr *ngFor="let subline of carSubline">
               <td>{{ subline.id }}</td>
-              <td>{{ subline.code }}</td>
-              <td>{{ subline.description }}</td>
-              <td>{{ subline.notes }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, subline, 'code')"
+              >
+                {{ subline.code }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, subline, 'description')"
+              >
+                {{ subline.description }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, subline, 'notes')"
+              >
+                {{ subline.notes }}
+              </td>
               <td>
                 {{ subline.sysCreatedDate | date : reportDateTimeFormat }}
               </td>
@@ -89,11 +109,11 @@
                   >delete</mat-icon
                 >
               </td>
-              <td>
+              <!-- <td>
                 <mat-icon (click)="updateCarSublineDialog(subline)"
                   >edit</mat-icon
                 >
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

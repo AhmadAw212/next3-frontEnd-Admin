@@ -17,6 +17,7 @@ import { CarProductsComponent } from './components/administrator/car-products/ca
 import { CarSublinesComponent } from './components/administrator/car-sublines/car-sublines.component';
 import { CarsReportListComponent } from './components/administrator/cars-report-list/cars-report-list.component';
 import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
+import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -99,6 +100,11 @@ const routes: Routes = [
       {
         path: 'carSupplier',
         component: CarsSupplierComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'expertConfig',
+        component: ExpertConfigComponent,
         canActivate: [AuthGuard],
       },
     ],

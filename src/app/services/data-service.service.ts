@@ -662,6 +662,11 @@ export class DataServiceService {
       `${this.userUrl}/constant/searchAddress?addressName=${address}`
     );
   }
+  getSingleAddressRecord(addressId: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/address-location?addressId=${addressId}`
+    );
+  }
 
   updateCarSupplier(supplier: CarSupplier[]): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
@@ -679,6 +684,29 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/cars-supplier/new`,
       supplier
+    );
+  }
+
+  searchSupplierExpert(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/all-experts`
+    );
+  }
+
+  getDomainYN(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getDomainYN`);
+  }
+
+  getExpGroup(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/expGroup`);
+  }
+
+  searchSupplierByName(
+    insuranceId: string,
+    name: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/${insuranceId}/experts?nameSubstring=${name}`
     );
   }
 }
