@@ -24,6 +24,7 @@ export class CarTrademarkComponent implements OnInit {
   carShape?: CarShape[];
   showCarShape = false;
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -41,6 +42,17 @@ export class CarTrademarkComponent implements OnInit {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
+  }
+
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
+
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
   }
   searchCarShape(trademarkId: string, tradeMark: CarTrademark) {
     this.showCarShape = true;

@@ -1,5 +1,5 @@
-<mat-sidenav-container class="sidenav-container Background">
-  <mat-sidenav #sidenav class="sidenav Background" mode="side" opened>
+<mat-sidenav-container class="Background">
+  <mat-sidenav #sidenav class="Background" mode="side" opened>
     <div class="row border border-3 mt-2 rounded-0 ms-2">
       <div class="col">Menu</div>
 
@@ -7,18 +7,18 @@
         <hr class="hr" />
       </div>
 
-      <mat-nav-list class="btn-group-vertical">
+      <mat-nav-list>
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
             <mat-panel-title>User Management</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/addUser" class="btn">
             <!-- <i class="fas fa-user-plus"></i> -->
-            <span>Add User</span>
+            <span>{{ dico.dico_add_user }}</span>
           </a>
           <a mat-list-item routerLink="/Administrator/editUser" class="btn">
             <!-- <i class="fas fa-user-edit"></i> -->
-            <span>Edit User</span>
+            <span>{{ dico.dico_edit_user }}</span>
           </a>
         </mat-expansion-panel>
         <hr class="hr" />
@@ -28,19 +28,19 @@
           </mat-expansion-panel-header>
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreConfig">
-            Core Configuration</a
+            {{ dico.DRAWER_CONFIGURATION }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/languageConfig">
-            Language Configuration</a
+            {{ dico.dico_language }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreDocument">
-            Document Configuration</a
+            {{ dico.dico_document }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreDomain">
-            Core Domain Configuration</a
+            {{ dico.dico_domain }}</a
           >
         </mat-expansion-panel>
 
@@ -50,12 +50,14 @@
             <mat-panel-title>Tables</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/carsBrand">
-            Cars Brand
+            {{ dico.dico_car_brand }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carCovers"> Cover </a>
+          <a mat-list-item routerLink="/Administrator/carCovers">
+            {{ dico.dico_cover }}
+          </a>
           <a mat-list-item routerLink="/Administrator/carsClient"> Client</a>
           <a mat-list-item routerLink="/Administrator/carProducts">
-            products
+            {{ dico.dico_product }}
           </a>
           <a mat-list-item routerLink="/Administrator/carSublines">
             Sublines
@@ -64,7 +66,7 @@
             Report List
           </a>
           <a mat-list-item routerLink="/Administrator/carSupplier">
-            Supplier
+            {{ dico.dico_supplier }}
           </a>
         </mat-expansion-panel>
       </mat-nav-list>

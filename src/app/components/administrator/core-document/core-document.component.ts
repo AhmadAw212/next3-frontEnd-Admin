@@ -19,6 +19,7 @@ export class CoreDocumentComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedDocValues?: CoreDocument[] = [];
   coreDocument?: CoreDocument;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -30,7 +31,16 @@ export class CoreDocumentComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

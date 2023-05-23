@@ -27,6 +27,7 @@ export class CarInfoComponent implements OnInit {
   @Input() selectedShape?: CarShape;
   reportDateTimeFormat?: string;
   updatedCarInfoVal?: CarInfo[] = [];
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -48,7 +49,16 @@ export class CarInfoComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   onTdBlur(
     event: FocusEvent,
     carInfo: CarInfo,

@@ -76,9 +76,7 @@
         >
           Add Client
         </button>
-        <button type="button" style="float: right" (click)="updateCarClient()">
-          Save
-        </button>
+        <button type="button" (click)="updateCarClient()">Save</button>
       </form>
       <div class="admin-button">
         <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
@@ -112,7 +110,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody *ngIf="carClients?.length! > 0; else noData">
+          <tbody
+            *ngIf="carClients?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let client of carClients">
               <td>{{ client.id }}</td>
               <td

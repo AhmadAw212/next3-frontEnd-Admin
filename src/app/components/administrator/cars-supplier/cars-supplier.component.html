@@ -74,11 +74,14 @@
               <th>Deactivate User</th>
             </tr>
           </thead>
-          <tbody *ngIf="carSupplier?.length! > 0; else noData">
+          <tbody
+            *ngIf="carSupplier?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let supplier of carSupplier">
               <td>
-                <span class="material-icons" (click)="showSuppList(supplier)"
-                  >arrow_circle_down</span
+                <mat-icon (click)="showSuppList(supplier)"
+                  >arrow_circle_down</mat-icon
                 >
               </td>
 

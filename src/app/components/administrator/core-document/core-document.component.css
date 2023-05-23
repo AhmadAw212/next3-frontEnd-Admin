@@ -2,3 +2,11 @@
     max-width: 60px;
     max-height: 60px;
   }
+
+  .highlight {
+    background-color: #e0f2db;
+  }
+
+  tr.highlight{
+    background-color: #e0f2db;
+  }

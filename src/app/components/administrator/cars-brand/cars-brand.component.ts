@@ -23,6 +23,7 @@ export class CarsBrandComponent implements OnInit {
   carTrademark?: CarTrademark[];
   showTrademark = false;
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -43,7 +44,16 @@ export class CarsBrandComponent implements OnInit {
   }
 
   // showTrademarkList() {}
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   carsBrandSearch() {
     this.showTrademark = false;
     this.dataService.carsBrandSearch(this.code, this.description).subscribe({

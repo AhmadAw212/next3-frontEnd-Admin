@@ -20,6 +20,7 @@ export class CarsReportListComponent implements OnInit {
   isSqlExpanded: boolean = false;
   reportDateTimeFormat?: string;
   updateCarReportList: CarsReportList[] = [];
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -36,6 +37,16 @@ export class CarsReportListComponent implements OnInit {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
+  }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
+
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
   }
   searchCarReport() {
     this.dataService.searchCarReportList(this.role!, this.sql!).subscribe({

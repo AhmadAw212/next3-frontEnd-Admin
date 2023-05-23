@@ -10,7 +10,7 @@
   </li> -->
 <h3 class="h3-header">Edit User</h3>
 <div class="form-tab">
-  <div class="admin-container" style="height: 300px; padding: 20px">
+  <div class="admin-container" style="height: 200px; padding: 10px">
     <div class="row">
       <div class="user-inputs">
         <form
@@ -107,9 +107,13 @@
       </table>
     </div>
   </div>
-</div>
-<div class="admin-container" *ngIf="showProfileList">
-  <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+  <div
+    class="admin-container"
+    *ngIf="showProfileList"
+    style="height: fit-content"
+  >
+    <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+  </div>
 </div>
 
 <!-- </ul> -->

@@ -49,7 +49,10 @@
           <th></th>
         </tr>
       </thead>
-      <tbody *ngIf="domainValues?.length! > 0; else noData">
+      <tbody
+        *ngIf="domainValues?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
         <tr *ngFor="let domain of domainValues">
           <td>{{ domain.id }}</td>
           <td contenteditable="true" (blur)="onTdBlur($event, domain, 'code')">
@@ -91,10 +94,7 @@
           <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val10')">
             {{ domain.val10 }}
           </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, domain, 'coreDomainId')"
-          >
+          <td>
             {{ domain.coreDomainId }}
           </td>
           <td>{{ domain.sysCreatedDate | date : reportDateTimeFormat }}</td>

@@ -7,18 +7,18 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-size: small;
+  font-size: 11px;
+  font-weight: normal;
+  font-family: 'Open Sans 300', sans-serif;
+  /* max-height: 766px; */
+  /* min-height: 766px; */
 }
-
-
-.navbar-brand {
-    color: white;
-    font-weight: bold;
-
-    /* margin-top: -15px; */
+table thead {
+  position: sticky;
+  /* top:0 */
+  top: 42px;
+  /* background-color: #f2f2f2; */
 }
-
-
 
 /* th {
   background-color: #f2f2f2;
@@ -40,38 +40,66 @@ tr.selected {
 table {
   border-collapse: collapse;
   width: 100%;
-  
+
 }
 
 th {
   background-color: #025696;
   color: white;
-  /* padding: 3px; */
+  padding: 3px;
   text-align: left;
-  border: 1px solid black;
+  border-right: 1px solid white
+
   /* font-size:medium ; */
   /* font-weight:normal; */
 }
+.car-logo-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.car-logo-dialog {
+  display: none;
+  position: absolute;
+  top: -50px;
+  /* left: 50%; */
+  transform: translateX(-20%);
+  z-index: 1;
+  /* padding: 8px; */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.car-logo-container:hover .car-logo-dialog {
+  display: block;
+}
+
+.car-logo-dialog-image {
+  max-width: 200px;
+  max-height: 200px;
+}
 .car-logo {
-  max-height: 70px;
-  max-width: 70px;
+  /* max-height: 70px; */
+  /* max-width: 70px; */
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   height: auto;
-  width: 50px;
+  width: 25px;
 }
 .h3-header{
-    margin: 0;
-    margin-top: 10px;
+    /* margin: 0; */
+    margin-top: 5px;
     margin-right: 10px;
     margin-left: 10px;
-    padding: 10px;
+    padding: 5px;
     background-color: #025696;
     color: #fff;
     text-transform: uppercase;
-    font-size: 20px;
-    font-weight: normal;
-  
+    font-size: 15px;
+    /* font-weight: normal; */
 }
 .preview-logo{
   height: 150px; width: 150px
@@ -92,18 +120,33 @@ td {
   /* width: 100px; */
   border: 1px solid rgb(237, 220, 220); /* Add this line */
 }
-tr:hover {
+/* tr:hover {
   background-color: #f5f5f5;
-}
+} */
+
 tr:nth-child(even):hover {
   background-color: #e5e1e1c3;
 
 }
-
+table .highlight {
+  background-color: #e0f2db;
+}
+/* .component-content table {
+  width: 100%;
+} */
+/* table tr.highlight{
+  background-color: #e0f2db;
+} */
  tr:nth-child(odd):hover {
   background-color: #a19e9ec3
 }
+table th {
+  border: 1px solid white;
+}
 
+table td {
+  border: 1px solid white;
+}
 tr:nth-child(even) {
   background-color: #fffafaae;
 }
@@ -122,10 +165,16 @@ tr:nth-child(odd) {
   overflow-y: scroll;
   overflow-x: scroll;
 }
-
+/* @media (max-width: 756px) {
+  .admin-container {
+    margin: 5px;
+    padding: 5px;
+    height: auto;
+  }
+} */
 .admin-button {
   text-align: right;
-  /* margin-top: 5px; */
+  /* margin-top: 2px; */
   /* margin-right: 8px; */
 }
 
@@ -299,9 +348,9 @@ tr:nth-child(odd) {
 }
 .user-inputs .input-dropdown {
   margin-right: 20px;
-  padding: 5px;
+  /* padding: 5px; */
   font-size: 14px;
-  width: 200px;
+  /* width: 200px; */
   border-radius: 4px;
 }
 .user-inputs label {
@@ -367,57 +416,88 @@ tr:nth-child(odd) {
     height: auto;
     overflow-y: visible;
     overflow-x: visible;
-    
   }
-  .user-inputs input {
-    margin: 5px;
-  }
-  .user-inputs {
-    flex: 0 0 50%;
 
+  .user-inputs {
+    display: flex;
+    justify-content: space-around;
+    position: sticky;
+    background-color: #ffffffc9;
+    padding: 8px;
+    top: 0;
+    z-index: 1;
+    flex-wrap: wrap;
   }
-  .admin-button {
-    text-align: right;
-    margin-top: 5px;
+
+  /* .user-inputs .input-dropdown {
+    margin-right: 20px;
+    margin-bottom: 5px;
+    padding: 5px;
+    font-size: 14px;
+    width: 200px;
+    border-radius: 4px;
+  } */
+
+  .user-inputs label {
     margin-right: 5px;
-    flex: 0 0 50%;
-    max-width: 50%;
   }
-  .admin-button button {
-    display: block;
-    margin: 5px ;
+
+  .user-inputs input {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .user-inputs button {
+    background-color: #1884d7;
+    color: white;
+    border: none;
+    padding: 5px 16px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .table-container {
+    overflow-x: auto;
   }
 
   table {
-    display: block;
-    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+  }
 
+  th{
+    display: none
   }
-  
-  tr {
-    display: inline-block;
-    /* width: 100%; */
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    vertical-align: top;
-  }
-  
+
   td {
     display: block;
-    /* width: 100%; */
     text-align: left;
     padding: 10px;
+    border-bottom: 1px solid #ddd;
   }
-  th {
-    display: none;
-  }
-  td::before {
+
+  td[data-label]::before {
     content: attr(data-label);
     font-weight: bold;
     margin-right: 10px;
   }
-}
 
+  /* th {
+    position: sticky;
+    top: 0;
+    background-color: #025696;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    border-right: 1px solid white;
+  } */
+
+  td {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
 .btn {
     color: black;
     font-weight: bold;

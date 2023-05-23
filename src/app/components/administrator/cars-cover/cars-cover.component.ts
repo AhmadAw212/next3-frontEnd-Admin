@@ -28,6 +28,7 @@ export class CarsCoverComponent implements OnInit {
   coverTypes?: type[];
   updatedCoverValues?: CarCover[] = [];
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -42,7 +43,16 @@ export class CarsCoverComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
 
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
   exportToExcel(): void {
     const element = document.getElementById('table');
     const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);

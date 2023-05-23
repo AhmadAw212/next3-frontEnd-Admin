@@ -8,7 +8,7 @@
         Update Car Info
       </button>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-4">
       <div class="col-md-12">
         <table>
           <thead>
@@ -29,7 +29,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody
+            *ngIf="carInfo?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
             <tr *ngFor="let carInfo of carInfo">
               <td>{{ carInfo.id }}</td>
               <td
