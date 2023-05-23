@@ -79,6 +79,7 @@ export class CoreDomainValueComponent implements OnInit {
       | 'val8'
       | 'val9'
       | 'val10'
+      | 'val11'
       | 'coreDomainId'
   ) {
     const tdElement = event.target as HTMLTableCellElement;
@@ -110,6 +111,7 @@ export class CoreDomainValueComponent implements OnInit {
         val8: domainValue.val8,
         val9: domainValue.val9,
         val10: domainValue.val10,
+        val11: domainValue.val11,
         coreDomainId: domainValue.coreDomainId,
         sysActiveFlag,
       });
@@ -141,6 +143,7 @@ export class CoreDomainValueComponent implements OnInit {
       val8: domainValue.val8,
       val9: domainValue.val9,
       val10: domainValue.val10,
+      val11: domainValue.val11,
       coreDomainId: domainValue.coreDomainId,
       sysActiveFlag,
     });

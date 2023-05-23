@@ -1,0 +1,38 @@
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-field select {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form-field input{
+    width: 150px;
+  }
+  .company-select {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .disabled-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .disabled-inputs label,
+  .disabled-inputs input[type="checkbox"] {
+    width: 200px;
+  }

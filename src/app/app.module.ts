@@ -76,6 +76,7 @@ import { AddReportListComponent } from './components/administrator/add-dialogs/a
 import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
 import { UpdateCarSuppFormComponent } from './components/administrator/update-car-supp-form/update-car-supp-form.component';
 import { AddCarSupplierComponent } from './components/administrator/add-dialogs/add-car-supplier/add-car-supplier.component';
+import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { AddCarSupplierComponent } from './components/administrator/add-dialogs/
     CarsSupplierComponent,
     UpdateCarSuppFormComponent,
     AddCarSupplierComponent,
+    ExpertConfigComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,121 @@
+<h3 class="h3-header">Expert Configuration</h3>
+<div class="admin-container" style="height: 200px">
+  <div class="form-container">
+    <form>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="supplierName">Supplier Name:</label>
+          <ng-select
+            appendTo="body"
+            class="small-select"
+            style="width: 200px; height: 25px"
+            name="supplierName"
+            (search)="searchSupplierByName($event)"
+            (change)="onSupplierChange()"
+            [(ngModel)]="selectedSupplier"
+          >
+            <ng-option *ngFor="let expert of expertSupplier" [value]="expert">{{
+              expert.fullName
+            }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="form-field">
+          <label for="group">Group:</label>
+          <select name="group" id="group">
+            <option *ngFor="let group of expGroup" [value]="group.code">
+              {{ group.description }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="bodilyInjuries">Bodily Injuries:</label>
+          <select name="bodilyInjury" id="bodilyInjury">
+            <option *ngFor="let yn of domainYN" [value]="yn.code">
+              {{ yn.description }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="vip">VIP:</label>
+          <select name="vip" id="vip">
+            <option *ngFor="let yn of domainYN" [value]="yn.code">
+              {{ yn.description }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="exclusive">Exclusive:</label>
+          <select name="exclusive" id="exclusive">
+            <option *ngFor="let yn of domainYN" [value]="yn.code">
+              {{ yn.description }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="insurance">Insurance:</label>
+          <select
+            id="insurance"
+            name="insurance"
+            required
+            class="company-select"
+            [(ngModel)]="insuranceId"
+            [disabled]="companies?.length! <= 1"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyId"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="territory">Territory:</label>
+          <input type="text" id="territory" name="territory" />
+        </div>
+        <div class="form-field">
+          <button type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="disabled-inputs">
+    <label>Supplier Info</label>
+
+    <div class="form-field">
+      <label for="fullName">Full Name:</label>
+      <input type="text" [(ngModel)]="fullName" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="fatherName">Father Name:</label>
+      <input type="text" [(ngModel)]="fatherName" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="prefixFamily">Prefix Family:</label>
+      <input type="text" [(ngModel)]="prefixFamily" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="familyName">Family Name:</label>
+      <input type="text" [(ngModel)]="familyName" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="arabicName">Arabic Name:</label>
+      <input type="text" [(ngModel)]="arabicName" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="mobilePhone">Mobile Phone:</label>
+      <input type="text" [(ngModel)]="mobilePhone" [disabled]="true" />
+    </div>
+
+    <div class="form-field">
+      <label for="sms">SMS:</label>
+      <input type="checkbox" [(ngModel)]="sms" [disabled]="true" />
+    </div>
+  </div>
+</div>

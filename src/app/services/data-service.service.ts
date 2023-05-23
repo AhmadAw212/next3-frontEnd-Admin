@@ -686,4 +686,27 @@ export class DataServiceService {
       supplier
     );
   }
+
+  searchSupplierExpert(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/all-experts`
+    );
+  }
+
+  getDomainYN(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getDomainYN`);
+  }
+
+  getExpGroup(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/expGroup`);
+  }
+
+  searchSupplierByName(
+    insuranceId: string,
+    name: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/${insuranceId}/experts?nameSubstring=${name}`
+    );
+  }
 }

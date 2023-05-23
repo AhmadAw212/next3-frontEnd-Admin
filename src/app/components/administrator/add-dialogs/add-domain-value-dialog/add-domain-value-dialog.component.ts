@@ -22,6 +22,7 @@ export class AddDomainValueDialogComponent {
   val8?: string;
   val9?: string;
   val10?: string;
+  val11?: string;
   coreDomainId?: string;
 
   constructor(
@@ -61,6 +62,7 @@ export class AddDomainValueDialogComponent {
       val8: this.val8,
       val9: this.val9,
       val10: this.val10,
+      val11: this.val11,
     };
     this.dataService.addDomainValue(id, domainData).subscribe({
       next: (res) => {

@@ -10,67 +10,74 @@
       <mat-nav-list>
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title class="list-class"
-              >User Management</mat-panel-title
-            >
+            <mat-panel-title class="list-class">{{
+              dico.dico_user_managment || "dico_user_managment"
+            }}</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/addUser" class="btn">
             <!-- <i class="fas fa-user-plus"></i> -->
-            {{ dico.dico_add_user }}
+            {{ dico.dico_add_user || "dico_add_user" }}
           </a>
           <a mat-list-item routerLink="/Administrator/editUser" class="btn">
             <!-- <i class="fas fa-user-edit"></i> -->
-            {{ dico.dico_edit_user }}
+            {{ dico.dico_edit_user || "dico_edit_user" }}
           </a>
         </mat-expansion-panel>
         <hr class="hr" />
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title class="list-class"
-              >System Configuration</mat-panel-title
-            >
+            <mat-panel-title class="list-class">{{
+              dico.systemConfiguration || "dico_systemConfiguration"
+            }}</mat-panel-title>
           </mat-expansion-panel-header>
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreConfig">
-            {{ dico.DRAWER_CONFIGURATION }}</a
+            {{ dico.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/languageConfig">
-            {{ dico.dico_language }}</a
+            {{ dico.dico_language || "dico_language" }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreDocument">
-            {{ dico.dico_document }}</a
+            {{ dico.dico_document || "dico_document" }}</a
           >
           <hr class="hr" />
           <a mat-list-item routerLink="/Administrator/coreDomain">
-            {{ dico.dico_domain }}</a
+            {{ dico.dico_domain || "dico_domain" }}</a
           >
         </mat-expansion-panel>
 
         <hr class="hr" />
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
-            <mat-panel-title class="list-class">Tables</mat-panel-title>
+            <mat-panel-title class="list-class">{{
+              dico.dico_tables || "dico_tables"
+            }}</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/carsBrand">
-            {{ dico.dico_car_brand }}
+            {{ dico.dico_car_brand || "dico_car_brand" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carCovers">
-            {{ dico.dico_cover }}
+            {{ dico.dico_cover || "dico_cover" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carsClient"> Client</a>
+          <a mat-list-item routerLink="/Administrator/carsClient">
+            {{ dico.dico_client || "dico_client" }}</a
+          >
           <a mat-list-item routerLink="/Administrator/carProducts">
-            {{ dico.dico_product }}
+            {{ dico.dico_product || "dico_product" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carSublines">
-            Sublines
+            {{ dico.dico_sublines || "dico_sublines" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carReportList">
-            Report List
+            {{ dico.dico_reportList || "dico_reportList" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carSupplier">
-            {{ dico.dico_supplier }}
+            {{ dico.dico_supplier || "dico_supplier" }}
+          </a>
+          <a mat-list-item routerLink="/Administrator/expertConfig">
+            {{ dico.dico_expert_config || "dico_expert_config" }}
           </a>
         </mat-expansion-panel>
       </mat-nav-list>
