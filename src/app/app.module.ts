@@ -77,6 +77,9 @@ import { CarsSupplierComponent } from './components/administrator/cars-supplier/
 import { UpdateCarSuppFormComponent } from './components/administrator/update-car-supp-form/update-car-supp-form.component';
 import { AddCarSupplierComponent } from './components/administrator/add-dialogs/add-car-supplier/add-car-supplier.component';
 import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
+import { ViewPolicyComponent } from './components/view-policy/view-policy.component';
+import { ViewPolicyDialogComponent } from './components/view-policy-dialog/view-policy-dialog.component';
+import { ExpertSearchResultsComponent } from './components/administrator/expert-config/expert-search-results/expert-search-results.component';
 
 @NgModule({
   declarations: [
@@ -134,6 +137,9 @@ import { ExpertConfigComponent } from './components/administrator/expert-config/
     UpdateCarSuppFormComponent,
     AddCarSupplierComponent,
     ExpertConfigComponent,
+    ViewPolicyComponent,
+    ViewPolicyDialogComponent,
+    ExpertSearchResultsComponent,
   ],
   imports: [
     BrowserModule,

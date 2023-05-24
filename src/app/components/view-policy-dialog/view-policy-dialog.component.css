@@ -1,0 +1,52 @@
+.dialog-header {
+    /* text-align: center; */
+    height: 50px;
+  }
+  
+  .dialog-logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .section {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    /* Add some box-shadow for a raised effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .dialog-footer button {
+    /* Add some padding and background color to the button */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .dialog-footer button:hover {
+    /* Add hover effect */
+    background-color: #0056b3;
+  }
+  
+  .logo {
+    /* Adjust the size of the logo image */
+    width: 150px;
+    height: 150px;
+  }

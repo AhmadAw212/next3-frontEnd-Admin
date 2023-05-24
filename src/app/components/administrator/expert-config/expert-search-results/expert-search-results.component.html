@@ -1,0 +1,66 @@
+<div class="admin-container" style="height: 300px">
+  <div class="user-inputs">
+    <div class="admin-button">
+      <button type="button">Add Cover</button>
+
+      <button type="button" style="margin-left: 8px">Update Cover</button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Expert</th>
+            <th>Group</th>
+            <th>Territory</th>
+            <th>Add Bodily Injury</th>
+            <th>VIP</th>
+            <th>Exclusive</th>
+            <th>Second Expert</th>
+            <th>Contract</th>
+            <th>Schedule</th>
+            <th>Remarks</th>
+            <th>Ratio</th>
+            <th>Sys_Created_Date</th>
+            <th>Sys_Created_By</th>
+            <th>Sys_Updated_Date</th>
+            <th>Sys_Updated_By</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <select id="type" name="type" required>
+                <option></option>
+              </select>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <mat-icon>delete</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
+    </div>
+  </div>
+</div>

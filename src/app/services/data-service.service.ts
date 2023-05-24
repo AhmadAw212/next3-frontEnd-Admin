@@ -698,7 +698,7 @@ export class DataServiceService {
   }
 
   getExpGroup(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.userUrl}/constant/expGroup`);
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getExpGroup`);
   }
 
   searchSupplierByName(
@@ -707,6 +707,18 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/cars-supplier/${insuranceId}/experts?nameSubstring=${name}`
+    );
+  }
+
+  viewPolicy(policyCarId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/ViewPolicy?policyCarId=${policyCarId}`
+    );
+  }
+
+  territoryAddress(territoryName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/territory-regions?territoryName=${territoryName}`
     );
   }
 }

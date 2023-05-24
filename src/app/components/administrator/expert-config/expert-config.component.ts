@@ -13,6 +13,7 @@ export class ExpertConfigComponent implements OnInit {
   expertSupplier?: CarSupplier[] = [];
   domainYN?: type[];
   expGroup?: type[];
+  terrAddress?: type[];
   insuranceId?: string;
   selectedValue?: string;
   selectedSupplier!: CarSupplier;
@@ -37,7 +38,7 @@ export class ExpertConfigComponent implements OnInit {
   // }
 
   onSupplierChange(): void {
-    console.log('Selected supplier:', this.selectedSupplier);
+    // console.log('Selected supplier:', this.selectedSupplier);
     this.fullName = this.selectedSupplier.fullName;
     this.fatherName = this.selectedSupplier.fathersName;
     this.prefixFamily = this.selectedSupplier.prefixFam;
@@ -99,6 +100,19 @@ export class ExpertConfigComponent implements OnInit {
     this.dataService.searchSupplierByName(company, name).subscribe({
       next: (res) => {
         this.expertSupplier = res.data;
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  territoryAddress(event: any) {
+    const territoryName = event.term;
+    this.dataService.territoryAddress(territoryName).subscribe({
+      next: (res) => {
+        this.terrAddress = res.data;
         // console.log(res);
       },
       error: (err) => {
