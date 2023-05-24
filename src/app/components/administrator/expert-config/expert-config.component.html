@@ -7,8 +7,7 @@
           <label for="supplierName">Supplier Name:</label>
           <ng-select
             appendTo="body"
-            class="small-select"
-            style="width: 200px; height: 25px"
+            style="width: 200px"
             name="supplierName"
             (search)="searchSupplierByName($event)"
             (change)="onSupplierChange()"
@@ -71,10 +70,20 @@
         </div>
         <div class="form-field">
           <label for="territory">Territory:</label>
-          <input type="text" id="territory" name="territory" />
+          <ng-select
+            appendTo="body"
+            (search)="territoryAddress($event)"
+            style="width: 200px"
+          >
+            <ng-option
+              *ngFor="let territory of terrAddress"
+              [value]="territory.code"
+              >{{ territory.description }}</ng-option
+            >
+          </ng-select>
         </div>
         <div class="form-field">
-          <button type="submit">Search</button>
+          <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </div>
     </form>
@@ -119,3 +128,5 @@
     </div>
   </div>
 </div>
+
+<app-expert-search-results></app-expert-search-results>
