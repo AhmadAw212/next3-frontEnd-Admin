@@ -85,6 +85,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddExpertComponent } from './components/administrator/add-dialogs/add-expert/add-expert.component';
 @NgModule({
   declarations: [
+    SpinnerComponent,
     AppComponent,
     NavbarComponent,
     SideMenuComponent,

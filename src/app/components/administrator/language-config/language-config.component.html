@@ -1,6 +1,8 @@
 <h3 class="h3-header">Language Configuration</h3>
+
 <div class="form-tab">
   <div class="admin-container">
+    <app-spinner *ngIf="isLoading"></app-spinner>
     <div class="user-inputs">
       <form (ngSubmit)="resourceBundleSearch()">
         <label for="inputId">Resource Key:</label>
@@ -24,6 +26,7 @@
         </button>
       </div>
     </div>
+
     <div class="row mt-4">
       <div class="col-md-12">
         <table>

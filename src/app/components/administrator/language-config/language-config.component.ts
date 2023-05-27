@@ -20,6 +20,7 @@ export class LanguageConfigComponent implements OnInit {
   reportDateTime?: string;
   updatedResourceValues?: ResourceBundle[] = [];
   selectedRow!: HTMLElement;
+  isLoading: boolean = false;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -74,6 +75,7 @@ export class LanguageConfigComponent implements OnInit {
   }
 
   resourceBundleSearch() {
+    this.isLoading = true;
     this.dataService.resourceBundleSearch(this.key, this.value).subscribe({
       next: (data) => {
         this.resourceData = data.data;
@@ -84,6 +86,10 @@ export class LanguageConfigComponent implements OnInit {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
+      },
+      complete: () => {
+        console.log('HTTP request completed');
+        this.isLoading = false;
       },
     });
   }

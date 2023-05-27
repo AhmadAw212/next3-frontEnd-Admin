@@ -28,118 +28,119 @@
     </select>
   </ng-template>
 </div>
-<div class="form-tab">
-  <div class="admin-container" style="height: 250px">
-    <div class="user-inputs">
-      <form (ngSubmit)="searchCarSupplier()">
-        <label for="name">Supplier Name:</label>
-        <input type="text" id="name" name="name" [(ngModel)]="name" />
 
-        <label for="type">Type:</label>
-        <select
-          id="type"
-          name="type"
-          class="input-dropdown"
-          [(ngModel)]="selectedType"
-        >
-          <option *ngFor="let type of suppType" [value]="type.code">
-            {{ type.description }}
-          </option>
-        </select>
-        <button type="submit">Search</button>
-      </form>
-      <div class="admin-button">
-        <button type="button" (click)="openAddSupplierDialog()">
-          Add Supplier
-        </button>
-      </div>
+<div class="admin-container" style="height: 250px">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <div class="user-inputs">
+    <form (ngSubmit)="searchCarSupplier()">
+      <label for="name">Supplier Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="name" />
+
+      <label for="type">Type:</label>
+      <select
+        id="type"
+        name="type"
+        class="input-dropdown"
+        [(ngModel)]="selectedType"
+      >
+        <option *ngFor="let type of suppType" [value]="type.code">
+          {{ type.description }}
+        </option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div class="admin-button">
+      <button type="button" (click)="openAddSupplierDialog()">
+        Add Supplier
+      </button>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <table id="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>NAME</th>
-              <th>INTERM</th>
-              <th>NUM</th>
-              <th>BUS_PHONE</th>
-              <th>MOBILE_PHONE</th>
-              <th>TVA_NUM</th>
-              <th>Grade</th>
-              <th>Sys_Created_Date</th>
-              <th>Sys_Created_By</th>
-              <th>Sys_Updated_Date</th>
-              <th>Sys_Updated_By</th>
-              <th>Deactivate_User</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="carSupplier?.length! > 0; else noData">
-            <tr
-              *ngFor="let supplier of carSupplier"
-              (click)="highlightRow($event)"
-            >
-              <td>
-                <span class="material-icons" (click)="showSuppList(supplier)"
-                  >arrow_circle_down</span
-                >
-              </td>
-
-              <td>{{ supplier.fullName }}</td>
-              <td>
-                <select
-                  id="type"
-                  name="type"
-                  class="input-dropdown"
-                  [(ngModel)]="supplier.interm"
-                  disabled
-                >
-                  <option *ngFor="let type of suppType" [value]="type.code">
-                    {{ type.description }}
-                  </option>
-                </select>
-              </td>
-
-              <td>{{ supplier.number }}</td>
-
-              <td>{{ supplier.bus_phone }}</td>
-              <td>{{ supplier.mobile_number }}</td>
-              <td>{{ supplier.tva_number }}</td>
-
-              <td>
-                <select
-                  id="supplierGradeID"
-                  name="supplierGradeID"
-                  class="input-dropdown"
-                  [(ngModel)]="supplier.grade_id"
-                  disabled
-                >
-                  <option *ngFor="let grade of suppGrade" [value]="grade.code">
-                    {{ grade.description }}
-                  </option>
-                </select>
-              </td>
-
-              <td>
-                {{ supplier.sysCreatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ supplier.sysCreatedBy }}</td>
-              <td>
-                {{ supplier.sysUpdatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ supplier.sysUpdatedBy }}</td>
-              <td>
-                <button>Deactivate</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ng-template #noData>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <table id="table">
+        <thead>
           <tr>
-            <td colspan="5">No data to display</td>
+            <th></th>
+            <th>NAME</th>
+            <th>INTERM</th>
+            <th>NUM</th>
+            <th>BUS_PHONE</th>
+            <th>MOBILE_PHONE</th>
+            <th>TVA_NUM</th>
+            <th>Grade</th>
+            <th>Sys_Created_Date</th>
+            <th>Sys_Created_By</th>
+            <th>Sys_Updated_Date</th>
+            <th>Sys_Updated_By</th>
+            <th>Deactivate_User</th>
           </tr>
-        </ng-template>
-      </div>
+        </thead>
+        <tbody *ngIf="carSupplier?.length! > 0; else noData">
+          <tr
+            *ngFor="let supplier of carSupplier"
+            (click)="highlightRow($event)"
+          >
+            <td>
+              <span class="material-icons" (click)="showSuppList(supplier)"
+                >arrow_circle_down</span
+              >
+            </td>
+
+            <td>{{ supplier.fullName }}</td>
+            <td>
+              <select
+                id="type"
+                name="type"
+                class="input-dropdown"
+                [(ngModel)]="supplier.interm"
+                disabled
+              >
+                <option *ngFor="let type of suppType" [value]="type.code">
+                  {{ type.description }}
+                </option>
+              </select>
+            </td>
+
+            <td>{{ supplier.number }}</td>
+
+            <td>{{ supplier.bus_phone }}</td>
+            <td>{{ supplier.mobile_number }}</td>
+            <td>{{ supplier.tva_number }}</td>
+
+            <td>
+              <select
+                id="supplierGradeID"
+                name="supplierGradeID"
+                class="input-dropdown"
+                [(ngModel)]="supplier.grade_id"
+                disabled
+              >
+                <option *ngFor="let grade of suppGrade" [value]="grade.code">
+                  {{ grade.description }}
+                </option>
+              </select>
+            </td>
+
+            <td>
+              {{ supplier.sysCreatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ supplier.sysCreatedBy }}</td>
+            <td>
+              {{ supplier.sysUpdatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ supplier.sysUpdatedBy }}</td>
+            <td>
+              <button>Deactivate</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
     </div>
   </div>
 </div>

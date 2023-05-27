@@ -17,10 +17,13 @@ export class ViewPolicyDialogComponent implements OnInit {
     this.dataService.viewPolicy('10.1.MO.347922.0.0.1').subscribe({
       next: (data) => {
         this.policyData = data.data;
-        console.log(data);
+        console.log(data.data);
       },
       error: (error) => {
         console.log(error);
+      },
+      complete: () => {
+        console.log('HTTP request completed');
       },
     });
   }

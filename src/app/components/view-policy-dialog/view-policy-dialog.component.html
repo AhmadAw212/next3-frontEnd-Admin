@@ -4,29 +4,102 @@
 <div class="dialog-logo">
   <img src="../../../assets/images/basicLogo.jpg" alt="Logo" class="logo" />
 </div>
+<div *ngIf="!policyData">
+  <app-spinner></app-spinner>
+</div>
 <div class="dialog-content">
   <div class="section">
-    <!-- Section 1 content here -->
-    <label for="branch">Branch</label>
-    <p>{{ policyData.branchCode }}</p>
-    <label for="certificate">Certificate</label>
-    <p>{{ policyData.policyCar }}</p>
-    <label for="certificate">Policy</label>
-    <p>{{ policyData.policyReference }}</p>
-    <label for="policyEndorsmentTypeCode">policy Endorsment Type Code</label>
-    <p>{{ policyData.policyEndorsmentTypeCode }}</p>
-    <label for="policyEndorsmentTypeDescription"
-      >policy Endorsment Type Desc</label
-    >
-    <p>{{ policyData.policyEndorsmentTypeDescription }}</p>
-  </div>
-  <div class="section">
-    <!-- Section 2 content here -->
-  </div>
-  <div class="section">
-    <!-- Section 3 content here -->
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="branch">Branch</label>
+          <p>{{ policyData?.branchCode }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="certificate">Certificate</label>
+          <p>{{ policyData?.policyCar }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="certificate">Policy</label>
+          <p>{{ policyData?.policyReference }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyEndorsmentTypeCode"
+            >Policy Endorsement Type Code</label
+          >
+          <p>{{ policyData?.policyEndorsmentTypeCode }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyEndorsmentTypeDescription"
+            >Policy Endorsement Type Desc</label
+          >
+          <p>{{ policyData?.policyEndorsmentTypeDescription }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyCurrency">policy Currency</label>
+          <p>{{ policyData?.policyCurrency }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyAmendment">Endorsment</label>
+          <p>{{ policyData?.policyAmendment }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyBlacklistNote">policy Blacklist Note</label>
+          <p>{{ policyData?.policyBlacklistNote }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyBlackistReason">policy Blackist Reason</label>
+          <p>{{ policyData?.policyBlackistReason }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyEndorsmentSubTypeCode"
+            >policy Endorsment SubType Code</label
+          >
+          <p>{{ policyData?.policyEndorsmentSubTypeCode }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyEndorsmentSubTypeDescrion"
+            >policy Endorsment SubType Desc</label
+          >
+          <p>{{ policyData?.policyEndorsmentSubTypeDescrion }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyHolderCode">policyHolderCode</label>
+          <p>{{ policyData?.policyHolderCode }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyHolderId">policy Holder Id</label>
+          <p>{{ policyData?.policyHolderId }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyHolderName">policyHolderName</label>
+          <p>{{ policyData?.policyHolderName }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyHolderPhone">policy Holder Phone</label>
+          <p>{{ policyData?.policyHolderPhone }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyRemarks">policy Remarks</label>
+          <p>{{ policyData?.policyRemarks }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<div class="section">
+  <!-- Section 2 content here -->
+</div>
+<div class="section">
+  <!-- Section 3 content here -->
+</div>
+
 <div class="dialog-footer">
   <button mat-button>Close</button>
 </div>
