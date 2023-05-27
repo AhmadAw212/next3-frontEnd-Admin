@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarSupplierComponent } from '../add-dialogs/add-car-supplier/add-car-supplier.component';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 
 @Component({
   selector: 'app-cars-supplier',
@@ -26,21 +27,24 @@ export class CarsSupplierComponent implements OnInit {
   reportDateTimeFormat?: string;
   suppGrade?: type[];
   selectedRow!: HTMLElement;
+
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loadingService: LoadingServiceService
   ) {}
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedElement = event.target as HTMLElement;
+    const clickedRow = clickedElement.closest('tr');
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow!;
     this.selectedRow.classList.add('highlight');
   }
   showSuppList(selectedSupplier: CarSupplier) {

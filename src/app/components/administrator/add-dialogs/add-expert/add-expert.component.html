@@ -1,0 +1,142 @@
+<h2 style="margin: 10px; font-size: large">Add Expert</h2>
+<div class="dialog">
+  <form [formGroup]="expertForm" (ngSubmit)="addExpert()">
+    <div class="form-group">
+      <label for="groupCode">Group Code:</label>
+      <select
+        id="groupCode"
+        name="groupCode"
+        class="input-dropdown"
+        formControlName="groupCode"
+      >
+        <option *ngFor="let expGroup of expGroups" [value]="expGroup.code">
+          {{ expGroup.description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="territory">Territory Name:</label>
+      <select
+        id="territory"
+        name="territory"
+        class="input-dropdown"
+        formControlName="territory_code"
+      >
+        <option *ngFor="let territory of teritories" [value]="territory.code">
+          {{ territory.description }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="remarks">Remarks:</label>
+      <input
+        type="text"
+        id="remarks"
+        name="remarks"
+        formControlName="remarks"
+      />
+    </div>
+    <div class="form-group">
+      <label for="ratio">Ratio:</label>
+      <input type="text" id="ratio" name="ratio" formControlName="ratio" />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['ratio'].errors &&
+          (formControl['ratio'].dirty || formControl['ratio'].touched)
+        "
+      >
+        <div *ngIf="formControl['ratio']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="priority">priority:</label>
+      <input
+        type="text"
+        id="priority"
+        name="priority"
+        formControlName="priority"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['priority'].errors &&
+          (formControl['priority'].dirty || formControl['priority'].touched)
+        "
+      >
+        <div *ngIf="formControl['priority']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="schedule_code">Schedule:</label>
+      <select
+        id="schedule_code"
+        name="schedule_code"
+        class="input-dropdown"
+        formControlName="schedule_code"
+      >
+        <option *ngFor="let schedule of schedule" [value]="schedule.code">
+          {{ schedule.description }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group" style="flex-direction: row">
+      <label for="bodily_injury"> Bodily Injury:</label>
+      <input
+        type="checkbox"
+        id="bodily_injury"
+        name="bodily_injury"
+        formControlName="bodily_injury"
+      />
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="vip">Vip:</label>
+      <input type="checkbox" id="vip" name="vip" formControlName="vip" />
+    </div>
+    <div class="form-group" style="flex-direction: row">
+      <label for="exclusive"> Exclusive:</label>
+      <input
+        type="checkbox"
+        id="exclusive"
+        name="exclusive"
+        formControlName="exclusive"
+      />
+    </div>
+    <div class="form-group" style="flex-direction: row">
+      <label for="secondExpert"> secondExpert:</label>
+      <input
+        type="checkbox"
+        id="secondExpert"
+        name="secondExpert"
+        formControlName="secondExpert"
+      />
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="sendSMS"> send SMS:</label>
+      <input
+        type="checkbox"
+        id="sendSMS"
+        name="sendSMS"
+        formControlName="sendSMS"
+      />
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="contract"> contract:</label>
+      <input
+        type="checkbox"
+        id="contract"
+        name="contract"
+        formControlName="contract"
+      />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>

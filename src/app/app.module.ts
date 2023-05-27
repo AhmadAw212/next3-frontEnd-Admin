@@ -80,7 +80,9 @@ import { ExpertConfigComponent } from './components/administrator/expert-config/
 import { ViewPolicyComponent } from './components/view-policy/view-policy.component';
 import { ViewPolicyDialogComponent } from './components/view-policy-dialog/view-policy-dialog.component';
 import { ExpertSearchResultsComponent } from './components/administrator/expert-config/expert-search-results/expert-search-results.component';
-
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddExpertComponent } from './components/administrator/add-dialogs/add-expert/add-expert.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,6 +142,8 @@ import { ExpertSearchResultsComponent } from './components/administrator/expert-
     ViewPolicyComponent,
     ViewPolicyDialogComponent,
     ExpertSearchResultsComponent,
+    SpinnerComponent,
+    AddExpertComponent,
   ],
   imports: [
     BrowserModule,
@@ -161,6 +165,7 @@ import { ExpertSearchResultsComponent } from './components/administrator/expert-
     NgxPaginationModule,
     MatExpansionModule,
     FontAwesomeModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

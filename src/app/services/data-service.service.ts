@@ -28,6 +28,7 @@ import { CarSublines } from '../model/car-sublines';
 import { CarClients } from '../model/car-clients';
 import { CarsReportList } from '../model/cars-report-list';
 import { CarSupplier } from '../model/car-supplier';
+import { CarExpert } from '../model/car-expert';
 
 @Injectable({
   providedIn: 'root',
@@ -719,6 +720,44 @@ export class DataServiceService {
   territoryAddress(territoryName: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/constant/territory-regions?territoryName=${territoryName}`
+    );
+  }
+
+  searchExpert(
+    supplierId: string,
+    insurance_id: string,
+    groupCode: string,
+    bodilyInjuriesCode: string,
+    vipCode: string,
+    exclusiveCode: string,
+    territoryCode: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-expert/search?supplierId=${supplierId}&insurance_id=${insurance_id}&groupCode=${groupCode}&bodilyInjuriesCode=${bodilyInjuriesCode}&vipCode=${vipCode}&exclusiveCode=${exclusiveCode}&territoryCode=${territoryCode}`
+    );
+  }
+
+  getSchedule(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getSchedules`);
+  }
+
+  addExpert(carExpert: CarExpert) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-expert/new`,
+      carExpert
+    );
+  }
+
+  updateExpert(carExpert: CarExpert[]) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-expert/update`,
+      carExpert
+    );
+  }
+
+  deleteExpert(expertId: string) {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-expert/delete?id=${expertId}`
     );
   }
 }

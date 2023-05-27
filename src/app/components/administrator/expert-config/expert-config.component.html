@@ -1,13 +1,12 @@
 <h3 class="h3-header">Expert Configuration</h3>
-<div class="admin-container" style="height: 200px">
+<div class="admin-container" style="height: 140px">
   <div class="form-container">
-    <form>
+    <form (ngSubmit)="expertSearch()">
       <div class="form-row">
         <div class="form-field">
           <label for="supplierName">Supplier Name:</label>
           <ng-select
             appendTo="body"
-            style="width: 200px"
             name="supplierName"
             (search)="searchSupplierByName($event)"
             (change)="onSupplierChange()"
@@ -20,7 +19,7 @@
         </div>
         <div class="form-field">
           <label for="group">Group:</label>
-          <select name="group" id="group">
+          <select name="group" id="group" [(ngModel)]="group">
             <option *ngFor="let group of expGroup" [value]="group.code">
               {{ group.description }}
             </option>
@@ -28,7 +27,11 @@
         </div>
         <div class="form-field">
           <label for="bodilyInjuries">Bodily Injuries:</label>
-          <select name="bodilyInjury" id="bodilyInjury">
+          <select
+            name="bodilyInjury"
+            id="bodilyInjury"
+            [(ngModel)]="bodilyInjury"
+          >
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
             </option>
@@ -36,7 +39,7 @@
         </div>
         <div class="form-field">
           <label for="vip">VIP:</label>
-          <select name="vip" id="vip">
+          <select name="vip" id="vip" [(ngModel)]="vipCode">
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
             </option>
@@ -44,7 +47,7 @@
         </div>
         <div class="form-field">
           <label for="exclusive">Exclusive:</label>
-          <select name="exclusive" id="exclusive">
+          <select name="exclusive" id="exclusive" [(ngModel)]="exclusiveCode">
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
             </option>
@@ -56,7 +59,6 @@
             id="insurance"
             name="insurance"
             required
-            class="company-select"
             [(ngModel)]="insuranceId"
             [disabled]="companies?.length! <= 1"
           >
@@ -72,8 +74,9 @@
           <label for="territory">Territory:</label>
           <ng-select
             appendTo="body"
+            name="territory"
             (search)="territoryAddress($event)"
-            style="width: 200px"
+            [(ngModel)]="territoryCode"
           >
             <ng-option
               *ngFor="let territory of terrAddress"
@@ -129,4 +132,9 @@
   </div>
 </div>
 
-<app-expert-search-results></app-expert-search-results>
+<app-expert-search-results
+  *ngIf="showExpertResult"
+  [expertSearchResult]="expertSearchResult"
+  [expGroup]="expGroup"
+  [selectedSupplier]="selectedSupplier"
+></app-expert-search-results>
