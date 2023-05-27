@@ -109,7 +109,6 @@ export class ExpertConfigComponent implements OnInit {
     });
   }
   searchSupplierByName(event: any) {
-    this.showExpertResult = true;
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => {
       const name = event.term;
@@ -141,6 +140,7 @@ export class ExpertConfigComponent implements OnInit {
   }
 
   expertSearch() {
+    this.showExpertResult = true;
     const supplierId = this.selectedSupplier.id;
     const insurance_id = this.insuranceId!;
     const groupCode = this.group!;

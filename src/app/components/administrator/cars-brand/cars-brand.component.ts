@@ -24,6 +24,7 @@ export class CarsBrandComponent implements OnInit {
   showTrademark = false;
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -57,6 +58,7 @@ export class CarsBrandComponent implements OnInit {
   }
   carsBrandSearch() {
     this.showTrademark = false;
+    this.isLoading = true;
     this.dataService.carsBrandSearch(this.code, this.description).subscribe({
       next: (data) => {
         this.carsBrandData = data.data.map((res: CarsBrand) => {
@@ -72,6 +74,9 @@ export class CarsBrandComponent implements OnInit {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

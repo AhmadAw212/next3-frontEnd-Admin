@@ -1,4 +1,11 @@
-<div class="admin-container" style="height: 300px">
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+<div
+  class="admin-container"
+  style="height: 300px"
+  *ngIf="expertSearchResult && terrAddress"
+>
   <div class="user-inputs">
     <div class="admin-button">
       <button type="button" (click)="openAddExpertDialog()">Add Expert</button>
@@ -10,7 +17,7 @@
   </div>
   <div class="row mt-2">
     <div class="col-md-12">
-      <table id="table">
+      <table id="table" *ngIf="expertSearchResult?.length! > 0; else noData">
         <thead>
           <tr>
             <th>Expert</th>
@@ -152,6 +159,7 @@
       <ng-template #noData>
         <tr>
           <td colspan="5">No data to display</td>
+          <!-- <div *ngIf="!isLoading">No data to display</div> -->
         </tr>
       </ng-template>
     </div>

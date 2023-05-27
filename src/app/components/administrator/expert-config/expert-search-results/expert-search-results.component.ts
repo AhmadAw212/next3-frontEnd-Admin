@@ -32,6 +32,8 @@ export class ExpertSearchResultsComponent implements OnInit {
   selectedRow!: HTMLElement;
   reportDateTimeFormat?: string;
   updatedExpert: CarExpert[] = [];
+  isLoading: boolean = true;
+
   @Input() selectedSupplier?: CarSupplier;
   constructor(
     private dataService: DataServiceService,
@@ -111,6 +113,7 @@ export class ExpertSearchResultsComponent implements OnInit {
     console.log(this.updatedExpert);
   }
   territoryAddress() {
+    // this.isLoading = true;
     this.dataService.territoryAddress(this.territoryName!).subscribe({
       next: (res) => {
         this.terrAddress = res.data;
@@ -118,6 +121,9 @@ export class ExpertSearchResultsComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

@@ -21,13 +21,13 @@ export class CarsSupplierComponent implements OnInit {
   selectedType?: string;
   companies?: CompanyBranchList[];
   company?: string;
-  name?: string;
+  name?: string = '';
   carSupplier?: CarSupplier[];
   selectedSupplier?: CarSupplier;
   reportDateTimeFormat?: string;
   suppGrade?: type[];
   selectedRow!: HTMLElement;
-
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -91,6 +91,7 @@ export class CarsSupplierComponent implements OnInit {
   }
 
   searchCarSupplier() {
+    this.isLoading = true;
     this.dataService
       .findCarSupplier(this.company!, this.name!, this.selectedType!)
       .subscribe({
@@ -100,6 +101,9 @@ export class CarsSupplierComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }
