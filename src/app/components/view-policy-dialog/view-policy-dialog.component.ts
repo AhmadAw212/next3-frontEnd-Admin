@@ -8,7 +8,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 })
 export class ViewPolicyDialogComponent implements OnInit {
   constructor(private dataService: DataServiceService) {}
-
+  policyData?: any;
   ngOnInit(): void {
     this.viewPolicy();
   }
@@ -16,6 +16,7 @@ export class ViewPolicyDialogComponent implements OnInit {
   viewPolicy() {
     this.dataService.viewPolicy('10.1.MO.347922.0.0.1').subscribe({
       next: (data) => {
+        this.policyData = data.data;
         console.log(data);
       },
       error: (error) => {

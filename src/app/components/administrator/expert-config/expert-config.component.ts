@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CarExpert } from 'src/app/model/car-expert';
 import { CarSupplier } from 'src/app/model/car-supplier';
 import { type } from 'src/app/model/type';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { AddExpertComponent } from '../add-dialogs/add-expert/add-expert.component';
 
 @Component({
   selector: 'app-expert-config',
@@ -14,9 +17,15 @@ export class ExpertConfigComponent implements OnInit {
   domainYN?: type[];
   expGroup?: type[];
   terrAddress?: type[];
-  insuranceId?: string;
+  insuranceId!: string;
   selectedValue?: string;
   selectedSupplier!: CarSupplier;
+  bodilyInjury: string = '';
+  vipCode: string = '';
+  // territory: string = '';
+  group: string = '';
+  exclusiveCode: string = '';
+  territoryCode: string = '';
   fullName?: string;
   fatherName?: string;
   prefixFamily?: string;
@@ -24,6 +33,9 @@ export class ExpertConfigComponent implements OnInit {
   arabicName?: string;
   mobilePhone?: string;
   sms?: boolean;
+  expertSearchResult?: CarExpert[];
+  showExpertResult: boolean = false;
+  private searchTimer: any;
   constructor(private dataService: DataServiceService) {}
 
   ngOnInit(): void {
@@ -36,7 +48,9 @@ export class ExpertConfigComponent implements OnInit {
   //   console.log('Search term:', searchTerm.term);
 
   // }
-
+  showExpResult() {
+    this.showExpertResult = true;
+  }
   onSupplierChange(): void {
     // console.log('Selected supplier:', this.selectedSupplier);
     this.fullName = this.selectedSupplier.fullName;
@@ -95,21 +109,26 @@ export class ExpertConfigComponent implements OnInit {
     });
   }
   searchSupplierByName(event: any) {
-    const name = event.term;
-    const company = this.insuranceId!;
-    this.dataService.searchSupplierByName(company, name).subscribe({
-      next: (res) => {
-        this.expertSupplier = res.data;
-        // console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.showExpertResult = true;
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      const name = event.term;
+      const company = this.insuranceId!;
+      this.dataService.searchSupplierByName(company, name).subscribe({
+        next: (res) => {
+          this.expertSupplier = res.data;
+          // console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }, 300);
   }
 
   territoryAddress(event: any) {
     const territoryName = event.term;
+
     this.dataService.territoryAddress(territoryName).subscribe({
       next: (res) => {
         this.terrAddress = res.data;
@@ -119,5 +138,35 @@ export class ExpertConfigComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  expertSearch() {
+    const supplierId = this.selectedSupplier.id;
+    const insurance_id = this.insuranceId!;
+    const groupCode = this.group!;
+    const bodilyInjuriesCode = this.bodilyInjury!;
+    const exclusiveCode = this.exclusiveCode!;
+    const vip = this.vipCode!;
+    const territory = this.territoryCode === null ? '' : this.territoryCode;
+
+    this.dataService
+      .searchExpert(
+        supplierId,
+        insurance_id,
+        groupCode,
+        bodilyInjuriesCode,
+        exclusiveCode,
+        vip,
+        territory
+      )
+      .subscribe({
+        next: (res) => {
+          this.expertSearchResult = res.data;
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

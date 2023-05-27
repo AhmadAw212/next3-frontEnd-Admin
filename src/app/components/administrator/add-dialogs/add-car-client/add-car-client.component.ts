@@ -64,9 +64,7 @@ export class AddCarClientComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          if (err.status === 409) {
-            this.alertifyService.error('NUM1 is found');
-          } else if (err.status === 401 || err.status === 500) {
+          if (err.status === 401 || err.status === 500) {
             this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }

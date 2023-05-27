@@ -39,13 +39,14 @@ export class CarsReportListComponent implements OnInit {
     });
   }
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedElement = event.target as HTMLElement;
+    const clickedRow = clickedElement.closest('tr');
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow!;
     this.selectedRow.classList.add('highlight');
   }
   searchCarReport() {
