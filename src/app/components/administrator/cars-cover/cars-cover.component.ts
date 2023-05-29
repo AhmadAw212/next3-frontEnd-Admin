@@ -44,16 +44,16 @@ export class CarsCoverComponent implements OnInit {
     this.dateFormatterService();
   }
   highlightRow(event: Event) {
-    const clickedElement = event.target as HTMLElement;
-    const clickedRow = clickedElement.closest('tr');
+    const clickedRow = event.target as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow!;
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+
   exportToExcel(): void {
     const element = document.getElementById('table');
     const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);

@@ -1,4 +1,6 @@
+import { DialogRef } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
@@ -7,8 +9,12 @@ import { DataServiceService } from 'src/app/services/data-service.service';
   styleUrls: ['./view-policy-dialog.component.css'],
 })
 export class ViewPolicyDialogComponent implements OnInit {
-  constructor(private dataService: DataServiceService) {}
+  constructor(
+    private dataService: DataServiceService,
+    private dialogRef: MatDialogRef<ViewPolicyDialogComponent>
+  ) {}
   policyData?: any;
+  policyCoverlist?: any;
   ngOnInit(): void {
     this.viewPolicy();
   }
@@ -17,14 +23,17 @@ export class ViewPolicyDialogComponent implements OnInit {
     this.dataService.viewPolicy('10.1.MO.347922.0.0.1').subscribe({
       next: (data) => {
         this.policyData = data.data;
+        this.policyCoverlist = data.data?.policyCoverlist;
         console.log(data.data);
       },
       error: (error) => {
         console.log(error);
       },
-      complete: () => {
-        console.log('HTTP request completed');
-      },
+      complete: () => {},
     });
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 }

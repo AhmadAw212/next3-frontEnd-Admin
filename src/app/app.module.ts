@@ -83,6 +83,9 @@ import { ExpertSearchResultsComponent } from './components/administrator/expert-
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddExpertComponent } from './components/administrator/add-dialogs/add-expert/add-expert.component';
+import { BranchConfigComponent } from './components/administrator/branch-config/branch-config.component';
+import { AddBranchComponent } from './components/administrator/add-dialogs/add-branch/add-branch.component';
+import { ExpertCompanyListComponent } from './components/administrator/expert-config/expert-company-list/expert-company-list.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -145,6 +148,9 @@ import { AddExpertComponent } from './components/administrator/add-dialogs/add-e
     ExpertSearchResultsComponent,
     SpinnerComponent,
     AddExpertComponent,
+    BranchConfigComponent,
+    AddBranchComponent,
+    ExpertCompanyListComponent,
   ],
   imports: [
     BrowserModule,

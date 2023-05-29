@@ -37,16 +37,16 @@ export class CarsSupplierComponent implements OnInit {
     private loadingService: LoadingServiceService
   ) {}
   highlightRow(event: Event) {
-    const clickedElement = event.target as HTMLElement;
-    const clickedRow = clickedElement.closest('tr');
+    const clickedRow = event.target as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow!;
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+
   showSuppList(selectedSupplier: CarSupplier) {
     this.selectedSupplier = selectedSupplier;
     this.showMoreInfo = true;

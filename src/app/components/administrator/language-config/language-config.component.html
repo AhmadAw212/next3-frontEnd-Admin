@@ -1,92 +1,84 @@
 <h3 class="h3-header">Language Configuration</h3>
 
-<div class="form-tab">
-  <div class="admin-container">
-    <app-spinner *ngIf="isLoading"></app-spinner>
-    <div class="user-inputs">
-      <form (ngSubmit)="resourceBundleSearch()">
-        <label for="inputId">Resource Key:</label>
-        <input type="text" id="key" name="key" [(ngModel)]="key" />
+<div class="admin-container container-fluid">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div class="user-inputs">
+    <form (ngSubmit)="resourceBundleSearch()">
+      <label for="inputId">Resource Key:</label>
+      <input type="text" id="key" name="key" [(ngModel)]="key" />
 
-        <label for="inputDescription">Resource Value:</label>
-        <input type="text" id="value" name="value" [(ngModel)]="value" />
+      <label for="inputDescription">Resource Value:</label>
+      <input type="text" id="value" name="value" [(ngModel)]="value" />
 
-        <button type="submit">Search</button>
-      </form>
-      <div class="admin-button">
-        <button type="button" (click)="openCoreConfigDialog()">
-          Add Language
-        </button>
-        <button
-          type="button"
-          (click)="updateResouce()"
-          style="margin-left: 8px"
-        >
-          Update
-        </button>
-      </div>
+      <button type="submit">Search</button>
+    </form>
+    <div class="admin-button">
+      <button type="button" (click)="openCoreConfigDialog()">
+        Add Language
+      </button>
+      <button type="button" (click)="updateResouce()" style="margin-left: 8px">
+        Update
+      </button>
     </div>
+  </div>
 
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>LOCALE</th>
-              <th>Resource Key</th>
-              <th style="width: 150px">Resource value</th>
-              <th>sysCreatedDate</th>
-              <th>sysCreatedBy</th>
-              <th>sysUpdatedDate</th>
-              <th>sysUpdatedBy</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="resourceData!.length > 0; else noData"
-            (click)="highlightRow($event)"
-          >
-            <tr *ngFor="let resource of resourceData">
-              <td>{{ resource.id }}</td>
-              <td>
-                {{ resource.locale }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, resource, 'resourceKey')"
-              >
-                {{ resource.resourceKey }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, resource, 'resourceValue')"
-                style="max-width: 200px"
-              >
-                {{ resource.resourceValue }}
-              </td>
-              <td>
-                {{ resource.sysCreatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ resource.sysCreatedBy }}</td>
-              <td>
-                {{ resource.sysUpdatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ resource.sysUpdatedBy }}</td>
-              <td>
-                <mat-icon (click)="deleteResource(resource.id!)"
-                  >delete</mat-icon
-                >
-              </td>
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="9">No data to display</td>
-            </tr>
-          </ng-template>
-        </table>
-      </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>LOCALE</th>
+            <th>Resource Key</th>
+            <th style="width: 150px">Resource value</th>
+            <th>sysCreatedDate</th>
+            <th>sysCreatedBy</th>
+            <th>sysUpdatedDate</th>
+            <th>sysUpdatedBy</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="resourceData!.length > 0; else noData"
+          (click)="highlightRow($event)"
+        >
+          <tr *ngFor="let resource of resourceData">
+            <td>{{ resource.id }}</td>
+            <td>
+              {{ resource.locale }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, resource, 'resourceKey')"
+            >
+              {{ resource.resourceKey }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, resource, 'resourceValue')"
+              style="max-width: 200px"
+            >
+              {{ resource.resourceValue }}
+            </td>
+            <td>
+              {{ resource.sysCreatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ resource.sysCreatedBy }}</td>
+            <td>
+              {{ resource.sysUpdatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ resource.sysUpdatedBy }}</td>
+            <td>
+              <mat-icon (click)="deleteResource(resource.id!)">delete</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">No data to display</td>
+          </tr>
+        </ng-template>
+      </table>
     </div>
   </div>
 </div>

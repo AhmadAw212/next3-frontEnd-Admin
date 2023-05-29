@@ -21,7 +21,7 @@ export class CoreConfigurationComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedConfigId?: string;
   selectedRow!: HTMLElement;
-
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -39,6 +39,7 @@ export class CoreConfigurationComponent implements OnInit {
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
@@ -66,7 +67,7 @@ export class CoreConfigurationComponent implements OnInit {
         configValue: config.configValue,
         description: config.description,
       });
-      console.log(this.updatedConfigValues);
+      // console.log(this.updatedConfigValues);
     }
   }
 
@@ -75,7 +76,7 @@ export class CoreConfigurationComponent implements OnInit {
       this.dataService.editConfig(this.updatedConfigValues).subscribe({
         next: (res) => {
           this.alertifyService.success(res.title!);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
@@ -94,10 +95,9 @@ export class CoreConfigurationComponent implements OnInit {
         const config = [configId];
         this.dataService.deleteConfig(config).subscribe({
           next: (res) => {
-            ``;
-            this.alertifyService.dialogAlert(res.title!);
+            this.alertifyService.success(res.title);
             this.coreConfigSearch();
-            console.log(res);
+            // console.log(res);
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
@@ -111,16 +111,20 @@ export class CoreConfigurationComponent implements OnInit {
   }
 
   coreConfigSearch() {
+    this.isLoading = true;
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {
         this.configData = data.data;
-        console.log(this.configData);
+        // console.log(this.configData);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

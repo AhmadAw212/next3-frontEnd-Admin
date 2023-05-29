@@ -42,16 +42,16 @@ export class CarProductsComponent implements OnInit {
     this.getProductsTypes();
   }
   highlightRow(event: Event) {
-    const clickedElement = event.target as HTMLElement;
-    const clickedRow = clickedElement.closest('tr');
+    const clickedRow = event.target as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow!;
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
@@ -92,7 +92,10 @@ export class CarProductsComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
         },
       });
   }
@@ -143,14 +146,15 @@ export class CarProductsComponent implements OnInit {
     const tdElement = event.target as HTMLTableCellElement;
     const oldValue = product[property];
     const newValue = tdElement.innerText.trim();
-    const updatedCarProduct = this.updatedCarProduct ?? [];
+    const updateCarProduct = this.updatedCarProduct ?? [];
 
-    const index = updatedCarProduct.findIndex((item) => item.id === product.id);
+    const index = updateCarProduct.findIndex((item) => item.id === product.id);
     if (index !== -1) {
-      updatedCarProduct.splice(index, 1);
+      updateCarProduct.splice(index, 1);
     }
     if (oldValue !== newValue) {
-      updatedCarProduct.push({
+      product[property] = newValue;
+      this.updatedCarProduct?.push({
         id: product.id,
         insuranceId: product.insuranceId,
         code: product.code,
@@ -159,9 +163,8 @@ export class CarProductsComponent implements OnInit {
         tarif: product.tarif,
         lob: product.lob,
       });
+      // console.log(this.updatedCarProduct);
     }
-
-    console.log(updatedCarProduct);
   }
 
   openAddProductDialog() {
@@ -195,13 +198,13 @@ export class CarProductsComponent implements OnInit {
       });
     }
   }
-  updateCarProductDialog(carProduct: CarProducts) {
-    const dialogRef = this.dialog.open(UpdateCarProductComponent, {
-      data: { carProduct: carProduct, type: this.productsTypes },
-      width: '350px',
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.searchCarProducts();
-    });
-  }
+  // updateCarProductDialog(carProduct: CarProducts) {
+  //   const dialogRef = this.dialog.open(UpdateCarProductComponent, {
+  //     data: { carProduct: carProduct, type: this.productsTypes },
+  //     width: '350px',
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //     this.searchCarProducts();
+  //   });
+  // }
 }
