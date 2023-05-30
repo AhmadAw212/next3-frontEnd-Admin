@@ -8,13 +8,13 @@
 }
 
 .col {
-  margin-top: 20px;
-  margin-left: 10px;
+  /* margin-top: 20px; */
+  /* margin-left: 10px; */
   font-weight: bold;
 }
 
 .component-content {
-  display: flex;
+  /* display: flex; */
   margin-left: 20px;
 }
 
@@ -30,19 +30,19 @@
 }
 
 .btn {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   color: #333;
-  font-size: 13px;
+  /* font-size: 13px; */
 
 }
 
 .hr {
   border-top: 1px solid #ccc;
-  margin: 10px 0;
+  /* margin: 10px 0; */
 }
 
 .list-class{
- font-size: 13px;
+ font-size: 12px;
  font-weight: bold;
 }

@@ -1,6 +1,6 @@
-.dialog-header {
+/* .dialog-header {
   height: 50px;
-}
+} */
 
 .dialog-logo {
   text-align: center;
@@ -12,19 +12,8 @@
 }
 
 .section {
-  /* margin-bottom: 20px; */
+  margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
 }
 
 .dialog-footer {
@@ -48,7 +37,7 @@ th, td {
 
 .logo {
   width: 150px;
-  height: 150px;
+  height: 90px;
 }
 .panel {
   display: flex;

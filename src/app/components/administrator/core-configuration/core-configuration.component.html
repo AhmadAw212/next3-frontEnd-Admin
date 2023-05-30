@@ -1,6 +1,7 @@
 <h3 class="h3-header">Core Configuration</h3>
 
-<div class="admin-container">
+<div class="admin-container container-fluid">
+  <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
     <form (ngSubmit)="coreConfigSearch()">
       <label for="inputId">ID:</label>

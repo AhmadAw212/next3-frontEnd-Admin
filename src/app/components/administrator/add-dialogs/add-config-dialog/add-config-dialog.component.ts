@@ -31,7 +31,7 @@ export class AddConfigDialogComponent {
 
     this.dataService.addConfig(configData).subscribe({
       next: (data) => {
-        this.alertifyService.dialogAlert(data.title!);
+        this.alertifyService.success(data.title);
         this.dialogRef.close();
         console.log(data);
       },

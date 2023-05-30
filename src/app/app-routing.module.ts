@@ -18,6 +18,7 @@ import { CarSublinesComponent } from './components/administrator/car-sublines/ca
 import { CarsReportListComponent } from './components/administrator/cars-report-list/cars-report-list.component';
 import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
 import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
+import { BranchConfigComponent } from './components/administrator/branch-config/branch-config.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -105,6 +106,11 @@ const routes: Routes = [
       {
         path: 'expertConfig',
         component: ExpertConfigComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'branchConfig',
+        component: BranchConfigComponent,
         canActivate: [AuthGuard],
       },
     ],

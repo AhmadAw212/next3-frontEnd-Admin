@@ -8,238 +8,219 @@
     required
     class="company-select"
     [(ngModel)]="company"
-    *ngIf="companies?.length! > 1; else oneResult"
+    [disabled]="companies?.length! <= 1"
   >
     <option *ngFor="let company of companies" [value]="company.companyId">
       {{ company.companyName }}
     </option>
   </select>
-  <ng-template #oneResult>
-    <select
-      id="bodyTypeNew"
-      name="bodyTypeNew"
-      required
-      class="company-select"
-      disabled
-    >
-      <option *ngFor="let company of companies" [value]="company.companyId">
-        {{ company.companyName }}
-      </option>
-    </select>
-  </ng-template>
 </div>
-<div class="form-tab">
-  <div class="admin-container">
-    <div class="user-inputs">
-      <form (ngSubmit)="searchCarClients()">
-        <label for="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          style="margin-right: 10px; width: 110px"
-          [(ngModel)]="fName"
-        />
 
-        <label for="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          style="margin-right: 10px; width: 110px"
-          [(ngModel)]="lName"
-        />
+<div class="admin-container container-fluid">
+  <div class="user-inputs">
+    <form (ngSubmit)="searchCarClients()">
+      <label for="firstName">First Name:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        style="margin-right: 10px; width: 110px"
+        [(ngModel)]="fName"
+      />
 
-        <label for="num1">NUM_1:</label>
-        <input
-          type="text"
-          id="num1"
-          name="num1"
-          style="margin-right: 10px; width: 110px"
-          [(ngModel)]="num1"
-        />
+      <label for="lastName">Last Name:</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        style="margin-right: 10px; width: 110px"
+        [(ngModel)]="lName"
+      />
 
-        <label for="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          style="margin-right: 10px; width: 110px"
-          [(ngModel)]="description"
-        />
+      <label for="num1">NUM_1:</label>
+      <input
+        type="text"
+        id="num1"
+        name="num1"
+        style="margin-right: 10px; width: 110px"
+        [(ngModel)]="num1"
+      />
 
-        <button type="submit">Search</button>
-        <button
-          type="button"
-          style="margin: 15px"
-          (click)="openAddClientDialog()"
-        >
-          Add Client
-        </button>
-        <button type="button" (click)="updateCarClient()">Save</button>
-      </form>
-      <div class="admin-button">
-        <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
-      </div>
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        style="margin-right: 10px; width: 110px"
+        [(ngModel)]="description"
+      />
+
+      <button type="submit">Search</button>
+      <button
+        type="button"
+        style="margin: 15px"
+        (click)="openAddClientDialog()"
+      >
+        Add Client
+      </button>
+      <button type="button" (click)="updateCarClient()">Save</button>
+    </form>
+    <div class="admin-button">
+      <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
     </div>
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NUM_1</th>
-              <th>NUM_2</th>
-              <th>Family_name</th>
-              <th>Prefix_family</th>
-              <th>First_Name</th>
-              <th>Father_Name</th>
-              <th>Bus_Phone</th>
-              <th>Mobile_Phone</th>
-              <th>Title</th>
-              <th>Gender</th>
-              <th>Broker</th>
-              <th>INDIC1</th>
-              <th>INDIC2</th>
-              <th>VIP</th>
-              <th>Description</th>
-              <th>Sys_Created_Date</th>
-              <th>Sys_Created_By</th>
-              <th>Sys_Updated_Date</th>
-              <th>Sys_Updated_By</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="carClients?.length! > 0; else noData"
-            (click)="highlightRow($event)"
-          >
-            <tr *ngFor="let client of carClients">
-              <td>{{ client.id }}</td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'num1')"
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NUM_1</th>
+            <th>NUM_2</th>
+            <th>Family_name</th>
+            <th>Prefix_family</th>
+            <th>First_Name</th>
+            <th>Father_Name</th>
+            <th>Bus_Phone</th>
+            <th>Mobile_Phone</th>
+            <th>Title</th>
+            <th>Gender</th>
+            <th>Broker</th>
+            <th>INDIC1</th>
+            <th>INDIC2</th>
+            <th>VIP</th>
+            <th>Description</th>
+            <th>Sys_Created_Date</th>
+            <th>Sys_Created_By</th>
+            <th>Sys_Updated_Date</th>
+            <th>Sys_Updated_By</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="carClients?.length! > 0; else noData"
+          (click)="highlightRow($event)"
+        >
+          <tr *ngFor="let client of carClients">
+            <td>{{ client.id }}</td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'num1')"
+            >
+              {{ client.num1 }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'num2')"
+            >
+              {{ client.num2 }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'lastName')"
+            >
+              {{ client.lastName }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'prefixFamily')"
+            >
+              {{ client.prefixFamily }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'firstName')"
+            >
+              {{ client.firstName }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'fatherName')"
+            >
+              {{ client.fatherName }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'busPhone')"
+            >
+              {{ client.busPhone }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'mobilePhone')"
+            >
+              {{ client.mobilePhone }}
+            </td>
+            <td>
+              <select
+                name="title"
+                id="title"
+                [(ngModel)]="client.titre"
+                (change)="onDropdownChange($event, client, 'titre')"
               >
-                {{ client.num1 }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'num2')"
+                <option [value]="title.code" *ngFor="let title of titleLov">
+                  {{ title.description }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select
+                name="gender"
+                id="gender"
+                [(ngModel)]="client.gender"
+                (change)="onDropdownChange($event, client, 'gender')"
               >
-                {{ client.num2 }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'lastName')"
-              >
-                {{ client.lastName }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'prefixFamily')"
-              >
-                {{ client.prefixFamily }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'firstName')"
-              >
-                {{ client.firstName }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'fatherName')"
-              >
-                {{ client.fatherName }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'busPhone')"
-              >
-                {{ client.busPhone }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'mobilePhone')"
-              >
-                {{ client.mobilePhone }}
-              </td>
-              <td>
-                <select
-                  name="title"
-                  id="title"
-                  [(ngModel)]="client.titre"
-                  (change)="onDropdownChange($event, client, 'titre')"
-                >
-                  <option [value]="title.code" *ngFor="let title of titleLov">
-                    {{ title.description }}
-                  </option>
-                </select>
-              </td>
-              <td>
-                <select
-                  name="gender"
-                  id="gender"
-                  [(ngModel)]="client.gender"
-                  (change)="onDropdownChange($event, client, 'gender')"
-                >
-                  <option
-                    [value]="gender.code"
-                    *ngFor="let gender of genderList"
-                  >
-                    {{ gender.description }}
-                  </option>
-                </select>
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'broker')"
-              >
-                {{ client.broker }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'indic1')"
-              >
-                {{ client.indic1 }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'indic2')"
-              >
-                {{ client.indic2 }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'clientVip')"
-              >
-                {{ client.clientVip }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, client, 'description')"
-              >
-                {{ client.description }}
-              </td>
-              <td>{{ client.sysCreatedDate | date : reportDateTimeFormat }}</td>
-              <td>{{ client.sysCreatedBy }}</td>
-              <td>{{ client.sysUpdatedDate | date : reportDateTimeFormat }}</td>
-              <td>{{ client.sysUpdatedBy }}</td>
+                <option [value]="gender.code" *ngFor="let gender of genderList">
+                  {{ gender.description }}
+                </option>
+              </select>
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'broker')"
+            >
+              {{ client.broker }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'indic1')"
+            >
+              {{ client.indic1 }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'indic2')"
+            >
+              {{ client.indic2 }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'clientVip')"
+            >
+              {{ client.clientVip }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, client, 'description')"
+            >
+              {{ client.description }}
+            </td>
+            <td>{{ client.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>{{ client.sysCreatedBy }}</td>
+            <td>{{ client.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>{{ client.sysUpdatedBy }}</td>
 
-              <td>
-                <mat-icon (click)="deleteCarCLient(client.id!)"
-                  >delete</mat-icon
-                >
-              </td>
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="5">No data to display</td>
-            </tr>
-          </ng-template>
-        </table>
-      </div>
+            <td>
+              <mat-icon (click)="deleteCarCLient(client.id!)">delete</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">No data to display</td>
+          </tr>
+        </ng-template>
+      </table>
     </div>
   </div>
 </div>

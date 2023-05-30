@@ -2,8 +2,8 @@
   <app-spinner></app-spinner>
 </div>
 <div
-  class="admin-container"
-  style="height: 300px"
+  class="admin-container container-fluid"
+  style="height: 250px"
   *ngIf="expertSearchResult && terrAddress"
 >
   <div class="user-inputs">
@@ -15,153 +15,143 @@
       </button>
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col-md-12">
-      <table id="table" *ngIf="expertSearchResult?.length! > 0; else noData">
-        <thead>
-          <tr>
-            <th>Expert</th>
-            <th>Group</th>
-            <th>Territory</th>
-            <th>Add Bodily Injury</th>
-            <th>VIP</th>
-            <th>Exclusive</th>
-            <th>Second Expert</th>
-            <th>Contract</th>
-            <th>Schedule</th>
-            <th>Remarks</th>
-            <th>Ratio</th>
-            <th>Sys_Created_Date</th>
-            <th>Sys_Created_By</th>
-            <th>Sys_Updated_Date</th>
-            <th>Sys_Updated_By</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          (click)="highlightRow($event)"
-          *ngIf="expertSearchResult?.length! > 0; else noData"
-        >
-          <tr *ngFor="let expert of expertSearchResult">
-            <td>{{ expert.expertName }}</td>
-            <td>
-              <select
-                id="group"
-                name="group"
-                [(ngModel)]="expert.groupCode"
-                (change)="onDropdownChange($event, expert, 'groupCode')"
-                class="select-class"
-              >
-                <option *ngFor="let group of expGroup" [value]="group.code">
-                  {{ group.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                id="territory"
-                name="territory"
-                class="select-class-schedule"
-                [(ngModel)]="expert.territory_code"
-                (change)="onDropdownChange($event, expert, 'territory_code')"
-              >
-                <option
-                  *ngFor="let terirtoy of terrAddress"
-                  [value]="terirtoy.code"
-                >
-                  {{ terirtoy.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name="bodilyInjury"
-                id="bodilyInjury"
-                [(ngModel)]="expert.bodily_injury"
-                (change)="onCheckboxChange(expert)"
-              />
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name="vip"
-                id="vip"
-                [(ngModel)]="expert.vip"
-                (change)="onCheckboxChange(expert)"
-              />
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name="exclusive"
-                id="exclusive"
-                [(ngModel)]="expert.exclusive"
-                (change)="onCheckboxChange(expert)"
-              />
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name="secondExpert"
-                id="secondExpert"
-                [(ngModel)]="expert.secondExpert"
-                (change)="onCheckboxChange(expert)"
-              />
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name="contract"
-                id="contract"
-                [(ngModel)]="expert.contract"
-                (change)="onCheckboxChange(expert)"
-              />
-            </td>
-            <td>
-              <select
-                id="schedule"
-                name="schedule"
-                [(ngModel)]="expert.schedule_code"
-                (change)="onDropdownChange($event, expert, 'schedule_code')"
-                class="select-class"
-              >
-                <option
-                  *ngFor="let schedule of schedule"
-                  [value]="schedule.code"
-                >
-                  {{ schedule.description }}
-                </option>
-              </select>
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, expert, 'remarks')"
+
+  <table id="table" *ngIf="expertSearchResult?.length! > 0; else noData">
+    <thead>
+      <tr>
+        <th>Expert</th>
+        <th>Group</th>
+        <th>Territory</th>
+        <th>Add Bodily Injury</th>
+        <th>VIP</th>
+        <th>Exclusive</th>
+        <th>Second Expert</th>
+        <th>Contract</th>
+        <th>Schedule</th>
+        <th>Remarks</th>
+        <th>Ratio</th>
+        <th>Sys_Created_Date</th>
+        <th>Sys_Created_By</th>
+        <th>Sys_Updated_Date</th>
+        <th>Sys_Updated_By</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      (click)="highlightRow($event)"
+      *ngIf="expertSearchResult?.length! > 0; else noData"
+    >
+      <tr *ngFor="let expert of expertSearchResult">
+        <td>{{ expert.expertName }}</td>
+        <td>
+          <select
+            id="group"
+            name="group"
+            [(ngModel)]="expert.groupCode"
+            (change)="onDropdownChange($event, expert, 'groupCode')"
+            class="select-class"
+          >
+            <option *ngFor="let group of expGroup" [value]="group.code">
+              {{ group.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            id="territory"
+            name="territory"
+            class="select-class-schedule"
+            [(ngModel)]="expert.territory_code"
+            (change)="onDropdownChange($event, expert, 'territory_code')"
+          >
+            <option
+              *ngFor="let terirtoy of terrAddress"
+              [value]="terirtoy.code"
             >
-              {{ expert.remarks }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, expert, 'ratio')"
-            >
-              {{ expert.ratio }}
-            </td>
-            <td>{{ expert.createdDate | date : reportDateTimeFormat }}</td>
-            <td>{{ expert.createdBy }}</td>
-            <td>{{ expert.updatedDate | date : reportDateTimeFormat }}</td>
-            <td>{{ expert.updatedBy }}</td>
-            <td>
-              <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <ng-template #noData>
-        <tr>
-          <td colspan="5">No data to display</td>
-          <!-- <div *ngIf="!isLoading">No data to display</div> -->
-        </tr>
-      </ng-template>
-    </div>
-  </div>
+              {{ terirtoy.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="bodilyInjury"
+            id="bodilyInjury"
+            [(ngModel)]="expert.bodily_injury"
+            (change)="onCheckboxChange(expert)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="vip"
+            id="vip"
+            [(ngModel)]="expert.vip"
+            (change)="onCheckboxChange(expert)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="exclusive"
+            id="exclusive"
+            [(ngModel)]="expert.exclusive"
+            (change)="onCheckboxChange(expert)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="secondExpert"
+            id="secondExpert"
+            [(ngModel)]="expert.secondExpert"
+            (change)="onCheckboxChange(expert)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            name="contract"
+            id="contract"
+            [(ngModel)]="expert.contract"
+            (change)="onCheckboxChange(expert)"
+          />
+        </td>
+        <td>
+          <select
+            id="schedule"
+            name="schedule"
+            [(ngModel)]="expert.schedule_code"
+            (change)="onDropdownChange($event, expert, 'schedule_code')"
+            class="select-class"
+          >
+            <option *ngFor="let schedule of schedule" [value]="schedule.code">
+              {{ schedule.description }}
+            </option>
+          </select>
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, expert, 'remarks')">
+          {{ expert.remarks }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, expert, 'ratio')">
+          {{ expert.ratio }}
+        </td>
+        <td>{{ expert.createdDate | date : reportDateTimeFormat }}</td>
+        <td>{{ expert.createdBy }}</td>
+        <td>{{ expert.updatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ expert.updatedBy }}</td>
+        <td>
+          <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noData>
+    <tr>
+      <td colspan="5">No data to display</td>
+      <!-- <div *ngIf="!isLoading">No data to display</div> -->
+    </tr>
+  </ng-template>
 </div>
+
+<app-expert-company-list></app-expert-company-list>

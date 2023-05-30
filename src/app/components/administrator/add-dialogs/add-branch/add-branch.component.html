@@ -1,0 +1,43 @@
+<h2 style="margin: 10px; font-size: large">Add Branch</h2>
+<div class="dialog">
+  <form (ngSubmit)="addBranch()">
+    <label for="code"> Code:</label>
+    <input type="text" id="code" name="code" required [(ngModel)]="code" />
+
+    <label for="description"> Description:</label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      required
+      [(ngModel)]="description"
+    />
+    <label for="arabic_description"> arabic_description:</label>
+    <input
+      type="text"
+      id="arabic_description"
+      name="arabic_description"
+      required
+      [(ngModel)]="arabic_description"
+    />
+
+    <label for="address1"> address1:</label>
+    <input
+      type="text"
+      id="address1"
+      name="address1"
+      required
+      [(ngModel)]="address1"
+    />
+    <label for="address2"> address2:</label>
+    <input
+      type="text"
+      id="address2"
+      name="address2"
+      required
+      [(ngModel)]="address2"
+    />
+
+    <button type="submit">Save</button>
+  </form>
+</div>

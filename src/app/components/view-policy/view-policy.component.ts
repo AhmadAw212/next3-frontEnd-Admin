@@ -13,6 +13,9 @@ export class ViewPolicyComponent implements OnInit {
   ngOnInit(): void {}
 
   viewPolicyComponent() {
-    this.dialog.open(ViewPolicyDialogComponent, { width: '1000px' });
+    this.dialog.open(ViewPolicyDialogComponent, {
+      width: '1000px',
+      maxHeight: '600px',
+    });
   }
 }

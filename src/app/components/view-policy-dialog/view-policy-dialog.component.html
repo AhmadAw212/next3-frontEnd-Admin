@@ -1,19 +1,20 @@
 <div class="dialog-header">
   <h2>View Policy</h2>
 </div>
-<div class="dialog-logo">
+<div class="dialog-logo" *ngIf="policyData">
   <img src="../../../assets/images/basicLogo.jpg" alt="Logo" class="logo" />
 </div>
 <div *ngIf="!policyData">
   <app-spinner></app-spinner>
 </div>
 <div class="dialog-content">
-  <div class="section">
-    <div class="panel" *ngIf="policyData">
+  <div class="section" *ngIf="policyData">
+    <h5>Policy Info</h5>
+    <div class="panel">
       <div class="column">
         <div class="panel-item">
           <label for="branch">Branch</label>
-          <p>{{ policyData?.branchCode }}</p>
+          <p>{{ policyData?.branchCode }} {{ policyData?.brancheDesc }}</p>
         </div>
         <div class="panel-item">
           <label for="certificate">Certificate</label>
@@ -92,14 +93,412 @@
       </div>
     </div>
   </div>
-</div>
-<div class="section">
-  <!-- Section 2 content here -->
-</div>
-<div class="section">
-  <!-- Section 3 content here -->
-</div>
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyIssueDate">policy Issue Date</label>
+          <p>{{ policyData?.policyIssueDate }}</p>
+        </div>
+      </div>
 
-<div class="dialog-footer">
-  <button mat-button>Close</button>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyExpiryDate">policy Expiry Date</label>
+          <p>{{ policyData?.policyExpiryDate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyEffectiveDate">policy Effective Date</label>
+          <p>{{ policyData?.policyEffectiveDate }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="firstInceptionDate">first Inception Date</label>
+          <p>{{ policyData?.firstInceptionDate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="firstEffectiveDate">first Effective Date</label>
+          <p>{{ policyData?.firstEffectiveDate }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyAction">Policy Type</label>
+          <p>{{ policyData?.policyAction }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="productsDescription">Subline</label>
+          <p>{{ policyData?.productsDescription }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyProduct">Policy Subline</label>
+          <p>{{ policyData?.policyProduct }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="sublineCode">Product Code</label>
+          <p>{{ policyData?.sublineCode }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="sublineDesc">Product</label>
+          <p>{{ policyData?.sublineDesc }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="productsType">Subline Category</label>
+          <p>{{ policyData?.productsType }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyBroker">Broker</label>
+          <p>{{ policyData?.policyBroker }}</p>
+        </div>
+
+        <div class="panel-item">
+          <label for="brokerDesc">Broker Name</label>
+          <p>{{ policyData?.brokerDesc }}</p>
+        </div>
+
+        <div class="panel-item">
+          <label for="brokerTelephone">Broker Mobile</label>
+          <p>{{ policyData?.brokerTelephone }}</p>
+        </div>
+
+        <div class="panel-item">
+          <label for="bibrokerid">Broker Black List</label>
+          <p>{{ policyData?.bibrokerid }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyBrokerWebOrigin">Broker Web Origin</label>
+          <p>{{ policyData?.policyBrokerWebOrigin }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyIsDirectBroker">Is Direct Broker</label>
+          <p>{{ policyData?.policyIsDirectBroker }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="bidate">Broker BlackList Set On</label>
+          <p>{{ policyData?.bidate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="binote1">Broker Black Note</label>
+          <p>{{ policyData?.binote1 }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="bisetBy">Broker BlackList Set By</label>
+          <p>{{ policyData?.bisetBy }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="bireason">Broker BlackList Reason</label>
+          <p>{{ policyData?.bireason }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="brokerEmail">Broker Email</label>
+          <p>{{ policyData?.brokerEmail }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyTowFlag">Tow Allowed</label>
+          <p>{{ policyData?.policyTowFlag }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyReplacementiag">Car Replacement</label>
+          <p>{{ policyData?.policyReplacementiag }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyAgencyRepairDesc">policy Agency Repair Desc</label>
+          <p>{{ policyData?.policyAgencyRepairDesc }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyDeductible">policy Deductible</label>
+          <p>{{ policyData?.policyDeductible }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyDeductibleAmt"> Deductible Amount</label>
+          <p>{{ policyData?.policyDeductibleAmt }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyweb">Web</label>
+          <p>{{ policyData?.policyweb }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyIssuingUser">Issuing User</label>
+          <p>{{ policyData?.policyIssuingUser }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyModifiedUser">Modified User</label>
+          <p>{{ policyData?.policyModifiedUser }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyPremiumCurrency"> Premium Currency</label>
+          <p>{{ policyData?.policyPremiumCurrency }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyPremiumCurrencyRate"> Premium Currency Rate</label>
+          <p>{{ policyData?.policyPremiumCurrencyRate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policySumInsCurrencyRate">SumIns Currency Rate</label>
+          <p>{{ policyData?.policySumInsCurrencyRate }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="policyInsuranceBlSetOn"
+            >Insurance Black List Set On</label
+          >
+          <p>{{ policyData?.policyInsuranceBISetOn }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policyInsuranceBISetBy"
+            >Insurance Black List Set By</label
+          >
+          <p>{{ policyData?.policyInsuranceBISetBy }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="policySpecialNotes">MOP Notes</label>
+          <p>{{ policyData?.policySpecialNotes }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="panel" *ngIf="policyData">
+      <table>
+        <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Description</th>
+            <th>Sum Insured</th>
+            <th>Deductible %</th>
+            <th>Deductible Flat Amount</th>
+            <th>Cover Limit Claim</th>
+            <th>Cover Count Limit</th>
+            <th>Deductible Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cover of policyCoverlist">
+            <td>{{ cover.policyCoversCover }}</td>
+            <td>{{ cover.coverDescription }}</td>
+            <td>{{ cover.policyCoversSumInsured }}</td>
+            <td>{{ cover.policyCoversDeductible100 }}</td>
+            <td>{{ cover.policyCoversDeductible }}</td>
+            <td>{{ cover.policyCoversLimitClaim }}</td>
+            <td>{{ cover.policyCoversCountLimit }}</td>
+            <td>{{ cover.policyCoversPercentage }}</td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">No data to display</td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" *ngIf="policyData">
+    <h5>Client Info</h5>
+    <div class="panel">
+      <div class="column">
+        <div class="panel-item">
+          <label for="clientName">Client Name</label>
+          <p>
+            {{ policyData?.clientFirstName }}
+            {{ policyData?.clientFatherName }}
+            {{ policyData?.clientFamilyName }}
+          </p>
+        </div>
+        <div class="panel-item">
+          <label for="policyPrintName">Print Name</label>
+          <p>{{ policyData?.policyPrintName }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="clientNum1">Client Code</label>
+          <p>{{ policyData?.clientNum1 }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <label for="clientMobilePhone"> Mobile Phone</label>
+          <p>{{ policyData?.clientMobilePhone }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="blPolicyNum"> Insured Black Note</label>
+          <p>{{ policyData?.blNote }}</p>
+        </div>
+        <!-- // todo blReason1 ,blPolicyNum -->
+        <!-- <div class="panel-item">
+          <label for="policySumInsCurrencyRate">SumIns Currency Rate</label>
+          <p>{{ policyData?.policySumInsCurrencyRate }}</p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="section" *ngIf="policyData">
+    <h5>Vehicle Info</h5>
+    <div class="panel">
+      <div class="column">
+        <div class="panel-item">
+          <label for="carBrandDescription">car Brand</label>
+          <p>
+            {{ policyData?.carBrandDescription }}
+          </p>
+        </div>
+        <div class="panel-item">
+          <label for="carTrademarkDescription">car Trademark</label>
+          <p>
+            {{ policyData?.carTrademarkDescription }}
+          </p>
+        </div>
+        <div class="panel-item">
+          <label for="carModelToPrint">Model to Print</label>
+          <p>
+            {{ policyData?.carModelToPrint }}
+          </p>
+        </div>
+        <div class="panel-item">
+          <label for="carYear">Car YOM</label>
+          <p>
+            {{ policyData?.carYear }}
+          </p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="carChassis">Print Name</label>
+          <p>{{ policyData?.carChassis }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carValue">Vehcile Value</label>
+          <p>{{ policyData?.carValue }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carPlate">Plate Number</label>
+          <p>{{ policyData?.carPlate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carEngine">Engine Number</label>
+          <p>{{ policyData?.carEngine }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="carVip"> Vip</label>
+          <p>{{ policyData?.carVip }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carUnPaidPremium">UnPaid Premium</label>
+          <p>{{ policyData?.carUnPaidPremium }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carUnPaidPremiumDate">UnPaid Premium Date</label>
+          <p>{{ policyData?.carUnPaidPremiumDate }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carDealerWorkshopName">Dealer Workshop Name</label>
+          <p>{{ policyData?.carDealerWorkshopName }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="carUsage">Car Usage</label>
+          <p>{{ policyData?.carUsage }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="beneficiaryDesc">Beneficiary</label>
+          <p>{{ policyData?.beneficiaryDesc }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carObjectNumber">Object Number</label>
+          <p>{{ policyData?.carObjectNumber }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carCertifBlackListed">BlackList </label>
+          <p>{{ policyData?.carCertifBlackListed }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label for="carCertifBlackListNote">BlackList Note</label>
+          <p>{{ policyData?.carCertifBlackListNote }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carCertifBlackListReason">BlackList Reason</label>
+          <p>{{ policyData?.carCertifBlackListReason }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carCertifBlackListSetBy">BlackList SetBy</label>
+          <p>{{ policyData?.carCertifBlackListSetBy }}</p>
+        </div>
+        <div class="panel-item">
+          <label for="carCertifBlackListSetOn">BlackList SetOn</label>
+          <p>{{ policyData?.carCertifBlackListSetOn }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button mat-button (click)="close()">Close</button>
+  </div>
 </div>

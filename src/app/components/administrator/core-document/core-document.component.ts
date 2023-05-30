@@ -20,6 +20,7 @@ export class CoreDocumentComponent implements OnInit {
   updatedDocValues?: CoreDocument[] = [];
   coreDocument?: CoreDocument;
   selectedRow!: HTMLElement;
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -41,6 +42,7 @@ export class CoreDocumentComponent implements OnInit {
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
@@ -50,6 +52,7 @@ export class CoreDocumentComponent implements OnInit {
     return contentType.startsWith('image/');
   }
   coreDocSearch() {
+    this.isLoading = true;
     this.dataService.coreDocSearch(this.fileName, this.path).subscribe({
       next: (res) => {
         this.docData = res.data;
@@ -63,6 +66,9 @@ export class CoreDocumentComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }
