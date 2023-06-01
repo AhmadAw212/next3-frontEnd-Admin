@@ -19,6 +19,7 @@ import { CarsReportListComponent } from './components/administrator/cars-report-
 import { CarsSupplierComponent } from './components/administrator/cars-supplier/cars-supplier.component';
 import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
 import { BranchConfigComponent } from './components/administrator/branch-config/branch-config.component';
+import { CarBrokerComponent } from './components/administrator/car-broker/car-broker.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -111,6 +112,11 @@ const routes: Routes = [
       {
         path: 'branchConfig',
         component: BranchConfigComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carBroker',
+        component: CarBrokerComponent,
         canActivate: [AuthGuard],
       },
     ],

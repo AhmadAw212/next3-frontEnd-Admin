@@ -33,7 +33,8 @@ export class ExpertSearchResultsComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedExpert: CarExpert[] = [];
   isLoading: boolean = true;
-
+  showExpertCompany?: boolean = false;
+  selectedExpert?: CarExpert;
   @Input() selectedSupplier?: CarSupplier;
   constructor(
     private dataService: DataServiceService,
@@ -48,6 +49,11 @@ export class ExpertSearchResultsComponent implements OnInit {
     this.getSchedule();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+  }
+  showExpertCompanies(expert: CarExpert) {
+    this.showExpertCompany = true;
+    this.selectedExpert = expert;
+    // console.log(expert);
   }
   findAndReplaceExpert(updatedExpert: CarExpert[], expert: CarExpert): void {
     const index = updatedExpert.findIndex((item) => item.id === expert.id);
@@ -86,7 +92,7 @@ export class ExpertSearchResultsComponent implements OnInit {
         expert[property] = newValue;
       }
       this.findAndReplaceExpert(updatedExpert, expert);
-      console.log(this.updatedExpert);
+      // console.log(this.updatedExpert);
     }
   }
 
@@ -99,7 +105,7 @@ export class ExpertSearchResultsComponent implements OnInit {
     const updatedExpert = this.updatedExpert ?? {};
 
     this.findAndReplaceExpert(updatedExpert, expert);
-    console.log(this.updatedExpert);
+    // console.log(this.updatedExpert);
   }
   onCheckboxChange(expert: CarExpert): void {
     const bodily_injury = expert.bodily_injury ?? false;
@@ -138,6 +144,14 @@ export class ExpertSearchResultsComponent implements OnInit {
       },
     });
   }
+  getSupplierExpert() {
+    this.dataService.searchSupplierExpert().subscribe({
+      next: (res) => {},
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   openAddExpertDialog() {
     const dialogRef = this.dialog.open(AddExpertComponent, {
@@ -149,6 +163,9 @@ export class ExpertSearchResultsComponent implements OnInit {
       },
       width: '350px',
       maxHeight: '600px',
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.getSupplierExpert();
     });
   }
   updateExpert() {
@@ -195,14 +212,13 @@ export class ExpertSearchResultsComponent implements OnInit {
   }
 
   highlightRow(event: Event) {
-    const clickedElement = event.target as HTMLElement;
-    const clickedRow = clickedElement.closest('tr');
+    const clickedRow = event.target as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow!;
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
   dateFormatterService() {

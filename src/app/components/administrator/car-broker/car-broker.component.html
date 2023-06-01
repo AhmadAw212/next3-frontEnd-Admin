@@ -1,0 +1,140 @@
+<h3 class="h3-header">Broker Configuration</h3>
+<div class="select-container">
+  <span>Company:</span>
+  <select
+    id="bodyTypeNew"
+    name="bodyTypeNew"
+    required
+    class="company-select"
+    [(ngModel)]="company"
+    [disabled]="companies?.length! <= 1"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+</div>
+
+<div class="form-tab">
+  <div class="admin-container container-fluid">
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div class="user-inputs">
+      <form (ngSubmit)="searchCarBroker()">
+        <label for="number">Number:</label>
+        <input type="text" id="number" name="number" [(ngModel)]="number" />
+
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+        />
+
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="openAddBrokerDialog()">
+          Add Broker
+        </button>
+        <button type="button" style="margin-left: 8px" (click)="updateBroker()">
+          Update Broker
+        </button>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>number</th>
+          <th>Description</th>
+          <th>description2</th>
+          <th>contactInfo</th>
+          <th>email</th>
+          <th>telephone</th>
+          <th>reference</th>
+          <th>BROKER_REFFERAL</th>
+          <th>BROKER_REFFERAL_NOTE</th>
+          <th>sysCreatedDate</th>
+          <th>sysCreatedBy</th>
+          <th>sysUpdatedDate</th>
+          <th>sysUpdatedBy</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="brokers.length > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr *ngFor="let broker of brokers">
+          <td>{{ broker.id }}</td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'number')"
+          >
+            {{ broker.number }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'description')"
+          >
+            {{ broker.description }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'description2')"
+          >
+            {{ broker.description2 }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'contactInfo')"
+          >
+            {{ broker.contactInfo }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, broker, 'email')">
+            {{ broker.email }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'telephone')"
+          >
+            {{ broker.telephone }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'reference')"
+          >
+            {{ broker.reference }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'referal')"
+          >
+            {{ broker.referal }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, broker, 'referalNote')"
+          >
+            {{ broker.referalNote }}
+          </td>
+          <td>{{ broker.sysCreatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ broker.sysCreatedBy }}</td>
+          <td>{{ broker.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ broker.sysUpdatedBy }}</td>
+
+          <td>
+            <mat-icon (click)="deleteBroker(broker.id!)">delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</div>

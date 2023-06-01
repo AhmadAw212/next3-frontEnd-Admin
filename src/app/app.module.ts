@@ -86,6 +86,9 @@ import { AddExpertComponent } from './components/administrator/add-dialogs/add-e
 import { BranchConfigComponent } from './components/administrator/branch-config/branch-config.component';
 import { AddBranchComponent } from './components/administrator/add-dialogs/add-branch/add-branch.component';
 import { ExpertCompanyListComponent } from './components/administrator/expert-config/expert-company-list/expert-company-list.component';
+import { AddExpertCompanyComponent } from './components/administrator/add-dialogs/add-expert-company/add-expert-company.component';
+import { CarBrokerComponent } from './components/administrator/car-broker/car-broker.component';
+import { AddBrokerComponent } from './components/administrator/add-dialogs/add-broker/add-broker.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -151,6 +154,9 @@ import { ExpertCompanyListComponent } from './components/administrator/expert-co
     BranchConfigComponent,
     AddBranchComponent,
     ExpertCompanyListComponent,
+    AddExpertCompanyComponent,
+    CarBrokerComponent,
+    AddBrokerComponent,
   ],
   imports: [
     BrowserModule,

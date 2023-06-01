@@ -54,8 +54,8 @@ export class EditUserComponent implements OnInit {
       data: {
         selectedUser: this.selectedUser,
       },
-      maxWidth: '100vw',
-      maxHeight: '100vh',
+      maxWidth: '500px',
+      maxHeight: '700px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -15,7 +15,7 @@ export class CoreUser {
   paymentLimit?: number;
   userLimitExpertFees?: number;
   companyDescription?: string;
-
+  userEmailSignature?: string;
   constructor(
     active: number,
     displayName: string,
@@ -32,7 +32,8 @@ export class CoreUser {
     userLimitHospitalFees: number,
     paymentLimit: number,
     userLimitExpertFees: number,
-    companyDescription: string
+    companyDescription: string,
+    userEmailSignature: string
   ) {
     this.active = active;
     (this.displayName = displayName),
@@ -50,6 +51,7 @@ export class CoreUser {
       (this.paymentLimit = paymentLimit),
       (this.userLimitExpertFees = userLimitExpertFees),
       (this.companyDescription = companyDescription);
+    this.userEmailSignature = userEmailSignature;
   }
 
   public static fromJSON(json: any): CoreUser {
@@ -71,7 +73,8 @@ export class CoreUser {
       json.userLimitHospitalFees,
       json.paymentLimit,
       json.userLimitExpertFees,
-      json.companyDescription
+      json.companyDescription,
+      json.userEmailSignature
     );
   }
 }
