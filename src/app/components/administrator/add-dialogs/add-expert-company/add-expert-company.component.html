@@ -1,0 +1,67 @@
+<h2 style="margin: 10px; font-size: large">Add Expert Company</h2>
+<div class="dialog">
+  <form [formGroup]="form" (ngSubmit)="AddExpertCompany()">
+    <div class="form-group">
+      <label for="company">Company:</label>
+      <select
+        id="company"
+        name="company"
+        class="input-dropdown"
+        formControlName="insuranceId"
+      >
+        <option *ngFor="let company of companies" [value]="company.companyId">
+          {{ company.companyName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="ratio">Ratio:</label>
+      <input type="text" id="ratio" name="ratio" formControlName="ratio" />
+    </div>
+    <div class="form-group">
+      <label for="initialCount">Initial Count:</label>
+      <input
+        type="text"
+        id="initialCount"
+        name="initialCount"
+        formControlName="initialCount"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['initialCount'].errors &&
+          (formControl['initialCount'].dirty ||
+            formControl['initialCount'].touched)
+        "
+      >
+        <div *ngIf="formControl['ratio']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div>
+    <!-- <div class="form-group">
+      <label for="dispatchCount">Dispatch Count:</label>
+      <input
+        type="text"
+        id="dispatchCount"
+        name="dispatchCount"
+        formControlName="dispatchCount"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['dispatchCount'].errors &&
+          (formControl['dispatchCount'].dirty ||
+            formControl['dispatchCount'].touched)
+        "
+      >
+        <div *ngIf="formControl['dispatchCount']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div> -->
+
+    <button type="submit">Submit</button>
+  </form>
+</div>

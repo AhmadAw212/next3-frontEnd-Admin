@@ -33,7 +33,7 @@ export class EditUserDialogComponent implements OnInit {
     private authService: AuthService
   ) {
     this.usersInfo = data.selectedUser;
-
+    console.log(this.usersInfo);
     this.editForm = this.fb.group({
       userName: [
         this.usersInfo.userName,

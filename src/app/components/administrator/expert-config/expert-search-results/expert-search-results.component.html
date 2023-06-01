@@ -16,9 +16,13 @@
     </div>
   </div>
 
-  <table id="table" *ngIf="expertSearchResult?.length! > 0; else noData">
+  <table
+    id="table table-responsive-sm"
+    *ngIf="expertSearchResult?.length! > 0; else noData"
+  >
     <thead>
       <tr>
+        <th></th>
         <th>Expert</th>
         <th>Group</th>
         <th>Territory</th>
@@ -42,6 +46,11 @@
       *ngIf="expertSearchResult?.length! > 0; else noData"
     >
       <tr *ngFor="let expert of expertSearchResult">
+        <td>
+          <span class="material-icons" (click)="showExpertCompanies(expert)"
+            >arrow_circle_down</span
+          >
+        </td>
         <td>{{ expert.expertName }}</td>
         <td>
           <select
@@ -102,8 +111,6 @@
         <td>
           <input
             type="checkbox"
-            name="secondExpert"
-            id="secondExpert"
             [(ngModel)]="expert.secondExpert"
             (change)="onCheckboxChange(expert)"
           />
@@ -153,5 +160,8 @@
     </tr>
   </ng-template>
 </div>
-
-<app-expert-company-list></app-expert-company-list>
+<div *ngIf="showExpertCompany">
+  <app-expert-company-list
+    [selectedExpert]="selectedExpert"
+  ></app-expert-company-list>
+</div>

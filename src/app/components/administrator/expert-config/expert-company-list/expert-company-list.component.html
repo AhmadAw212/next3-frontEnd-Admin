@@ -1,8 +1,14 @@
 <div class="admin-container container-fluid" style="height: 200px">
   <div class="user-inputs">
     <div class="admin-button">
-      <button type="button">Add Company</button>
-      <button type="button" style="margin-left: 8px">Update Company</button>
+      <button type="button" (click)="openAddExpertDialog()">Add Company</button>
+      <button
+        type="button"
+        style="margin-left: 8px"
+        (click)="updateExpertCompany()"
+      >
+        Update Company
+      </button>
     </div>
   </div>
 
@@ -21,16 +27,47 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let exptCompany of expertCompanies">
+        <td>
+          <select
+            id="insuranceId"
+            name="insuranceId"
+            required
+            class="select-class"
+            [(ngModel)]="exptCompany.insuranceId"
+            (change)="onDropdownChange($event, exptCompany, 'insuranceId')"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyId"
+              [disabled]="companies?.length! <= 1"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, exptCompany, 'initialCount')"
+        >
+          {{ exptCompany.initialCount }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, exptCompany, 'ratio')"
+        >
+          {{ exptCompany.ratio }}
+        </td>
+        <td>{{ exptCompany.dispatchCount }}</td>
+        <td>{{ exptCompany.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ exptCompany.sysCreatedBy }}</td>
+        <td>{{ exptCompany.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ exptCompany.sysUpdatedBy }}</td>
+        <td>
+          <mat-icon (click)="deleteExpertCompany(exptCompany.expertCompanyId!)"
+            >delete</mat-icon
+          >
+        </td>
       </tr>
     </tbody>
     <ng-template #noData>

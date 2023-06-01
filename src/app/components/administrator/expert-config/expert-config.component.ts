@@ -20,11 +20,11 @@ export class ExpertConfigComponent implements OnInit {
   insuranceId!: string;
   selectedValue?: string;
   selectedSupplier!: CarSupplier;
-  bodilyInjury: string = '';
-  vipCode: string = '';
+  bodilyInjury: string = 'ALL';
+  vipCode: string = 'ALL';
   // territory: string = '';
-  group: string = '';
-  exclusiveCode: string = '';
+  group: string = 'X';
+  exclusiveCode: string = 'ALL';
   territoryCode: string = '';
   fullName?: string;
   fatherName?: string;
@@ -113,7 +113,7 @@ export class ExpertConfigComponent implements OnInit {
     this.searchTimer = setTimeout(() => {
       const name = event.term;
       const company = this.insuranceId!;
-      this.dataService.searchSupplierByName(company, name).subscribe({
+      this.dataService.searchSupplierByName(name).subscribe({
         next: (res) => {
           this.expertSupplier = res.data;
           // console.log(res);
@@ -166,6 +166,9 @@ export class ExpertConfigComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
         },
       });
   }

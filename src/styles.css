@@ -82,6 +82,20 @@ th {
   max-width: 200px;
   max-height: 200px;
 }
+.select-class-schedule{
+  width: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.select-class{
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  align-items: center;
+}
 .car-logo {
   /* max-height: 70px; */
   /* max-width: 70px; */

@@ -30,6 +30,8 @@ import { CarsReportList } from '../model/cars-report-list';
 import { CarSupplier } from '../model/car-supplier';
 import { CarExpert } from '../model/car-expert';
 import { Branch } from '../model/branch';
+import { ExpertCompany } from '../model/expert-company';
+import { CarBroker } from '../model/car-broker';
 
 @Injectable({
   providedIn: 'root',
@@ -703,12 +705,9 @@ export class DataServiceService {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/getExpGroup`);
   }
 
-  searchSupplierByName(
-    insuranceId: string,
-    name: string
-  ): Observable<ApiResponse> {
+  searchSupplierByName(name: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/${insuranceId}/experts?nameSubstring=${name}`
+      `${this.userUrl}/cars-supplier/experts?nameSubstring=${name}`
     );
   }
 
@@ -762,6 +761,41 @@ export class DataServiceService {
     );
   }
 
+  getExpertCompany(expertId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-expert/${expertId}/companies`
+    );
+  }
+
+  addExpertCompany(
+    expertId: string,
+    expert: ExpertCompany
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-expert/${expertId}/new`,
+      expert
+    );
+  }
+
+  updateExpertCompany(
+    expertId: string,
+    expertCompany: ExpertCompany[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-expert/${expertId}/updateCompanies`,
+      expertCompany
+    );
+  }
+
+  deleteExpertCompany(
+    expertId: string,
+    expertCompanyId: string
+  ): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-expert/${expertId}/deleteCompany?id=${expertCompanyId}`
+    );
+  }
+
   getBranches(
     insuranceId: string,
     code: string,
@@ -789,6 +823,33 @@ export class DataServiceService {
   deleteBranch(branchId: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(
       `${this.userUrl}/car-branch/delete?id=${branchId}`
+    );
+  }
+  searchCarBroker(
+    insuranceId: string,
+    number: string,
+    description: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-broker/${insuranceId}/search?number=${number}&description=${description}`
+    );
+  }
+
+  addBroker(broker: CarBroker): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-broker/new`,
+      broker
+    );
+  }
+  deleteBroker(brokerId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-broker/delete?id=${brokerId}`
+    );
+  }
+  updateBroker(broker: CarBroker[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-broker/update`,
+      broker
     );
   }
 }

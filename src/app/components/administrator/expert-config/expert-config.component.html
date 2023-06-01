@@ -75,6 +75,7 @@
           <ng-select
             appendTo="body"
             name="territory"
+            id="territory"
             (search)="territoryAddress($event)"
             [(ngModel)]="territoryCode"
           >
@@ -97,37 +98,78 @@
 
     <div class="form-field">
       <label for="fullName">Full Name:</label>
-      <input type="text" [(ngModel)]="fullName" [disabled]="true" />
+      <input
+        type="text"
+        id="fullName"
+        name="fullName"
+        [(ngModel)]="fullName"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="fatherName">Father Name:</label>
-      <input type="text" [(ngModel)]="fatherName" [disabled]="true" />
+      <input
+        type="text"
+        id="fatherName "
+        name="fatherName"
+        [(ngModel)]="fatherName"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="prefixFamily">Prefix Family:</label>
-      <input type="text" [(ngModel)]="prefixFamily" [disabled]="true" />
+      <input
+        type="text"
+        id="prefixFamily"
+        name="prefixFamily"
+        [(ngModel)]="prefixFamily"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="familyName">Family Name:</label>
-      <input type="text" [(ngModel)]="familyName" [disabled]="true" />
+      <input
+        type="text"
+        id="familyName"
+        name="familyName"
+        [(ngModel)]="familyName"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="arabicName">Arabic Name:</label>
-      <input type="text" [(ngModel)]="arabicName" [disabled]="true" />
+      <input
+        type="text"
+        id="arabicName"
+        name="arabicName"
+        [(ngModel)]="arabicName"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="mobilePhone">Mobile Phone:</label>
-      <input type="text" [(ngModel)]="mobilePhone" [disabled]="true" />
+      <input
+        type="text"
+        id="mobilePhone"
+        name="mobilePhone"
+        [disabled]="true"
+      />
     </div>
 
     <div class="form-field">
       <label for="sms">SMS:</label>
-      <input type="checkbox" [(ngModel)]="sms" [disabled]="true" />
+      <input
+        type="checkbox"
+        id="sms"
+        name="sms"
+        [(ngModel)]="sms"
+        [disabled]="true"
+      />
     </div>
   </div>
 </div>

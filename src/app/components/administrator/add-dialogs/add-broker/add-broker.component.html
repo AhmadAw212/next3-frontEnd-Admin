@@ -1,0 +1,38 @@
+<h2 style="margin: 10px; font-size: large">Add Broker</h2>
+<div class="dialog">
+  <form [formGroup]="brokerForm" (ngSubmit)="addBroker()">
+    <label for="number">Number:</label>
+    <input type="text" id="number" formControlName="number" />
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" formControlName="description" />
+    <label for="description2">Description2:</label>
+    <input type="text" id="description2" formControlName="description2" />
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" formControlName="email" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['email'].errors &&
+        (formControl['email'].dirty || formControl['email'].touched)
+      "
+    >
+      <div *ngIf="formControl['email']?.errors?.['email']">
+        Email pattern required
+      </div>
+    </div>
+    <label for="contactInfo">Contace Info:</label>
+    <input type="text" id="contactInfo" formControlName="contactInfo" />
+    <label for="telephone">Telephone:</label>
+    <input type="text" id="telephone" formControlName="telephone" />
+    <label for="reference">Reference:</label>
+    <input type="text" id="reference" formControlName="reference" />
+    <label for="referal">Referal:</label>
+    <input type="text" id="referal" formControlName="referal" />
+    <label for="referalNote">Referal Note:</label>
+    <input type="text" id="referalNote" formControlName="referalNote" />
+
+    <button type="submit" [disabled]="!brokerForm.valid">Save</button>
+  </form>
+</div>
