@@ -19,10 +19,10 @@
   <div class="admin-container container-fluid">
     <div class="user-inputs">
       <form (ngSubmit)="searchCarProducts()">
-        <label for="code">Code:</label>
+        <label>Code:</label>
         <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <label for="description">Description:</label>
+        <label>Description:</label>
         <input
           type="text"
           id="description"
@@ -45,101 +45,85 @@
         </button>
       </div>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Tarif</th>
-              <th>LOB</th>
-              <th>Sys_Created_Date</th>
-              <th>Sys_Created_By</th>
-              <th>Sys_Updated_Date</th>
-              <th>Sys_Updated_By</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="carProducts?.length! > 0; else noData"
-            (click)="highlightRow($event)"
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Tarif</th>
+          <th>LOB</th>
+          <th>Sys_Created_Date</th>
+          <th>Sys_Created_By</th>
+          <th>Sys_Updated_Date</th>
+          <th>Sys_Updated_By</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="carProducts?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr *ngFor="let product of carProducts">
+          <td>{{ product.id }}</td>
+          <td contenteditable="true" (blur)="onTdBlur($event, product, 'code')">
+            {{ product.code }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, product, 'description')"
           >
-            <tr *ngFor="let product of carProducts">
-              <td>{{ product.id }}</td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, product, 'code')"
-              >
-                {{ product.code }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, product, 'description')"
-              >
-                {{ product.description }}
-              </td>
-              <td>
-                <select
-                  id="type"
-                  name="type"
-                  required
-                  style="width: 150px"
-                  [(ngModel)]="product.type"
-                  (change)="onDropdownChange($event, product, 'type')"
-                >
-                  <option
-                    *ngFor="let type of productsTypes"
-                    [value]="type.code"
-                  >
-                    {{ type.description }}
-                  </option>
-                </select>
-              </td>
+            {{ product.description }}
+          </td>
+          <td>
+            <select
+              required
+              style="width: 150px"
+              [(ngModel)]="product.type"
+              (change)="onDropdownChange($event, product, 'type')"
+            >
+              <option *ngFor="let type of productsTypes" [value]="type.code">
+                {{ type.description }}
+              </option>
+            </select>
+          </td>
 
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, product, 'tarif')"
-              >
-                {{ product.tarif }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, product, 'lob')"
-              >
-                {{ product.lob }}
-              </td>
-              <td>
-                {{ product.sysCreatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ product.sysCreatedBy }}</td>
-              <td>
-                {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
-              </td>
-              <td>{{ product.sysUpdatedBy }}</td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, product, 'tarif')"
+          >
+            {{ product.tarif }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, product, 'lob')">
+            {{ product.lob }}
+          </td>
+          <td>
+            {{ product.sysCreatedDate | date : reportDateTimeFormat }}
+          </td>
+          <td>{{ product.sysCreatedBy }}</td>
+          <td>
+            {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
+          </td>
+          <td>{{ product.sysUpdatedBy }}</td>
 
-              <td>
-                <mat-icon (click)="deleteCarCover(product.id!)"
-                  >delete</mat-icon
-                >
-              </td>
-              <!-- <td>
+          <td>
+            <mat-icon (click)="deleteCarCover(product.id!)">delete</mat-icon>
+          </td>
+          <!-- <td>
                 <mat-icon (click)="updateCarProductDialog(product)"
                   >edit</mat-icon
                 >
               </td> -->
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="5">No data to display</td>
-            </tr>
-          </ng-template>
-        </table>
-      </div>
-    </div>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
+    </table>
   </div>
 </div>

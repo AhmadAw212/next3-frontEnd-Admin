@@ -1,35 +1,40 @@
-<h2 style="margin: 10px; font-size: large">Add Car Cover</h2>
 <div class="dialog">
-  <form (ngSubmit)="addCarProduct()">
-    <label for="code"> Code:</label>
-    <input type="text" id="code" name="code" required [(ngModel)]="code" />
+  <form [formGroup]="carCoverForm" (ngSubmit)="addCarProduct()">
+    <label for="code">Code:</label>
+    <input type="text" id="code" name="code" formControlName="code" required />
 
-    <label for="description"> Description:</label>
+    <label for="description">Description:</label>
     <input
       type="text"
       id="description"
       name="description"
+      formControlName="description"
       required
-      [(ngModel)]="description"
     />
 
-    <label for="tarif"> TARIF:</label>
-    <input type="text" id="tarif" name="tarif" required [(ngModel)]="tarif" />
-    <label for="lob"> LOB:</label>
-    <input type="text" id="lob" name="lob" required [(ngModel)]="lob" />
+    <label for="tarif">TARIF:</label>
+    <input
+      type="text"
+      id="tarif"
+      name="tarif"
+      formControlName="tarif"
+      required
+    />
 
-    <label for="type">Type</label>
+    <label for="lob">LOB:</label>
+    <input type="text" id="lob" name="lob" formControlName="lob" required />
+
+    <label>Type:</label>
     <select
       id="bodyTypeNew"
       name="bodyTypeNew"
+      formControlName="productType"
       required
-      [(ngModel)]="productType"
     >
       <option *ngFor="let type of productTypes" [value]="type.code">
         {{ type.description }}
       </option>
     </select>
-
     <button type="submit">Save</button>
   </form>
 </div>

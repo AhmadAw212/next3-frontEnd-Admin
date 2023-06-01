@@ -54,8 +54,6 @@
         <td>{{ expert.expertName }}</td>
         <td>
           <select
-            id="group"
-            name="group"
             [(ngModel)]="expert.groupCode"
             (change)="onDropdownChange($event, expert, 'groupCode')"
             class="select-class"
@@ -67,8 +65,6 @@
         </td>
         <td>
           <select
-            id="territory"
-            name="territory"
             class="select-class-schedule"
             [(ngModel)]="expert.territory_code"
             (change)="onDropdownChange($event, expert, 'territory_code')"
@@ -84,8 +80,6 @@
         <td>
           <input
             type="checkbox"
-            name="bodilyInjury"
-            id="bodilyInjury"
             [(ngModel)]="expert.bodily_injury"
             (change)="onCheckboxChange(expert)"
           />
@@ -93,8 +87,6 @@
         <td>
           <input
             type="checkbox"
-            name="vip"
-            id="vip"
             [(ngModel)]="expert.vip"
             (change)="onCheckboxChange(expert)"
           />
@@ -102,8 +94,6 @@
         <td>
           <input
             type="checkbox"
-            name="exclusive"
-            id="exclusive"
             [(ngModel)]="expert.exclusive"
             (change)="onCheckboxChange(expert)"
           />
@@ -118,16 +108,12 @@
         <td>
           <input
             type="checkbox"
-            name="contract"
-            id="contract"
             [(ngModel)]="expert.contract"
             (change)="onCheckboxChange(expert)"
           />
         </td>
         <td>
           <select
-            id="schedule"
-            name="schedule"
             [(ngModel)]="expert.schedule_code"
             (change)="onDropdownChange($event, expert, 'schedule_code')"
             class="select-class"

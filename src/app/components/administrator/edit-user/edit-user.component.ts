@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,7 @@ export class EditUserComponent implements OnInit {
   selectedUser?: CoreUser;
   showProfileList = false;
   rolesSubscribtion?: Subscription;
-  dico?: any = '';
+  dico?: any;
   roleNames?: string[] = [];
   constructor(
     private dataService: DataServiceService,
@@ -29,14 +30,22 @@ export class EditUserComponent implements OnInit {
     private alertify: AlertifyService,
     public companyBranchService: CompanyBranchService,
     private authService: AuthService,
-    private userRolesService: UsersRolesService
+    private userRolesService: UsersRolesService,
+    private dicoService: DicoServiceService
   ) {
     this.userRolesService.getUserRoles();
   }
 
   ngOnInit(): void {
     this.subscribedUsers();
+    this.dicoService.getDico();
     this.getDico();
+  }
+
+  getDico() {
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   hasPerm(role: string): boolean {
@@ -133,19 +142,19 @@ export class EditUserComponent implements OnInit {
     );
   }
 
-  getDico() {
-    const language = localStorage.getItem('selectedLanguage')!;
-    this.dataService.Dico(language).subscribe({
-      next: (language) => {
-        this.dico = language.data;
-        // console.log(language.data);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
-      },
-    });
-  }
+  // getDico() {
+  //   const language = localStorage.getItem('selectedLanguage')!;
+  //   this.dataService.Dico(language).subscribe({
+  //     next: (language) => {
+  //       this.dico = language.data;
+  //       // console.log(language.data);
+  //     },
+  //     error: (err) => {
+  //       if (err.status === 401 || err.status === 500) {
+  //         this.authService.logout();
+  //         this.alertify.dialogAlert('Error');
+  //       }
+  //     },
+  //   });
+  // }
 }

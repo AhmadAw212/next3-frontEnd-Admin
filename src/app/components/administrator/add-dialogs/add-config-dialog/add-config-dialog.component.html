@@ -1,13 +1,13 @@
 <h2 style="margin: 10px; font-size: large">Add Configuration</h2>
 <div class="dialog">
   <form (ngSubmit)="addConfiguration()">
-    <label for="id">ID:</label>
+    <label>ID:</label>
     <input type="text" id="id" [(ngModel)]="configId" name="id" />
 
-    <label for="configValue">Config Value:</label>
+    <label>Config Value:</label>
     <input type="text" [(ngModel)]="configValue" name="configValue" />
 
-    <label for="description">Description:</label>
+    <label>Description:</label>
     <input
       type="text"
       [(ngModel)]="configDescription"

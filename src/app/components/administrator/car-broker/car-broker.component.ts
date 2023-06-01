@@ -60,18 +60,22 @@ export class CarBrokerComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }
 
   searchCarBroker() {
+    this.isLoading = true;
     this.dataService
       .searchCarBroker(this.company!, this.number!, this.description!)
       .subscribe({
         next: (res) => {
           this.brokers = res.data;
-          console.log(this.brokers);
+          // console.log(this.brokers);
         },
         error: (err) => {
           console.log(err);
