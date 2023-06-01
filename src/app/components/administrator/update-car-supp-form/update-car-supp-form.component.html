@@ -25,13 +25,8 @@
       />
     </div>
     <div class="form-group">
-      <label for="supplierType">Supplier Type:</label>
-      <select
-        id="type"
-        name="type"
-        class="input-dropdown"
-        formControlName="interm"
-      >
+      <label>Supplier Type:</label>
+      <select class="input-dropdown" formControlName="interm">
         <option *ngFor="let type of supplierType" [value]="type.code">
           {{ type.description }}
         </option>
@@ -76,8 +71,8 @@
     </div>
 
     <div class="form-group">
-      <label for="supplierTitre">Supplier Title:</label>
-      <select name="title" id="title" formControlName="titre">
+      <label>Supplier Title:</label>
+      <select formControlName="titre">
         <option *ngFor="let title of titleLov" [value]="title.code">
           {{ title.description }}
         </option>
@@ -85,7 +80,7 @@
     </div>
 
     <div class="form-group">
-      <label for="home">Home City</label>
+      <label>Home City</label>
       <ng-select appendTo="body" formControlName="home_id">
         <ng-option *ngFor="let address of addressLov" [value]="address.code">{{
           address.description
@@ -104,7 +99,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="supplierBusStreet">Supplier Business City:</label>
+      <label>Supplier Business City:</label>
       <ng-select appendTo="body" formControlName="bus_id">
         <ng-option *ngFor="let address of addressLov" [value]="address.code">{{
           address.description

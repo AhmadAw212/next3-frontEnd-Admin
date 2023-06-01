@@ -134,7 +134,7 @@ export class CarsSupplierComponent implements OnInit {
     this.dataService.getSupplierGrade().subscribe({
       next: (res) => {
         this.suppGrade = res.data;
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);

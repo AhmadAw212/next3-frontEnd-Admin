@@ -34,7 +34,7 @@
             [disabled]="hasPerm('systemAdmin')"
             [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
           >
-            {{ dico.dico_search }}
+            {{ dico?.dico_search }}
           </button>
         </form>
       </div>
@@ -42,12 +42,12 @@
         <thead>
           <tr>
             <th></th>
-            <th>{{ dico.BASIC_EDIT }}</th>
+            <th>{{ dico?.BASIC_EDIT || "dico.BASIC_EDIT" }}</th>
             <th>Code</th>
             <th>Display Name</th>
-            <th>{{ dico.dico_email }}</th>
-            <th>{{ dico.dico_company }}</th>
-            <th>{{ dico.dico_active }}</th>
+            <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
+            <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
+            <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
             <th></th>
             <th></th>
           </tr>
@@ -101,14 +101,14 @@
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">{{ dico.BASIC_NO_DATA_TO_DISPLAY }}</td>
+            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY }}</td>
           </tr>
         </ng-template>
       </table>
     </div>
   </div>
   <div
-    class="admin-container"
+    class="admin-container container-fluid"
     *ngIf="showProfileList"
     style="height: fit-content"
   >

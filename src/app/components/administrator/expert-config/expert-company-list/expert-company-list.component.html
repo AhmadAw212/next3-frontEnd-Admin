@@ -30,9 +30,6 @@
       <tr *ngFor="let exptCompany of expertCompanies">
         <td>
           <select
-            id="insuranceId"
-            name="insuranceId"
-            required
             class="select-class"
             [(ngModel)]="exptCompany.insuranceId"
             (change)="onDropdownChange($event, exptCompany, 'insuranceId')"

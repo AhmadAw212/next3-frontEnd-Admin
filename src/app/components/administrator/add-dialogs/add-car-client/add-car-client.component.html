@@ -169,8 +169,8 @@
       </div>
     </div>
     <!-- dico_title -->
-    <label for="titre">Title:</label>
-    <select name="title" id="title" formControlName="titre">
+    <label>Title:</label>
+    <select formControlName="titre">
       <option [value]="title.code" *ngFor="let title of titleLov">
         {{ title.description }}
       </option>

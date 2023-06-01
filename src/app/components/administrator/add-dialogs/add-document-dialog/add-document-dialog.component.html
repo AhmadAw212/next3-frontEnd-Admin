@@ -1,13 +1,13 @@
 <h2 style="margin: 10px; font-size: large">Add Document</h2>
 <div class="dialog">
   <form (ngSubmit)="addDocument()">
-    <label for="file">File:</label>
+    <label>File:</label>
     <input type="file" name="file" (change)="onFileSelected($event)" />
 
-    <label for="id">ID:</label>
+    <label>ID:</label>
     <input type="text" id="id" [(ngModel)]="id" name="id" />
 
-    <label for="id">Company:</label>
+    <label>Company:</label>
     <ng-select appendTo="body" [(ngModel)]="company" name="locale">
       <ng-option
         *ngFor="let company of companyList"
@@ -16,13 +16,13 @@
       >
     </ng-select>
 
-    <label for="fileName">File Name:</label>
+    <label>File Name:</label>
     <input type="text" name="fileName" [(ngModel)]="fileName" />
 
-    <label for="path">File path:</label>
+    <label>File path:</label>
     <input type="text" [(ngModel)]="filePath" name="path" />
 
-    <label for="content-Type">Content Type:</label>
+    <label>Content Type:</label>
     <input type="text" [(ngModel)]="contentType" name="content-Type" />
 
     <button type="submit">Save</button>

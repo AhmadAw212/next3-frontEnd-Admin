@@ -4,10 +4,10 @@
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
     <form (ngSubmit)="resourceBundleSearch()">
-      <label for="inputId">Resource Key:</label>
+      <label>Resource Key:</label>
       <input type="text" id="key" name="key" [(ngModel)]="key" />
 
-      <label for="inputDescription">Resource Value:</label>
+      <label>Resource Value:</label>
       <input type="text" id="value" name="value" [(ngModel)]="value" />
 
       <button type="submit">Search</button>
