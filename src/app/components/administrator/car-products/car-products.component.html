@@ -1,133 +1,148 @@
-<h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
-<div class="select-container">
-  <span>Company:</span>
-  <select
-    id="bodyTypeNew"
-    name="bodyTypeNew"
-    required
-    class="company-select"
-    [(ngModel)]="company"
-    [disabled]="companies?.length! <= 1"
-  >
-    <option *ngFor="let company of companies" [value]="company.companyId">
-      {{ company.companyName }}
-    </option>
-  </select>
-</div>
+<div *ngIf="dico; else spinner">
+  <h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
+  <div class="select-container">
+    <span>Company:</span>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      [(ngModel)]="company"
+      [disabled]="companies?.length! <= 1"
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </div>
 
-<div class="form-tab">
-  <div class="admin-container container-fluid">
-    <div class="user-inputs">
-      <form (ngSubmit)="searchCarProducts()">
-        <label>{{ dico?.dico_code || " dico_code" }}:</label>
-        <input type="text" id="code" name="code" [(ngModel)]="code" />
+  <div class="form-tab">
+    <div class="admin-container container-fluid">
+      <div class="user-inputs">
+        <form (ngSubmit)="searchCarProducts()">
+          <label>{{ dico?.dico_code || " dico_code" }}:</label>
+          <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <label>{{ dico?.dico_description || "dico_description" }}:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          [(ngModel)]="description"
-        />
+          <label>{{ dico?.dico_description || "dico_description" }}:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            [(ngModel)]="description"
+          />
 
-        <button type="submit">
-          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-        </button>
-      </form>
-      <div class="admin-button">
-        <button type="button" (click)="openAddProductDialog()">
-          {{ dico?.dico_add || "dico_add" }}
-        </button>
-        <button
-          type="button"
-          style="margin-left: 8px"
-          (click)="updateCarProduct()"
-        >
-          {{ dico?.dico_save || "dico_save" }}
-        </button>
+          <button type="submit">
+            {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+          </button>
+        </form>
+        <div class="admin-button">
+          <button type="button" (click)="openAddProductDialog()">
+            {{ dico?.dico_add || "dico_add" }}
+          </button>
+          <button
+            type="button"
+            style="margin-left: 8px"
+            (click)="updateCarProduct()"
+          >
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>{{ dico?.dico_id || "dico_id" }}</th>
-          <th>{{ dico?.dico_code || "dico_code" }}</th>
-          <th>{{ dico?.dico_description || "dico_description" }}</th>
-          <th>{{ dico?.dico_type || "dico_type" }}</th>
-          <th>{{ dico?.dico_tarif || "dico_tarif" }}</th>
-          <th>{{ dico?.dico_lob || "dico_lob" }}</th>
-          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
-          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
-          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-          <th></th>
-          <!-- <th></th> -->
-        </tr>
-      </thead>
-      <tbody
-        *ngIf="carProducts?.length! > 0; else noData"
-        (click)="highlightRow($event)"
-      >
-        <tr *ngFor="let product of carProducts">
-          <td>{{ product.id }}</td>
-          <td contenteditable="true" (blur)="onTdBlur($event, product, 'code')">
-            {{ product.code }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, product, 'description')"
-          >
-            {{ product.description }}
-          </td>
-          <td>
-            <select
-              required
-              style="width: 150px"
-              [(ngModel)]="product.type"
-              (change)="onDropdownChange($event, product, 'type')"
+      <table>
+        <thead>
+          <tr>
+            <th>{{ dico?.dico_id || "dico_id" }}</th>
+            <th>{{ dico?.dico_code || "dico_code" }}</th>
+            <th>{{ dico?.dico_description || "dico_description" }}</th>
+            <th>{{ dico?.dico_type || "dico_type" }}</th>
+            <th>{{ dico?.dico_tarif || "dico_tarif" }}</th>
+            <th>{{ dico?.dico_lob || "dico_lob" }}</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
+            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
+            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+            <th></th>
+            <!-- <th></th> -->
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="carProducts?.length! > 0; else noData"
+          (click)="highlightRow($event)"
+        >
+          <tr *ngFor="let product of carProducts">
+            <td>{{ product.id }}</td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, product, 'code')"
             >
-              <option *ngFor="let type of productsTypes" [value]="type.code">
-                {{ type.description }}
-              </option>
-            </select>
-          </td>
+              {{ product.code }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, product, 'description')"
+            >
+              {{ product.description }}
+            </td>
+            <td>
+              <select
+                required
+                style="width: 150px"
+                [(ngModel)]="product.type"
+                (change)="onDropdownChange($event, product, 'type')"
+              >
+                <option *ngFor="let type of productsTypes" [value]="type.code">
+                  {{ type.description }}
+                </option>
+              </select>
+            </td>
 
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, product, 'tarif')"
-          >
-            {{ product.tarif }}
-          </td>
-          <td contenteditable="true" (blur)="onTdBlur($event, product, 'lob')">
-            {{ product.lob }}
-          </td>
-          <td>
-            {{ product.sysCreatedDate | date : reportDateTimeFormat }}
-          </td>
-          <td>{{ product.sysCreatedBy }}</td>
-          <td>
-            {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
-          </td>
-          <td>{{ product.sysUpdatedBy }}</td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, product, 'tarif')"
+            >
+              {{ product.tarif }}
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, product, 'lob')"
+            >
+              {{ product.lob }}
+            </td>
+            <td>
+              {{ product.sysCreatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ product.sysCreatedBy }}</td>
+            <td>
+              {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
+            </td>
+            <td>{{ product.sysUpdatedBy }}</td>
 
-          <td>
-            <mat-icon (click)="deleteCarCover(product.id!)">delete</mat-icon>
-          </td>
-          <!-- <td>
-                <mat-icon (click)="updateCarProductDialog(product)"
-                  >edit</mat-icon
-                >
-              </td> -->
-        </tr>
-      </tbody>
-      <ng-template #noData>
-        <tr>
-          <td colspan="5">
-            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-          </td>
-        </tr>
-      </ng-template>
-    </table>
+            <td>
+              <mat-icon (click)="deleteCarCover(product.id!)">delete</mat-icon>
+            </td>
+            <!-- <td>
+                  <mat-icon (click)="updateCarProductDialog(product)"
+                    >edit</mat-icon
+                  >
+                </td> -->
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
   </div>
 </div>
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>
