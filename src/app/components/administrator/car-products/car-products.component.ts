@@ -44,15 +44,6 @@ export class CarProductsComponent implements OnInit {
     this.getCompaniesPerUser();
     this.getProductsTypes();
   }
-  getDico() {
-    this.dicoService.getDico();
-    this.dicoService.dico.subscribe((data) => {
-      this.dico = data;
-      this.getDico();
-    });
-  }
-
-
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
