@@ -1,0 +1,80 @@
+<div class="select-container" style="margin: 10px">
+  <span>Company:</span>
+  <select
+    required
+    class="company-select"
+    [(ngModel)]="company"
+    [disabled]="companies?.length! <= 1"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+</div>
+
+<div class="form-tab">
+  <div class="admin-container container-fluid" style="height: 350px">
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div class="user-inputs">
+      <form (ngSubmit)="searchTownTerritory()">
+        <label>Territory Name:</label>
+        <input type="text" id="key" name="key" [(ngModel)]="territoryName" />
+
+        <label>Town Name:</label>
+        <input type="text" id="value" name="value" [(ngModel)]="townName" />
+
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button">Add Approval Type</button>
+        <button type="button" style="margin-left: 8px">
+          Update Approval Type
+        </button>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>teritory_code</th>
+          <th>territory_name</th>
+          <th>address Id</th>
+          <th>townName</th>
+          <th>sysCreatedDate</th>
+          <th>sysCreatedBy</th>
+          <th>sysUpdatedDate</th>
+          <th>sysUpdatedBy</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          (click)="highlightRow($event)"
+          *ngFor="let townTerritory of townTerritory"
+        >
+          <td>{{ townTerritory.id }}</td>
+          <td>{{ townTerritory.teritory_code }}</td>
+
+          <td>{{ townTerritory.territory_name }}</td>
+          <td>{{ townTerritory.addressId }}</td>
+          <td>{{ townTerritory.townName }}</td>
+          <td>{{ townTerritory.sysCreatedDate }}</td>
+
+          <td>{{ townTerritory.sysCreatedBy }}</td>
+          <td>{{ townTerritory.sysUpdatedDate }}</td>
+          <td>{{ townTerritory.sysUpdatedBy }}</td>
+
+          <td>
+            <mat-icon>delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="select-container" style="margin: 10px">
+  <span>Company:</span>
+  <select
+    required
+    class="company-select"
+    [(ngModel)]="company"
+    [disabled]="companies?.length! <= 1"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+</div>
+
+<div class="form-tab">
+  <div class="admin-container container-fluid" style="height: 350px">
+    <app-spinner *ngIf="isLoading"></app-spinner>
+    <div class="user-inputs">
+      <form (ngSubmit)="searchCarAppType()">
+        <button type="submit">Search</button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="addApprovalTypeDialog()">
+          Add Approval Type
+        </button>
+        <button
+          type="button"
+          style="margin-left: 8px"
+          (click)="updateCarApprovalType()"
+        >
+          Update Approval Type
+        </button>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Application Type</th>
+          <th>App User Id</th>
+          <th>Amount To</th>
+          <th>Amount From</th>
+          <th>Send Email</th>
+          <th>sysCreatedDate</th>
+          <th>sysCreatedBy</th>
+          <th>sysUpdatedDate</th>
+          <th>sysUpdatedBy</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="carAppType?.length! > 0; else noData">
+        <tr *ngFor="let carApp of carAppType" (click)="highlightRow($event)">
+          <td>{{ carApp.id }}</td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, carApp, 'applicationType')"
+          >
+            {{ carApp.applicationType }}
+          </td>
+          <td>{{ carApp.appUserId }}</td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, carApp, 'amountTo')"
+          >
+            {{ carApp.amountTo }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, carApp, 'amountFrom')"
+          >
+            {{ carApp.amountFrom }}
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="email"
+              id="email"
+              [(ngModel)]="carApp.sendEmail"
+              (change)="onDropdownChange($event, carApp, 'sendEmail')"
+            />
+          </td>
+          <td>{{ carApp.sysCreatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ carApp.sysCreatedBy }}</td>
+          <td>{{ carApp.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ carApp.sysUpdatedBy }}</td>
+
+          <td>
+            <mat-icon (click)="deleteApprovalType(carApp.id!)">delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">No data to display</td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</div>

@@ -41,11 +41,11 @@
         <th></th>
       </tr>
     </thead>
-    <tbody
-      (click)="highlightRow($event)"
-      *ngIf="expertSearchResult?.length! > 0; else noData"
-    >
-      <tr *ngFor="let expert of expertSearchResult">
+    <tbody *ngIf="expertSearchResult?.length! > 0; else noData">
+      <tr
+        *ngFor="let expert of expertSearchResult"
+        (click)="highlightRow($event)"
+      >
         <td>
           <span class="material-icons" (click)="showExpertCompanies(expert)"
             >arrow_circle_down</span

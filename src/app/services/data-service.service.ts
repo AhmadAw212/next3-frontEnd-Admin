@@ -32,6 +32,7 @@ import { CarExpert } from '../model/car-expert';
 import { Branch } from '../model/branch';
 import { ExpertCompany } from '../model/expert-company';
 import { CarBroker } from '../model/car-broker';
+import { CarApprovalType } from '../model/car-approval-type';
 
 @Injectable({
   providedIn: 'root',
@@ -850,6 +851,59 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/car-broker/update`,
       broker
+    );
+  }
+
+  searchCarAppType(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-approvalType/${insuranceId}`
+    );
+  }
+
+  addApprovalType(approvalType: CarApprovalType): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-approvalType/new`,
+      approvalType
+    );
+  }
+
+  deleteApprovalType(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-approvalType/delete?id=${id}`
+    );
+  }
+
+  searchCoreUserId(
+    insuranceId: string,
+    nameSubstring: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/user/${insuranceId}/search?nameSubstring=${nameSubstring}`
+    );
+  }
+
+  updateCarApprovalType(
+    carApprovalType: CarApprovalType[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-approvalType/update`,
+      carApprovalType
+    );
+  }
+
+  searchCarsTownTerritory(
+    insuranceId: string,
+    territoryName: string,
+    townName: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-town-territory/${insuranceId}/search?territoryName=${territoryName}&townName=${townName}`
+    );
+  }
+
+  getDataEntry(notificationId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getNotificationByIdDataEntry?notificationId=${notificationId}`
     );
   }
 }

@@ -13,6 +13,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 export class AdminPageComponent implements OnInit {
   userProfiles?: CoreProfile;
   userRoles?: Role;
+  navBarTitle = 'Administrator';
   constructor(private dataService: DataServiceService) {}
 
   ngOnInit(): void {

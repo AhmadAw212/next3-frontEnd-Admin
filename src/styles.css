@@ -110,8 +110,8 @@ table.table thead th {
 .h3-header{
     /* margin: 0; */
     margin-top: 5px;
-    margin-right: 10px;
-    margin-left: 10px;
+    /* margin-right: 10px; */
+    /* margin-left: 10px; */
     padding: 5px;
     background-color: #025696;
     color: #fff;
@@ -121,6 +121,33 @@ table.table thead th {
 }
 .admin-container {
   position: relative;
+}
+.dialog-content {
+  padding: 10px;
+}
+label{
+  font-weight: bold;
+}
+.section {
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.panel {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+
+.column {
+  width: 20%;
+  margin-right: 20px;
+}
+
+.panel-item {
+  margin-bottom: 10px;
+
 }
 
 .admin-container app-spinner {

@@ -218,7 +218,7 @@ export class ExpertSearchResultsComponent implements OnInit {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow.closest('tr') as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
   dateFormatterService() {
