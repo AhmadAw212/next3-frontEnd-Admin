@@ -1,5 +1,6 @@
 <h2 style="margin: 10px; font-size: large">
-  {{ dico?.dico_add || "dico_add" }}
+  {{ dico?.dico_add || "dico_add"
+  }}{{ dico?.dico_subline_desc || "dico_subline_desc" }}
 </h2>
 <div class="dialog">
   <form (ngSubmit)="addCarSubline()">
