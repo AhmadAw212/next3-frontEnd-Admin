@@ -8,6 +8,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarProductComponent } from '../add-dialogs/add-car-product/add-car-product.component';
 import { UpdateCarProductComponent } from '../update-dialogs/update-car-product/update-car-product.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 interface type {
   code: string;
@@ -28,18 +29,28 @@ export class CarProductsComponent implements OnInit {
   carProducts?: CarProducts[];
   updatedCarProduct?: CarProducts[] = [];
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getProductsTypes();
+    this.getDico();
+  }
+
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   highlightRow(event: Event) {

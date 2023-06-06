@@ -314,7 +314,8 @@ tr:nth-child(odd) {
     display: flex;
     align-items: center;
     /* margin-bottom: 10px; */
-    margin-right: 8px;
+    /* margin-right: 8px; */
+    margin: 5px;
     float: right;
 
 }
