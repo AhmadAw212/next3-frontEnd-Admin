@@ -38,11 +38,11 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribedUsers();
-    this.dicoService.getDico();
     this.getDico();
   }
 
   getDico() {
+    this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

@@ -20,6 +20,8 @@ import { CarsSupplierComponent } from './components/administrator/cars-supplier/
 import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
 import { BranchConfigComponent } from './components/administrator/branch-config/branch-config.component';
 import { CarBrokerComponent } from './components/administrator/car-broker/car-broker.component';
+import { TownTerritoryComponent } from './components/administrator/town-territory/town-territory.component';
+import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -119,7 +121,17 @@ const routes: Routes = [
         component: CarBrokerComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'carTerritoryTown',
+        component: TownTerritoryComponent,
+        canActivate: [AuthGuard],
+      },
     ],
+  },
+  {
+    path: 'dataEntryView',
+    component: DataEntryViewComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

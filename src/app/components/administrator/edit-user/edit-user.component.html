@@ -1,119 +1,109 @@
-<!-- <ul class="nav nav-tabs"> -->
-<!-- <li class="nav-item">
-    <a
-      class="nav-link active"
-      data-toggle="tab"
-      routerLink="/editUser"
-      style="margin-top: 20px"
-      >Edit User Permissions</a
-    >
-  </li> -->
 <h3 class="h3-header">Edit User</h3>
-<div class="form-tab">
-  <div class="admin-container" style="height: 200px; padding: 10px">
-    <div class="row">
-      <div class="user-inputs">
-        <form
-          (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
+
+<div
+  class="admin-container container-fluid"
+  style="height: 200px; padding: 10px"
+>
+  <div class="row">
+    <div class="user-inputs">
+      <form
+        (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
+      >
+        <label for="user-code">User Code:</label>
+
+        <!-- or you can user [(ngModel)]="userCode" -->
+        <input type="text" id="user-code" name="user-code" #userCodeInput />
+
+        <label for="user-name">Display Name : </label>
+        <input type="text" id="user-name" name="user-name" #displayNameInput />
+
+        <button
+          type="submit"
+          [disabled]="hasPerm('systemAdmin')"
+          [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
         >
-          <label for="user-code">User Code:</label>
-
-          <!-- or you can user [(ngModel)]="userCode" -->
-          <input type="text" id="user-code" name="user-code" #userCodeInput />
-
-          <label for="user-name">Display Name : </label>
-          <input
-            type="text"
-            id="user-name"
-            name="user-name"
-            #displayNameInput
-          />
-
-          <button
-            type="submit"
-            [disabled]="hasPerm('systemAdmin')"
-            [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
-          >
-            {{ dico?.dico_search }}
-          </button>
-        </form>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>{{ dico?.BASIC_EDIT || "dico.BASIC_EDIT" }}</th>
-            <th>Code</th>
-            <th>Display Name</th>
-            <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
-            <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
-            <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody *ngIf="users!.length > 0; else noData">
-          <tr
-            *ngFor="let user of users!"
-            (click)="selectedUser = user"
-            [class.selected]="user === selectedUser"
-          >
-            <td>
-              <span class="material-icons" (click)="showProfList(user)"
-                >arrow_circle_down</span
-              >
-            </td>
-            <td (click)="openDialog(user)">
-              <span class="material-icons">edit</span>
-            </td>
-            <td>{{ user.userName }}</td>
-            <td>{{ user.displayName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.companyDescription }}</td>
-            <td>
-              <input type="checkbox" [checked]="user.active" disabled />
-            </td>
-            <td>
-              <button
+          {{ dico?.dico_search }}
+        </button>
+      </form>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{ dico?.BASIC_EDIT || "dico.BASIC_EDIT" }}</th>
+          <th>Code</th>
+          <th>Display Name</th>
+          <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
+          <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
+          <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users!.length > 0; else noData">
+        <tr
+          *ngFor="let user of users!"
+          (click)="selectedUser = user"
+          [class.selected]="user === selectedUser"
+        >
+          <td>
+            <span class="material-icons" (click)="showProfList(user)"
+              >arrow_circle_down</span
+            >
+          </td>
+          <td (click)="openDialog(user)">
+            <span class="material-icons">edit</span>
+          </td>
+          <td>{{ user.userName }}</td>
+          <td>{{ user.displayName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.companyDescription }}</td>
+          <td>
+            <input type="checkbox" [checked]="user.active" disabled />
+          </td>
+          <td>
+            <button
+              type="submit"
+              class="table-btn"
+              (click)="editUserStatus(user.userName, user.active)"
+              *ngIf="user.active == 1; else activateUser"
+            >
+              Deactivate User
+            </button>
+            <ng-template #activateUser
+              ><button
                 type="submit"
                 class="table-btn"
-                (click)="editUserStatus(user.userName, user.active)"
-                *ngIf="user.active == 1; else activateUser"
+                (click)="editUserStatus(user.userName, user.active!)"
               >
-                Deactivate User
-              </button>
-              <ng-template #activateUser
-                ><button
-                  type="submit"
-                  class="table-btn"
-                  (click)="editUserStatus(user.userName, user.active!)"
-                >
-                  Re-Activate User
-                </button></ng-template
-              >
-            </td>
-            <td>
-              <button type="submit" class="table-btn" (click)="resetPassword()">
-                Reset Password
-              </button>
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY }}</td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
-  <div
-    class="admin-container container-fluid"
-    *ngIf="showProfileList"
-    style="height: fit-content"
-  >
-    <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+                Re-Activate User
+              </button></ng-template
+            >
+          </td>
+          <td>
+            <button type="submit" class="table-btn" (click)="resetPassword()">
+              Reset Password
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY }}</td>
+        </tr>
+      </ng-template>
+    </table>
   </div>
 </div>
+<mat-tab-group *ngIf="showProfileList">
+  <mat-tab label="Profiles">
+    <div class="admin-container" style="height: fit-content">
+      <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+    </div>
+  </mat-tab>
+  <mat-tab label="Car Approval Type"
+    ><app-car-approval-type></app-car-approval-type>
+  </mat-tab>
+</mat-tab-group>
 
 <!-- </ul> -->

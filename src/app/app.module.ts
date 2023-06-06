@@ -89,6 +89,13 @@ import { ExpertCompanyListComponent } from './components/administrator/expert-co
 import { AddExpertCompanyComponent } from './components/administrator/add-dialogs/add-expert-company/add-expert-company.component';
 import { CarBrokerComponent } from './components/administrator/car-broker/car-broker.component';
 import { AddBrokerComponent } from './components/administrator/add-dialogs/add-broker/add-broker.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CarApprovalTypeComponent } from './components/administrator/car-approval-type/car-approval-type.component';
+import { AddApprovalTypeComponent } from './components/administrator/add-dialogs/add-approval-type/add-approval-type.component';
+import { TownTerritoryComponent } from './components/administrator/town-territory/town-territory.component';
+
+import { DataEntryButtonComponent } from './components/data-entry-button/data-entry-button.component';
+import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -157,6 +164,11 @@ import { AddBrokerComponent } from './components/administrator/add-dialogs/add-b
     AddExpertCompanyComponent,
     CarBrokerComponent,
     AddBrokerComponent,
+    CarApprovalTypeComponent,
+    AddApprovalTypeComponent,
+    TownTerritoryComponent,
+    DataEntryButtonComponent,
+    DataEntryViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -173,6 +185,7 @@ import { AddBrokerComponent } from './components/administrator/add-dialogs/add-b
     FormsModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatTabsModule,
     MatTableModule,
     NgSelectModule,
     NgxPaginationModule,

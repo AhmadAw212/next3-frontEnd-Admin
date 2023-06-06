@@ -33,7 +33,7 @@ export class CarBrokerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
-    this.dateFormatService.dateFormatter();
+
     this.dateFormatterService();
   }
   highlightRow(event: Event) {
@@ -48,6 +48,7 @@ export class CarBrokerComponent implements OnInit {
   }
 
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });

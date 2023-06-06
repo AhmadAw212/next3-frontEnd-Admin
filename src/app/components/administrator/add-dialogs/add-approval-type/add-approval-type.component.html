@@ -1,0 +1,64 @@
+<h2 style="margin: 10px; font-size: large">Add Approval Type</h2>
+<div class="dialog">
+  <form [formGroup]="carApproval" (ngSubmit)="addApprovaType()">
+    <div class="form-group">
+      <label>Application Type:</label>
+      <input type="text" id="number" formControlName="applicationType" />
+    </div>
+
+    <div class="form-group">
+      <label>App User Id:</label>
+      <ng-select
+        appendTo="body"
+        name="appUserId"
+        id="appUserId"
+        formControlName="appUserId"
+        (search)="searchCoreUserId($event)"
+      >
+        <ng-option *ngFor="let user of userId" [value]="user.username">{{
+          user.userFullName
+        }}</ng-option>
+      </ng-select>
+      <!-- <input type="text" id="appUserId" formControlName="appUserId" /> -->
+    </div>
+    <div class="form-group">
+      <label>Amount To:</label>
+      <input type="text" id="amountTo" formControlName="amountTo" />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['amountTo'].errors &&
+          (formControl['amountTo'].dirty || formControl['amountTo'].touched)
+        "
+      >
+        <div *ngIf="formControl['amountTo']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Amount From:</label>
+      <input type="text" id="amountFrom" formControlName="amountFrom" />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['amountFrom'].errors &&
+          (formControl['amountFrom'].dirty || formControl['amountFrom'].touched)
+        "
+      >
+        <div *ngIf="formControl['amountFrom']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Send Email:</label>
+      <input type="checkbox" id="sendEmail" formControlName="sendEmail" />
+    </div>
+
+    <button type="submit" [disabled]="!carApproval.valid">Save</button>
+  </form>
+</div>

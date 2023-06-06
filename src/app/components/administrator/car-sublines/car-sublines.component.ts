@@ -8,6 +8,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarSublineComponent } from '../add-dialogs/add-car-subline/add-car-subline.component';
 import { UpdateCarSublineComponent } from '../update-dialogs/update-car-subline/update-car-subline.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-car-sublines',
@@ -23,18 +24,29 @@ export class CarSublinesComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedSublineValue?: CarSublines[] = [];
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getCompaniesPerUser();
+    this.getDico();
   }
+
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
     const clickedRow = clickedElement.closest('tr');
