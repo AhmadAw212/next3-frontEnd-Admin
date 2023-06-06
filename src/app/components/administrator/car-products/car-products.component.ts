@@ -41,6 +41,7 @@ export class CarProductsComponent implements OnInit {
     this.getCompaniesPerUser();
     this.getProductsTypes();
   }
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
