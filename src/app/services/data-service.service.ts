@@ -33,12 +33,14 @@ import { Branch } from '../model/branch';
 import { ExpertCompany } from '../model/expert-company';
 import { CarBroker } from '../model/car-broker';
 import { CarApprovalType } from '../model/car-approval-type';
+import { NearRegionTerritory } from '../model/near-region-territory';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
+
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
   updatedCarSupp = new Subject<CarSupplier>();
@@ -368,7 +370,9 @@ export class DataServiceService {
 
   searchCarTrademarks(id: string, code: string, description: string) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/carTrademark/${id}/search?code=${code}&description=${description}`
+      `${this.userUrl}/carTrademark/${id}/search?code=${encodeURIComponent(
+        code
+      )}&description=${description}`
     );
   }
 
@@ -891,13 +895,34 @@ export class DataServiceService {
     );
   }
 
-  searchCarsTownTerritory(
-    insuranceId: string,
-    territoryName: string,
-    townName: string
+  searchRegionTerritory(
+    code: string,
+    description: string
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-town-territory/${insuranceId}/search?territoryName=${territoryName}&townName=${townName}`
+      `${this.userUrl}/cars-region/search?code=${code}&description=${description}`
+    );
+  }
+
+  getNearRegionTerritory(parentRegion: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near`
+    );
+  }
+
+  addNearRegion(
+    parentRegion: string,
+    regionTerritory: NearRegionTerritory
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near/new`,
+      regionTerritory
+    );
+  }
+
+  deleteNearRegionTerritory(regionId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-region/near/delete?id=${regionId}`
     );
   }
 

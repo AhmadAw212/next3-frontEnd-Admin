@@ -17,7 +17,7 @@ export class DataEntryViewComponent implements OnInit {
   }
 
   getDataEntry() {
-    this.dataService.getDataEntry('10.424032008').subscribe({
+    this.dataService.getDataEntry('10.9103262').subscribe({
       next: (res) => {
         this.dataEntry = res.data;
         console.log(res);

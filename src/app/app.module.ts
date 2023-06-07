@@ -96,6 +96,8 @@ import { TownTerritoryComponent } from './components/administrator/town-territor
 
 import { DataEntryButtonComponent } from './components/data-entry-button/data-entry-button.component';
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
+import { NearRegionTerritoryComponent } from './components/administrator/near-region-territory/near-region-territory.component';
+import { AddNearRegionTerritoryComponent } from './components/administrator/near-region-territory/add-near-region-territory/add-near-region-territory.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -169,6 +171,8 @@ import { DataEntryViewComponent } from './components/data-entry-view/data-entry-
     TownTerritoryComponent,
     DataEntryButtonComponent,
     DataEntryViewComponent,
+    NearRegionTerritoryComponent,
+    AddNearRegionTerritoryComponent,
   ],
   imports: [
     BrowserModule,

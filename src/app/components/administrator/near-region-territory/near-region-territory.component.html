@@ -1,0 +1,45 @@
+<div class="admin-container container-fluid" style="height: 250px">
+  <div class="user-inputs">
+    <div class="admin-button">
+      <button type="button" (click)="addNearRegionDialog()">
+        Add Near Region
+      </button>
+      <button type="button" style="margin-left: 8px">Update Near Region</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>RegionCode</th>
+        <th>RegionDescription</th>
+        <th>Priority</th>
+        <th>sysCreatedDate</th>
+        <th>sysCreatedBy</th>
+        <th>sysupdatedDate</th>
+        <th>sysupdatedBy</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let region of nearRegion" (click)="highlightRow($event)">
+        <td>{{ region.id }}</td>
+        <td>{{ region.near_RegionCode }}</td>
+        <td>{{ region.near_RegionDescription }}</td>
+        <td>{{ region.priority }}</td>
+        <td>{{ region.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ region.sysCreatedBy }}</td>
+        <td>{{ region.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ region.sysUpdatedBy }}</td>
+        <td>
+          <mat-icon (click)="deleteCarCover(region.id!)">delete</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">No data to display</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

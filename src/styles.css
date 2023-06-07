@@ -20,7 +20,12 @@ table thead {
   /* background-color: #f2f2f2; */
   
 }
-
+table tr.highlight{
+  background-color: #e0f2db;
+}
+table tr.highlight:hover{
+  background-color: #e0f2db;
+}
 th {
   background-color: #f2f2f2;
   color: #444;
