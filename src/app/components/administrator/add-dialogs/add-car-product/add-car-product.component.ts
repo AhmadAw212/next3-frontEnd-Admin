@@ -5,6 +5,7 @@ import { CarProducts } from 'src/app/model/car-products';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 interface type {
   code: string;
   description: string;
@@ -23,13 +24,15 @@ export class AddCarProductComponent implements OnInit {
   productTypes?: type[];
   insuranceId: string;
   carCoverForm!: FormGroup;
+  dico?: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddCarProductComponent>,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     this.productTypes = this.data.type;
     this.insuranceId = this.data.company;
@@ -37,7 +40,16 @@ export class AddCarProductComponent implements OnInit {
   }
   ngOnInit(): void {
     this.createForm();
+    this.getDico();
   }
+
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
   createForm() {
     this.carCoverForm = this.formBuilder.group({
       insuranceId: this.insuranceId,

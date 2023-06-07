@@ -1,10 +1,15 @@
-<h2 style="margin: 10px; font-size: large">Add Car Subline</h2>
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add || "dico_add"
+  }}{{ dico?.dico_subline_desc || "dico_subline_desc" }}
+</h2>
 <div class="dialog">
   <form (ngSubmit)="addCarSubline()">
-    <label for="code"> Code:</label>
+    <label for="code"> {{ dico?.dico_code || " dico_code" }}:</label>
     <input type="text" id="code" name="code" required [(ngModel)]="code" />
 
-    <label for="description"> Description:</label>
+    <label for="description">
+      {{ dico?.dico_description || "dico_description" }}:</label
+    >
     <input
       type="text"
       id="description"
@@ -13,9 +18,11 @@
       [(ngModel)]="description"
     />
 
-    <label for="notes">Notes:</label>
+    <label for="notes">{{ dico?.dico_notes || "dico_notes" }}:</label>
     <input type="text" id="notes" name="notes" required [(ngModel)]="notes" />
 
-    <button type="submit">Save</button>
+    <button type="submit">
+      {{ dico?.dico_save || "dico_save" }}
+    </button>
   </form>
 </div>

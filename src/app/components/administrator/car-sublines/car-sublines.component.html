@@ -1,106 +1,121 @@
-<h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
-<div class="select-container">
-  <span>Company:</span>
-  <select
-    id="bodyTypeNew"
-    name="bodyTypeNew"
-    required
-    class="company-select"
-    [(ngModel)]="company"
-    [disabled]="companies?.length! <= 1"
-  >
-    <option *ngFor="let company of companies" [value]="company.companyId">
-      {{ company.companyName }}
-    </option>
-  </select>
-</div>
-
-<div class="admin-container container-fluid">
-  <div class="user-inputs">
-    <form (ngSubmit)="searchCarSublines()">
-      <label for="code">{{ dico?.dico_code || " dico_code" }}</label>
-      <input type="text" id="code" name="code" [(ngModel)]="code" />
-
-      <label for="description">{{
-        dico?.dico_description || "dico_description"
-      }}</label>
-      <input
-        type="text"
-        id="description"
-        name="description"
-        [(ngModel)]="description"
-      />
-
-      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
-    </form>
-    <div class="admin-button">
-      <button type="button" (click)="openAddCarSubline()">
-        {{ dico?.add_subline || "add_subline" }}
-      </button>
-      <button
-        type="button"
-        style="margin-left: 8px"
-        (click)="updateCarSubline()"
-      >
-        {{ dico?.update_subline || "update_subline" }}
-      </button>
-    </div>
+<div *ngIf="dico; else spinner">
+  <h3 class="h3-header">
+    {{ dico?.dico_subline_desc || "dico_subline_desc" }}
+  </h3>
+  <div class="select-container">
+    <span>Company:</span>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      [(ngModel)]="company"
+      [disabled]="companies?.length! <= 1"
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_id || "dico_id" }}</th>
-        <th>{{ dico?.dico_code || "dico_code" }}</th>
-        <th>{{ dico?.dico_description || "dico_description" }}</th>
-        <th>{{ dico?.dico_notes || "dico_notes" }}</th>
-        <th>Sys_Created_Date</th>
-        <th>Sys_Created_By</th>
-        <th>Sys_Updated_Date</th>
-        <th>Sys_Updated_By</th>
-      </tr>
-    </thead>
-    <tbody
-      *ngIf="carSubline?.length! > 0; else noData"
-      (click)="highlightRow($event)"
-    >
-      <tr *ngFor="let subline of carSubline">
-        <td>{{ subline.id }}</td>
-        <td contenteditable="true" (blur)="onTdBlur($event, subline, 'code')">
-          {{ subline.code }}
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, subline, 'description')"
-        >
-          {{ subline.description }}
-        </td>
-        <td contenteditable="true" (blur)="onTdBlur($event, subline, 'notes')">
-          {{ subline.notes }}
-        </td>
-        <td>
-          {{ subline.sysCreatedDate | date : reportDateTimeFormat }}
-        </td>
-        <td>{{ subline.sysCreatedBy }}</td>
-        <td>
-          {{ subline.sysUpdatedDate | date : reportDateTimeFormat }}
-        </td>
-        <td>{{ subline.sysUpdatedBy }}</td>
+  <div class="admin-container container-fluid">
+    <div class="user-inputs">
+      <form (ngSubmit)="searchCarSublines()">
+        <label for="code">{{ dico?.dico_code || " dico_code" }}</label>
+        <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <td>
-          <mat-icon (click)="deleteCarSubline(subline.id!)">delete</mat-icon>
+        <label for="description">{{
+          dico?.dico_description || "dico_description"
+        }}</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+        />
+
+        <button type="submit">
+          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+        </button>
+      </form>
+      <div class="admin-button">
+        <button type="button" (click)="openAddCarSubline()">
+          {{ dico?.dico_add || "dico_add" }}
+        </button>
+        <button
+          type="button"
+          style="margin-left: 8px"
+          (click)="updateCarSubline()"
+        >
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>{{ dico?.dico_id || "dico_id" }}</th>
+          <th>{{ dico?.dico_code || "dico_code" }}</th>
+          <th>{{ dico?.dico_description || "dico_description" }}</th>
+          <th>{{ dico?.dico_notes || "dico_notes" }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="carSubline?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr *ngFor="let subline of carSubline">
+          <td>{{ subline.id }}</td>
+          <td contenteditable="true" (blur)="onTdBlur($event, subline, 'code')">
+            {{ subline.code }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, subline, 'description')"
+          >
+            {{ subline.description }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, subline, 'notes')"
+          >
+            {{ subline.notes }}
+          </td>
+          <td>
+            {{ subline.sysCreatedDate | date : reportDateTimeFormat }}
+          </td>
+          <td>{{ subline.sysCreatedBy }}</td>
+          <td>
+            {{ subline.sysUpdatedDate | date : reportDateTimeFormat }}
+          </td>
+          <td>{{ subline.sysUpdatedBy }}</td>
+
+          <td>
+            <mat-icon (click)="deleteCarSubline(subline.id!)">delete</mat-icon>
+          </td>
+          <!-- <td>
+                  <mat-icon (click)="updateCarSublineDialog(subline)"
+                    >edit</mat-icon
+                  >
+                </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
         </td>
-        <!-- <td>
-                <mat-icon (click)="updateCarSublineDialog(subline)"
-                  >edit</mat-icon
-                >
-              </td> -->
       </tr>
-    </tbody>
-  </table>
-  <ng-template #noData>
-    <tr>
-      <td colspan="5">No data to display</td>
-    </tr>
-  </ng-template>
+    </ng-template>
+  </div>
 </div>
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>
