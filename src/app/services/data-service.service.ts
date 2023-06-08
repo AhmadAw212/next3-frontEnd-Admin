@@ -920,6 +920,16 @@ export class DataServiceService {
     );
   }
 
+  updateNearRegion(
+    parentRegion: string,
+    regionTerritory: NearRegionTerritory[]
+  ) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near/update`,
+      regionTerritory
+    );
+  }
+
   deleteNearRegionTerritory(regionId: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(
       `${this.userUrl}/cars-region/near/delete?id=${regionId}`
