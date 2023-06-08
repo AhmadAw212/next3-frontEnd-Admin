@@ -24,6 +24,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   @Input() selectedRegion?: type;
   nearRegion?: NearRegionTerritory[];
   reportDateTimeFormat?: string;
+  updatedRegion?: NearRegionTerritory[] = [];
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -56,6 +57,30 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.selectedRow = clickedRow.closest('tr') as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
+  // onTdBlur(
+  //   event: FocusEvent,
+  //   region: NearRegionTerritory,
+  //   property: 'priority'
+  // ) {
+  //   const tdElement = event.target as HTMLTableCellElement;
+  //   const oldValue = region[property];
+  //   const newValue = tdElement.innerText.trim();
+  //   const updatedRegion = this.updatedRegion ?? [];
+
+  //   const index = updatedRegion.findIndex((item) => item.id === region.id);
+  //   if (index !== -1) {
+  //     updatedRegion.splice(index, 1);
+  //   }
+
+  //   if (oldValue !== newValue) {
+  //     region[property] = parseInt(newValue);
+  //     this.updatedRegion?.push({
+  //       id: region.id,
+  //       priority: region.priority,
+  //     });
+  //     console.log(this.updatedRegion);
+  //   }
+  // }
 
   getRegionTerritory() {
     const regionCode = this.selectedRegion?.code!;

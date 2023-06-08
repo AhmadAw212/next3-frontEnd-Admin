@@ -25,7 +25,6 @@ export class AddNearRegionTerritoryComponent implements OnInit {
     private authService: AuthService
   ) {
     this.parentRegionCode = this.data.parentRegion;
-    console.log(this.parentRegionCode);
   }
 
   ngOnInit(): void {

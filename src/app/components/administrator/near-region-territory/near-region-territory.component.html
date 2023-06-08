@@ -26,7 +26,9 @@
         <td>{{ region.id }}</td>
         <td>{{ region.near_RegionCode }}</td>
         <td>{{ region.near_RegionDescription }}</td>
-        <td>{{ region.priority }}</td>
+        <td contenteditable="true">
+          {{ region.priority }}
+        </td>
         <td>{{ region.sysCreatedDate | date : reportDateTimeFormat }}</td>
         <td>{{ region.sysCreatedBy }}</td>
         <td>{{ region.sysUpdatedDate | date : reportDateTimeFormat }}</td>
