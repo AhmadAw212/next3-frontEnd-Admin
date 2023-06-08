@@ -4,7 +4,13 @@
       <button type="button" (click)="addNearRegionDialog()">
         Add Near Region
       </button>
-      <button type="button" style="margin-left: 8px">Update Near Region</button>
+      <button
+        type="button"
+        style="margin-left: 8px"
+        (click)="updateNearRegion()"
+      >
+        Update Near Region
+      </button>
     </div>
   </div>
   <table>
@@ -26,7 +32,10 @@
         <td>{{ region.id }}</td>
         <td>{{ region.near_RegionCode }}</td>
         <td>{{ region.near_RegionDescription }}</td>
-        <td contenteditable="true">
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, region, 'priority')"
+        >
           {{ region.priority }}
         </td>
         <td>{{ region.sysCreatedDate | date : reportDateTimeFormat }}</td>

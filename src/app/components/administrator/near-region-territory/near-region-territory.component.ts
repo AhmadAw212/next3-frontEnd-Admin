@@ -57,31 +57,51 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.selectedRow = clickedRow.closest('tr') as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
-  // onTdBlur(
-  //   event: FocusEvent,
-  //   region: NearRegionTerritory,
-  //   property: 'priority'
-  // ) {
-  //   const tdElement = event.target as HTMLTableCellElement;
-  //   const oldValue = region[property];
-  //   const newValue = tdElement.innerText.trim();
-  //   const updatedRegion = this.updatedRegion ?? [];
+  onTdBlur(
+    event: FocusEvent,
+    region: NearRegionTerritory,
+    property: 'priority'
+  ) {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = region[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedRegion = this.updatedRegion ?? [];
 
-  //   const index = updatedRegion.findIndex((item) => item.id === region.id);
-  //   if (index !== -1) {
-  //     updatedRegion.splice(index, 1);
-  //   }
+    const index = updatedRegion.findIndex((item) => item.id === region.id);
+    if (index !== -1) {
+      updatedRegion.splice(index, 1);
+    }
 
-  //   if (oldValue !== newValue) {
-  //     region[property] = parseInt(newValue);
-  //     this.updatedRegion?.push({
-  //       id: region.id,
-  //       priority: region.priority,
-  //     });
-  //     console.log(this.updatedRegion);
-  //   }
-  // }
+    if (oldValue !== Number(newValue)) {
+      region[property] = parseInt(newValue);
+      this.updatedRegion?.push({
+        id: region.id,
+        priority: region.priority,
+      });
+      console.log(this.updatedRegion);
+    }
+  }
+  updateNearRegion() {
+    const parentRegion = this.selectedRegion?.code!;
+    if (this.updatedRegion?.length) {
+      this.dataService
+        .updateNearRegion(parentRegion, this.updatedRegion)
+        .subscribe({
+          next: (res) => {
+            this.alertifyService.success(res.message!);
+            this.updatedRegion = [];
 
+            console.log(res);
+          },
+          error: (err) => {
+            if (err.status === 401 || err.status === 500) {
+              this.authService.logout();
+              this.alertifyService.dialogAlert('Error');
+            }
+          },
+        });
+    }
+  }
   getRegionTerritory() {
     const regionCode = this.selectedRegion?.code!;
     this.dataService.getNearRegionTerritory(regionCode).subscribe({
