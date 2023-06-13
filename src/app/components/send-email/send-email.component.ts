@@ -37,7 +37,7 @@ export class SendEmailComponent implements OnInit {
   emailForm() {
     this.emailFormBuild = this.formBuilder.group({
       from: [{ value: this.from, disabled: true }],
-      recipients: ['', [Validators.required, Validators.email]],
+      recipients: ['', Validators.required],
       BCC: '',
       subject: '',
       body: '',
@@ -58,6 +58,7 @@ export class SendEmailComponent implements OnInit {
     // recipientsControl?.reset();
     this.focusRecipientsField();
   }
+
   focusRecipientsField() {
     const recipientsField = document.getElementById('recipients');
     if (recipientsField) {

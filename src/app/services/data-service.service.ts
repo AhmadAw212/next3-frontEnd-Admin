@@ -717,7 +717,9 @@ export class DataServiceService {
 
   searchSupplierByName(name: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/experts?nameSubstring=${name}`
+      `${this.userUrl}/cars-supplier/experts?nameSubstring=${encodeURIComponent(
+        name
+      )}`
     );
   }
 
