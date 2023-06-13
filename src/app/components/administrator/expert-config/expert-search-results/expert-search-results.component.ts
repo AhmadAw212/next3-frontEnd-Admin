@@ -53,6 +53,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   showExpertCompanies(expert: CarExpert) {
     this.showExpertCompany = true;
     this.selectedExpert = expert;
+
     // console.log(expert);
   }
   findAndReplaceExpert(updatedExpert: CarExpert[], expert: CarExpert): void {
@@ -146,7 +147,9 @@ export class ExpertSearchResultsComponent implements OnInit {
   }
   getSupplierExpert() {
     this.dataService.searchSupplierExpert().subscribe({
-      next: (res) => {},
+      next: (res) => {
+        console.log(res);
+      },
       error: (err) => {
         console.log(err);
       },

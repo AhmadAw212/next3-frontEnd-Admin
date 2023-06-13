@@ -1,0 +1,225 @@
+<div class="grid-container container-fluid">
+  <div class="section">
+    <div class="panel">
+      <div class="column">
+        <div class="panel-item">
+          <label>Insured - Third Party</label>
+          <p>{{ lossCarList.carSequenceDescription }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label>Car Plate</label>
+          <p>{{ lossCarList.carPlate }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label>YOM</label>
+          <p>{{ lossCarList.carYearManfact }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label>Owner Name</label>
+          <p>{{ lossCarList.ownerName }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <label>Brand</label>
+          <p>{{ lossCarList.brandTrademarkName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Vehicles">
+      <div class="header">
+        <h5>{{ lossCarList.carSequenceDescription }}</h5>
+      </div>
+
+      <div class="section">
+        <div class="panel">
+          <div class="column">
+            <div class="panel-item">
+              <label>Plate Char</label>
+              <p>{{ lossCarList.carPlateChar }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Plate </label>
+              <p>{{ lossCarList.carPlateNum }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>YOM </label>
+              <p>{{ lossCarList.carYearManfact }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Brand </label>
+              <p>{{ lossCarList.carBrandName }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Trademark </label>
+              <p>{{ lossCarList.carTradeName }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Submodel </label>
+              <p>{{ lossCarList.carShapeName }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Color </label>
+              <p>{{ lossCarList.carColor }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="grid-container-vehicle">
+          <div class="grid-vehicle">
+            <label class="header">Driver</label>
+            <div class="panel">
+              <div class="column">
+                <div class="panel-item">
+                  <label>Relationship </label>
+                  <p>{{ lossCarList.carDriverRelationship }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>First Name </label>
+                  <p>{{ lossCarList.carDriverFirstName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Father Name </label>
+                  <p>{{ lossCarList.carDriverFatherName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Family Name </label>
+                  <p>{{ lossCarList.carDriverFamilyName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Nationality</label>
+                  <p>{{ lossCarList.stateId }}</p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="panel-item">
+                  <label>D-L Type </label>
+                  <p>{{ lossCarList.carDriverLicenseType }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>D-L Number </label>
+                  <p>{{ lossCarList.carDriverLicenseNumber }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Effective </label>
+                  <p>{{ lossCarList.carDriverLicenseIssueDate }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Expiry </label>
+                  <p>{{ lossCarList.carDriverLicenseExpirationDate }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>DOB </label>
+                  <p>{{ lossCarList.carDriverDateOfBirth }}</p>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="panel-item">
+                  <label>Phone</label>
+                  <p>{{ lossCarList.carDriverPhone }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Address </label>
+                  <p>{{ lossCarList.driverTownName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Gender </label>
+                  <p>{{ lossCarList.carDriverGender }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Note </label>
+                  <p>{{ lossCarList.carDriverNote }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-vehicle">
+            <label class="header">Owner</label>
+            <div class="panel">
+              <div class="column">
+                <div class="panel-item">
+                  <label>First Name </label>
+                  <p>{{ lossCarList.carOwnerFirstName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Father Name </label>
+                  <p>{{ lossCarList.carOwnerFatherName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Family Name </label>
+                  <p>{{ lossCarList.carOwnerFamilyName }}</p>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="panel-item">
+                  <label>Mobile Phone </label>
+                  <p>{{ lossCarList.carOwnerMobilePhone }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Address </label>
+                  <p>{{ lossCarList.ownerTownName }}</p>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="panel-item">
+                  <label>Tp Ins Checked </label>
+                  <p>{{ lossCarList.carThrdInsCompanyChecked }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Insurance Company </label>
+                  <p>{{ lossCarList.supplierTpCompanyName }}</p>
+                </div>
+                <div class="panel-item">
+                  <label>Policy Number </label>
+                  <p>{{ lossCarList.carThrpMotorPolicy }}</p>
+                </div>
+
+                <div class="panel-item">
+                  <label>Policy Type</label>
+                  <p>{{ lossCarList.carPolicyTypeId }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

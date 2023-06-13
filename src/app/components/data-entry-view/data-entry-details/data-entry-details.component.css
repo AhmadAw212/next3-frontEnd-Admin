@@ -1,0 +1,13 @@
+.header{
+    padding: 10px;
+    color:rgb(26, 178, 239);
+}
+.grid-container-vehicle {
+    display: flex;
+  }
+  
+  .grid-vehicle {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+  }

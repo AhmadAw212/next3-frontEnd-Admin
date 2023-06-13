@@ -98,6 +98,12 @@ import { DataEntryButtonComponent } from './components/data-entry-button/data-en
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 import { NearRegionTerritoryComponent } from './components/administrator/near-region-territory/near-region-territory.component';
 import { AddNearRegionTerritoryComponent } from './components/administrator/near-region-territory/add-near-region-territory/add-near-region-territory.component';
+import { DataEntryDetailsComponent } from './components/data-entry-view/data-entry-details/data-entry-details.component';
+import { BodilyInjuryComponent } from './components/data-entry-view/bodily-injury/bodily-injury.component';
+import { MaterialDamageComponent } from './components/data-entry-view/material-damage/material-damage.component';
+import { SendEmailComponent } from './components/send-email/send-email.component';
+import { SendEmailButtonComponent } from './components/send-email-button/send-email-button.component';
+
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -173,6 +179,11 @@ import { AddNearRegionTerritoryComponent } from './components/administrator/near
     DataEntryViewComponent,
     NearRegionTerritoryComponent,
     AddNearRegionTerritoryComponent,
+    DataEntryDetailsComponent,
+    BodilyInjuryComponent,
+    MaterialDamageComponent,
+    SendEmailComponent,
+    SendEmailButtonComponent,
   ],
   imports: [
     BrowserModule,

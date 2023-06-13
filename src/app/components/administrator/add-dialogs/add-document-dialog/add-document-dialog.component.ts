@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { CoreDocument } from 'src/app/model/core-document';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
@@ -23,7 +24,8 @@ export class AddDocumentDialogComponent implements OnInit {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private companyListService: CompanyBranchService,
-    private dialogRef: MatDialogRef<AddDocumentDialogComponent>
+    private dialogRef: MatDialogRef<AddDocumentDialogComponent>,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,10 @@ export class AddDocumentDialogComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
         },
       });
   }

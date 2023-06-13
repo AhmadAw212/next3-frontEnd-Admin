@@ -18,7 +18,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
 export class CarsSupplierComponent implements OnInit {
   showMoreInfo?: boolean = false;
   suppType?: type[];
-  selectedType?: string;
+  selectedType?: string = '';
   companies?: CompanyBranchList[];
   company?: string;
   name?: string = '';

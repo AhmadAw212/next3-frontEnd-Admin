@@ -49,14 +49,8 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes?.['selectedExpert'] &&
-      changes?.['selectedExpert'].currentValue !==
-        changes?.['selectedExpert'].previousValue
-    ) {
-      // console.log(changes);
-      this.getExpertCompany();
-    }
+    // console.log(changes);
+    this.getExpertCompany();
   }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({
