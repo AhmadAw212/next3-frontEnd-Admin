@@ -663,7 +663,11 @@ export class DataServiceService {
     interm_code: string
   ) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/${insuranceId}/search?nameSubstring=${nameSubstring}&interm_code=${interm_code}`
+      `${
+        this.userUrl
+      }/cars-supplier/${insuranceId}/search?nameSubstring=${encodeURIComponent(
+        nameSubstring
+      )}&interm_code=${interm_code}`
     );
   }
 
