@@ -15,102 +15,101 @@
   </select>
 </div>
 
-<div class="form-tab">
-  <div class="admin-container container-fluid">
-    <app-spinner *ngIf="isLoading"></app-spinner>
-    <div class="user-inputs">
-      <form (ngSubmit)="getBranchesList()">
-        <label for="code">Code:</label>
-        <input type="text" id="code" name="code" [(ngModel)]="code" />
+<div class="admin-container container-fluid">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div class="user-inputs">
+    <form (ngSubmit)="getBranchesList()">
+      <label for="code">Code:</label>
+      <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <label for="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          [(ngModel)]="description"
-        />
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        [(ngModel)]="description"
+      />
 
-        <button type="submit">Search</button>
-      </form>
-      <div class="admin-button">
-        <button type="button" (click)="addBranchDialog()">Add Branch</button>
-        <button type="button" style="margin-left: 8px" (click)="updateBranch()">
-          Update Branch
-        </button>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Description</th>
-              <th>arabic_description</th>
-              <th>address1</th>
-              <th>address2</th>
-              <th>sysCreatedDate</th>
-              <th>sysCreatedBy</th>
-              <th>sysUpdatedDate</th>
-              <th>sysUpdatedBy</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="branches?.length! > 0; else noData"
-            (click)="highlightRow($event)"
-          >
-            <tr *ngFor="let branch of branches">
-              <td>{{ branch.id }}</td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, branch, 'code')"
-              >
-                {{ branch.code }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, branch, 'description')"
-              >
-                {{ branch.description }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, branch, 'arabic_description')"
-              >
-                {{ branch.arabic_description }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, branch, 'address1')"
-              >
-                {{ branch.address1 }}
-              </td>
-              <td
-                contenteditable="true"
-                (blur)="onTdBlur($event, branch, 'address2')"
-              >
-                {{ branch.address2 }}
-              </td>
-              <td>{{ branch.sysCreatedDate | date : reportDateTimeFormat }}</td>
-              <td>{{ branch.sysCreatedBy }}</td>
-              <td>{{ branch.sysUpdatedDate | date : reportDateTimeFormat }}</td>
-              <td>{{ branch.sysUpdatedBy }}</td>
-
-              <td>
-                <mat-icon (click)="deleteBranch(branch.id!)">delete</mat-icon>
-              </td>
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="5">No data to display</td>
-            </tr>
-          </ng-template>
-        </table>
-      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary" (click)="addBranchDialog()">
+        Add Branch
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        style="margin-left: 8px"
+        (click)="updateBranch()"
+      >
+        Update Branch
+      </button>
     </div>
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>arabic_description</th>
+        <th>address1</th>
+        <th>address2</th>
+        <th>sysCreatedDate</th>
+        <th>sysCreatedBy</th>
+        <th>sysUpdatedDate</th>
+        <th>sysUpdatedBy</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="branches?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let branch of branches">
+        <td>{{ branch.id }}</td>
+        <td contenteditable="true" (blur)="onTdBlur($event, branch, 'code')">
+          {{ branch.code }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, branch, 'description')"
+        >
+          {{ branch.description }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, branch, 'arabic_description')"
+        >
+          {{ branch.arabic_description }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, branch, 'address1')"
+        >
+          {{ branch.address1 }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, branch, 'address2')"
+        >
+          {{ branch.address2 }}
+        </td>
+        <td>{{ branch.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ branch.sysCreatedBy }}</td>
+        <td>{{ branch.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>{{ branch.sysUpdatedBy }}</td>
+
+        <td>
+          <mat-icon (click)="deleteBranch(branch.id!)">delete</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">No data to display</td>
+      </tr>
+    </ng-template>
+  </table>
 </div>

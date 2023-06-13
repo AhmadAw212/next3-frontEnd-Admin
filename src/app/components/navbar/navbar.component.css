@@ -4,3 +4,8 @@
     padding: 10px;
     font-size: medium;
 }
+
+.navigate-btn{
+    float: right; 
+    margin-right: 10px
+}

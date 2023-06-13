@@ -34,6 +34,7 @@ import { ExpertCompany } from '../model/expert-company';
 import { CarBroker } from '../model/car-broker';
 import { CarApprovalType } from '../model/car-approval-type';
 import { NearRegionTerritory } from '../model/near-region-territory';
+import { Email } from '../model/email';
 
 @Injectable({
   providedIn: 'root',
@@ -662,7 +663,11 @@ export class DataServiceService {
     interm_code: string
   ) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/${insuranceId}/search?nameSubstring=${nameSubstring}&interm_code=${interm_code}`
+      `${
+        this.userUrl
+      }/cars-supplier/${insuranceId}/search?nameSubstring=${encodeURIComponent(
+        nameSubstring
+      )}&interm_code=${interm_code}`
     );
   }
 
@@ -712,7 +717,9 @@ export class DataServiceService {
 
   searchSupplierByName(name: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/experts?nameSubstring=${name}`
+      `${this.userUrl}/cars-supplier/experts?nameSubstring=${encodeURIComponent(
+        name
+      )}`
     );
   }
 
@@ -939,6 +946,26 @@ export class DataServiceService {
   getDataEntry(notificationId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/common-service/getNotificationByIdDataEntry?notificationId=${notificationId}`
+    );
+  }
+
+  getFromEmail(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/email/getEmail`);
+  }
+
+  sendEmail(
+    recipients: string,
+    fileName: string,
+    body: string,
+    subject: string,
+    file: File,
+    bcc: string
+  ): Observable<ApiResponse> {
+    const formData: FormData = new FormData();
+    formData.append('multipart', file);
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${body}&subject=${subject}&BCC=${bcc}`,
+      formData
     );
   }
 }

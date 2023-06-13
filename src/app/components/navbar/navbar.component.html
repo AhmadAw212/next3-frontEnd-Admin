@@ -1,7 +1,6 @@
 <nav class="navbar-class">
-  <span style="color: white">{{ title }}</span>
-  <app-view-policy style="float: right"></app-view-policy>
-  <app-data-entry-button
-    style="float: right; margin-right: 10px"
-  ></app-data-entry-button>
+  <span style="color: white" (click)="goBack()">{{ title }}</span>
+  <app-view-policy class="navigate-btn"></app-view-policy>
+  <app-data-entry-button class="navigate-btn"></app-data-entry-button>
+  <app-send-email-button class="navigate-btn"></app-send-email-button>
 </nav>

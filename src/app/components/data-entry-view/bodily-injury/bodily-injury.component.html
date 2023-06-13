@@ -1,0 +1,83 @@
+<div class="grid-container container-fluid">
+  <mat-tab-group>
+    <mat-tab label="Injuries">
+      <div class="section">
+        <div class="header">
+          <label>Injured {{ Injured?.injuredSeq }}</label>
+        </div>
+        <div class="panel">
+          <div class="column">
+            <div class="panel-item">
+              <label>First Name</label>
+              <p>{{ Injured.injuredFirstName }}</p>
+            </div>
+            <div class="panel-item">
+              <label>DOB</label>
+              <p>{{ Injured.injuredDateOfBirth }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Identification</label>
+              <p>{{ Injured.injuredPlace }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Hospital</label>
+              <p>{{ Injured.hospitalName }}</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="panel-item">
+              <label>Father Name</label>
+              <p>{{ Injured.injuredFather }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Mobile</label>
+              <p>{{ Injured.injuredMobile }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Talephone</label>
+              <p>{{ Injured.injuredHomeTelephone }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Still At Hosptital</label>
+              <p>{{ Injured.injuredStillAtHosp }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Family Name</label>
+              <p>{{ Injured.injuredFamily }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Health or Pa Policy</label>
+              <p>{{ Injured.injuredHealthPa }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Approved By</label>
+              <p>{{ Injured.injuredApprovedBy }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Vehicle Link</label>
+              <p>{{ Injured.injuredVehicleSequenceLink }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Amount Of Cover</label>
+              <p>{{ Injured.injuredAmountOfCover }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Gender</label>
+              <p>{{ Injured.injuredGender }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Note</label>
+              <p>{{ Injured.injuredWording }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

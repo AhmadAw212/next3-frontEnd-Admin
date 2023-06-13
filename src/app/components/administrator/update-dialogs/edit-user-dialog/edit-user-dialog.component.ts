@@ -76,6 +76,10 @@ export class EditUserDialogComponent implements OnInit {
         this.usersInfo.userLimitHospitalFees,
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+      userEmailSignature: [
+        this.usersInfo.userEmailSignature,
+        Validators.required,
+      ],
       paymentLimit: [
         this.usersInfo.paymentLimit,
         [Validators.required, Validators.pattern('^[0-9]*$')],

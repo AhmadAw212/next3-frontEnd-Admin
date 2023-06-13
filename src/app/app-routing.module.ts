@@ -22,6 +22,7 @@ import { BranchConfigComponent } from './components/administrator/branch-config/
 import { CarBrokerComponent } from './components/administrator/car-broker/car-broker.component';
 import { TownTerritoryComponent } from './components/administrator/town-territory/town-territory.component';
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
+import { SendEmailComponent } from './components/send-email/send-email.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -131,6 +132,11 @@ const routes: Routes = [
   {
     path: 'dataEntryView',
     component: DataEntryViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sendEmail',
+    component: SendEmailComponent,
     canActivate: [AuthGuard],
   },
 ];

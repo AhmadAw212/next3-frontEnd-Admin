@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CoreDomain } from 'src/app/model/core-domain';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class AddDomainDialogComponent {
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dialogRef: MatDialogRef<AddDomainDialogComponent>
+    private dialogRef: MatDialogRef<AddDomainDialogComponent>,
+    private authService: AuthService
   ) {}
 
   addNewDomain() {
@@ -34,7 +36,10 @@ export class AddDomainDialogComponent {
         console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
       },
     });
   }
