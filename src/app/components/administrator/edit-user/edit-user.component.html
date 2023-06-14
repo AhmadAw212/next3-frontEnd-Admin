@@ -36,6 +36,10 @@
           <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
           <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
           <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
+          <th>Created Date</th>
+          <th>Created By</th>
+          <th>Updated Date</th>
+          <th>Updated By</th>
           <th></th>
           <th></th>
         </tr>
@@ -61,6 +65,10 @@
           <td>
             <input type="checkbox" [checked]="user.active" disabled />
           </td>
+          <td>{{ user.sysCreatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ user.sysCreatedBy }}</td>
+          <td>{{ user.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+          <td>{{ user.sysUpdatedBy }}</td>
           <td>
             <button
               type="submit"

@@ -1,21 +1,21 @@
-<h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
-<div class="select-container">
-  <span>Company:</span>
-  <select
-    id="bodyTypeNew"
-    name="bodyTypeNew"
-    required
-    class="company-select"
-    [(ngModel)]="company"
-    [disabled]="companies?.length! <= 1"
-  >
-    <option *ngFor="let company of companies" [value]="company.companyId">
-      {{ company.companyName }}
-    </option>
-  </select>
-</div>
+<div *ngIf="dico; else spinner">
+  <h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
+  <div class="select-container">
+    <span>Company:</span>
+    <select
+      id="bodyTypeNew"
+      name="bodyTypeNew"
+      required
+      class="company-select"
+      [(ngModel)]="company"
+      [disabled]="companies?.length! <= 1"
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </div>
 
-<div class="form-tab">
   <div class="admin-container container-fluid">
     <div class="user-inputs">
       <form (ngSubmit)="searchCarProducts()">
@@ -57,9 +57,13 @@
           <th>{{ dico?.dico_type || "dico_type" }}</th>
           <th>{{ dico?.dico_tarif || "dico_tarif" }}</th>
           <th>{{ dico?.dico_lob || "dico_lob" }}</th>
-          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>
+            {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+          </th>
           <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>
+            {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+          </th>
           <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
           <th></th>
           <!-- <th></th> -->
@@ -115,10 +119,10 @@
             <mat-icon (click)="deleteCarCover(product.id!)">delete</mat-icon>
           </td>
           <!-- <td>
-                <mat-icon (click)="updateCarProductDialog(product)"
-                  >edit</mat-icon
-                >
-              </td> -->
+                  <mat-icon (click)="updateCarProductDialog(product)"
+                    >edit</mat-icon
+                  >
+                </td> -->
         </tr>
       </tbody>
       <ng-template #noData>
@@ -131,3 +135,7 @@
     </table>
   </div>
 </div>
+
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>

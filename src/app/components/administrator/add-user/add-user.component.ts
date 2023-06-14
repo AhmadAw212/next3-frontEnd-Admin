@@ -15,7 +15,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   styleUrls: ['./add-user.component.css'],
 })
 export class AddUserComponent implements OnInit {
-  userForm: FormGroup;
+  userForm!: FormGroup;
   companyList?: CompanyBranchList[];
   branchList?: BranchList[];
   dico?: any;
@@ -51,7 +51,7 @@ export class AddUserComponent implements OnInit {
       userName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['123456', [Validators.required, Validators.minLength(6)]],
+      // password: ['', [Validators.required, Validators.minLength(6)]],
       userLimitDoctorFees: [
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -60,6 +60,7 @@ export class AddUserComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+
       userLimitSurveyFees: [
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -84,6 +85,8 @@ export class AddUserComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+
+      userEmailSignature: [''],
     });
   }
 
@@ -103,7 +106,12 @@ export class AddUserComponent implements OnInit {
 
   addUser(): void {
     if (this.userForm.valid) {
-      this.dataService.addUser(this.userForm.value).subscribe({
+      const formData = { ...this.userForm.value };
+      const wrappedValue = `<div><p>${formData.userEmailSignature}</p></div>`;
+
+      formData.userEmailSignature = wrappedValue;
+
+      this.dataService.addUser(formData).subscribe({
         next: (res: ApiResponse) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
             this.alertify.error(res.message!);

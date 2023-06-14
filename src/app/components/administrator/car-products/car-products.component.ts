@@ -30,6 +30,7 @@ export class CarProductsComponent implements OnInit {
   updatedCarProduct?: CarProducts[] = [];
   selectedRow!: HTMLElement;
   dico?: any;
+  isLoading?: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -47,6 +48,7 @@ export class CarProductsComponent implements OnInit {
   }
 
   getDico() {
+    this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -95,6 +97,7 @@ export class CarProductsComponent implements OnInit {
   }
 
   searchCarProducts() {
+    this.isLoading = true;
     this.dataService
       .searchCarProducts(this.company!, this.code!, this.description!)
       .subscribe({
@@ -107,6 +110,9 @@ export class CarProductsComponent implements OnInit {
             this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

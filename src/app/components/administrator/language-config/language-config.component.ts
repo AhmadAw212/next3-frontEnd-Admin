@@ -33,7 +33,6 @@ export class LanguageConfigComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
   }
@@ -75,6 +74,7 @@ export class LanguageConfigComponent implements OnInit {
   }
 
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
       this.reportDateTime = this.dateFormatService.reportDateTime;

@@ -1,0 +1,47 @@
+<div class="grid-container container-fluid">
+  <mat-tab-group>
+    <mat-tab label="Material Damage">
+      <div class="section">
+        <div class="header">
+          <label>Material Damage - {{ matDamage.matDamageSeq }}</label>
+        </div>
+        <div class="panel">
+          <div class="column">
+            <div class="panel-item">
+              <label>Type</label>
+              <p>{{ matDamage.matDamageMaterialTypeId }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Owner Name</label>
+              <p>{{ matDamage.matDamageOwnerName }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Insurance Company</label>
+              <p>{{ matDamage.supplierName }}</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="panel-item">
+              <label>Policy Number</label>
+              <p>{{ matDamage.matDamagePolicyNumber }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Owner Phone</label>
+              <p>{{ matDamage.matDamageOwnerPhone }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Vehicle Link</label>
+              <p>{{ matDamage.matVehicleSequenceLink }}</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="panel-item">
+              <label>Note</label>
+              <p>{{ matDamage.maDamageNote }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

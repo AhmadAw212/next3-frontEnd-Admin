@@ -29,7 +29,7 @@ export class EditUserDialogComponent implements OnInit {
     private fb: FormBuilder,
     public companyBranchService: CompanyBranchService,
     public dialogRef: MatDialogRef<EditUserDialogComponent>,
-    private alertify: AlertifyService,
+    private alertifyService: AlertifyService,
     private authService: AuthService
   ) {
     this.usersInfo = data.selectedUser;
@@ -76,6 +76,10 @@ export class EditUserDialogComponent implements OnInit {
         this.usersInfo.userLimitHospitalFees,
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+      userEmailSignature: [
+        this.usersInfo.userEmailSignature,
+        Validators.required,
+      ],
       paymentLimit: [
         this.usersInfo.paymentLimit,
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -95,15 +99,14 @@ export class EditUserDialogComponent implements OnInit {
   editUser() {
     this.dataService.editUser(this.editForm.value).subscribe({
       next: (res) => {
-        this.alertify.success(res.message!);
+        this.alertifyService.success(res.message!);
         this.dataService.getUsers.next(res.data);
         this.dialogRef.close();
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
-          this.dialogRef.close();
+        if (err.status === 401 || err.status === 500) {
           this.authService.logout();
-          console.log(err.error);
+          this.alertifyService.dialogAlert('Error');
         }
       },
     });

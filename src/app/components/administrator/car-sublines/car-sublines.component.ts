@@ -24,6 +24,7 @@ export class CarSublinesComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedSublineValue?: CarSublines[] = [];
   selectedRow!: HTMLElement;
+  isLoading?: boolean = false;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
@@ -41,6 +42,7 @@ export class CarSublinesComponent implements OnInit {
   }
 
   getDico() {
+    this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -107,6 +109,7 @@ export class CarSublinesComponent implements OnInit {
     }
   }
   searchCarSublines() {
+    this.isLoading = true;
     this.dataService
       .searchCarSublines(this.company!, this.code!, this.description!)
       .subscribe({
@@ -119,6 +122,9 @@ export class CarSublinesComponent implements OnInit {
             this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

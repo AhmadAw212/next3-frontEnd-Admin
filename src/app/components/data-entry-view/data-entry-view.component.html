@@ -1,34 +1,143 @@
-<app-navbar [title]="navBarTitle"></app-navbar>
+<app-navbar [title]="navBarTitle" [showDataEntryButton]="false"> </app-navbar>
 
-<div class="dialog-content">
-  <div class="section">
-    <div class="panel">
-      <div class="column">
-        <div class="panel-item">
-          <label>PAS</label>
-          <p>{{ dataEntry?.notificationVisa }}</p>
-        </div>
-        <div class="panel-item">
-          <label>Branch</label>
-          <p>TEST</p>
-        </div>
-        <div class="panel-item">
-          <label>Branch</label>
-          <p>TEST</p>
+<div class="top-container">
+  <div class="container-fluid">
+    <div class="dialog-content">
+      <div class="section">
+        <div class="panel">
+          <div class="column">
+            <div class="panel-item">
+              <label>PAS</label>
+              <p>{{ dataEntry?.notificationVisa }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Related</label>
+              <p>{{ dataEntry?.lossTowRelated }}</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="panel-item">
+              <label>Accident Date</label>
+              <p>{{ dataEntry?.lossTowLossDate }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Status</label>
+              <p>{{ dataEntry?.notificationsStatus }}</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="panel-item">
+              <label>Dispatch Address</label>
+              <p>{{ dataEntry?.dico_dispatch_address }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Accident Address</label>
+              <p>{{ dataEntry?.distributionTownName }}</p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="panel-item">
+              <label>Expert Full Name </label>
+              <p>{{ dataEntry?.supplierExpertName }}</p>
+            </div>
+            <div class="panel-item">
+              <label>Claims Officer</label>
+              <p>{{ dataEntry?.claimOfficerFullName }}</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="column">
-        <div class="panel-item">
-          <label>Branch</label>
-          <p>TEST</p>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col">
+          <app-data-entry-details
+            [lossCarList]="selectedLossCar"
+            *ngIf="showDataEntryDetails"
+          ></app-data-entry-details>
+          <app-bodily-injury
+            [Injured]="selectedInjuredSequence"
+            *ngIf="showBodilyInjury"
+          ></app-bodily-injury>
+
+          <app-material-damage
+            [matDamage]="selectedMatDamage"
+            *ngIf="showMatDamage"
+          ></app-material-damage>
         </div>
-        <div class="panel-item">
-          <label>Branch</label>
-          <p>TEST</p>
-        </div>
-        <div class="panel-item">
-          <label>Branch</label>
-          <p>TEST</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col">
+          <div class="side-menu">
+            <table class="table table-bordered">
+              <thead style="position: static">
+                <tr>
+                  <th>Insured - Third Party</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let carLoss of lossCarList"
+                  (click)="highlightRow($event)"
+                >
+                  <td (click)="toggleDataEntryDetails(carLoss)">
+                    <a class="data-link">
+                      {{ carLoss?.carSequenceDescription }} -
+                      {{ carLoss?.carPlate }}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered">
+              <thead style="position: static">
+                <tr>
+                  <th>Injured</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let bodilyInjury of bodilyInjuryList"
+                  (click)="highlightRow($event)"
+                >
+                  <td (click)="toggleBodilyInjury(bodilyInjury)">
+                    <a class="data-link"
+                      >injured {{ bodilyInjury.injuredSeq }} -
+                      {{ bodilyInjury?.injuredFirstName }}
+                      {{ bodilyInjury?.injuredFamily }}</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Material Damage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let matDamage of materialDamageList"
+                  (click)="highlightRow($event)"
+                >
+                  <td (click)="toggleMaterialDamage(matDamage)">
+                    <a class="data-link"
+                      >Material Damage {{ matDamage.matDamageSeq }}</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

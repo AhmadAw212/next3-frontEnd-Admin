@@ -1,5 +1,5 @@
 <h2 style="margin: 10px; font-size: large">
-  {{ dico?.dico_add || "dico_add" }}
+  {{ dico?.dico_add || "dico_add" }}{{ dico?.dico_product || "dico_product" }}
 </h2>
 <div class="dialog">
   <form [formGroup]="carCoverForm" (ngSubmit)="addCarProduct()">

@@ -1,0 +1,24 @@
+<h2 style="margin: 10px; font-size: large">Add Region</h2>
+<div class="dialog">
+  <form [formGroup]="formRegion" (ngSubmit)="addnewRegion()">
+    <label for="region">Region:</label>
+    <ng-select
+      appendTo="body"
+      name="region"
+      id="region"
+      (search)="territoryAddress($event)"
+      formControlName="near_RegionCode"
+    >
+      <ng-option
+        *ngFor="let territory of terrAddress"
+        [value]="territory.code"
+        >{{ territory.description }}</ng-option
+      >
+    </ng-select>
+
+    <label for="priority">Priority:</label>
+    <input type="text" id="priority" formControlName="priority" />
+
+    <button type="submit">Save</button>
+  </form>
+</div>

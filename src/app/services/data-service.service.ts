@@ -33,12 +33,15 @@ import { Branch } from '../model/branch';
 import { ExpertCompany } from '../model/expert-company';
 import { CarBroker } from '../model/car-broker';
 import { CarApprovalType } from '../model/car-approval-type';
+import { NearRegionTerritory } from '../model/near-region-territory';
+import { Email } from '../model/email';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataServiceService {
   userUrl = 'http://localhost:9090/next2/api';
+
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
   updatedCarSupp = new Subject<CarSupplier>();
@@ -368,7 +371,9 @@ export class DataServiceService {
 
   searchCarTrademarks(id: string, code: string, description: string) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/carTrademark/${id}/search?code=${code}&description=${description}`
+      `${this.userUrl}/carTrademark/${id}/search?code=${encodeURIComponent(
+        code
+      )}&description=${description}`
     );
   }
 
@@ -658,7 +663,11 @@ export class DataServiceService {
     interm_code: string
   ) {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/${insuranceId}/search?nameSubstring=${nameSubstring}&interm_code=${interm_code}`
+      `${
+        this.userUrl
+      }/cars-supplier/${insuranceId}/search?nameSubstring=${encodeURIComponent(
+        nameSubstring
+      )}&interm_code=${interm_code}`
     );
   }
 
@@ -708,7 +717,9 @@ export class DataServiceService {
 
   searchSupplierByName(name: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-supplier/experts?nameSubstring=${name}`
+      `${this.userUrl}/cars-supplier/experts?nameSubstring=${encodeURIComponent(
+        name
+      )}`
     );
   }
 
@@ -891,19 +902,74 @@ export class DataServiceService {
     );
   }
 
-  searchCarsTownTerritory(
-    insuranceId: string,
-    territoryName: string,
-    townName: string
+  searchRegionTerritory(
+    code: string,
+    description: string
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/cars-town-territory/${insuranceId}/search?territoryName=${territoryName}&townName=${townName}`
+      `${this.userUrl}/cars-region/search?code=${code}&description=${description}`
+    );
+  }
+
+  getNearRegionTerritory(parentRegion: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near`
+    );
+  }
+
+  addNearRegion(
+    parentRegion: string,
+    regionTerritory: NearRegionTerritory
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near/new`,
+      regionTerritory
+    );
+  }
+
+  updateNearRegion(
+    parentRegion: string,
+    regionTerritory: NearRegionTerritory[]
+  ) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-region/${parentRegion}/near/update`,
+      regionTerritory
+    );
+  }
+
+  deleteNearRegionTerritory(regionId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-region/near/delete?id=${regionId}`
     );
   }
 
   getDataEntry(notificationId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/common-service/getNotificationByIdDataEntry?notificationId=${notificationId}`
+    );
+  }
+
+  getFromEmail(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/email/getEmail`);
+  }
+
+  sendEmail(
+    recipients: string,
+    fileName: string,
+    body: string,
+    subject: string,
+    file: File,
+    bcc: string
+  ): Observable<ApiResponse> {
+    const formData: FormData = new FormData();
+    formData.append('multipart', file);
+    return this.http.post<ApiResponse>(
+      `${
+        this.userUrl
+      }/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${encodeURIComponent(
+        body
+      )}&subject=${subject}&BCC=${bcc}`,
+      formData
     );
   }
 }

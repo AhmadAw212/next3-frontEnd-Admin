@@ -11,6 +11,7 @@ import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -24,6 +25,7 @@ export class EditUserComponent implements OnInit {
   rolesSubscribtion?: Subscription;
   dico?: any;
   roleNames?: string[] = [];
+  reportDateTimeFormat?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -31,7 +33,8 @@ export class EditUserComponent implements OnInit {
     public companyBranchService: CompanyBranchService,
     private authService: AuthService,
     private userRolesService: UsersRolesService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private dateFormatService: DateFormatterService
   ) {
     this.userRolesService.getUserRoles();
   }
@@ -39,8 +42,14 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
+    this.dateFormatterService();
   }
-
+  dateFormatterService() {
+    this.dateFormatService.dateFormatter();
+    this.dateFormatService.date.subscribe(() => {
+      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    });
+  }
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
@@ -63,8 +72,8 @@ export class EditUserComponent implements OnInit {
       data: {
         selectedUser: this.selectedUser,
       },
-      maxWidth: '500px',
-      maxHeight: '700px',
+      width: '400px',
+      maxHeight: '600px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -94,7 +103,7 @@ export class EditUserComponent implements OnInit {
     this.dataService.userSearch(username, name).subscribe({
       next: (res) => {
         this.users = res.data;
-        // console.log(this.users);
+        console.log(this.users);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
