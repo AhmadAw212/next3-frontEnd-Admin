@@ -7,6 +7,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { UpdateCoreConfigurationComponent } from '../update-dialogs/update-core-configuration/update-core-configuration.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-core-configuration',
@@ -22,12 +23,14 @@ export class CoreConfigurationComponent implements OnInit {
   selectedConfigId?: string;
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
@@ -43,7 +46,15 @@ export class CoreConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
   }
+ getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

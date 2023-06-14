@@ -1,10 +1,21 @@
-<h3 class="h3-header">Add User</h3>
+<!-- <ul class="nav nav-tabs" style="border-style: none">
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      data-toggle="tab"
+      routerLink="/addUser"
+      style="margin-top: 20px"
+      >Add New User</a
+    >
+  </li>
+</ul> -->
+<h3 class="h3-header">{{ dico?.dico_add_user || "dico_add_user" }}</h3>
 
 <div class="admin-container container-fluid">
   <form [formGroup]="userForm" (ngSubmit)="addUser()">
     <div class="form-row">
       <div class="form-group">
-        <label for="firstName">First Name:</label>
+        <label for="firstName">{{ dico?.dico_first_name || "dico_first_name" }}:</label>
         <input
           type="text"
           id="firstName"
@@ -29,7 +40,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="username">Username:</label>
+        <label for="username">{{ dico?.BASIC_USER_NAME || "BASIC_USER_NAME" }}:</label>
         <input
           type="text"
           id="username"
@@ -55,7 +66,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">{{ dico?.dico_email || "dico_email" }}:</label>
         <input
           type="email"
           id="email"
@@ -83,7 +94,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="lastName">Last Name:</label>
+        <label for="lastName">{{ dico?.dico_last_name || "dico_last_name" }}:</label>
         <input
           type="text"
           id="lastName"
@@ -109,7 +120,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitExpertFees">user Limit Expert Fees:</label>
+        <label for="userLimitExpertFees">{{ dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees" }}:</label>
         <input
           type="text"
           id="userLimitExpertFees"
@@ -134,7 +145,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="userLimitDoctorFees">Doctor Fee Limit:</label>
+        <label for="userLimitDoctorFees">{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }}:</label>
         <input
           type="text"
           id="userLimitDoctorFees"
@@ -161,7 +172,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitTaxiFees">Taxi Fee Limit:</label>
+        <label for="userLimitTaxiFees">{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }}:</label>
         <input
           type="text"
           id="userLimitTaxiFees"
@@ -186,7 +197,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="userLimitSurveyFees">Survey Fee Limit:</label>
+        <label for="userLimitSurveyFees">{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }}:</label>
         <input
           type="text"
           id="userLimitSurveyFees"
@@ -213,7 +224,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitExceedPercentage">Exceed Percentage Limit:</label>
+        <label for="userLimitExceedPercentage">{{ dico?.dico_exceed_percentage_limit || "dico_exceed_percentage_limit" }}:</label>
         <input
           type="text"
           id="userLimitExceedPercentage"
@@ -238,7 +249,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="userLimitLawyerFees">Lawyer Fee Limit:</label>
+        <label for="userLimitLawyerFees">{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }}:</label>
         <input
           type="text"
           id="userLimitLawyerFees"
@@ -265,7 +276,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Company ID:</label>
+        <label>{{ dico?.dico_insurance_company || "dico_insurance_company" }}:</label>
         <select
           #companyIdSelect
           formControlName="companyId"
@@ -291,7 +302,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Branch ID:</label>
+        <label>{{ dico?.dico_branch || "dico_branch" }}:</label>
         <select formControlName="branchId">
           <option *ngFor="let branch of branchList" [value]="branch.code">
             {{ branch.description }}
@@ -312,7 +323,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="recoverLimit">Recover limit</label>
+        <label for="recoverLimit">{{ dico?.dico_recover_limit || "dico_recover_limit" }}</label>
         <input
           type="text"
           id="recoverLimit"
@@ -336,7 +347,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="userLimitHospitalFees">user Limit Hospital Fees:</label>
+        <label for="userLimitHospitalFees">{{ dico?.dico_user_limit_hospital_fees || "dico_user_limit_hospital_fees" }}:</label>
         <input
           type="text"
           id="userLimitHospitalFees"
@@ -363,7 +374,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="paymentLimit">Payment Limit:</label>
+        <label for="paymentLimit">{{ dico?.dico_payment_limit || "dico_payment_limit" }}:</label>
         <input
           type="text"
           id="paymentLimit"
@@ -394,9 +405,10 @@
           cols="40"
           rows="5"
           formControlName="userEmailSignature"
-        ></textarea>
+        >
+        </textarea>
       </div>
     </div>
-    <button type="submit" class="btn">Add User</button>
+    <button class="btn" [disabled]="!userForm.valid">{{ dico?.dico_add_user || "dico_add_user" }}</button>
   </form>
 </div>

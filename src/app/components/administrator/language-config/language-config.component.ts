@@ -6,6 +6,7 @@ import { ResourceBundle } from 'src/app/model/resource-bundle';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-language-config',
@@ -21,16 +22,26 @@ export class LanguageConfigComponent implements OnInit {
   updatedResourceValues?: ResourceBundle[] = [];
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dico?: any;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatterService();
+    this.getDico();
+  }
+
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

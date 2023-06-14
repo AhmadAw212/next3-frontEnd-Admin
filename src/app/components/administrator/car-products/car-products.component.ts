@@ -54,7 +54,6 @@ export class CarProductsComponent implements OnInit {
       this.dico = data;
     });
   }
-
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

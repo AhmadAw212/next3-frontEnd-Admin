@@ -94,7 +94,10 @@
   flex-grow: 1;
   margin-right: 10px;
 }
-
+textarea.signature {
+  font-style: italic;
+  color: #286090;
+}
 .add-recipient-btn {
   /* width: 30px;
   height: 30px; */

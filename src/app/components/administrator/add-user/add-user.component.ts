@@ -7,7 +7,7 @@ import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { BranchList } from 'src/app/model/branch-list';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-user',
@@ -18,12 +18,12 @@ export class AddUserComponent implements OnInit {
   userForm!: FormGroup;
   companyList?: CompanyBranchList[];
   branchList?: BranchList[];
-
+  dico?: any;
   ngOnInit(): void {
     this.companyBranchService.getCompanyId();
     this.getCompanyId();
     this.getBranchList();
-    this.userFormBuild();
+    this.getDico() ;
   }
 
   getCompanyId() {
@@ -44,9 +44,8 @@ export class AddUserComponent implements OnInit {
     private alertify: AlertifyService,
     public companyBranchService: CompanyBranchService,
     private authService: AuthService,
-    private sanitizer: DomSanitizer
-  ) {}
-  userFormBuild() {
+    private dicoService: DicoServiceService
+  ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       userName: ['', [Validators.required, Validators.minLength(2)]],
@@ -91,10 +90,16 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  // togglePasswordVisibility(passwordInput: HTMLInputElement) {
-  //   passwordInput.type =
-  //     passwordInput.type === 'password' ? 'text' : 'password';
-  // }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+  togglePasswordVisibility(passwordInput: HTMLInputElement) {
+    passwordInput.type =
+      passwordInput.type === 'password' ? 'text' : 'password';
+  }
   get form() {
     return this.userForm.controls;
   }

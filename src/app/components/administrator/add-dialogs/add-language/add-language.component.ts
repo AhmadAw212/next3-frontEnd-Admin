@@ -4,6 +4,7 @@ import { ResourceBundle } from 'src/app/model/resource-bundle';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 interface Languages {
   key: string;
@@ -19,15 +20,25 @@ export class AddLanguageComponent implements OnInit {
   key?: string;
   value?: string;
   languages?: Languages[];
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<AddLanguageComponent>,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
+
   ) {}
 
   ngOnInit(): void {
     this.getLang();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   getLang() {
