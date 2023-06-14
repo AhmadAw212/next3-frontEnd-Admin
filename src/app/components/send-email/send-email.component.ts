@@ -75,12 +75,7 @@ export class SendEmailComponent implements OnInit {
         this.emailFormBuild.get('from')?.setValue(res.data.email);
         const signature = res.data.signature;
         const strippedSignature = this.stripHtmlTags(signature);
-        this.emailFormBuild
-          .get('body')
-          ?.setValue('\n\n\n\n\n\n' + strippedSignature);
-
-        // this.signature = res.data.signature;
-        // this.emailForm();
+        this.setEmailBodyValue(strippedSignature);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
@@ -90,12 +85,16 @@ export class SendEmailComponent implements OnInit {
       },
     });
   }
+  setEmailBodyValue(signature: string) {
+    const newLines = '\n'.repeat(6); // Repeat '\n' six times
+    const emailBodyValue = newLines + signature;
+    this.emailFormBuild.get('body')?.setValue(emailBodyValue);
+  }
   stripHtmlTags(html: string): string {
     return html.replace(/<[^>]+>/g, '');
   }
   handleImageUpload(event: any) {
     const file = event.target.files[0];
-    // Implement logic to handle the uploaded image here
     this.fileName = file.name;
     this.multipart = file;
     this.fileType = file.type;
