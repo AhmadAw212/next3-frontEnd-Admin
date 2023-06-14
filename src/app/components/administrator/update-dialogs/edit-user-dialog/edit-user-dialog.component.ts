@@ -18,7 +18,7 @@ export class EditUserDialogComponent implements OnInit {
   usersInfo?: any;
   companyList: any;
   branchList: any;
-  editForm: FormGroup;
+  editForm!: FormGroup;
   selectedCompanyId?: string;
   selectedBranchId?: string;
   isDisabled = true;
@@ -34,6 +34,12 @@ export class EditUserDialogComponent implements OnInit {
   ) {
     this.usersInfo = data.selectedUser;
     console.log(this.usersInfo);
+  }
+  stripHtmlTags(html: string): string {
+    return html?.replace(/<[^>]+>/g, '');
+  }
+
+  editUserForm() {
     this.editForm = this.fb.group({
       userName: [
         this.usersInfo.userName,
@@ -77,7 +83,7 @@ export class EditUserDialogComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userEmailSignature: [
-        this.usersInfo.userEmailSignature,
+        this.stripHtmlTags(this.usersInfo.userEmailSignature!),
         Validators.required,
       ],
       paymentLimit: [
@@ -90,10 +96,10 @@ export class EditUserDialogComponent implements OnInit {
       ],
     });
   }
-
   ngOnInit() {
     this.companyBranchService.getCompanyId();
     this.companyBranchService.getBranchId(this.usersInfo.companyId);
+    this.editUserForm();
   }
 
   editUser() {
