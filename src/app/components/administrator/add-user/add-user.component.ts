@@ -7,6 +7,7 @@ import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { BranchList } from 'src/app/model/branch-list';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-user',
@@ -14,7 +15,7 @@ import { BranchList } from 'src/app/model/branch-list';
   styleUrls: ['./add-user.component.css'],
 })
 export class AddUserComponent implements OnInit {
-  userForm: FormGroup;
+  userForm!: FormGroup;
   companyList?: CompanyBranchList[];
   branchList?: BranchList[];
 
@@ -22,6 +23,7 @@ export class AddUserComponent implements OnInit {
     this.companyBranchService.getCompanyId();
     this.getCompanyId();
     this.getBranchList();
+    this.userFormBuild();
   }
 
   getCompanyId() {
@@ -41,14 +43,16 @@ export class AddUserComponent implements OnInit {
     private dataService: DataServiceService,
     private alertify: AlertifyService,
     public companyBranchService: CompanyBranchService,
-    private authService: AuthService
-  ) {
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
+  ) {}
+  userFormBuild() {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       userName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['123456', [Validators.required, Validators.minLength(6)]],
+      // password: ['', [Validators.required, Validators.minLength(6)]],
       userLimitDoctorFees: [
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -57,6 +61,7 @@ export class AddUserComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+
       userLimitSurveyFees: [
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -81,19 +86,27 @@ export class AddUserComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
+
+      userEmailSignature: [''],
     });
   }
-  togglePasswordVisibility(passwordInput: HTMLInputElement) {
-    passwordInput.type =
-      passwordInput.type === 'password' ? 'text' : 'password';
-  }
+
+  // togglePasswordVisibility(passwordInput: HTMLInputElement) {
+  //   passwordInput.type =
+  //     passwordInput.type === 'password' ? 'text' : 'password';
+  // }
   get form() {
     return this.userForm.controls;
   }
 
   addUser(): void {
     if (this.userForm.valid) {
-      this.dataService.addUser(this.userForm.value).subscribe({
+      const formData = { ...this.userForm.value };
+      const wrappedValue = `<div><p>${formData.userEmailSignature}</p></div>`;
+
+      formData.userEmailSignature = wrappedValue;
+
+      this.dataService.addUser(formData).subscribe({
         next: (res: ApiResponse) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
             this.alertify.error(res.message!);

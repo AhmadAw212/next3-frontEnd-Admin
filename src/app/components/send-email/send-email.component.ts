@@ -48,11 +48,14 @@ export class SendEmailComponent implements OnInit {
   addRecipient(): void {
     const recipientsControl = this.emailFormBuild.get('recipients');
     const trimmedRecipients = recipientsControl?.value.trim();
-    const hasComma = trimmedRecipients?.endsWith(',');
 
-    if (!hasComma) {
-      const updatedRecipients = trimmedRecipients + ',';
-      recipientsControl?.setValue(updatedRecipients);
+    if (trimmedRecipients) {
+      const hasComma = trimmedRecipients.endsWith(',');
+
+      if (!hasComma) {
+        const updatedRecipients = trimmedRecipients + ',';
+        recipientsControl?.setValue(updatedRecipients);
+      }
     }
 
     // recipientsControl?.reset();
@@ -104,7 +107,7 @@ export class SendEmailComponent implements OnInit {
     const body = this.emailFormBuild.get('body')?.value;
     const subject = this.emailFormBuild.get('subject')?.value;
     const file = this.multipart!;
-    const bcc = this.emailFormBuild.get('bcc')?.value;
+    const bcc = this.emailFormBuild.get('BCC')?.value;
 
     this.dataService
       .sendEmail(recipients, fileName, body, subject, file, bcc)

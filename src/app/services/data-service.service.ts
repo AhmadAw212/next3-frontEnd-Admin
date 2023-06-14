@@ -964,7 +964,11 @@ export class DataServiceService {
     const formData: FormData = new FormData();
     formData.append('multipart', file);
     return this.http.post<ApiResponse>(
-      `${this.userUrl}/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${body}&subject=${subject}&BCC=${bcc}`,
+      `${
+        this.userUrl
+      }/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${encodeURIComponent(
+        body
+      )}&subject=${subject}&BCC=${bcc}`,
       formData
     );
   }

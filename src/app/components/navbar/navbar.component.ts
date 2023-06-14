@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   @Input() title?: string;
-
+  @Input() showDataEntryButton?: boolean = true;
+  @Input() sendEmailButton?: boolean = true;
   constructor(private router: Router) {}
 
   goBack(): void {
