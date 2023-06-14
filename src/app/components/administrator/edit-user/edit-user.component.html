@@ -1,4 +1,4 @@
-<h3 class="h3-header">Edit User</h3>
+<h3 class="h3-header">{{ dico?.dico_edit_user || "dico_dico_edit_user" }}</h3>
 
 <div
   class="admin-container container-fluid"
@@ -9,12 +9,12 @@
       <form
         (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
       >
-        <label for="user-code">User Code:</label>
+        <label for="user-code">{{ dico?.dico_user_code || "dico_user_code" }}:</label>
 
         <!-- or you can user [(ngModel)]="userCode" -->
         <input type="text" id="user-code" name="user-code" #userCodeInput />
 
-        <label for="user-name">Display Name : </label>
+        <label for="user-name">{{ dico?.dico_display_name || "dico_display_name" }}: </label>
         <input type="text" id="user-name" name="user-name" #displayNameInput />
 
         <button
@@ -22,7 +22,7 @@
           [disabled]="hasPerm('systemAdmin')"
           [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
         >
-          {{ dico?.dico_search }}
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
         </button>
       </form>
     </div>
@@ -31,8 +31,8 @@
         <tr>
           <th></th>
           <th>{{ dico?.BASIC_EDIT || "dico.BASIC_EDIT" }}</th>
-          <th>Code</th>
-          <th>Display Name</th>
+          <th>{{ dico?.dico_code || "dico_code" }}</th>
+          <th>{{ dico?.dico_display_name || "dico_display_name" }}</th>
           <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
           <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
           <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
@@ -68,7 +68,7 @@
               (click)="editUserStatus(user.userName, user.active)"
               *ngIf="user.active == 1; else activateUser"
             >
-              Deactivate User
+            {{ dico?.dico_deactivate_user || "dico_deactivate_user" }}
             </button>
             <ng-template #activateUser
               ><button
@@ -76,20 +76,20 @@
                 class="table-btn"
                 (click)="editUserStatus(user.userName, user.active!)"
               >
-                Re-Activate User
+              {{ dico?.dico_reactivate_user || "dico_reactivate_user" }}
               </button></ng-template
             >
           </td>
           <td>
             <button type="submit" class="table-btn" (click)="resetPassword()">
-              Reset Password
+              {{ dico?.dico_reset_password || "dico_reset_password" }}
             </button>
           </td>
         </tr>
       </tbody>
       <ng-template #noData>
         <tr>
-          <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY }}</td>
+          <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
         </tr>
       </ng-template>
     </table>
