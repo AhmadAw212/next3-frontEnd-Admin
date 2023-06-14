@@ -1,4 +1,4 @@
-<h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
+<h3 class="h3-header">{{ dico?.dico_subline_desc || "dico_subline_desc" }}</h3>
 <div class="select-container">
   <span>Company:</span>
   <select
@@ -35,14 +35,14 @@
     </form>
     <div class="admin-button">
       <button type="button" (click)="openAddCarSubline()">
-        {{ dico?.add_subline || "add_subline" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
       <button
         type="button"
         style="margin-left: 8px"
         (click)="updateCarSubline()"
       >
-        {{ dico?.update_subline || "update_subline" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
   </div>
@@ -54,10 +54,11 @@
         <th>{{ dico?.dico_code || "dico_code" }}</th>
         <th>{{ dico?.dico_description || "dico_description" }}</th>
         <th>{{ dico?.dico_notes || "dico_notes" }}</th>
-        <th>Sys_Created_Date</th>
-        <th>Sys_Created_By</th>
-        <th>Sys_Updated_Date</th>
-        <th>Sys_Updated_By</th>
+        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
       </tr>
     </thead>
     <tbody
@@ -100,7 +101,9 @@
   </table>
   <ng-template #noData>
     <tr>
-      <td colspan="5">No data to display</td>
+      <td colspan="5">
+        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+      </td>
     </tr>
   </ng-template>
 </div>

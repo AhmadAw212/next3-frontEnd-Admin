@@ -43,6 +43,14 @@ export class CarProductsComponent implements OnInit {
     this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getProductsTypes();
+    this.getDico();
+  }
+
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
