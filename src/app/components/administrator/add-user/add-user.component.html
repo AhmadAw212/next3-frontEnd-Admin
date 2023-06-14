@@ -1,17 +1,6 @@
-<!-- <ul class="nav nav-tabs" style="border-style: none">
-  <li class="nav-item">
-    <a
-      class="nav-link active"
-      data-toggle="tab"
-      routerLink="/addUser"
-      style="margin-top: 20px"
-      >Add New User</a
-    >
-  </li>
-</ul> -->
 <h3 class="h3-header">Add User</h3>
 
-<div class="admin-container" style="height: auto">
+<div class="admin-container container-fluid">
   <form [formGroup]="userForm" (ngSubmit)="addUser()">
     <div class="form-row">
       <div class="form-group">
@@ -397,7 +386,17 @@
           </div>
         </div>
       </div>
+      <div class="form-group">
+        <label for="emailSignature">Email Signature:</label>
+        <textarea
+          name="emailSignature"
+          id="emailSignature"
+          cols="40"
+          rows="5"
+          formControlName="userEmailSignature"
+        ></textarea>
+      </div>
     </div>
-    <button class="btn" [disabled]="!userForm.valid">Add User</button>
+    <button type="submit" class="btn">Add User</button>
   </form>
 </div>

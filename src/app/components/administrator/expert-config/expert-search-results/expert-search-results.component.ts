@@ -47,7 +47,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   ngOnInit(): void {
     this.territoryAddress();
     this.getSchedule();
-    this.dateFormatService.dateFormatter();
+
     this.dateFormatterService();
   }
   showExpertCompanies(expert: CarExpert) {
@@ -225,6 +225,7 @@ export class ExpertSearchResultsComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });

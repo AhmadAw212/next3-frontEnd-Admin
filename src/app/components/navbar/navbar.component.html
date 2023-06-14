@@ -1,6 +1,12 @@
 <nav class="navbar-class">
   <span style="color: white" (click)="goBack()">{{ title }}</span>
   <app-view-policy class="navigate-btn"></app-view-policy>
-  <app-data-entry-button class="navigate-btn"></app-data-entry-button>
-  <app-send-email-button class="navigate-btn"></app-send-email-button>
+  <app-data-entry-button
+    class="navigate-btn"
+    *ngIf="showDataEntryButton"
+  ></app-data-entry-button>
+  <app-send-email-button
+    class="navigate-btn"
+    *ngIf="sendEmailButton"
+  ></app-send-email-button>
 </nav>

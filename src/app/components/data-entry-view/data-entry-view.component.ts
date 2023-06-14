@@ -25,6 +25,7 @@ export class DataEntryViewComponent implements OnInit {
   selectedInjuredSequence!: any;
   selectedLossCar?: any;
   selectedMatDamage?: any;
+
   constructor(
     private dataService: DataServiceService,
     private router: Router,

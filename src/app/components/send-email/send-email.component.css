@@ -96,13 +96,13 @@
 }
 
 .add-recipient-btn {
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  /* font-size: 15px; */
   font-weight: bold;
   margin-left: 5px;
 }
