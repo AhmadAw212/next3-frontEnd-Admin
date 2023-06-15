@@ -103,7 +103,7 @@ import { BodilyInjuryComponent } from './components/data-entry-view/bodily-injur
 import { MaterialDamageComponent } from './components/data-entry-view/material-damage/material-damage.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { SendEmailButtonComponent } from './components/send-email-button/send-email-button.component';
-
+import { NgxEditorModule } from 'ngx-editor';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -207,6 +207,7 @@ import { SendEmailButtonComponent } from './components/send-email-button/send-em
     MatExpansionModule,
     FontAwesomeModule,
     MatProgressSpinnerModule,
+    NgxEditorModule,
   ],
   providers: [
     {

@@ -1,17 +1,17 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-
+import { Editor } from 'ngx-editor';
 @Component({
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
   styleUrls: ['./send-email.component.css'],
 })
-export class SendEmailComponent implements OnInit {
+export class SendEmailComponent implements OnInit, OnDestroy {
   navBarTitle = 'Send Email';
   emailFormBuild!: FormGroup;
   from?: string;
@@ -25,6 +25,8 @@ export class SendEmailComponent implements OnInit {
   recipients: string = '';
   signature?: string;
   sanitizedSignature?: SafeHtml;
+  editor!: Editor;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private formBuilder: FormBuilder,
@@ -37,6 +39,10 @@ export class SendEmailComponent implements OnInit {
   ngOnInit(): void {
     this.emailForm();
     this.getEmailFrom();
+    this.editor = new Editor();
+  }
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
   emailForm() {
     this.emailFormBuild = this.formBuilder.group({
@@ -72,21 +78,19 @@ export class SendEmailComponent implements OnInit {
       recipientsField.focus();
     }
   }
-  // convertHtmlToPlainText(html: string): string {
-  //   const parser = new DOMParser();
-  //   const parsedDoc = parser.parseFromString(html, 'text/html');
-  //   const bodyElement = parsedDoc.body;
 
-  //   return bodyElement ? bodyElement.textContent || '' : '';
-  // }
   getEmailFrom() {
     this.dataService.getFromEmail().subscribe({
       next: (res) => {
         this.emailFormBuild.get('from')?.setValue(res.data.email);
         const signature = res.data.signature;
+
         this.sanitizedSignature =
           this.sanitizer.bypassSecurityTrustHtml(signature);
-        // this.emailFormBuild.get('body')?.setValue(signature); // Set the signature as the value of the body form control
+
+        this.emailFormBuild
+          .get('body')
+          ?.setValue('<br><br><br><br>' + signature);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
