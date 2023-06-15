@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -22,13 +23,15 @@ export class SendEmailComponent implements OnInit {
   body?: string;
   fileType?: string;
   recipients: string = '';
-  strippedSignature?: string;
+  signature?: string;
+  sanitizedSignature?: SafeHtml;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private formBuilder: FormBuilder,
     private dataService: DataServiceService,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -69,13 +72,21 @@ export class SendEmailComponent implements OnInit {
       recipientsField.focus();
     }
   }
+  // convertHtmlToPlainText(html: string): string {
+  //   const parser = new DOMParser();
+  //   const parsedDoc = parser.parseFromString(html, 'text/html');
+  //   const bodyElement = parsedDoc.body;
+
+  //   return bodyElement ? bodyElement.textContent || '' : '';
+  // }
   getEmailFrom() {
     this.dataService.getFromEmail().subscribe({
       next: (res) => {
         this.emailFormBuild.get('from')?.setValue(res.data.email);
         const signature = res.data.signature;
-        const strippedSignature = this.stripHtmlTags(signature);
-        this.setEmailBodyValue(strippedSignature);
+        this.sanitizedSignature =
+          this.sanitizer.bypassSecurityTrustHtml(signature);
+        // this.emailFormBuild.get('body')?.setValue(signature); // Set the signature as the value of the body form control
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
@@ -85,14 +96,13 @@ export class SendEmailComponent implements OnInit {
       },
     });
   }
-  setEmailBodyValue(signature: string) {
-    const newLines = '\n'.repeat(6); // Repeat '\n' six times
-    const emailBodyValue = newLines + signature;
-    this.emailFormBuild.get('body')?.setValue(emailBodyValue);
-  }
-  stripHtmlTags(html: string): string {
-    return html.replace(/<[^>]+>/g, '');
-  }
+
+  // setEmailBodyValue(signature: string) {
+  //   const bodyControl = this.emailFormBuild.get('body');
+  //   const currentValue = bodyControl?.value || '';
+  //   const newValue = `${currentValue}${signature}`;
+  //   bodyControl?.setValue(newValue);
+  // }
   handleImageUpload(event: any) {
     const file = event.target.files[0];
     this.fileName = file.name;

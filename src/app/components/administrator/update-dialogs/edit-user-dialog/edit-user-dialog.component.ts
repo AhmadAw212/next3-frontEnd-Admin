@@ -83,7 +83,7 @@ export class EditUserDialogComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userEmailSignature: [
-        this.stripHtmlTags(this.usersInfo.userEmailSignature!),
+        this.usersInfo.userEmailSignature,
         Validators.required,
       ],
       paymentLimit: [

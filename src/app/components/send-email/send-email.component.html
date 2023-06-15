@@ -20,8 +20,6 @@
               formControlName="from"
             />
           </div>
-        </div>
-        <div class="col-md-6">
           <div class="form-group">
             <label for="recipients">To:</label>
             <div class="recipients-input">
@@ -40,28 +38,14 @@
                 +
               </button>
             </div>
-            <!-- <div
-              style="color: red"
-              *ngIf="
-                formControl['recipients'].errors &&
-                (formControl['recipients'].dirty ||
-                  formControl['recipients'].touched)
-              "
-            >
-              <div *ngIf="formControl['recipients']?.errors?.['required']">
-                Email is required
-              </div>
-              <div *ngIf="formControl['recipients']?.errors?.['email']">
-                Email pattern is required
-              </div>
-            </div> -->
           </div>
         </div>
+        <!-- <div class="col-md-6"></div> -->
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="bcc">BCC:</label>
+            <label for="bcc">CC:</label>
             <input
               type="text"
               class="form-control"
@@ -96,6 +80,7 @@
               style="height: 200px; resize: none"
             >
             </textarea>
+            <div id="body" [innerHTML]="sanitizedSignature"></div>
           </div>
         </div>
       </div>
