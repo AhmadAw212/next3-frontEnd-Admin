@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/model/api-response';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { BranchList } from 'src/app/model/branch-list';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-add-user',
@@ -19,11 +20,13 @@ export class AddUserComponent implements OnInit {
   companyList?: CompanyBranchList[];
   branchList?: BranchList[];
   dico?: any;
+  editor!: Editor;
   ngOnInit(): void {
     this.companyBranchService.getCompanyId();
     this.getCompanyId();
     this.getBranchList();
     this.getDico() ;
+    this.editor = new Editor();
   }
 
   getCompanyId() {
@@ -48,48 +51,56 @@ export class AddUserComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
-      userName: ['', [Validators.required, Validators.minLength(2)]],
+      userName: ['', [Validators.required, Validators.minLength(2),this.uppercaseValidator]],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      // password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['Claims_1234', [Validators.required, Validators.minLength(6)]],
       userLimitDoctorFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userLimitTaxiFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
 
       userLimitSurveyFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userLimitExceedPercentage: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userLimitLawyerFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       companyId: ['', Validators.required],
       branchId: ['', Validators.required],
-      recoverLimit: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      recoverLimit: ['0', [Validators.required, Validators.pattern('^[0-9]*$')]],
       userLimitHospitalFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
-      paymentLimit: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      paymentLimit: ['0', [Validators.required, Validators.pattern('^[0-9]*$')]],
       userLimitExpertFees: [
-        '',
+        '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
 
       userEmailSignature: [''],
     });
   }
-
+   uppercaseValidator(control: AbstractControl): { [key: string]: any } | null {
+    const value: string = control.value;
+  
+    if (value && value !== value.toUpperCase()) {
+      return { uppercase: true };
+    }
+  
+    return null;
+  }
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
