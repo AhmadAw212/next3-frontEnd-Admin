@@ -31,7 +31,11 @@
             }}</mat-panel-title>
           </mat-expansion-panel-header>
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/coreConfig">
+          <a
+            mat-list-item
+            routerLink="/Administrator/coreConfig"
+            *ngIf="hasPerm('systemAdmin')"
+          >
             {{ dico.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}</a
           >
           <hr class="hr" />

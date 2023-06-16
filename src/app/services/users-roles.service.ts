@@ -10,23 +10,20 @@ export class UsersRolesService {
   roleNames?: string[] = [];
 
   constructor(private dataService: DataServiceService) {}
-
   hasPermission(roleName: string): boolean {
-    const index = this.roleNames?.indexOf(roleName);
-    return index === -1;
+    const trimmedRoleName = roleName.trim();
+    const index = this.roleNames?.indexOf(trimmedRoleName);
+    return index !== -1; // Return true if index is not -1 (roleName found), false otherwise
   }
-
   getUserRoles() {
     const selectedProfile = localStorage.getItem('selectedProfile');
 
     this.dataService.getUserRoles(selectedProfile!).subscribe({
       next: (res) => {
         this.userRoles = res.data;
-        this.roleNames = [];
-        this.userRoles?.forEach((res) => {
-          this.roleNames?.push(res.id!);
-        });
-        // console.log(this.roleNames);
+        this.roleNames = this.userRoles?.map((role) => role.id!) ?? [];
+        console.log('User roles:', this.userRoles);
+        console.log('Role names:', this.roleNames);
       },
       error: (err) => {
         console.log(err);

@@ -35,14 +35,13 @@ export class EditUserComponent implements OnInit {
     private userRolesService: UsersRolesService,
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService
-  ) {
-    this.userRolesService.getUserRoles();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
     this.dateFormatterService();
+    this.userRolesService.getUserRoles();
   }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();

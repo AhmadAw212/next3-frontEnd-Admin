@@ -9,20 +9,20 @@
       <form
         (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
       >
-        <label for="user-code">{{ dico?.dico_user_code || "dico_user_code" }}:</label>
+        <label for="user-code"
+          >{{ dico?.dico_user_code || "dico_user_code" }}:</label
+        >
 
         <!-- or you can user [(ngModel)]="userCode" -->
         <input type="text" id="user-code" name="user-code" #userCodeInput />
 
-        <label for="user-name">{{ dico?.dico_display_name || "dico_display_name" }}: </label>
+        <label for="user-name"
+          >{{ dico?.dico_display_name || "dico_display_name" }}:
+        </label>
         <input type="text" id="user-name" name="user-name" #displayNameInput />
 
-        <button
-          type="submit"
-          [disabled]="hasPerm('systemAdmin')"
-          [ngClass]="{ 'is-disabled': hasPerm('systemAdmin') }"
-        >
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+        <button type="submit">
+          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
         </button>
       </form>
     </div>
@@ -76,7 +76,7 @@
               (click)="editUserStatus(user.userName, user.active)"
               *ngIf="user.active == 1; else activateUser"
             >
-            {{ dico?.dico_deactivate_user || "dico_deactivate_user" }}
+              {{ dico?.dico_deactivate_user || "dico_deactivate_user" }}
             </button>
             <ng-template #activateUser
               ><button
@@ -84,7 +84,7 @@
                 class="table-btn"
                 (click)="editUserStatus(user.userName, user.active!)"
               >
-              {{ dico?.dico_reactivate_user || "dico_reactivate_user" }}
+                {{ dico?.dico_reactivate_user || "dico_reactivate_user" }}
               </button></ng-template
             >
           </td>
@@ -97,7 +97,9 @@
       </tbody>
       <ng-template #noData>
         <tr>
-          <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+          <td colspan="9">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
         </tr>
       </ng-template>
     </table>
