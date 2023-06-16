@@ -961,7 +961,7 @@ export class DataServiceService {
 
   sendEmail(
     recipients: string[],
-    fileName: string,
+    fileName: string[],
     body: string,
     subject: string,
     file: File[],

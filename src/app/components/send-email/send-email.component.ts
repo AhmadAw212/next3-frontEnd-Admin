@@ -16,7 +16,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   navBarTitle = 'Send Email';
   emailFormBuild!: FormGroup;
   from?: string;
-  fileName?: string;
+  fileName?: string[] = [];
   attachments: File[] = [];
   subject?: string;
   bcc?: string[];
@@ -130,6 +130,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       this.attachments.push(file);
+      this.fileName?.push(file.name);
     }
   }
   openFileSelection() {
