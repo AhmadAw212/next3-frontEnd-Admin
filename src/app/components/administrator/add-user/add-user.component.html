@@ -149,162 +149,6 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitExpertFees">{{ dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees" }}:</label>
-        <input
-          type="text"
-          id="userLimitExpertFees"
-          name="userLimitExpertFees"
-          required
-          formControlName="userLimitExpertFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitExpertFees']?.invalid &&
-            (form['userLimitExpertFees']?.dirty ||
-              form['userLimitExpertFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitExpertFees']?.errors?.['required']">
-            User Limit Expert Fees is required
-          </div>
-          <div *ngIf="form['userLimitExpertFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="userLimitDoctorFees">{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }}:</label>
-        <input
-          type="text"
-          id="userLimitDoctorFees"
-          name="userLimitDoctorFees"
-          required
-          formControlName="userLimitDoctorFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitDoctorFees']?.invalid &&
-            (form['userLimitDoctorFees']?.dirty ||
-              form['userLimitDoctorFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitDoctorFees']?.errors?.['required']">
-            User Limit Doctor Fees is required
-          </div>
-          <div *ngIf="form['userLimitDoctorFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="userLimitTaxiFees">{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }}:</label>
-        <input
-          type="text"
-          id="userLimitTaxiFees"
-          name="userLimitTaxiFees"
-          required
-          formControlName="userLimitTaxiFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitTaxiFees']?.invalid &&
-            (form['userLimitTaxiFees']?.dirty ||
-              form['userLimitTaxiFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitTaxiFees']?.errors?.['required']">
-            User Limit Taxi Fees is required
-          </div>
-          <div *ngIf="form['userLimitTaxiFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="userLimitSurveyFees">{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }}:</label>
-        <input
-          type="text"
-          id="userLimitSurveyFees"
-          name="userLimitSurveyFees"
-          required
-          formControlName="userLimitSurveyFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitSurveyFees']?.invalid &&
-            (form['userLimitSurveyFees']?.dirty ||
-              form['userLimitSurveyFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitSurveyFees']?.errors?.['required']">
-            User Limit Survey Fees is required
-          </div>
-          <div *ngIf="form['userLimitSurveyFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="userLimitExceedPercentage">{{ dico?.dico_exceed_percentage_limit || "dico_exceed_percentage_limit" }}:</label>
-        <input
-          type="text"
-          id="userLimitExceedPercentage"
-          name="userLimitExceedPercentage"
-          required
-          formControlName="userLimitExceedPercentage"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitExceedPercentage']?.invalid &&
-            (form['userLimitExceedPercentage']?.dirty ||
-              form['userLimitExceedPercentage']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitExceedPercentage']?.errors?.['required']">
-            User Limit Exceed Percentage Fees is required
-          </div>
-          <div *ngIf="form['userLimitExceedPercentage']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="userLimitLawyerFees">{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }}:</label>
-        <input
-          type="text"
-          id="userLimitLawyerFees"
-          name="userLimitLawyerFees"
-          required
-          formControlName="userLimitLawyerFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitLawyerFees']?.invalid &&
-            (form['userLimitLawyerFees']?.dirty ||
-              form['userLimitLawyerFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitLawyerFees']?.errors?.['required']">
-            User Limit Lawyer Fees is required
-          </div>
-          <div *ngIf="form['userLimitLawyerFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
         <label>{{ dico?.dico_insurance_company || "dico_insurance_company" }}:</label>
         <select
           #companyIdSelect
@@ -352,57 +196,6 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="recoverLimit">{{ dico?.dico_recover_limit || "dico_recover_limit" }}</label>
-        <input
-          type="text"
-          id="recoverLimit"
-          name="recoverLimit"
-          required
-          formControlName="recoverLimit"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['recoverLimit']?.invalid &&
-            (form['recoverLimit']?.dirty || form['recoverLimit']?.touched)
-          "
-        >
-          <div *ngIf="form['recoverLimit']?.errors?.['required']">
-            Recover Limit is required
-          </div>
-          <div *ngIf="form['recoverLimit']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="userLimitHospitalFees">{{ dico?.dico_user_limit_hospital_fees || "dico_user_limit_hospital_fees" }}:</label>
-        <input
-          type="text"
-          id="userLimitHospitalFees"
-          name="userLimitHospitalFees"
-          required
-          formControlName="userLimitHospitalFees"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userLimitHospitalFees']?.invalid &&
-            (form['userLimitHospitalFees']?.dirty ||
-              form['userLimitHospitalFees']?.touched)
-          "
-        >
-          <div *ngIf="form['userLimitHospitalFees']?.errors?.['required']">
-            User Limit Hospital Fees is required
-          </div>
-          <div *ngIf="form['userLimitHospitalFees']?.errors?.['pattern']">
-            Number is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
         <label for="paymentLimit">{{ dico?.dico_payment_limit || "dico_payment_limit" }}:</label>
         <input
           type="text"
@@ -427,11 +220,231 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="userLimitExceedPercentage">{{ dico?.dico_exceed_percentage_limit || "dico_exceed_percentage_limit" }}:</label>
+        <input
+          type="text"
+          id="userLimitExceedPercentage"
+          name="userLimitExceedPercentage"
+          required
+          formControlName="userLimitExceedPercentage"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitExceedPercentage']?.invalid &&
+            (form['userLimitExceedPercentage']?.dirty ||
+              form['userLimitExceedPercentage']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitExceedPercentage']?.errors?.['required']">
+            User Limit Exceed Percentage Fees is required
+          </div>
+          <div *ngIf="form['userLimitExceedPercentage']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userLimitExpertFees">{{ dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees" }}:</label>
+        <input
+          type="text"
+          id="userLimitExpertFees"
+          name="userLimitExpertFees"
+          required
+          formControlName="userLimitExpertFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitExpertFees']?.invalid &&
+            (form['userLimitExpertFees']?.dirty ||
+              form['userLimitExpertFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitExpertFees']?.errors?.['required']">
+            User Limit Expert Fees is required
+          </div>
+          <div *ngIf="form['userLimitExpertFees']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="userLimitSurveyFees">{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }}:</label>
+        <input
+          type="text"
+          id="userLimitSurveyFees"
+          name="userLimitSurveyFees"
+          required
+          formControlName="userLimitSurveyFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitSurveyFees']?.invalid &&
+            (form['userLimitSurveyFees']?.dirty ||
+              form['userLimitSurveyFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitSurveyFees']?.errors?.['required']">
+            User Limit Survey Fees is required
+          </div>
+          <div *ngIf="form['userLimitSurveyFees']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+      
+    </div>
+ 
+    
+  <div class="form-row">
+    <div class="form-group">
+      <label for="userLimitHospitalFees">{{ dico?.dico_user_limit_hospital_fees || "dico_user_limit_hospital_fees" }}:</label>
+      <input
+        type="text"
+        id="userLimitHospitalFees"
+        name="userLimitHospitalFees"
+        required
+        formControlName="userLimitHospitalFees"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          form['userLimitHospitalFees']?.invalid &&
+          (form['userLimitHospitalFees']?.dirty ||
+            form['userLimitHospitalFees']?.touched)
+        "
+      >
+        <div *ngIf="form['userLimitHospitalFees']?.errors?.['required']">
+          User Limit Hospital Fees is required
+        </div>
+        <div *ngIf="form['userLimitHospitalFees']?.errors?.['pattern']">
+          Number is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="userLimitDoctorFees">{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }}:</label>
+      <input
+        type="text"
+        id="userLimitDoctorFees"
+        name="userLimitDoctorFees"
+        required
+        formControlName="userLimitDoctorFees"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          form['userLimitDoctorFees']?.invalid &&
+          (form['userLimitDoctorFees']?.dirty ||
+            form['userLimitDoctorFees']?.touched)
+        "
+      >
+        <div *ngIf="form['userLimitDoctorFees']?.errors?.['required']">
+          User Limit Doctor Fees is required
+        </div>
+        <div *ngIf="form['userLimitDoctorFees']?.errors?.['pattern']">
+          Number is required
+        </div>
+      </div>
+    </div>
+
+  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="userLimitTaxiFees">{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }}:</label>
+          <input
+            type="text"
+            id="userLimitTaxiFees"
+            name="userLimitTaxiFees"
+            required
+            formControlName="userLimitTaxiFees"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              form['userLimitTaxiFees']?.invalid &&
+              (form['userLimitTaxiFees']?.dirty ||
+                form['userLimitTaxiFees']?.touched)
+            "
+          >
+            <div *ngIf="form['userLimitTaxiFees']?.errors?.['required']">
+              User Limit Taxi Fees is required
+            </div>
+            <div *ngIf="form['userLimitTaxiFees']?.errors?.['pattern']">
+              Number is required
+            </div>
+          </div>
+        </div>
+      
+        
+      
+      <div class="form-group">
+        <label for="userLimitLawyerFees">{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }}:</label>
+        <input
+          type="text"
+          id="userLimitLawyerFees"
+          name="userLimitLawyerFees"
+          required
+          formControlName="userLimitLawyerFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitLawyerFees']?.invalid &&
+            (form['userLimitLawyerFees']?.dirty ||
+              form['userLimitLawyerFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitLawyerFees']?.errors?.['required']">
+            User Limit Lawyer Fees is required
+          </div>
+          <div *ngIf="form['userLimitLawyerFees']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="recoverLimit">{{ dico?.dico_recover_limit || "dico_recover_limit" }}</label>
+        <input
+          type="text"
+          id="recoverLimit"
+          name="recoverLimit"
+          required
+          formControlName="recoverLimit"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['recoverLimit']?.invalid &&
+            (form['recoverLimit']?.dirty || form['recoverLimit']?.touched)
+          "
+        >
+          <div *ngIf="form['recoverLimit']?.errors?.['required']">
+            Recover Limit is required
+          </div>
+          <div *ngIf="form['recoverLimit']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    <div class="form-row">
+      
+      <div class="form-group">
         <label for="emailSignature">Email Signature:</label>
         <ngx-editor
         style="width: 40%"
         [editor]="editor"
-        [placeholder]="'Type here...'"
+        [placeholder]="'Fill Email Signature...'"
         formControlName="userEmailSignature"
       >
       </ngx-editor>
