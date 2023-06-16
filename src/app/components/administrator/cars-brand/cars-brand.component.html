@@ -1,12 +1,12 @@
-<h3 class="h3-header">Cars Brand</h3>
+<h3 class="h3-header">{{ dico?.dico_car_brand || "dico_car_brand" }}</h3>
 <div class="admin-container container-fluid" style="height: 150px">
   <!-- <app-spinner *ngIf="isLoading" style="margin-top: 50px"></app-spinner> -->
   <div class="user-inputs">
     <form (ngSubmit)="carsBrandSearch()">
-      <label for="code">Code:</label>
+      <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
       <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-      <label for="description">Description:</label>
+      <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
       <input
         type="text"
         id="description"
@@ -14,10 +14,10 @@
         [(ngModel)]="description"
       />
 
-      <button type="submit">Search</button>
+      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddCarBrandDialog()">Add Car</button>
+      <button type="button" (click)="openAddCarBrandDialog()">{{ dico?.dico_add_car || "dico_add_car" }}</button>
       <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
     </div>
   </div>
@@ -26,14 +26,14 @@
       <table>
         <thead>
           <tr>
-            <th>Brand Id</th>
-            <th>Brand Code</th>
-            <th>Brand Description</th>
-            <th>Car Logo</th>
-            <th>sysCreatedDate</th>
-            <th>sysCreatedBy</th>
-            <th>sysUpdatedDate</th>
-            <th>sysUpdatedBy</th>
+            <th>{{ dico?.dico_brand_id || "dico_brand_id" }}</th>
+            <th>{{ dico?.dico_brand_code || "dico_brand_code" }}</th>
+            <th>{{ dico?.dico_brand_description || "dico_brand_description" }}</th>
+            <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
             <th></th>
           </tr>
@@ -64,17 +64,17 @@
 
             <td>
               <mat-icon (click)="deleteCarBrand(cars.carBrandCode!)"
-                >delete</mat-icon
+                >{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon
               >
             </td>
             <td>
-              <mat-icon (click)="updateCarBrandDialog(cars)">edit</mat-icon>
+              <mat-icon (click)="updateCarBrandDialog(cars)">{{ dico?.BASIC_EDIT || "BASIC_EDIT" }}</mat-icon>
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">No data to display</td>
+            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
           </tr>
         </ng-template>
       </table>

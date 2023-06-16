@@ -6,6 +6,7 @@ import { AddDocumentDialogComponent } from '../add-dialogs/add-document-dialog/a
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CoreProfile } from 'src/app/model/core-profile';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-core-document',
@@ -21,16 +22,26 @@ export class CoreDocumentComponent implements OnInit {
   coreDocument?: CoreDocument;
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private dialog: MatDialog,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

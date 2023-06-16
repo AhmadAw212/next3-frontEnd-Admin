@@ -1,20 +1,20 @@
-<h3 class="h3-header">Domain Configuration</h3>
+<h3 class="h3-header">{{ dico?.dico_domain_configuration || "dico_domain_configuration" }}</h3>
 
 <div class="admin-container container-fluid" style="height: 250px">
   <div class="user-inputs">
     <form (ngSubmit)="coreDomainSearch()">
-      <label>Code:</label>
+      <label>{{ dico?.dico_code || "dico_code" }}:</label>
       <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-      <label>Description:</label>
+      <label>{{ dico?.dico_description || "dico_description" }}:</label>
       <input type="text" id="value" name="value" [(ngModel)]="description" />
 
-      <button type="submit">Search</button>
+      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddDomainDialog()">Add Domain</button>
+      <button type="button" (click)="openAddDomainDialog()">{{ dico?.dico_add_domain || "dico_add_domain" }}</button>
       <button type="button" (click)="updateDomain()" style="margin-left: 8px">
-        Update
+        {{ dico?.dico_Update || "dico_Update" }}
       </button>
     </div>
   </div>
@@ -22,15 +22,15 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
-        <th>CODE</th>
-        <th>DESCRIPTION</th>
-        <th>PREFERENCE_CODE</th>
-        <th>sysCreatedDate</th>
-        <th>sysCreatedBy</th>
-        <th>sysUpdatedDate</th>
-        <th>sysUpdatedBy</th>
-        <th>Active Flag</th>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_code || "dico_code" }}</th>
+        <th>{{ dico?.dico_description || "dico_description" }}</th>
+        <th>{{ dico?.dico_preference_code || "dico_preference_code" }}</th>
+        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th>{{ dico?.dico_active_flag || "dico_active_flag" }}</th>
         <th></th>
       </tr>
     </thead>
@@ -71,13 +71,13 @@
           />
         </td>
         <td>
-          <mat-icon (click)="deleteResource(domain.id!)">delete</mat-icon>
+          <mat-icon (click)="deleteResource(domain.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
         </td>
       </tr>
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="9">No data to display</td>
+        <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
       </tr>
     </ng-template>
   </table>

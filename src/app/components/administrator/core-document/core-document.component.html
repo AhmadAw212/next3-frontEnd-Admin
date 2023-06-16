@@ -1,20 +1,20 @@
-<h3 class="h3-header">Document Configuration</h3>
+<h3 class="h3-header">{{ dico?.dico_document_configuration || "dico_document_configuration" }}</h3>
 
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
     <form (ngSubmit)="coreDocSearch()">
-      <label for="fileName">File Name:</label>
+      <label for="fileName">{{ dico?.dico_file_name || "dico_file_name" }}:</label>
       <input type="text" id="fileName" name="fileName" [(ngModel)]="fileName" />
 
-      <label for="path">Path:</label>
+      <label for="path">{{ dico?.dico_path || "dico_path" }}:</label>
       <input type="text" id="path" name="path" [(ngModel)]="path" />
 
-      <button type="submit">Search</button>
+      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openCoreDocDialog()">Add Document</button>
-      <button type="button" style="margin-left: 8px">Update</button>
+      <button type="button" (click)="openCoreDocDialog()">{{ dico?.dico_add_total_loss_claim || "dico_add_total_loss_claim" }}</button>
+      <button type="button" style="margin-left: 8px">{{ dico?.dico_Update || "dico_Update" }}</button>
     </div>
   </div>
   <div class="row mt-4">
@@ -22,15 +22,15 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>File Name</th>
-            <th>Path</th>
-            <th style="width: 150px">Content-Type</th>
-            <th>Content</th>
-            <th>sysCreatedDate</th>
-            <th>sysCreatedBy</th>
-            <th>sysUpdatedDate</th>
-            <th>sysUpdatedBy</th>
+            <th>{{ dico?.dico_id || "dico_id" }}</th>
+            <th>{{ dico?.dico_file_name || "dico_file_name" }}</th>
+            <th>{{ dico?.dico_path || "dico_path" }}</th>
+            <th style="width: 150px">{{ dico?.dico_content_type || "dico_content_type" }}</th>
+            <th>{{ dico?.dico_content || "dico_content" }}</th>
+            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
           </tr>
         </thead>
@@ -63,13 +63,13 @@
             <td>{{ document.updateDate | date : reportDateTimeFormat }}</td>
             <td>{{ document.updatedBy }}</td>
             <td>
-              <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>
+              <mat-icon (click)="deleteDocument(document.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">No data to display</td>
+            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
           </tr>
         </ng-template>
       </table>

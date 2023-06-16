@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarClientComponent } from '../add-dialogs/add-car-client/add-car-client.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 interface type {
   code: string;
   description: string;
@@ -29,12 +30,16 @@ export class CarsClientComponent implements OnInit {
   titleLov?: type[];
   genderList?: type[];
   selectedRow!: HTMLElement;
+  dico?: any;
+  isLoading?: boolean = false;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -43,8 +48,15 @@ export class CarsClientComponent implements OnInit {
     this.dateFormatterService();
     this.getTitleLov();
     this.getGenderList();
+    this.getDico();
   }
-
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

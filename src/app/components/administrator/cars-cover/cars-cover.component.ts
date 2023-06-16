@@ -10,6 +10,7 @@ import { AddCarCoverComponent } from '../add-dialogs/add-car-cover/add-car-cover
 import { UpdateCarCoverComponent } from '../update-dialogs/update-car-cover/update-car-cover.component';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 interface type {
   code: string;
   description: string;
@@ -29,12 +30,15 @@ export class CarsCoverComponent implements OnInit {
   updatedCoverValues?: CarCover[] = [];
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
+  dico?: any;
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +46,14 @@ export class CarsCoverComponent implements OnInit {
     this.getCoverTypes();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

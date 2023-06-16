@@ -11,7 +11,7 @@
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">{{
-              dico.dico_user_managment || "dico_user_managment"
+              dico.dico_user_management || "dico_user_management"
             }}</mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/Administrator/addUser" class="btn">
@@ -27,7 +27,7 @@
         <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">{{
-              dico.systemConfiguration || "dico_systemConfiguration"
+              dico.dico_system_configuration || "dico_dico_system_configuration"
             }}</mat-panel-title>
           </mat-expansion-panel-header>
           <hr class="hr" />
@@ -62,7 +62,7 @@
             {{ dico.dico_cover || "dico_cover" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carsClient">
-            {{ dico.dico_client || "dico_client" }}</a
+            {{ dico.dico_cars_clients || "dico_cars_clients" }}</a
           >
           <a mat-list-item routerLink="/Administrator/carProducts">
             {{ dico.dico_product || "dico_product" }}
@@ -71,7 +71,7 @@
             {{ dico.dico_subline_desc || "dico_subline_desc" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carReportList">
-            {{ dico.dico_reportList || "dico_reportList" }}
+            {{ dico.dico_report_list || "dico_report_list" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carSupplier">
             {{ dico.dico_supplier || "dico_supplier" }}
@@ -86,7 +86,7 @@
             {{ dico.dico_broker || "dico_broker" }}
           </a>
           <a mat-list-item routerLink="/Administrator/carTerritoryTown">
-            {{ dico.dico_teritory || "dico.dico_teritory" }}
+            {{ dico.dico_territory || "dico.dico_territory" }}
           </a>
         </mat-expansion-panel>
       </mat-nav-list>
