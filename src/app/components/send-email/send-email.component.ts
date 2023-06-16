@@ -17,9 +17,9 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   emailFormBuild!: FormGroup;
   from?: string;
   fileName?: string;
-  multipart?: File;
+  attachments: File[] = [];
   subject?: string;
-  bcc?: string;
+  bcc?: string[];
   to?: string;
   body?: string;
   fileType?: string;
@@ -57,7 +57,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
       from: [{ value: this.from, disabled: true }],
       recipients: ['', Validators.required],
       BCC: '',
-      subject: '',
+      subject: ['', Validators.required],
       body: '',
     });
     this.emailFormBuild.get('from')?.disable();
@@ -125,13 +125,13 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   //   bodyControl?.setValue(newValue);
   // }
   handleImageUpload(event: any) {
-    const file = event.target.files[0];
-    this.fileName = file.name;
-    this.multipart = file;
-    this.fileType = file.type;
-    // console.log(file);
-  }
+    const files: FileList = event.target.files;
 
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.attachments.push(file);
+    }
+  }
   openFileSelection() {
     const fileInput = this.document.getElementById('image');
     if (fileInput) {
@@ -146,7 +146,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     const fileName = this.fileName!;
     const body = this.emailFormBuild.get('body')?.value;
     const subject = this.emailFormBuild.get('subject')?.value;
-    const file = this.multipart!;
+    const file = this.attachments!;
     const bcc = this.emailFormBuild.get('BCC')?.value;
     // return console.log(this.emailFormBuild.value);
     this.dataService
@@ -167,7 +167,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   searchRecipient() {
     this.searchTerms
       .pipe(
-        debounceTime(500), // Wait for 300 milliseconds of inactivity
+        debounceTime(300), // Wait for 300 milliseconds of inactivity
         takeUntil(this.unsubscribe$),
         switchMap((term: string) => this.dataService.searchRecipient(term))
       )

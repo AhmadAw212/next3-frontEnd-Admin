@@ -960,15 +960,17 @@ export class DataServiceService {
   }
 
   sendEmail(
-    recipients: string,
+    recipients: string[],
     fileName: string,
     body: string,
     subject: string,
-    file: File,
-    bcc: string
+    file: File[],
+    bcc: string[]
   ): Observable<ApiResponse> {
     const formData: FormData = new FormData();
-    formData.append('multipart', file);
+    for (let i = 0; i < file.length; i++) {
+      formData.append('multipart', file[i]);
+    }
     return this.http.post<ApiResponse>(
       `${
         this.userUrl

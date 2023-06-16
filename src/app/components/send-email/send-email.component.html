@@ -20,22 +20,11 @@
               formControlName="from"
             />
           </div>
-
-          <!-- <ng-select
-                formControlName="recipients"
-                (search)="searchRecipients($event)"
-              >
-                <ng-option *ngFor="let recipient of recipients"
-                  >{{ recipient }}
-                </ng-option>
-              </ng-select> -->
           <div class="form-group">
             <label for="recipients">To:</label>
             <div class="recipients-input">
               <ng-select
                 [items]="recipients"
-                bindLabel="email"
-                bindValue="id"
                 formControlName="recipients"
                 [multiple]="true"
                 [addTag]="true"
@@ -58,13 +47,23 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="bcc">CC:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="bcc"
-              name="bcc"
-              formControlName="BCC"
-            />
+            <div class="recipients-input">
+              <ng-select
+                [items]="recipients"
+                formControlName="BCC"
+                [multiple]="true"
+                [addTag]="true"
+                (search)="searchRecipients($event)"
+              >
+              </ng-select>
+              <button
+                type="button"
+                class="btn btn-primary add-recipient-btn"
+                (click)="addRecipient()"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +79,17 @@
               name="subject"
               formControlName="subject"
             />
+            <div
+              style="color: red"
+              *ngIf="
+                formControl['subject'].errors &&
+                (formControl['subject'].dirty || formControl['subject'].touched)
+              "
+            >
+              <div *ngIf="formControl['subject']?.errors?.['required']">
+                Subject is required
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="subject">Body:</label>
@@ -102,6 +112,7 @@
             <div class="input-group">
               <input
                 type="file"
+                multiple
                 class="custom-file-input"
                 id="image"
                 style="display: none"
@@ -120,11 +131,9 @@
                 </button>
               </div>
             </div>
-            <div class="file-info">
-              <label>File Name: {{ fileName }}</label>
-            </div>
-            <div class="file-info">
-              <label>File Type: {{ fileType }}</label>
+            <div class="file-info" *ngFor="let attachment of attachments">
+              <label>File Name: {{ attachment.name }}</label>
+              <label>File Type: {{ attachment.type }}</label>
             </div>
           </div>
         </div>
