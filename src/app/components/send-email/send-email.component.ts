@@ -148,7 +148,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     const subject = this.emailFormBuild.get('subject')?.value;
     const file = this.multipart!;
     const bcc = this.emailFormBuild.get('BCC')?.value;
-    return console.log(this.emailFormBuild.value);
+    // return console.log(this.emailFormBuild.value);
     this.dataService
       .sendEmail(recipients, fileName, body, subject, file, bcc)
       .subscribe({
