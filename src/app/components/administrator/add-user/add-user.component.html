@@ -457,7 +457,8 @@
         >
         </textarea> -->
       </div>
+      <button class="btn" [disabled]="!userForm.valid">{{ dico?.dico_add_user || "dico_add_user" }}</button>
     </div>
-    <button class="btn" [disabled]="!userForm.valid">{{ dico?.dico_add_user || "dico_add_user" }}</button>
+    
   </form>
 </div>

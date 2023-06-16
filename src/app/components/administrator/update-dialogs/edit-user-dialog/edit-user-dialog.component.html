@@ -31,76 +31,12 @@
           type="email"
           id="email"
           name="email"
-          placeholder="Enter a email address"
+          placeholder="Enter an email address"
           required
           formControlName="email"
         />
       </div>
-      <div class="form-group">
-        <label for="email">Email Signature:</label>
-        <ngx-editor
-        [editor]="editor"
-        [placeholder]="'Type here...'"
-        formControlName="userEmailSignature"
-      >
-      </ngx-editor>
-        <!-- <textarea
-          placeholder="Enter a email Signature"
-          formControlName="userEmailSignature"
-          cols="25"
-          rows="5"
-        >
-        </textarea> -->
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="userLimitTaxiFees">Taxi Limit:</label>
-        <input
-          type="text"
-          id="userLimitTaxiFees"
-          name="userLimitTaxiFees"
-          placeholder="Enter taxi limit"
-          required
-          formControlName="userLimitTaxiFees"
-        />
-      </div>
-      <div class="form-group">
-        <label for="userLimitSurveyFees">Survey Limit:</label>
-        <input
-          type="text"
-          id="userLimitSurveyFees"
-          name="userLimitSurveyFees"
-          placeholder="Enter survey limit"
-          required
-          formControlName="userLimitSurveyFees"
-        />
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="exceedPercentage"> Percentage Limit:</label>
-        <input
-          type="text"
-          id="exceedPercentage"
-          name="exceedPercentage"
-          placeholder="Enter percentage limit"
-          required
-          formControlName="userLimitExceedPercentage"
-        />
-      </div>
-      <div class="form-group">
-        <label for="userLimitLawyerFees">Lawyer Limit:</label>
-        <input
-          type="text"
-          id="userLimitLawyerFees"
-          name="userLimitLawyerFees"
-          placeholder="Enter lawyer limit"
-          required
-          formControlName="userLimitLawyerFees"
-        />
-      </div>
+      
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -142,6 +78,67 @@
     </div>
     <div class="form-row">
       <div class="form-group">
+        <label for="paymentLimit">Payment Limit :</label>
+        <input
+          type="text"
+          id="paymentLimit"
+          name="paymentLimit"
+          required
+          placeholder="Enter payment limit"
+          formControlName="paymentLimit"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exceedPercentage"> Percentage Limit:</label>
+        <input
+          type="text"
+          id="exceedPercentage"
+          name="exceedPercentage"
+          placeholder="Enter percentage limit"
+          required
+          formControlName="userLimitExceedPercentage"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitTaxiFees">Taxi Limit:</label>
+        <input
+          type="text"
+          id="userLimitTaxiFees"
+          name="userLimitTaxiFees"
+          placeholder="Enter taxi limit"
+          required
+          formControlName="userLimitTaxiFees"
+        />
+      </div>
+      <div class="form-group">
+        <label for="userLimitSurveyFees">Survey Limit:</label>
+        <input
+          type="text"
+          id="userLimitSurveyFees"
+          name="userLimitSurveyFees"
+          placeholder="Enter survey limit"
+          required
+          formControlName="userLimitSurveyFees"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      
+      <div class="form-group">
+        <label for="userLimitLawyerFees">Lawyer Limit:</label>
+        <input
+          type="text"
+          id="userLimitLawyerFees"
+          name="userLimitLawyerFees"
+          placeholder="Enter lawyer limit"
+          required
+          formControlName="userLimitLawyerFees"
+        />
+      </div>
+    </div>
+ 
+    <div class="form-row">
+      <div class="form-group">
         <label for="recoverLimit">Recover Limit :</label>
         <input
           type="text"
@@ -166,17 +163,7 @@
     </div>
 
     <div class="form-row">
-      <div class="form-group">
-        <label for="paymentLimit">Payment Limit :</label>
-        <input
-          type="text"
-          id="paymentLimit"
-          name="paymentLimit"
-          required
-          placeholder="Enter payment limit"
-          formControlName="paymentLimit"
-        />
-      </div>
+      
       <div class="form-group">
         <label for="userLimitExpertFees"> Expert Fees:</label>
         <input
@@ -201,6 +188,24 @@
         />
       </div>
     </div>
+    <div class="form-row">
+    <div class="form-group">
+      <label for="email">Email Signature:</label>
+      <ngx-editor
+      [editor]="editor"
+      [placeholder]="'Type Email Signature...'"
+      formControlName="userEmailSignature"
+    >
+    </ngx-editor>
+      <!-- <textarea
+        placeholder="Enter a email Signature"
+        formControlName="userEmailSignature"
+        cols="25"
+        rows="5"
+      >
+      </textarea> -->
+    </div>
+  </div>
     <div class="button-row">
       <button type="submit" class="btn">Update</button>
       <button type="button" class="btn" (click)="Cancle()">Cancel</button>
