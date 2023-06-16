@@ -36,7 +36,8 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     private dataService: DataServiceService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private alertify: AlertifyService
   ) {}
 
   ngOnInit(): void {
@@ -63,20 +64,29 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   }
 
   addRecipient(): void {
-    const recipientsControl = this.emailFormBuild.get('recipients');
-    const trimmedRecipients = recipientsControl?.value.trim();
+    const recipients = this.emailFormBuild.get('recipients')?.value;
+    const lastRecipient = recipients[recipients.length - 1];
+    if (recipients.length === 1 || lastRecipient) {
+      const recipientToAdd = lastRecipient ? lastRecipient : recipients[0];
 
-    if (trimmedRecipients) {
-      const hasComma = trimmedRecipients.endsWith(',');
-
-      if (!hasComma) {
-        const updatedRecipients = trimmedRecipients + ',';
-        recipientsControl?.setValue(updatedRecipients);
-      }
+      this.dataService.addEmailContact(recipientToAdd).subscribe({
+        next: (res) => {
+          if (res.statusCode === 200) {
+            this.alertify.success(res.message);
+            console.log(res);
+          } else {
+            this.alertify.error(res.message);
+          }
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
     }
-
-    // recipientsControl?.reset();
-    this.focusRecipientsField();
+    // this.focusRecipientsField();
   }
 
   focusRecipientsField() {

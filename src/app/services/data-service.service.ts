@@ -978,4 +978,10 @@ export class DataServiceService {
       formData
     );
   }
+
+  addEmailContact(email: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/email/add-contact?newContactEmail=${email}`
+    );
+  }
 }
