@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { Editor } from 'ngx-editor';
+import { debounceTime, takeUntil, switchMap, Subject } from 'rxjs';
 @Component({
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
@@ -22,11 +23,13 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   to?: string;
   body?: string;
   fileType?: string;
-  recipients: string = '';
+  recipients!: string[];
   signature?: string;
   sanitizedSignature?: SafeHtml;
   editor!: Editor;
-
+  selectedRecipients: string[] = [];
+  private searchTerms = new Subject<string>();
+  private unsubscribe$ = new Subject<void>();
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private formBuilder: FormBuilder,
@@ -40,10 +43,14 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     this.emailForm();
     this.getEmailFrom();
     this.editor = new Editor();
+    this.searchRecipient();
   }
   ngOnDestroy(): void {
     this.editor.destroy();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
+
   emailForm() {
     this.emailFormBuild = this.formBuilder.group({
       from: [{ value: this.from, disabled: true }],
@@ -131,7 +138,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     const subject = this.emailFormBuild.get('subject')?.value;
     const file = this.multipart!;
     const bcc = this.emailFormBuild.get('BCC')?.value;
-
+    return console.log(this.emailFormBuild.value);
     this.dataService
       .sendEmail(recipients, fileName, body, subject, file, bcc)
       .subscribe({
@@ -145,6 +152,29 @@ export class SendEmailComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+
+  searchRecipient() {
+    this.searchTerms
+      .pipe(
+        debounceTime(500), // Wait for 300 milliseconds of inactivity
+        takeUntil(this.unsubscribe$),
+        switchMap((term: string) => this.dataService.searchRecipient(term))
+      )
+      .subscribe({
+        next: (res) => {
+          this.recipients = res.data;
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  searchRecipients(event: any) {
+    const substring = event.term;
+    this.searchTerms.next(substring);
   }
 }
 // }

@@ -20,16 +20,28 @@
               formControlName="from"
             />
           </div>
+
+          <!-- <ng-select
+                formControlName="recipients"
+                (search)="searchRecipients($event)"
+              >
+                <ng-option *ngFor="let recipient of recipients"
+                  >{{ recipient }}
+                </ng-option>
+              </ng-select> -->
           <div class="form-group">
             <label for="recipients">To:</label>
             <div class="recipients-input">
-              <input
-                type="email"
-                class="form-control"
-                id="recipients"
-                name="recipients"
+              <ng-select
+                [items]="recipients"
+                bindLabel="email"
+                bindValue="id"
                 formControlName="recipients"
-              />
+                [multiple]="true"
+                [addTag]="true"
+                (search)="searchRecipients($event)"
+              >
+              </ng-select>
               <button
                 type="button"
                 class="btn btn-primary add-recipient-btn"
@@ -40,8 +52,8 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-md-6"></div> -->
       </div>
+
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">

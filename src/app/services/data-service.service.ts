@@ -953,6 +953,12 @@ export class DataServiceService {
     return this.http.get<ApiResponse>(`${this.userUrl}/email/getEmail`);
   }
 
+  searchRecipient(substring: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/email/recipients?contactSubstring=${substring}`
+    );
+  }
+
   sendEmail(
     recipients: string,
     fileName: string,
