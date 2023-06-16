@@ -7,6 +7,7 @@ import { AddDomainDialogComponent } from '../add-dialogs/add-domain-dialog/add-d
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreDomainValue } from 'src/app/model/core-domain-value';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-core-domain',
@@ -25,12 +26,15 @@ export class CoreDomainComponent implements OnInit {
   showDomainValue?: boolean = false;
   selectedRow!: HTMLElement;
   isLoading?: boolean = false;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
+
   ) {}
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
@@ -46,6 +50,14 @@ export class CoreDomainComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
