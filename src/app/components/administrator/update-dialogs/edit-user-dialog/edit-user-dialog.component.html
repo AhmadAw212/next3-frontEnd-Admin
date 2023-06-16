@@ -38,13 +38,19 @@
       </div>
       <div class="form-group">
         <label for="email">Email Signature:</label>
-        <textarea
+        <ngx-editor
+        [editor]="editor"
+        [placeholder]="'Type here...'"
+        formControlName="userEmailSignature"
+      >
+      </ngx-editor>
+        <!-- <textarea
           placeholder="Enter a email Signature"
           formControlName="userEmailSignature"
           cols="25"
           rows="5"
         >
-        </textarea>
+        </textarea> -->
       </div>
     </div>
 

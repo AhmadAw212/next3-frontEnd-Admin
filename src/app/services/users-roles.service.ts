@@ -22,8 +22,8 @@ export class UsersRolesService {
       next: (res) => {
         this.userRoles = res.data;
         this.roleNames = this.userRoles?.map((role) => role.id!) ?? [];
-        console.log('User roles:', this.userRoles);
-        console.log('Role names:', this.roleNames);
+        // console.log('User roles:', this.userRoles);
+        // console.log('Role names:', this.roleNames);
       },
       error: (err) => {
         console.log(err);

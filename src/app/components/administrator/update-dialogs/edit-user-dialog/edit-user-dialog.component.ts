@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -22,7 +23,7 @@ export class EditUserDialogComponent implements OnInit {
   selectedCompanyId?: string;
   selectedBranchId?: string;
   isDisabled = true;
-
+  editor!: Editor;
   constructor(
     private dataService: DataServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -100,6 +101,7 @@ export class EditUserDialogComponent implements OnInit {
     this.companyBranchService.getCompanyId();
     this.companyBranchService.getBranchId(this.usersInfo.companyId);
     this.editUserForm();
+    this.editor = new Editor();
   }
 
   editUser() {

@@ -40,60 +40,6 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="username">{{ dico?.BASIC_USER_NAME || "BASIC_USER_NAME" }}:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          required
-          formControlName="userName"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['userName'].errors &&
-            (form['userName'].dirty || form['userName'].touched)
-          "
-        >
-          <div *ngIf="form['userName']?.errors?.['required']">
-            User Name is required
-          </div>
-          <div *ngIf="form['userName']?.errors?.['minlength']">
-            User Name must be at least 2 characters long
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="email">{{ dico?.dico_email || "dico_email" }}:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          formControlName="email"
-          [class.is-invalid]="
-            form['email'].invalid &&
-            (form['email'].dirty || form['email'].touched)
-          "
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="
-            form['email']?.invalid &&
-            (form['email']?.dirty || form['email']?.touched)
-          "
-        >
-          <div *ngIf="form['email']?.errors?.['required']">
-            Email is required
-          </div>
-          <div *ngIf="form['email']?.errors?.['email']">
-            Email format is invalid
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
         <label for="lastName">{{ dico?.dico_last_name || "dico_last_name" }}:</label>
         <input
           type="text"
@@ -117,6 +63,89 @@
           </div>
         </div>
       </div>
+          </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="username">{{ dico?.BASIC_USER_NAME || "BASIC_USER_NAME" }}:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          formControlName="userName"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userName'].errors &&
+            (form['userName'].dirty || form['userName'].touched)
+          "
+        >
+          <div *ngIf="form['userName']?.errors?.['required']">
+            User Name is required
+          </div>
+          <div *ngIf="form['userName']?.errors?.['minlength']">
+            User Name must be at least 2 characters long
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">{{ dico?.BASIC_PWD  || "BASIC_PWD" }}:</label>
+        <input
+          type="text"
+          id="password"
+          name="password"
+          required
+          formControlName="password"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['password'].errors &&
+            (form['password'].dirty || form['password'].touched)
+          "
+        >
+          <div *ngIf="form['password']?.errors?.['required']">
+            Password is required
+          </div>
+          <div *ngIf="form['password']?.errors?.['minlength']">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row"   >
+      <div class="form-group"  >
+        <label for="email">{{ dico?.dico_email || "dico_email" }}:</label>
+        <input
+     
+          type="email"
+          id="email"
+          name="email"
+          required
+          formControlName="email"
+          [class.is-invalid]="
+            form['email'].invalid &&
+            (form['email'].dirty || form['email'].touched)
+          "
+       
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['email']?.invalid &&
+            (form['email']?.dirty || form['email']?.touched)
+          "
+        >
+          <div *ngIf="form['email']?.errors?.['required']">
+            Email is required
+          </div>
+          <div *ngIf="form['email']?.errors?.['email']">
+            Email format is invalid
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -399,14 +428,21 @@
       </div>
       <div class="form-group">
         <label for="emailSignature">Email Signature:</label>
-        <textarea
+        <ngx-editor
+        style="width: 40%"
+        [editor]="editor"
+        [placeholder]="'Type here...'"
+        formControlName="userEmailSignature"
+      >
+      </ngx-editor>
+        <!-- <textarea
           name="emailSignature"
           id="emailSignature"
           cols="40"
           rows="5"
           formControlName="userEmailSignature"
         >
-        </textarea>
+        </textarea> -->
       </div>
     </div>
     <button class="btn" [disabled]="!userForm.valid">{{ dico?.dico_add_user || "dico_add_user" }}</button>
