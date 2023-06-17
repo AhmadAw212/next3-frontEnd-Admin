@@ -36,7 +36,6 @@
           formControlName="email"
         />
       </div>
-      
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -100,32 +99,32 @@
         />
       </div>
     </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="userLimitExpertFees"> Expert Fees:</label>
-          <input
-            type="text"
-            id="userLimitExpertFees"
-            name="userLimitExpertFees"
-            required
-            placeholder="Enter Expert Limit"
-            formControlName="userLimitExpertFees"
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="userLimitHospitalFees"> Hospital Fees:</label>
-          <input
-            type="text"
-            id="userLimitHospitalFees"
-            name="userLimitHospitalFees"
-            placeholder="Enter Hospital Fee"
-            required
-            formControlName="userLimitHospitalFees"
-          />
-        </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userLimitExpertFees"> Expert Fees:</label>
+        <input
+          type="text"
+          id="userLimitExpertFees"
+          name="userLimitExpertFees"
+          required
+          placeholder="Enter Expert Limit"
+          formControlName="userLimitExpertFees"
+        />
       </div>
-    
+
+      <div class="form-group">
+        <label for="userLimitHospitalFees"> Hospital Fees:</label>
+        <input
+          type="text"
+          id="userLimitHospitalFees"
+          name="userLimitHospitalFees"
+          placeholder="Enter Hospital Fee"
+          required
+          formControlName="userLimitHospitalFees"
+        />
+      </div>
+    </div>
+
     <div class="form-row">
       <div class="form-group">
         <label for="userLimitDoctorFees">Doctor Limit:</label>
@@ -139,7 +138,6 @@
         />
       </div>
 
-    
       <div class="form-group">
         <label for="userLimitSurveyFees">Survey Limit:</label>
         <input
@@ -151,8 +149,6 @@
           formControlName="userLimitSurveyFees"
         />
       </div>
-
-      
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -178,7 +174,7 @@
         />
       </div>
     </div>
- 
+
     <div class="form-row">
       <div class="form-group">
         <label for="recoverLimit">Recover Limit :</label>
@@ -191,28 +187,26 @@
           formControlName="recoverLimit"
         />
       </div>
-      
     </div>
 
-   
-    <div class="form-row">
-    <div class="form-group">
-      <label for="email">Email Signature:</label>
-      <ngx-editor
-      [editor]="editor"
-      [placeholder]="'Type Email Signature...'"
-      formControlName="userEmailSignature"
-    >
-    </ngx-editor>
-      <!-- <textarea
+    <div class="row">
+      <div class="form-group">
+        <label for="email">Email Signature:</label>
+        <ngx-editor
+          [editor]="editor"
+          [placeholder]="'Type Email Signature...'"
+          formControlName="userEmailSignature"
+        >
+        </ngx-editor>
+        <!-- <textarea
         placeholder="Enter a email Signature"
         formControlName="userEmailSignature"
         cols="25"
         rows="5"
       >
       </textarea> -->
+      </div>
     </div>
-  </div>
     <div class="button-row">
       <button type="submit" class="btn">Update</button>
       <button type="button" class="btn" (click)="Cancle()">Cancel</button>

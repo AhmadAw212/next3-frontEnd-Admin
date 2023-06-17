@@ -17,7 +17,6 @@ export class UsersRolesService {
   }
   getUserRoles() {
     const selectedProfile = localStorage.getItem('selectedProfile');
-
     this.dataService.getUserRoles(selectedProfile!).subscribe({
       next: (res) => {
         this.userRoles = res.data;
