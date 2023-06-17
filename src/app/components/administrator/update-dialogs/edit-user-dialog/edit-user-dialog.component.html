@@ -99,17 +99,47 @@
           formControlName="userLimitExceedPercentage"
         />
       </div>
+    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="userLimitExpertFees"> Expert Fees:</label>
+          <input
+            type="text"
+            id="userLimitExpertFees"
+            name="userLimitExpertFees"
+            required
+            placeholder="Enter Expert Limit"
+            formControlName="userLimitExpertFees"
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="userLimitHospitalFees"> Hospital Fees:</label>
+          <input
+            type="text"
+            id="userLimitHospitalFees"
+            name="userLimitHospitalFees"
+            placeholder="Enter Hospital Fee"
+            required
+            formControlName="userLimitHospitalFees"
+          />
+        </div>
+      </div>
+    
+    <div class="form-row">
       <div class="form-group">
-        <label for="userLimitTaxiFees">Taxi Limit:</label>
+        <label for="userLimitDoctorFees">Doctor Limit:</label>
         <input
           type="text"
-          id="userLimitTaxiFees"
-          name="userLimitTaxiFees"
-          placeholder="Enter taxi limit"
+          id="userLimitDoctorFees"
+          name="userLimitDoctorFees"
+          placeholder="Enter doctor limit"
           required
-          formControlName="userLimitTaxiFees"
+          formControlName="userLimitDoctorFees"
         />
       </div>
+
+    
       <div class="form-group">
         <label for="userLimitSurveyFees">Survey Limit:</label>
         <input
@@ -121,9 +151,21 @@
           formControlName="userLimitSurveyFees"
         />
       </div>
+
+      
     </div>
     <div class="form-row">
-      
+      <div class="form-group">
+        <label for="userLimitTaxiFees">Taxi Limit:</label>
+        <input
+          type="text"
+          id="userLimitTaxiFees"
+          name="userLimitTaxiFees"
+          placeholder="Enter taxi limit"
+          required
+          formControlName="userLimitTaxiFees"
+        />
+      </div>
       <div class="form-group">
         <label for="userLimitLawyerFees">Lawyer Limit:</label>
         <input
@@ -149,45 +191,10 @@
           formControlName="recoverLimit"
         />
       </div>
-      <div class="form-group">
-        <label for="userLimitDoctorFees">Doctor Limit:</label>
-        <input
-          type="text"
-          id="userLimitDoctorFees"
-          name="userLimitDoctorFees"
-          placeholder="Enter doctor limit"
-          required
-          formControlName="userLimitDoctorFees"
-        />
-      </div>
-    </div>
-
-    <div class="form-row">
       
-      <div class="form-group">
-        <label for="userLimitExpertFees"> Expert Fees:</label>
-        <input
-          type="text"
-          id="userLimitExpertFees"
-          name="userLimitExpertFees"
-          required
-          placeholder="Enter Expert Limit"
-          formControlName="userLimitExpertFees"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="userLimitHospitalFees"> Hospital Fees:</label>
-        <input
-          type="text"
-          id="userLimitHospitalFees"
-          name="userLimitHospitalFees"
-          placeholder="Enter Hospital Fee"
-          required
-          formControlName="userLimitHospitalFees"
-        />
-      </div>
     </div>
+
+   
     <div class="form-row">
     <div class="form-group">
       <label for="email">Email Signature:</label>
