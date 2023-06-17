@@ -94,7 +94,8 @@
           <div class="form-group">
             <label for="subject">Body:</label>
             <div class="NgxEditor__Wrapper">
-              <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+              </ngx-editor-menu>
 
               <ngx-editor
                 [editor]="editor"
@@ -107,7 +108,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
           <div class="form-group">
             <div class="input-group">
               <input
@@ -131,9 +132,25 @@
                 </button>
               </div>
             </div>
-            <div class="file-info" *ngFor="let attachment of attachments">
-              <label>File Name: {{ attachment.name }}</label>
-              <label>File Type: {{ attachment.type }}</label>
+            <div
+              class="file-info"
+              *ngFor="let attachment of attachments; let i = index"
+            >
+              <div class="attachment-row">
+                <div class="attachment-info">
+                  <label class="file-name"
+                    >File Name: {{ attachment.name }}</label
+                  >
+                  <label class="file-type"
+                    >File Type: {{ attachment.type }}</label
+                  >
+                </div>
+                <span
+                  class="delete-button"
+                  (click)="deleteAttachment(attachment)"
+                  >X</span
+                >
+              </div>
             </div>
           </div>
         </div>

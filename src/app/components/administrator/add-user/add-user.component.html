@@ -15,7 +15,9 @@
   <form [formGroup]="userForm" (ngSubmit)="addUser()">
     <div class="form-row">
       <div class="form-group">
-        <label for="firstName">{{ dico?.dico_first_name || "dico_first_name" }}:</label>
+        <label for="firstName"
+          >{{ dico?.dico_first_name || "dico_first_name" }}:</label
+        >
         <input
           type="text"
           id="firstName"
@@ -40,7 +42,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="lastName">{{ dico?.dico_last_name || "dico_last_name" }}:</label>
+        <label for="lastName"
+          >{{ dico?.dico_last_name || "dico_last_name" }}:</label
+        >
         <input
           type="text"
           id="lastName"
@@ -63,10 +67,12 @@
           </div>
         </div>
       </div>
-          </div>
+    </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="username">{{ dico?.BASIC_USER_NAME || "BASIC_USER_NAME" }}:</label>
+        <label for="username"
+          >{{ dico?.BASIC_USER_NAME || "BASIC_USER_NAME" }}:</label
+        >
         <input
           type="text"
           id="username"
@@ -90,7 +96,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="password">{{ dico?.BASIC_PWD  || "BASIC_PWD" }}:</label>
+        <label for="password">{{ dico?.BASIC_PWD || "BASIC_PWD" }}:</label>
         <input
           type="text"
           id="password"
@@ -108,17 +114,14 @@
           <div *ngIf="form['password']?.errors?.['required']">
             Password is required
           </div>
-          <div *ngIf="form['password']?.errors?.['minlength']">
-            
-          </div>
+          <div *ngIf="form['password']?.errors?.['minlength']"></div>
         </div>
       </div>
     </div>
-    <div class="form-row"   >
-      <div class="form-group"  >
+    <div class="form-row">
+      <div class="form-group">
         <label for="email">{{ dico?.dico_email || "dico_email" }}:</label>
         <input
-     
           type="email"
           id="email"
           name="email"
@@ -128,7 +131,6 @@
             form['email'].invalid &&
             (form['email'].dirty || form['email'].touched)
           "
-       
         />
         <div
           class="invalid-feedback"
@@ -145,11 +147,14 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>{{ dico?.dico_insurance_company || "dico_insurance_company" }}:</label>
+        <label
+          >{{
+            dico?.dico_insurance_company || "dico_insurance_company"
+          }}:</label
+        >
         <select
           #companyIdSelect
           formControlName="companyId"
@@ -196,7 +201,9 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="paymentLimit">{{ dico?.dico_payment_limit || "dico_payment_limit" }}:</label>
+        <label for="paymentLimit"
+          >{{ dico?.dico_payment_limit || "dico_payment_limit" }}:</label
+        >
         <input
           type="text"
           id="paymentLimit"
@@ -220,7 +227,12 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="userLimitExceedPercentage">{{ dico?.dico_exceed_percentage_limit || "dico_exceed_percentage_limit" }}:</label>
+        <label for="userLimitExceedPercentage"
+          >{{
+            dico?.dico_exceed_percentage_limit ||
+              "dico_exceed_percentage_limit"
+          }}:</label
+        >
         <input
           type="text"
           id="userLimitExceedPercentage"
@@ -247,7 +259,11 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitExpertFees">{{ dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees" }}:</label>
+        <label for="userLimitExpertFees"
+          >{{
+            dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees"
+          }}:</label
+        >
         <input
           type="text"
           id="userLimitExpertFees"
@@ -273,7 +289,9 @@
       </div>
 
       <div class="form-group">
-        <label for="userLimitSurveyFees">{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }}:</label>
+        <label for="userLimitSurveyFees"
+          >{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }}:</label
+        >
         <input
           type="text"
           id="userLimitSurveyFees"
@@ -297,94 +315,100 @@
           </div>
         </div>
       </div>
-      
-    </div>
- 
-    
-  <div class="form-row">
-    <div class="form-group">
-      <label for="userLimitHospitalFees">{{ dico?.dico_user_limit_hospital_fees || "dico_user_limit_hospital_fees" }}:</label>
-      <input
-        type="text"
-        id="userLimitHospitalFees"
-        name="userLimitHospitalFees"
-        required
-        formControlName="userLimitHospitalFees"
-      />
-      <div
-        class="invalid-feedback"
-        *ngIf="
-          form['userLimitHospitalFees']?.invalid &&
-          (form['userLimitHospitalFees']?.dirty ||
-            form['userLimitHospitalFees']?.touched)
-        "
-      >
-        <div *ngIf="form['userLimitHospitalFees']?.errors?.['required']">
-          User Limit Hospital Fees is required
-        </div>
-        <div *ngIf="form['userLimitHospitalFees']?.errors?.['pattern']">
-          Number is required
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="userLimitDoctorFees">{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }}:</label>
-      <input
-        type="text"
-        id="userLimitDoctorFees"
-        name="userLimitDoctorFees"
-        required
-        formControlName="userLimitDoctorFees"
-      />
-      <div
-        class="invalid-feedback"
-        *ngIf="
-          form['userLimitDoctorFees']?.invalid &&
-          (form['userLimitDoctorFees']?.dirty ||
-            form['userLimitDoctorFees']?.touched)
-        "
-      >
-        <div *ngIf="form['userLimitDoctorFees']?.errors?.['required']">
-          User Limit Doctor Fees is required
-        </div>
-        <div *ngIf="form['userLimitDoctorFees']?.errors?.['pattern']">
-          Number is required
-        </div>
-      </div>
     </div>
 
-  </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="userLimitTaxiFees">{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }}:</label>
-          <input
-            type="text"
-            id="userLimitTaxiFees"
-            name="userLimitTaxiFees"
-            required
-            formControlName="userLimitTaxiFees"
-          />
-          <div
-            class="invalid-feedback"
-            *ngIf="
-              form['userLimitTaxiFees']?.invalid &&
-              (form['userLimitTaxiFees']?.dirty ||
-                form['userLimitTaxiFees']?.touched)
-            "
-          >
-            <div *ngIf="form['userLimitTaxiFees']?.errors?.['required']">
-              User Limit Taxi Fees is required
-            </div>
-            <div *ngIf="form['userLimitTaxiFees']?.errors?.['pattern']">
-              Number is required
-            </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userLimitHospitalFees"
+          >{{
+            dico?.dico_user_limit_hospital_fees ||
+              "dico_user_limit_hospital_fees"
+          }}:</label
+        >
+        <input
+          type="text"
+          id="userLimitHospitalFees"
+          name="userLimitHospitalFees"
+          required
+          formControlName="userLimitHospitalFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitHospitalFees']?.invalid &&
+            (form['userLimitHospitalFees']?.dirty ||
+              form['userLimitHospitalFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitHospitalFees']?.errors?.['required']">
+            User Limit Hospital Fees is required
+          </div>
+          <div *ngIf="form['userLimitHospitalFees']?.errors?.['pattern']">
+            Number is required
           </div>
         </div>
-      
-        
-      
+      </div>
       <div class="form-group">
-        <label for="userLimitLawyerFees">{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }}:</label>
+        <label for="userLimitDoctorFees"
+          >{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }}:</label
+        >
+        <input
+          type="text"
+          id="userLimitDoctorFees"
+          name="userLimitDoctorFees"
+          required
+          formControlName="userLimitDoctorFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitDoctorFees']?.invalid &&
+            (form['userLimitDoctorFees']?.dirty ||
+              form['userLimitDoctorFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitDoctorFees']?.errors?.['required']">
+            User Limit Doctor Fees is required
+          </div>
+          <div *ngIf="form['userLimitDoctorFees']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userLimitTaxiFees"
+          >{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }}:</label
+        >
+        <input
+          type="text"
+          id="userLimitTaxiFees"
+          name="userLimitTaxiFees"
+          required
+          formControlName="userLimitTaxiFees"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form['userLimitTaxiFees']?.invalid &&
+            (form['userLimitTaxiFees']?.dirty ||
+              form['userLimitTaxiFees']?.touched)
+          "
+        >
+          <div *ngIf="form['userLimitTaxiFees']?.errors?.['required']">
+            User Limit Taxi Fees is required
+          </div>
+          <div *ngIf="form['userLimitTaxiFees']?.errors?.['pattern']">
+            Number is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="userLimitLawyerFees"
+          >{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }}:</label
+        >
         <input
           type="text"
           id="userLimitLawyerFees"
@@ -409,10 +433,12 @@
         </div>
       </div>
     </div>
-    
+
     <div class="form-row">
       <div class="form-group">
-        <label for="recoverLimit">{{ dico?.dico_recover_limit || "dico_recover_limit" }}</label>
+        <label for="recoverLimit">{{
+          dico?.dico_recover_limit || "dico_recover_limit"
+        }}</label>
         <input
           type="text"
           id="recoverLimit"
@@ -435,30 +461,21 @@
           </div>
         </div>
       </div>
-     
     </div>
     <div class="form-row">
-      
       <div class="form-group">
         <label for="emailSignature">Email Signature:</label>
         <ngx-editor
-        style="width: 40%"
-        [editor]="editor"
-        [placeholder]="'Fill Email Signature...'"
-        formControlName="userEmailSignature"
-      >
-      </ngx-editor>
-        <!-- <textarea
-          name="emailSignature"
-          id="emailSignature"
-          cols="40"
-          rows="5"
+          style="width: 40%"
+          [editor]="editor"
+          [placeholder]="'Fill Email Signature...'"
           formControlName="userEmailSignature"
         >
-        </textarea> -->
+        </ngx-editor>
       </div>
-      <button class="btn" [disabled]="!userForm.valid">{{ dico?.dico_add_user || "dico_add_user" }}</button>
+      <button class="btn" [disabled]="!userForm.valid">
+        {{ dico?.dico_add_user || "dico_add_user" }}
+      </button>
     </div>
-    
   </form>
 </div>

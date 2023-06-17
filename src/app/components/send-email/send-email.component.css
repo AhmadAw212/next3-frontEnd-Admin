@@ -54,7 +54,45 @@
 .form-group label {
   font-weight: bold;
 }
+.attachment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.attachment-row {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
 
+.attachment-info {
+  flex-grow: 1;
+}
+
+.file-name {
+  font-weight: bold;
+}
+
+.file-type {
+  color: gray;
+  margin-left: 10px;
+  /* margin-top: 5px; */
+}
+
+.delete-button {
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+  /* margin-left: 10px; */
+}
+.attachment-info {
+  flex-grow: 1;
+}
+
+.delete-button {
+  margin-left: 10px;
+}
 .form-group input[type="text"],
 .form-group textarea {
   width: 100%;

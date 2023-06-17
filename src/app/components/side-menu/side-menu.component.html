@@ -39,15 +39,15 @@
             {{ dico.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/languageConfig" *ngIf="hasPerm('systemAdmin1')">
+          <a mat-list-item routerLink="/Administrator/languageConfig">
             {{ dico.dico_language || "dico_language" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/coreDocument" *ngIf="hasPerm('systemAdmin2')">
+          <a mat-list-item routerLink="/Administrator/coreDocument">
             {{ dico.dico_document || "dico_document" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/coreDomain" *ngIf="hasPerm('systemAdmin3')">
+          <a mat-list-item routerLink="/Administrator/coreDomain">
             {{ dico.dico_domain || "dico_domain" }}</a
           >
         </mat-expansion-panel>

@@ -5,7 +5,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { Editor } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 import { debounceTime, takeUntil, switchMap, Subject } from 'rxjs';
 @Component({
   selector: 'app-send-email',
@@ -28,6 +28,15 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   sanitizedSignature?: SafeHtml;
   editor!: Editor;
   selectedRecipients: string[] = [];
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    // ['link'],
+    // ['image'],
+  ];
   private searchTerms = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
   constructor(
@@ -129,12 +138,26 @@ export class SendEmailComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      this.attachments.push(file);
-      this.fileName?.push(file.name);
+      if (!this.isAttachmentExist(file)) {
+        this.attachments.push(file);
+        this.fileName?.push(file.name);
+      }
     }
   }
+
+  isAttachmentExist(file: File): boolean {
+    return this.attachments.some((attachment) => attachment.name === file.name);
+  }
+
+  deleteAttachment(attachment: File) {
+    const index = this.attachments.indexOf(attachment);
+    if (index !== -1) {
+      this.attachments.splice(index, 1);
+    }
+  }
+
   openFileSelection() {
-    const fileInput = this.document.getElementById('image');
+    const fileInput = document.getElementById('image');
     if (fileInput) {
       fileInput.click();
     }
