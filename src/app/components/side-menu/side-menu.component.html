@@ -8,7 +8,7 @@
       </div>
 
       <mat-nav-list>
-        <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
+        <mat-expansion-panel style="background-color: rgb(237, 243, 245)" *ngIf="hasPerm('admUserManagment')">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">{{
               dico.dico_user_management || "dico_user_management"
@@ -24,7 +24,7 @@
           </a>
         </mat-expansion-panel>
         <hr class="hr" />
-        <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
+        <mat-expansion-panel style="background-color: rgb(237, 243, 245)" *ngIf="hasPerm('admCoreConfiguration') or hasPerm('admCoreResourceBundle') or hasPerm('admCoreDocumentFile') or hasPerm('admCoreDomainValue')">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">{{
               dico.dico_system_configuration || "dico_dico_system_configuration"
@@ -33,63 +33,61 @@
           <hr class="hr" />
           <a
             mat-list-item
-            routerLink="/Administrator/coreConfig"
-            *ngIf="hasPerm('systemAdmin')"
-          >
+            routerLink="/Administrator/coreConfig" *ngIf="hasPerm('admCoreConfiguration')">
             {{ dico.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/languageConfig" *ngIf="hasPerm('systemAdmin1')">
+          <a mat-list-item routerLink="/Administrator/languageConfig" *ngIf="hasPerm('admCoreResourceBundle')">
             {{ dico.dico_language || "dico_language" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/coreDocument" *ngIf="hasPerm('systemAdmin2')">
+          <a mat-list-item routerLink="/Administrator/coreDocument" *ngIf="hasPerm('admCoreDocumentFile')">
             {{ dico.dico_document || "dico_document" }}</a
           >
           <hr class="hr" />
-          <a mat-list-item routerLink="/Administrator/coreDomain" *ngIf="hasPerm('systemAdmin3')">
+          <a mat-list-item routerLink="/Administrator/coreDomain" *ngIf="hasPerm('admCoreDomainValue')">
             {{ dico.dico_domain || "dico_domain" }}</a
           >
         </mat-expansion-panel>
 
         <hr class="hr" />
-        <mat-expansion-panel style="background-color: rgb(237, 243, 245)">
+        <mat-expansion-panel style="background-color: rgb(237, 243, 245)" *ngIf="hasPerm('admCarsBrand') or hasPerm('admCarsCovers') or hasPerm('admCarsClient') or hasPerm('admCarsProducts')  or hasPerm('admCarsSublines') or hasPerm('admReportList') or hasPerm('admCarsSupplier') or hasPerm('admCarsExpertConfig') or hasPerm('admCarsBranch') or hasPerm('admCarsBroker')  or hasPerm('admCarsTerritoryTown')">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">{{
               dico.dico_tables || "dico_tables"
             }}</mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/Administrator/carsBrand">
+          <a mat-list-item routerLink="/Administrator/carsBrand"  *ngIf="hasPerm('admCarsBrand')">
             {{ dico.dico_car_brand || "dico_car_brand" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carCovers">
+          <a mat-list-item routerLink="/Administrator/carCovers"  *ngIf="hasPerm('admCarsCovers')">
             {{ dico.dico_cover || "dico_cover" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carsClient">
+          <a mat-list-item routerLink="/Administrator/carsClient"  *ngIf="hasPerm('admCarsClient')">
             {{ dico.dico_cars_clients || "dico_cars_clients" }}</a
           >
-          <a mat-list-item routerLink="/Administrator/carProducts">
+          <a mat-list-item routerLink="/Administrator/carProducts"  *ngIf="hasPerm('admCarsProducts')">
             {{ dico.dico_product || "dico_product" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carSublines">
+          <a mat-list-item routerLink="/Administrator/carSublines"  *ngIf="hasPerm('admCarsSublines')">
             {{ dico.dico_subline_desc || "dico_subline_desc" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carReportList">
+          <a mat-list-item routerLink="/Administrator/carReportList"  *ngIf="hasPerm('admReportList')">
             {{ dico.dico_report_list || "dico_report_list" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carSupplier">
+          <a mat-list-item routerLink="/Administrator/carSupplier"  *ngIf="hasPerm('admCarsSupplier')">
             {{ dico.dico_supplier || "dico_supplier" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/expertConfig">
+          <a mat-list-item routerLink="/Administrator/expertConfig"  *ngIf="hasPerm('admCarsExpertConfig')">
             {{ dico.dico_expert_config || "dico_expert_config" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/branchConfig">
+          <a mat-list-item routerLink="/Administrator/branchConfig"  *ngIf="hasPerm('admCarsBranch')">
             {{ dico.dico_branch || "dico_branch" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carBroker">
+          <a mat-list-item routerLink="/Administrator/carBroker"  *ngIf="hasPerm('admCarsBroker')">
             {{ dico.dico_broker || "dico_broker" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/carTerritoryTown">
+          <a mat-list-item routerLink="/Administrator/carTerritoryTown"  *ngIf="hasPerm('admCarsTerritoryTown')">
             {{ dico.dico_territory || "dico.dico_territory" }}
           </a>
         </mat-expansion-panel>
