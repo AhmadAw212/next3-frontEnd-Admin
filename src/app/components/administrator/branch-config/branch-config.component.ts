@@ -41,6 +41,10 @@ export class BranchConfigComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
+
+  trackBranchById(index: number, branch: Branch) {
+    return branch.id;
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

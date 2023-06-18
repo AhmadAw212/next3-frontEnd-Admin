@@ -46,7 +46,9 @@ export class CarBrokerComponent implements OnInit {
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
-
+  trackBrokerById(index: number, broker: CarBroker) {
+    return broker.id;
+  }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {

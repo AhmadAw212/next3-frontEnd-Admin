@@ -35,7 +35,9 @@ export class CarShapeComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
   }
-
+  trackShapeById(index: number, brand: CarShape) {
+    return brand.carShapeId;
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

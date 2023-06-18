@@ -48,7 +48,9 @@ export class CarSublinesComponent implements OnInit {
       this.dico = data;
     });
   }
-
+  trackSublineById(index: number, subline: CarSublines) {
+    return subline.id;
+  }
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
     const clickedRow = clickedElement.closest('tr');

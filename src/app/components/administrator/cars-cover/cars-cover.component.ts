@@ -48,6 +48,9 @@ export class CarsCoverComponent implements OnInit {
     this.dateFormatterService();
     this.getDico();
   }
+  trackCoverById(index: number, brand: CarCover) {
+    return brand.id;
+  }
   getDico() {
     this.isLoading = true;
     this.dicoService.getDico();
@@ -232,7 +235,7 @@ export class CarsCoverComponent implements OnInit {
         description: cover.description,
         type: cover.type,
       });
-      console.log(this.updatedCoverValues);
+      // console.log(this.updatedCoverValues);
     }
   }
 
@@ -250,7 +253,7 @@ export class CarsCoverComponent implements OnInit {
       description: cover.description,
       type: cover.type,
     });
-    console.log(this.updatedCoverValues);
+    // console.log(this.updatedCoverValues);
   }
 
   updateCarInfo() {

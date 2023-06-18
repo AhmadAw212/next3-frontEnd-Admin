@@ -48,7 +48,7 @@ export class CoreConfigurationComponent implements OnInit {
     this.dateFormatterService();
     this.getDico();
   }
- getDico() {
+  getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -61,7 +61,9 @@ export class CoreConfigurationComponent implements OnInit {
       // this.reportDateTime = this.dateFormatService.reportDateTime;
     });
   }
-
+  trackConfigById(index: number, config: any): string {
+    return config.id;
+  }
   onTdBlur(
     event: FocusEvent,
     config: ConfigData,

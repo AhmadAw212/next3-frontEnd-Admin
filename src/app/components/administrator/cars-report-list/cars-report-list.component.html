@@ -51,7 +51,7 @@
           *ngIf="carReport?.length! > 0; else noData"
           (click)="highlightRow($event)"
         >
-          <tr *ngFor="let report of carReport">
+          <tr *ngFor="let report of carReport; trackBy: trackReportListById">
             <td>{{ report.id }}</td>
             <td
               contenteditable="true"

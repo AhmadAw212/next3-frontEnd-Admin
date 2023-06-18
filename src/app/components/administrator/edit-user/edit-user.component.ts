@@ -102,7 +102,7 @@ export class EditUserComponent implements OnInit {
     this.dataService.userSearch(username, name).subscribe({
       next: (res) => {
         this.users = res.data;
-        console.log(this.users);
+        // console.log(this.users);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
@@ -137,7 +137,7 @@ export class EditUserComponent implements OnInit {
         this.dataService.resetPassword(userName).subscribe({
           next: (res) => {
             this.alertify.dialogAlert(res.title!);
-            console.log(res);
+            // console.log(res);
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {

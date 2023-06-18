@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_core_configuration || "dico_core_configuration" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_core_configuration || "dico_core_configuration" }}
+</h3>
 
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
@@ -7,7 +9,9 @@
       <label for="inputId">{{ dico?.dico_id || "dico_id" }}:</label>
       <input type="text" id="inputId" [(ngModel)]="id" name="id" />
 
-      <label for="inputDescription">{{ dico?.dico_description || "dico_description" }}:</label>
+      <label for="inputDescription"
+        >{{ dico?.dico_description || "dico_description" }}:</label
+      >
       <input
         type="text"
         id="inputDescription"
@@ -34,9 +38,13 @@
             <th>{{ dico?.dico_id || "dico_id" }}</th>
             <th>{{ dico?.dico_config_value || "dico_config_value" }}</th>
             <th>{{ dico?.dico_description || "dico_description" }}</th>
-            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
             <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
           </tr>
@@ -45,7 +53,7 @@
           *ngIf="configData!.length > 0; else noData"
           (click)="highlightRow($event)"
         >
-          <tr *ngFor="let config of configData!">
+          <tr *ngFor="let config of configData; trackBy: trackConfigById">
             <td>{{ config.id }}</td>
             <td
               contenteditable="true"
@@ -67,17 +75,13 @@
             <td>
               <mat-icon (click)="deleteConfig(config.id!)">delete</mat-icon>
             </td>
-
-            <!-- <td>
-                  <mat-icon (click)="updateCoreConfigDialog(config)"
-                    >edit</mat-icon
-                  >
-                </td> -->
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </table>

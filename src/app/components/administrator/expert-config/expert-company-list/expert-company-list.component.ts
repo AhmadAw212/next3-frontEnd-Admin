@@ -52,6 +52,9 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     // console.log(changes);
     this.getExpertCompany();
   }
+  trackExpCompanyeById(index: number, expertComp: ExpertCompany) {
+    return expertComp.expertCompanyId;
+  }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({
       next: (res) => {

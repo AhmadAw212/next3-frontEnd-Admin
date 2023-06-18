@@ -31,6 +31,7 @@ export class TownTerritoryComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
   }
+
   showNearTerritory(selectedRegion: type) {
     this.selectedRegion = selectedRegion;
 

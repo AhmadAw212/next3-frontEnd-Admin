@@ -36,6 +36,9 @@ export class CoreDocumentComponent implements OnInit {
     this.dateFormatterService();
     this.getDico();
   }
+  trackDocById(index: number, doc: any): string {
+    return doc.id;
+  }
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {

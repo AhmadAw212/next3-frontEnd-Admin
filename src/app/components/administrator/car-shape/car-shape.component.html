@@ -13,7 +13,6 @@
               <th>shape id</th>
               <th>Shape Code</th>
               <th>Shape description</th>
-              <th>trademark Id</th>
               <th>Shape logo</th>
               <th>sysCreatedDate</th>
               <th>sysCreatedBy</th>
@@ -28,13 +27,12 @@
             (click)="highlightRow($event)"
           >
             <tr
-              *ngFor="let shape of carShape"
+              *ngFor="let shape of carShape; trackBy: trackShapeById"
               (click)="searchCarInfo(shape.carShapeId, shape)"
             >
               <td>{{ shape.carShapeId }}</td>
               <td>{{ shape.carShapeCode }}</td>
               <td>{{ shape.carShapeDescription }}</td>
-              <td>{{ shape.carTrademarkId }}</td>
               <td>
                 <div class="car-logo-container">
                   <img [src]="shape.logo" class="car-logo" />

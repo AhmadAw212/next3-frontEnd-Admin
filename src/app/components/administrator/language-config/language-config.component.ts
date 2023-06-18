@@ -43,6 +43,10 @@ export class LanguageConfigComponent implements OnInit {
       this.dico = data;
     });
   }
+
+  trackLangById(index: number, lang: any): string {
+    return lang.id;
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
@@ -82,7 +86,10 @@ export class LanguageConfigComponent implements OnInit {
   }
 
   openCoreConfigDialog() {
-    this.dialog.open(AddLanguageComponent);
+    const dialogRef = this.dialog.open(AddLanguageComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.resourceBundleSearch();
+    });
   }
 
   resourceBundleSearch() {

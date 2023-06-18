@@ -19,7 +19,9 @@
 <div class="admin-container container-fluid">
   <div class="user-inputs">
     <form (ngSubmit)="searchCarClients()">
-      <label for="firstName">{{ dico?.dico_first_name || "dico_first_name" }}:</label>
+      <label for="firstName"
+        >{{ dico?.dico_first_name || "dico_first_name" }}:</label
+      >
       <input
         type="text"
         id="firstName"
@@ -28,7 +30,9 @@
         [(ngModel)]="fName"
       />
 
-      <label for="lastName">{{ dico?.dico_last_name || "dico_last_name" }}:</label>
+      <label for="lastName"
+        >{{ dico?.dico_last_name || "dico_last_name" }}:</label
+      >
       <input
         type="text"
         id="lastName"
@@ -46,7 +50,9 @@
         [(ngModel)]="num1"
       />
 
-      <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
+      <label for="description"
+        >{{ dico?.dico_description || "dico_description" }}:</label
+      >
       <input
         type="text"
         id="description"
@@ -63,7 +69,9 @@
       >
         {{ dico?.dico_add_client || "dico_add_client" }}
       </button>
-      <button type="button" (click)="updateCarClient()">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
+      <button type="button" (click)="updateCarClient()">
+        {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+      </button>
     </form>
     <div class="admin-button">
       <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
@@ -90,9 +98,13 @@
             <th>{{ dico?.dico_indic2 || "dico_indic2" }}</th>
             <th>{{ dico?.dico_vip || "dico_vip" }}</th>
             <th>{{ dico?.dico_description || "dico_description" }}</th>
-            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
             <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
           </tr>
@@ -101,7 +113,7 @@
           *ngIf="carClients?.length! > 0; else noData"
           (click)="highlightRow($event)"
         >
-          <tr *ngFor="let client of carClients">
+          <tr *ngFor="let client of carClients; trackBy: trackClientById">
             <td>{{ client.id }}</td>
             <td
               contenteditable="true"
@@ -207,13 +219,15 @@
             <td>{{ client.sysUpdatedBy }}</td>
 
             <td>
-              <mat-icon (click)="deleteCarCLient(client.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
+              <mat-icon (click)="deleteCarCLient(client.id!)">delete</mat-icon>
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+            <td colspan="5">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </table>

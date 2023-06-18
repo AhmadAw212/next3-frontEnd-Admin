@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_language_configuration || "dico_language_configuration" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_language_configuration || "dico_language_configuration" }}
+</h3>
 
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
@@ -30,10 +32,16 @@
             <th>{{ dico?.dico_id || "dico_id" }}</th>
             <th>{{ dico?.dico_locale || "dico_locale" }}</th>
             <th>{{ dico?.dico_resource_key || "dico_resource_key" }}</th>
-            <th style="width: 150px">{{ dico?.dico_resource_value || "dico_resource_value" }}</th>
-            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th style="width: 150px">
+              {{ dico?.dico_resource_value || "dico_resource_value" }}
+            </th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
             <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
             <th>{{ dico?.dico_updated_by || "dico_updated_by" }}</th>
             <th></th>
           </tr>
@@ -42,7 +50,7 @@
           *ngIf="resourceData!.length > 0; else noData"
           (click)="highlightRow($event)"
         >
-          <tr *ngFor="let resource of resourceData">
+          <tr *ngFor="let resource of resourceData; trackBy: trackLangById">
             <td>{{ resource.id }}</td>
             <td>
               {{ resource.locale }}
@@ -75,7 +83,9 @@
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </table>

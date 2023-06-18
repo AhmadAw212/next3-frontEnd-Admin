@@ -32,7 +32,9 @@
         [(ngModel)]="description"
       />
 
-      <button class="btn btn-primary" type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+      <button class="btn btn-primary" type="submit">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
     </form>
     <div class="btn-group">
       <button
@@ -61,10 +63,18 @@
         <th scope="col">{{ dico?.dico_code || "dico_code" }}</th>
         <th scope="col">{{ dico?.dico_description || "dico_description" }}</th>
         <th scope="col">{{ dico?.dico_type || "dico_type" }}</th>
-        <th scope="col">{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
-        <th scope="col">{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th scope="col">{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
-        <th scope="col">{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th scope="col">
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th scope="col">
+          {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+        </th>
+        <th scope="col">
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th scope="col">
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
         <th></th>
       </tr>
     </thead>
@@ -72,7 +82,7 @@
       *ngIf="carCover?.length! > 0; else noData"
       (click)="highlightRow($event)"
     >
-      <tr *ngFor="let cover of carCover">
+      <tr *ngFor="let cover of carCover; trackBy: trackCoverById">
         <td>{{ cover.id }}</td>
         <td contenteditable="true" (blur)="onTdBlur($event, cover, 'code')">
           {{ cover.code }}
@@ -102,14 +112,16 @@
         <td>{{ cover.sysUpdatedBy }}</td>
 
         <td>
-          <mat-icon (click)="deleteCarCover(cover.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
+          <mat-icon (click)="deleteCarCover(cover.id!)">delete</mat-icon>
         </td>
       </tr>
     </tbody>
   </table>
   <ng-template #noData>
     <tr>
-      <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+      <td colspan="5">
+        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+      </td>
     </tr>
   </ng-template>
 </div>

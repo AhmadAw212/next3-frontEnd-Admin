@@ -43,6 +43,10 @@ export class CoreDomainValueComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
+
+  trackDomainById(index: number, domain: CoreDomainValue) {
+    return domain.id;
+  }
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();

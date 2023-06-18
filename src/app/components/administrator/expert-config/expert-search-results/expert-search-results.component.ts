@@ -56,6 +56,10 @@ export class ExpertSearchResultsComponent implements OnInit {
 
     // console.log(expert);
   }
+
+  trackExpertById(index: number, expert: CarExpert) {
+    return expert.id;
+  }
   findAndReplaceExpert(updatedExpert: CarExpert[], expert: CarExpert): void {
     const index = updatedExpert.findIndex((item) => item.id === expert.id);
     if (index !== -1) {

@@ -67,7 +67,7 @@
         *ngIf="brokers.length > 0; else noData"
         (click)="highlightRow($event)"
       >
-        <tr *ngFor="let broker of brokers">
+        <tr *ngFor="let broker of brokers; trackBy: trackBrokerById">
           <td>{{ broker.id }}</td>
           <td
             contenteditable="true"

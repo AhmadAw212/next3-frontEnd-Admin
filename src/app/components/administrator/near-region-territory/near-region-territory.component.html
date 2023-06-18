@@ -28,7 +28,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let region of nearRegion" (click)="highlightRow($event)">
+      <tr
+        *ngFor="let region of nearRegion; trackBy: trackNearTerritoryById"
+        (click)="highlightRow($event)"
+      >
         <td>{{ region.id }}</td>
         <td>{{ region.near_RegionCode }}</td>
         <td>{{ region.near_RegionDescription }}</td>

@@ -34,7 +34,6 @@ export class CoreDomainComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dicoService: DicoServiceService
-
   ) {}
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
@@ -64,7 +63,9 @@ export class CoreDomainComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
-
+  trackDomainById(index: number, domain: any): string {
+    return domain.id;
+  }
   onTdBlur(
     event: FocusEvent,
     domain: CoreDomain,
@@ -189,6 +190,9 @@ export class CoreDomainComponent implements OnInit {
   }
 
   openAddDomainDialog() {
-    this.dialog.open(AddDomainDialogComponent);
+    const dialogRef = this.dialog.open(AddDomainDialogComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      // this.getDomainValuesData();
+    });
   }
 }
