@@ -67,7 +67,7 @@
       *ngIf="branches?.length! > 0; else noData"
       (click)="highlightRow($event)"
     >
-      <tr *ngFor="let branch of branches">
+      <tr *ngFor="let branch of branches; trackBy: trackBranchById">
         <td>{{ branch.id }}</td>
         <td contenteditable="true" (blur)="onTdBlur($event, branch, 'code')">
           {{ branch.code }}

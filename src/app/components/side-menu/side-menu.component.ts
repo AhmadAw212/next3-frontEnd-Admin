@@ -20,7 +20,7 @@ export class SideMenuComponent implements OnInit {
   searchIcon = faSearch;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  dico: any = '';
+  dico?: any;
   toggleMenu() {
     this.sidenav.toggle();
   }

@@ -43,7 +43,9 @@ export class CarTrademarkComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
-
+  trackTrademarkById(index: number, brand: CarTrademark) {
+    return brand.id;
+  }
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
     const clickedRow = clickedElement.closest('tr');

@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ApiResponse } from 'src/app/model/api-response';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -21,11 +26,12 @@ export class AddUserComponent implements OnInit {
   branchList?: BranchList[];
   dico?: any;
   editor!: Editor;
+  isLoading: boolean = false;
   ngOnInit(): void {
     this.companyBranchService.getCompanyId();
     this.getCompanyId();
     this.getBranchList();
-    this.getDico() ;
+    this.getDico();
     this.editor = new Editor();
   }
 
@@ -51,7 +57,10 @@ export class AddUserComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
-      userName: ['', [Validators.required, Validators.minLength(2),this.uppercaseValidator]],
+      userName: [
+        '',
+        [Validators.required, Validators.minLength(2), this.uppercaseValidator],
+      ],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       password: ['Claims_1234', [Validators.required, Validators.minLength(6)]],
@@ -78,12 +87,18 @@ export class AddUserComponent implements OnInit {
       ],
       companyId: ['', Validators.required],
       branchId: ['', Validators.required],
-      recoverLimit: ['0', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      recoverLimit: [
+        '0',
+        [Validators.required, Validators.pattern('^[0-9]*$')],
+      ],
       userLimitHospitalFees: [
         '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
-      paymentLimit: ['0', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      paymentLimit: [
+        '0',
+        [Validators.required, Validators.pattern('^[0-9]*$')],
+      ],
       userLimitExpertFees: [
         '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -92,13 +107,13 @@ export class AddUserComponent implements OnInit {
       userEmailSignature: [''],
     });
   }
-   uppercaseValidator(control: AbstractControl): { [key: string]: any } | null {
+  uppercaseValidator(control: AbstractControl): { [key: string]: any } | null {
     const value: string = control.value;
-  
+
     if (value && value !== value.toUpperCase()) {
       return { uppercase: true };
     }
-  
+
     return null;
   }
   getDico() {

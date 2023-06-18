@@ -17,12 +17,11 @@
   </div>
 
   <table
-    id="table table-responsive-sm"
+    id="table table-responsive"
     *ngIf="expertSearchResult?.length! > 0; else noData"
   >
     <thead>
       <tr>
-        <th></th>
         <th>Expert</th>
         <th>Group</th>
         <th>Territory</th>
@@ -43,14 +42,9 @@
     </thead>
     <tbody *ngIf="expertSearchResult?.length! > 0; else noData">
       <tr
-        *ngFor="let expert of expertSearchResult"
-        (click)="highlightRow($event)"
+        *ngFor="let expert of expertSearchResult; trackBy: trackExpertById"
+        (click)="highlightRow($event); showExpertCompanies(expert)"
       >
-        <td>
-          <span class="material-icons" (click)="showExpertCompanies(expert)"
-            >arrow_circle_down</span
-          >
-        </td>
         <td>{{ expert.expertName }}</td>
         <td>
           <select

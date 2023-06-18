@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_domain_configuration || "dico_domain_configuration" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_domain_configuration || "dico_domain_configuration" }}
+</h3>
 
 <div class="admin-container container-fluid" style="height: 250px">
   <div class="user-inputs">
@@ -12,7 +14,9 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddDomainDialog()">{{ dico?.dico_add_domain || "dico_add_domain" }}</button>
+      <button type="button" (click)="openAddDomainDialog()">
+        {{ dico?.dico_add_domain || "dico_add_domain" }}
+      </button>
       <button type="button" (click)="updateDomain()" style="margin-left: 8px">
         {{ dico?.dico_Update || "dico_Update" }}
       </button>
@@ -40,7 +44,7 @@
       (click)="highlightRow($event)"
     >
       <tr
-        *ngFor="let domain of domainData"
+        *ngFor="let domain of domainData; trackBy: trackDomainById"
         (click)="getDomainValuesData(domain.id!, domain)"
       >
         <td>{{ domain.id }}</td>
@@ -71,13 +75,15 @@
           />
         </td>
         <td>
-          <mat-icon (click)="deleteResource(domain.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
+          <mat-icon (click)="deleteResource(domain.id!)">delete</mat-icon>
         </td>
       </tr>
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
       </tr>
     </ng-template>
   </table>

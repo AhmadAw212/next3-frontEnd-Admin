@@ -46,7 +46,9 @@ export class CarProductsComponent implements OnInit {
     this.getProductsTypes();
     this.getDico();
   }
-
+  trackProductById(index: number, product: CarProducts) {
+    return product.id;
+  }
   getDico() {
     this.isLoading = true;
     this.dicoService.getDico();

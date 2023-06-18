@@ -33,7 +33,7 @@
             *ngIf="carInfo?.length! > 0; else noData"
             (click)="highlightRow($event)"
           >
-            <tr *ngFor="let carInfo of carInfo">
+            <tr *ngFor="let carInfo of carInfo; trackBy: trackInfoById">
               <td>{{ carInfo.id }}</td>
               <td
                 contenteditable="true"

@@ -49,7 +49,9 @@ export class CarsSupplierComponent implements OnInit {
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
-
+  trackSupplierById(index: number, supplier: CarSupplier) {
+    return supplier.id;
+  }
   showSuppList(selectedSupplier: CarSupplier) {
     this.selectedSupplier = selectedSupplier;
     this.showMoreInfo = true;
@@ -152,7 +154,7 @@ export class CarsSupplierComponent implements OnInit {
     });
   }
   openAddSupplierDialog() {
-    this.dialog.open(AddCarSupplierComponent, {
+    const dialogRef = this.dialog.open(AddCarSupplierComponent, {
       data: {
         types: this.suppType,
         company: this.company,
@@ -160,6 +162,9 @@ export class CarsSupplierComponent implements OnInit {
       },
       width: '350px',
       maxHeight: '600px',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.searchCarSupplier();
     });
   }
 }

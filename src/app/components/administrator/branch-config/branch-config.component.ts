@@ -46,13 +46,15 @@ export class BranchConfigComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    this.isLoading = true;
+    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
   }
-
+  trackBranchById(index: number, branch: Branch) {
+    return branch.id;
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

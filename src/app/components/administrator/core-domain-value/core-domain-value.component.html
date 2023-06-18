@@ -39,7 +39,6 @@
       <th>VAL9</th>
       <th>VAL10</th>
       <th>VAL11</th>
-      <th>CORE_DOMAIN_ID</th>
       <th>SYS_CREATED_DATE</th>
       <th>SYS_CREATED_BY</th>
       <th>SYS_UPDATED_DATE</th>
@@ -52,7 +51,7 @@
     *ngIf="domainValues?.length! > 0; else noData"
     (click)="highlightRow($event)"
   >
-    <tr *ngFor="let domain of domainValues">
+    <tr *ngFor="let domain of domainValues; trackBy: trackDomainById">
       <td>{{ domain.id }}</td>
       <td contenteditable="true" (blur)="onTdBlur($event, domain, 'code')">
         {{ domain.code }}
@@ -96,9 +95,7 @@
       <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val11')">
         {{ domain.val11 }}
       </td>
-      <td>
-        {{ domain.coreDomainId }}
-      </td>
+
       <td>{{ domain.sysCreatedDate | date : reportDateTimeFormat }}</td>
       <td>{{ domain.sysCreatedBy }}</td>
       <td>{{ domain.sysUpdatedDate | date : reportDateTimeFormat }}</td>

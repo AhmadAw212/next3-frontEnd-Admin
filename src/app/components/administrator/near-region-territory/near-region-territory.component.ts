@@ -40,6 +40,9 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.getRegionTerritory();
     this.dateFormatterService();
   }
+  trackNearTerritoryById(index: number, territory: NearRegionTerritory) {
+    return territory.id;
+  }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {

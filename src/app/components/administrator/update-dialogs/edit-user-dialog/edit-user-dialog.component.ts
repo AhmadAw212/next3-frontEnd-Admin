@@ -24,6 +24,8 @@ export class EditUserDialogComponent implements OnInit {
   selectedBranchId?: string;
   isDisabled = true;
   editor!: Editor;
+  isLoading?: boolean = false;
+  dico: any;
   constructor(
     private dataService: DataServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,6 +42,21 @@ export class EditUserDialogComponent implements OnInit {
     return html?.replace(/<[^>]+>/g, '');
   }
 
+  getDico() {
+    const language = localStorage.getItem('selectedLanguage')!;
+    this.dataService.Dico(language).subscribe({
+      next: (language) => {
+        this.dico = language.data;
+        // console.log(language);
+      },
+      error: (err) => {
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+        }
+      },
+    });
+  }
   editUserForm() {
     this.editForm = this.fb.group({
       userName: [
@@ -101,6 +118,7 @@ export class EditUserDialogComponent implements OnInit {
     this.companyBranchService.getCompanyId();
     this.companyBranchService.getBranchId(this.usersInfo.companyId);
     this.editUserForm();
+    this.getDico();
     this.editor = new Editor();
   }
 

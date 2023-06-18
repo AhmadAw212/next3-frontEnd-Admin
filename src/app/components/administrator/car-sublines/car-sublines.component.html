@@ -70,7 +70,7 @@
         *ngIf="carSubline?.length! > 0; else noData"
         (click)="highlightRow($event)"
       >
-        <tr *ngFor="let subline of carSubline">
+        <tr *ngFor="let subline of carSubline; trackBy: trackSublineById">
           <td>{{ subline.id }}</td>
           <td contenteditable="true" (blur)="onTdBlur($event, subline, 'code')">
             {{ subline.code }}

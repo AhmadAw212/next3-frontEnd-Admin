@@ -46,7 +46,9 @@ export class CarsReportListComponent implements OnInit {
       this.dico = data;
     });
   }
-
+  trackReportListById(index: number, report: CarsReportList) {
+    return report.id;
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

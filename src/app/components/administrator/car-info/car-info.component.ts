@@ -49,6 +49,9 @@ export class CarInfoComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
+  trackInfoById(index: number, brand: CarInfo) {
+    return brand.id;
+  }
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
     const clickedRow = clickedElement.closest('tr');

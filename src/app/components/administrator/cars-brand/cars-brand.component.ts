@@ -53,7 +53,9 @@ export class CarsBrandComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
-
+  trackBrandById(index: number, brand: CarsBrand) {
+    return brand.carBrandId;
+  }
   // showTrademarkList() {}
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;

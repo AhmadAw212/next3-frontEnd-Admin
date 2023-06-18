@@ -50,6 +50,9 @@ export class CarsClientComponent implements OnInit {
     this.getGenderList();
     this.getDico();
   }
+  trackClientById(index: number, client: CarClients) {
+    return client.id;
+  }
   getDico() {
     this.isLoading = true;
     this.dicoService.getDico();
@@ -204,7 +207,7 @@ export class CarsClientComponent implements OnInit {
         });
       }
 
-      console.log(updatedCarClientVal);
+      // console.log(updatedCarClientVal);
     }
   }
   updateCarClient() {

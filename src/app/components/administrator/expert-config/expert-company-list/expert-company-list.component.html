@@ -27,7 +27,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let exptCompany of expertCompanies">
+      <tr
+        *ngFor="
+          let exptCompany of expertCompanies;
+          trackBy: trackExpCompanyeById
+        "
+      >
         <td>
           <select
             class="select-class"

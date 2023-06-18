@@ -61,19 +61,14 @@
             <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th>
+          
           </tr>
         </thead>
         <tbody *ngIf="carSupplier?.length! > 0; else noData">
           <tr
-            *ngFor="let supplier of carSupplier"
-            (click)="highlightRow($event)"
+            *ngFor="let supplier of carSupplier; trackBy: trackSupplierById"
+            (click)="highlightRow($event); showSuppList(supplier)"
           >
-            <td>
-              <span class="material-icons" (click)="showSuppList(supplier)"
-                >arrow_circle_down</span
-              >
-            </td>
-
             <td>{{ supplier.fullName }}</td>
             <td>
               <select
