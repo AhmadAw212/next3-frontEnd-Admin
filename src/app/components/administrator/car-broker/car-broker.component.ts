@@ -41,7 +41,6 @@ export class CarBrokerComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
