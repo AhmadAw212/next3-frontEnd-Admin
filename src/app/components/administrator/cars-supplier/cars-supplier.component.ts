@@ -9,6 +9,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarSupplierComponent } from '../add-dialogs/add-car-supplier/add-car-supplier.component';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-cars-supplier',
@@ -28,13 +29,15 @@ export class CarsSupplierComponent implements OnInit {
   suppGrade?: type[];
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dialog: MatDialog,
-    private loadingService: LoadingServiceService
+    private loadingService: LoadingServiceService,
+    private dicoService: DicoServiceService
   ) {}
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
@@ -58,8 +61,15 @@ export class CarsSupplierComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getSupplierGrade();
+    this.getDico();
   }
-
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

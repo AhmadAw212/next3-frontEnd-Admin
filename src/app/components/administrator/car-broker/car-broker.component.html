@@ -1,6 +1,6 @@
-<h3 class="h3-header">Broker Configuration</h3>
+<h3 class="h3-header">{{ dico?.dico_broker_configuration || "dico_broker_configuration" }}</h3>
 <div class="select-container">
-  <span>Company:</span>
+  <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
     id="bodyTypeNew"
     name="bodyTypeNew"
@@ -20,10 +20,10 @@
     <app-spinner *ngIf="isLoading"></app-spinner>
     <div class="user-inputs">
       <form (ngSubmit)="searchCarBroker()">
-        <label for="number">Number:</label>
+        <label for="number">{{ dico?.dico_number || "dico_number" }}:</label>
         <input type="text" id="number" name="number" [(ngModel)]="number" />
 
-        <label for="description">Description:</label>
+        <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
         <input
           type="text"
           id="description"
@@ -31,14 +31,14 @@
           [(ngModel)]="description"
         />
 
-        <button type="submit">Search</button>
+        <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="openAddBrokerDialog()">
-          Add Broker
+          {{ dico?.dico_add_broker || "dico_add_broker" }}
         </button>
         <button type="button" style="margin-left: 8px" (click)="updateBroker()">
-          Update Broker
+          {{ dico?.dico_update_broker || "dico_update_broker" }}
         </button>
       </div>
     </div>
@@ -46,20 +46,20 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>number</th>
-          <th>Description</th>
-          <th>description2</th>
-          <th>contactInfo</th>
-          <th>email</th>
-          <th>telephone</th>
-          <th>reference</th>
-          <th>BROKER_REFFERAL</th>
-          <th>BROKER_REFFERAL_NOTE</th>
-          <th>sysCreatedDate</th>
-          <th>sysCreatedBy</th>
-          <th>sysUpdatedDate</th>
-          <th>sysUpdatedBy</th>
+          <th>{{ dico?.dico_id || "dico_id" }}</th>
+          <th>{{ dico?.dico_number || "dico_number" }}</th>
+          <th>{{ dico?.dico_description || "dico_description" }}</th>
+          <th>{{ dico?.dico_description2 || "dico_description2" }}</th>
+          <th>{{ dico?.dico_contact_info || "dico_contact_info" }}</th>
+          <th>{{ dico?.dico_email || "dico_email" }}</th>
+          <th>{{ dico?.dico_home_phone || "dico_home_phone" }}</th>
+          <th>{{ dico?.dico_reference || "dico_reference" }}</th>
+          <th>{{ dico?.dico_refferal || "dico_refferal" }}</th>
+          <th>{{ dico?.dico_refferal_note || "didico_refferal_noteco_car_brand" }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
           <th></th>
         </tr>
       </thead>
@@ -132,7 +132,7 @@
       </tbody>
       <ng-template #noData>
         <tr>
-          <td colspan="5">No data to display</td>
+          <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
         </tr>
       </ng-template>
     </table>

@@ -5,6 +5,7 @@ import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-town-territory',
@@ -20,17 +21,28 @@ export class TownTerritoryComponent implements OnInit {
   description?: string = '';
   townTerritory?: type[];
   showNearTerr?: boolean = false;
+  dico?: any;
 
   selectedRegion?: type;
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
+    this.getDico();
   }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
   showNearTerritory(selectedRegion: type) {
     this.selectedRegion = selectedRegion;
 

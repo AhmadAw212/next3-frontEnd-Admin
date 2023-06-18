@@ -1,10 +1,10 @@
-<h3 class="h3-header">Expert Configuration</h3>
+<h3 class="h3-header">{{ dico?.dico_expert_config || "dico_expert_config" }}</h3>
 <div class="admin-container container-fluid" style="height: 150px">
   <div class="form-container">
     <form (ngSubmit)="expertSearch()">
       <div class="form-row">
         <div class="form-field">
-          <label>Supplier Name:</label>
+          <label>{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label>
           <ng-select
             appendTo="body"
             name="supplierName"
@@ -18,7 +18,7 @@
           </ng-select>
         </div>
         <div class="form-field">
-          <label for="group">Group:</label>
+          <label for="group">{{ dico?.dico_group || "dico_group" }}:</label>
           <select name="group" id="group" [(ngModel)]="group">
             <option *ngFor="let group of expGroup" [value]="group.code">
               {{ group.description }}
@@ -26,7 +26,7 @@
           </select>
         </div>
         <div class="form-field">
-          <label>Bodily Injuries:</label>
+          <label>{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label>
           <select
             name="bodilyInjury"
             id="bodilyInjury"
@@ -38,7 +38,7 @@
           </select>
         </div>
         <div class="form-field">
-          <label for="vip">VIP:</label>
+          <label for="vip">{{ dico?.dico_vip || "dico_vip" }}:</label>
           <select name="vip" id="vip" [(ngModel)]="vipCode">
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
@@ -46,7 +46,7 @@
           </select>
         </div>
         <div class="form-field">
-          <label for="exclusive">Exclusive:</label>
+          <label for="exclusive">{{ dico?.dico_exclusive || "dico_exclusive" }}:</label>
           <select name="exclusive" id="exclusive" [(ngModel)]="exclusiveCode">
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
@@ -54,7 +54,7 @@
           </select>
         </div>
         <div class="form-field">
-          <label for="insurance">Insurance:</label>
+          <label for="insurance">{{ dico?.dico_insurance || "dico_insurance" }}:</label>
           <select
             id="insurance"
             name="insurance"
@@ -71,7 +71,7 @@
           </select>
         </div>
         <div class="form-field">
-          <label>Territory:</label>
+          <label>{{ dico?.dico_territory || "dico_territory" }}:</label>
           <ng-select
             appendTo="body"
             name="territory"
@@ -87,17 +87,17 @@
           </ng-select>
         </div>
         <div class="form-field">
-          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="submit" class="btn btn-primary">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
         </div>
       </div>
     </form>
   </div>
 
   <div class="disabled-inputs">
-    <label>Supplier Info</label>
+    <label>{{ dico?.dico_supplier_details || "dico_supplier_details" }}</label>
 
     <div class="form-field">
-      <label for="fullName">Full Name:</label>
+      <label for="fullName">{{ dico?.dico__full_name || "dico__full_name" }}:</label>
       <input
         type="text"
         id="fullName"
@@ -108,7 +108,7 @@
     </div>
 
     <div class="form-field">
-      <label>Father Name:</label>
+      <label>{{ dico?.dico_father_name || "dico_father_name" }}:</label>
       <input
         type="text"
         id="fatherName "
@@ -119,7 +119,7 @@
     </div>
 
     <div class="form-field">
-      <label for="prefixFamily">Prefix Family:</label>
+      <label for="prefixFamily">{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label>
       <input
         type="text"
         id="prefixFamily"
@@ -130,7 +130,7 @@
     </div>
 
     <div class="form-field">
-      <label for="familyName">Family Name:</label>
+      <label for="familyName">{{ dico?.dico_family_name || "dico_family_name" }}:</label>
       <input
         type="text"
         id="familyName"
@@ -141,7 +141,7 @@
     </div>
 
     <div class="form-field">
-      <label for="arabicName">Arabic Name:</label>
+      <label for="arabicName">{{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label>
       <input
         type="text"
         id="arabicName"
@@ -152,7 +152,7 @@
     </div>
 
     <div class="form-field">
-      <label for="mobilePhone">Mobile Phone:</label>
+      <label for="mobilePhone">{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label>
       <input
         type="text"
         id="mobilePhone"
@@ -162,7 +162,7 @@
     </div>
 
     <div class="form-field">
-      <label for="sms">SMS:</label>
+      <label for="sms">{{ dico?.dico_sms || "dico_sms" }}:</label>
       <input
         type="checkbox"
         id="sms"

@@ -1,25 +1,25 @@
-<h3 class="h3-header">Cars Report List</h3>
+<h3 class="h3-header">{{ dico?.dico_cars_report_list || "dico_cars_report_list" }}</h3>
 <div class="admin-container container-fluid">
   <div class="user-inputs">
     <form (ngSubmit)="searchCarReport()">
-      <label for="role">Role:</label>
+      <label for="role">{{ dico?.dico_role || "dico_role" }}:</label>
       <input type="text" id="role" name="role" [(ngModel)]="role" />
 
-      <label for="sql">SQL:</label>
+      <label for="sql">{{ dico?.dico_sql || "dico_sql" }}:</label>
       <input type="text" id="sql" name="sql" [(ngModel)]="sql" />
 
-      <button type="submit">Search</button>
+      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
       <button type="button" (click)="openAddReportListDialog()">
-        Add Report
+        {{ dico?.dico_add_report || "dico_add_report" }}
       </button>
       <button
         type="button"
         style="margin-left: 8px"
         (click)="updateReportList()"
       >
-        Update ReportList
+        {{ dico?.dico_update_report_list || "dico_update_report_list" }}
       </button>
     </div>
   </div>
@@ -28,22 +28,22 @@
       <table class="sql-table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Report</th>
-            <th>Role</th>
-            <th>SQL</th>
-            <th>Sheet</th>
-            <th>Order</th>
-            <th>File</th>
-            <th>File_Extension</th>
-            <th>Directory</th>
-            <th>Email</th>
-            <th>Email_Done</th>
-            <th>Notes</th>
-            <th>sysCreatedDate</th>
-            <th>sysCreatedBy</th>
-            <th>sysUpdatedDate</th>
-            <th>sysUpdatedBy</th>
+            <th>{{ dico?.dico_id || "dico_id" }}</th>
+            <th>{{ dico?.dico_report || "dico_report" }}</th>
+            <th>{{ dico?.dico_role || "dico_role" }}</th>
+            <th>{{ dico?.dico_sql || "dico_sql" }}</th>
+            <th>{{ dico?.dico_sheet || "dico_sheet" }}</th>
+            <th>{{ dico?.dico_order || "dico_order" }}</th>
+            <th>{{ dico?.dico_file || "dico_file" }}</th>
+            <th>{{ dico?.dco_file_extension || "dco_file_extension" }}</th>
+            <th>{{ dico?.dico_directory || "dico_directory" }}</th>
+            <th>{{ dico?.dico_email || "dico_email" }}</th>
+            <th>{{ dico?.dico_email_done || "dico_email_done" }}</th>
+            <th>{{ dico?.dico_notes || "dico_notes" }}</th>
+            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
           </tr>
         </thead>
@@ -125,14 +125,14 @@
             <td>{{ report.sysUpdatedBy }}</td>
             <td>
               <mat-icon (click)="deleteCarReportList(report.id!)"
-                >delete</mat-icon
+                >{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon
               >
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">No data to display</td>
+            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
           </tr>
         </ng-template>
       </table>

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddBrokerComponent } from '../add-dialogs/add-broker/add-broker.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-car-broker',
@@ -23,18 +24,28 @@ export class CarBrokerComponent implements OnInit {
   brokers: CarBroker[] = [];
   updatedBroker?: CarBroker[] = [];
   reportDateTimeFormat?: string;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
 
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddReportListComponent } from '../add-dialogs/add-report-list/add-report-list.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-cars-report-list',
@@ -21,16 +22,29 @@ export class CarsReportListComponent implements OnInit {
   reportDateTimeFormat?: string;
   updateCarReportList: CarsReportList[] = [];
   selectedRow!: HTMLElement;
+  isLoading: boolean = false;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
+
   ) {}
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+    
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   dateFormatterService() {

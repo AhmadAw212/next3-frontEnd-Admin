@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddBranchComponent } from '../add-dialogs/add-branch/add-branch.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-branch-config',
@@ -22,13 +23,15 @@ export class BranchConfigComponent implements OnInit {
   description?: string = '';
   isLoading?: boolean = false;
   reportDateTimeFormat?: string;
+  dico?: any;
   updatedBranch?: Branch[] = [];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   dateFormatterService() {
@@ -40,7 +43,16 @@ export class BranchConfigComponent implements OnInit {
     this.getCompaniesPerUser();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
   }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

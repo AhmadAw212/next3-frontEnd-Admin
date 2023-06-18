@@ -5,6 +5,7 @@ import { CarSupplier } from 'src/app/model/car-supplier';
 import { type } from 'src/app/model/type';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../add-dialogs/add-expert/add-expert.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-expert-config',
@@ -36,13 +37,26 @@ export class ExpertConfigComponent implements OnInit {
   expertSearchResult?: CarExpert[];
   showExpertResult: boolean = false;
   private searchTimer: any;
-  constructor(private dataService: DataServiceService) {}
+  isLoading: boolean = false;
+  dico?: any;
+  constructor(private dataService: DataServiceService,
+    private dicoService: DicoServiceService
+    ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
     // this.getSupplierExpert();
     this.getDomainYN();
     this.getExpGroup();
+    this.getDico();
+
+  }
+  getDico() {
+    this.isLoading = true;
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   // onSearch(searchTerm: any): void {
   //   console.log('Search term:', searchTerm.term);
