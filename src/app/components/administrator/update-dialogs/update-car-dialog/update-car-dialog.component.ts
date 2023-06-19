@@ -28,19 +28,15 @@ export class UpdateCarDialogComponent {
     private authService: AuthService,
     private dialogRef: MatDialogRef<UpdateCarDialogComponent>,
     private dicoService: DicoServiceService
-    
-  )
-   {
+  ) {
     console.log(car);
     this.code = car.carBrandCode;
     this.description = car.carBrandDescription;
   }
   ngOnInit(): void {
- 
     this.getDico();
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -58,11 +54,14 @@ export class UpdateCarDialogComponent {
         next: (res) => {
           this.dialogRef.close();
           this.alertifyService.success(res.title!);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);
         },
       });
+  }
+  onCancel() {
+    this.dialog.closeAll();
   }
 }

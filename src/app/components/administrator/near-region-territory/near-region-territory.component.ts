@@ -91,7 +91,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
         id: region.id,
         priority: region.priority,
       });
-      console.log(this.updatedRegion);
+      // console.log(this.updatedRegion);
     }
   }
   updateNearRegion() {

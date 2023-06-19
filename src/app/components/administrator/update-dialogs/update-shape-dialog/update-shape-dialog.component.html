@@ -42,7 +42,11 @@
         <button class="dialog-button save-button" type="submit">
           {{ dico?.dico_save || "dico_save" }}
         </button>
-        <button class="dialog-button cancel-button" type="button">
+        <button
+          class="dialog-button cancel-button"
+          type="button"
+          (click)="onCancel()"
+        >
           {{ dico?.dico_cancel || "dico_cancel" }}
         </button>
       </div>

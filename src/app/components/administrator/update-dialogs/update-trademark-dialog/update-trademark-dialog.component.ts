@@ -64,4 +64,7 @@ export class UpdateTrademarkDialogComponent implements OnInit {
         },
       });
   }
+  onCancel() {
+    this.dialogRef.close();
+  }
 }

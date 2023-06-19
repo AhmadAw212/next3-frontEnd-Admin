@@ -63,4 +63,7 @@ export class UpdateShapeDialogComponent implements OnInit {
         },
       });
   }
+  onCancel() {
+    this.dialogRef.close();
+  }
 }

@@ -45,11 +45,9 @@ export class UpdateCarCoverComponent {
     console.log(this.type);
   }
   ngOnInit(): void {
-  
     this.getDico();
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -76,5 +74,8 @@ export class UpdateCarCoverComponent {
         }
       },
     });
+  }
+  onCancel() {
+    this.dialog.closeAll();
   }
 }
