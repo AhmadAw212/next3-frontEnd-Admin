@@ -1,10 +1,10 @@
-<h2 style="margin: 10px; font-size: large">Add Car Cover</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_add_car_cover || "dico_add_car_cover" }}</h2>
 <div class="dialog">
   <form (ngSubmit)="addCarCover()">
-    <label for="code"> Code:</label>
+    <label for="code"> {{ dico?.dico_code || "dico_code" }}:</label>
     <input type="text" id="code" name="code" required [(ngModel)]="code" />
 
-    <label for="description"> Description:</label>
+    <label for="description"> {{ dico?.dico_description || "dico_description" }}:</label>
     <input
       type="text"
       id="description"
@@ -13,7 +13,7 @@
       [(ngModel)]="description"
     />
 
-    <label for="type">Type</label>
+    <label for="type">{{ dico?.dico_type || "dico_type" }}</label>
     <select
       id="bodyTypeNew"
       name="bodyTypeNew"
@@ -25,6 +25,6 @@
       </option>
     </select>
 
-    <button type="submit">Save</button>
+    <button type="submit">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>

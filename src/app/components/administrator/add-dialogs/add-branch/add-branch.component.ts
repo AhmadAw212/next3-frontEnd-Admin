@@ -5,6 +5,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddCarCoverComponent } from '../add-car-cover/add-car-cover.component';
 import { Branch } from 'src/app/model/branch';
 import { AuthService } from 'src/app/services/auth.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-branch',
@@ -18,13 +19,15 @@ export class AddBranchComponent implements OnInit {
   insuranceId?: string;
   address1?: string;
   address2?: string;
+  dico?: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddCarCoverComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     console.log(data);
     this.insuranceId = data;
@@ -32,8 +35,15 @@ export class AddBranchComponent implements OnInit {
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
+    this.getDico();
   }
-
+  getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   addBranch() {
     const branch: Branch = {
       code: this.code,

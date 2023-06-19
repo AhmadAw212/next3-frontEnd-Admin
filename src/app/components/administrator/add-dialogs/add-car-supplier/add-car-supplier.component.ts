@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-car-supplier',
@@ -18,13 +19,15 @@ export class AddCarSupplierComponent implements OnInit {
   addressLov?: type[];
   addressName?: string = '';
   carSupplierForm!: FormGroup;
+  dico?: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
     private alertifyService: AlertifyService,
-    private dialogRef: MatDialogRef<AddCarSupplierComponent>
+    private dialogRef: MatDialogRef<AddCarSupplierComponent>,
+    private dicoService: DicoServiceService
   ) {
     this.supplierType = this.data.types;
     this.supplierGrade = this.data.grades;
@@ -35,8 +38,15 @@ export class AddCarSupplierComponent implements OnInit {
     this.buildForm();
     this.getTitleLov();
     this.getAddressLov();
+    this.getDico();
   }
-
+  getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   buildForm(): void {
     this.carSupplierForm = this.formBuilder.group({
       id: ['', Validators.required],

@@ -1,10 +1,10 @@
-<h2 style="margin: 10px; font-size: large">Add Branch</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_add_branch || "dico_add_branch" }}</h2>
 <div class="dialog">
   <form (ngSubmit)="addBranch()">
-    <label for="code"> Code:</label>
+    <label for="code"> {{ dico?.dico_code || "dico_code" }}:</label>
     <input type="text" id="code" name="code" required [(ngModel)]="code" />
 
-    <label for="description"> Description:</label>
+    <label for="description"> {{ dico?.dico_description || "dico_description" }}:</label>
     <input
       type="text"
       id="description"
@@ -12,7 +12,7 @@
       required
       [(ngModel)]="description"
     />
-    <label for="arabic_description"> arabic_description:</label>
+    <label for="arabic_description"> {{ dico?.dico_part_arabic_description || "dico_part_arabic_description" }}:</label>
     <input
       type="text"
       id="arabic_description"
@@ -21,7 +21,7 @@
       [(ngModel)]="arabic_description"
     />
 
-    <label for="address1"> address1:</label>
+    <label for="address1"> {{ dico?.dico_address1 || "dico_address1" }}:</label>
     <input
       type="text"
       id="address1"
@@ -29,7 +29,7 @@
       required
       [(ngModel)]="address1"
     />
-    <label for="address2"> address2:</label>
+    <label for="address2"> {{ dico?.dico_address2 || "dico_address2" }}:</label>
     <input
       type="text"
       id="address2"
@@ -38,6 +38,6 @@
       [(ngModel)]="address2"
     />
 
-    <button type="submit">Save</button>
+    <button type="submit">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>

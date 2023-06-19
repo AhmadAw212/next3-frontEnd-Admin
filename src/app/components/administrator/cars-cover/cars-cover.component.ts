@@ -52,7 +52,7 @@ export class CarsCoverComponent implements OnInit {
     return brand.id;
   }
   getDico() {
-    this.isLoading = true;
+    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;

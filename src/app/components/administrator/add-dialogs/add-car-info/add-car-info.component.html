@@ -1,7 +1,7 @@
-<h2 style="margin: 10px; font-size: large">Add Car Info</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_Add_Car_Info || "dico_Add_Car_Info" }}</h2>
 <div class="dialog">
   <form (ngSubmit)="addCarInfo()">
-    <label for="bodyTypeCode">Body Type Code:</label>
+    <label for="bodyTypeCode">{{ dico?.dico_body_type_code || "dico_body_type_code" }}:</label>
     <input
       type="text"
       id="bodyTypeCode"
@@ -10,7 +10,7 @@
       required
     />
 
-    <label for="fromYear">From Year:</label>
+    <label for="fromYear">{{ dico?.dico_from_year || "dico_from_year" }}:</label>
     <input
       type="text"
       id="fromYear"
@@ -20,7 +20,7 @@
       pattern="[0-9]+"
     />
 
-    <label for="toYear">To Year:</label>
+    <label for="toYear">{{ dico?.dico_to_year || "dico_to_year" }}:</label>
     <input
       type="text"
       id="toYear"
@@ -30,21 +30,21 @@
       pattern="[0-9]+"
     />
 
-    <label for="Doors">Doors:</label>
+    <label for="Doors">{{ dico?.dico_doors || "dico_doors" }}:</label>
     <select id="door" name="door" [(ngModel)]="door" required>
       <option *ngFor="let door of doors" [value]="door.code">
         {{ door.description }}
       </option>
     </select>
 
-    <label for="size">Size:</label>
+    <label for="size">{{ dico?.dico_size || "dico_size" }}:</label>
     <select id="size" name="size" [(ngModel)]="size" required>
       <option *ngFor="let size of vehicleSize" [value]="size.code">
         {{ size.description }}
       </option>
     </select>
 
-    <label for="bodyTypeNew">Body Type New:</label>
+    <label for="bodyTypeNew">{{ dico?.dico_Body_Type_New || "dico_Body_Type_New" }}:</label>
     <select
       id="bodyTypeNew"
       name="bodyTypeNew"
@@ -56,7 +56,7 @@
       </option>
     </select>
 
-    <label for="bodyTypeOld">Body Type Old:</label>
+    <label for="bodyTypeOld">{{ dico?.dico_body_type_old || "dico_body_type_old" }}:</label>
     <select
       id="bodyTypeOld"
       name="bodyTypeOld"
@@ -67,6 +67,6 @@
         {{ bodyType.description }}
       </option>
     </select>
-    <button type="submit">Save</button>
+    <button type="submit">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>

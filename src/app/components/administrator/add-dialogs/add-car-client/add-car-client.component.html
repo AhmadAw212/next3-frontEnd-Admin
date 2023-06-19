@@ -1,7 +1,7 @@
-<h2 style="margin: 10px; font-size: large">Add Client</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_add_client || "dico_add_client" }}</h2>
 <div class="dialog">
   <form [formGroup]="form" (ngSubmit)="addCarClient()">
-    <label for="num1">NUM_1:</label>
+    <label for="num1">{{ dico?.dico_num_1 || "dico_num_1" }}:</label>
     <input
       type="text"
       id="num1"
@@ -18,13 +18,13 @@
       "
     >
       <div *ngIf="formControl['num1']?.errors?.['required']">
-        num1 is required
+        {{ dico?.dico_num1_is_required || "dico_num1_is_required" }}
       </div>
       <div *ngIf="formControl['num1']?.errors?.['pattern']">
-        number is required
+        {{ dico?.dico_number_is_required || "dico_number_is_required" }}
       </div>
     </div>
-    <label for="num2">NUM_2:</label>
+    <label for="num2">{{ dico?.dico_num_2 || "dico_num_2" }}:</label>
     <input
       type="text"
       id="num2"
@@ -41,13 +41,13 @@
       "
     >
       <div *ngIf="formControl['num2']?.errors?.['required']">
-        num2 is required
+        {{ dico?.dico_num2_is_required || "dico_num2_is_required" }}
       </div>
       <div *ngIf="formControl['num2']?.errors?.['pattern']">
-        number is required
+       {{ dico?.dico_number_is_required || "dico_number_is_required" }}
       </div>
     </div>
-    <label for="firstName">First name:</label>
+    <label for="firstName">{{ dico?.dico_first_name || "dico_first_name" }}:</label>
     <input
       type="text"
       id="firstName"
@@ -64,10 +64,10 @@
       "
     >
       <div *ngIf="formControl['firstName']?.errors?.['required']">
-        firstName is required
+        {{ dico?.dico_first_name_is_required || "dico_first_name_is_required" }}
       </div>
     </div>
-    <label for="lastName">Family name:</label>
+    <label for="lastName">{{ dico?.dico_family_name || "dico_family_name" }}:</label>
     <input
       type="text"
       id="lastName"
@@ -84,10 +84,10 @@
       "
     >
       <div *ngIf="formControl['lastName']?.errors?.['required']">
-        Family Name is required
+        {{ dico?.dico_Family_Name_is_required || "dico_Family_Name_is_required" }}
       </div>
     </div>
-    <label for="fatherName">Father Name:</label>
+    <label for="fatherName">{{ dico?.dico_father_name || "dico_father_name" }}:</label>
     <input
       type="text"
       id="fatherName"
@@ -104,10 +104,10 @@
       "
     >
       <div *ngIf="formControl['fatherName']?.errors?.['required']">
-        father Name is required
+        {{ dico?.dico_father_Name_is_required || "dico_father_Name_is_required" }}
       </div>
     </div>
-    <label for="prefixFamily">Prefix Family:</label>
+    <label for="prefixFamily">{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label>
     <input
       type="text"
       id="prefixFamily"
@@ -125,10 +125,10 @@
       "
     >
       <div *ngIf="formControl['prefixFamily']?.errors?.['required']">
-        Prefix Family is required
+        {{ dico?.dico_Prefix_Family_is_required || "dico_Prefix_Family_is_required" }}
       </div>
     </div>
-    <label for="busPhone">Bus Phone:</label>
+    <label for="busPhone">{{ dico?.dico_bus_phone || "dico_bus_phone" }}:</label>
     <input
       type="text"
       id="busPhone"
@@ -145,10 +145,10 @@
       "
     >
       <div *ngIf="formControl['busPhone']?.errors?.['required']">
-        busPhone is required
+        {{ dico?.dico_bus_Phone_is_required || "dico_bus_Phone_is_required" }}
       </div>
     </div>
-    <label for="mobilePhone">Mobile Phone:</label>
+    <label for="mobilePhone">{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label>
     <input
       type="text"
       id="mobilePhone"
@@ -165,11 +165,11 @@
       "
     >
       <div *ngIf="formControl['mobilePhone']?.errors?.['required']">
-        Mobile Phone is required
+        {{ dico?.dico_Mobile_Phone_is_required || "dico_Mobile_Phone_is_required" }}
       </div>
     </div>
     <!-- dico_title -->
-    <label>Title:</label>
+    <label>{{ dico?.dico_title || "dico_title" }}:</label>
     <select formControlName="titre">
       <option [value]="title.code" *ngFor="let title of titleLov">
         {{ title.description }}
@@ -191,14 +191,14 @@
       "
     >
       <div *ngIf="formControl['titre']?.errors?.['required']">
-        titre is required
+        {{ dico?.dico_titre_is_required || "dico_titre_is_required" }}
       </div>
 
       <div *ngIf="formControl['titre']?.errors?.['maxlength']">
-        maximum length exceeded
+        {{ dico?.dico_maximum_length_exceeded || "dico_maximum_length_exceeded" }}
       </div>
     </div>
-    <label for="gender">Gender:</label>
+    <label for="gender">{{ dico?.dico_gender || "dico_gender" }}:</label>
     <select
       name="gender"
       id="gender"
@@ -218,13 +218,13 @@
       "
     >
       <div *ngIf="formControl['gender']?.errors?.['required']">
-        gender is required
+        {{ dico?.dico_gender_is_required || "dico_gender_is_required" }}
       </div>
       <div *ngIf="formControl['gender']?.errors?.['maxlength']">
-        maximum length exceeded
+        {{ dico?.dico_maximum_length_exceeded || "dico_maximum_length_exceeded" }}
       </div>
     </div>
-    <label for="broker">Broker:</label>
+    <label for="broker">{{ dico?.dico_broker || "dico_broker" }}:</label>
     <input
       type="text"
       id="broker"
@@ -241,13 +241,13 @@
       "
     >
       <div *ngIf="formControl['broker']?.errors?.['required']">
-        broker is required
+        {{ dico?.dico_broker_is_required || "dico_broker_is_required" }}
       </div>
       <div *ngIf="formControl['broker']?.errors?.['pattern']">
-        number is required
+        {{ dico?.dico_number_is_required || "dico_number_is_required" }}
       </div>
     </div>
-    <label for="indic1">INDIC1:</label>
+    <label for="indic1">{{ dico?.dico_indic1 || "dico_indic1" }}:</label>
     <input
       type="text"
       id="indic1"
@@ -264,13 +264,13 @@
       "
     >
       <div *ngIf="formControl['indic1']?.errors?.['required']">
-        indic1 is required
+        {{ dico?.dico_indic1_is_required || "dico_indic1_is_required" }}
       </div>
       <div *ngIf="formControl['indic1']?.errors?.['pattern']">
-        number is required
+        {{ dico?.dico_number_is_required || "dico_number_is_required" }}
       </div>
     </div>
-    <label for="indic2">INDIC2:</label>
+    <label for="indic2">{{ dico?.dico_indic2 || "dico_indic2" }}:</label>
     <input
       type="text"
       id="indic2"
@@ -287,13 +287,13 @@
       "
     >
       <div *ngIf="formControl['indic2']?.errors?.['required']">
-        indic2 is required
+        {{ dico?.dico_indic2_is_required || "dico_indic2_is_required" }}
       </div>
       <div *ngIf="formControl['indic2']?.errors?.['pattern']">
-        number is required
+        {{ dico?.dico_number_is_required || "dico_number_is_required" }}
       </div>
     </div>
-    <label for="vip">VIP:</label>
+    <label for="vip">{{ dico?.dico_vip || "dico_vip" }}:</label>
     <input
       type="text"
       id="vip"
@@ -310,10 +310,10 @@
       "
     >
       <div *ngIf="formControl['clientVip']?.errors?.['required']">
-        clientVip is required
+        {{ dico?.dico_Client_Vip_is_required || "dico_Client_Vip_is_required" }}
       </div>
     </div>
-    <label for="description">Description:</label>
+    <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
     <input
       type="text"
       id="description"
@@ -330,7 +330,7 @@
       "
     >
       <div *ngIf="formControl['description']?.errors?.['required']">
-        description is required
+        {{ dico?.dico_description_is_required || "dico_description_is_required" }}
       </div>
     </div>
     <button
@@ -338,7 +338,7 @@
       [disabled]="!form.valid"
       [ngClass]="{ 'disabled-button': !form.valid }"
     >
-      Save
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
     </button>
   </form>
 </div>

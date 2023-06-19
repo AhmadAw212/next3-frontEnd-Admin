@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-car-client',
@@ -15,13 +16,15 @@ export class AddCarClientComponent implements OnInit {
   insuranceId!: string;
   titleLov?: any;
   genderList?: any;
+  dico?: any;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddCarClientComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     this.insuranceId = this.data.insuranceId;
     this.titleLov = this.data.title;
@@ -47,6 +50,13 @@ export class AddCarClientComponent implements OnInit {
       indic2: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       clientVip: ['', Validators.required],
       description: ['', Validators.required],
+      this:this.getDico(),
+    });
+  }getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
     });
   }
 

@@ -1,15 +1,15 @@
-<h2 style="margin: 10px; font-size: large">Add Broker</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_add_broker || "dico_add_broker" }}</h2>
 <div class="dialog">
   <form [formGroup]="brokerForm" (ngSubmit)="addBroker()">
-    <label for="number">Number:</label>
+    <label for="number">{{ dico?.dico_number || "dico_number" }}:</label>
     <input type="text" id="number" formControlName="number" />
 
-    <label for="description">Description:</label>
+    <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
     <input type="text" id="description" formControlName="description" />
-    <label for="description2">Description2:</label>
+    <label for="description2">{{ dico?.dico_description2 || "dico_description2" }}:</label>
     <input type="text" id="description2" formControlName="description2" />
 
-    <label for="email">Email:</label>
+    <label for="email">{{ dico?.dico_email || "dico_email" }}:</label>
     <input type="text" id="email" formControlName="email" />
     <div
       style="color: red"
@@ -19,20 +19,20 @@
       "
     >
       <div *ngIf="formControl['email']?.errors?.['email']">
-        Email pattern required
+        {{ dico?.dico_email_pattern_required || "dico_email_pattern_required" }}
       </div>
     </div>
-    <label for="contactInfo">Contace Info:</label>
+    <label for="contactInfo">{{ dico?.dico_contact_info || "dico_contact_info" }}:</label>
     <input type="text" id="contactInfo" formControlName="contactInfo" />
-    <label for="telephone">Telephone:</label>
+    <label for="telephone">{{ dico?.dico_home_phone || "dico_home_phone" }}:</label>
     <input type="text" id="telephone" formControlName="telephone" />
-    <label for="reference">Reference:</label>
+    <label for="reference">{{ dico?.dico_reference || "dico_reference" }}:</label>
     <input type="text" id="reference" formControlName="reference" />
-    <label for="referal">Referal:</label>
+    <label for="referal">{{ dico?.dico_referal || "dico_referal" }}:</label>
     <input type="text" id="referal" formControlName="referal" />
-    <label for="referalNote">Referal Note:</label>
+    <label for="referalNote">{{ dico?.dico_referal_note || "dico_referal_note" }}:</label>
     <input type="text" id="referalNote" formControlName="referalNote" />
 
-    <button type="submit" [disabled]="!brokerForm.valid">Save</button>
+    <button type="submit" [disabled]="!brokerForm.valid">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>

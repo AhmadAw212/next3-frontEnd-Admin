@@ -1,13 +1,13 @@
-<h2 style="margin: 10px; font-size: large">Add Approval Type</h2>
+<h2 style="margin: 10px; font-size: large">{{ dico?.dico_add_approval_type || "dico_add_approval_type" }}</h2>
 <div class="dialog">
   <form [formGroup]="carApproval" (ngSubmit)="addApprovaType()">
     <div class="form-group">
-      <label>Application Type:</label>
+      <label>{{ dico?.dico_application_type || "dico_application_type" }}:</label>
       <input type="text" id="number" formControlName="applicationType" />
     </div>
 
     <div class="form-group">
-      <label>App User Id:</label>
+      <label>{{ dico?.dico_app_user_id || "dico_app_user_id" }}:</label>
       <ng-select
         appendTo="body"
         name="appUserId"
@@ -22,7 +22,7 @@
       <!-- <input type="text" id="appUserId" formControlName="appUserId" /> -->
     </div>
     <div class="form-group">
-      <label>Amount To:</label>
+      <label>{{ dico?.dico_amount_to || "dico_amount_to" }}:</label>
       <input type="text" id="amountTo" formControlName="amountTo" />
 
       <div
@@ -33,13 +33,13 @@
         "
       >
         <div *ngIf="formControl['amountTo']?.errors?.['pattern']">
-          number is required
+          {{ dico?.dico_number_is_required || "dico_number_is_required" }}
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Amount From:</label>
+      <label>{{ dico?.dico_amount_from || "dico_amount_from" }}:</label>
       <input type="text" id="amountFrom" formControlName="amountFrom" />
       <div
         style="color: red"
@@ -49,16 +49,16 @@
         "
       >
         <div *ngIf="formControl['amountFrom']?.errors?.['pattern']">
-          number is required
+          {{ dico?.dico_number_is_required || "dico_number_is_required" }}
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Send Email:</label>
+      <label>{{ dico?.dico_send_email || "dico_send_email" }}:</label>
       <input type="checkbox" id="sendEmail" formControlName="sendEmail" />
     </div>
 
-    <button type="submit" [disabled]="!carApproval.valid">Save</button>
+    <button type="submit" [disabled]="!carApproval.valid">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>

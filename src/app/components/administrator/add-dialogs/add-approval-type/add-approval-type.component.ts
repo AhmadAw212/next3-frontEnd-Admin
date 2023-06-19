@@ -5,6 +5,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddBrokerComponent } from '../add-broker/add-broker.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-approval-type',
@@ -15,18 +16,28 @@ export class AddApprovalTypeComponent implements OnInit {
   carApproval!: FormGroup;
   insuranceId?: string;
   userId?: any;
+  dico?: any;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddBrokerComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     this.insuranceId = this.data.insuranceId;
   }
   ngOnInit(): void {
     this.fromApprovalType();
+    this.getDico();
+  }
+  getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   fromApprovalType() {
     this.carApproval = this.formBuilder.group({

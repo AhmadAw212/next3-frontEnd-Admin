@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CarInfo } from 'src/app/model/car-info';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 interface carInfoList {
   code: string;
@@ -28,11 +29,14 @@ export class AddCarInfoComponent {
   bodyTypeOld?: string;
   hp?: number = 0;
   denting?: boolean = true;
+  dico?: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private carInfoData: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dialogRef: MatDialogRef<AddCarInfoComponent>
+    private dialogRef: MatDialogRef<AddCarInfoComponent>,
+    private dicoService: DicoServiceService
   ) {
     console.log(this.carInfoData);
     this.doors = carInfoData.doors;
@@ -40,7 +44,17 @@ export class AddCarInfoComponent {
     this.oldBodyType = carInfoData.oldBodyType;
     this.newBodyType = carInfoData.newBodyType;
   }
-
+  ngOnInit(): void {
+  
+    this.getDico();
+  }
+  getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   addCarInfo() {
     const shapeId = this.carInfoData.selectedShape!;
     const carInfo: CarInfo = {

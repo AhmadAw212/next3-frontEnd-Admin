@@ -9,6 +9,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 interface type {
   code: string;
   description: string;
@@ -24,6 +25,8 @@ export class UpdateCarCoverComponent {
   description?: string;
   types?: type[];
   type?: string;
+  dico?: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<UpdateCarCoverComponent>,
@@ -31,7 +34,8 @@ export class UpdateCarCoverComponent {
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {
     this.selectedCarCover = this.data.carCover;
     this.code = data.carCover.code;
@@ -40,7 +44,17 @@ export class UpdateCarCoverComponent {
     this.type = data.carCover.type;
     console.log(this.type);
   }
-
+  ngOnInit(): void {
+  
+    this.getDico();
+  }
+  getDico() {
+    
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   updateCarCover() {
     const updateCarCover: CarCover = {
       id: this.selectedCarCover?.id,
