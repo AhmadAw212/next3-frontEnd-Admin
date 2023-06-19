@@ -34,7 +34,7 @@
         <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
         <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
         <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-        <th>{{ dico?.dico_active_flag || "dico_active_flag" }}</th>
+        <!-- <th>{{ dico?.dico_active_flag || "dico_active_flag" }}</th> -->
         <th></th>
       </tr>
     </thead>
@@ -67,13 +67,13 @@
         <td>{{ domain.createdBy }}</td>
         <td>{{ domain.updateDate | date : reportDateTimeFormat }}</td>
         <td>{{ domain.updatedBy }}</td>
-        <td>
+        <!-- <td>
           <input
             type="checkbox"
             [(ngModel)]="domain.sysActiveFlag"
             (change)="onCheckboxChange(domain)"
           />
-        </td>
+        </td> -->
         <td>
           <mat-icon (click)="deleteResource(domain.id!)">delete</mat-icon>
         </td>

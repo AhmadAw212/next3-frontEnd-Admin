@@ -17,7 +17,7 @@
     <app-spinner *ngIf="isLoading"></app-spinner>
     <div class="user-inputs">
       <form (ngSubmit)="searchCarAppType()">
-        <button type="submit">{{ dico?.dico_search || "dico_search" }}</button>
+        <button type="submit">{{ dico?.BASIC_REFRESH || "BASIC_REFRESH" }}</button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="addApprovalTypeDialog()">
