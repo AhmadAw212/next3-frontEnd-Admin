@@ -39,13 +39,20 @@ export class ProfilesPageComponent implements OnInit {
     this.dataService.getUserListProfiles().subscribe({
       next: (profiles) => {
         // this.userProfiles = profiles.data;
-        this.userProfiles = profiles.data.map((profile: CoreProfile) => {
-          // console.log(`data:image/jpeg;base64,${profile.logo}`);
-          return {
-            ...profile,
-            logo: `data:image/jpeg;base64,${profile.logo}`,
-          };
-        });
+        this.userProfiles = profiles.data
+          .map((profile: CoreProfile) => {
+            // console.log(`data:image/jpeg;base64,${profile.logo}`);
+            return {
+              ...profile,
+              logo: `data:image/jpeg;base64,${profile.logo}`,
+            };
+          })
+          .filter(
+            (profile: CoreProfile) =>
+              profile.description === 'Administrator' ||
+              profile.description === 'CallCenter'
+          );
+        console.log(this.userProfiles);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
