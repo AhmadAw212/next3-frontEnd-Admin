@@ -50,7 +50,7 @@ export class ProfilesPageComponent implements OnInit {
           .filter(
             (profile: CoreProfile) =>
               profile.description === 'Administrator' ||
-              profile.description === 'CallCenter'
+              profile.description === 'Administrator'
           );
         console.log(this.userProfiles);
       },
