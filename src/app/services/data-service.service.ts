@@ -250,7 +250,6 @@ export class DataServiceService {
   }
 
   addDocument(
-    id: string,
     fileName: string,
     filePath: string,
     contentType: string,
@@ -262,7 +261,7 @@ export class DataServiceService {
 
     const url = `${
       this.userUrl
-    }/core-document/new?id=${id}&fileName=${encodeURIComponent(
+    }/core-document/new?&fileName=${encodeURIComponent(
       fileName
     )}&filePath=${encodeURIComponent(
       filePath

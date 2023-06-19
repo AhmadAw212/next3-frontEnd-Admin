@@ -7,6 +7,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarInfoComponent } from '../add-dialogs/add-car-info/add-car-info.component';
 import { CarShape } from 'src/app/model/car-shape';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 interface carInfoList {
   code: string;
@@ -28,12 +29,14 @@ export class CarInfoComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedCarInfoVal?: CarInfo[] = [];
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,13 @@ export class CarInfoComponent implements OnInit {
     this.getNewBodyType();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {

@@ -54,7 +54,6 @@ export class AddDocumentDialogComponent implements OnInit {
   addDocument() {
     this.dataService
       .addDocument(
-        this.id!,
         this.fileName!,
         this.filePath!,
         this.contentType!,

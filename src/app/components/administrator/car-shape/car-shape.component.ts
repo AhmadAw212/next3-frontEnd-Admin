@@ -9,6 +9,7 @@ import { AddShapeDialogComponent } from '../add-dialogs/add-shape-dialog/add-sha
 import { UpdateShapeDialogComponent } from '../update-dialogs/update-shape-dialog/update-shape-dialog.component';
 import { CarTrademark } from 'src/app/model/car-trademark';
 import { CarInfo } from 'src/app/model/car-info';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-car-shape',
@@ -23,17 +24,26 @@ export class CarShapeComponent implements OnInit {
   reportDateTimeFormat?: string;
   showCarInfo = false;
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   trackShapeById(index: number, brand: CarShape) {
     return brand.carShapeId;

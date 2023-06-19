@@ -1,11 +1,14 @@
 <div class="form-tab">
+  <h3 class="h3-header">{{ dico?.dico_trademark || "dico_trademark" }}</h3>
   <div class="admin-container container-fluid" style="height: 200px">
     <div class="user-inputs">
       <form (ngSubmit)="carTrademarkSearch()">
-        <label for="code">Code:</label>
+        <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
         <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-        <label for="description">Description:</label>
+        <label for="description"
+          >{{ dico?.dico_description || "dico_description" }}:</label
+        >
         <input
           type="text"
           id="description"
@@ -13,11 +16,11 @@
           [(ngModel)]="description"
         />
 
-        <button type="submit">Search</button>
+        <button type="submit">{{ dico?.dico_search || "dico_search" }}</button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="openAddCarTrademarkDialog()">
-          Add Trademark
+          {{ dico?.dico_add || "dico_add" }}
         </button>
       </div>
     </div>
@@ -26,15 +29,19 @@
         <table>
           <thead>
             <tr>
-              <th>Trademark Id</th>
-              <th>Trademark Code</th>
-              <th>Trademark Description</th>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_code || "dico_code" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
               <!-- <th>Brand</th> -->
-              <th>Logo</th>
-              <th>sysCreatedDate</th>
-              <th>sysCreatedBy</th>
-              <th>sysUpdatedDate</th>
-              <th>sysUpdatedBy</th>
+              <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
               <th></th>
               <th></th>
             </tr>
@@ -85,7 +92,9 @@
         </table>
         <ng-template #noData>
           <tr>
-            <td colspan="5">No data to display</td>
+            <td colspan="5">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </div>

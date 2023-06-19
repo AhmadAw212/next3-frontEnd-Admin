@@ -9,6 +9,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddTrademarkDialogComponent } from '../add-dialogs/add-trademark-dialog/add-trademark-dialog.component';
 import { UpdateTrademarkDialogComponent } from '../update-dialogs/update-trademark-dialog/update-trademark-dialog.component';
 import { CarShape } from 'src/app/model/car-shape';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-car-trademark',
@@ -25,19 +26,27 @@ export class CarTrademarkComponent implements OnInit {
   showCarShape = false;
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;

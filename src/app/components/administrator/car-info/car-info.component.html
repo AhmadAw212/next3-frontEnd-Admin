@@ -1,11 +1,12 @@
 <div class="form-tab">
+  <h3 class="h3-header">{{ dico?.dico_car_info || "dico_car_info" }}</h3>
   <div class="admin-container container-fluid" style="height: 200px">
     <div class="admin-button">
       <button type="button" (click)="openAddCarInfoDialog()">
-        Add Car Info
+        {{ dico?.dico_add || "dico_add" }}
       </button>
       <button type="button" style="margin-left: 5px" (click)="updateCarInfo()">
-        Update Car Info
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
     <div class="row mt-4">
@@ -13,19 +14,23 @@
         <table>
           <thead>
             <tr>
-              <th>Car Info id</th>
-              <th>From Year</th>
-              <th>To Year</th>
-              <th>Body Type Old</th>
-              <th>Body Type New</th>
-              <th>Doors</th>
-              <th>Size</th>
-              <th>Body Type Code</th>
-              <th>sysCreatedBy</th>
-              <th>sysCreatedBy</th>
-              <th>sysUpdatedDate</th>
-              <th>sysUpdatedBy</th>
-              <th>Denting</th>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_from_year || "dico_from_year" }}</th>
+              <th>{{ dico?.dico_to_year || "dico_to_year" }}</th>
+              <th>{{ dico?.dico_body_type_old || "dico_body_type_old" }}</th>
+              <th>{{ dico?.dico_body_type || "dico_body_type" }}</th>
+              <th>{{ dico?.dico_doors || "dico_doors" }}</th>
+              <th>{{ dico?.dico_size || "dico_size" }}</th>
+              <th>{{ dico?.dico_body_type_code || "dico_body_type_code" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <th>{{ dico?.dico_denting || "dico_denting" }}</th>
               <th></th>
             </tr>
           </thead>
@@ -133,7 +138,11 @@
           </tbody>
           <ng-template #noData>
             <tr>
-              <td colspan="5">No data to display</td>
+              <td colspan="5">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
             </tr>
           </ng-template>
         </table>
