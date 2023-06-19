@@ -1,72 +1,79 @@
-<h2 style="margin: 10px; font-size: large">{{ dico?.dico_Add_Car_Info || "dico_Add_Car_Info" }}</h2>
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_Add_Car_Info || "dico_Add_Car_Info" }}
+</h2>
 <div class="dialog">
-  <form (ngSubmit)="addCarInfo()">
-    <label for="bodyTypeCode">{{ dico?.dico_body_type_code || "dico_body_type_code" }}:</label>
-    <input
-      type="text"
-      id="bodyTypeCode"
-      name="bodyTypeCode"
-      [(ngModel)]="bodyTypeCode"
-      required
-    />
+  <form [formGroup]="carForm" (ngSubmit)="addCarInfo()">
+    <label for="bodyTypeCode"
+      >{{ dico?.dico_body_type_code || "dico_body_type_code" }}:</label
+    >
+    <input type="text" id="bodyTypeCode" formControlName="bodyTypeCode" />
 
-    <label for="fromYear">{{ dico?.dico_from_year || "dico_from_year" }}:</label>
-    <input
-      type="text"
-      id="fromYear"
-      name="fromYear"
-      [(ngModel)]="fromYear"
-      required
-      pattern="[0-9]+"
-    />
-
+    <label for="fromYear"
+      >{{ dico?.dico_from_year || "dico_from_year" }}:</label
+    >
+    <input type="text" id="fromYear" formControlName="fromYear" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['fromYear'].errors &&
+        (formControl['fromYear'].dirty || formControl['fromYear'].touched)
+      "
+    >
+      <div *ngIf="formControl['fromYear']?.errors?.['pattern']">
+        number is required
+      </div>
+      <div *ngIf="formControl['fromYear']?.errors?.['maxlength']">
+        Maximum 4 characters
+      </div>
+    </div>
     <label for="toYear">{{ dico?.dico_to_year || "dico_to_year" }}:</label>
-    <input
-      type="text"
-      id="toYear"
-      name="toYear"
-      [(ngModel)]="toYear"
-      required
-      pattern="[0-9]+"
-    />
-
+    <input type="text" id="toYear" formControlName="toYear" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['toYear'].errors &&
+        (formControl['toYear'].dirty || formControl['toYear'].touched)
+      "
+    >
+      <div *ngIf="formControl['toYear']?.errors?.['pattern']">
+        number is required
+      </div>
+      <div *ngIf="formControl['toYear']?.errors?.['maxlength']">
+        Maximum 4 characters
+      </div>
+    </div>
     <label for="Doors">{{ dico?.dico_doors || "dico_doors" }}:</label>
-    <select id="door" name="door" [(ngModel)]="door" required>
+    <select id="door" formControlName="doors_lov_code">
       <option *ngFor="let door of doors" [value]="door.code">
         {{ door.description }}
       </option>
     </select>
 
     <label for="size">{{ dico?.dico_size || "dico_size" }}:</label>
-    <select id="size" name="size" [(ngModel)]="size" required>
+    <select id="size" formControlName="vehicle_size_lov_code">
       <option *ngFor="let size of vehicleSize" [value]="size.code">
         {{ size.description }}
       </option>
     </select>
 
-    <label for="bodyTypeNew">{{ dico?.dico_Body_Type_New || "dico_Body_Type_New" }}:</label>
-    <select
-      id="bodyTypeNew"
-      name="bodyTypeNew"
-      [(ngModel)]="bodyTypeNew"
-      required
+    <label for="bodyTypeNew"
+      >{{ dico?.dico_Body_Type_New || "dico_Body_Type_New" }}:</label
     >
+    <select id="bodyTypeNew" formControlName="bodyType_lov_new_code">
       <option *ngFor="let bodyType of newBodyType" [value]="bodyType.code">
         {{ bodyType.description }}
       </option>
     </select>
 
-    <label for="bodyTypeOld">{{ dico?.dico_body_type_old || "dico_body_type_old" }}:</label>
-    <select
-      id="bodyTypeOld"
-      name="bodyTypeOld"
-      [(ngModel)]="bodyTypeOld"
-      required
+    <label for="bodyTypeOld"
+      >{{ dico?.dico_body_type_old || "dico_body_type_old" }}:</label
     >
+    <select id="bodyTypeOld" formControlName="bodyType_lov_old_code">
       <option *ngFor="let bodyType of oldBodyType" [value]="bodyType.code">
         {{ bodyType.description }}
       </option>
     </select>
+
     <button type="submit">{{ dico?.BASIC_SAVE || "BASIC_SAVE" }}</button>
   </form>
 </div>
