@@ -6,7 +6,6 @@ import { AddConfigDialogComponent } from '../add-dialogs/add-config-dialog/add-c
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-import { UpdateCoreConfigurationComponent } from '../update-dialogs/update-core-configuration/update-core-configuration.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({

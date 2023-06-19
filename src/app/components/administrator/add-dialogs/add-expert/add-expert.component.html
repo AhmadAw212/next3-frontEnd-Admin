@@ -2,7 +2,7 @@
 <div class="dialog">
   <form [formGroup]="expertForm" (ngSubmit)="addExpert()">
     <div class="form-group">
-      <label for="groupCode">Group Code:</label>
+      <label for="groupCode">{{ dico?.dico_group || "dico_group" }}:</label>
       <select
         id="groupCode"
         name="groupCode"
@@ -16,7 +16,9 @@
     </div>
 
     <div class="form-group">
-      <label for="territory">Territory Name:</label>
+      <label for="territory"
+        >{{ dico?.dico_territory || "dico_territory" }}:</label
+      >
       <select
         id="territory"
         name="territory"
@@ -29,7 +31,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="remarks">Remarks:</label>
+      <label for="remarks">{{ dico?.dico_remarks || "dico_remarks" }}:</label>
       <input
         type="text"
         id="remarks"
@@ -38,7 +40,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="ratio">Ratio:</label>
+      <label for="ratio">{{ dico?.dico_ratio || "dico_ratio" }}:</label>
       <input type="text" id="ratio" name="ratio" formControlName="ratio" />
       <div
         style="color: red"
@@ -53,7 +55,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="priority">priority:</label>
+      <label for="priority"
+        >{{ dico?.dico_priority || "dico_priority" }}:</label
+      >
       <input
         type="text"
         id="priority"
@@ -73,7 +77,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="schedule_code">Schedule:</label>
+      <label for="schedule_code"
+        >{{ dico?.dico_schedule || "dico_schedule" }}:</label
+      >
       <select
         id="schedule_code"
         name="schedule_code"
@@ -86,7 +92,9 @@
       </select>
     </div>
     <div class="form-group" style="flex-direction: row">
-      <label for="bodily_injury"> Bodily Injury:</label>
+      <label for="bodily_injury">
+        {{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label
+      >
       <input
         type="checkbox"
         id="bodily_injury"
@@ -96,11 +104,13 @@
     </div>
 
     <div class="form-group" style="flex-direction: row">
-      <label for="vip">Vip:</label>
+      <label for="vip">{{ dico?.dico_vip || "dico_vip" }}:</label>
       <input type="checkbox" id="vip" name="vip" formControlName="vip" />
     </div>
     <div class="form-group" style="flex-direction: row">
-      <label for="exclusive"> Exclusive:</label>
+      <label for="exclusive">
+        {{ dico?.dico_exclusive || "dico_exclusive" }}:</label
+      >
       <input
         type="checkbox"
         id="exclusive"
@@ -109,7 +119,9 @@
       />
     </div>
     <div class="form-group" style="flex-direction: row">
-      <label for="secondExpert"> secondExpert:</label>
+      <label for="secondExpert">
+        {{ dico?.dico_second_expert || "dico_second_expert" }}:</label
+      >
       <input
         type="checkbox"
         id="secondExpert"
@@ -119,7 +131,7 @@
     </div>
 
     <div class="form-group" style="flex-direction: row">
-      <label for="sendSMS"> send SMS:</label>
+      <label for="sendSMS"> {{ dico?.dico_sms || "dico_sms" }}:</label>
       <input
         type="checkbox"
         id="sendSMS"
@@ -129,7 +141,7 @@
     </div>
 
     <div class="form-group" style="flex-direction: row">
-      <label for="contract"> contract:</label>
+      <label for="contract"> {{ dico?.dico_contact || "dico_contact" }}:</label>
       <input
         type="checkbox"
         id="contract"
@@ -137,6 +149,6 @@
         formControlName="contract"
       />
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
   </form>
 </div>

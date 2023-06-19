@@ -1,5 +1,9 @@
 <div id="dialog">
-  <h3>Add Profile For {{ data.selectedUser.displayName }}</h3>
+  <h3>
+    {{ dico?.dico_add || "dico_add" }}
+    {{ dico?.MA_PROFILE || "MA_PROFILE" }} For
+    {{ data.selectedUser.displayName }}
+  </h3>
   <select id="dropdown" [(ngModel)]="selectedProfile">
     <option *ngFor="let profile of nonGrantedProfile" [value]="profile.code">
       {{ profile.description }}
@@ -10,8 +14,10 @@
       id="save-btn"
       (click)="addProfile(selectedUserId!, selectedProfile!)"
     >
-      Save
+      {{ dico?.dico_save || "dico_save" }}
     </button>
-    <button id="cancel-btn" (click)="onCancel()">Cancel</button>
+    <button id="cancel-btn" (click)="onCancel()">
+      {{ dico?.dico_cancel || "dico_cancel" }}
+    </button>
   </div>
 </div>

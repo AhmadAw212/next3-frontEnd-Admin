@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddApprovalTypeComponent } from '../add-dialogs/add-approval-type/add-approval-type.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-car-approval-type',
@@ -21,19 +22,27 @@ export class CarApprovalTypeComponent implements OnInit {
   carAppType?: CarApprovalType[];
   reportDateTimeFormat?: string;
   updatedApprovalType?: CarApprovalType[] = [];
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dateFormatService: DateFormatterService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.dateFormatterService();
+    this.getDico();
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {

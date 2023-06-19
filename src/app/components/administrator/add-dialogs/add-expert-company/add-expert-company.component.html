@@ -2,7 +2,7 @@
 <div class="dialog">
   <form [formGroup]="form" (ngSubmit)="AddExpertCompany()">
     <div class="form-group">
-      <label for="company">Company:</label>
+      <label for="company">{{ dico?.dico_company || "dico_company" }}:</label>
       <select
         id="company"
         name="company"
@@ -16,11 +16,24 @@
     </div>
 
     <div class="form-group">
-      <label for="ratio">Ratio:</label>
+      <label for="ratio">{{ dico?.dico_ratio || "dico_ratio" }}:</label>
       <input type="text" id="ratio" name="ratio" formControlName="ratio" />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['ratio'].errors &&
+          (formControl['ratio'].dirty || formControl['ratio'].touched)
+        "
+      >
+        <div *ngIf="formControl['ratio']?.errors?.['pattern']">
+          number is required
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="initialCount">Initial Count:</label>
+      <label for="initialCount"
+        >{{ dico?.dico_initial_count || "dico_initial_count" }}:</label
+      >
       <input
         type="text"
         id="initialCount"
@@ -35,33 +48,12 @@
             formControl['initialCount'].touched)
         "
       >
-        <div *ngIf="formControl['ratio']?.errors?.['pattern']">
+        <div *ngIf="formControl['initialCount']?.errors?.['pattern']">
           number is required
         </div>
       </div>
     </div>
-    <!-- <div class="form-group">
-      <label for="dispatchCount">Dispatch Count:</label>
-      <input
-        type="text"
-        id="dispatchCount"
-        name="dispatchCount"
-        formControlName="dispatchCount"
-      />
-      <div
-        style="color: red"
-        *ngIf="
-          formControl['dispatchCount'].errors &&
-          (formControl['dispatchCount'].dirty ||
-            formControl['dispatchCount'].touched)
-        "
-      >
-        <div *ngIf="formControl['dispatchCount']?.errors?.['pattern']">
-          number is required
-        </div>
-      </div>
-    </div> -->
 
-    <button type="submit">Submit</button>
+    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
   </form>
 </div>

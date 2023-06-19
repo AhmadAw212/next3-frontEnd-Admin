@@ -13,13 +13,14 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
   styleUrls: ['./user-roles.component.css'],
 })
-export class UserRolesComponent implements OnChanges {
+export class UserRolesComponent implements OnInit, OnChanges {
   @Input() profiles?: Profiles[];
   @Input() selectedProfile?: Profiles;
   @Input() selectedUser?: CoreUser;
@@ -28,18 +29,27 @@ export class UserRolesComponent implements OnChanges {
   roleDescFilter: string = '';
   rolesPage: number = 1;
   maxSizeValue = 5;
-
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private alertify: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {}
+  ngOnInit(): void {
+    this.getDico();
+  }
 
   ngOnChanges() {
     const selectedProfile = this.selectedProfile!;
     this.getUserRoles(selectedProfile);
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   getUserRoles(profileId: Profiles) {
     const selected_profile = this.profiles?.find((p) => p.id === profileId.id);
     this.roles = selected_profile?.profileRoles;

@@ -1,5 +1,5 @@
 import { DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiResponse } from 'src/app/model/api-response';
 import { CoreUser } from 'src/app/model/core-user';
@@ -9,6 +9,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddProfileDialogComponent } from '../add-dialogs/add-profile-dialog/add-profile-dialog.component';
 import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -16,24 +17,33 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './user-profiles.component.html',
   styleUrls: ['./user-profiles.component.css'],
 })
-export class UserProfilesComponent implements OnChanges {
+export class UserProfilesComponent implements OnInit, OnChanges {
   profiles?: Profiles[];
   showRoleList = false;
   @Input() selectedUser?: CoreUser;
   selectedProfile?: Profiles;
-
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertify: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {}
+  ngOnInit(): void {
+    this.getDico();
+  }
 
   ngOnChanges() {
     this.getProfiles();
     this.showRoleList = false;
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   RoleList(selectedProfile: Profiles) {
     this.selectedProfile = selectedProfile;
     this.showRoleList = true;

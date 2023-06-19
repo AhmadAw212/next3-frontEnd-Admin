@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-document-dialog',
@@ -20,12 +21,14 @@ export class AddDocumentDialogComponent implements OnInit {
   company?: string;
   file?: File;
   companyList?: CompanyBranchList[];
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private companyListService: CompanyBranchService,
     private dialogRef: MatDialogRef<AddDocumentDialogComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -33,8 +36,14 @@ export class AddDocumentDialogComponent implements OnInit {
     this.companyListService.company.subscribe(
       () => (this.companyList = this.companyListService.companyList)
     );
+    this.getDico();
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   onFileSelected(event: any) {
     const file = event.target.files[0];
     this.file = file;

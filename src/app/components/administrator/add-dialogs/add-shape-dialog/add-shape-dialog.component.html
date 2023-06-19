@@ -1,12 +1,14 @@
 <div class="dialog">
   <form (ngSubmit)="addCarShape()">
-    <label for="file">File:</label>
+    <label for="file">{{ dico?.dico_file || "dico_file" }}:</label>
     <input type="file" name="file" (change)="onFileSelected($event)" />
 
-    <label for="code">Code:</label>
+    <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
     <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-    <label for="description">Description:</label>
+    <label for="description"
+      >{{ dico?.dico_description || "dico_description" }}:</label
+    >
     <input
       type="text"
       id="description"
@@ -14,6 +16,6 @@
       [(ngModel)]="description"
     />
 
-    <button type="submit">Save</button>
+    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
   </form>
 </div>

@@ -3,7 +3,9 @@
     <legend><h2>User Info</h2></legend>
     <div class="form-row">
       <div class="form-group">
-        <label for="username">Username:</label>
+        <label for="username"
+          >{{ dico?.dico_user_name || "dico_user_name" }} :</label
+        >
         <input
           type="text"
           id="username"
@@ -13,7 +15,9 @@
         />
       </div>
       <div class="form-group">
-        <label for="displayName">Display Name:</label>
+        <label for="displayName"
+          >{{ dico?.dico_display_name || "dico_display_name" }} :</label
+        >
         <input
           type="text"
           id="displayName"
@@ -26,7 +30,7 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">{{ dico?.dico_email || "dico_email" }} :</label>
         <input
           type="email"
           id="email"
@@ -39,7 +43,9 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="companyId">Company:</label>
+        <label for="companyId"
+          >{{ dico?.dico_company || "dico_company" }} :</label
+        >
         <!-- <input
           type="text"
           id="companyId"
@@ -58,7 +64,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="branchId">Branch:</label>
+        <label for="branchId">{{ dico?.dico_branch || "dico_branch" }} :</label>
         <select
           id="branchId"
           name="branchId"
@@ -77,7 +83,9 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="paymentLimit">Payment Limit :</label>
+        <label for="paymentLimit"
+          >{{ dico?.dico_payment_limit || "dico_payment_limit" }} :</label
+        >
         <input
           type="text"
           id="paymentLimit"
@@ -88,7 +96,12 @@
         />
       </div>
       <div class="form-group">
-        <label for="exceedPercentage"> Percentage Limit:</label>
+        <label for="exceedPercentage">
+          {{
+            dico?.dico_exceed_percentage_limit || "dico_exceed_percentage_limit"
+          }}
+          :</label
+        >
         <input
           type="text"
           id="exceedPercentage"
@@ -101,7 +114,12 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitExpertFees"> Expert Fees:</label>
+        <label for="userLimitExpertFees">
+          {{
+            dico?.dico_user_limit_expert_fees || "dico_user_limit_expert_fees"
+          }}
+          :</label
+        >
         <input
           type="text"
           id="userLimitExpertFees"
@@ -113,7 +131,13 @@
       </div>
 
       <div class="form-group">
-        <label for="userLimitHospitalFees"> Hospital Fees:</label>
+        <label for="userLimitHospitalFees"
+          >{{
+            dico?.dico_user_limit_hospital_fees ||
+              "dico_user_limit_hospital_fees"
+          }}
+          :</label
+        >
         <input
           type="text"
           id="userLimitHospitalFees"
@@ -127,7 +151,9 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitDoctorFees">Doctor Limit:</label>
+        <label for="userLimitDoctorFees"
+          >{{ dico?.dico_doctor_fee_limit || "dico_doctor_fee_limit" }} :</label
+        >
         <input
           type="text"
           id="userLimitDoctorFees"
@@ -139,7 +165,9 @@
       </div>
 
       <div class="form-group">
-        <label for="userLimitSurveyFees">Survey Limit:</label>
+        <label for="userLimitSurveyFees"
+          >{{ dico?.dico_survey_fee_limit || "dico_survey_fee_limit" }} :</label
+        >
         <input
           type="text"
           id="userLimitSurveyFees"
@@ -152,7 +180,9 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="userLimitTaxiFees">Taxi Limit:</label>
+        <label for="userLimitTaxiFees"
+          >{{ dico?.dico_taxi_fee_limit || "dico_taxi_fee_limit" }} :</label
+        >
         <input
           type="text"
           id="userLimitTaxiFees"
@@ -163,7 +193,9 @@
         />
       </div>
       <div class="form-group">
-        <label for="userLimitLawyerFees">Lawyer Limit:</label>
+        <label for="userLimitLawyerFees"
+          >{{ dico?.dico_lawyer_fee_limit || "dico_lawyer_fee_limit" }} :</label
+        >
         <input
           type="text"
           id="userLimitLawyerFees"
@@ -177,7 +209,9 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="recoverLimit">Recover Limit :</label>
+        <label for="recoverLimit"
+          >{{ dico?.dico_recover_limit || "dico_recover_limit" }} :</label
+        >
         <input
           type="text"
           id="recoverLimit"
@@ -191,25 +225,24 @@
 
     <div class="row">
       <div class="form-group">
-        <label for="email">Email Signature:</label>
+        <label for="email"
+          >{{ dico?.dico_email_signature || "dico_email_signature" }}:</label
+        >
         <ngx-editor
           [editor]="editor"
           [placeholder]="'Type Email Signature...'"
           formControlName="userEmailSignature"
         >
         </ngx-editor>
-        <!-- <textarea
-        placeholder="Enter a email Signature"
-        formControlName="userEmailSignature"
-        cols="25"
-        rows="5"
-      >
-      </textarea> -->
       </div>
     </div>
     <div class="button-row">
-      <button type="submit" class="btn">Update</button>
-      <button type="button" class="btn" (click)="Cancle()">Cancel</button>
+      <button type="submit" class="btn">
+        {{ dico?.dico_save || "dico_save" }}
+      </button>
+      <button type="button" class="btn" (click)="Cancle()">
+        {{ dico?.dico_cancel || "dico_cancel" }}
+      </button>
     </div>
   </form>
 </div>

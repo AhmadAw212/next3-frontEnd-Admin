@@ -6,6 +6,7 @@ import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-expert',
@@ -18,26 +19,33 @@ export class AddExpertComponent implements OnInit {
   schedule?: type[];
   selectedSupplier?: CarSupplier;
   expertForm!: FormGroup;
-
+  dico?: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private formBuilder: FormBuilder,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddExpertComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     this.teritories = this.data.teritories;
     this.expGroups = this.data.expGroups;
     this.schedule = this.data.schedules;
     this.selectedSupplier = this.data.selectedSupplier;
-    console.log(data);
+    // console.log(data);
   }
 
   ngOnInit(): void {
     this.buildForm();
+    this.getDico();
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   buildForm() {
     this.expertForm = this.formBuilder.group({
       expertName: this.selectedSupplier?.fullName,

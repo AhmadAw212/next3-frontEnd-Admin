@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-profile-dialog',
@@ -17,9 +18,10 @@ export class AddProfileDialogComponent implements OnInit {
   selectedUserId?: string;
   nonGrantedProfile?: Profiles[];
   selectedProfile?: string;
-
+  dico?: any;
   ngOnInit(): void {
     this.getNonGrantedUserProfiles();
+    this.getDico();
   }
 
   constructor(
@@ -27,9 +29,15 @@ export class AddProfileDialogComponent implements OnInit {
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<AddProfileDialogComponent>,
     private alertifyService: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {}
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   getNonGrantedUserProfiles() {
     this.selectedUserId = this.data.selectedUser.userName;
     this.dataService.getNonGrantedUserProfiles(this.selectedUserId!).subscribe({

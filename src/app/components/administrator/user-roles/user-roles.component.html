@@ -5,7 +5,7 @@
       aria-label="Copy Profile"
       (click)="getProfileDefaultAccessRoles()"
     >
-      Default Access
+      {{ dico?.dico_default_access || "dico_default_access" }}
     </button>
   </div>
   <div class="search-container">
@@ -24,13 +24,27 @@
       placeholder="Search by Desc"
       [(ngModel)]="roleDescFilter"
     />
+    <button
+      class="save-role-btn"
+      aria-label="Save Changes"
+      (click)="updateRoles()"
+    >
+      {{ dico?.dico_save || "dico_save" }}
+    </button>
   </div>
+
   <table class="table table-responsive">
     <thead>
       <tr>
-        <th>Role Code</th>
-        <th>Role Desc</th>
-        <th>Selected</th>
+        <th>
+          {{ dico?.dico_role || "dico_role" }}
+          {{ dico?.dico_code || "dico_code" }}
+        </th>
+        <th>
+          {{ dico?.dico_role || "dico_role" }}
+          {{ dico?.dico_description || "dico_description" }}
+        </th>
+        <th>{{ dico?.dico_selected || "dico_selected" }}</th>
       </tr>
     </thead>
     <tbody>
@@ -52,13 +66,6 @@
         </td>
       </tr>
     </tbody>
-    <button
-      class="save-role-btn"
-      aria-label="Save Changes"
-      (click)="updateRoles()"
-    >
-      Save Changes
-    </button>
   </table>
 
   <div class="pagination-wrapper">

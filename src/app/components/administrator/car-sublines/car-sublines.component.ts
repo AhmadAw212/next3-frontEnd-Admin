@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarSublineComponent } from '../add-dialogs/add-car-subline/add-car-subline.component';
-import { UpdateCarSublineComponent } from '../update-dialogs/update-car-subline/update-car-subline.component';
+
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({

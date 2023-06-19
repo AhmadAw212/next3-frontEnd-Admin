@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarProductComponent } from '../add-dialogs/add-car-product/add-car-product.component';
-import { UpdateCarProductComponent } from '../update-dialogs/update-car-product/update-car-product.component';
+
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 interface type {
