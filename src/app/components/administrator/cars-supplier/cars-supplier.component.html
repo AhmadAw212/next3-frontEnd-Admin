@@ -67,7 +67,7 @@
               {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
             </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th>
+            <!-- <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th> -->
           </tr>
         </thead>
         <tbody *ngIf="carSupplier?.length! > 0; else noData">
@@ -114,9 +114,9 @@
               {{ supplier.sysUpdatedDate | date : reportDateTimeFormat }}
             </td>
             <td>{{ supplier.sysUpdatedBy }}</td>
-            <td>
+            <!-- <td>
               <button>{{ dico?.dico_deactivate || "dico_deactivate" }}</button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -133,7 +133,6 @@
 
 <div
   class="admin-container container-fluid"
-  style="height: 350px"
   *ngIf="showMoreInfo"
 >
   <app-update-car-supp-form
