@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_broker_configuration || "dico_broker_configuration" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_broker_configuration || "dico_broker_configuration" }}
+</h3>
 <div class="select-container">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
@@ -23,7 +25,9 @@
         <label for="number">{{ dico?.dico_number || "dico_number" }}:</label>
         <input type="text" id="number" name="number" [(ngModel)]="number" />
 
-        <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
+        <label for="description"
+          >{{ dico?.dico_description || "dico_description" }}:</label
+        >
         <input
           type="text"
           id="description"
@@ -31,7 +35,9 @@
           [(ngModel)]="description"
         />
 
-        <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+        <button type="submit">
+          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+        </button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="openAddBrokerDialog()">
@@ -55,7 +61,7 @@
           <th>{{ dico?.dico_home_phone || "dico_home_phone" }}</th>
           <th>{{ dico?.dico_reference || "dico_reference" }}</th>
           <th>{{ dico?.dico_refferal || "dico_refferal" }}</th>
-          <th>{{ dico?.dico_refferal_note || "didico_refferal_noteco_car_brand" }}</th>
+          <th>{{ dico?.dico_refferal_note || "dico_refferal_note" }}</th>
           <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
           <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
           <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
@@ -132,7 +138,9 @@
       </tbody>
       <ng-template #noData>
         <tr>
-          <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+          <td colspan="5">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
         </tr>
       </ng-template>
     </table>

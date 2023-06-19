@@ -33,6 +33,7 @@ export class AddUserComponent implements OnInit {
     this.getBranchList();
     this.getDico();
     this.editor = new Editor();
+    this.getDefaultPass();
   }
 
   getCompanyId() {
@@ -46,7 +47,16 @@ export class AddUserComponent implements OnInit {
       () => (this.branchList = this.companyBranchService.branchList)
     );
   }
-
+  getDefaultPass() {
+    this.dataService.getAddUserDefaultPass().subscribe({
+      next: (res) => {
+        this.userForm.get('password')?.setValue(res.data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   constructor(
     private fb: FormBuilder,
     private dataService: DataServiceService,
@@ -63,7 +73,7 @@ export class AddUserComponent implements OnInit {
       ],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['Claims_1234', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       userLimitDoctorFees: [
         '0',
         [Validators.required, Validators.pattern('^[0-9]*$')],

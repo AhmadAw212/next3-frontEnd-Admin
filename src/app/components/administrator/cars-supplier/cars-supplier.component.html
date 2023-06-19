@@ -1,5 +1,7 @@
 <h3 class="h3-header">{{ dico?.dico_car_supplier || "dico_car_supplier" }}</h3>
-<button type="button" style="margin-left: 10px">{{ dico?.dico_export_to_excel || "dico_export_to_excel" }}</button>
+<button type="button" style="margin-left: 10px">
+  {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+</button>
 <div class="select-container">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
@@ -21,7 +23,9 @@
 
   <div class="user-inputs">
     <form (ngSubmit)="searchCarSupplier()">
-      <label for="name">{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label>
+      <label for="name"
+        >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
+      >
       <input type="text" id="name" name="name" [(ngModel)]="name" />
 
       <label for="type">{{ dico?.dico_type || "dico_type" }}:</label>
@@ -48,7 +52,6 @@
       <table id="table">
         <thead>
           <tr>
-            <th></th>
             <th>{{ dico?.dico_name || "dico_name" }}</th>
             <th>{{ dico?.dico_interm || "dico_interm" }}</th>
             <th>{{ dico?.dico_num || "dico_num" }}</th>
@@ -56,12 +59,15 @@
             <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
             <th>{{ dico?.dico_tva_num || "dico_tva_num" }}</th>
             <th>{{ dico?.dico_grade || "dico_grade" }}</th>
-            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
             <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th>
-          
           </tr>
         </thead>
         <tbody *ngIf="carSupplier?.length! > 0; else noData">
@@ -116,7 +122,9 @@
       </table>
       <ng-template #noData>
         <tr>
-          <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+          <td colspan="5">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
         </tr>
       </ng-template>
     </div>

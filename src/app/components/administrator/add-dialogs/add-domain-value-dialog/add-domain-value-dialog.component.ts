@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoreDomainValue } from 'src/app/model/core-domain-value';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-domain-value-dialog',
   templateUrl: './add-domain-value-dialog.component.html',
   styleUrls: ['./add-domain-value-dialog.component.css'],
 })
-export class AddDomainValueDialogComponent {
+export class AddDomainValueDialogComponent implements OnInit {
   code?: string;
   description?: string;
   val1?: string;
@@ -24,15 +25,25 @@ export class AddDomainValueDialogComponent {
   val10?: string;
   val11?: string;
   coreDomainId?: string;
-
+  dico?: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public domainValues: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dialogRef: MatDialogRef<AddDomainValueDialogComponent>
+    private dialogRef: MatDialogRef<AddDomainValueDialogComponent>,
+    private dicoService: DicoServiceService
   ) {
     this.coreDomainId = domainValues.domainId;
-    console.log(this.domainValues);
+    // console.log(this.domainValues);
+  }
+  ngOnInit(): void {
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   getDomainValuesData(id: string) {

@@ -5,6 +5,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddCarClientComponent } from '../add-car-client/add-car-client.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { type } from 'src/app/model/type';
 
 @Component({
   selector: 'app-add-report-list',
@@ -24,6 +26,8 @@ export class AddReportListComponent implements OnInit {
   emailDone?: string;
   notes?: string;
   form!: FormGroup;
+  domainYN?: type[];
+  dico?: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,10 +35,13 @@ export class AddReportListComponent implements OnInit {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddCarClientComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
+    this.getDico();
+    // this.getDomainYN();
     this.form = this.formBuilder.group({
       report: ['', Validators.required],
       role: ['', Validators.required],
@@ -50,10 +57,26 @@ export class AddReportListComponent implements OnInit {
     });
   }
 
+  getDomainYN() {
+    this.dataService.getDomainYN().subscribe({
+      next: (res) => {
+        this.domainYN = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   get formControl() {
     return this.form.controls;
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   addReportList() {
     this.dataService.addCarReportList(this.form.value).subscribe({
       next: (res) => {

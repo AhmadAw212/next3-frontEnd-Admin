@@ -1,7 +1,7 @@
 <h2 style="margin: 10px; font-size: large">Add Car ReportList</h2>
 <div class="dialog">
   <form [formGroup]="form" (ngSubmit)="addReportList()">
-    <label for="report"> Report:</label>
+    <label for="report"> {{ dico?.dico_report || "dico_report" }}:</label>
     <input
       type="text"
       id="report"
@@ -10,13 +10,13 @@
       formControlName="report"
     />
 
-    <label for="role"> role:</label>
+    <label for="role"> {{ dico?.dico_role || "dico_role" }}:</label>
     <input type="text" id="role" name="role" required formControlName="role" />
 
-    <label for="sql"> SQL:</label>
+    <label for="sql"> {{ dico?.dico_query || "dico_query" }}:</label>
     <input type="text" id="sql" name="sql" required formControlName="sql" />
 
-    <label for="sheet"> Sheet:</label>
+    <label for="sheet">{{ dico?.dico_sheet || "dico_sheet" }}:</label>
     <input
       type="text"
       id="sheet"
@@ -25,7 +25,7 @@
       formControlName="sheet"
     />
 
-    <label for="order"> Order:</label>
+    <label for="order"> {{ dico?.dico_order || "dico_order" }}:</label>
     <input
       type="text"
       id="order"
@@ -47,13 +47,15 @@
         number is required
       </div>
     </div>
-    <label for="file"> file:</label>
+    <label for="file">{{ dico?.dico_file || "dico_file" }} :</label>
     <select id="file" name="file" required formControlName="file">
       <option value="true">True</option>
       <option value="false">False</option>
     </select>
 
-    <label for="fileExtension"> File_Extension:</label>
+    <label for="fileExtension">
+      {{ dico?.dico_file_extension || "dico_file_extension" }}:</label
+    >
     <input
       type="text"
       id="fileExtension"
@@ -62,7 +64,9 @@
       formControlName="fileExtension"
     />
 
-    <label for="directory"> Directory:</label>
+    <label for="directory">
+      {{ dico?.dico_directory || "dico_directory" }}:</label
+    >
     <input
       type="text"
       id="directory"
@@ -71,13 +75,15 @@
       formControlName="directory"
     />
 
-    <label for="email"> Email:</label>
+    <label for="email"> {{ dico?.dico_email || "dico_email" }}:</label>
     <select id="email" name="email" required formControlName="email">
       <option value="true">True</option>
       <option value="false">False</option>
     </select>
 
-    <label for="emailDone"> Email_Done:</label>
+    <label for="emailDone">
+      {{ dico?.dico_email_done || "dico_email_done" }}:</label
+    >
     <select
       id="emailDone"
       name="emailDone"
@@ -87,7 +93,7 @@
       <option value="true">True</option>
       <option value="false">False</option>
     </select>
-    <label for="notes"> Notes:</label>
+    <label for="notes"> {{ dico?.dico_notes || "dico_notes" }}:</label>
     <input
       type="text"
       id="notes"

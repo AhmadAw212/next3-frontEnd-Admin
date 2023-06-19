@@ -13,6 +13,7 @@ import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-update-car-supp-form',
@@ -31,10 +32,12 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   addressName?: string = '';
   @Output() supplierUpdated: EventEmitter<CarSupplier> =
     new EventEmitter<CarSupplier>();
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -42,11 +45,18 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     this.getTitleLov();
     this.getAddressLov();
     this.buildForm();
+    this.getDico();
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedSupplier'] && this.carSupplierForm) {
       this.carSupplierForm.patchValue(changes['selectedSupplier'].currentValue);
     }
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   buildForm(): void {
     this.carSupplierForm = this.formBuilder.group({

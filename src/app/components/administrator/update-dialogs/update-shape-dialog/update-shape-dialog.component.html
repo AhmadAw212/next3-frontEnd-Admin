@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <div class="dialog-header">Preview/Update Logo</div>
+  <div class="dialog-header">{{ dico?.dico_car_logo || "dico_car_logo" }}</div>
   <div class="dialog-body">
     <form class="logo-form" (ngSubmit)="updateCarShape()">
       <div class="logo-preview-container">
@@ -12,7 +12,9 @@
       />
 
       <div class="form-group">
-        <label for="code" class="label">Code:</label>
+        <label for="code" class="label"
+          >{{ dico?.dico_code || "dico_code" }}:</label
+        >
         <input
           id="code"
           type="input"
@@ -24,7 +26,9 @@
       </div>
 
       <div class="form-group">
-        <label for="description" class="label">Description:</label>
+        <label for="description" class="label"
+          >{{ dico?.dico_description || "dico_description" }}:</label
+        >
         <input
           id="description"
           type="input"
@@ -35,9 +39,11 @@
       </div>
 
       <div class="dialog-footer">
-        <button class="dialog-button save-button" type="submit">Save</button>
+        <button class="dialog-button save-button" type="submit">
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
         <button class="dialog-button cancel-button" type="button">
-          Cancel
+          {{ dico?.dico_cancel || "dico_cancel" }}
         </button>
       </div>
     </form>

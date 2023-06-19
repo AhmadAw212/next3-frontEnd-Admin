@@ -65,11 +65,9 @@ import { AddCarCoverComponent } from './components/administrator/add-dialogs/add
 import { UpdateCarCoverComponent } from './components/administrator/update-dialogs/update-car-cover/update-car-cover.component';
 import { CarProductsComponent } from './components/administrator/car-products/car-products.component';
 import { AddCarProductComponent } from './components/administrator/add-dialogs/add-car-product/add-car-product.component';
-import { UpdateCarProductComponent } from './components/administrator/update-dialogs/update-car-product/update-car-product.component';
+
 import { CarSublinesComponent } from './components/administrator/car-sublines/car-sublines.component';
 import { AddCarSublineComponent } from './components/administrator/add-dialogs/add-car-subline/add-car-subline.component';
-import { UpdateCarSublineComponent } from './components/administrator/update-dialogs/update-car-subline/update-car-subline.component';
-import { UpdateCoreConfigurationComponent } from './components/administrator/update-dialogs/update-core-configuration/update-core-configuration.component';
 import { AddCarClientComponent } from './components/administrator/add-dialogs/add-car-client/add-car-client.component';
 import { CarsReportListComponent } from './components/administrator/cars-report-list/cars-report-list.component';
 import { AddReportListComponent } from './components/administrator/add-dialogs/add-report-list/add-report-list.component';
@@ -149,11 +147,8 @@ import { NgxEditorModule } from 'ngx-editor';
     UpdateCarCoverComponent,
     CarProductsComponent,
     AddCarProductComponent,
-    UpdateCarProductComponent,
     CarSublinesComponent,
     AddCarSublineComponent,
-    UpdateCarSublineComponent,
-    UpdateCoreConfigurationComponent,
     AddCarClientComponent,
     CarsReportListComponent,
     AddReportListComponent,

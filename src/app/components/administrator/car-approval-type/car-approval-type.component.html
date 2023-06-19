@@ -1,5 +1,5 @@
 <div class="select-container" style="margin: 10px">
-  <span>Company:</span>
+  <span> {{ dico?.dico_company || "dico_company" }}:</span>
   <select
     required
     class="company-select"
@@ -17,18 +17,18 @@
     <app-spinner *ngIf="isLoading"></app-spinner>
     <div class="user-inputs">
       <form (ngSubmit)="searchCarAppType()">
-        <button type="submit">Search</button>
+        <button type="submit">{{ dico?.dico_search || "dico_search" }}</button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="addApprovalTypeDialog()">
-          Add Approval Type
+          {{ dico?.dico_add || "dico_add" }}
         </button>
         <button
           type="button"
           style="margin-left: 8px"
           (click)="updateCarApprovalType()"
         >
-          Update Approval Type
+          {{ dico?.dico_save || "dico_save" }}
         </button>
       </div>
     </div>
@@ -36,16 +36,16 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Application Type</th>
-          <th>App User Id</th>
-          <th>Amount To</th>
-          <th>Amount From</th>
-          <th>Send Email</th>
-          <th>sysCreatedDate</th>
-          <th>sysCreatedBy</th>
-          <th>sysUpdatedDate</th>
-          <th>sysUpdatedBy</th>
+          <th>{{ dico?.dico_id || "dico_id" }}</th>
+          <th>{{ dico?.dico_application_type || "dico_application_type" }}</th>
+          <th>{{ dico?.dico_user_name || "dico_user_name" }}</th>
+          <th>{{ dico?.dico_amount_from || "dico_amount_from" }}</th>
+          <th>{{ dico?.dico_amount_to || "dico_amount_to" }}</th>
+          <th>{{ dico?.dico_send_email || "dico_send_email" }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>{{ dico?.dico_sys_updated_By || "dico_sys_updated_By" }}</th>
           <th></th>
         </tr>
       </thead>
@@ -61,15 +61,15 @@
           <td>{{ carApp.appUserId }}</td>
           <td
             contenteditable="true"
-            (blur)="onTdBlur($event, carApp, 'amountTo')"
-          >
-            {{ carApp.amountTo }}
-          </td>
-          <td
-            contenteditable="true"
             (blur)="onTdBlur($event, carApp, 'amountFrom')"
           >
             {{ carApp.amountFrom }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, carApp, 'amountTo')"
+          >
+            {{ carApp.amountTo }}
           </td>
           <td>
             <input
@@ -92,7 +92,9 @@
       </tbody>
       <ng-template #noData>
         <tr>
-          <td colspan="5">No data to display</td>
+          <td colspan="5">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
         </tr>
       </ng-template>
     </table>

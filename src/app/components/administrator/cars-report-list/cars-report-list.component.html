@@ -1,11 +1,13 @@
-<h3 class="h3-header">{{ dico?.dico_cars_report_list || "dico_cars_report_list" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_cars_report_list || "dico_cars_report_list" }}
+</h3>
 <div class="admin-container container-fluid">
   <div class="user-inputs">
     <form (ngSubmit)="searchCarReport()">
       <label for="role">{{ dico?.dico_role || "dico_role" }}:</label>
       <input type="text" id="role" name="role" [(ngModel)]="role" />
 
-      <label for="sql">{{ dico?.dico_sql || "dico_sql" }}:</label>
+      <label for="sql"> {{ dico?.dico_query || "dico_query" }}:</label>
       <input type="text" id="sql" name="sql" [(ngModel)]="sql" />
 
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
@@ -31,7 +33,7 @@
             <th>{{ dico?.dico_id || "dico_id" }}</th>
             <th>{{ dico?.dico_report || "dico_report" }}</th>
             <th>{{ dico?.dico_role || "dico_role" }}</th>
-            <th>{{ dico?.dico_sql || "dico_sql" }}</th>
+            <th>{{ dico?.dico_query || "dico_query" }}</th>
             <th>{{ dico?.dico_sheet || "dico_sheet" }}</th>
             <th>{{ dico?.dico_order || "dico_order" }}</th>
             <th>{{ dico?.dico_file || "dico_file" }}</th>
@@ -40,9 +42,13 @@
             <th>{{ dico?.dico_email || "dico_email" }}</th>
             <th>{{ dico?.dico_email_done || "dico_email_done" }}</th>
             <th>{{ dico?.dico_notes || "dico_notes" }}</th>
-            <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
             <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
           </tr>
@@ -124,15 +130,17 @@
             <td>{{ report.sysUpdatedDate | date : reportDateTimeFormat }}</td>
             <td>{{ report.sysUpdatedBy }}</td>
             <td>
-              <mat-icon (click)="deleteCarReportList(report.id!)"
-                >{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon
-              >
+              <mat-icon (click)="deleteCarReportList(report.id!)">{{
+                dico?.BASIC_DELETE || "BASIC_DELETE"
+              }}</mat-icon>
             </td>
           </tr>
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </table>

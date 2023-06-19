@@ -3,7 +3,7 @@
     width:650px;
     /* height: auto; */
     float: left;
-    margin: 10px;
+    margin: 15px;
     padding: 10px;
     border: 1px solid #ccc;
     background-color: rgb(230, 235, 243);
@@ -23,7 +23,7 @@
     margin:5px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    float: left;
+    float: right;
   }
   
   .save-role-btn:hover {
@@ -40,7 +40,7 @@
   }
   
   .search-container input {
-    /* width: 200px; */
+    width: 200px;
     padding: 4px;
     margin-right: 10px;
     border: 1px solid #ccc;

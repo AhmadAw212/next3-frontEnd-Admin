@@ -1,10 +1,12 @@
 <h2 style="margin: 10px; font-size: large">Add Domain Value</h2>
 <div class="dialog">
   <form (ngSubmit)="addDomainValue()">
-    <label for="code">code:</label>
+    <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
     <input type="text" name="code" [(ngModel)]="code" />
 
-    <label for="description">description:</label>
+    <label for="description"
+      >{{ dico?.dico_description || "dico_description" }}:</label
+    >
     <input type="text" name="description" [(ngModel)]="description" />
     <!-- 
     <label for="coreDomainId">coreDomainId:</label>

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../add-expert/add-expert.component';
 import { CarExpert } from 'src/app/model/car-expert';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-expert-company',
@@ -17,13 +18,15 @@ export class AddExpertCompanyComponent {
   form!: FormGroup;
   companies?: CompanyBranchList[];
   selectedExpert?: CarExpert;
+  dico?: any;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddExpertCompanyComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dicoService: DicoServiceService
   ) {
     this.companies = this.data.companies;
     this.selectedExpert = this.data.selectedExpert;
@@ -32,6 +35,13 @@ export class AddExpertCompanyComponent {
 
   ngOnInit() {
     this.buildForm();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   buildForm() {
     this.form = this.formBuilder.group({

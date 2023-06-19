@@ -986,4 +986,9 @@ export class DataServiceService {
       `${this.userUrl}/email/add-contact?newContactEmail=${email}`
     );
   }
+  getAddUserDefaultPass(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/core-domain-value/defaultPassword`
+    );
+  }
 }
