@@ -1,4 +1,6 @@
-<h2 style="margin: 10px; font-size: large">Add Domain Value</h2>
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_domain || "dico_add_domain" }}
+</h2>
 <div class="dialog">
   <form (ngSubmit)="addDomainValue()">
     <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
@@ -45,6 +47,6 @@
     <label for="Val11">{{ dico?.dico_val_11 || "dico_val_11" }}:</label>
     <input type="text" name="Val11" [(ngModel)]="val11" />
 
-    <button type="submit">{{dico?.dico_save || "dico_save"}}</button>
+    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
   </form>
 </div>

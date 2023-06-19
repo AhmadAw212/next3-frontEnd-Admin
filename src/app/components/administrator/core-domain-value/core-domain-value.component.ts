@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-core-domain-value',
@@ -21,13 +22,16 @@ export class CoreDomainValueComponent implements OnInit {
   description: string = '';
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
@@ -43,13 +47,19 @@ export class CoreDomainValueComponent implements OnInit {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
   }
-
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   trackDomainById(index: number, domain: CoreDomainValue) {
     return domain.id;
   }
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
   }
 
   domainValueSearch() {
