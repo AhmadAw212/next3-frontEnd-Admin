@@ -2,28 +2,28 @@
   <div class="user-inputs">
     <div class="admin-button">
       <button type="button" (click)="addNearRegionDialog()">
-        Add Near Region
+        {{ dico?.dico_add || "dico_add" }}
       </button>
       <button
         type="button"
         style="margin-left: 8px"
         (click)="updateNearRegion()"
       >
-        Update Near Region
+        {{ dico?.dico_update || "dico_update" }}
       </button>
     </div>
   </div>
   <table>
     <thead>
       <tr>
-        <th>ID</th>
-        <th>RegionCode</th>
-        <th>RegionDescription</th>
-        <th>Priority</th>
-        <th>sysCreatedDate</th>
-        <th>sysCreatedBy</th>
-        <th>sysupdatedDate</th>
-        <th>sysupdatedBy</th>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_code || "dico_code" }}</th>
+        <th>{{ dico?.dico_description || "dico_description" }}</th>
+        <th>{{ dico?.dico_priority || "dico_priority" }}</th>
+        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
         <th></th>
       </tr>
     </thead>
@@ -52,7 +52,9 @@
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="5">No data to display</td>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
       </tr>
     </ng-template>
   </table>

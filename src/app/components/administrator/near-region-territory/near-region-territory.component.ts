@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddNearRegionTerritoryComponent } from './add-near-region-territory/add-near-region-territory.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-near-region-territory',
@@ -25,12 +26,14 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   nearRegion?: NearRegionTerritory[];
   reportDateTimeFormat?: string;
   updatedRegion?: NearRegionTerritory[] = [];
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnChanges(): void {
@@ -39,6 +42,13 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getRegionTerritory();
     this.dateFormatterService();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   trackNearTerritoryById(index: number, territory: NearRegionTerritory) {
     return territory.id;
