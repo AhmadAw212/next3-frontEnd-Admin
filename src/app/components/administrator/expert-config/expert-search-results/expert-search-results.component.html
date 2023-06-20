@@ -8,10 +8,10 @@
 >
   <div class="user-inputs">
     <div class="admin-button">
-      <button type="button" (click)="openAddExpertDialog()">Add Expert</button>
+      <button type="button" (click)="openAddExpertDialog()">{{ dico?.dico_Add_Expert_to || "dico_Add_Expert_to" }}</button>
 
       <button type="button" style="margin-left: 8px" (click)="updateExpert()">
-        Update Expert
+        {{ dico?.dico_update_Expert || "dico_update_Expert" }}
       </button>
     </div>
   </div>
@@ -22,21 +22,21 @@
   >
     <thead>
       <tr>
-        <th>Expert</th>
-        <th>Group</th>
-        <th>Territory</th>
-        <th>Add Bodily Injury</th>
-        <th>VIP</th>
-        <th>Exclusive</th>
-        <th>Second Expert</th>
-        <th>Contract</th>
-        <th>Schedule</th>
-        <th>Remarks</th>
-        <th>Ratio</th>
-        <th>Sys_Created_Date</th>
-        <th>Sys_Created_By</th>
-        <th>Sys_Updated_Date</th>
-        <th>Sys_Updated_By</th>
+        <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+        <th>{{ dico?.dico_group || "dico_group" }}</th>
+        <th>{{ dico?.dico_territory || "dico_territory" }}</th>
+        <th>{{ dico?.dico_bodily_injury || "dico_bodily_injury" }}</th>
+        <th>{{ dico?.dico_vip || "dico_vip" }}</th>
+        <th>{{ dico?.dico_exclusive || "dico_exclusive" }}</th>
+        <th>{{ dico?.dico_second_expert || "dico_second_expert" }}</th>
+        <th>{{ dico?.dico_contract || "dico_contract" }}</th>
+        <th>{{ dico?.dico_schedule || "dico_schedule" }}</th>
+        <th>{{ dico?.dico_remarks || "dico_remarks" }}</th>
+        <th>{{ dico?.dico_ratio || "dico_ratio" }}</th>
+        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
         <th></th>
       </tr>
     </thead>
@@ -128,14 +128,14 @@
         <td>{{ expert.updatedDate | date : reportDateTimeFormat }}</td>
         <td>{{ expert.updatedBy }}</td>
         <td>
-          <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>
+          <mat-icon (click)="deleteExpert(expert.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
         </td>
       </tr>
     </tbody>
   </table>
   <ng-template #noData>
     <tr>
-      <td colspan="5">No data to display</td>
+      <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
       <!-- <div *ngIf="!isLoading">No data to display</div> -->
     </tr>
   </ng-template>

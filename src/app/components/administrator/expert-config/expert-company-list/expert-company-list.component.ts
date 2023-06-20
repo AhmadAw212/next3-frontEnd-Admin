@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddExpertCompanyComponent } from '../../add-dialogs/add-expert-company/add-expert-company.component';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-expert-company-list',
@@ -27,12 +28,14 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   company?: string;
   updatedExpCompany?: ExpertCompany[] = [];
   reportDateTimeFormat?: string;
+   dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +44,14 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     console.log(this.selectedExpert);
+        this.getDico();
+
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
 
   dateFormatterService() {

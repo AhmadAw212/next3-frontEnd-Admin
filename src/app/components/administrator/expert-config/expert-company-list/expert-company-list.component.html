@@ -1,13 +1,13 @@
 <div class="admin-container container-fluid" style="height: 200px">
   <div class="user-inputs">
     <div class="admin-button">
-      <button type="button" (click)="openAddExpertDialog()">Add Company</button>
+      <button type="button" (click)="openAddExpertDialog()">{{ dico?.dico_add_company || "dico_add_company" }}</button>
       <button
         type="button"
         style="margin-left: 8px"
         (click)="updateExpertCompany()"
       >
-        Update Company
+        {{ dico?.dico_update_company || "dico_update_company" }}
       </button>
     </div>
   </div>
@@ -15,14 +15,14 @@
   <table>
     <thead>
       <tr>
-        <th>Insurance</th>
-        <th>Insurance Initial Count</th>
-        <th>Insurance Ratio</th>
-        <th>All Expert Dispatch Count</th>
-        <th>sysCreatedDate</th>
-        <th>sysCreatedBy</th>
-        <th>sysUpdatedDate</th>
-        <th>sysUpdatedBy</th>
+        <th>{{ dico?.dico_insurance || "dico_insurance" }}</th>
+        <th>{{ dico?.dico_insurance_init_count || "dico_insurance_init_count" }}</th>
+        <th>{{ dico?.dico_insurance_ratio || "dico_insurance_ratio" }}</th>
+        <th>{{ dico?.dico_All_Expert_Dispatch_Count || "dico_All_Expert_Dispatch_Count" }}</th>
+        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
         <th></th>
       </tr>
     </thead>
@@ -67,14 +67,14 @@
         <td>{{ exptCompany.sysUpdatedBy }}</td>
         <td>
           <mat-icon (click)="deleteExpertCompany(exptCompany.expertCompanyId!)"
-            >delete</mat-icon
+            >{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon
           >
         </td>
       </tr>
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="9">No data to display</td>
+        <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
       </tr>
     </ng-template>
   </table>

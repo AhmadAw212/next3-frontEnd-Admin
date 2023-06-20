@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../../add-dialogs/add-expert/add-expert.component';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-expert-search-results',
@@ -35,20 +36,29 @@ export class ExpertSearchResultsComponent implements OnInit {
   isLoading: boolean = true;
   showExpertCompany?: boolean = false;
   selectedExpert?: CarExpert;
+  dico?: any;
   @Input() selectedSupplier?: CarSupplier;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.territoryAddress();
     this.getSchedule();
+    this.getDico();
 
     this.dateFormatterService();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   showExpertCompanies(expert: CarExpert) {
     this.showExpertCompany = true;
