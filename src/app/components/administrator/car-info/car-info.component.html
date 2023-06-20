@@ -30,7 +30,7 @@
                 {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
               </th>
               <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-              <th>{{ dico?.dico_denting || "dico_denting" }}</th>
+              <!-- <th>{{ dico?.dico_denting || "dico_denting" }}</th> -->
               <th></th>
             </tr>
           </thead>
@@ -122,7 +122,7 @@
               <td>{{ carInfo.createdBy }}</td>
               <td>{{ carInfo.updated_date | date : reportDateTimeFormat }}</td>
               <td>{{ carInfo.updatedBy }}</td>
-              <td>
+              <!-- <td>
                 <input
                   type="checkbox"
                   name="denting"
@@ -130,7 +130,7 @@
                   [(ngModel)]="carInfo.denting"
                   (change)="onCheckboxChange(carInfo)"
                 />
-              </td>
+              </td> -->
               <td>
                 <mat-icon (click)="deleteCarInfo(carInfo.id!)">delete</mat-icon>
               </td>
