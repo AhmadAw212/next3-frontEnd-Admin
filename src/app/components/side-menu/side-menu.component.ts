@@ -21,6 +21,7 @@ export class SideMenuComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   dico?: any;
+  isLoading: boolean = false;
   toggleMenu() {
     this.sidenav.toggle();
   }
@@ -33,6 +34,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   getDico() {
+    this.isLoading = true;
     const language = localStorage.getItem('selectedLanguage')!;
     this.dataService.Dico(language).subscribe({
       next: (language) => {
@@ -44,6 +46,9 @@ export class SideMenuComponent implements OnInit {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

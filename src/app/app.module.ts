@@ -102,6 +102,7 @@ import { MaterialDamageComponent } from './components/data-entry-view/material-d
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { SendEmailButtonComponent } from './components/send-email-button/send-email-button.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { UpdateDocumentComponent } from './components/administrator/update-dialogs/update-document/update-document.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -179,6 +180,7 @@ import { NgxEditorModule } from 'ngx-editor';
     MaterialDamageComponent,
     SendEmailComponent,
     SendEmailButtonComponent,
+    UpdateDocumentComponent,
   ],
   imports: [
     BrowserModule,

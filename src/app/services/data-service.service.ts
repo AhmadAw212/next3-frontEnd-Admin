@@ -35,13 +35,12 @@ import { CarBroker } from '../model/car-broker';
 import { CarApprovalType } from '../model/car-approval-type';
 import { NearRegionTerritory } from '../model/near-region-territory';
 import { Email } from '../model/email';
-
+import { environment } from '../../environments/environment.development';
 @Injectable({
   providedIn: 'root',
 })
 export class DataServiceService {
-  userUrl = 'http://localhost:9090/next2/api';
-
+  userUrl = environment.userUrl;
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
   updatedCarSupp = new Subject<CarSupplier>();
@@ -277,6 +276,26 @@ export class DataServiceService {
     );
   }
 
+  updateDocument(
+    id: string,
+    fileName: string,
+    filePath: string,
+    contentType: string,
+    company: string,
+    file: File
+  ): Observable<ApiResponse> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const url = `${
+      this.userUrl
+    }/core-document/update?id=${id}&fileName=${encodeURIComponent(
+      fileName
+    )}&filePath=${encodeURIComponent(
+      filePath
+    )}&contentType=${contentType}&company=${company}`;
+
+    return this.http.post<ApiResponse>(url, formData);
+  }
   coreDomainSearch(code: string, description: string) {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/core-domain/search?code=${code}&description=${description}`
@@ -964,7 +983,8 @@ export class DataServiceService {
     body: string,
     subject: string,
     file: File[],
-    bcc: string[]
+    bcc: string[],
+    cc: string[]
   ): Observable<ApiResponse> {
     const formData: FormData = new FormData();
     for (let i = 0; i < file.length; i++) {
@@ -975,7 +995,7 @@ export class DataServiceService {
         this.userUrl
       }/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${encodeURIComponent(
         body
-      )}&subject=${subject}&BCC=${bcc}`,
+      )}&subject=${subject}&BCC=${bcc}&CC=${cc}`,
       formData
     );
   }

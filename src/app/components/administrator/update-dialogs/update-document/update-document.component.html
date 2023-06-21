@@ -1,22 +1,13 @@
 <h2 style="margin: 10px; font-size: large">
-  {{ dico?.dico_add_total_loss_claim || "dico_add_total_loss_claim" }}
+  {{ dico?.dico_update_document || "dico_update_document" }}
 </h2>
 <div class="dialog">
-  <form (ngSubmit)="addDocument()">
+  <form (ngSubmit)="updateDocument()">
+    <div class="logo-preview-container">
+      <img [src]="data.content" alt="Preview Logo" class="preview-logo" />
+    </div>
     <label>{{ dico?.dico_upload_file || "dico_upload_file" }}:</label>
     <input type="file" name="file" (change)="onFileSelected($event)" />
-
-    <!-- <label>{{ dico?.dico_id || "dico_id" }}:</label>
-    <input type="text" id="id" [(ngModel)]="id" name="id" /> -->
-
-    <label>{{ dico?.dico_company || "dico_company" }}:</label>
-    <ng-select appendTo="body" [(ngModel)]="company" name="locale">
-      <ng-option
-        *ngFor="let company of companyList"
-        [value]="company.companyId"
-        >{{ company.companyName }}</ng-option
-      >
-    </ng-select>
 
     <label>{{ dico?.dico_file_name || "dico_file_name" }}:</label>
     <input type="text" name="fileName" [(ngModel)]="fileName" />
@@ -27,6 +18,11 @@
     <label>{{ dico?.dico_content_type || "dico_content_type" }}:</label>
     <input type="text" [(ngModel)]="contentType" name="content-Type" />
 
-    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
+    <button type="submit" class="btn btn-primary">
+      {{ dico?.dico_save || "dico_save" }}
+    </button>
+    <button type="button" class="btn btn-danger" style="margin: 10px">
+      {{ dico?.dico_cancel || "dico_cancel" }}
+    </button>
   </form>
 </div>

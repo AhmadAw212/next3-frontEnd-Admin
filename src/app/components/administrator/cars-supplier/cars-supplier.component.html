@@ -2,7 +2,7 @@
 <button type="button" style="margin-left: 10px">
   {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
 </button>
-<div class="select-container">
+<!-- <div class="select-container">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
     id="bodyTypeNew"
@@ -16,7 +16,7 @@
       {{ company.companyName }}
     </option>
   </select>
-</div>
+</div> -->
 
 <div class="admin-container container-fluid" style="height: 200px">
   <app-spinner *ngIf="isLoading" style="margin-top: 30px"></app-spinner>
@@ -131,10 +131,7 @@
   </div>
 </div>
 
-<div
-  class="admin-container container-fluid"
-  *ngIf="showMoreInfo"
->
+<div class="admin-container container-fluid" *ngIf="showMoreInfo">
   <app-update-car-supp-form
     [supplierType]="suppType"
     [selectedSupplier]="selectedSupplier"

@@ -68,6 +68,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
       BCC: '',
       subject: ['', Validators.required],
       body: '',
+      CC: ['', Validators.required],
     });
     this.emailFormBuild.get('from')?.disable();
   }
@@ -172,9 +173,10 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     const subject = this.emailFormBuild.get('subject')?.value;
     const file = this.attachments!;
     const bcc = this.emailFormBuild.get('BCC')?.value;
+    const cc = this.emailFormBuild.get('CC')?.value;
     // return console.log(this.emailFormBuild.value);
     this.dataService
-      .sendEmail(recipients, fileName, body, subject, file, bcc)
+      .sendEmail(recipients, fileName, body, subject, file, bcc, cc)
       .subscribe({
         next: (res) => {
           this.alertifyService.dialogAlert('Email Sent');

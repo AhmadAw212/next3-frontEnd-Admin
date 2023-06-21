@@ -1,7 +1,9 @@
-<h2>Change Password</h2>
+<h2>{{ dico?.BASIC_CHANGE_PWD || "BASIC_CHANGE_PWD" }}</h2>
 <form class="change-password-form" (ngSubmit)="changePassword()">
   <div>
-    <label for="current-password">Current Password</label>
+    <label for="current-password">{{
+      dico?.BASIC_PWD_CURRENT || "BASIC_PWD_CURRENT"
+    }}</label>
     <input
       type="password"
       id="current-password"
@@ -10,7 +12,9 @@
     />
   </div>
   <div>
-    <label for="new-password">New Password</label>
+    <label for="new-password">{{
+      dico?.BASIC_PWD_NEW || "BASIC_PWD_NEW"
+    }}</label>
     <input
       type="password"
       id="new-password"
@@ -19,7 +23,9 @@
     />
   </div>
   <div>
-    <label for="confirm-password">Confirm Password</label>
+    <label for="confirm-password">{{
+      dico?.dico_confirm_password || "dico_confirm_password"
+    }}</label>
     <input
       type="password"
       id="confirm-password"
@@ -28,9 +34,11 @@
     />
   </div>
   <div class="error" *ngIf="newPassword !== confirmPassword">
-    Passwords do not match
+    <p>
+      {{ dico?.dico_dont_match_password || "dico_dont_match_password" }}
+    </p>
   </div>
   <button type="submit" [disabled]="newPassword !== confirmPassword">
-    Change Password
+    {{ dico?.BASIC_CHANGE_PWD || "BASIC_CHANGE_PWD" }}
   </button>
 </form>

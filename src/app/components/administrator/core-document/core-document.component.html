@@ -33,7 +33,7 @@
             <th>{{ dico?.dico_id || "dico_id" }}</th>
             <th>{{ dico?.dico_file_name || "dico_file_name" }}</th>
             <th>{{ dico?.dico_path || "dico_path" }}</th>
-            <th style="width: 150px">
+            <th>
               {{ dico?.dico_content_type || "dico_content_type" }}
             </th>
             <th>{{ dico?.dico_content || "dico_content" }}</th>
@@ -46,6 +46,7 @@
             </th>
             <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody
@@ -55,8 +56,8 @@
           <tr *ngFor="let document of docData; trackBy: trackDocById">
             <td>{{ document.id }}</td>
             <td>{{ document.fileName }}</td>
-            <td contenteditable="true">{{ document.filePath }}</td>
-            <td contenteditable="true" style="max-width: 200px">
+            <td>{{ document.filePath }}</td>
+            <td>
               {{ document.contentType }}
             </td>
             <td *ngIf="isImage(document.contentType!)">
@@ -78,6 +79,9 @@
             <td>{{ document.updatedBy }}</td>
             <td>
               <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>
+            </td>
+            <td>
+              <mat-icon (click)="UpdateDocDialog(document)">edit</mat-icon>
             </td>
           </tr>
         </tbody>

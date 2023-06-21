@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { UpdateDocumentComponent } from '../update-dialogs/update-document/update-document.component';
 
 @Component({
   selector: 'app-core-document',
@@ -45,6 +46,7 @@ export class CoreDocumentComponent implements OnInit {
       this.dico = data;
     });
   }
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
@@ -107,8 +109,17 @@ export class CoreDocumentComponent implements OnInit {
   openCoreDocDialog() {
     this.dialog.open(AddDocumentDialogComponent);
   }
+  UpdateDocDialog(selectedDoc: CoreDocument) {
+    // this.selectedDoc = selectedDoc;
+    const dialogRef = this.dialog.open(UpdateDocumentComponent, {
+      data: selectedDoc,
+    });
 
-  openUpdateDocumentDialog(document: CoreDocument) {
-    // this.dialog.open();
+    dialogRef.afterClosed().subscribe(() => {
+      this.coreDocSearch();
+    });
   }
+  // openUpdateDocumentDialog(document: CoreDocument) {
+  //   // this.dialog.open();
+  // }
 }

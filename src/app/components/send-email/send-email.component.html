@@ -70,6 +70,31 @@
       </div>
 
       <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="bcc">CC:</label>
+            <div class="recipients-input">
+              <ng-select
+                [items]="recipients"
+                formControlName="CC"
+                [multiple]="true"
+                [addTag]="true"
+                (search)="searchRecipients($event)"
+              >
+              </ng-select>
+              <button
+                type="button"
+                class="btn btn-primary add-recipient-btn"
+                (click)="addRecipient()"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label for="subject">Subject:</label>
