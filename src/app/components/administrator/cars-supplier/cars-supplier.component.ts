@@ -103,20 +103,18 @@ export class CarsSupplierComponent implements OnInit {
 
   searchCarSupplier() {
     this.isLoading = true;
-    this.dataService
-      .findCarSupplier(this.company!, this.name!, this.selectedType!)
-      .subscribe({
-        next: (res) => {
-          this.carSupplier = res.data;
-          // console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+    this.dataService.findCarSupplier(this.name!, this.selectedType!).subscribe({
+      next: (res) => {
+        this.carSupplier = res.data;
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
   handleSupplierUpdated(event: any) {
     this.carSupplier = event;

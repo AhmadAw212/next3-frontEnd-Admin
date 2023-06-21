@@ -10,7 +10,8 @@ import { AddTrademarkDialogComponent } from '../add-dialogs/add-trademark-dialog
 import { UpdateTrademarkDialogComponent } from '../update-dialogs/update-trademark-dialog/update-trademark-dialog.component';
 import { CarShape } from 'src/app/model/car-shape';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-car-trademark',
   templateUrl: './car-trademark.component.html',
@@ -40,6 +41,38 @@ export class CarTrademarkComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carTrademark?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        Description: data.description,
+        'Created Date': data.created_date,
+        'Created By': data.createdBy,
+        'Updated Date': data.updated_date,
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Car TradeMark');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Car_Trademark.xlsx');
   }
   getDico() {
     this.dicoService.getDico();

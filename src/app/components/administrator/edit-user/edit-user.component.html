@@ -1,6 +1,17 @@
 <app-spinner *ngIf="!dico"></app-spinner>
 <div *ngIf="dico">
-  <h3 class="h3-header">{{ dico?.dico_edit_user || "dico_dico_edit_user" }}</h3>
+  <div class="h3-header">
+    <h3>
+      {{ dico?.dico_edit_user || "dico_dico_edit_user" }}
+      <button
+        type="button"
+        (click)="exportToExcel()"
+        class="export-excel btn btn-primary"
+      >
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+      </button>
+    </h3>
+  </div>
   <div
     class="admin-container container-fluid"
     style="height: 200px; padding: 10px"
@@ -35,17 +46,20 @@
       <table>
         <thead>
           <tr>
-            <th></th>
-            <th>{{ dico?.BASIC_EDIT || "dico.BASIC_EDIT" }}</th>
             <th>{{ dico?.dico_code || "dico_code" }}</th>
             <th>{{ dico?.dico_display_name || "dico_display_name" }}</th>
             <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
             <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
             <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
-            <th>Created Date</th>
-            <th>Created By</th>
-            <th>Updated Date</th>
-            <th>Updated By</th>
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
+            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
+            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+            <th></th>
             <th></th>
             <th></th>
           </tr>
@@ -53,17 +67,8 @@
         <tbody *ngIf="users!.length > 0; else noData">
           <tr
             *ngFor="let user of users!"
-            (click)="selectedUser = user"
-            [class.selected]="user === selectedUser"
+            (click)="showProfList(user); highlightRow($event)"
           >
-            <td>
-              <span class="material-icons" (click)="showProfList(user)"
-                >arrow_circle_down</span
-              >
-            </td>
-            <td (click)="openDialog(user)">
-              <span class="material-icons">edit</span>
-            </td>
             <td>{{ user.userName }}</td>
             <td>{{ user.displayName }}</td>
             <td>{{ user.email }}</td>
@@ -98,6 +103,9 @@
               <button type="submit" class="table-btn" (click)="resetPassword()">
                 {{ dico?.dico_reset_password || "dico_reset_password" }}
               </button>
+            </td>
+            <td (click)="openDialog(user)">
+              <span class="material-icons">edit</span>
             </td>
           </tr>
         </tbody>

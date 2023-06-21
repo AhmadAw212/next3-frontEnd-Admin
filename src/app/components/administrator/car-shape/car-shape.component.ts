@@ -10,7 +10,8 @@ import { UpdateShapeDialogComponent } from '../update-dialogs/update-shape-dialo
 import { CarTrademark } from 'src/app/model/car-trademark';
 import { CarInfo } from 'src/app/model/car-info';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-car-shape',
   templateUrl: './car-shape.component.html',
@@ -38,6 +39,38 @@ export class CarShapeComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carShape?.map((data) => {
+      return {
+        ID: data.carShapeId,
+        Code: data.carShapeCode,
+        Description: data.carShapeDescription,
+        'Created Date': data.created_date,
+        'Created By': data.updated_date,
+        'Updated Date': data.updated_date,
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Car Shape');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Car_Shape.xlsx');
   }
   getDico() {
     this.dicoService.getDico();

@@ -9,7 +9,8 @@ import { AddCarBrandDialogComponent } from '../add-dialogs/add-car-brand-dialog/
 import { UpdateCarDialogComponent } from '../update-dialogs/update-car-dialog/update-car-dialog.component';
 import { CarTrademark } from 'src/app/model/car-trademark';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-cars-brand',
   templateUrl: './cars-brand.component.html',
@@ -40,6 +41,38 @@ export class CarsBrandComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carsBrandData?.map((data) => {
+      return {
+        ID: data.carBrandId,
+        Code: data.carBrandCode,
+        Description: data.carBrandDescription,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Cars Brands');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Cars_Brands.xlsx');
   }
   getDico() {
     this.isLoading = true;

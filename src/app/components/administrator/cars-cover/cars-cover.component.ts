@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarCover } from 'src/app/model/car-cover';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
@@ -8,8 +8,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarCoverComponent } from '../add-dialogs/add-car-cover/add-car-cover.component';
 import { UpdateCarCoverComponent } from '../update-dialogs/update-car-cover/update-car-cover.component';
-import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 interface type {
   code: string;
@@ -52,7 +52,6 @@ export class CarsCoverComponent implements OnInit {
     return brand.id;
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -69,66 +68,40 @@ export class CarsCoverComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
 
-  exportToExcel(): void {
-    const element = document.getElementById('table');
-    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+  exportToExcel() {
+    // Prepare the data to export
+    const data = this.carCover?.map((cover) => {
+      return {
+        ID: cover.id,
+        Code: cover.code,
+        Description: cover.description,
+        Type: cover.type,
+        'Created Date': new Date(cover.sysCreatedDate!).toLocaleDateString(),
+        'Created By': cover.sysCreatedBy,
+        'Updated Date': new Date(cover.sysUpdatedDate!).toLocaleDateString(),
+        'Updated By': cover.sysUpdatedBy,
+      };
+    });
 
-    // Exclude the last two columns from exporting
-    const excludedColumns = [8, 9]; // Column indices to exclude
-    const range = XLSX.utils.decode_range(worksheet['!ref']!);
-    for (let R = range.s.r; R <= range.e.r; ++R) {
-      excludedColumns.forEach((columnIndex) => {
-        const cellAddress = XLSX.utils.encode_cell({ r: R, c: columnIndex });
-        delete worksheet[cellAddress];
-      });
-    }
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
 
-    // Get the selected cover type value
-    const selectedCoverType = this.carCover!.map((cover) => cover.type);
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Car Covers');
 
-    // console.log(selectedCoverType);
-
-    const updateWorksheetWithCoverType = (
-      worksheet: XLSX.WorkSheet,
-      coverTypeValues: (string | undefined)[]
-    ): void => {
-      const range = XLSX.utils.decode_range(worksheet['!ref']!);
-      const coverTypeColumnIndex = 3; // Index of the column to update with cover type description
-
-      for (let R = range.s.r + 1; R <= range.e.r; R++) {
-        const cellAddress = XLSX.utils.encode_cell({
-          r: R,
-          c: coverTypeColumnIndex,
-        });
-        const coverType = coverTypeValues[R - 1];
-        worksheet[cellAddress] = { v: coverType || '', w: coverType || '' };
-      }
-    };
-
-    updateWorksheetWithCoverType(worksheet, selectedCoverType);
-
-    const workbook: XLSX.WorkBook = {
-      Sheets: { data: worksheet },
-      SheetNames: ['data'],
-    };
-
-    const excelBuffer: any = XLSX.write(workbook, {
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
       bookType: 'xlsx',
       type: 'array',
     });
 
-    const data: Blob = new Blob([excelBuffer], {
+    // Convert the buffer to a Blob and save the file
+    const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-
-    const url = window.URL.createObjectURL(data);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'table.xlsx';
-    link.click();
-    window.URL.revokeObjectURL(url);
+    saveAs(excelBlob, 'car_covers.xlsx');
   }
-
   dateFormatterService() {
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
@@ -165,7 +138,7 @@ export class CarsCoverComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.carCover = res.data;
-          // console.log(res);
+          console.log(res.data);
         },
         error: (err) => {
           console.log(err);

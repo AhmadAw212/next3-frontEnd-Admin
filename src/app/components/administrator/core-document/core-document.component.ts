@@ -8,7 +8,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UpdateDocumentComponent } from '../update-dialogs/update-document/update-document.component';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-core-document',
   templateUrl: './core-document.component.html',
@@ -46,7 +47,40 @@ export class CoreDocumentComponent implements OnInit {
       this.dico = data;
     });
   }
+  exportToExcel() {
+    const data = this.docData?.map((data) => {
+      return {
+        ID: data.id,
+        Company: data.company,
+        'Content Type': data.contentType,
+        'File Name': data.fileName,
+        'File Path': data.filePath,
+        'Created Date': data.createdDate,
+        'Created By': data.createdBy,
+        'Updated Date': data.updateDate,
+        'Updated By': data.updatedBy,
+      };
+    });
 
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Core Document');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Core_Document.xlsx');
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

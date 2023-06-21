@@ -8,7 +8,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarInfoComponent } from '../add-dialogs/add-car-info/add-car-info.component';
 import { CarShape } from 'src/app/model/car-shape';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 interface carInfoList {
   code: string;
   description: string;
@@ -47,6 +48,44 @@ export class CarInfoComponent implements OnInit {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carInfo?.map((data) => {
+      return {
+        ID: data.id,
+        'Body Type': data.bodyTypeCode,
+        'Body Type old ': data.bodyType_lov_old_desc,
+        'Body Type new ': data.bodyType_lov_new_desc,
+        Doors: data.doors_lov_desc,
+        Size: data.vehicle_size_lov_desc,
+        'From Year': data.fromYear,
+        'To Year': data.toYear,
+        HP: data.hp,
+        'Created Date': data.created_date,
+        'Created By': data.createdBy,
+        'Updated Date': data.updated_date,
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Car Info');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Car_Info.xlsx');
   }
   getDico() {
     this.dicoService.getDico();
@@ -232,7 +271,7 @@ export class CarInfoComponent implements OnInit {
     this.dataService.getcarInfo(shapeId).subscribe({
       next: (res) => {
         this.carInfo = res.data;
-        // console.log(res);
+        console.log(res);
       },
       error: (err) => {
         console.log(err);

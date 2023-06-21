@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_branch_configuration || "dico_branch_configuration" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_branch_configuration || "dico_branch_configuration" }}
+</h3>
 <div class="select-container">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
@@ -22,7 +24,9 @@
       <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
       <input type="text" id="code" name="code" [(ngModel)]="code" />
 
-      <label for="description">{{ dico?.dico_description || "dico_description" }}:</label>
+      <label for="description"
+        >{{ dico?.dico_description || "dico_description" }}:</label
+      >
       <input
         type="text"
         id="description"
@@ -30,7 +34,9 @@
         [(ngModel)]="description"
       />
 
-      <button type="submit" class="btn btn-primary">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+      <button type="submit" class="btn btn-primary">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
     </form>
     <div class="btn-group">
       <button type="button" class="btn btn-primary" (click)="addBranchDialog()">
@@ -53,7 +59,11 @@
         <th>{{ dico?.dico_id || "dico_id" }}</th>
         <th>{{ dico?.dico_code || "dico_code" }}</th>
         <th>{{ dico?.dico_description || "dico_description" }}</th>
-        <th>{{ dico?.dico_part_arabic_description || "dico_part_arabic_description" }}</th>
+        <th>
+          {{
+            dico?.dico_part_arabic_description || "dico_part_arabic_description"
+          }}
+        </th>
         <th>{{ dico?.dico_address1 || "dico_address1" }}</th>
         <th>{{ dico?.dico_address2 || "dico_address2" }}</th>
         <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
@@ -102,13 +112,15 @@
         <td>{{ branch.sysUpdatedBy }}</td>
 
         <td>
-          <mat-icon (click)="deleteBranch(branch.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
+          <mat-icon (click)="deleteBranch(branch.id!)">delete</mat-icon>
         </td>
       </tr>
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
       </tr>
     </ng-template>
   </table>

@@ -675,15 +675,9 @@ export class DataServiceService {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/getGenderList`);
   }
 
-  findCarSupplier(
-    insuranceId: string,
-    nameSubstring: string,
-    interm_code: string
-  ) {
+  findCarSupplier(nameSubstring: string, interm_code: string) {
     return this.http.get<ApiResponse>(
-      `${
-        this.userUrl
-      }/cars-supplier/${insuranceId}/search?nameSubstring=${encodeURIComponent(
+      `${this.userUrl}/cars-supplier/search?nameSubstring=${encodeURIComponent(
         nameSubstring
       )}&interm_code=${interm_code}`
     );

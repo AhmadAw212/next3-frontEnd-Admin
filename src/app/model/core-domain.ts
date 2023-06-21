@@ -1,7 +1,6 @@
 export interface CoreDomain {
   id?: string;
   code?: string;
-
   description?: string;
   preference_code?: string;
   createdDate?: Date;

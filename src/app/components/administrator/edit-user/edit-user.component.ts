@@ -12,7 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -26,6 +27,7 @@ export class EditUserComponent implements OnInit {
   dico?: any;
   roleNames?: string[] = [];
   reportDateTimeFormat?: string;
+  selectedRow!: HTMLElement;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -42,6 +44,50 @@ export class EditUserComponent implements OnInit {
     this.getDico();
     this.dateFormatterService();
     this.userRolesService.getUserRoles();
+  }
+  highlightRow(event: Event) {
+    const clickedRow = event.target as HTMLElement;
+
+    if (this.selectedRow) {
+      this.selectedRow.classList.remove('highlight');
+    }
+
+    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow.classList.add('highlight');
+  }
+  exportToExcel() {
+    const data = this.users?.map((user) => {
+      return {
+        'User Name': user.userName,
+        'Display Name': user.displayName,
+        Email: user.email,
+        Company: user.companyDescription,
+        Active: user.activeDesc,
+        'Created Date': user.sysCreatedDate,
+        'Created By': user.sysCreatedBy,
+        'Updated Date': user.sysUpdatedDate,
+        'Updated By': user.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Users.xlsx');
   }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();

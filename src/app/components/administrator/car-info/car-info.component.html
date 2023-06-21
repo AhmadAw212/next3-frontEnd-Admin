@@ -1,5 +1,17 @@
 <div class="form-tab">
-  <h3 class="h3-header">{{ dico?.dico_car_info || "dico_car_info" }}</h3>
+  <div class="h3-header">
+    <h3>
+      {{ dico?.dico_car_info || "dico_car_info" }}
+
+      <button
+        type="button"
+        (click)="exportToExcel()"
+        class="export-excel btn btn-primary"
+      >
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+      </button>
+    </h3>
+  </div>
   <div class="admin-container container-fluid" style="height: 200px">
     <div class="admin-button">
       <button type="button" (click)="openAddCarInfoDialog()">

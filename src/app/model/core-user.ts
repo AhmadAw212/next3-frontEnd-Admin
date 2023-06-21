@@ -1,5 +1,6 @@
 export interface CoreUser {
   active?: number;
+  activeDesc?: string;
   displayName?: string;
   userName: string;
   email?: string;
@@ -17,7 +18,7 @@ export interface CoreUser {
   companyDescription?: string;
   userEmailSignature?: string;
   sysCreatedBy?: string;
-  sysCreatedDate?: string;
+  sysCreatedDate?: Date;
   sysUpdatedBy?: string;
-  sysUpdatedDate?: string;
+  sysUpdatedDate?: Date;
 }

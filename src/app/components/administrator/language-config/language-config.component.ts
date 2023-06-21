@@ -7,7 +7,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-language-config',
   templateUrl: './language-config.component.html',
@@ -35,6 +36,40 @@ export class LanguageConfigComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatterService();
     this.getDico();
+  }
+
+  exportToExcel() {
+    const data = this.resourceData?.map((data) => {
+      return {
+        ID: data.id,
+        Locale: data.locale,
+        'Language Key': data.resourceKey,
+        'Language Value': data.resourceValue,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Language Configuration');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Language_Config.xlsx');
   }
 
   getDico() {

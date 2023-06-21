@@ -8,7 +8,9 @@
 >
   <div class="user-inputs">
     <div class="admin-button">
-      <button type="button" (click)="openAddExpertDialog()">{{ dico?.dico_Add_Expert_to || "dico_Add_Expert_to" }}</button>
+      <button type="button" (click)="openAddExpertDialog()">
+        {{ dico?.dico_Add_Expert_to || "dico_Add_Expert_to" }}
+      </button>
 
       <button type="button" style="margin-left: 8px" (click)="updateExpert()">
         {{ dico?.dico_update_Expert || "dico_update_Expert" }}
@@ -128,14 +130,16 @@
         <td>{{ expert.updatedDate | date : reportDateTimeFormat }}</td>
         <td>{{ expert.updatedBy }}</td>
         <td>
-          <mat-icon (click)="deleteExpert(expert.id!)">{{ dico?.BASIC_DELETE || "BASIC_DELETE" }}</mat-icon>
+          <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>
         </td>
       </tr>
     </tbody>
   </table>
   <ng-template #noData>
     <tr>
-      <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+      <td colspan="5">
+        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+      </td>
       <!-- <div *ngIf="!isLoading">No data to display</div> -->
     </tr>
   </ng-template>

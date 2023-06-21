@@ -1,7 +1,16 @@
-<h3 class="h3-header">
-  {{ dico?.dico_document_configuration || "dico_document_configuration" }}
-</h3>
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_document_configuration || "dico_document_configuration" }}
 
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
@@ -20,79 +29,76 @@
       <button type="button" (click)="openCoreDocDialog()">
         {{ dico?.dico_add_total_loss_claim || "dico_add_total_loss_claim" }}
       </button>
-      <button type="button" style="margin-left: 8px">
+      <!-- <button type="button" style="margin-left: 8px">
         {{ dico?.dico_Update || "dico_Update" }}
-      </button>
+      </button> -->
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_id || "dico_id" }}</th>
-            <th>{{ dico?.dico_file_name || "dico_file_name" }}</th>
-            <th>{{ dico?.dico_path || "dico_path" }}</th>
-            <th>
-              {{ dico?.dico_content_type || "dico_content_type" }}
-            </th>
-            <th>{{ dico?.dico_content || "dico_content" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="docData?.length! > 0; else noData"
-          (click)="highlightRow($event)"
-        >
-          <tr *ngFor="let document of docData; trackBy: trackDocById">
-            <td>{{ document.id }}</td>
-            <td>{{ document.fileName }}</td>
-            <td>{{ document.filePath }}</td>
-            <td>
-              {{ document.contentType }}
-            </td>
-            <td *ngIf="isImage(document.contentType!)">
-              <div class="car-logo-container">
-                <img [src]="document.content" class="car-logo" />
-                <div class="car-logo-dialog">
-                  <img [src]="document.content" class="car-logo-dialog-image" />
-                </div>
-              </div>
-            </td>
-            <td *ngIf="!isImage(document.contentType!)">
-              <a [href]="document.content" target="_blank">{{
-                document.fileName
-              }}</a>
-            </td>
-            <td>{{ document.createdDate | date : reportDateTimeFormat }}</td>
-            <td>{{ document.createdBy }}</td>
-            <td>{{ document.updateDate | date : reportDateTimeFormat }}</td>
-            <td>{{ document.updatedBy }}</td>
-            <td>
-              <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>
-            </td>
-            <td>
-              <mat-icon (click)="UpdateDocDialog(document)">edit</mat-icon>
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="9">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_file_name || "dico_file_name" }}</th>
+        <th>{{ dico?.dico_path || "dico_path" }}</th>
+        <th>
+          {{ dico?.dico_content_type || "dico_content_type" }}
+        </th>
+        <th>{{ dico?.dico_content || "dico_content" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="docData?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let document of docData; trackBy: trackDocById">
+        <td>{{ document.id }}</td>
+        <td>{{ document.fileName }}</td>
+        <td>{{ document.filePath }}</td>
+        <td>
+          {{ document.contentType }}
+        </td>
+        <td *ngIf="isImage(document.contentType!)">
+          <div class="car-logo-container">
+            <img [src]="document.content" class="car-logo" />
+            <div class="car-logo-dialog">
+              <img [src]="document.content" class="car-logo-dialog-image" />
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!isImage(document.contentType!)">
+          <a [href]="document.content" target="_blank">{{
+            document.fileName
+          }}</a>
+        </td>
+        <td>{{ document.createdDate | date : reportDateTimeFormat }}</td>
+        <td>{{ document.createdBy }}</td>
+        <td>{{ document.updateDate | date : reportDateTimeFormat }}</td>
+        <td>{{ document.updatedBy }}</td>
+        <td>
+          <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>
+        </td>
+        <td>
+          <mat-icon (click)="UpdateDocDialog(document)">edit</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>

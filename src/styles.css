@@ -49,7 +49,10 @@ table {
   width: 100%;
 
 }
-
+.export-excel{
+  float: right;
+  /* margin: 5px; */
+}
 th {
   background-color: #025696;
   color: white;
@@ -121,8 +124,8 @@ table.table thead th {
     padding: 5px;
     background-color: #025696;
     color: #fff;
-    text-transform: uppercase;
-    font-size: 11px;
+    /* text-transform: uppercase; */
+    /* font-size: 11px; */
     /* font-weight: normal; */
 }
 .grid-container {

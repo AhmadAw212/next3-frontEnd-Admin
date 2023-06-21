@@ -1,6 +1,16 @@
-<h3 class="h3-header">
-  {{ dico?.dico_domain_configuration || "dico_domain_configuration" }}
-</h3>
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_domain_configuration || "dico_domain_configuration" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 
 <div class="admin-container container-fluid" style="height: 250px">
   <div class="user-inputs">
@@ -89,13 +99,24 @@
   </table>
 </div>
 
-<div
-  class="admin-container container-fluid"
-  style="height: 300px"
-  *ngIf="showDomainValue"
->
-  <app-core-domain-value
-    [domainValues]="domainValuesList"
-    [domain]="domain"
-  ></app-core-domain-value>
+<div *ngIf="showDomainValue">
+  <div class="h3-header">
+    <h3>
+      {{ dico?.dico_domain_value || "dico_domain_value" }}
+
+      <button
+        type="button"
+        class="export-excel btn btn-primary"
+        (click)="exportDomainValueToExcel()"
+      >
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+      </button>
+    </h3>
+  </div>
+  <div class="admin-container container-fluid" style="height: 300px">
+    <app-core-domain-value
+      [domainValues]="domainValuesList"
+      [domain]="domain"
+    ></app-core-domain-value>
+  </div>
 </div>

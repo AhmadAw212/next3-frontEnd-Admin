@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CoreDomainValue } from 'src/app/model/core-domain-value';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-core-domain',
   templateUrl: './core-domain.component.html',
@@ -47,9 +49,93 @@ export class CoreDomainComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.domainData?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        Description: data.description,
+        'Preference Code': data.preference_code,
+        'Created Date': data.createdDate,
+        'Created By': data.createdBy,
+        'Updated Date': data.updateDate,
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Core Domain Configuration'
+    );
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Core_Domain.xlsx');
+  }
+
+  exportDomainValueToExcel() {
+    const data = this.domainValuesList?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        Description: data.description,
+        'Value 1': data.val1,
+        'Value 2': data.val2,
+        'Value 3': data.val3,
+        'Value 4': data.val4,
+        'Value 5': data.val5,
+        'Value 6': data.val6,
+        'Value 7': data.val7,
+        'Value 8': data.val8,
+        'Value 9': data.val9,
+        'Value 10': data.val10,
+        'Value 11': data.val11,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Core Domain Value Configuration'
+    );
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Core_Domain_Value.xlsx');
   }
   getDico() {
     this.isLoading = true;
@@ -59,6 +145,7 @@ export class CoreDomainComponent implements OnInit {
     });
   }
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe(() => {
       this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
     });
@@ -93,7 +180,7 @@ export class CoreDomainComponent implements OnInit {
         preference_code: domain.preference_code,
         sysActiveFlag,
       });
-      console.log(this.updatedDomainValues);
+      // console.log(this.updatedDomainValues);
     }
   }
 
@@ -114,7 +201,7 @@ export class CoreDomainComponent implements OnInit {
       preference_code: domain.preference_code,
       sysActiveFlag,
     });
-    console.log(this.updatedDomainValues);
+    // console.log(this.updatedDomainValues);
   }
 
   getDomainValuesData(id: string, domain: CoreDomain) {
@@ -124,7 +211,7 @@ export class CoreDomainComponent implements OnInit {
     this.dataService.coreDomainValue(id).subscribe({
       next: (res) => {
         this.domainValuesList = res.data;
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -139,7 +226,7 @@ export class CoreDomainComponent implements OnInit {
       next: (res) => {
         this.domainData = res.data;
 
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);
