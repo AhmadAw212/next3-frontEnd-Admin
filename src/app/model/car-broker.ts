@@ -5,6 +5,7 @@ export interface CarBroker {
   contactInfo?: string;
   description2?: string;
   insuranceId?: string;
+  insuranceDescription?: string;
   email?: string;
   telephone?: string;
   reference?: string;

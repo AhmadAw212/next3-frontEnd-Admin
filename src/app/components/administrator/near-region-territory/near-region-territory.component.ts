@@ -14,7 +14,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddNearRegionTerritoryComponent } from './add-near-region-territory/add-near-region-territory.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-near-region-territory',
   templateUrl: './near-region-territory.component.html',
@@ -43,6 +44,41 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.getRegionTerritory();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.nearRegion?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.near_RegionCode,
+        Description: data.near_RegionDescription,
+        'Central Region Code': data.central_regionCode,
+        'Central Region Description': data.central_regionDescription,
+        Priority: data.priority,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Core Configuration');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Core_Config.xlsx');
   }
   getDico() {
     this.dicoService.getDico();

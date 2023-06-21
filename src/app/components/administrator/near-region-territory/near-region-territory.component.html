@@ -1,8 +1,17 @@
-<div class="admin-container container-fluid" style="height: 250px">
-  <h3 class="h3-header">
+<div class="h3-header">
+  <h3>
     {{ dico?.dico_near_region || "dico_near_region" }}
-  </h3>
 
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div class="admin-container container-fluid" style="height: 250px">
   <div class="user-inputs">
     <div class="admin-button">
       <button type="button" (click)="addNearRegionDialog()">

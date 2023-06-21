@@ -4,6 +4,7 @@ export interface Branch {
   description?: string;
   arabic_description?: string;
   insuranceId?: string;
+  insuranceDescription?: string;
   address1?: string;
   address2?: string;
   sysCreatedBy?: string;

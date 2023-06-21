@@ -10,7 +10,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarSupplierComponent } from '../add-dialogs/add-car-supplier/add-car-supplier.component';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-cars-supplier',
   templateUrl: './cars-supplier.component.html',
@@ -64,6 +65,34 @@ export class CarsSupplierComponent implements OnInit {
     this.dateFormatterService();
     this.getSupplierGrade();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carSupplier?.map((data) => {
+      return {
+        ID: data.id,
+        // Description: data.description,
+        // 'Configuration Key': data.configKey,
+        // 'Configuration Value': data.configValue,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Core Configuration');
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Core_Config.xlsx');
   }
   getDico() {
     this.dicoService.getDico();

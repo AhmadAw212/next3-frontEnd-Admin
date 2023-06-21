@@ -1,4 +1,16 @@
-<h3 class="h3-header">{{ dico?.dico_near_region_territory || "dico_near_region_territory" }}</h3>
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_near_region_territory || "dico_near_region_territory" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 <div class="admin-container container-fluid" style="height: 250px">
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
@@ -31,7 +43,9 @@
     </tbody>
     <ng-template #noData>
       <tr>
-        <td colspan="5">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
       </tr>
     </ng-template>
   </table>

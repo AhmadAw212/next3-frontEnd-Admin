@@ -1,22 +1,16 @@
-<h3 class="h3-header">{{ dico?.dico_car_supplier || "dico_car_supplier" }}</h3>
-<button type="button" style="margin-left: 10px">
-  {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
-</button>
-<!-- <div class="select-container">
-  <span>{{ dico?.dico_company || "dico_company" }}:</span>
-  <select
-    id="bodyTypeNew"
-    name="bodyTypeNew"
-    required
-    class="company-select"
-    [(ngModel)]="company"
-    [disabled]="companies?.length! <= 1"
-  >
-    <option *ngFor="let company of companies" [value]="company.companyId">
-      {{ company.companyName }}
-    </option>
-  </select>
-</div> -->
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_car_supplier || "dico_car_supplier" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 
 <div class="admin-container container-fluid" style="height: 200px">
   <app-spinner *ngIf="isLoading" style="margin-top: 30px"></app-spinner>

@@ -1,6 +1,17 @@
-<h3 class="h3-header">
-  {{ dico?.dico_cars_report_list || "dico_cars_report_list" }}
-</h3>
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_cars_report_list || "dico_cars_report_list" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+
 <div class="admin-container container-fluid">
   <div class="user-inputs">
     <form (ngSubmit)="searchCarReport()">
@@ -130,9 +141,9 @@
             <td>{{ report.sysUpdatedDate | date : reportDateTimeFormat }}</td>
             <td>{{ report.sysUpdatedBy }}</td>
             <td>
-              <mat-icon (click)="deleteCarReportList(report.id!)">{{
-                dico?.BASIC_DELETE || "BASIC_DELETE"
-              }}</mat-icon>
+              <mat-icon (click)="deleteCarReportList(report.id!)"
+                >delete</mat-icon
+              >
             </td>
           </tr>
         </tbody>

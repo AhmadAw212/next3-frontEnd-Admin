@@ -7,7 +7,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddReportListComponent } from '../add-dialogs/add-report-list/add-report-list.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-cars-report-list',
   templateUrl: './cars-report-list.component.html',
@@ -31,16 +32,54 @@ export class CarsReportListComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService
-
   ) {}
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
-    
+  }
+  exportToExcel() {
+    const data = this.carReport?.map((data) => {
+      return {
+        ID: data.id,
+        Report: data.report,
+        Role: data.role,
+        Query: data.sql,
+        Sheet: data.sheet,
+        Order: data.order,
+        File: data.file,
+        'File Extension': data.fileExtension,
+        Directory: data.directory,
+        Email: data.email,
+        'Email Done': data.emailDone,
+        Notes: data.notes,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report List');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Report_List.xlsx');
   }
   getDico() {
-
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;

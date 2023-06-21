@@ -6,7 +6,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-town-territory',
   templateUrl: './town-territory.component.html',
@@ -34,6 +35,33 @@ export class TownTerritoryComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.townTerritory?.map((data) => {
+      return {
+        Code: data.code,
+        Description: data.description,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Territories');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Territories.xlsx');
   }
   getDico() {
     this.dicoService.getDico();

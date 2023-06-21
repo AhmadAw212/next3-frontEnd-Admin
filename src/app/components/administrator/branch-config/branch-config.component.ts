@@ -8,7 +8,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddBranchComponent } from '../add-dialogs/add-branch/add-branch.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-branch-config',
   templateUrl: './branch-config.component.html',
@@ -45,8 +46,43 @@ export class BranchConfigComponent implements OnInit {
     this.dateFormatterService();
     this.getDico();
   }
+  exportToExcel() {
+    const data = this.branches?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.description,
+        Description: data.description,
+        'Arabic description': data.arabic_description,
+        Company: data.insuranceDescription,
+        'Address 1': data.address1,
+        'Address 2': data.address2,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Branch Configuration');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Branch_config.xlsx');
+  }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
