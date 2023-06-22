@@ -75,10 +75,10 @@ export class CarsCoverComponent implements OnInit {
         ID: cover.id,
         Code: cover.code,
         Description: cover.description,
-        Type: cover.type,
-        'Created Date': new Date(cover.sysCreatedDate!).toLocaleDateString(),
+        Type: cover.coverTypeDescription,
+        'Created Date': cover.sysCreatedDate,
         'Created By': cover.sysCreatedBy,
-        'Updated Date': new Date(cover.sysUpdatedDate!).toLocaleDateString(),
+        'Updated Date': cover.sysUpdatedDate,
         'Updated By': cover.sysUpdatedBy,
       };
     });
