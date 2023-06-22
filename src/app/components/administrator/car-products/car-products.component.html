@@ -1,5 +1,18 @@
 <div *ngIf="dico; else spinner">
-  <h3 class="h3-header">{{ dico?.dico_product || "dico_product" }}</h3>
+  <div class="h3-header">
+    <h3>
+      {{ dico?.dico_product || "dico_product" }}
+
+      <button
+        type="button"
+        (click)="exportToExcel()"
+        class="export-excel btn btn-primary"
+      >
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+      </button>
+    </h3>
+  </div>
+
   <div class="select-container">
     <span>{{ dico?.dico_company || "dico_company" }}:</span>
     <select

@@ -69,13 +69,13 @@ export class CarsCoverComponent implements OnInit {
   }
 
   exportToExcel() {
-    // Prepare the data to export
     const data = this.carCover?.map((cover) => {
       return {
         ID: cover.id,
         Code: cover.code,
         Description: cover.description,
         Type: cover.coverTypeDescription,
+        Company: cover.insuranceDesc,
         'Created Date': cover.sysCreatedDate,
         'Created By': cover.sysCreatedBy,
         'Updated Date': cover.sysUpdatedDate,

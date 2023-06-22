@@ -2,6 +2,7 @@ export interface CarSupplier {
   id: string;
   companyId: string;
   interm: string;
+  intermDesc?: string;
   number: number;
   titre: string;
   email: string;
@@ -12,7 +13,11 @@ export interface CarSupplier {
   home_building: string;
   street: string;
   home_phone: string;
-  bus_street: string;
+  // bus_street: string;
+  business_caza: string;
+  business_region: string;
+  business_street: string;
+  business_town: string;
   bus_phone: string;
   mobile_number: string;
   fax: string;
@@ -25,6 +30,7 @@ export interface CarSupplier {
   home_id: string;
   bus_id: string;
   grade_id: string;
+  gradeDesc?: string;
   show_in_list: boolean;
   fullName: string;
   out_network: boolean;

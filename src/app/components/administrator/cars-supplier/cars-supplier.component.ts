@@ -12,6 +12,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-cars-supplier',
   templateUrl: './cars-supplier.component.html',
@@ -38,8 +39,10 @@ export class CarsSupplierComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private loadingService: LoadingServiceService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 
@@ -70,12 +73,41 @@ export class CarsSupplierComponent implements OnInit {
     const data = this.carSupplier?.map((data) => {
       return {
         ID: data.id,
-        // Description: data.description,
-        // 'Configuration Key': data.configKey,
-        // 'Configuration Value': data.configValue,
-        'Created Date': data.sysCreatedDate,
+        Type: data.intermDesc,
+        Number: data.number,
+        Title: data.titre,
+        'First Name': data.firstname,
+        'Father Name': data.fathersName,
+        'prefix Name': data.prefixFam,
+        'Last Name': data.lastname,
+        Email: data.email,
+        'Mobile Number': data.mobile_number,
+        'Bussines Phone': data.bus_phone,
+        'Home Phone': data.home_phone,
+        Fax: data.fax,
+        'Home Address': data.home_id,
+        'Bussines Address': data.bus_id,
+        'Arabic Name': data.arabic_name,
+        Grade: data.gradeDesc,
+        'Initial Count': data.initialCount,
+        'Registration Number': data.registration_number,
+        'TVA Number': data.tva_number,
+        'Active Date': data.fdate,
+        'Inactive Date': data.inAcctD,
+        SMS: data.sms,
+        'Include App': data.include_app,
+        'Show In List': data.show_in_list,
+        'Out Network': data.out_network,
+
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          'yyyy-MM-dd HH:mm:ss'
+        ),
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          'yyyy-MM-dd HH:mm:ss'
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -83,7 +115,7 @@ export class CarsSupplierComponent implements OnInit {
     const worksheet = XLSX.utils.json_to_sheet(data!);
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Core Configuration');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Suppliers');
 
     const excelBuffer = XLSX.write(workbook, {
       bookType: 'xlsx',
@@ -92,7 +124,7 @@ export class CarsSupplierComponent implements OnInit {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Core_Config.xlsx');
+    saveAs(excelBlob, 'Suppliers.xlsx');
   }
   getDico() {
     this.dicoService.getDico();
@@ -112,7 +144,7 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
     });
   }
@@ -125,7 +157,7 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
     });
   }
@@ -161,7 +193,7 @@ export class CarsSupplierComponent implements OnInit {
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
               this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
+              this.alertifyService.error(err.error.message);
             }
           },
         });
@@ -175,7 +207,7 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
     });
   }

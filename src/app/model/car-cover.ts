@@ -3,6 +3,7 @@ export interface CarCover {
   insuranceId?: string;
   code?: string;
   description?: string;
+  insuranceDesc?: string;
   coverTypeDescription?: string;
   type?: string;
   sysCreatedBy?: string;

@@ -147,7 +147,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
     });
   }

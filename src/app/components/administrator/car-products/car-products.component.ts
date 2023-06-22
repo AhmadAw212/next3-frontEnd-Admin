@@ -9,7 +9,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarProductComponent } from '../add-dialogs/add-car-product/add-car-product.component';
 
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 interface type {
   code: string;
   description: string;
@@ -48,6 +49,42 @@ export class CarProductsComponent implements OnInit {
   }
   trackProductById(index: number, product: CarProducts) {
     return product.id;
+  }
+  exportToExcel() {
+    const data = this.carProducts?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        Description: data.description,
+        Type: data.type_description,
+        Tarif: data.tarif,
+        LOB: data.lob,
+        Company: data.insuranceDesc,
+        'Created Date': data.sysCreatedDate,
+        'Created By': data.sysCreatedBy,
+        'Updated Date': data.sysUpdatedDate,
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Products.xlsx');
   }
   getDico() {
     this.isLoading = true;

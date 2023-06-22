@@ -111,7 +111,11 @@ export class CarsReportListComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401 || err.status === 500) {
+          this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
+          this.alertifyService.error(err.error.message);
+        }
       },
     });
   }
@@ -165,7 +169,7 @@ export class CarsReportListComponent implements OnInit {
         emailDone: emailDone,
         notes: reportList.notes,
       });
-      console.log(this.updateCarReportList);
+      // console.log(this.updateCarReportList);
     }
   }
 
@@ -207,6 +211,7 @@ export class CarsReportListComponent implements OnInit {
             this.searchCarReport();
           },
           error: (err) => {
+            this.alertifyService.error(err.error.message);
             if (err.status === 401 || err.status === 500) {
               this.authService.logout();
               this.alertifyService.dialogAlert('Error');
@@ -232,6 +237,7 @@ export class CarsReportListComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
+          this.alertifyService.error(err.error.message);
           if (err.status === 401 || err.status === 500) {
             this.authService.logout();
             this.alertifyService.dialogAlert('Error');
