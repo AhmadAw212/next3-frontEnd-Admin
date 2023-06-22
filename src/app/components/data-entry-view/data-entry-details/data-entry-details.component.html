@@ -3,35 +3,35 @@
     <div class="panel">
       <div class="column">
         <div class="panel-item">
-          <label>Insured - Third Party</label>
+          <label>{{ dico?.dico_third_party || "dico_third_party" }}</label>
           <p>{{ lossCarList.carSequenceDescription }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label>Car Plate</label>
+          <label>{{ dico?.dico_car_plate || "dico_car_plate" }}</label>
           <p>{{ lossCarList.carPlate }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label>YOM</label>
+          <label>{{ dico?.dico_yom || "dico_yom" }}</label>
           <p>{{ lossCarList.carYearManfact }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label>Owner Name</label>
+          <label>{{ dico?.dico_owner || "dico_owner" }}</label>
           <p>{{ lossCarList.ownerName }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label>Brand</label>
+          <label>{{ dico?.dico_brand || "dico_brand" }}</label>
           <p>{{ lossCarList.brandTrademarkName }}</p>
         </div>
       </div>
@@ -48,49 +48,49 @@
         <div class="panel">
           <div class="column">
             <div class="panel-item">
-              <label>Plate Char</label>
+              <label>{{ dico?.dico_plate_char || "dico_plate_char" }}</label>
               <p>{{ lossCarList.carPlateChar }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Plate </label>
+              <label>{{ dico?.dico_plate || "dico_plate" }} </label>
               <p>{{ lossCarList.carPlateNum }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>YOM </label>
+              <label>{{ dico?.dico_yom || "dico_yom" }} </label>
               <p>{{ lossCarList.carYearManfact }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Brand </label>
+              <label>{{ dico?.dico_brand || "dico_brand" }} </label>
               <p>{{ lossCarList.carBrandName }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Trademark </label>
+              <label>{{ dico?.dico_trademark || "dico_trademark" }}</label>
               <p>{{ lossCarList.carTradeName }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Submodel </label>
+              <label>{{ dico?.dico_shape || "dico_shape" }} </label>
               <p>{{ lossCarList.carShapeName }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Color </label>
+              <label>{{ dico?.dico_color || "dico_color" }} </label>
               <p>{{ lossCarList.carColor }}</p>
             </div>
           </div>
@@ -100,68 +100,68 @@
       <div class="section">
         <div class="grid-container-vehicle">
           <div class="grid-vehicle">
-            <label class="header">Driver</label>
+            <label class="header">{{ dico?.dico_driver || "dico_driver" }}</label>
             <div class="panel">
               <div class="column">
                 <div class="panel-item">
-                  <label>Relationship </label>
+                  <label>{{ dico?.dico_relationship || "dico_relationship" }} </label>
                   <p>{{ lossCarList.carDriverRelationship }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>First Name </label>
+                  <label>{{ dico?.dico_first_name || "dico_first_name" }} </label>
                   <p>{{ lossCarList.carDriverFirstName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Father Name </label>
+                  <label>{{ dico?.dico_father_name || "dico_father_name" }}</label>
                   <p>{{ lossCarList.carDriverFatherName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Family Name </label>
+                  <label> {{ dico?.dico_family_name || "dico_family_name" }} </label>
                   <p>{{ lossCarList.carDriverFamilyName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Nationality</label>
+                  <label>{{ dico?.dico_nationality || "dico_nationality" }}</label>
                   <p>{{ lossCarList.stateId }}</p>
                 </div>
               </div>
               <div class="column">
                 <div class="panel-item">
-                  <label>D-L Type </label>
+                  <label>{{ dico?.dico_d_l_type || "dico_d_l_type" }}</label>
                   <p>{{ lossCarList.carDriverLicenseType }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>D-L Number </label>
+                  <label>{{ dico?.dico_d_l_number || "dico_d_l_number" }}</label>
                   <p>{{ lossCarList.carDriverLicenseNumber }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Effective </label>
+                  <label> {{ dico?.dico_effective || "dico_effective" }}</label>
                   <p>{{ lossCarList.carDriverLicenseIssueDate }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Expiry </label>
+                  <label>{{ dico?.dico_expiry || "dico_expiry" }} </label>
                   <p>{{ lossCarList.carDriverLicenseExpirationDate }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>DOB </label>
+                  <label> {{ dico?.dico_dob || "dico_dob" }}</label>
                   <p>{{ lossCarList.carDriverDateOfBirth }}</p>
                 </div>
               </div>
 
               <div class="column">
                 <div class="panel-item">
-                  <label>Phone</label>
+                  <label>{{ dico?.dico_phone || "dico_phone" }}</label>
                   <p>{{ lossCarList.carDriverPhone }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Address </label>
+                  <label>{{ dico?.dico_address || "dico_address" }}</label>
                   <p>{{ lossCarList.driverTownName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Gender </label>
+                  <label>{{ dico?.dico_gender || "dico_gender" }} </label>
                   <p>{{ lossCarList.carDriverGender }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Note </label>
+                  <label>{{ dico?.dico_note || "dico_note" }}</label>
                   <p>{{ lossCarList.carDriverNote }}</p>
                 </div>
               </div>
@@ -169,30 +169,30 @@
           </div>
 
           <div class="grid-vehicle">
-            <label class="header">Owner</label>
+            <label class="header">{{ dico?.dico_owner || "dico_owner" }}</label>
             <div class="panel">
               <div class="column">
                 <div class="panel-item">
-                  <label>First Name </label>
+                  <label>{{ dico?.dico_first_name || "dico_first_name" }}</label>
                   <p>{{ lossCarList.carOwnerFirstName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Father Name </label>
+                  <label>{{ dico?.dico_father_name || "dico_father_name" }} </label>
                   <p>{{ lossCarList.carOwnerFatherName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Family Name </label>
+                  <label>{{ dico?.dico_family_name || "dico_family_name" }} </label>
                   <p>{{ lossCarList.carOwnerFamilyName }}</p>
                 </div>
               </div>
 
               <div class="column">
                 <div class="panel-item">
-                  <label>Mobile Phone </label>
+                  <label>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }} </label>
                   <p>{{ lossCarList.carOwnerMobilePhone }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Address </label>
+                  <label>{{ dico?.dico_address || "dico_address" }} </label>
                   <p>{{ lossCarList.ownerTownName }}</p>
                 </div>
               </div>
@@ -203,16 +203,16 @@
                   <p>{{ lossCarList.carThrdInsCompanyChecked }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Insurance Company </label>
+                  <label> {{ dico?.dico_insurance_company || "dico_insurance_company" }}</label>
                   <p>{{ lossCarList.supplierTpCompanyName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>Policy Number </label>
+                  <label> {{ dico?.dico_policy_number || "dico_policy_number" }}</label>
                   <p>{{ lossCarList.carThrpMotorPolicy }}</p>
                 </div>
 
                 <div class="panel-item">
-                  <label>Policy Type</label>
+                  <label>{{ dico?.dico_policy_type || "dico_policy_type" }}</label>
                   <p>{{ lossCarList.carPolicyTypeId }}</p>
                 </div>
               </div>

@@ -3,76 +3,76 @@
     <mat-tab label="Injuries">
       <div class="section">
         <div class="header">
-          <label>Injured {{ Injured?.injuredSeq }}</label>
+          <label>{{ dico?.dico_injured || "dico_injured" }} {{ Injured?.injuredSeq }}</label>
         </div>
         <div class="panel">
           <div class="column">
             <div class="panel-item">
-              <label>First Name</label>
+              <label>{{ dico?.dico_first_name || "dico_first_name" }}</label>
               <p>{{ Injured.injuredFirstName }}</p>
             </div>
             <div class="panel-item">
-              <label>DOB</label>
+              <label>{{ dico?.dico_dob || "dico_dob" }}</label>
               <p>{{ Injured.injuredDateOfBirth }}</p>
             </div>
             <div class="panel-item">
-              <label>Identification</label>
+              <label>{{ dico?.dico_identification || "dico_identification" }}</label>
               <p>{{ Injured.injuredPlace }}</p>
             </div>
             <div class="panel-item">
-              <label>Hospital</label>
+              <label>{{ dico?.dico_hospital || "dico_hospital" }}</label>
               <p>{{ Injured.hospitalName }}</p>
             </div>
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>Father Name</label>
+              <label>{{ dico?.dico_father_name || "dico_father_name" }}</label>
               <p>{{ Injured.injuredFather }}</p>
             </div>
             <div class="panel-item">
-              <label>Mobile</label>
+              <label>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</label>
               <p>{{ Injured.injuredMobile }}</p>
             </div>
             <div class="panel-item">
-              <label>Talephone</label>
+              <label>{{ dico?.dico_phone || "dico_phone" }}</label>
               <p>{{ Injured.injuredHomeTelephone }}</p>
             </div>
             <div class="panel-item">
-              <label>Still At Hosptital</label>
+              <label>{{ dico?.dico_still_at_hospital || "dico_still_at_hospital" }}</label>
               <p>{{ Injured.injuredStillAtHosp }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Family Name</label>
+              <label>{{ dico?.dico_family_name || "dico_family_name" }}</label>
               <p>{{ Injured.injuredFamily }}</p>
             </div>
             <div class="panel-item">
-              <label>Health or Pa Policy</label>
+              <label>{{ dico?.dico_health_or_pa_policy || "dico_health_or_pa_policy" }}</label>
               <p>{{ Injured.injuredHealthPa }}</p>
             </div>
             <div class="panel-item">
-              <label>Approved By</label>
+              <label>{{ dico?.dico_injured_approved_by || "dico_injured_approved_by" }}</label>
               <p>{{ Injured.injuredApprovedBy }}</p>
             </div>
             <div class="panel-item">
-              <label>Vehicle Link</label>
+              <label>{{ dico?.dico_material_vehicle_seq_link || "dico_material_vehicle_seq_link" }}</label>
               <p>{{ Injured.injuredVehicleSequenceLink }}</p>
             </div>
             <div class="panel-item">
-              <label>Amount Of Cover</label>
+              <label>{{ dico?.dico_amount_of_cover || "dico_amount_of_cover" }}</label>
               <p>{{ Injured.injuredAmountOfCover }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Gender</label>
+              <label>{{ dico?.dico_gender || "dico_gender" }}</label>
               <p>{{ Injured.injuredGender }}</p>
             </div>
             <div class="panel-item">
-              <label>Note</label>
+              <label>{{ dico?.dico_note || "dico_note" }}</label>
               <p>{{ Injured.injuredWording }}</p>
             </div>
           </div>
