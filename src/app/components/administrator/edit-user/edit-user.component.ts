@@ -14,6 +14,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -28,6 +29,8 @@ export class EditUserComponent implements OnInit {
   roleNames?: string[] = [];
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
+  dateFormats?: any;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -36,7 +39,8 @@ export class EditUserComponent implements OnInit {
     private authService: AuthService,
     private userRolesService: UsersRolesService,
     private dicoService: DicoServiceService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -63,9 +67,15 @@ export class EditUserComponent implements OnInit {
         Email: user.email,
         Company: user.companyDescription,
         Active: user.activeDesc,
-        'Created Date': user.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          user.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': user.sysCreatedBy,
-        'Updated Date': user.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          user.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': user.sysUpdatedBy,
       };
     });
@@ -89,11 +99,14 @@ export class EditUserComponent implements OnInit {
     });
     saveAs(excelBlob, 'Users.xlsx');
   }
+
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
     this.dicoService.getDico();

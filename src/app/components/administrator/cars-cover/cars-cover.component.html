@@ -16,7 +16,7 @@
     id="bodyTypeNew"
     name="bodyTypeNew"
     required
-    class="company-select"
+    class="company-select select-class"
     [(ngModel)]="company"
     [disabled]="companies?.length! <= 1"
   >
@@ -105,6 +105,7 @@
             required
             [(ngModel)]="cover.type"
             style="width: 150px"
+            class="select-class"
             (change)="onDropdownChange($event, cover, 'type')"
           >
             <option *ngFor="let type of coverTypes" [value]="type.code">
@@ -113,9 +114,13 @@
           </select>
         </td>
 
-        <td>{{ cover.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ cover.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ cover.sysCreatedBy }}</td>
-        <td>{{ cover.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ cover.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ cover.sysUpdatedBy }}</td>
 
         <td>

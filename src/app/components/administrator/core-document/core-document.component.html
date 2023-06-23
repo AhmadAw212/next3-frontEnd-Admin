@@ -81,9 +81,13 @@
             document.fileName
           }}</a>
         </td>
-        <td>{{ document.createdDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ document.createdDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ document.createdBy }}</td>
-        <td>{{ document.updateDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ document.updateDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ document.updatedBy }}</td>
         <td>
           <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>

@@ -12,6 +12,7 @@ import { CarShape } from 'src/app/model/car-shape';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-car-trademark',
   templateUrl: './car-trademark.component.html',
@@ -28,13 +29,15 @@ export class CarTrademarkComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -48,9 +51,16 @@ export class CarTrademarkComponent implements OnInit {
         ID: data.id,
         Code: data.code,
         Description: data.description,
-        'Created Date': data.created_date,
+        'Created Date': this.datePipe.transform(
+          data.created_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.createdBy,
-        'Updated Date': data.updated_date,
+        'Updated Date': this.datePipe.transform(
+          data.updated_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.updatedBy,
       };
     });
@@ -81,9 +91,12 @@ export class CarTrademarkComponent implements OnInit {
     });
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   trackTrademarkById(index: number, brand: CarTrademark) {
     return brand.id;

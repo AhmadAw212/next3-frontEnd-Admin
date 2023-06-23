@@ -11,6 +11,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-car-broker',
   templateUrl: './car-broker.component.html',
@@ -27,13 +28,15 @@ export class CarBrokerComponent implements OnInit {
   updatedBroker?: CarBroker[] = [];
   reportDateTimeFormat?: string;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -56,9 +59,17 @@ export class CarBrokerComponent implements OnInit {
         Reference: data.reference,
         referal: data.referal,
         'Rreferal Note': data.referalNote,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -102,10 +113,12 @@ export class CarBrokerComponent implements OnInit {
     return broker.id;
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({

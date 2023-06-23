@@ -7,10 +7,12 @@ export interface CarExpert {
   exclusive?: boolean;
   expertName?: string;
   groupCode?: string;
+  groupDesc?: string;
   priority?: number;
   ratio?: number;
   remarks?: string;
   schedule_code?: string;
+  scheduleDesc?: string;
   secondExpert?: boolean;
   sendSMS?: boolean;
   supplier_id?: string;

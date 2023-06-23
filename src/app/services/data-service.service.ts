@@ -36,6 +36,11 @@ import { CarApprovalType } from '../model/car-approval-type';
 import { NearRegionTerritory } from '../model/near-region-territory';
 import { Email } from '../model/email';
 import { environment } from '../../environments/environment.development';
+
+interface User {
+  username: string;
+  password: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -46,15 +51,15 @@ export class DataServiceService {
   updatedCarSupp = new Subject<CarSupplier>();
   constructor(private http: HttpClient) {}
 
-  validateUser(name: string, password: string): Observable<ApiResponse> {
-    const authData = btoa(`${name}:${password}`);
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic ' + authData)
-      .append('X-Requested-With', 'XMLHttpRequest');
-    return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/validate`, {
-      headers: headers,
-      withCredentials: true,
-    });
+  validateUser(user: User): Observable<ApiResponse> {
+    // const authData = btoa(`${name}:${password}`);
+    // const headers = new HttpHeaders()
+    // .append('Authorization', 'Basic ' + authData)
+    // .append('X-Requested-With', 'XMLHttpRequest');
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/basicAuth/validate`,
+      user
+    );
   }
 
   loginUserInfo(): Observable<ApiResponse> {
@@ -194,6 +199,11 @@ export class DataServiceService {
     );
   }
 
+  dateTimeFormatter(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/coreConfiguration/dateFormats`
+    );
+  }
   addConfig(configData: ConfigData): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/coreConfiguration/addConfig`,

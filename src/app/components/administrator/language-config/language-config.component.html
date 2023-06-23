@@ -78,11 +78,17 @@
               {{ resource.resourceValue }}
             </td>
             <td>
-              {{ resource.sysCreatedDate | date : reportDateTimeFormat }}
+              {{
+                resource.sysCreatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
             </td>
             <td>{{ resource.sysCreatedBy }}</td>
             <td>
-              {{ resource.sysUpdatedDate | date : reportDateTimeFormat }}
+              {{
+                resource.sysUpdatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
             </td>
             <td>{{ resource.sysUpdatedBy }}</td>
             <td>

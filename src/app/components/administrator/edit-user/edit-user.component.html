@@ -76,9 +76,17 @@
             <td>
               <input type="checkbox" [checked]="user.active" disabled />
             </td>
-            <td>{{ user.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                user.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ user.sysCreatedBy }}</td>
-            <td>{{ user.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                user.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ user.sysUpdatedBy }}</td>
             <td>
               <button

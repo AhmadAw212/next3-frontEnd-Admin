@@ -9,6 +9,7 @@ import { AddReportListComponent } from '../add-dialogs/add-report-list/add-repor
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-cars-report-list',
   templateUrl: './cars-report-list.component.html',
@@ -24,6 +25,7 @@ export class CarsReportListComponent implements OnInit {
   updateCarReportList: CarsReportList[] = [];
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dateFormats?: any;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
@@ -31,7 +33,8 @@ export class CarsReportListComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
@@ -53,9 +56,16 @@ export class CarsReportListComponent implements OnInit {
         Email: data.email,
         'Email Done': data.emailDone,
         Notes: data.notes,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -89,9 +99,12 @@ export class CarsReportListComponent implements OnInit {
     return report.id;
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

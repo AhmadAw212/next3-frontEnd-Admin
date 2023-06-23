@@ -71,7 +71,7 @@
           >
             <td>{{ supplier.fullName }}</td>
             <td>
-              <select
+              <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.interm"
                 disabled
@@ -79,7 +79,8 @@
                 <option *ngFor="let type of suppType" [value]="type.code">
                   {{ type.description }}
                 </option>
-              </select>
+              </select> -->
+              {{ supplier.intermDesc }}
             </td>
 
             <td>{{ supplier.number }}</td>
@@ -89,7 +90,7 @@
             <td>{{ supplier.tva_number }}</td>
 
             <td>
-              <select
+              <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.grade_id"
                 disabled
@@ -97,15 +98,22 @@
                 <option *ngFor="let grade of suppGrade" [value]="grade.code">
                   {{ grade.description }}
                 </option>
-              </select>
+              </select> -->
+              {{ supplier.gradeDesc }}
             </td>
 
             <td>
-              {{ supplier.sysCreatedDate | date : reportDateTimeFormat }}
+              {{
+                supplier.sysCreatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
             </td>
             <td>{{ supplier.sysCreatedBy }}</td>
             <td>
-              {{ supplier.sysUpdatedDate | date : reportDateTimeFormat }}
+              {{
+                supplier.sysUpdatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
             </td>
             <td>{{ supplier.sysUpdatedBy }}</td>
             <!-- <td>

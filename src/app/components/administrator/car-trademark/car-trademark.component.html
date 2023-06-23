@@ -82,11 +82,17 @@
                 </div>
               </td>
               <td>
-                {{ trademark.created_date | date : reportDateTimeFormat }}
+                {{
+                  trademark.created_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
               </td>
               <td>{{ trademark.createdBy }}</td>
               <td>
-                {{ trademark.updated_date | date : reportDateTimeFormat }}
+                {{
+                  trademark.updated_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
               </td>
               <td>{{ trademark.updatedBy }}</td>
               <td>

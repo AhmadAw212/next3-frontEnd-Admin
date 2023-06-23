@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-core-domain-value',
@@ -23,6 +24,7 @@ export class CoreDomainValueComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -43,9 +45,12 @@ export class CoreDomainValueComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
     this.dicoService.getDico();
@@ -57,7 +62,6 @@ export class CoreDomainValueComponent implements OnInit {
     return domain.id;
   }
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
   }

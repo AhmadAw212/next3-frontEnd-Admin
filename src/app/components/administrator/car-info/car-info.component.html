@@ -130,9 +130,19 @@
               >
                 {{ carInfo.bodyTypeCode }}
               </td>
-              <td>{{ carInfo.created_date | date : reportDateTimeFormat }}</td>
+              <td>
+                {{
+                  carInfo.created_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
               <td>{{ carInfo.createdBy }}</td>
-              <td>{{ carInfo.updated_date | date : reportDateTimeFormat }}</td>
+              <td>
+                {{
+                  carInfo.updated_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
               <td>{{ carInfo.updatedBy }}</td>
               <!-- <td>
                 <input

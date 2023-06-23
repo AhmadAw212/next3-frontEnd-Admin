@@ -60,9 +60,17 @@
                   </div>
                 </div>
               </td>
-              <td>{{ shape.created_date | date : reportDateTimeFormat }}</td>
+              <td>
+                {{
+                  shape.created_date | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
               <td>{{ shape.createdBy }}</td>
-              <td>{{ shape.updated_date | date : reportDateTimeFormat }}</td>
+              <td>
+                {{
+                  shape.updated_date | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
               <td>{{ shape.updatedBy }}</td>
               <td>
                 <mat-icon (click)="deleteCarShape(shape.carShapeId)"

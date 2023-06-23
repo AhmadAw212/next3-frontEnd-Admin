@@ -136,9 +136,19 @@
             >
               {{ report.notes }}
             </td>
-            <td>{{ report.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                report.sysCreatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ report.sysCreatedBy }}</td>
-            <td>{{ report.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                report.sysUpdatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ report.sysUpdatedBy }}</td>
             <td>
               <mat-icon (click)="deleteCarReportList(report.id!)"

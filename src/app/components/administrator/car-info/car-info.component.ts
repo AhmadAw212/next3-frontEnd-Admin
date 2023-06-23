@@ -10,6 +10,7 @@ import { CarShape } from 'src/app/model/car-shape';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 interface carInfoList {
   code: string;
   description: string;
@@ -30,6 +31,7 @@ export class CarInfoComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedCarInfoVal?: CarInfo[] = [];
   selectedRow!: HTMLElement;
+  dateFormats?: any;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
@@ -37,7 +39,8 @@ export class CarInfoComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -61,9 +64,15 @@ export class CarInfoComponent implements OnInit {
         'From Year': data.fromYear,
         'To Year': data.toYear,
         HP: data.hp,
-        'Created Date': data.created_date,
+        'Created Date': this.datePipe.transform(
+          data.created_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': data.createdBy,
-        'Updated Date': data.updated_date,
+        'Updated Date': this.datePipe.transform(
+          data.updated_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.updatedBy,
       };
     });
@@ -94,9 +103,12 @@ export class CarInfoComponent implements OnInit {
     });
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   trackInfoById(index: number, brand: CarInfo) {
     return brand.id;

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class DateFormatterService {
-  dateFormat?: ConfigData[] = [];
+  dateFormat?: any;
   reportDateTimeFormat?: string;
   reportDateTime?: string;
   private dateFormatterSubject = new Subject<ConfigData>();
@@ -15,11 +15,12 @@ export class DateFormatterService {
   constructor(private dataService: DataServiceService) {}
 
   dateFormatter() {
-    this.dataService.coreConfigSearch('date', '').subscribe({
+    this.dataService.dateTimeFormatter().subscribe({
       next: (res) => {
         this.dateFormat = res.data;
-        this.reportDateTimeFormat = this.getConfigValue('reportDateTimeFormat');
-        this.reportDateTime = this.getConfigValue('reportDateFormat');
+        // console.log(this.dateFormat);
+        // this.reportDateTimeFormat = this.getConfigValue('reportDateTimeFormat');
+        // this.reportDateTime = this.getConfigValue('reportDateFormat');
         this.dateFormatterSubject.next(res.data);
       },
       error: (err) => {
@@ -27,11 +28,14 @@ export class DateFormatterService {
       },
     });
   }
-
-  getConfigValue(id: string) {
-    const configValue = this.dateFormat?.find(
-      (config: ConfigData) => config.id === id
-    )?.configValue;
-    return configValue;
+  getDateFormat(id: string): string {
+    const format = this.dateFormat.find((f: any) => f.id === id);
+    return format ? format.value : '';
   }
+  // getConfigValue(id: string) {
+  //   const configValue = this.dateFormat?.find(
+  //     (config: ConfigData) => config.id === id
+  //   )?.configValue;
+  //   return configValue;
+  // }
 }

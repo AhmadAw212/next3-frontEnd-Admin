@@ -10,6 +10,7 @@ import { AddBranchComponent } from '../add-dialogs/add-branch/add-branch.compone
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-branch-config',
   templateUrl: './branch-config.component.html',
@@ -26,19 +27,24 @@ export class BranchConfigComponent implements OnInit {
   reportDateTimeFormat?: string;
   dico?: any;
   updatedBranch?: Branch[] = [];
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   ngOnInit(): void {
     this.getCompaniesPerUser();
@@ -56,9 +62,15 @@ export class BranchConfigComponent implements OnInit {
         Company: data.insuranceDescription,
         'Address 1': data.address1,
         'Address 2': data.address2,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });

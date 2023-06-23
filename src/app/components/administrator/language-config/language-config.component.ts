@@ -9,6 +9,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-language-config',
   templateUrl: './language-config.component.html',
@@ -24,13 +25,15 @@ export class LanguageConfigComponent implements OnInit {
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -45,9 +48,15 @@ export class LanguageConfigComponent implements OnInit {
         Locale: data.locale,
         'Language Key': data.resourceKey,
         'Language Value': data.resourceValue,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -113,13 +122,13 @@ export class LanguageConfigComponent implements OnInit {
   }
 
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
-      this.reportDateTime = this.dateFormatService.reportDateTime;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
   }
-
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   openCoreConfigDialog() {
     const dialogRef = this.dialog.open(AddLanguageComponent);
     dialogRef.afterClosed().subscribe(() => {

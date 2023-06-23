@@ -4,7 +4,7 @@
 <div class="dialog-logo" *ngIf="policyData">
   <img src="../../../assets/images/basicLogo.jpg" alt="Logo" class="logo" />
 </div>
-<div *ngIf="!policyData">
+<div *ngIf="!policyData && !dico">
   <app-spinner></app-spinner>
 </div>
 <div class="dialog-content">
@@ -17,77 +17,101 @@
           <p>{{ policyData?.branchCode }} {{ policyData?.brancheDesc }}</p>
         </div>
         <div class="panel-item">
-          <label for="certificate">{{ dico?.dico_certificate || "dico_certificate" }}</label>
+          <label for="certificate">{{
+            dico?.dico_certificate || "dico_certificate"
+          }}</label>
           <p>{{ policyData?.policyCar }}</p>
         </div>
         <div class="panel-item">
-          <label for="certificate">{{ dico?.dico_policy || "dico_policy" }}</label>
+          <label for="certificate">{{
+            dico?.dico_policy || "dico_policy"
+          }}</label>
           <p>{{ policyData?.policyReference }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyEndorsmentTypeCode"
-            >{{ dico?.dico_policy_endorsment_type_code || "dico_policy_endorsment_type_code" }}</label
-          >
+          <label for="policyEndorsmentTypeCode">{{
+            dico?.dico_policy_endorsment_type_code ||
+              "dico_policy_endorsment_type_code"
+          }}</label>
           <p>{{ policyData?.policyEndorsmentTypeCode }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="policyEndorsmentTypeDescription"
-            >{{ dico?.dico_policy_endorsment_type_desc || "dico_policy_endorsment_type_desc" }}</label
-          >
+          <label for="policyEndorsmentTypeDescription">{{
+            dico?.dico_policy_endorsment_type_desc ||
+              "dico_policy_endorsment_type_desc"
+          }}</label>
           <p>{{ policyData?.policyEndorsmentTypeDescription }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyCurrency">{{ dico?.dico_policy_currency || "dico_policy_currency" }}</label>
+          <label for="policyCurrency">{{
+            dico?.dico_policy_currency || "dico_policy_currency"
+          }}</label>
           <p>{{ policyData?.policyCurrency }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyAmendment">{{ dico?.dico_endorsment || "dico_endorsment" }}</label>
+          <label for="policyAmendment">{{
+            dico?.dico_endorsment || "dico_endorsment"
+          }}</label>
           <p>{{ policyData?.policyAmendment }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyBlacklistNote">{{ dico?.dico_policy_blacklist_note || "dico_policy_blacklist_note" }}</label>
+          <label for="policyBlacklistNote">{{
+            dico?.dico_policy_blacklist_note || "dico_policy_blacklist_note"
+          }}</label>
           <p>{{ policyData?.policyBlacklistNote }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="policyBlackistReason">{{ dico?.dico_policy_blacklist_reason || "dico_policy_blacklist_reason" }}</label>
+          <label for="policyBlackistReason">{{
+            dico?.dico_policy_blacklist_reason || "dico_policy_blacklist_reason"
+          }}</label>
           <p>{{ policyData?.policyBlackistReason }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyEndorsmentSubTypeCode"
-            >{{ dico?.dico_pol_end_sub_type_code || "dico_pol_end_sub_type_code" }}</label
-          >
+          <label for="policyEndorsmentSubTypeCode">{{
+            dico?.dico_pol_end_sub_type_code || "dico_pol_end_sub_type_code"
+          }}</label>
           <p>{{ policyData?.policyEndorsmentSubTypeCode }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyEndorsmentSubTypeDescrion"
-            >{{ dico?.dico_pol_end_sub_type_desc || "dico_pol_end_sub_type_desc" }}</label
-          >
+          <label for="policyEndorsmentSubTypeDescrion">{{
+            dico?.dico_pol_end_sub_type_desc || "dico_pol_end_sub_type_desc"
+          }}</label>
           <p>{{ policyData?.policyEndorsmentSubTypeDescrion }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyHolderCode">{{ dico?.dico_policy_holder_code || "dico_policy_holder_code" }}</label>
+          <label for="policyHolderCode">{{
+            dico?.dico_policy_holder_code || "dico_policy_holder_code"
+          }}</label>
           <p>{{ policyData?.policyHolderCode }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="policyHolderId">{{ dico?.dico_policy_holder_id || "dico_policy_holder_id" }}</label>
+          <label for="policyHolderId">{{
+            dico?.dico_policy_holder_id || "dico_policy_holder_id"
+          }}</label>
           <p>{{ policyData?.policyHolderId }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyHolderName">{{ dico?.dico_policy_holder_name || "dico_policy_holder_name" }}</label>
+          <label for="policyHolderName">{{
+            dico?.dico_policy_holder_name || "dico_policy_holder_name"
+          }}</label>
           <p>{{ policyData?.policyHolderName }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyHolderPhone">{{ dico?.dico_policy_holder_phone || "dico_policy_holder_phone" }}</label>
+          <label for="policyHolderPhone">{{
+            dico?.dico_policy_holder_phone || "dico_policy_holder_phone"
+          }}</label>
           <p>{{ policyData?.policyHolderPhone }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyRemarks">{{ dico?.dico_note || "dico_note" }}</label>
+          <label for="policyRemarks">{{
+            dico?.dico_note || "dico_note"
+          }}</label>
           <p>{{ policyData?.policyRemarks }}</p>
         </div>
       </div>
@@ -97,36 +121,48 @@
     <div class="panel" *ngIf="policyData">
       <div class="column">
         <div class="panel-item">
-          <label for="policyIssueDate">{{ dico?.dico_issue_date || "dico_issue_date" }}</label>
+          <label for="policyIssueDate">{{
+            dico?.dico_issue_date || "dico_issue_date"
+          }}</label>
           <p>{{ policyData?.policyIssueDate }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyExpiryDate">{{ dico?.dico_expiry_date || "dico_expiry_date" }}</label>
+          <label for="policyExpiryDate">{{
+            dico?.dico_expiry_date || "dico_expiry_date"
+          }}</label>
           <p>{{ policyData?.policyExpiryDate }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyEffectiveDate">{{ dico?.dico_effective_date || "dico_effective_date" }}</label>
+          <label for="policyEffectiveDate">{{
+            dico?.dico_effective_date || "dico_effective_date"
+          }}</label>
           <p>{{ policyData?.policyEffectiveDate }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="firstInceptionDate">{{ dico?.dico_first_inception || "dico_first_inception" }}</label>
+          <label for="firstInceptionDate">{{
+            dico?.dico_first_inception || "dico_first_inception"
+          }}</label>
           <p>{{ policyData?.firstInceptionDate }}</p>
         </div>
         <div class="panel-item">
-          <label for="firstEffectiveDate">{{ dico?.dico_first_effective || "dico_first_effective" }}</label>
+          <label for="firstEffectiveDate">{{
+            dico?.dico_first_effective || "dico_first_effective"
+          }}</label>
           <p>{{ policyData?.firstEffectiveDate }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyAction">{{ dico?.dico_policy_type || "dico_policy_type" }}</label>
+          <label for="policyAction">{{
+            dico?.dico_policy_type || "dico_policy_type"
+          }}</label>
           <p>{{ policyData?.policyAction }}</p>
         </div>
       </div>
@@ -137,35 +173,45 @@
     <div class="panel" *ngIf="policyData">
       <div class="column">
         <div class="panel-item">
-          <label for="productsDescription">{{ dico?.dico_product || "dico_product" }}</label>
+          <label for="productsDescription">{{
+            dico?.dico_product || "dico_product"
+          }}</label>
           <p>{{ policyData?.productsDescription }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyProduct">{{ dico?.dico_policy_product || "dico_policy_product" }}</label>
+          <label for="policyProduct">{{
+            dico?.dico_policy_product || "dico_policy_product"
+          }}</label>
           <p>{{ policyData?.policyProduct }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="sublineCode">{{ dico?.dico_subline_code || "dico_subline_code" }}</label>
+          <label for="sublineCode">{{
+            dico?.dico_subline_code || "dico_subline_code"
+          }}</label>
           <p>{{ policyData?.sublineCode }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="sublineDesc">{{ dico?.dico_subline_desc || "dico_subline_desc" }}</label>
+          <label for="sublineDesc">{{
+            dico?.dico_subline_desc || "dico_subline_desc"
+          }}</label>
           <p>{{ policyData?.sublineDesc }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="productsType">{{ dico?.dico_product_category || "dico_product_category" }}</label>
+          <label for="productsType">{{
+            dico?.dico_product_category || "dico_product_category"
+          }}</label>
           <p>{{ policyData?.productsType }}</p>
         </div>
       </div>
@@ -176,56 +222,78 @@
     <div class="panel" *ngIf="policyData">
       <div class="column">
         <div class="panel-item">
-          <label for="policyBroker">{{ dico?.dico_broker || "dico_broker" }}</label>
+          <label for="policyBroker">{{
+            dico?.dico_broker || "dico_broker"
+          }}</label>
           <p>{{ policyData?.policyBroker }}</p>
         </div>
 
         <div class="panel-item">
-          <label for="brokerDesc">{{ dico?.dico_broker_name || "dico_broker_name" }}</label>
+          <label for="brokerDesc">{{
+            dico?.dico_broker_name || "dico_broker_name"
+          }}</label>
           <p>{{ policyData?.brokerDesc }}</p>
         </div>
 
         <div class="panel-item">
-          <label for="brokerTelephone">{{ dico?.dico_broker_phone || "dico_broker_phone" }}</label>
+          <label for="brokerTelephone">{{
+            dico?.dico_broker_phone || "dico_broker_phone"
+          }}</label>
           <p>{{ policyData?.brokerTelephone }}</p>
         </div>
 
         <div class="panel-item">
-          <label for="bibrokerid">{{ dico?.dico_broker_blackList || "dico_broker_blackList" }}</label>
+          <label for="bibrokerid">{{
+            dico?.dico_broker_blackList || "dico_broker_blackList"
+          }}</label>
           <p>{{ policyData?.bibrokerid }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyBrokerWebOrigin">{{ dico?.dico_BrokerWebOrigin || "dico_BrokerWebOrigin" }}</label>
+          <label for="policyBrokerWebOrigin">{{
+            dico?.dico_BrokerWebOrigin || "dico_BrokerWebOrigin"
+          }}</label>
           <p>{{ policyData?.policyBrokerWebOrigin }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyIsDirectBroker">{{ dico?.dico_IsDirectBroker || "dico_IsDirectBroker" }}</label>
+          <label for="policyIsDirectBroker">{{
+            dico?.dico_IsDirectBroker || "dico_IsDirectBroker"
+          }}</label>
           <p>{{ policyData?.policyIsDirectBroker }}</p>
         </div>
         <div class="panel-item">
-          <label for="bidate">{{ dico?.dico_blacklist_set_on || "dico_blacklist_set_on" }}</label>
+          <label for="bidate">{{
+            dico?.dico_blacklist_set_on || "dico_blacklist_set_on"
+          }}</label>
           <p>{{ policyData?.bidate }}</p>
         </div>
         <div class="panel-item">
-          <label for="binote1">{{ dico?.dico_Blacklist_note || "dico_Blacklist_note" }}</label>
+          <label for="binote1">{{
+            dico?.dico_Blacklist_note || "dico_Blacklist_note"
+          }}</label>
           <p>{{ policyData?.binote1 }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="bisetBy">{{ dico?.dico_blacklist_set_by || "dico_blacklist_set_by" }}</label>
+          <label for="bisetBy">{{
+            dico?.dico_blacklist_set_by || "dico_blacklist_set_by"
+          }}</label>
           <p>{{ policyData?.bisetBy }}</p>
         </div>
         <div class="panel-item">
-          <label for="bireason">{{ dico?.dico_blacklist_reason || "dico_blacklist_reason" }}</label>
+          <label for="bireason">{{
+            dico?.dico_blacklist_reason || "dico_blacklist_reason"
+          }}</label>
           <p>{{ policyData?.bireason }}</p>
         </div>
         <div class="panel-item">
-          <label for="brokerEmail">{{ dico?.dico_broker_email || "dico_broker_email" }}</label>
+          <label for="brokerEmail">{{
+            dico?.dico_broker_email || "dico_broker_email"
+          }}</label>
           <p>{{ policyData?.brokerEmail }}</p>
         </div>
       </div>
@@ -236,28 +304,40 @@
     <div class="panel" *ngIf="policyData">
       <div class="column">
         <div class="panel-item">
-          <label for="policyTowFlag">{{ dico?.dico_tow_allowed || "dico_tow_allowed" }}</label>
+          <label for="policyTowFlag">{{
+            dico?.dico_tow_allowed || "dico_tow_allowed"
+          }}</label>
           <p>{{ policyData?.policyTowFlag }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyReplacementiag">{{ dico?.dico_car_replacement || "dico_car_replacement" }}</label>
+          <label for="policyReplacementiag">{{
+            dico?.dico_car_replacement || "dico_car_replacement"
+          }}</label>
           <p>{{ policyData?.policyReplacementiag }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyAgencyRepairDesc">{{ dico?.dico_dealer_repair || "dico_dealer_repair" }}</label>
+          <label for="policyAgencyRepairDesc">{{
+            dico?.dico_dealer_repair || "dico_dealer_repair"
+          }}</label>
           <p>{{ policyData?.policyAgencyRepairDesc }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyDeductible">{{ dico?.dico_policy_deductible || "dico_policy_deductible" }}</label>
+          <label for="policyDeductible">{{
+            dico?.dico_policy_deductible || "dico_policy_deductible"
+          }}</label>
           <p>{{ policyData?.policyDeductible }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="policyDeductibleAmt"> {{ dico?.dico_deductible_amount || "dico_deductible_amount" }}</label>
+          <label for="policyDeductibleAmt">
+            {{
+              dico?.dico_deductible_amount || "dico_deductible_amount"
+            }}</label
+          >
           <p>{{ policyData?.policyDeductibleAmt }}</p>
         </div>
       </div>
@@ -272,44 +352,58 @@
           <p>{{ policyData?.policyweb }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyIssuingUser">{{ dico?.dico_IssuingUser || "dico_IssuingUser" }}</label>
+          <label for="policyIssuingUser">{{
+            dico?.dico_IssuingUser || "dico_IssuingUser"
+          }}</label>
           <p>{{ policyData?.policyIssuingUser }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyModifiedUser">{{ dico?.dico_ModifiedUser || "dico_ModifiedUser" }}</label>
+          <label for="policyModifiedUser">{{
+            dico?.dico_ModifiedUser || "dico_ModifiedUser"
+          }}</label>
           <p>{{ policyData?.policyModifiedUser }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="policyPremiumCurrency"> {{ dico?.dico_PremiumCurrency || "dico_PremiumCurrency" }}</label>
+          <label for="policyPremiumCurrency">
+            {{ dico?.dico_PremiumCurrency || "dico_PremiumCurrency" }}</label
+          >
           <p>{{ policyData?.policyPremiumCurrency }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyPremiumCurrencyRate"> {{ dico?.dico_PremiumCurrencyRate || "dico_PremiumCurrencyRate" }}</label>
+          <label for="policyPremiumCurrencyRate">
+            {{
+              dico?.dico_PremiumCurrencyRate || "dico_PremiumCurrencyRate"
+            }}</label
+          >
           <p>{{ policyData?.policyPremiumCurrencyRate }}</p>
         </div>
         <div class="panel-item">
-          <label for="policySumInsCurrencyRate">{{ dico?.dico_SumInsCurrencyRate || "dico_SumInsCurrencyRate" }}</label>
+          <label for="policySumInsCurrencyRate">{{
+            dico?.dico_SumInsCurrencyRate || "dico_SumInsCurrencyRate"
+          }}</label>
           <p>{{ policyData?.policySumInsCurrencyRate }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="policyInsuranceBlSetOn"
-            >{{ dico?.dico_InsuranceBlSetOn || "dico_InsuranceBlSetOn" }}</label
-          >
+          <label for="policyInsuranceBlSetOn">{{
+            dico?.dico_InsuranceBlSetOn || "dico_InsuranceBlSetOn"
+          }}</label>
           <p>{{ policyData?.policyInsuranceBISetOn }}</p>
         </div>
         <div class="panel-item">
-          <label for="policyInsuranceBISetBy"
-            >{{ dico?.dico_InsuranceBlSetBy || "dico_InsuranceBlSetBy" }}</label
-          >
+          <label for="policyInsuranceBISetBy">{{
+            dico?.dico_InsuranceBlSetBy || "dico_InsuranceBlSetBy"
+          }}</label>
           <p>{{ policyData?.policyInsuranceBISetBy }}</p>
         </div>
         <div class="panel-item">
-          <label for="policySpecialNotes">{{ dico?.dico_special_notes || "dico_special_notes" }}</label>
+          <label for="policySpecialNotes">{{
+            dico?.dico_special_notes || "dico_special_notes"
+          }}</label>
           <p>{{ policyData?.policySpecialNotes }}</p>
         </div>
       </div>
@@ -326,8 +420,12 @@
             <th>{{ dico?.dico_sum_insured || "dico_sum_insured" }}</th>
             <th>{{ dico?.dico_deductible_per || "dico_deductible_per" }}</th>
             <th>{{ dico?.dico_deductible_2 || "dico_deductible_2" }}</th>
-            <th>{{ dico?.dico_cover_limit_claim || "dico_cover_limit_claim" }}</th>
-            <th>{{ dico?.dico_cover_count_limit || "dico_cover_count_limit" }}</th>
+            <th>
+              {{ dico?.dico_cover_limit_claim || "dico_cover_limit_claim" }}
+            </th>
+            <th>
+              {{ dico?.dico_cover_count_limit || "dico_cover_count_limit" }}
+            </th>
             <th>{{ dico?.dico_deductible_type || "dico_deductible_type" }}</th>
           </tr>
         </thead>
@@ -345,7 +443,9 @@
         </tbody>
         <ng-template #noData>
           <tr>
-            <td colspan="9">{{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}</td>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
           </tr>
         </ng-template>
       </table>
@@ -357,7 +457,9 @@
     <div class="panel">
       <div class="column">
         <div class="panel-item">
-          <label for="clientName">{{ dico?.dico_client_name || "dico_client_name" }}</label>
+          <label for="clientName">{{
+            dico?.dico_client_name || "dico_client_name"
+          }}</label>
           <p>
             {{ policyData?.clientFirstName }}
             {{ policyData?.clientFatherName }}
@@ -365,21 +467,29 @@
           </p>
         </div>
         <div class="panel-item">
-          <label for="policyPrintName">{{ dico?.dico_policyPrintName || "dico_policyPrintName" }}</label>
+          <label for="policyPrintName">{{
+            dico?.dico_policyPrintName || "dico_policyPrintName"
+          }}</label>
           <p>{{ policyData?.policyPrintName }}</p>
         </div>
         <div class="panel-item">
-          <label for="clientNum1">{{ dico?.dico_client_code || "dico_client_code" }}</label>
+          <label for="clientNum1">{{
+            dico?.dico_client_code || "dico_client_code"
+          }}</label>
           <p>{{ policyData?.clientNum1 }}</p>
         </div>
       </div>
       <div class="column">
         <div class="panel-item">
-          <label for="clientMobilePhone"> {{ dico?.dico_phone_number || "dico_phone_number" }}</label>
+          <label for="clientMobilePhone">
+            {{ dico?.dico_phone_number || "dico_phone_number" }}</label
+          >
           <p>{{ policyData?.clientMobilePhone }}</p>
         </div>
         <div class="panel-item">
-          <label for="blPolicyNum"> {{ dico?.dico_insured_bl_note || "dico_insured_bl_note" }}</label>
+          <label for="blPolicyNum">
+            {{ dico?.dico_insured_bl_note || "dico_insured_bl_note" }}</label
+          >
           <p>{{ policyData?.blNote }}</p>
         </div>
         <!-- // todo blReason1 ,blPolicyNum -->
@@ -396,25 +506,33 @@
     <div class="panel">
       <div class="column">
         <div class="panel-item">
-          <label for="carBrandDescription">{{ dico?.dico_car_brand || "dico_car_brand" }}</label>
+          <label for="carBrandDescription">{{
+            dico?.dico_car_brand || "dico_car_brand"
+          }}</label>
           <p>
             {{ policyData?.carBrandDescription }}
           </p>
         </div>
         <div class="panel-item">
-          <label for="carTrademarkDescription">{{ dico?.dico_car_trademark || "dico_car_trademark" }}</label>
+          <label for="carTrademarkDescription">{{
+            dico?.dico_car_trademark || "dico_car_trademark"
+          }}</label>
           <p>
             {{ policyData?.carTrademarkDescription }}
           </p>
         </div>
         <div class="panel-item">
-          <label for="carModelToPrint">{{ dico?.dico_model_print || "dico_model_print" }}</label>
+          <label for="carModelToPrint">{{
+            dico?.dico_model_print || "dico_model_print"
+          }}</label>
           <p>
             {{ policyData?.carModelToPrint }}
           </p>
         </div>
         <div class="panel-item">
-          <label for="carYear">{{ dico?.dico_car_yom || "dico_car_yom" }}</label>
+          <label for="carYear">{{
+            dico?.dico_car_yom || "dico_car_yom"
+          }}</label>
           <p>
             {{ policyData?.carYear }}
           </p>
@@ -423,19 +541,27 @@
 
       <div class="column">
         <div class="panel-item">
-          <label for="carChassis">{{ dico?.dico_policyPrintName || "dico_policyPrintName" }}</label>
+          <label for="carChassis">{{
+            dico?.dico_policyPrintName || "dico_policyPrintName"
+          }}</label>
           <p>{{ policyData?.carChassis }}</p>
         </div>
         <div class="panel-item">
-          <label for="carValue">{{ dico?.dico_vehicle_value || "dico_vehicle_value" }}</label>
+          <label for="carValue">{{
+            dico?.dico_vehicle_value || "dico_vehicle_value"
+          }}</label>
           <p>{{ policyData?.carValue }}</p>
         </div>
         <div class="panel-item">
-          <label for="carPlate">{{ dico?.dico_plate_number || "dico_plate_number" }}</label>
+          <label for="carPlate">{{
+            dico?.dico_plate_number || "dico_plate_number"
+          }}</label>
           <p>{{ policyData?.carPlate }}</p>
         </div>
         <div class="panel-item">
-          <label for="carEngine">{{ dico?.dico_engine_number || "dico_engine_number" }}</label>
+          <label for="carEngine">{{
+            dico?.dico_engine_number || "dico_engine_number"
+          }}</label>
           <p>{{ policyData?.carEngine }}</p>
         </div>
       </div>
@@ -446,53 +572,75 @@
           <p>{{ policyData?.carVip }}</p>
         </div>
         <div class="panel-item">
-          <label for="carUnPaidPremium">{{ dico?.dico_un_paid_premium || "dico_un_paid_premium" }}</label>
+          <label for="carUnPaidPremium">{{
+            dico?.dico_un_paid_premium || "dico_un_paid_premium"
+          }}</label>
           <p>{{ policyData?.carUnPaidPremium }}</p>
         </div>
         <div class="panel-item">
-          <label for="carUnPaidPremiumDate">{{ dico?.dico_un_paid_premium_date || "dico_un_paid_premium_date" }}</label>
+          <label for="carUnPaidPremiumDate">{{
+            dico?.dico_un_paid_premium_date || "dico_un_paid_premium_date"
+          }}</label>
           <p>{{ policyData?.carUnPaidPremiumDate }}</p>
         </div>
         <div class="panel-item">
-          <label for="carDealerWorkshopName">{{ dico?.dico_DealerWorkshopName || "dico_DealerWorkshopName" }}</label>
+          <label for="carDealerWorkshopName">{{
+            dico?.dico_DealerWorkshopName || "dico_DealerWorkshopName"
+          }}</label>
           <p>{{ policyData?.carDealerWorkshopName }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="carUsage">{{ dico?.dico_car_usage || "dico_car_usage" }}</label>
+          <label for="carUsage">{{
+            dico?.dico_car_usage || "dico_car_usage"
+          }}</label>
           <p>{{ policyData?.carUsage }}</p>
         </div>
         <div class="panel-item">
-          <label for="beneficiaryDesc">{{ dico?.dico_beneficiary || "dico_beneficiary" }}</label>
+          <label for="beneficiaryDesc">{{
+            dico?.dico_beneficiary || "dico_beneficiary"
+          }}</label>
           <p>{{ policyData?.beneficiaryDesc }}</p>
         </div>
         <div class="panel-item">
-          <label for="carObjectNumber">{{ dico?.dico_car_object_number || "dico_car_object_number" }}</label>
+          <label for="carObjectNumber">{{
+            dico?.dico_car_object_number || "dico_car_object_number"
+          }}</label>
           <p>{{ policyData?.carObjectNumber }}</p>
         </div>
         <div class="panel-item">
-          <label for="carCertifBlackListed">{{ dico?.dico_blacklist || "dico_blacklist" }} </label>
+          <label for="carCertifBlackListed"
+            >{{ dico?.dico_blacklist || "dico_blacklist" }}
+          </label>
           <p>{{ policyData?.carCertifBlackListed }}</p>
         </div>
       </div>
 
       <div class="column">
         <div class="panel-item">
-          <label for="carCertifBlackListNote">{{ dico?.dico_Blacklist_note || "dico_Blacklist_note" }}</label>
+          <label for="carCertifBlackListNote">{{
+            dico?.dico_Blacklist_note || "dico_Blacklist_note"
+          }}</label>
           <p>{{ policyData?.carCertifBlackListNote }}</p>
         </div>
         <div class="panel-item">
-          <label for="carCertifBlackListReason">{{ dico?.dico_blacklist_reason || "dico_blacklist_reason" }}</label>
+          <label for="carCertifBlackListReason">{{
+            dico?.dico_blacklist_reason || "dico_blacklist_reason"
+          }}</label>
           <p>{{ policyData?.carCertifBlackListReason }}</p>
         </div>
         <div class="panel-item">
-          <label for="carCertifBlackListSetBy">{{ dico?.dico_blacklist_set_by || "dico_blacklist_set_by" }}</label>
+          <label for="carCertifBlackListSetBy">{{
+            dico?.dico_blacklist_set_by || "dico_blacklist_set_by"
+          }}</label>
           <p>{{ policyData?.carCertifBlackListSetBy }}</p>
         </div>
         <div class="panel-item">
-          <label for="carCertifBlackListSetOn">{{ dico?.dico_blacklist_set_on || "dico_blacklist_set_on" }}</label>
+          <label for="carCertifBlackListSetOn">{{
+            dico?.dico_blacklist_set_on || "dico_blacklist_set_on"
+          }}</label>
           <p>{{ policyData?.carCertifBlackListSetOn }}</p>
         </div>
       </div>

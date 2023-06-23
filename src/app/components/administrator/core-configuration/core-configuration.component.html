@@ -76,9 +76,19 @@
             >
               {{ config.description }}
             </td>
-            <td>{{ config.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                config.sysCreatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ config.sysCreatedBy }}</td>
-            <td>{{ config.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                config.sysUpdatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ config.sysUpdatedBy }}</td>
 
             <td>

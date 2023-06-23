@@ -5,7 +5,11 @@ import { DataServiceService } from './data-service.service';
 import { AlertifyService } from './alertify.service';
 import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { AuthInterceptorInterceptor } from '../shared/auth-interceptor.interceptor';
+interface User {
+  username: string;
+  password: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -18,12 +22,15 @@ export class AuthService {
     private dialog: MatDialog
   ) {}
 
-  authenticate(name: string, password: string) {
-    this.dataService.validateUser(name, password).subscribe({
+  authenticate(user: User) {
+    this.dataService.validateUser(user).subscribe({
       next: (result) => {
         if (result.statusCode === 200) {
           const token = result.data.token;
           const profiles = result.data.profiles;
+          const access_token = (AuthInterceptorInterceptor.access_token =
+            result.data.refreshToken);
+          localStorage.setItem('access_token', access_token);
           localStorage.setItem('token', token);
           if (token && result.data.firstLogin === false) {
             this.router.navigate(['/profiles-main']);

@@ -1,4 +1,6 @@
-<h3 class="h3-header">{{ dico?.dico_expert_config || "dico_expert_config" }}</h3>
+<h3 class="h3-header">
+  {{ dico?.dico_expert_config || "dico_expert_config" }}
+</h3>
 <div class="admin-container container-fluid" style="height: 150px">
   <div class="form-container">
     <form (ngSubmit)="expertSearch()">
@@ -26,7 +28,9 @@
           </select>
         </div>
         <div class="form-field">
-          <label>{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label>
+          <label
+            >{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label
+          >
           <select
             name="bodilyInjury"
             id="bodilyInjury"
@@ -46,7 +50,9 @@
           </select>
         </div>
         <div class="form-field">
-          <label for="exclusive">{{ dico?.dico_exclusive || "dico_exclusive" }}:</label>
+          <label for="exclusive"
+            >{{ dico?.dico_exclusive || "dico_exclusive" }}:</label
+          >
           <select name="exclusive" id="exclusive" [(ngModel)]="exclusiveCode">
             <option *ngFor="let yn of domainYN" [value]="yn.code">
               {{ yn.description }}
@@ -54,7 +60,9 @@
           </select>
         </div>
         <div class="form-field">
-          <label for="insurance">{{ dico?.dico_insurance || "dico_insurance" }}:</label>
+          <label for="insurance"
+            >{{ dico?.dico_insurance || "dico_insurance" }}:</label
+          >
           <select
             id="insurance"
             name="insurance"
@@ -87,7 +95,9 @@
           </ng-select>
         </div>
         <div class="form-field">
-          <button type="submit" class="btn btn-primary">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+          <button type="submit" class="btn btn-primary">
+            {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+          </button>
         </div>
       </div>
     </form>
@@ -97,7 +107,9 @@
     <label>{{ dico?.dico_supplier_details || "dico_supplier_details" }}</label>
 
     <div class="form-field">
-      <label for="fullName">{{ dico?.dico__full_name || "dico__full_name" }}:</label>
+      <label for="fullName"
+        >{{ dico?.dico__full_name || "dico__full_name" }}:</label
+      >
       <input
         type="text"
         id="fullName"
@@ -119,7 +131,9 @@
     </div>
 
     <div class="form-field">
-      <label for="prefixFamily">{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label>
+      <label for="prefixFamily"
+        >{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label
+      >
       <input
         type="text"
         id="prefixFamily"
@@ -130,7 +144,9 @@
     </div>
 
     <div class="form-field">
-      <label for="familyName">{{ dico?.dico_family_name || "dico_family_name" }}:</label>
+      <label for="familyName"
+        >{{ dico?.dico_family_name || "dico_family_name" }}:</label
+      >
       <input
         type="text"
         id="familyName"
@@ -141,7 +157,9 @@
     </div>
 
     <div class="form-field">
-      <label for="arabicName">{{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label>
+      <label for="arabicName"
+        >{{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label
+      >
       <input
         type="text"
         id="arabicName"
@@ -152,7 +170,9 @@
     </div>
 
     <div class="form-field">
-      <label for="mobilePhone">{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label>
+      <label for="mobilePhone"
+        >{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label
+      >
       <input
         type="text"
         id="mobilePhone"
@@ -173,9 +193,24 @@
     </div>
   </div>
 </div>
-<app-expert-search-results
-  *ngIf="showExpertResult"
-  [expertSearchResult]="expertSearchResult"
-  [expGroup]="expGroup"
-  [selectedSupplier]="selectedSupplier"
-></app-expert-search-results>
+
+<div *ngIf="showExpertResult">
+  <div class="h3-header">
+    <h3>
+      {{ dico?.dico_expert_config || "dico_expert_config" }}
+
+      <button
+        type="button"
+        (click)="exportToExcel()"
+        class="export-excel btn btn-primary"
+      >
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+      </button>
+    </h3>
+  </div>
+  <app-expert-search-results
+    [expertSearchResult]="expertSearchResult"
+    [expGroup]="expGroup"
+    [selectedSupplier]="selectedSupplier"
+  ></app-expert-search-results>
+</div>

@@ -8,6 +8,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-town-territory',
   templateUrl: './town-territory.component.html',
@@ -23,13 +24,14 @@ export class TownTerritoryComponent implements OnInit {
   townTerritory?: type[];
   showNearTerr?: boolean = false;
   dico?: any;
-
+  dateFormats?: any;
   selectedRegion?: type;
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {

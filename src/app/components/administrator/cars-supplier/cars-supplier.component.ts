@@ -31,6 +31,7 @@ export class CarsSupplierComponent implements OnInit {
   suppGrade?: type[];
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dateFormats?: any;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
@@ -63,10 +64,10 @@ export class CarsSupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSupplierType();
-    this.getCompaniesPerUser();
-    this.dateFormatService.dateFormatter();
+    // this.getCompaniesPerUser();
+
     this.dateFormatterService();
-    this.getSupplierGrade();
+    // this.getSupplierGrade();
     this.getDico();
   }
   exportToExcel() {
@@ -85,8 +86,24 @@ export class CarsSupplierComponent implements OnInit {
         'Bussines Phone': data.bus_phone,
         'Home Phone': data.home_phone,
         Fax: data.fax,
-        'Home Address': data.home_id,
-        'Bussines Address': data.bus_id,
+        ' Home Region Name': data.home_district_desc,
+        ' Home Caza Name': data.home_sector_desc,
+        ' Home Town Name': data.home_city_desc,
+        'Home Address':
+          data.home_district_desc +
+          ',' +
+          data.home_sector_desc +
+          ',' +
+          data.home_city_desc,
+        'Business Region Name': data.business_district_desc,
+        'Business Caza Name': data.business_sector_desc,
+        'Business Town Name': data.business_city_desc,
+        'Business Address':
+          data.business_district_desc +
+          ' , ' +
+          data.business_sector_desc +
+          ' , ' +
+          data.business_city_desc,
         'Arabic Name': data.arabic_name,
         Grade: data.gradeDesc,
         'Initial Count': data.initialCount,
@@ -98,15 +115,14 @@ export class CarsSupplierComponent implements OnInit {
         'Include App': data.include_app,
         'Show In List': data.show_in_list,
         'Out Network': data.out_network,
-
         'Created Date': this.datePipe.transform(
           data.sysCreatedDate,
-          'yyyy-MM-dd HH:mm:ss'
+          this.dateFormat('excelDateTimeFormat')
         ),
         'Created By': data.sysCreatedBy,
         'Updated Date': this.datePipe.transform(
           data.sysUpdatedDate,
-          'yyyy-MM-dd HH:mm:ss'
+          this.dateFormat('excelDateTimeFormat')
         ),
         'Updated By': data.sysUpdatedBy,
       };
@@ -133,9 +149,12 @@ export class CarsSupplierComponent implements OnInit {
     });
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getSupplierType() {
     this.dataService.getSupplierType().subscribe({

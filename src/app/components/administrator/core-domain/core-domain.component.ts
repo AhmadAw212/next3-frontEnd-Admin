@@ -11,6 +11,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-core-domain',
   templateUrl: './core-domain.component.html',
@@ -29,13 +30,15 @@ export class CoreDomainComponent implements OnInit {
   selectedRow!: HTMLElement;
   isLoading?: boolean = false;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
@@ -59,9 +62,16 @@ export class CoreDomainComponent implements OnInit {
         Code: data.code,
         Description: data.description,
         'Preference Code': data.preference_code,
-        'Created Date': data.createdDate,
+        'Created Date': this.datePipe.transform(
+          data.createdDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.createdBy,
-        'Updated Date': data.updateDate,
+        'Updated Date': this.datePipe.transform(
+          data.updateDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.updatedBy,
       };
     });
@@ -107,9 +117,17 @@ export class CoreDomainComponent implements OnInit {
         'Value 9': data.val9,
         'Value 10': data.val10,
         'Value 11': data.val11,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -144,11 +162,14 @@ export class CoreDomainComponent implements OnInit {
       this.dico = data;
     });
   }
+
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   trackDomainById(index: number, domain: any): string {
     return domain.id;

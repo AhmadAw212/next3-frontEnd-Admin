@@ -79,9 +79,17 @@
                 </div>
               </div>
             </td>
-            <td>{{ cars.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ cars.sysCreatedBy }}</td>
-            <td>{{ cars.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                cars.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ cars.sysUpdatedBy }}</td>
 
             <td>

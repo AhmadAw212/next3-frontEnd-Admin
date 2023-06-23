@@ -16,6 +16,7 @@ import { AddNearRegionTerritoryComponent } from './add-near-region-territory/add
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-near-region-territory',
   templateUrl: './near-region-territory.component.html',
@@ -28,13 +29,15 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   reportDateTimeFormat?: string;
   updatedRegion?: NearRegionTerritory[] = [];
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dialog: MatDialog,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnChanges(): void {
@@ -54,9 +57,16 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
         'Central Region Code': data.central_regionCode,
         'Central Region Description': data.central_regionDescription,
         Priority: data.priority,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -90,12 +100,13 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     return territory.id;
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
   }
-
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

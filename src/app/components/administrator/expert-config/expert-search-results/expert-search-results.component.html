@@ -125,9 +125,13 @@
         <td contenteditable="true" (blur)="onTdBlur($event, expert, 'ratio')">
           {{ expert.ratio }}
         </td>
-        <td>{{ expert.createdDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ expert.createdDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ expert.createdBy }}</td>
-        <td>{{ expert.updatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ expert.updatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ expert.updatedBy }}</td>
         <td>
           <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>

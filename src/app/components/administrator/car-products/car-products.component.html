@@ -120,11 +120,15 @@
             {{ product.lob }}
           </td>
           <td>
-            {{ product.sysCreatedDate | date : reportDateTimeFormat }}
+            {{
+              product.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
           </td>
           <td>{{ product.sysCreatedBy }}</td>
           <td>
-            {{ product.sysUpdatedDate | date : reportDateTimeFormat }}
+            {{
+              product.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
           </td>
           <td>{{ product.sysUpdatedBy }}</td>
 

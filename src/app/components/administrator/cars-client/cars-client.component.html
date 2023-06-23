@@ -1,5 +1,16 @@
-<h3 class="h3-header">{{ dico?.dico_cars_clients || "dico_cars_clients" }}</h3>
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_cars_clients || "dico_cars_clients" }}
 
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 <div class="select-container">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
@@ -213,9 +224,19 @@
             >
               {{ client.description }}
             </td>
-            <td>{{ client.sysCreatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                client.sysCreatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ client.sysCreatedBy }}</td>
-            <td>{{ client.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+            <td>
+              {{
+                client.sysUpdatedDate
+                  | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
             <td>{{ client.sysUpdatedBy }}</td>
 
             <td>

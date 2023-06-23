@@ -7,6 +7,10 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../add-dialogs/add-expert/add-expert.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 @Component({
   selector: 'app-expert-config',
   templateUrl: './expert-config.component.html',
@@ -39,9 +43,13 @@ export class ExpertConfigComponent implements OnInit {
   private searchTimer: any;
   isLoading: boolean = false;
   dico?: any;
-  constructor(private dataService: DataServiceService,
-    private dicoService: DicoServiceService
-    ) {}
+  dateFormats?: any;
+  constructor(
+    private dataService: DataServiceService,
+    private dicoService: DicoServiceService,
+    private dateFormatService: DateFormatterService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
@@ -49,7 +57,55 @@ export class ExpertConfigComponent implements OnInit {
     this.getDomainYN();
     this.getExpGroup();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.expertSearchResult?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        'Expert Name': data.expertName,
+        Group: data.groupDesc,
+        Territory: data.territory_name,
+        'Bodily Injury': data.bodily_injury,
+        VIP: data.vip,
+        Exclusive: data.exclusive,
+        'Second Expert': data.secondExpert,
+        Contract: data.contract,
+        Schedule: data.scheduleDesc,
+        Remarks: data.remarks,
+        Ratio: data.ratio,
+        'Created Date': this.datePipe.transform(
+          data.createdDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
 
+        'Created By': data.createdBy,
+        'Updated Date': this.datePipe.transform(
+          data.updatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Experts');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Experts.xlsx');
   }
   getDico() {
     this.isLoading = true;
@@ -62,6 +118,14 @@ export class ExpertConfigComponent implements OnInit {
   //   console.log('Search term:', searchTerm.term);
 
   // }
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
+    });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   showExpResult() {
     this.showExpertResult = true;
   }

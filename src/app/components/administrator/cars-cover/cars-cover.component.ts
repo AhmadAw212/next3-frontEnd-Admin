@@ -11,6 +11,7 @@ import { UpdateCarCoverComponent } from '../update-dialogs/update-car-cover/upda
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { DatePipe } from '@angular/common';
 interface type {
   code: string;
   description: string;
@@ -32,13 +33,15 @@ export class CarsCoverComponent implements OnInit {
   selectedRow!: HTMLElement;
   dico?: any;
   isLoading: boolean = false;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -75,10 +78,16 @@ export class CarsCoverComponent implements OnInit {
         Code: cover.code,
         Description: cover.description,
         Type: cover.coverTypeDescription,
-        Company: cover.insuranceDesc,
-        'Created Date': cover.sysCreatedDate,
+        // Company: cover.insuranceDesc,
+        'Created Date': this.datePipe.transform(
+          cover.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': cover.sysCreatedBy,
-        'Updated Date': cover.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          cover.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': cover.sysUpdatedBy,
       };
     });
@@ -103,9 +112,12 @@ export class CarsCoverComponent implements OnInit {
     saveAs(excelBlob, 'car_covers.xlsx');
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getCompaniesPerUser() {
     this.dataService.getCompaniesListByCurrentUser().subscribe({

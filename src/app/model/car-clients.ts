@@ -6,6 +6,7 @@ export interface CarClients {
   fatherName?: string;
   firstName?: string;
   gender?: string;
+  titre_description?: string;
   id?: string;
   indic1?: number;
   indic2?: number;

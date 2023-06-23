@@ -9,7 +9,9 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../../add-dialogs/add-expert/add-expert.component';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import { DatePipe } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-expert-search-results',
   templateUrl: './expert-search-results.component.html',
@@ -37,6 +39,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   showExpertCompany?: boolean = false;
   selectedExpert?: CarExpert;
   dico?: any;
+  dateFormats?: any;
   @Input() selectedSupplier?: CarSupplier;
   constructor(
     private dataService: DataServiceService,
@@ -44,7 +47,8 @@ export class ExpertSearchResultsComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +58,7 @@ export class ExpertSearchResultsComponent implements OnInit {
 
     this.dateFormatterService();
   }
+
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
@@ -239,9 +244,11 @@ export class ExpertSearchResultsComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
 }

@@ -98,11 +98,15 @@
             {{ subline.notes }}
           </td>
           <td>
-            {{ subline.sysCreatedDate | date : reportDateTimeFormat }}
+            {{
+              subline.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
           </td>
           <td>{{ subline.sysCreatedBy }}</td>
           <td>
-            {{ subline.sysUpdatedDate | date : reportDateTimeFormat }}
+            {{
+              subline.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
           </td>
           <td>{{ subline.sysUpdatedBy }}</td>
 

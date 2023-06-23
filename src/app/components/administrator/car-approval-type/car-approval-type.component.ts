@@ -9,6 +9,9 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddApprovalTypeComponent } from '../add-dialogs/add-approval-type/add-approval-type.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-car-approval-type',
   templateUrl: './car-approval-type.component.html',
@@ -23,19 +26,62 @@ export class CarApprovalTypeComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedApprovalType?: CarApprovalType[] = [];
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dateFormatService: DateFormatterService,
     private dialog: MatDialog,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.dateFormatterService();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carAppType?.map((data) => {
+      return {
+        ID: data.id,
+        'Application Type': data.applicationType,
+        Username: data.appUserId,
+        'Amount To': data.amountTo,
+        'Amount From': data.amountFrom,
+        'Send Email': data.sendEmail,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Created By': data.sysCreatedBy,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Approval Type');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Approval Type.xlsx');
   }
   getDico() {
     this.dicoService.getDico();
@@ -44,10 +90,12 @@ export class CarApprovalTypeComponent implements OnInit {
     });
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

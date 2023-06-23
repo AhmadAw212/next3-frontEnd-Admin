@@ -12,6 +12,7 @@ import { CarInfo } from 'src/app/model/car-info';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-car-shape',
   templateUrl: './car-shape.component.html',
@@ -26,13 +27,16 @@ export class CarShapeComponent implements OnInit {
   showCarInfo = false;
   selectedRow!: HTMLElement;
   dico?: any;
+
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -46,9 +50,16 @@ export class CarShapeComponent implements OnInit {
         ID: data.carShapeId,
         Code: data.carShapeCode,
         Description: data.carShapeDescription,
-        'Created Date': data.created_date,
+        'Created Date': this.datePipe.transform(
+          data.created_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.updated_date,
-        'Updated Date': data.updated_date,
+        'Updated Date': this.datePipe.transform(
+          data.updated_date,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.updatedBy,
       };
     });
@@ -82,9 +93,12 @@ export class CarShapeComponent implements OnInit {
     return brand.carShapeId;
   }
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;

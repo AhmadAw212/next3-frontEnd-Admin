@@ -13,6 +13,12 @@ export interface CarSupplier {
   home_building: string;
   street: string;
   home_phone: string;
+  home_district_desc?: string;
+  home_sector_desc?: string;
+  home_city_desc?: string;
+  business_district_desc?: string;
+  business_sector_desc?: string;
+  business_city_desc?: string;
   // bus_street: string;
   business_caza: string;
   business_region: string;

@@ -1,3 +1,16 @@
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_car_approval_type || "dico_car_approval_type" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 <div class="select-container" style="margin: 10px">
   <span> {{ dico?.dico_company || "dico_company" }}:</span>
   <select
@@ -17,7 +30,9 @@
     <app-spinner *ngIf="isLoading"></app-spinner>
     <div class="user-inputs">
       <form (ngSubmit)="searchCarAppType()">
-        <button type="submit">{{ dico?.BASIC_REFRESH || "BASIC_REFRESH" }}</button>
+        <button type="submit">
+          {{ dico?.BASIC_REFRESH || "BASIC_REFRESH" }}
+        </button>
       </form>
       <div class="admin-button">
         <button type="button" (click)="addApprovalTypeDialog()">
@@ -80,9 +95,17 @@
               (change)="onDropdownChange($event, carApp, 'sendEmail')"
             />
           </td>
-          <td>{{ carApp.sysCreatedDate | date : reportDateTimeFormat }}</td>
+          <td>
+            {{
+              carApp.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
           <td>{{ carApp.sysCreatedBy }}</td>
-          <td>{{ carApp.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+          <td>
+            {{
+              carApp.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
           <td>{{ carApp.sysUpdatedBy }}</td>
 
           <td>

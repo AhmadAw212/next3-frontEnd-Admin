@@ -116,9 +116,17 @@
         >
           {{ branch.address2 }}
         </td>
-        <td>{{ branch.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{
+            branch.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
         <td>{{ branch.sysCreatedBy }}</td>
-        <td>{{ branch.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{
+            branch.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
         <td>{{ branch.sysUpdatedBy }}</td>
 
         <td>

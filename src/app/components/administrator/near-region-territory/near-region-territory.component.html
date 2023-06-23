@@ -54,9 +54,17 @@
         >
           {{ region.priority }}
         </td>
-        <td>{{ region.sysCreatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{
+            region.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
         <td>{{ region.sysCreatedBy }}</td>
-        <td>{{ region.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{
+            region.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
         <td>{{ region.sysUpdatedBy }}</td>
         <td>
           <mat-icon (click)="deleteCarCover(region.id!)">delete</mat-icon>

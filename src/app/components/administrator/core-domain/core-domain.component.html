@@ -73,9 +73,13 @@
         >
           {{ domain.preference_code }}
         </td>
-        <td>{{ domain.createdDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ domain.createdDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ domain.createdBy }}</td>
-        <td>{{ domain.updateDate | date : reportDateTimeFormat }}</td>
+        <td>
+          {{ domain.updateDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
         <td>{{ domain.updatedBy }}</td>
         <!-- <td>
           <input

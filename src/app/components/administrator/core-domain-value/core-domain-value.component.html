@@ -98,9 +98,13 @@
         {{ domain.val11 }}
       </td>
 
-      <td>{{ domain.sysCreatedDate | date : reportDateTimeFormat }}</td>
+      <td>
+        {{ domain.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+      </td>
       <td>{{ domain.sysCreatedBy }}</td>
-      <td>{{ domain.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+      <td>
+        {{ domain.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+      </td>
       <td>{{ domain.sysUpdatedBy }}</td>
 
       <!-- <td>

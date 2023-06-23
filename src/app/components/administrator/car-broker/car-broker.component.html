@@ -136,9 +136,17 @@
           >
             {{ broker.referalNote }}
           </td>
-          <td>{{ broker.sysCreatedDate | date : reportDateTimeFormat }}</td>
+          <td>
+            {{
+              broker.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
           <td>{{ broker.sysCreatedBy }}</td>
-          <td>{{ broker.sysUpdatedDate | date : reportDateTimeFormat }}</td>
+          <td>
+            {{
+              broker.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
           <td>{{ broker.sysUpdatedBy }}</td>
 
           <td>

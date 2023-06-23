@@ -15,7 +15,9 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddExpertCompanyComponent } from '../../add-dialogs/add-expert-company/add-expert-company.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import { DatePipe } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-expert-company-list',
   templateUrl: './expert-company-list.component.html',
@@ -28,24 +30,65 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   company?: string;
   updatedExpCompany?: ExpertCompany[] = [];
   reportDateTimeFormat?: string;
-   dico?: any;
+  dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.getExpertCompany();
     this.getCompaniesPerUser();
-    this.dateFormatService.dateFormatter();
+
     this.dateFormatterService();
     console.log(this.selectedExpert);
-        this.getDico();
+    this.getDico();
+  }
+  exportToExcel() {
+    const data = this.expertCompanies?.map((data) => {
+      return {
+        Insurance: data.insuranceDesc,
+        'Initial Count': data.initialCount,
+        Ratio: data.ratio,
+        'All Expert Dispatch Count': data.dispatchCount,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
 
+        'Created By': data.sysCreatedBy,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Expert Companies');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Expert_Companies.xlsx');
   }
   getDico() {
     this.dicoService.getDico();
@@ -55,9 +98,12 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   }
 
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
@@ -151,6 +197,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
         });
     }
   }
+
   getExpertCompany() {
     const expertId = this.selectedExpert?.id!;
     this.dataService.getExpertCompany(expertId).subscribe({

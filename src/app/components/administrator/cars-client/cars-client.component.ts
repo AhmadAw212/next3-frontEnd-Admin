@@ -8,6 +8,9 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarClientComponent } from '../add-dialogs/add-car-client/add-car-client.component';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { DatePipe } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 interface type {
   code: string;
   description: string;
@@ -32,14 +35,15 @@ export class CarsClientComponent implements OnInit {
   selectedRow!: HTMLElement;
   dico?: any;
   isLoading?: boolean = false;
-
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +53,58 @@ export class CarsClientComponent implements OnInit {
     this.getTitleLov();
     this.getGenderList();
     this.getDico();
+  }
+  exportToExcel() {
+    const data = this.carClients?.map((data) => {
+      return {
+        ID: data.id,
+        Description: data.description,
+        'First Name': data.firstName,
+        'Father Name': data.fatherName,
+        'Prefix Family': data.prefixFamily,
+        'Last Name': data.lastName,
+        Gender: data.gender,
+        'Number 1': data.num1,
+        'Number 2': data.num2,
+        'Mobile Phone': data.mobilePhone,
+        Title: data.titre_description,
+        'Indic 1': data.indic1,
+        'Indic 2': data.indic2,
+        Broker: data.broker,
+        'Client VIP': data.clientVip,
+        'Business Phone': data.busPhone,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
+        'Created By': data.sysCreatedBy,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Updated By': data.sysUpdatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Clients');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Clients.xlsx');
   }
   trackClientById(index: number, client: CarClients) {
     return client.id;
@@ -60,12 +116,15 @@ export class CarsClientComponent implements OnInit {
       this.dico = data;
     });
   }
+
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
   }
-
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

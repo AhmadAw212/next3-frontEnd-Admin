@@ -10,6 +10,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UpdateDocumentComponent } from '../update-dialogs/update-document/update-document.component';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-core-document',
   templateUrl: './core-document.component.html',
@@ -24,13 +25,15 @@ export class CoreDocumentComponent implements OnInit {
   coreDocument?: CoreDocument;
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
+  dateFormats?: any;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -55,9 +58,16 @@ export class CoreDocumentComponent implements OnInit {
         'Content Type': data.contentType,
         'File Name': data.fileName,
         'File Path': data.filePath,
-        'Created Date': data.createdDate,
+        'Created Date': this.datePipe.transform(
+          data.createdDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+
         'Created By': data.createdBy,
-        'Updated Date': data.updateDate,
+        'Updated Date': this.datePipe.transform(
+          data.updateDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.updatedBy,
       };
     });
@@ -93,9 +103,12 @@ export class CoreDocumentComponent implements OnInit {
   }
 
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   isImage(contentType: string): boolean {
     return contentType.startsWith('image/');

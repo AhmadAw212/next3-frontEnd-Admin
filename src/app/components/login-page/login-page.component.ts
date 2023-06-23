@@ -39,8 +39,12 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     const lang = localStorage.getItem('selectedLanguage');
+    const user = {
+      username: this.userName!,
+      password: this.password!,
+    };
     if (this.userName && this.password && this.languages && lang) {
-      this.authService.authenticate(this.userName, this.password);
+      this.authService.authenticate(user);
     } else {
       this.alertify.error('Please enter your username and password');
       // return;

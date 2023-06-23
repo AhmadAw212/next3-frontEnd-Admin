@@ -9,6 +9,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-core-configuration',
   templateUrl: './core-configuration.component.html',
@@ -24,13 +25,15 @@ export class CoreConfigurationComponent implements OnInit {
   selectedRow!: HTMLElement;
   isLoading: boolean = false;
   dico?: any;
+  dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe
   ) {}
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
@@ -44,7 +47,6 @@ export class CoreConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
   }
@@ -55,9 +57,15 @@ export class CoreConfigurationComponent implements OnInit {
         Description: data.description,
         'Configuration Key': data.configKey,
         'Configuration Value': data.configValue,
-        'Created Date': data.sysCreatedDate,
+        'Created Date': this.datePipe.transform(
+          data.sysCreatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Created By': data.sysCreatedBy,
-        'Updated Date': data.sysUpdatedDate,
+        'Updated Date': this.datePipe.transform(
+          data.sysUpdatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
         'Updated By': data.sysUpdatedBy,
       };
     });
@@ -89,10 +97,12 @@ export class CoreConfigurationComponent implements OnInit {
   }
 
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
-      // this.reportDateTime = this.dateFormatService.reportDateTime;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   trackConfigById(index: number, config: any): string {
     return config.id;
