@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-data-entry-view',
@@ -25,16 +26,26 @@ export class DataEntryViewComponent implements OnInit {
   selectedInjuredSequence!: any;
   selectedLossCar?: any;
   selectedMatDamage?: any;
+  dico?: any;
+
 
   constructor(
     private dataService: DataServiceService,
     private router: Router,
     private authService: AuthService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.getDataEntry();
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
@@ -69,7 +80,7 @@ export class DataEntryViewComponent implements OnInit {
 
   //10.9091591
   getDataEntry() {
-    this.dataService.getDataEntry('10.9091591').subscribe({
+    this.dataService.getDataEntry('2a53e157-3713-42a3-87cd-099d9efb4bc6').subscribe({
       next: (res) => {
         this.dataEntry = res.data;
         this.lossCarList = res.data.lossCarList;

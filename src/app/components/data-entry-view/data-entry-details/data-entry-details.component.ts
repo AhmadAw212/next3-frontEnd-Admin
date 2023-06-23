@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-data-entry-details',
@@ -7,8 +8,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DataEntryDetailsComponent implements OnInit {
   @Input() lossCarList: any;
+  dico?: any;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {this.getDico();}
 
-  constructor() {}
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
+
+  constructor(private dicoService: DicoServiceService) {}
 }

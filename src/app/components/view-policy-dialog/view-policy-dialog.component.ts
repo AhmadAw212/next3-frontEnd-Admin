@@ -29,7 +29,7 @@ export class ViewPolicyDialogComponent implements OnInit {
     });
   }
   viewPolicy() {
-    this.dataService.viewPolicy('10.1.MO.347922.0.0.1').subscribe({
+    this.dataService.viewPolicy('10.7.MO.3200803267.0.0.1').subscribe({
       next: (data) => {
         this.policyData = data.data;
         this.policyCoverlist = data.data?.policyCoverlist;

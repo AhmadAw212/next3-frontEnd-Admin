@@ -7,42 +7,42 @@
         <div class="panel">
           <div class="column">
             <div class="panel-item">
-              <label>PAS</label>
+              <label>{{ dico?.dico_pas_info || "dico_pas_info" }}</label>
               <p>{{ dataEntry?.notificationVisa }}</p>
             </div>
             <div class="panel-item">
-              <label>Related</label>
+              <label>{{ dico?.dico_related || "dico_related" }}</label>
               <p>{{ dataEntry?.lossTowRelated }}</p>
             </div>
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>Accident Date</label>
+              <label>{{ dico?.dico_accident_date || "dico_accident_date" }}</label>
               <p>{{ dataEntry?.lossTowLossDate }}</p>
             </div>
             <div class="panel-item">
-              <label>Status</label>
+              <label>{{ dico?.dico_status || "dico_status" }}</label>
               <p>{{ dataEntry?.notificationsStatus }}</p>
             </div>
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>Dispatch Address</label>
+              <label>{{ dico?.dico_dispatch_address || "dico_dispatch_address" }}</label>
               <p>{{ dataEntry?.dico_dispatch_address }}</p>
             </div>
             <div class="panel-item">
-              <label>Accident Address</label>
+              <label>{{ dico?.dico_accident_address || "dico_accident_address" }}</label>
               <p>{{ dataEntry?.distributionTownName }}</p>
             </div>
           </div>
 
           <div class="column">
             <div class="panel-item">
-              <label>Expert Full Name </label>
+              <label>{{ dico?.dico_expert || "dico_expert" }}</label>
               <p>{{ dataEntry?.supplierExpertName }}</p>
             </div>
             <div class="panel-item">
-              <label>Claims Officer</label>
+              <label>{{ dico?.dico_claim_officer || "dico_claim_officer" }}</label>
               <p>{{ dataEntry?.claimOfficerFullName }}</p>
             </div>
           </div>
@@ -80,7 +80,7 @@
             <table class="table table-bordered">
               <thead style="position: static">
                 <tr>
-                  <th>Insured - Third Party</th>
+                  <th>{{ dico?.dico_insured_third_party || "dico_insured_third_party" }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -100,7 +100,7 @@
             <table class="table table-bordered">
               <thead style="position: static">
                 <tr>
-                  <th>Injured</th>
+                  <th>{{ dico?.dico_injured || "dico_injured" }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -110,7 +110,7 @@
                 >
                   <td (click)="toggleBodilyInjury(bodilyInjury)">
                     <a class="data-link"
-                      >injured {{ bodilyInjury.injuredSeq }} -
+                      >{{ dico?.dico_injured || "dico_injured" }} {{ bodilyInjury.injuredSeq }} -
                       {{ bodilyInjury?.injuredFirstName }}
                       {{ bodilyInjury?.injuredFamily }}</a
                     >
@@ -121,7 +121,7 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Material Damage</th>
+                  <th>{{ dico?.dico_material_damage || "dico_material_damage" }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,7 +131,7 @@
                 >
                   <td (click)="toggleMaterialDamage(matDamage)">
                     <a class="data-link"
-                      >Material Damage {{ matDamage.matDamageSeq }}</a
+                      >{{ dico?.dico_material_damage || "dico_material_damage" }} {{ matDamage.matDamageSeq }}</a
                     >
                   </td>
                 </tr>
