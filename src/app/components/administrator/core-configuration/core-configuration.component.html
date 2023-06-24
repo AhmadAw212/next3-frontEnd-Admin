@@ -45,6 +45,7 @@
         <thead>
           <tr>
             <th>{{ dico?.dico_id || "dico_id" }}</th>
+            <th>{{ dico?.dico_config_key || "dico_config_key" }}</th>
             <th>{{ dico?.dico_config_value || "dico_config_value" }}</th>
             <th>{{ dico?.dico_description || "dico_description" }}</th>
             <th>
@@ -64,6 +65,12 @@
         >
           <tr *ngFor="let config of configData; trackBy: trackConfigById">
             <td>{{ config.id }}</td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, config, 'configKey')"
+            >
+              {{ config.configKey }}
+            </td>
             <td
               contenteditable="true"
               (blur)="onTdBlur($event, config, 'configValue')"

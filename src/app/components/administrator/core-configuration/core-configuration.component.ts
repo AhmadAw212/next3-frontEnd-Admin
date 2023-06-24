@@ -54,9 +54,9 @@ export class CoreConfigurationComponent implements OnInit {
     const data = this.configData?.map((data) => {
       return {
         ID: data.id,
-        Description: data.description,
         'Configuration Key': data.configKey,
         'Configuration Value': data.configValue,
+        Description: data.description,
         'Created Date': this.datePipe.transform(
           data.sysCreatedDate,
           this.dateFormat('excelDateTimeFormat')
@@ -120,6 +120,7 @@ export class CoreConfigurationComponent implements OnInit {
       config[property] = newValue;
       this.updatedConfigValues?.push({
         id: config.id,
+        configKey: config.configKey,
         configValue: config.configValue,
         description: config.description,
       });
