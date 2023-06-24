@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { LoginInfo } from 'src/app/model/login-info';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-login-nav',
@@ -18,28 +19,37 @@ export class LoginNavComponent implements OnInit {
   userName?: string;
   loginInfo?: LoginInfo;
   reportDateTimeFormat?: string;
-
+  dateFormats?: any;
+  dico?: any;
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dataService: DataServiceService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private dicoService: DicoServiceService
   ) {}
   ngOnInit(): void {
     this.loginUserInfo();
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
+    this.getDico();
   }
-
   dateFormatterService() {
-    this.dateFormatService.date.subscribe(() => {
-      this.reportDateTimeFormat = this.dateFormatService.reportDateTimeFormat;
-      // this.reportDateTime = this.dateFormatService.reportDateTime;
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
     });
   }
-
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   logout(): void {
     this.dataService.logout().subscribe({
       next: (response) => {

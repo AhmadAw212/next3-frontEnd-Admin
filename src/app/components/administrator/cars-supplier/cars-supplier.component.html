@@ -41,37 +41,36 @@
       </button>
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col-md-12">
-      <table id="table">
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_name || "dico_name" }}</th>
-            <th>{{ dico?.dico_interm || "dico_interm" }}</th>
-            <th>{{ dico?.dico_num || "dico_num" }}</th>
-            <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
-            <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
-            <th>{{ dico?.dico_tva_num || "dico_tva_num" }}</th>
-            <th>{{ dico?.dico_grade || "dico_grade" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <!-- <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th> -->
-          </tr>
-        </thead>
-        <tbody *ngIf="carSupplier?.length! > 0; else noData">
-          <tr
-            *ngFor="let supplier of carSupplier; trackBy: trackSupplierById"
-            (click)="highlightRow($event); showSuppList(supplier)"
-          >
-            <td>{{ supplier.fullName }}</td>
-            <td>
-              <!-- <select
+
+  <table id="table">
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_name || "dico_name" }}</th>
+        <th>{{ dico?.dico_interm || "dico_interm" }}</th>
+        <th>{{ dico?.dico_num || "dico_num" }}</th>
+        <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
+        <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
+        <th>{{ dico?.dico_tva_num || "dico_tva_num" }}</th>
+        <th>{{ dico?.dico_grade || "dico_grade" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <!-- <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th> -->
+      </tr>
+    </thead>
+    <tbody *ngIf="carSupplier?.length! > 0; else noData">
+      <tr
+        *ngFor="let supplier of carSupplier; trackBy: trackSupplierById"
+        (click)="highlightRow($event); showSuppList(supplier)"
+      >
+        <td>{{ supplier.fullName }}</td>
+        <td>
+          <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.interm"
                 disabled
@@ -80,17 +79,17 @@
                   {{ type.description }}
                 </option>
               </select> -->
-              {{ supplier.intermDesc }}
-            </td>
+          {{ supplier.intermDesc }}
+        </td>
 
-            <td>{{ supplier.number }}</td>
+        <td>{{ supplier.number }}</td>
 
-            <td>{{ supplier.bus_phone }}</td>
-            <td>{{ supplier.mobile_number }}</td>
-            <td>{{ supplier.tva_number }}</td>
+        <td>{{ supplier.bus_phone }}</td>
+        <td>{{ supplier.mobile_number }}</td>
+        <td>{{ supplier.tva_number }}</td>
 
-            <td>
-              <!-- <select
+        <td>
+          <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.grade_id"
                 disabled
@@ -99,38 +98,34 @@
                   {{ grade.description }}
                 </option>
               </select> -->
-              {{ supplier.gradeDesc }}
-            </td>
+          {{ supplier.gradeDesc }}
+        </td>
 
-            <td>
-              {{
-                supplier.sysCreatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ supplier.sysCreatedBy }}</td>
-            <td>
-              {{
-                supplier.sysUpdatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ supplier.sysUpdatedBy }}</td>
-            <!-- <td>
+        <td>
+          {{
+            supplier.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ supplier.sysCreatedBy }}</td>
+        <td>
+          {{
+            supplier.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ supplier.sysUpdatedBy }}</td>
+        <!-- <td>
               <button>{{ dico?.dico_deactivate || "dico_deactivate" }}</button>
             </td> -->
-          </tr>
-        </tbody>
-      </table>
-      <ng-template #noData>
-        <tr>
-          <td colspan="5">
-            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-          </td>
-        </tr>
-      </ng-template>
-    </div>
-  </div>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noData>
+    <tr>
+      <td colspan="5">
+        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+      </td>
+    </tr>
+  </ng-template>
 </div>
 
 <div class="admin-container container-fluid" *ngIf="showMoreInfo">

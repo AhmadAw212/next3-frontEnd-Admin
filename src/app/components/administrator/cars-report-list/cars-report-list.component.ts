@@ -127,7 +127,7 @@ export class CarsReportListComponent implements OnInit {
         if (err.status === 401 || err.status === 500) {
           this.authService.logout();
           this.alertifyService.dialogAlert('Error');
-          this.alertifyService.error(err.error.message);
+          // this.alertifyService.error(err.error.message);
         }
       },
     });

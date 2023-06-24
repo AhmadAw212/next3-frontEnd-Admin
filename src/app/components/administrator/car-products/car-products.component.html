@@ -19,7 +19,7 @@
       id="bodyTypeNew"
       name="bodyTypeNew"
       required
-      class="company-select"
+      class="company-select select-class"
       [(ngModel)]="company"
       [disabled]="companies?.length! <= 1"
     >
@@ -101,6 +101,7 @@
             <select
               required
               style="width: 150px"
+              class="select-class"
               [(ngModel)]="product.type"
               (change)="onDropdownChange($event, product, 'type')"
             >

@@ -5,9 +5,9 @@
     /></a>
   </div>
   <div class="navbar-right">
-    <span class="navbar-date"
-      >Last login :{{
-        loginInfo?.sysCreatedDate | date : reportDateTimeFormat
+    <span class="navbar-date">
+      {{ dico?.BASIC_LAST_LOGIN || "BASIC_LAST_LOGIN" }} :{{
+        loginInfo?.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
       }}</span
     >
     <div class="navbar-dropdown">
@@ -16,8 +16,10 @@
         {{ loginInfo?.displayName }}
       </button>
       <div class="navbar-dropdown-content">
-        <a (click)="openChangePasswordDialog()">Change Password</a>
-        <a (click)="logout()">Logout</a>
+        <a (click)="openChangePasswordDialog()">{{
+          dico?.BASIC_CHANGE_PWD || "BASIC_CHANGE_PWD"
+        }}</a>
+        <a (click)="logout()">{{ dico?.BASIC_LOGOUT || "BASIC_LOGOUT" }}</a>
       </div>
     </div>
   </div>

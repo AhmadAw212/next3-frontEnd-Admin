@@ -163,7 +163,8 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.error(err.error.message);
+        console.log(err);
+        // this.alertifyService.error(err.error.message);
       },
     });
   }
@@ -176,7 +177,8 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        this.alertifyService.error(err.error.message);
+        console.log(err);
+        // this.alertifyService.error(err.error.message);
       },
     });
   }
@@ -212,7 +214,8 @@ export class CarsSupplierComponent implements OnInit {
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
               this.authService.logout();
-              this.alertifyService.error(err.error.message);
+              this.alertifyService.error(err.message);
+              // this.alertifyService.error(err.error.message);
             }
           },
         });
@@ -226,7 +229,8 @@ export class CarsSupplierComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.error(err.error.message);
+        console.log(err);
+        // this.alertifyService.error(err.error.message);
       },
     });
   }

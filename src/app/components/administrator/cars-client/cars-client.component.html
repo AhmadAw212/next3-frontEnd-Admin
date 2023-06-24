@@ -17,7 +17,7 @@
     id="bodyTypeNew"
     name="bodyTypeNew"
     required
-    class="company-select"
+    class="company-select select-class"
     [(ngModel)]="company"
     [disabled]="companies?.length! <= 1"
   >
@@ -88,170 +88,152 @@
       <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_id || "dico_id" }}</th>
-            <th>{{ dico?.dico_num_1 || "dico_num_1" }}</th>
-            <th>{{ dico?.dico_num_2 || "dico_num_2" }}</th>
-            <th>{{ dico?.dico_family_name || "dico_family_name" }}</th>
-            <th>{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}</th>
-            <th>{{ dico?.dico_first_name || "dico_first_name" }}</th>
-            <th>{{ dico?.dico_father_name || "dico_father_name" }}</th>
-            <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
-            <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
-            <th>{{ dico?.dico_title || "dico_title" }}</th>
-            <th>{{ dico?.dico_gender || "dico_gender" }}</th>
-            <th>{{ dico?.dico_broker || "dico_broker" }}</th>
-            <th>{{ dico?.dico_indic1 || "dico_indic1" }}</th>
-            <th>{{ dico?.dico_indic2 || "dico_indic2" }}</th>
-            <th>{{ dico?.dico_vip || "dico_vip" }}</th>
-            <th>{{ dico?.dico_description || "dico_description" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="carClients?.length! > 0; else noData"
-          (click)="highlightRow($event)"
-        >
-          <tr *ngFor="let client of carClients; trackBy: trackClientById">
-            <td>{{ client.id }}</td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'num1')"
-            >
-              {{ client.num1 }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'num2')"
-            >
-              {{ client.num2 }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'lastName')"
-            >
-              {{ client.lastName }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'prefixFamily')"
-            >
-              {{ client.prefixFamily }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'firstName')"
-            >
-              {{ client.firstName }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'fatherName')"
-            >
-              {{ client.fatherName }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'busPhone')"
-            >
-              {{ client.busPhone }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'mobilePhone')"
-            >
-              {{ client.mobilePhone }}
-            </td>
-            <td>
-              <select
-                [(ngModel)]="client.titre"
-                (change)="onDropdownChange($event, client, 'titre')"
-              >
-                <option [value]="title.code" *ngFor="let title of titleLov">
-                  {{ title.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                [(ngModel)]="client.gender"
-                (change)="onDropdownChange($event, client, 'gender')"
-              >
-                <option [value]="gender.code" *ngFor="let gender of genderList">
-                  {{ gender.description }}
-                </option>
-              </select>
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'broker')"
-            >
-              {{ client.broker }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'indic1')"
-            >
-              {{ client.indic1 }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'indic2')"
-            >
-              {{ client.indic2 }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'clientVip')"
-            >
-              {{ client.clientVip }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, client, 'description')"
-            >
-              {{ client.description }}
-            </td>
-            <td>
-              {{
-                client.sysCreatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ client.sysCreatedBy }}</td>
-            <td>
-              {{
-                client.sysUpdatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ client.sysUpdatedBy }}</td>
 
-            <td>
-              <mat-icon (click)="deleteCarCLient(client.id!)">delete</mat-icon>
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="5">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_num_1 || "dico_num_1" }}</th>
+        <th>{{ dico?.dico_num_2 || "dico_num_2" }}</th>
+        <th>{{ dico?.dico_family_name || "dico_family_name" }}</th>
+        <th>{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}</th>
+        <th>{{ dico?.dico_first_name || "dico_first_name" }}</th>
+        <th>{{ dico?.dico_father_name || "dico_father_name" }}</th>
+        <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
+        <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
+        <th>{{ dico?.dico_title || "dico_title" }}</th>
+        <th>{{ dico?.dico_gender || "dico_gender" }}</th>
+        <th>{{ dico?.dico_broker || "dico_broker" }}</th>
+        <th>{{ dico?.dico_indic1 || "dico_indic1" }}</th>
+        <th>{{ dico?.dico_indic2 || "dico_indic2" }}</th>
+        <th>{{ dico?.dico_vip || "dico_vip" }}</th>
+        <th>{{ dico?.dico_description || "dico_description" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="carClients?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let client of carClients; trackBy: trackClientById">
+        <td>{{ client.id }}</td>
+        <td contenteditable="true" (blur)="onTdBlur($event, client, 'num1')">
+          {{ client.num1 }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, client, 'num2')">
+          {{ client.num2 }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'lastName')"
+        >
+          {{ client.lastName }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'prefixFamily')"
+        >
+          {{ client.prefixFamily }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'firstName')"
+        >
+          {{ client.firstName }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'fatherName')"
+        >
+          {{ client.fatherName }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'busPhone')"
+        >
+          {{ client.busPhone }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'mobilePhone')"
+        >
+          {{ client.mobilePhone }}
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="client.titre"
+            (change)="onDropdownChange($event, client, 'titre')"
+          >
+            <option [value]="title.code" *ngFor="let title of titleLov">
+              {{ title.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="client.gender"
+            (change)="onDropdownChange($event, client, 'gender')"
+          >
+            <option [value]="gender.code" *ngFor="let gender of genderList">
+              {{ gender.description }}
+            </option>
+          </select>
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, client, 'broker')">
+          {{ client.broker }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, client, 'indic1')">
+          {{ client.indic1 }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, client, 'indic2')">
+          {{ client.indic2 }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'clientVip')"
+        >
+          {{ client.clientVip }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, client, 'description')"
+        >
+          {{ client.description }}
+        </td>
+        <td>
+          {{
+            client.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ client.sysCreatedBy }}</td>
+        <td>
+          {{
+            client.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ client.sysUpdatedBy }}</td>
+
+        <td>
+          <mat-icon (click)="deleteCarCLient(client.id!)">delete</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>

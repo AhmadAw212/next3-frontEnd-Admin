@@ -18,9 +18,7 @@ export class DateFormatterService {
     this.dataService.dateTimeFormatter().subscribe({
       next: (res) => {
         this.dateFormat = res.data;
-        // console.log(this.dateFormat);
-        // this.reportDateTimeFormat = this.getConfigValue('reportDateTimeFormat');
-        // this.reportDateTime = this.getConfigValue('reportDateFormat');
+
         this.dateFormatterSubject.next(res.data);
       },
       error: (err) => {
