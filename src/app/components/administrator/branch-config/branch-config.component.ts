@@ -56,7 +56,7 @@ export class BranchConfigComponent implements OnInit {
     const data = this.branches?.map((data) => {
       return {
         ID: data.id,
-        Code: data.description,
+        Code: data.code,
         Description: data.description,
         'Arabic description': data.arabic_description,
         Company: data.insuranceDescription,
