@@ -97,7 +97,7 @@ export class CarsCoverComponent implements OnInit {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Car Covers');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Covers');
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -109,7 +109,7 @@ export class CarsCoverComponent implements OnInit {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'car_covers.xlsx');
+    saveAs(excelBlob, 'Covers.xlsx');
   }
   dateFormatterService() {
     this.dateFormatService.date.subscribe((data) => {

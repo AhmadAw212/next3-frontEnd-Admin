@@ -49,16 +49,16 @@ export class CarBrokerComponent implements OnInit {
     const data = this.brokers?.map((data) => {
       return {
         ID: data.id,
+        Number: data.number,
         Description: data.description,
         Description2: data.description2,
-        Number: data.number,
         'Contact Info': data.contactInfo,
         Company: data.insuranceDescription,
         Email: data.email,
         Telephone: data.telephone,
         Reference: data.reference,
         referal: data.referal,
-        'Rreferal Note': data.referalNote,
+        'Rereferal Note': data.referalNote,
         'Created Date': this.datePipe.transform(
           data.sysCreatedDate,
           this.dateFormat('excelDateTimeFormat')

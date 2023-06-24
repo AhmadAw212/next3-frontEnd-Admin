@@ -92,7 +92,7 @@ export class BranchConfigComponent implements OnInit {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Branch_config.xlsx');
+    saveAs(excelBlob, 'Branch.xlsx');
   }
   getDico() {
     this.dicoService.getDico();
