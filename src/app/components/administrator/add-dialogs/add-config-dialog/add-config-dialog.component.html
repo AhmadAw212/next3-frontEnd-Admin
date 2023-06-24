@@ -1,8 +1,10 @@
-<h2 style="margin: 10px; font-size: large">Add Configuration</h2>
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_config || "dico_add_config" }}
+</h2>
 <div class="dialog">
   <form (ngSubmit)="addConfiguration()">
-    <label>{{ dico?.dico_id || "dico_id" }}:</label>
-    <input type="text" id="id" [(ngModel)]="configId" name="id" />
+    <label>{{ dico?.dico_config_key || "dico_config_key" }}:</label>
+    <input type="text" id="id" [(ngModel)]="configKey" name="id" />
 
     <label>{{ dico?.dico_config_value || "dico_config_value" }}:</label>
     <input type="text" [(ngModel)]="configValue" name="configValue" />

@@ -13,7 +13,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   styleUrls: ['./add-config-dialog.component.css'],
 })
 export class AddConfigDialogComponent implements OnInit {
-  configId?: string;
+  configKey?: string;
   configDescription?: string;
   configValue?: string;
   dico?: any;
@@ -35,7 +35,7 @@ export class AddConfigDialogComponent implements OnInit {
   }
   addConfiguration() {
     const configData: ConfigData = {
-      id: this.configId,
+      configKey: this.configKey,
       description: this.configDescription,
       configValue: this.configValue,
     };

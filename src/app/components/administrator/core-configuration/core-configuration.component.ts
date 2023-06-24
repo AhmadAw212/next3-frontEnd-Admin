@@ -110,7 +110,7 @@ export class CoreConfigurationComponent implements OnInit {
   onTdBlur(
     event: FocusEvent,
     config: ConfigData,
-    property: 'configValue' | 'description'
+    property: 'configValue' | 'description' | 'configKey'
   ) {
     const tdElement = event.target as HTMLTableCellElement;
     const oldValue = config[property];
@@ -124,7 +124,7 @@ export class CoreConfigurationComponent implements OnInit {
         configValue: config.configValue,
         description: config.description,
       });
-      // console.log(this.updatedConfigValues);
+      console.log(this.updatedConfigValues);
     }
   }
 
