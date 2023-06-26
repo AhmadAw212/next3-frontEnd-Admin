@@ -43,7 +43,6 @@ export class AuthGuard implements CanActivate {
 
     if (expiredDate) {
       this.router.navigate(['/login']); // Navigate user to the login page
-      this.alertifyService.dialogAlert('Session Expired');
       return false;
     } else {
       // Token is not expired, call the refresh token function
