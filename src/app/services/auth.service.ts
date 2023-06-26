@@ -86,19 +86,13 @@ export class AuthService {
       map((result) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
-        if (token && newRefreshToken) {
-          this.storeTokens(token, newRefreshToken);
-          this.tokenRefreshed = false; // Reset the flag after successful token refresh
-          this.tokenRefreshedSubject.next(true);
-          return token; // Return the refreshed token
-        } else {
-          this.alertifyService.dialogAlert('Session Expired');
-          throw new Error('Token refresh failed');
-        }
+        this.storeTokens(token, newRefreshToken);
+        this.tokenRefreshed = false; // Reset the flag after successful token refresh
+        this.tokenRefreshedSubject.next(true);
+        return token; // Return the refreshed token
       }),
       catchError((err) => {
-        if (err.status === 403 || err.status === 401) {
-          this.logout();
+        if (err.status == 403) {
           this.router.navigate(['/login']);
         } else {
           this.logout();
