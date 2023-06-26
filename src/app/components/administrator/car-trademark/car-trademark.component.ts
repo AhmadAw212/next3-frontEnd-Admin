@@ -126,6 +126,7 @@ export class CarTrademarkComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -147,6 +148,7 @@ export class CarTrademarkComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
+          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });
@@ -164,7 +166,7 @@ export class CarTrademarkComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

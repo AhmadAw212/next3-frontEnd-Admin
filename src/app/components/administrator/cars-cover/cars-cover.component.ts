@@ -127,6 +127,7 @@ export class CarsCoverComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -139,6 +140,7 @@ export class CarsCoverComponent implements OnInit {
         // console.log(this.coverTypes?.map);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -153,6 +155,7 @@ export class CarsCoverComponent implements OnInit {
           console.log(res.data);
         },
         error: (err) => {
+          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });
@@ -168,7 +171,7 @@ export class CarsCoverComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -251,7 +254,7 @@ export class CarsCoverComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+           // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

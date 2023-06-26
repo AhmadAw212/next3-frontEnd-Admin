@@ -129,7 +129,7 @@ export class CarsBrandComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+         // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -157,6 +157,7 @@ export class CarsBrandComponent implements OnInit {
         }
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -174,7 +175,7 @@ export class CarsBrandComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

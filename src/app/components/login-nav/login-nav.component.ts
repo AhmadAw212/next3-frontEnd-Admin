@@ -61,9 +61,9 @@ export class LoginNavComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.authService.refreshTokens();
+         // this.authService.refreshTokens();
           // this.authService.logout();
-          // this.alertifyService.dialogAlert('Error');
+           this.alertifyService.dialogAlert('Error');
         }
       },
     });
@@ -83,11 +83,9 @@ export class LoginNavComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.authService.refreshTokens();
-        } else {
-          this.alertifyService.error(err.error.message);
-          console.log(err);
-        }
+          this.alertifyService.dialogAlert('Error');
+         // this.authService.refreshTokens();
+        } 
       },
     });
   }

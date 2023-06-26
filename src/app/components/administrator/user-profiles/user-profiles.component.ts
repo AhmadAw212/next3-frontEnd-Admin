@@ -28,7 +28,8 @@ export class UserProfilesComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private alertify: AlertifyService,
     private authService: AuthService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private alertifyService:AlertifyService
   ) {}
   ngOnInit(): void {
     this.getDico();
@@ -57,7 +58,8 @@ export class UserProfilesComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         if (err.error === 'Token Expired') {
-          this.authService.logout();
+          //this.authService.logout();
+          this.alertifyService.dialogAlert('Error');
           console.log(err.error);
         }
       },

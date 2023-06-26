@@ -234,7 +234,8 @@ export class CoreDomainComponent implements OnInit {
         this.domainValuesList = res.data;
         // console.log(res);
       },
-      error: (err) => {
+      error: (err) => {	
+         this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -250,6 +251,7 @@ export class CoreDomainComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
       complete: () => {
@@ -270,7 +272,7 @@ export class CoreDomainComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+             // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -289,7 +291,7 @@ export class CoreDomainComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            //this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

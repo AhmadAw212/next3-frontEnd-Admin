@@ -230,11 +230,11 @@ export class CarInfoComponent implements OnInit {
         next: (res) => {
           this.alertifyService.success(res.message!);
           this.updatedCarInfoVal = [];
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -286,7 +286,7 @@ export class CarInfoComponent implements OnInit {
         console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.dialogAlert('Error');
       },
     });
   }
@@ -303,7 +303,7 @@ export class CarInfoComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

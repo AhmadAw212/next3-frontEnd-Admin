@@ -155,7 +155,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -171,7 +171,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          //this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -188,7 +188,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

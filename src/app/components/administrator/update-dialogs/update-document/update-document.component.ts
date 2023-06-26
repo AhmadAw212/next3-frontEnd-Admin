@@ -84,7 +84,7 @@ export class UpdateDocumentComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            //this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

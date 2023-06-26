@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 @Component({
   selector: 'app-expert-config',
   templateUrl: './expert-config.component.html',
@@ -48,7 +49,8 @@ export class ExpertConfigComponent implements OnInit {
     private dataService: DataServiceService,
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private alertifyService : AlertifyService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +150,7 @@ export class ExpertConfigComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -160,6 +163,7 @@ export class ExpertConfigComponent implements OnInit {
         console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -171,6 +175,7 @@ export class ExpertConfigComponent implements OnInit {
         this.domainYN = res.data;
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -182,6 +187,7 @@ export class ExpertConfigComponent implements OnInit {
         this.expGroup = res.data;
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -197,6 +203,7 @@ export class ExpertConfigComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
+          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });
@@ -212,6 +219,7 @@ export class ExpertConfigComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -243,6 +251,7 @@ export class ExpertConfigComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
+          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });

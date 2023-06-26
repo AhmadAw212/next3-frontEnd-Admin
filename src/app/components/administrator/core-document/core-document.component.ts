@@ -130,11 +130,9 @@ export class CoreDocumentComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.authService.refreshTokens();
-        } else {
-          this.alertifyService.error(err.error.message);
-          console.log(err);
-        }
+          //this.authService.refreshTokens();
+          this.alertifyService.dialogAlert('Error');
+        } 
       },
       complete: () => {
         this.isLoading = false;
@@ -154,11 +152,9 @@ export class CoreDocumentComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401) {
-              this.authService.refreshTokens();
-            } else {
-              this.alertifyService.error(err.error.message);
-              console.log(err);
-            }
+              this.alertifyService.dialogAlert('Error');
+              //this.authService.refreshTokens();
+            } 
           },
         });
       }
