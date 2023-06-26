@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -13,10 +14,19 @@
 </div>
 <div class="admin-container container-fluid" style="height: 200px">
   <div class="admin-button">
-    <button type="button" (click)="openAddCarInfoDialog()">
+    <button
+      type="button"
+      (click)="openAddCarInfoDialog()"
+      *ngIf="hasPerm('admAddData')"
+    >
       {{ dico?.dico_add || "dico_add" }}
     </button>
-    <button type="button" style="margin-left: 5px" (click)="updateCarInfo()">
+    <button
+      type="button"
+      style="margin-left: 5px"
+      (click)="updateCarInfo()"
+      *ngIf="hasPerm('admUpdateData')"
+    >
       {{ dico?.dico_save || "dico_save" }}
     </button>
   </div>
@@ -155,7 +165,11 @@
                 />
               </td> -->
             <td>
-              <mat-icon (click)="deleteCarInfo(carInfo.id!)">delete</mat-icon>
+              <mat-icon
+                *ngIf="hasPerm('admDeleteData')"
+                (click)="deleteCarInfo(carInfo.id!)"
+                >delete</mat-icon
+              >
             </td>
           </tr>
         </tbody>

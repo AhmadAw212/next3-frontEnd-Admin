@@ -1,6 +1,21 @@
+<div class="h3-header" *ngIf="expertSearchResult && terrAddress">
+  <h3>
+    {{ dico?.dico_expert_config || "dico_expert_config" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      class="export-excel btn btn-primary"
+      *ngIf="hasPerm('admExportToFile')"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
 <div *ngIf="isLoading">
   <app-spinner></app-spinner>
 </div>
+
 <div
   class="admin-container container-fluid"
   style="height: 250px"
@@ -8,11 +23,20 @@
 >
   <div class="user-inputs">
     <div class="admin-button">
-      <button type="button" (click)="openAddExpertDialog()">
+      <button
+        type="button"
+        (click)="openAddExpertDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_Add_Expert_to || "dico_Add_Expert_to" }}
       </button>
 
-      <button type="button" style="margin-left: 8px" (click)="updateExpert()">
+      <button
+        type="button"
+        style="margin-left: 8px"
+        (click)="updateExpert()"
+        *ngIf="hasPerm('admUpdateData')"
+      >
         {{ dico?.dico_update_Expert || "dico_update_Expert" }}
       </button>
     </div>
@@ -134,7 +158,11 @@
         </td>
         <td>{{ expert.updatedBy }}</td>
         <td>
-          <mat-icon (click)="deleteExpert(expert.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteExpert(expert.id!)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>

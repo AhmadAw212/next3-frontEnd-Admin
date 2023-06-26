@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -26,7 +27,11 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openCoreDocDialog()">
+      <button
+        type="button"
+        (click)="openCoreDocDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_total_loss_claim || "dico_add_total_loss_claim" }}
       </button>
       <!-- <button type="button" style="margin-left: 8px">
@@ -90,10 +95,18 @@
         </td>
         <td>{{ document.updatedBy }}</td>
         <td>
-          <mat-icon (click)="deleteDocument(document.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteDocument(document.id!)"
+            >delete</mat-icon
+          >
         </td>
         <td>
-          <mat-icon (click)="UpdateDocDialog(document)">edit</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admUpdateData')"
+            (click)="UpdateDocDialog(document)"
+            >edit</mat-icon
+          >
         </td>
       </tr>
     </tbody>

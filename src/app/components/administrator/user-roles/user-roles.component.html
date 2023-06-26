@@ -2,8 +2,8 @@
   <div class="buttons-container">
     <button
       class="default-access-btn"
-      aria-label="Copy Profile"
       (click)="getProfileDefaultAccessRoles()"
+      *ngIf="hasPerm('admUpdateData')"
     >
       {{ dico?.dico_default_access || "dico_default_access" }}
     </button>
@@ -28,6 +28,7 @@
       class="save-role-btn"
       aria-label="Save Changes"
       (click)="updateRoles()"
+      *ngIf="hasPerm('admUpdateData')"
     >
       {{ dico?.dico_save || "dico_save" }}
     </button>

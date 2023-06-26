@@ -4,6 +4,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -47,6 +48,7 @@
       <button
         class="btn btn-primary"
         type="button"
+        *ngIf="hasPerm('admAddData')"
         (click)="openAddCoverDialog()"
       >
         {{ dico?.dico_add_cover || "dico_add_cover" }}
@@ -57,6 +59,7 @@
         type="button"
         style="margin-left: 8px"
         (click)="updateCarInfo()"
+        *ngIf="hasPerm('admUpdateData')"
       >
         {{ dico?.dico_update_cover || "dico_update_cover" }}
       </button>
@@ -124,7 +127,11 @@
         <td>{{ cover.sysUpdatedBy }}</td>
 
         <td>
-          <mat-icon (click)="deleteCarCover(cover.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteCarCover(cover.id!)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>

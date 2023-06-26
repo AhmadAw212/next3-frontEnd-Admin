@@ -46,7 +46,7 @@ export class AddNearRegionTerritoryComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.dialogAlert('Error');
       },
     });
   }
@@ -60,13 +60,13 @@ export class AddNearRegionTerritoryComponent implements OnInit {
           next: (res) => {
             this.dialogRef.close();
             this.alertifyService.success(res.message);
-            console.log(res);
+            // console.log(res);
           },
           error: (err) => {
             if (err.error.statusCode === 409) {
               this.alertifyService.error('Duplicate Records');
             } else if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-core-domain-value',
@@ -31,7 +32,8 @@ export class CoreDomainValueComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRolesService: UsersRolesService
   ) {}
 
   highlightRow(event: Event) {
@@ -64,6 +66,10 @@ export class CoreDomainValueComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
+  }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
 
   domainValueSearch() {

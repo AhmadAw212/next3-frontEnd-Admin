@@ -10,9 +10,9 @@ import { AuthService } from './auth.service';
 export class DicoServiceService {
   private dicoSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public dico: Observable<any> = this.dicoSubject.asObservable();
+
   constructor(
     private dataService: DataServiceService,
-    private alertify: AlertifyService,
     private authService: AuthService,
     private alertifyService: AlertifyService
   ) {}
@@ -20,16 +20,11 @@ export class DicoServiceService {
   getDico() {
     const language = localStorage.getItem('selectedLanguage')!;
     this.dataService.Dico(language).subscribe({
-      next: (language) => {
-        this.dicoSubject.next(language.data);
+      next: (languageData) => {
+        this.dicoSubject.next(languageData.data);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.authService.refreshTokens();
-        } else {
-          this.alertifyService.error(err.error.message);
-          console.log(err);
-        }
+        this.alertifyService.dialogAlert('ERROR');
       },
     });
   }

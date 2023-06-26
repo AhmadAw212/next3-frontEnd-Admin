@@ -18,6 +18,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-expert-company-list',
   templateUrl: './expert-company-list.component.html',
@@ -39,17 +40,22 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnInit(): void {
     this.getExpertCompany();
     this.getCompaniesPerUser();
-
+    this.userRolesService.getUserRoles();
     this.dateFormatterService();
     console.log(this.selectedExpert);
     this.getDico();
   }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
+
   exportToExcel() {
     const data = this.expertCompanies?.map((data) => {
       return {

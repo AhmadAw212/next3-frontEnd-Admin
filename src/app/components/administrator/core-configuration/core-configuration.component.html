@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -31,10 +32,19 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openCoreConfigDialog()">
+      <button
+        type="button"
+        (click)="openCoreConfigDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_configuration || "dico_add_configuration" }}
       </button>
-      <button type="button" style="margin-left: 8px" (click)="editConfig()">
+      <button
+        type="button"
+        style="margin-left: 8px"
+        (click)="editConfig()"
+        *ngIf="hasPerm('admUpdateData')"
+      >
         {{ dico?.dico_Update || "dico_Update" }}
       </button>
     </div>
@@ -99,7 +109,11 @@
             <td>{{ config.sysUpdatedBy }}</td>
 
             <td>
-              <mat-icon (click)="deleteConfig(config.id!)">delete</mat-icon>
+              <mat-icon
+                (click)="deleteConfig(config.id!)"
+                *ngIf="hasPerm('admDeleteData')"
+                >delete</mat-icon
+              >
             </td>
           </tr>
         </tbody>

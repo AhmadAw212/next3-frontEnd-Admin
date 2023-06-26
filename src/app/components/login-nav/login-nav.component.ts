@@ -46,11 +46,12 @@ export class LoginNavComponent implements OnInit {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
+    this.dicoService.getDico();
   }
+
   logout(): void {
     this.dataService.logout().subscribe({
       next: (response) => {
@@ -82,12 +83,7 @@ export class LoginNavComponent implements OnInit {
         // console.log(data.data);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.authService.refreshTokens();
-        } else {
-          this.alertifyService.error(err.error.message);
-          console.log(err);
-        }
+        this.alertifyService.error(err.error.message);
       },
     });
   }

@@ -6,6 +6,7 @@
       <button
         type="button"
         (click)="exportToExcel()"
+        *ngIf="hasPerm('admExportToFile')"
         class="export-excel btn btn-primary"
       >
         {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -31,94 +32,95 @@
         <button type="submit">{{ dico?.dico_search || "dico_search" }}</button>
       </form>
       <div class="admin-button">
-        <button type="button" (click)="openAddCarTrademarkDialog()">
+        <button
+          type="button"
+          (click)="openAddCarTrademarkDialog()"
+          *ngIf="hasPerm('admAddData')"
+        >
           {{ dico?.dico_add || "dico_add" }}
         </button>
       </div>
     </div>
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <table>
-          <thead>
-            <tr>
-              <th>{{ dico?.dico_id || "dico_id" }}</th>
-              <th>{{ dico?.dico_code || "dico_code" }}</th>
-              <th>{{ dico?.dico_description || "dico_description" }}</th>
-              <!-- <th>Brand</th> -->
-              <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
-              <th>
-                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-              </th>
-              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-              <th>
-                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-              </th>
-              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="carTrademark?.length! > 0; else noData"
-            (click)="highlightRow($event)"
-          >
-            <tr
-              *ngFor="
-                let trademark of carTrademark;
-                trackBy: trackTrademarkById
-              "
-              (click)="searchCarShape(trademark.id, trademark)"
+
+    <table>
+      <thead>
+        <tr>
+          <th>{{ dico?.dico_id || "dico_id" }}</th>
+          <th>{{ dico?.dico_code || "dico_code" }}</th>
+          <th>{{ dico?.dico_description || "dico_description" }}</th>
+          <!-- <th>Brand</th> -->
+          <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+          <th>
+            {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+          </th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+          <th>
+            {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+          </th>
+          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="carTrademark?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr
+          *ngFor="let trademark of carTrademark; trackBy: trackTrademarkById"
+          (click)="searchCarShape(trademark.id, trademark)"
+        >
+          <td>{{ trademark.id }}</td>
+          <td>{{ trademark.code }}</td>
+          <td>{{ trademark.description }}</td>
+          <!-- <td>{{ trademark.carBrandId }}</td> -->
+          <td>
+            <div class="car-logo-container">
+              <img [src]="trademark.logo" class="car-logo" />
+              <div class="car-logo-dialog">
+                <img [src]="trademark.logo" class="car-logo-dialog-image" />
+              </div>
+            </div>
+          </td>
+          <td>
+            {{
+              trademark.created_date | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>{{ trademark.createdBy }}</td>
+          <td>
+            {{
+              trademark.updated_date | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>{{ trademark.updatedBy }}</td>
+          <td>
+            <mat-icon
+              (click)="deleteTrademark(trademark.id)"
+              *ngIf="hasPerm('admDeleteData')"
+              >delete</mat-icon
             >
-              <td>{{ trademark.id }}</td>
-              <td>{{ trademark.code }}</td>
-              <td>{{ trademark.description }}</td>
-              <!-- <td>{{ trademark.carBrandId }}</td> -->
-              <td>
-                <div class="car-logo-container">
-                  <img [src]="trademark.logo" class="car-logo" />
-                  <div class="car-logo-dialog">
-                    <img [src]="trademark.logo" class="car-logo-dialog-image" />
-                  </div>
-                </div>
-              </td>
-              <td>
-                {{
-                  trademark.created_date
-                    | date : dateFormat("reportDateTimeFormat")
-                }}
-              </td>
-              <td>{{ trademark.createdBy }}</td>
-              <td>
-                {{
-                  trademark.updated_date
-                    | date : dateFormat("reportDateTimeFormat")
-                }}
-              </td>
-              <td>{{ trademark.updatedBy }}</td>
-              <td>
-                <mat-icon (click)="deleteTrademark(trademark.id)"
-                  >delete</mat-icon
-                >
-              </td>
-              <td>
-                <mat-icon (click)="updateTrademarkDialog(trademark)"
-                  >edit</mat-icon
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ng-template #noData>
-          <tr>
-            <td colspan="5">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </div>
-    </div>
+          </td>
+          <td>
+            <mat-icon
+              *ngIf="hasPerm('admUpdateData')"
+              (click)="updateTrademarkDialog(trademark)"
+              >edit</mat-icon
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
   </div>
 </div>
+
 <div *ngIf="showCarShape">
   <app-car-shape
     [carShape]="carShape"

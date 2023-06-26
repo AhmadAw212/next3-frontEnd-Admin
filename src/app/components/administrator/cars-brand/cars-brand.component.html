@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -31,7 +32,11 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddCarBrandDialog()">
+      <button
+        type="button"
+        (click)="openAddCarBrandDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_car || "dico_add_car" }}
       </button>
       <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
@@ -93,12 +98,18 @@
             <td>{{ cars.sysUpdatedBy }}</td>
 
             <td>
-              <mat-icon (click)="deleteCarBrand(cars.carBrandCode!)"
+              <mat-icon
+                *ngIf="hasPerm('admDeleteData')"
+                (click)="deleteCarBrand(cars.carBrandCode!)"
                 >delete</mat-icon
               >
             </td>
             <td>
-              <mat-icon (click)="updateCarBrandDialog(cars)">edit</mat-icon>
+              <mat-icon
+                *ngIf="hasPerm('admUpdateData')"
+                (click)="updateCarBrandDialog(cars)"
+                >edit</mat-icon
+              >
             </td>
           </tr>
         </tbody>

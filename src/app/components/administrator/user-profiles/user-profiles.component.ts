@@ -10,6 +10,7 @@ import { AddProfileDialogComponent } from '../add-dialogs/add-profile-dialog/add
 import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -28,15 +29,21 @@ export class UserProfilesComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private alertify: AlertifyService,
     private authService: AuthService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
     this.getDico();
+    this.userRolesService.getUserRoles();
   }
 
   ngOnChanges() {
     this.getProfiles();
     this.showRoleList = false;
+  }
+
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
   getDico() {
     this.dicoService.getDico();
@@ -56,10 +63,8 @@ export class UserProfilesComponent implements OnInit, OnChanges {
         this.profiles = res.data;
       },
       error: (err) => {
-        if (err.error === 'Token Expired') {
-          this.authService.logout();
-          console.log(err.error);
-        }
+        // this.authService.logout();
+        console.log(err.error);
       },
     });
   }
@@ -92,7 +97,7 @@ export class UserProfilesComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertify.dialogAlert('Error');
             }
           },

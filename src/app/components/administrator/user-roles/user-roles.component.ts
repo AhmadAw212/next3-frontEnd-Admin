@@ -14,6 +14,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-user-roles',
@@ -34,12 +35,16 @@ export class UserRolesComponent implements OnInit, OnChanges {
     private dataService: DataServiceService,
     private alertify: AlertifyService,
     private authService: AuthService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
     this.getDico();
+    this.userRolesService.getUserRoles();
   }
-
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
   ngOnChanges() {
     const selectedProfile = this.selectedProfile!;
     this.getUserRoles(selectedProfile);
@@ -76,8 +81,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
     this.dataService.updateRoles(userId, profileId).subscribe({
       next: (roles) => {
         this.alertify.dialogAlert(roles.message!);
-
-        console.log(roles.data);
+        // console.log(roles.data);
       },
       error: (err) => {
         let errorMessage = 'An error occurred';
@@ -122,7 +126,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
             },
             error: (err) => {
               if (err.status === 401 || err.status === 500) {
-                this.authService.logout();
+                // this.authService.logout();
                 this.alertify.dialogAlert('Error');
               }
             },

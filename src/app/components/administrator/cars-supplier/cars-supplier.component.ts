@@ -13,6 +13,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-cars-supplier',
   templateUrl: './cars-supplier.component.html',
@@ -41,7 +42,8 @@ export class CarsSupplierComponent implements OnInit {
     private dialog: MatDialog,
     private loadingService: LoadingServiceService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
 
   highlightRow(event: Event) {
@@ -61,8 +63,13 @@ export class CarsSupplierComponent implements OnInit {
     this.selectedSupplier = selectedSupplier;
     this.showMoreInfo = true;
   }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
 
   ngOnInit(): void {
+    this.userRolesService.getUserRoles();
+
     this.getSupplierType();
     // this.getCompaniesPerUser();
 

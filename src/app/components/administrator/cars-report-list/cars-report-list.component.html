@@ -6,6 +6,7 @@
       type="button"
       (click)="exportToExcel()"
       class="export-excel btn btn-primary"
+      *ngIf="hasPerm('admExportToFile')"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
     </button>
@@ -24,12 +25,17 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddReportListDialog()">
+      <button
+        type="button"
+        (click)="openAddReportListDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_report || "dico_add_report" }}
       </button>
       <button
         type="button"
         style="margin-left: 8px"
+        *ngIf="hasPerm('admUpdateData')"
         (click)="updateReportList()"
       >
         {{ dico?.dico_update_report_list || "dico_update_report_list" }}
@@ -151,7 +157,9 @@
             </td>
             <td>{{ report.sysUpdatedBy }}</td>
             <td>
-              <mat-icon (click)="deleteCarReportList(report.id!)"
+              <mat-icon
+                (click)="deleteCarReportList(report.id!)"
+                *ngIf="hasPerm('admDeleteData')"
                 >delete</mat-icon
               >
             </td>

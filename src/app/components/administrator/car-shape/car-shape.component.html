@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -14,82 +15,85 @@
 
 <div class="admin-container container-fluid" style="height: 200px">
   <div class="admin-button">
-    <button type="button" (click)="openAddCarShapeDialog()">
+    <button
+      type="button"
+      (click)="openAddCarShapeDialog()"
+      *ngIf="hasPerm('admAddData')"
+    >
       {{ dico?.dico_add || "dico_add" }}
     </button>
   </div>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_id || "dico_id" }}</th>
-            <th>{{ dico?.dico_code || "dico_code" }}</th>
-            <th>{{ dico?.dico_description || "dico_description" }}</th>
-            <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="carShape?.length! > 0; else noData"
-          (click)="highlightRow($event)"
-        >
-          <tr
-            *ngFor="let shape of carShape; trackBy: trackShapeById"
-            (click)="searchCarInfo(shape.carShapeId, shape)"
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_code || "dico_code" }}</th>
+        <th>{{ dico?.dico_description || "dico_description" }}</th>
+        <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="carShape?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr
+        *ngFor="let shape of carShape; trackBy: trackShapeById"
+        (click)="searchCarInfo(shape.carShapeId, shape)"
+      >
+        <td>{{ shape.carShapeId }}</td>
+        <td>{{ shape.carShapeCode }}</td>
+        <td>{{ shape.carShapeDescription }}</td>
+        <td>
+          <div class="car-logo-container">
+            <img [src]="shape.logo" class="car-logo" />
+            <div class="car-logo-dialog">
+              <img [src]="shape.logo" class="car-logo-dialog-image" />
+            </div>
+          </div>
+        </td>
+        <td>
+          {{ shape.created_date | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ shape.createdBy }}</td>
+        <td>
+          {{ shape.updated_date | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ shape.updatedBy }}</td>
+        <td>
+          <mat-icon
+            (click)="deleteCarShape(shape.carShapeId)"
+            *ngIf="hasPerm('admDeleteData')"
+            >delete</mat-icon
           >
-            <td>{{ shape.carShapeId }}</td>
-            <td>{{ shape.carShapeCode }}</td>
-            <td>{{ shape.carShapeDescription }}</td>
-            <td>
-              <div class="car-logo-container">
-                <img [src]="shape.logo" class="car-logo" />
-                <div class="car-logo-dialog">
-                  <img [src]="shape.logo" class="car-logo-dialog-image" />
-                </div>
-              </div>
-            </td>
-            <td>
-              {{
-                shape.created_date | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ shape.createdBy }}</td>
-            <td>
-              {{
-                shape.updated_date | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ shape.updatedBy }}</td>
-            <td>
-              <mat-icon (click)="deleteCarShape(shape.carShapeId)"
-                >delete</mat-icon
-              >
-            </td>
-            <td>
-              <mat-icon (click)="updateShapeDialog(shape)">edit</mat-icon>
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="5">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+        </td>
+        <td>
+          <mat-icon
+            *ngIf="hasPerm('admUpdateData')"
+            (click)="updateShapeDialog(shape)"
+            >edit</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>
 
 <div *ngIf="showCarInfo">

@@ -18,10 +18,19 @@
     <label>{{ dico?.dico_content_type || "dico_content_type" }}:</label>
     <input type="text" [(ngModel)]="contentType" name="content-Type" />
 
-    <button type="submit" class="btn btn-primary">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      *ngIf="hasPerm('admUpdateData')"
+    >
       {{ dico?.dico_save || "dico_save" }}
     </button>
-    <button type="button" class="btn btn-danger" style="margin: 10px">
+    <button
+      type="button"
+      class="btn btn-danger"
+      style="margin: 10px"
+      *ngIf="hasPerm('admUpdateData')"
+    >
       {{ dico?.dico_cancel || "dico_cancel" }}
     </button>
   </form>

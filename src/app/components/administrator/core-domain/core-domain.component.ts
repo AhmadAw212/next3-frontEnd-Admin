@@ -12,6 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-core-domain',
   templateUrl: './core-domain.component.html',
@@ -38,7 +39,8 @@ export class CoreDomainComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
   highlightRow(event: Event) {
     const clickedElement = event.target as HTMLElement;
@@ -54,6 +56,11 @@ export class CoreDomainComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
+  }
+
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
     const data = this.domainData?.map((data) => {

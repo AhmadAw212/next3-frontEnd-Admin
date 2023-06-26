@@ -10,6 +10,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-language-config',
   templateUrl: './language-config.component.html',
@@ -33,14 +34,19 @@ export class LanguageConfigComponent implements OnInit {
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
   }
 
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
   exportToExcel() {
     const data = this.resourceData?.map((data) => {
       return {
@@ -117,7 +123,7 @@ export class LanguageConfigComponent implements OnInit {
         resourceKey: resource.resourceKey,
         resourceValue: resource.resourceValue,
       });
-      console.log(this.updatedResourceValues);
+      // console.log(this.updatedResourceValues);
     }
   }
 
@@ -145,7 +151,7 @@ export class LanguageConfigComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -168,7 +174,7 @@ export class LanguageConfigComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -186,7 +192,7 @@ export class LanguageConfigComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

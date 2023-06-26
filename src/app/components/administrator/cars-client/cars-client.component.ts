@@ -11,6 +11,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 interface type {
   code: string;
   description: string;
@@ -43,7 +44,8 @@ export class CarsClientComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,10 @@ export class CarsClientComponent implements OnInit {
     this.getTitleLov();
     this.getGenderList();
     this.getDico();
+    this.userRolesService.getUserRoles();
+  }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
     const data = this.carClients?.map((data) => {
