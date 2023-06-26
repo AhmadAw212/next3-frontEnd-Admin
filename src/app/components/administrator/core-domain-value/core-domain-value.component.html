@@ -9,13 +9,18 @@
     <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
   </form>
   <div class="admin-button">
-    <button type="button" (click)="openAddDomainValueDialog()">
+    <button
+      type="button"
+      (click)="openAddDomainValueDialog()"
+      *ngIf="hasPerm('admAddData')"
+    >
       {{ dico?.dico_add || "dico_add" }}
     </button>
     <button
       type="button"
       style="margin-left: 8px"
       (click)="updateDomainValue()"
+      *ngIf="hasPerm('admUpdateData')"
     >
       {{ dico?.dico_save || "dico_save" }}
     </button>
@@ -115,7 +120,11 @@
         />
       </td> -->
       <td>
-        <mat-icon (click)="deleteDomainValue(domain.id!)">delete</mat-icon>
+        <mat-icon
+          *ngIf="hasPerm('admDeleteData')"
+          (click)="deleteDomainValue(domain.id!)"
+          >delete</mat-icon
+        >
       </td>
     </tr>
   </tbody>

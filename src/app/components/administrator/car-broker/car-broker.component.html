@@ -6,6 +6,7 @@
       type="button"
       (click)="exportToExcel()"
       class="export-excel btn btn-primary"
+      *ngIf="hasPerm('admExportToFile')"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
     </button>
@@ -50,10 +51,19 @@
         </button>
       </form>
       <div class="admin-button">
-        <button type="button" (click)="openAddBrokerDialog()">
+        <button
+          type="button"
+          (click)="openAddBrokerDialog()"
+          *ngIf="hasPerm('admAddData')"
+        >
           {{ dico?.dico_add_broker || "dico_add_broker" }}
         </button>
-        <button type="button" style="margin-left: 8px" (click)="updateBroker()">
+        <button
+          type="button"
+          style="margin-left: 8px"
+          *ngIf="hasPerm('admUpdateData')"
+          (click)="updateBroker()"
+        >
           {{ dico?.dico_update_broker || "dico_update_broker" }}
         </button>
       </div>
@@ -150,7 +160,11 @@
           <td>{{ broker.sysUpdatedBy }}</td>
 
           <td>
-            <mat-icon (click)="deleteBroker(broker.id!)">delete</mat-icon>
+            <mat-icon
+              *ngIf="hasPerm('admDeleteData')"
+              (click)="deleteBroker(broker.id!)"
+              >delete</mat-icon
+            >
           </td>
         </tr>
       </tbody>

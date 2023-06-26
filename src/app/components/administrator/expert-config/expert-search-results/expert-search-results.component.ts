@@ -12,6 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-expert-search-results',
   templateUrl: './expert-search-results.component.html',
@@ -48,15 +49,67 @@ export class ExpertSearchResultsComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
+  exportToExcel() {
+    const data = this.expertSearchResult?.map((data) => {
+      return {
+        ID: data.id,
+        Code: data.code,
+        'Expert Name': data.expertName,
+        Group: data.groupDesc,
+        Territory: data.territory_name,
+        'Bodily Injury': data.bodily_injury,
+        VIP: data.vip,
+        Exclusive: data.exclusive,
+        'Second Expert': data.secondExpert,
+        Contract: data.contract,
+        Schedule: data.scheduleDesc,
+        Remarks: data.remarks,
+        Ratio: data.ratio,
+        'Created Date': this.datePipe.transform(
+          data.createdDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
 
+        'Created By': data.createdBy,
+        'Updated Date': this.datePipe.transform(
+          data.updatedDate,
+          this.dateFormat('excelDateTimeFormat')
+        ),
+        'Updated By': data.updatedBy,
+      };
+    });
+    // Save the Excel file.
+    // Convert the data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(data!);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Experts');
+
+    // Generate an Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Save the file
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(excelBlob, 'Experts.xlsx');
+  }
   ngOnInit(): void {
     this.territoryAddress();
     this.getSchedule();
     this.getDico();
-
+    this.userRolesService.getUserRoles();
     this.dateFormatterService();
+  }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
 
   getDico() {

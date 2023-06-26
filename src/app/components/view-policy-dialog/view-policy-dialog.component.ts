@@ -36,7 +36,7 @@ export class ViewPolicyDialogComponent implements OnInit {
         console.log(data.data);
       },
       error: (error) => {
-        console.log(error);
+        // console.log(error);
       },
       complete: () => {},
     });

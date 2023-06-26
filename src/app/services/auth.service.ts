@@ -77,7 +77,7 @@ export class AuthService {
 
     if (!refreshToken) {
       this.logout();
-      return throwError('Refresh token not found'); // Return null or throw an error, depending on your error handling approach
+      return throwError(() => 'Refresh token not found'); // Return null or throw an error, depending on your error handling approach
     }
 
     this.tokenRefreshed = true;
@@ -86,18 +86,23 @@ export class AuthService {
       map((result) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
-        this.storeTokens(token, newRefreshToken);
-        this.tokenRefreshed = false; // Reset the flag after successful token refresh
-        this.tokenRefreshedSubject.next(true);
-        return token; // Return the refreshed token
+        if (token && newRefreshToken) {
+          this.storeTokens(token, newRefreshToken);
+          this.tokenRefreshed = false; // Reset the flag after successful token refresh
+          this.tokenRefreshedSubject.next(true);
+          return token; // Return the refreshed token
+        } else {
+          throw new Error('Token refresh failed');
+        }
       }),
       catchError((err) => {
-        if (err.status == 403) {
+        if (err.status === 403 || err.status === 401) {
+          this.logout();
           this.router.navigate(['/login']);
         } else {
           this.logout();
         }
-        return throwError(err); // Rethrow the error to propagate it further
+        return throwError(() => err); // Rethrow the error to propagate it further
       })
     );
   }

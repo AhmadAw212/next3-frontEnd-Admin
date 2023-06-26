@@ -11,6 +11,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UpdateCarDialogComponent } from '../update-car-dialog/update-car-dialog.component';
 import { CoreDocument } from 'src/app/model/core-document';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-update-document',
@@ -30,7 +31,8 @@ export class UpdateDocumentComponent implements OnInit {
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dialogRef: MatDialogRef<UpdateDocumentComponent>,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRolesService: UsersRolesService
   ) {
     this.fileName = data.fileName;
     this.filePath = data.filePath;
@@ -40,6 +42,7 @@ export class UpdateDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDico();
+    this.userRolesService.getUserRoles();
     // console.log(this.data);
   }
   onFileSelected(event: any) {
@@ -54,6 +57,9 @@ export class UpdateDocumentComponent implements OnInit {
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
+  }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
 
   updateDocument() {

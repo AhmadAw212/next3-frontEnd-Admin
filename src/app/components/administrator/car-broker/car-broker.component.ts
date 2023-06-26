@@ -12,6 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-car-broker',
   templateUrl: './car-broker.component.html',
@@ -36,12 +37,16 @@ export class CarBrokerComponent implements OnInit {
     private authService: AuthService,
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
-
+    this.userRolesService.getUserRoles();
     this.dateFormatterService();
     this.getDico();
   }

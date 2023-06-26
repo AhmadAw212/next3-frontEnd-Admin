@@ -149,7 +149,7 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
+          // this.authService.logout();
           this.alertify.dialogAlert('Error');
         }
       },
@@ -165,7 +165,7 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
+          // this.authService.logout();
           this.alertify.dialogAlert('Error');
         }
       },
@@ -181,7 +181,7 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
+          // this.authService.logout();
           this.alertify.dialogAlert('Error');
         }
       },
@@ -200,7 +200,7 @@ export class EditUserComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-             // this.authService.logout();
+              // this.authService.logout();
               this.alertify.dialogAlert('Error');
             }
           },

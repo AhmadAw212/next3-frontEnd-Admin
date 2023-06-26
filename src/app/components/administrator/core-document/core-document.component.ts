@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-core-document',
   templateUrl: './core-document.component.html',
@@ -35,13 +36,19 @@ export class CoreDocumentComponent implements OnInit {
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
-    private authService: AuthService
+    private authService: AuthService,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnInit(): void {
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
   }
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
+  }
+
   trackDocById(index: number, doc: any): string {
     return doc.id;
   }

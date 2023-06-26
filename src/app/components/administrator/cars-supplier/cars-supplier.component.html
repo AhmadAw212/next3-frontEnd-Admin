@@ -6,6 +6,7 @@
       type="button"
       (click)="exportToExcel()"
       class="export-excel btn btn-primary"
+      *ngIf="hasPerm('admExportToFile')"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
     </button>
@@ -36,7 +37,11 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddSupplierDialog()">
+      <button
+        type="button"
+        (click)="openAddSupplierDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_supplier_1 || "dico_add_supplier_1" }}
       </button>
     </div>

@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -24,10 +25,19 @@
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">
-      <button type="button" (click)="openAddDomainDialog()">
+      <button
+        type="button"
+        (click)="openAddDomainDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
         {{ dico?.dico_add_domain || "dico_add_domain" }}
       </button>
-      <button type="button" (click)="updateDomain()" style="margin-left: 8px">
+      <button
+        type="button"
+        (click)="updateDomain()"
+        *ngIf="hasPerm('admUpdateData')"
+        style="margin-left: 8px"
+      >
         {{ dico?.dico_Update || "dico_Update" }}
       </button>
     </div>
@@ -89,7 +99,11 @@
           />
         </td> -->
         <td>
-          <mat-icon (click)="deleteResource(domain.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteResource(domain.id!)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>
@@ -112,6 +126,7 @@
         type="button"
         class="export-excel btn btn-primary"
         (click)="exportDomainValueToExcel()"
+        *ngIf="hasPerm('admExportToFile')"
       >
         {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
       </button>

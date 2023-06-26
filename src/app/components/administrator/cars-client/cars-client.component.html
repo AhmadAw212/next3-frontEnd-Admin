@@ -5,6 +5,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -77,10 +78,15 @@
         type="button"
         style="margin: 15px"
         (click)="openAddClientDialog()"
+        *ngIf="hasPerm('admAddData')"
       >
         {{ dico?.dico_add_client || "dico_add_client" }}
       </button>
-      <button type="button" (click)="updateCarClient()">
+      <button
+        type="button"
+        (click)="updateCarClient()"
+        *ngIf="hasPerm('admUpdateData')"
+      >
         {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
       </button>
     </form>
@@ -224,7 +230,11 @@
         <td>{{ client.sysUpdatedBy }}</td>
 
         <td>
-          <mat-icon (click)="deleteCarCLient(client.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteCarCLient(client.id!)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>

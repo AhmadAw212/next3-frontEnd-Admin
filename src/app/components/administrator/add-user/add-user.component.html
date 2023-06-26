@@ -473,7 +473,11 @@
           >
           </ngx-editor>
         </div>
-        <button class="btn" [disabled]="!userForm.valid">
+        <button
+          class="btn"
+          [disabled]="!userForm.valid"
+          *ngIf="hasPerm('admAddData')"
+        >
           {{ dico?.dico_add_user || "dico_add_user" }}
         </button>
       </div>

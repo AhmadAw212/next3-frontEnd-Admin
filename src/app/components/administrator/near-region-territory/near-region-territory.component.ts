@@ -17,6 +17,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-near-region-territory',
   templateUrl: './near-region-territory.component.html',
@@ -37,7 +38,8 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     private alertifyService: AlertifyService,
     private dialog: MatDialog,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnChanges(): void {
@@ -47,6 +49,11 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.getRegionTerritory();
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
+  }
+
+  hasPerm(role: string): boolean {
+    return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
     const data = this.nearRegion?.map((data) => {
@@ -155,7 +162,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -171,7 +178,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -188,7 +195,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

@@ -4,6 +4,7 @@
       class="add-remove-profile-btn"
       aria-label="Add Profile"
       (click)="openProfileDialog()"
+      *ngIf="hasPerm('admAddData')"
     >
       {{ dico?.dico_add || "dico_add" }} {{ dico?.MA_PROFILE || "MA_PROFILE" }}
     </button>
@@ -11,6 +12,7 @@
       class="copy-profile-btn"
       aria-label="Copy Profile"
       (click)="CopyProfileDialog()"
+      *ngIf="hasPerm('admAddData')"
     >
       {{ dico?.dico_copy || "dico_copy" }}
       {{ dico?.MA_PROFILE || "MA_PROFILE" }}
@@ -34,7 +36,11 @@
       >
         <td (click)="RoleList(profile)">{{ profile.description }}</td>
         <td>
-          <mat-icon (click)="deleteProfile(profile.id!)">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteDatas')"
+            (click)="deleteProfile(profile.id!)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>
