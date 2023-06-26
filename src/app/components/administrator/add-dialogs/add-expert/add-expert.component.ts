@@ -81,8 +81,7 @@ export class AddExpertComponent implements OnInit {
       error: (err) => {
         if (err.error.statusCode === 409) {
           this.alertifyService.error('Duplicate Records');
-        } else if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+        } else {
           this.alertifyService.dialogAlert('Error');
         }
       },

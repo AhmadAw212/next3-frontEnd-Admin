@@ -50,10 +50,10 @@ export class AddCarClientComponent implements OnInit {
       indic2: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       clientVip: ['', Validators.required],
       description: ['', Validators.required],
-      this:this.getDico(),
+      this: this.getDico(),
     });
-  }getDico() {
-    
+  }
+  getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -75,7 +75,6 @@ export class AddCarClientComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

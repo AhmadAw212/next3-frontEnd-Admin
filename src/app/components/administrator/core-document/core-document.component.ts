@@ -11,6 +11,7 @@ import { UpdateDocumentComponent } from '../update-dialogs/update-document/updat
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-core-document',
   templateUrl: './core-document.component.html',
@@ -33,11 +34,11 @@ export class CoreDocumentComponent implements OnInit {
     private dialog: MatDialog,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
   }
@@ -103,6 +104,7 @@ export class CoreDocumentComponent implements OnInit {
   }
 
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });
@@ -127,7 +129,12 @@ export class CoreDocumentComponent implements OnInit {
         });
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+        } else {
+          this.alertifyService.error(err.error.message);
+          console.log(err);
+        }
       },
       complete: () => {
         this.isLoading = false;
@@ -146,7 +153,12 @@ export class CoreDocumentComponent implements OnInit {
             console.log(res);
           },
           error: (err) => {
-            console.log(err);
+            if (err.status === 401) {
+              this.authService.refreshTokens();
+            } else {
+              this.alertifyService.error(err.error.message);
+              console.log(err);
+            }
           },
         });
       }

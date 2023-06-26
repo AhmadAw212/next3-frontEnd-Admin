@@ -27,7 +27,6 @@ export class AddLanguageComponent implements OnInit {
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService
-
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +62,7 @@ export class AddLanguageComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         } else if (err.status === 409) {
           this.alertifyService.error('ID exist');

@@ -54,10 +54,10 @@ export class AddTrademarkDialogComponent implements OnInit {
         next: (res) => {
           this.dialogRef.close();
           this.alertifyService.success(res.message!);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.dialogAlert('Error');
         },
       });
   }

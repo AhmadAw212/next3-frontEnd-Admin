@@ -23,11 +23,9 @@ export class AddCarBrandDialogComponent {
     private dicoService: DicoServiceService
   ) {}
   ngOnInit(): void {
- 
     this.getDico();
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -44,10 +42,10 @@ export class AddCarBrandDialogComponent {
         next: (res) => {
           this.dialogRef.close();
           this.alertifyService.success(res.message!);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.dialogAlert('Error');
         },
       });
   }

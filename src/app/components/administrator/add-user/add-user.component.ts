@@ -155,7 +155,7 @@ export class AddUserComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertify.dialogAlert('Error');
           }
         },

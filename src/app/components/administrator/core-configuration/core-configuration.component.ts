@@ -124,7 +124,7 @@ export class CoreConfigurationComponent implements OnInit {
         configValue: config.configValue,
         description: config.description,
       });
-      console.log(this.updatedConfigValues);
+      // console.log(this.updatedConfigValues);
     }
   }
 
@@ -136,8 +136,10 @@ export class CoreConfigurationComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+          if (err.status === 401) {
+            this.authService.refreshTokens();
+            // this.alertifyService.dialogAlert('Error');
+          } else {
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -157,8 +159,10 @@ export class CoreConfigurationComponent implements OnInit {
             // console.log(res);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+            if (err.status === 401) {
+              this.authService.refreshTokens();
+              // this.alertifyService.dialogAlert('Error');
+            } else {
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -169,16 +173,15 @@ export class CoreConfigurationComponent implements OnInit {
 
   coreConfigSearch() {
     this.isLoading = true;
+
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {
         this.configData = data.data;
+
         // console.log(this.configData);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        this.alertifyService.dialogAlert('Error');
       },
       complete: () => {
         this.isLoading = false;
@@ -192,12 +195,4 @@ export class CoreConfigurationComponent implements OnInit {
       this.coreConfigSearch();
     });
   }
-  // updateCoreConfigDialog(coreConfig: ConfigData) {
-  //   const dialogRef = this.dialog.open(UpdateCoreConfigurationComponent, {
-  //     data: coreConfig,
-  //   });
-  //   dialogRef.afterClosed().subscribe(() => {
-  //     this.coreConfigSearch();
-  //   });
-  // }
 }

@@ -189,9 +189,9 @@ export class DataServiceService {
     );
   }
 
-  logout(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/logout`);
-  }
+  // logout(): Observable<ApiResponse> {
+  //   return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/logout`);
+  // }
 
   coreConfigSearch(id: string, desc: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
@@ -1013,5 +1013,14 @@ export class DataServiceService {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/core-domain-value/defaultPassword`
     );
+  }
+  refreshToken(refreshToken: any): Observable<any> {
+    return this.http.post<any>(`${this.userUrl}/refresh/refreshtoken`, {
+      refreshToken: refreshToken,
+    });
+  }
+
+  logout(): Observable<any> {
+    return this.http.post<any>(`${this.userUrl}/refresh/signout`, {});
   }
 }

@@ -82,11 +82,11 @@ export class AddReportListComponent implements OnInit {
       next: (res) => {
         this.dialogRef.close();
         this.alertifyService.success(res.message!);
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },

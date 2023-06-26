@@ -47,10 +47,8 @@ export class AddConfigDialogComponent implements OnInit {
         console.log(data);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        // this.authService.logout();
+        this.alertifyService.dialogAlert('Error');
       },
     });
   }

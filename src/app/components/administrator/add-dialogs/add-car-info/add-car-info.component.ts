@@ -115,7 +115,7 @@ export class AddCarInfoComponent {
           // console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.dialogAlert('Error');
         },
       });
     }

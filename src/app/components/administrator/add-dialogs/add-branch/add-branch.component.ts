@@ -38,7 +38,6 @@ export class AddBranchComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -57,13 +56,12 @@ export class AddBranchComponent implements OnInit {
       next: (res) => {
         this.dialogRef.close();
         this.alertifyService.success(res.message);
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         if (err.error.statusCode === 409) {
           this.alertifyService.error('Duplicate Records');
-        } else if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+        } else {
           this.alertifyService.dialogAlert('Error');
         }
       },

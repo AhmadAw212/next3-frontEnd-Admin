@@ -32,11 +32,12 @@ export class LoginNavComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.loginUserInfo();
-    this.dateFormatService.dateFormatter();
+
     this.dateFormatterService();
     this.getDico();
   }
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });
@@ -59,9 +60,10 @@ export class LoginNavComponent implements OnInit {
         // console.log(response);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+          // this.authService.logout();
+          // this.alertifyService.dialogAlert('Error');
         }
       },
     });
@@ -80,9 +82,11 @@ export class LoginNavComponent implements OnInit {
         // console.log(data.data);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+        } else {
+          this.alertifyService.error(err.error.message);
+          console.log(err);
         }
       },
     });

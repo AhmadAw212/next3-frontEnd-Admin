@@ -55,8 +55,11 @@ export class ProfilesPageComponent implements OnInit {
         console.log(this.userProfiles);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+          // this.authService.logout();
+          // this.alertifyService.dialogAlert('Error');
+        } else {
           this.alertifyService.dialogAlert('Error');
         }
       },

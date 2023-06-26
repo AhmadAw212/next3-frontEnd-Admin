@@ -13,7 +13,8 @@ export class DicoServiceService {
   constructor(
     private dataService: DataServiceService,
     private alertify: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertifyService: AlertifyService
   ) {}
 
   getDico() {
@@ -23,9 +24,11 @@ export class DicoServiceService {
         this.dicoSubject.next(language.data);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
-          this.alertify.dialogAlert('Error');
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+        } else {
+          this.alertifyService.error(err.error.message);
+          console.log(err);
         }
       },
     });

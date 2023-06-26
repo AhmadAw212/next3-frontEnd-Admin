@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Role } from '../model/role';
 import { DataServiceService } from './data-service.service';
+import { AuthService } from './auth.service';
+import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +11,11 @@ export class UsersRolesService {
   userRoles: Role[] = [];
   roleNames: any[] = [];
 
-  constructor(private dataService: DataServiceService) {}
+  constructor(
+    private dataService: DataServiceService,
+    private authService: AuthService,
+    private alertifyService: AlertifyService
+  ) {}
 
   hasPermission(roleName: string): boolean {
     const trimmedRoleName = roleName.trim();
@@ -28,7 +34,12 @@ export class UsersRolesService {
           // console.log('Role names:', this.roleNames);
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401) {
+            this.authService.refreshTokens();
+          } else {
+            this.alertifyService.error(err.error.message);
+            console.log(err);
+          }
         },
       });
     }

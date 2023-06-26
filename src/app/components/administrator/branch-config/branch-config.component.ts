@@ -122,7 +122,7 @@ export class BranchConfigComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        console.log(err);
+        this.alertifyService.dialogAlert('Error');
       },
     });
   }
@@ -138,7 +138,7 @@ export class BranchConfigComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -159,7 +159,7 @@ export class BranchConfigComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -221,7 +221,7 @@ export class BranchConfigComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
