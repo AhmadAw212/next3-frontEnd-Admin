@@ -95,7 +95,7 @@ export class AuthService {
         if (err.status == 403) {
           this.router.navigate(['/login']);
         } else {
-          this.logout();
+          // this.logout();
         }
         return throwError(() => err); // Rethrow the error to propagate it further
       })
