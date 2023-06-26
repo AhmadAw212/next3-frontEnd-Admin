@@ -19,6 +19,7 @@ import {
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { AlertifyService } from '../services/alertify.service';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private tokenRefreshedSubject: BehaviorSubject<boolean> =
@@ -26,7 +27,11 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
   private tokenRefreshed$: Observable<boolean> =
     this.tokenRefreshedSubject.asObservable();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertifyService: AlertifyService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -48,6 +53,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           if (expiredToken) {
             this.authService.logout(); // Logout user if the token is expired
             this.router.navigate(['/login']); // Navigate user to the login page
+            this.alertifyService.dialogAlert('Session Expired');
             return throwError(() => error); // Return an error to propagate it further
           } else {
             return this.authService.refreshTokens().pipe(
@@ -61,6 +67,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
                   });
                   return next.handle(request);
                 } else {
+                  this.alertifyService.dialogAlert('Session Expired');
                   throw new Error('Token refresh failed');
                 }
               })

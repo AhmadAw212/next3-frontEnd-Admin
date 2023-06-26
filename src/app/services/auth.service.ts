@@ -92,6 +92,7 @@ export class AuthService {
           this.tokenRefreshedSubject.next(true);
           return token; // Return the refreshed token
         } else {
+          this.alertifyService.dialogAlert('Session Expired');
           throw new Error('Token refresh failed');
         }
       }),

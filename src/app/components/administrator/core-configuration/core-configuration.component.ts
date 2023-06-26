@@ -181,7 +181,6 @@ export class CoreConfigurationComponent implements OnInit {
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {
         this.configData = data.data;
-
         // console.log(this.configData);
       },
       error: (err) => {
