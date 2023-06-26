@@ -14,12 +14,10 @@ import {
   from,
   switchMap,
   take,
-  throwError,
 } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { AlertifyService } from '../services/alertify.service';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private tokenRefreshedSubject: BehaviorSubject<boolean> =
@@ -27,16 +25,13 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
   private tokenRefreshed$: Observable<boolean> =
     this.tokenRefreshedSubject.asObservable();
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private alertifyService: AlertifyService
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // Clone the request to add the Authorization header if a token exists
     const token = localStorage.getItem('token');
     if (token && !this.shouldExcludeToken(request.url)) {
       request = request.clone({
@@ -48,31 +43,38 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error) => {
+        // Check for unauthorized error and trigger token refresh
         if (error.status === 401) {
-          const expiredToken = error.headers.get('Expired-Token');
+          const expiredToken = localStorage.getItem('token');
           if (expiredToken) {
-            this.authService.logout(); // Logout user if the token is expired
-            this.router.navigate(['/login']); // Navigate user to the login page
-            this.alertifyService.dialogAlert('Session Expired');
-            return throwError(() => error); // Return an error to propagate it further
-          } else {
-            return this.authService.refreshTokens().pipe(
-              switchMap((refreshedToken) => {
-                if (refreshedToken) {
-                  this.tokenRefreshedSubject.next(true);
-                  request = request.clone({
-                    setHeaders: {
-                      Authorization: `Bearer ${refreshedToken}`,
-                    },
-                  });
-                  return next.handle(request);
-                } else {
-                  this.alertifyService.dialogAlert('Session Expired');
-                  throw new Error('Token refresh failed');
-                }
-              })
-            );
+            const payload: any = jwt_decode(expiredToken);
+            const expiredDate = payload.exp < Date.now() / 1000;
+            if (expiredDate) {
+              // Token is expired, navigate user to login page
+              this.router.navigate(['/login']);
+              return EMPTY;
+            }
           }
+
+          return this.authService.refreshTokens().pipe(
+            switchMap((refreshedToken) => {
+              if (refreshedToken) {
+                // Emit the refreshed token value
+                this.tokenRefreshedSubject.next(true);
+
+                // Retry the original request with the updated token
+                request = request.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${refreshedToken}`,
+                  },
+                });
+                return next.handle(request);
+              } else {
+                // Handle the case where token refresh failed
+                throw new Error('Token refresh failed');
+              }
+            })
+          );
         } else {
           throw error;
         }
