@@ -16,7 +16,7 @@
             "allowedCommonJsDependencies": [
               "file-saver"
            ],
-            "outputPath": "dist/tutorial",
+            "outputPath": "dist/next3",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -63,7 +63,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             }

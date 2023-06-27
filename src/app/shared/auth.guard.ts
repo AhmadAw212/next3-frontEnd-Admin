@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
 
     if (!token) {
       this.alertifyService.dialogAlert('Session Expired');
-      this.authService.logout();
+      // this.authService.logout();
       return false;
     }
 

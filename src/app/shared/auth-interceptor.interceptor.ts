@@ -51,7 +51,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           const expiredToken = error.headers.get('Expired-Token');
           if (expiredToken) {
-            this.authService.logout(); // Logout user if the token is expired
+            // this.authService.logout(); // Logout user if the token is expired
             this.router.navigate(['/login']); // Navigate user to the login page
             this.alertifyService.dialogAlert('Session Expired');
             return throwError(() => error); // Return an error to propagate it further

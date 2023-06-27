@@ -49,11 +49,13 @@ export class AuthService {
         let errorMessage = 'An error occurred';
         if (err.status === 401) {
           errorMessage = 'Incorrect username or password';
+          // Send the error message here
+          this.alertifyService.error(errorMessage);
         } else if (err.status === 500) {
           errorMessage = 'An error occurred. Please try again later.';
+          // Send the error message here
+          this.alertifyService.error(errorMessage);
         }
-
-        this.alertifyService.error(errorMessage);
       },
     });
   }
@@ -127,7 +129,7 @@ export class AuthService {
     this.dataService.logout().subscribe({
       next: (response) => {
         this.alertifyService.dialogAlert(response.message!);
-        localStorage.clear();
+        this.clearTokens();
       },
       error: (err) => {
         this.alertifyService.dialogAlert('Error');
