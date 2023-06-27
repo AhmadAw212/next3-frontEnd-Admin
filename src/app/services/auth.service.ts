@@ -17,7 +17,6 @@ interface User {
 })
 export class AuthService {
   userProfiles?: CoreProfile[];
-  private tokenRefreshed = false;
   private tokenRefreshedSubject = new Subject<boolean>();
 
   constructor(
@@ -69,10 +68,6 @@ export class AuthService {
   }
 
   refreshTokens(): Observable<any> {
-    if (this.tokenRefreshed) {
-      return this.tokenRefreshedSubject.asObservable(); // Return the observable if token is already refreshed
-    }
-
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
@@ -80,15 +75,12 @@ export class AuthService {
       return throwError(() => 'Refresh token not found'); // Return null or throw an error, depending on your error handling approach
     }
 
-    this.tokenRefreshed = true;
-
     return this.dataService.refreshToken(refreshToken).pipe(
       map((result) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
         if (token && newRefreshToken) {
           this.storeTokens(token, newRefreshToken);
-          this.tokenRefreshed = false; // Reset the flag after successful token refresh
           this.tokenRefreshedSubject.next(true);
           return token; // Return the refreshed token
         } else {
@@ -97,19 +89,16 @@ export class AuthService {
         }
       }),
       catchError((err) => {
-        if (err.status === 403 || err.status === 401) {
-          this.logout();
-          this.router.navigate(['/login']);
-        } else {
-          this.logout();
-        }
+        this.logout();
         return throwError(() => err); // Rethrow the error to propagate it further
       })
     );
   }
-  onTokenRefreshed(): Observable<any> {
+
+  onTokenRefreshed(): Observable<boolean> {
     return this.tokenRefreshedSubject.asObservable();
   }
+
   openChangePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePassDialogComponent, {
       width: '300px',
@@ -123,11 +112,12 @@ export class AuthService {
       }
     });
   }
+
   logout() {
     this.dataService.logout().subscribe({
       next: (response) => {
         this.alertifyService.dialogAlert(response.message!);
-        localStorage.clear();
+        this.clearTokens();
       },
       error: (err) => {
         this.alertifyService.dialogAlert('Error');
