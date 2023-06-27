@@ -5,7 +5,7 @@ import { DataServiceService } from './data-service.service';
 import { AlertifyService } from './alertify.service';
 import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, catchError, map, throwError } from 'rxjs';
 
 interface User {
   username: string;
@@ -68,36 +68,44 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
   }
 
-  refreshTokens() {
+  refreshTokens(): Observable<any> {
     if (this.tokenRefreshed) {
-      return; // Prevent multiple refresh attempts
+      return this.tokenRefreshedSubject.asObservable(); // Return the observable if token is already refreshed
     }
 
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
       this.logout();
-      return;
+      return throwError(() => 'Refresh token not found'); // Return null or throw an error, depending on your error handling approach
     }
 
     this.tokenRefreshed = true;
 
-    this.dataService.refreshToken(refreshToken).subscribe({
-      next: (result) => {
+    return this.dataService.refreshToken(refreshToken).pipe(
+      map((result) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
-        this.storeTokens(token, newRefreshToken);
-        this.tokenRefreshed = false; // Reset the flag after successful token refresh
-        this.tokenRefreshedSubject.next(true);
-      },
-      error: (err) => {
-        if (err.status == 403) {
+        if (token && newRefreshToken) {
+          this.storeTokens(token, newRefreshToken);
+          this.tokenRefreshed = false; // Reset the flag after successful token refresh
+          this.tokenRefreshedSubject.next(true);
+          return token; // Return the refreshed token
+        } else {
+          this.alertifyService.dialogAlert('Session Expired');
+          throw new Error('Token refresh failed');
+        }
+      }),
+      catchError((err) => {
+        if (err.status === 403 || err.status === 401) {
+          this.logout();
           this.router.navigate(['/login']);
         } else {
           this.logout();
         }
-      },
-    });
+        return throwError(() => err); // Rethrow the error to propagate it further
+      })
+    );
   }
   onTokenRefreshed(): Observable<any> {
     return this.tokenRefreshedSubject.asObservable();
