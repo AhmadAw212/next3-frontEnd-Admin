@@ -57,7 +57,7 @@ export class AddCarProductComponent implements OnInit {
       description: ['', Validators.required],
       tarif: ['', Validators.required],
       lob: ['', [Validators.required, Validators.maxLength(2)]],
-      productType: ['', Validators.required],
+      type: ['', Validators.required],
     });
   }
   addCarProduct() {
