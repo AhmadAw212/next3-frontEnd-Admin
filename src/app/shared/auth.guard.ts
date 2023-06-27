@@ -38,23 +38,28 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const payload: TokenPayload = jwt_decode(token); // Declare the payload variable
-
+    const payload: TokenPayload = jwt_decode(token);
     const expiredDate = payload.exp < Date.now() / 1000;
 
     if (expiredDate) {
-      // Trigger token refresh and wait for the refresh to complete
-      this.authService.refreshTokens();
-      return this.authService.onTokenRefreshed().pipe(
-        map(() => {
-          return this.checkAccess(route, payload); // Pass the payload to the checkAccess method
+      this.router.navigate(['/login']); // Navigate user to the login page
+      this.alertifyService.dialogAlert('Session Expired');
+      return false;
+    } else {
+      // Token is not expired, call the refresh token function
+      return this.authService.refreshTokens().pipe(
+        map((refreshedToken) => {
+          if (refreshedToken) {
+            localStorage.setItem('token', refreshedToken);
+            return this.checkAccess(route, payload);
+          } else {
+            this.alertifyService.dialogAlert('Session Expired');
+            throw new Error('Token refresh failed');
+          }
         })
       );
     }
-
-    return this.checkAccess(route, payload); // Pass the payload to the checkAccess method
   }
-
   private checkAccess(
     route: ActivatedRouteSnapshot,
     payload: TokenPayload
