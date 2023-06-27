@@ -6,7 +6,7 @@ import { AlertifyService } from './alertify.service';
 import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject, catchError, map, throwError } from 'rxjs';
-import jwt_decode from 'jwt-decode';
+
 interface User {
   username: string;
   password: string;
@@ -17,6 +17,7 @@ interface User {
 })
 export class AuthService {
   userProfiles?: CoreProfile[];
+  private tokenRefreshed = false;
   private tokenRefreshedSubject = new Subject<boolean>();
 
   constructor(
@@ -48,11 +49,13 @@ export class AuthService {
         let errorMessage = 'An error occurred';
         if (err.status === 401) {
           errorMessage = 'Incorrect username or password';
+          // Send the error message here
+          this.alertifyService.error(errorMessage);
         } else if (err.status === 500) {
           errorMessage = 'An error occurred. Please try again later.';
+          // Send the error message here
+          this.alertifyService.error(errorMessage);
         }
-
-        this.alertifyService.error(errorMessage);
       },
     });
   }
@@ -66,18 +69,12 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
   }
-  isTokenExpired(token: string): boolean {
-    if (!token) {
-      return true; // Token is considered expired if it's not available
-    }
-
-    const decodedToken: any = jwt_decode(token);
-    const currentTime = Date.now() / 1000; // Convert current time to seconds
-
-    return decodedToken.exp < currentTime;
-  }
 
   refreshTokens(): Observable<any> {
+    if (this.tokenRefreshed) {
+      return this.tokenRefreshedSubject.asObservable(); // Return the observable if token is already refreshed
+    }
+
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
@@ -85,12 +82,15 @@ export class AuthService {
       return throwError(() => 'Refresh token not found'); // Return null or throw an error, depending on your error handling approach
     }
 
+    this.tokenRefreshed = true;
+
     return this.dataService.refreshToken(refreshToken).pipe(
       map((result) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
         if (token && newRefreshToken) {
           this.storeTokens(token, newRefreshToken);
+          this.tokenRefreshed = false; // Reset the flag after successful token refresh
           this.tokenRefreshedSubject.next(true);
           return token; // Return the refreshed token
         } else {
@@ -99,16 +99,19 @@ export class AuthService {
         }
       }),
       catchError((err) => {
-        this.logout();
+        if (err.status === 403 || err.status === 401) {
+          this.logout();
+          this.router.navigate(['/login']);
+        } else {
+          this.logout();
+        }
         return throwError(() => err); // Rethrow the error to propagate it further
       })
     );
   }
-
-  onTokenRefreshed(): Observable<boolean> {
+  onTokenRefreshed(): Observable<any> {
     return this.tokenRefreshedSubject.asObservable();
   }
-
   openChangePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePassDialogComponent, {
       width: '300px',
@@ -122,7 +125,6 @@ export class AuthService {
       }
     });
   }
-
   logout() {
     this.dataService.logout().subscribe({
       next: (response) => {
