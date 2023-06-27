@@ -6,7 +6,7 @@ import { AlertifyService } from './alertify.service';
 import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject, catchError, map, throwError } from 'rxjs';
-
+import jwt_decode from 'jwt-decode';
 interface User {
   username: string;
   password: string;
@@ -65,6 +65,16 @@ export class AuthService {
   private clearTokens() {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
+  }
+  isTokenExpired(token: string): boolean {
+    if (!token) {
+      return true; // Token is considered expired if it's not available
+    }
+
+    const decodedToken: any = jwt_decode(token);
+    const currentTime = Date.now() / 1000; // Convert current time to seconds
+
+    return decodedToken.exp < currentTime;
   }
 
   refreshTokens(): Observable<any> {

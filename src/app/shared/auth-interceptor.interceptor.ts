@@ -46,8 +46,9 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          const expiredToken = error.headers.get('Expired-Token');
-          if (expiredToken) {
+          const isTokenExpired = this.authService.isTokenExpired(token!);
+
+          if (isTokenExpired) {
             this.authService.logout();
             this.router.navigate(['/login']);
             this.alertifyService.dialogAlert('Session Expired');
@@ -73,11 +74,16 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
             );
           } else {
             return this.refreshTokenSubject.pipe(
-              filter((token) => token !== null),
-              take(1),
-              switchMap((token) =>
-                next.handle(this.addTokenToRequest(request, token))
-              )
+              switchMap((token) => {
+                if (token) {
+                  return next.handle(this.addTokenToRequest(request, token));
+                } else {
+                  // If the refresh token subject emits a null token, it means the token refresh failed.
+                  this.authService.logout();
+                  this.router.navigate(['/login']);
+                  return throwError(() => new Error('Token refresh failed'));
+                }
+              })
             );
           }
         } else {
