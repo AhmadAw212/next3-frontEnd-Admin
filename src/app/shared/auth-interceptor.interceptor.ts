@@ -22,10 +22,10 @@ import jwt_decode from 'jwt-decode';
 import { AlertifyService } from '../services/alertify.service';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
-  );
+  private tokenRefreshedSubject: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  private tokenRefreshed$: Observable<boolean> =
+    this.tokenRefreshedSubject.asObservable();
 
   constructor(
     private authService: AuthService,
@@ -38,73 +38,49 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
-
     if (token && !this.shouldExcludeToken(request.url)) {
-      request = this.addTokenToRequest(request, token);
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     }
 
     return next.handle(request).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          const isTokenExpired = this.authService.isTokenExpired(token!);
-
-          if (isTokenExpired) {
-            this.authService.logout();
-            this.router.navigate(['/login']);
+          const expiredToken = error.headers.get('Expired-Token');
+          if (expiredToken) {
+            this.authService.logout(); // Logout user if the token is expired
+            this.router.navigate(['/login']); // Navigate user to the login page
             this.alertifyService.dialogAlert('Session Expired');
-            return throwError(() => error);
-          } else if (!this.isRefreshing) {
-            this.isRefreshing = true;
-            this.refreshTokenSubject.next(null);
-
+            return throwError(() => error); // Return an error to propagate it further
+          } else {
             return this.authService.refreshTokens().pipe(
               switchMap((refreshedToken) => {
-                this.isRefreshing = false;
-                this.refreshTokenSubject.next(refreshedToken);
-                return next.handle(
-                  this.addTokenToRequest(request, refreshedToken)
-                );
-              }),
-              catchError((refreshError) => {
-                this.isRefreshing = false;
-                this.authService.logout();
-                this.router.navigate(['/login']);
-                return throwError(() => refreshError);
-              })
-            );
-          } else {
-            return this.refreshTokenSubject.pipe(
-              switchMap((token) => {
-                if (token) {
-                  return next.handle(this.addTokenToRequest(request, token));
+                if (refreshedToken) {
+                  this.tokenRefreshedSubject.next(true);
+                  request = request.clone({
+                    setHeaders: {
+                      Authorization: `Bearer ${refreshedToken}`,
+                    },
+                  });
+                  return next.handle(request);
                 } else {
-                  // If the refresh token subject emits a null token, it means the token refresh failed.
-                  this.authService.logout();
-                  this.router.navigate(['/login']);
-                  return throwError(() => new Error('Token refresh failed'));
+                  this.alertifyService.dialogAlert('Session Expired');
+                  throw new Error('Token refresh failed');
                 }
               })
             );
           }
         } else {
-          return throwError(() => error);
+          throw error;
         }
       })
     );
   }
 
-  private shouldExcludeToken(url: string): boolean {
+  shouldExcludeToken(url: string): boolean {
     return url.includes('/api/refresh/refreshtoken');
-  }
-
-  private addTokenToRequest(
-    request: HttpRequest<any>,
-    token: string
-  ): HttpRequest<any> {
-    return request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
   }
 }
