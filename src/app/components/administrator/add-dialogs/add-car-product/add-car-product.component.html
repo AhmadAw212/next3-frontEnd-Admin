@@ -30,12 +30,7 @@
     <input type="text" id="lob" name="lob" formControlName="lob" required />
 
     <label>{{ dico?.dico_type || "dico_type" }}:</label>
-    <select
-      id="bodyTypeNew"
-      name="bodyTypeNew"
-      formControlName="productType"
-      required
-    >
+    <select id="bodyTypeNew" name="bodyTypeNew" formControlName="type" required>
       <option *ngFor="let type of productTypes" [value]="type.code">
         {{ type.description }}
       </option>

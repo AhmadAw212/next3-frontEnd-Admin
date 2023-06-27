@@ -38,7 +38,8 @@ export class AuthService {
             this.storeTokens(token, refreshToken);
             this.router.navigate(['/profiles-main']);
             this.userProfiles = profiles;
-          } else if (token && result.data.firstLogin === true) {
+          } else if (result.data.firstLogin === true) {
+            this.storeTokens(token, refreshToken);
             this.openChangePasswordDialog();
           }
         } else if (result.statusCode === 423) {
@@ -71,18 +72,12 @@ export class AuthService {
   }
 
   refreshTokens(): Observable<any> {
-    if (this.tokenRefreshed) {
-      return this.tokenRefreshedSubject.asObservable(); // Return the observable if token is already refreshed
-    }
-
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
       this.logout();
-      return throwError(() => 'Refresh token not found'); // Return null or throw an error, depending on your error handling approach
+      return throwError(() => 'Refresh token not found');
     }
-
-    this.tokenRefreshed = true;
 
     return this.dataService.refreshToken(refreshToken).pipe(
       map((result) => {
@@ -90,9 +85,9 @@ export class AuthService {
         const newRefreshToken = result.refreshToken;
         if (token && newRefreshToken) {
           this.storeTokens(token, newRefreshToken);
-          this.tokenRefreshed = false; // Reset the flag after successful token refresh
-          this.tokenRefreshedSubject.next(true);
-          return token; // Return the refreshed token
+          this.tokenRefreshed = true; // Set the tokenRefreshed flag to true
+          this.tokenRefreshedSubject.next(true); // Emit the token refresh event
+          return token;
         } else {
           this.alertifyService.dialogAlert('Session Expired');
           throw new Error('Token refresh failed');
@@ -105,11 +100,12 @@ export class AuthService {
         } else {
           this.logout();
         }
-        return throwError(() => err); // Rethrow the error to propagate it further
+        return throwError(() => err);
       })
     );
   }
-  onTokenRefreshed(): Observable<any> {
+
+  onTokenRefreshed(): Observable<boolean> {
     return this.tokenRefreshedSubject.asObservable();
   }
   openChangePasswordDialog() {
