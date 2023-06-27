@@ -6,10 +6,9 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, catchError } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { AlertifyService } from '../services/alertify.service';
-import { TokenPayload } from '../model/token-payload';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -38,7 +37,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const payload: TokenPayload = jwt_decode(token);
+    const payload = this.decodeToken(token);
     const expiredDate = payload.exp < Date.now() / 1000;
 
     if (expiredDate) {
@@ -56,14 +55,25 @@ export class AuthGuard implements CanActivate {
             this.alertifyService.dialogAlert('Session Expired');
             throw new Error('Token refresh failed');
           }
+        }),
+        catchError((error) => {
+          this.authService.logout();
+          throw new Error('Token refresh failed');
         })
       );
     }
   }
-  private checkAccess(
-    route: ActivatedRouteSnapshot,
-    payload: TokenPayload
-  ): boolean {
+
+  private decodeToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (error) {
+      this.authService.logout();
+      throw new Error('Invalid token');
+    }
+  }
+
+  private checkAccess(route: ActivatedRouteSnapshot, payload: any): boolean {
     const authorities = payload.authorities;
     const requiredAuthorities = route.data?.['authorities'];
 
