@@ -2,6 +2,7 @@
 <hr />
 <div class="container-fluid">
   <form [formGroup]="carSupplierForm" (ngSubmit)="updateCarSupplier()">
+    
     <div class="form-group">
       <label for="supplierID"
         >{{ dico?.dico_supplier_id || "dico_supplier_id" }} :</label
@@ -37,6 +38,14 @@
       </select>
     </div>
     <div class="form-group">
+      <label> {{ dico?.dico_title || "dico_title" }}:</label>
+      <select formControlName="titre">
+        <option *ngFor="let title of titleLov" [value]="title.code">
+          {{ title.description }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="supplierFirstName">
         {{
           dico?.dico_supplier_first_name || "dico_supplier_first_name"
@@ -50,14 +59,14 @@
       />
     </div>
     <div class="form-group">
-      <label for="supplierFamilyName">
-        {{ dico?.dico_familyname || "dico_familyname" }}:</label
+      <label for="supplierFatherName">
+        {{ dico?.dico_father_name || "dico_father_name" }}:</label
       >
       <input
         type="text"
-        id="supplierFamilyName"
-        name="supplierFamilyName"
-        formControlName="lastname"
+        id="supplierFatherName"
+        name="supplierFatherName"
+        formControlName="fathersName"
       />
     </div>
     <div class="form-group">
@@ -71,26 +80,40 @@
         formControlName="prefixFam"
       />
     </div>
-
     <div class="form-group">
-      <label for="supplierFatherName">
-        {{ dico?.dico_father_name || "dico_father_name" }}:</label
+      <label for="supplierFamilyName">
+        {{ dico?.dico_familyname || "dico_familyname" }}:</label
       >
       <input
         type="text"
-        id="supplierFatherName"
-        name="supplierFatherName"
-        formControlName="fathersName"
+        id="supplierFamilyName"
+        name="supplierFamilyName"
+        formControlName="lastname"
+        required
       />
     </div>
-
     <div class="form-group">
-      <label> {{ dico?.dico_title || "dico_title" }}:</label>
-      <select formControlName="titre">
-        <option *ngFor="let title of titleLov" [value]="title.code">
-          {{ title.description }}
-        </option>
-      </select>
+      <label for="supplierName"
+        >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
+      >
+      <input
+        type="text"
+        id="supplierName"
+        name="supplierName"
+        formControlName="fullName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supplierArabicName">
+        {{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label
+      >
+      <input
+        type="text"
+        id="supplierArabicName"
+        name="supplierArabicName"
+        formControlName="arabic_name"
+      />
     </div>
 
     <div class="form-group">
@@ -155,17 +178,7 @@
         formControlName="fax"
       />
     </div>
-    <div class="form-group">
-      <label for="supplierArabicName">
-        {{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label
-      >
-      <input
-        type="text"
-        id="supplierArabicName"
-        name="supplierArabicName"
-        formControlName="arabic_name"
-      />
-    </div>
+  
 
     <div class="form-group">
       <label for="supplierGradeID"
@@ -183,17 +196,7 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="supplierName"
-        >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
-      >
-      <input
-        type="text"
-        id="supplierName"
-        name="supplierName"
-        formControlName="fullName"
-      />
-    </div>
+   
 
     <div class="form-group">
       <label for="supplierFDate">
@@ -204,6 +207,7 @@
         id="supplierFDate"
         name="supplierFDate"
         formControlName="fdate"
+        required
       />
     </div>
     <div class="form-group">

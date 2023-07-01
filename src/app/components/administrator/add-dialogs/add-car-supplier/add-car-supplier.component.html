@@ -10,6 +10,14 @@
       </select>
     </div>
     <div class="form-group">
+      <label>{{ dico?.dico_Supplier_Title || "dico_Supplier_Title" }}:</label>
+      <select name="title" id="title" formControlName="titre">
+        <option *ngFor="let title of titleLov" [value]="title.code">
+          {{ title.description }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
       <label>{{ dico?.dico_supplier_first_name || "dico_supplier_first_name" }}:</label>
       <input
         type="text"
@@ -19,12 +27,12 @@
       />
     </div>
     <div class="form-group">
-      <label for="supplierFamilyName">{{ dico?.dico_sup_family_name || "dico_sup_family_name" }}:</label>
+      <label for="supplierFatherName">{{ dico?.dico_sup_father_name || "dico_sup_father_name" }}:</label>
       <input
         type="text"
-        id="supplierFamilyName"
-        name="supplierFamilyName"
-        formControlName="lastname"
+        id="supplierFatherName"
+        name="supplierFatherName"
+        formControlName="fathersName"
       />
     </div>
     <div class="form-group">
@@ -36,24 +44,28 @@
         formControlName="prefixFam"
       />
     </div>
-
     <div class="form-group">
-      <label for="supplierFatherName">{{ dico?.dico_sup_father_name || "dico_sup_father_name" }}:</label>
+      <label for="supplierFamilyName">{{ dico?.dico_sup_family_name || "dico_sup_family_name" }}:</label>
       <input
         type="text"
-        id="supplierFatherName"
-        name="supplierFatherName"
-        formControlName="fathersName"
+        id="supplierFamilyName"
+        name="supplierFamilyName"
+        formControlName="lastname"
+        required
       />
     </div>
+   
+
+    
 
     <div class="form-group">
-      <label>{{ dico?.dico_Supplier_Title || "dico_Supplier_Title" }}:</label>
-      <select name="title" id="title" formControlName="titre">
-        <option *ngFor="let title of titleLov" [value]="title.code">
-          {{ title.description }}
-        </option>
-      </select>
+      <label for="supplierArabicName">{{ dico?.Supplier_Arabic_Name || "Supplier_Arabic_Name" }}:</label>
+      <input
+        type="text"
+        id="supplierArabicName"
+        name="supplierArabicName"
+        formControlName="arabic_name"
+      />
     </div>
 
     <div class="form-group">
@@ -76,7 +88,7 @@
       />
     </div>
     <div class="form-group">
-      <label>{{ dico?.dico_Supplier_Business_City || "dico_Supplier_Business_City" }}:</label>
+      <label>{{ dico?.dico_busines_town_name || "dico_busines_town_name" }}:</label>
       <ng-select appendTo="body" formControlName="bus_id">
         <ng-option *ngFor="let address of addressLov" [value]="address.code">{{
           address.description
@@ -110,15 +122,7 @@
         formControlName="fax"
       />
     </div>
-    <div class="form-group">
-      <label for="supplierArabicName">{{ dico?.Supplier_Arabic_Name || "Supplier_Arabic_Name" }}:</label>
-      <input
-        type="text"
-        id="supplierArabicName"
-        name="supplierArabicName"
-        formControlName="arabic_name"
-      />
-    </div>
+   
 
     <div class="form-group">
       <label for="supplierGradeID">{{ dico?.dico_Supplier_Grade_ID || "dico_Supplier_Grade_ID" }}:</label>
@@ -141,6 +145,7 @@
         id="supplierFDate"
         name="supplierFDate"
         formControlName="fdate"
+        required
       />
     </div>
     <div class="form-group">
