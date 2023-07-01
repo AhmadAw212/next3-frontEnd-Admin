@@ -137,7 +137,7 @@ export class CoreDocumentComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.authService.refreshTokens();
+          // this.authService.refreshTokens();
         } else {
           this.alertifyService.error(err.error.message);
           console.log(err);
@@ -161,7 +161,7 @@ export class CoreDocumentComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401) {
-              this.authService.refreshTokens();
+              // this.authService.refreshTokens();
             } else {
               this.alertifyService.error(err.error.message);
               console.log(err);

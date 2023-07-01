@@ -465,13 +465,18 @@
       <div class="form-row">
         <div class="form-group">
           <label for="emailSignature">Email Signature:</label>
-          <ngx-editor
-            style="width: 40%"
-            [editor]="editor"
-            [placeholder]="'Fill Email Signature...'"
-            formControlName="userEmailSignature"
-          >
-          </ngx-editor>
+          <div class="NgxEditor__Wrapper">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+            </ngx-editor-menu>
+
+            <ngx-editor
+              style="width: 40%"
+              [editor]="editor"
+              [placeholder]="'Fill Email Signature...'"
+              formControlName="userEmailSignature"
+            >
+            </ngx-editor>
+          </div>
         </div>
         <button
           class="btn"

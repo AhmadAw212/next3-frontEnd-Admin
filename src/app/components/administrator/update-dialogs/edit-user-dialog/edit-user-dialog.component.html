@@ -228,12 +228,17 @@
         <label for="email"
           >{{ dico?.dico_email_signature || "dico_email_signature" }}:</label
         >
-        <ngx-editor
-          [editor]="editor"
-          [placeholder]="'Type Email Signature...'"
-          formControlName="userEmailSignature"
-        >
-        </ngx-editor>
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+
+          <ngx-editor
+            [editor]="editor"
+            [placeholder]="'Type here...'"
+            formControlName="body"
+          >
+          </ngx-editor>
+        </div>
       </div>
     </div>
     <div class="button-row">

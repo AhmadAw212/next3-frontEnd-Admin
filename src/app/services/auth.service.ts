@@ -44,6 +44,8 @@ export class AuthService {
           }
         } else if (result.statusCode === 423) {
           this.alertifyService.dialogAlert(result.message!);
+        } else if (result.statusCode === 403) {
+          this.alertifyService.error(result.message);
         }
       },
       error: (err) => {
@@ -55,7 +57,7 @@ export class AuthService {
         } else if (err.status === 500) {
           errorMessage = 'An error occurred. Please try again later.';
           // Send the error message here
-          this.alertifyService.error(errorMessage);
+          this.alertifyService.error(err.error.message);
         }
       },
     });

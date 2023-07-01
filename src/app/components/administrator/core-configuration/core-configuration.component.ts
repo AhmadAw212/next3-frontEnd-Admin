@@ -144,7 +144,7 @@ export class CoreConfigurationComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401) {
-            this.authService.refreshTokens();
+            // this.authService.refreshTokens();
             // this.alertifyService.dialogAlert('Error');
           } else {
             this.alertifyService.dialogAlert('Error');
@@ -167,7 +167,7 @@ export class CoreConfigurationComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401) {
-              this.authService.refreshTokens();
+              // this.authService.refreshTokens();
               // this.alertifyService.dialogAlert('Error');
             } else {
               this.alertifyService.dialogAlert('Error');

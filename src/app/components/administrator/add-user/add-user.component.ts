@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { BranchList } from 'src/app/model/branch-list';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-import { Editor } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
@@ -28,6 +28,15 @@ export class AddUserComponent implements OnInit {
   dico?: any;
   editor!: Editor;
   isLoading: boolean = false;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    // ['link'],
+    // ['image'],
+  ];
   ngOnInit(): void {
     this.companyBranchService.getCompanyId();
     this.getCompanyId();

@@ -1,6 +1,6 @@
 <h5>{{ dico?.dico_supplier_details || "dico_supplier_details" }}</h5>
 <hr />
-<div class="container-fluid" >
+<div class="container-fluid">
   <form [formGroup]="carSupplierForm" (ngSubmit)="updateCarSupplier()">
     <div class="form-group">
       <label for="supplierID"
@@ -197,7 +197,7 @@
 
     <div class="form-group">
       <label for="supplierFDate">
-        {{ dico?.dico_inactive_date || "dico_inactive_date" }}:</label
+        {{ dico?.dico_active_date || "dico_active_date" }}:</label
       >
       <input
         type="date"
