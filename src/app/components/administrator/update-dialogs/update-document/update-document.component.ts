@@ -12,7 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UpdateCarDialogComponent } from '../update-car-dialog/update-car-dialog.component';
 import { CoreDocument } from 'src/app/model/core-document';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-update-document',
   templateUrl: './update-document.component.html',
