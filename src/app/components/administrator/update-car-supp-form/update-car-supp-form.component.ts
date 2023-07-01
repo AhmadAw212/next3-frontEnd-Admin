@@ -14,7 +14,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-update-car-supp-form',
   templateUrl: './update-car-supp-form.component.html',
@@ -37,7 +37,9 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private datePipe: DatePipe,
+    private dateFormatService: DateFormatterService
   ) {}
 
   ngOnInit(): void {
