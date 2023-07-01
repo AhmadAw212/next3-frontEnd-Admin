@@ -5,7 +5,16 @@ import { DataServiceService } from './data-service.service';
 import { AlertifyService } from './alertify.service';
 import { ChangePassDialogComponent } from '../components/administrator/change-pass-dialog/change-pass-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject, catchError, map, throwError } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  Subject,
+  catchError,
+  finalize,
+  map,
+  tap,
+  throwError,
+} from 'rxjs';
 
 interface User {
   username: string;
@@ -42,10 +51,6 @@ export class AuthService {
             this.storeTokens(token, refreshToken);
             this.openChangePasswordDialog();
           }
-        } else if (result.statusCode === 423) {
-          this.alertifyService.dialogAlert(result.message!);
-        } else if (result.statusCode === 403) {
-          this.alertifyService.error(result.message);
         }
       },
       error: (err) => {
@@ -57,6 +62,8 @@ export class AuthService {
         } else if (err.status === 500) {
           errorMessage = 'An error occurred. Please try again later.';
           // Send the error message here
+          this.alertifyService.error(err.error.message);
+        } else if (err.status === 404) {
           this.alertifyService.error(err.error.message);
         }
       },
@@ -72,41 +79,40 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
   }
-
   refreshTokens(): Observable<any> {
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
       this.logout();
+      console.log('Refresh token not found');
       return throwError(() => 'Refresh token not found');
     }
 
+    if (this.tokenRefreshed) {
+      // Token already refreshed, emit the token refreshed subject
+      this.tokenRefreshedSubject.next(true);
+      return EMPTY;
+    }
+
+    this.tokenRefreshed = true;
+
     return this.dataService.refreshToken(refreshToken).pipe(
-      map((result) => {
+      tap((result: any) => {
         const token = result.token;
         const newRefreshToken = result.refreshToken;
-        if (token && newRefreshToken) {
-          this.storeTokens(token, newRefreshToken);
-          this.tokenRefreshed = true; // Set the tokenRefreshed flag to true
-          this.tokenRefreshedSubject.next(true); // Emit the token refresh event
-          return token;
-        } else {
-          this.alertifyService.dialogAlert('Session Expired');
-          throw new Error('Token refresh failed');
-        }
+        this.storeTokens(token, newRefreshToken);
+        this.tokenRefreshedSubject.next(true);
       }),
-      catchError((err) => {
-        if (err.status === 403 || err.status === 401) {
-          this.logout();
-          this.router.navigate(['/login']);
-        } else {
-          this.logout();
-        }
-        return throwError(() => err);
+      catchError((error: any) => {
+        // this.logout();
+        // this.alertifyService.error(error.error.message);
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.tokenRefreshed = false; // Reset the token refreshed flag
       })
     );
   }
-
   onTokenRefreshed(): Observable<boolean> {
     return this.tokenRefreshedSubject.asObservable();
   }
@@ -130,7 +136,7 @@ export class AuthService {
         this.clearTokens();
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        this.alertifyService.dialogAlert('Session Timeout');
       },
     });
   }

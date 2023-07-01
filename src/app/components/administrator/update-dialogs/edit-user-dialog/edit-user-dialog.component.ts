@@ -110,7 +110,9 @@ export class EditUserDialogComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userEmailSignature: [
-        this.usersInfo.userEmailSignature,
+        this.usersInfo.userEmailSignature !== null
+          ? this.usersInfo.userEmailSignature
+          : '',
         Validators.required,
       ],
       paymentLimit: [
@@ -146,7 +148,6 @@ export class EditUserDialogComponent implements OnInit {
       },
     });
   }
-
   Cancle() {
     this.dialogRef.close();
   }

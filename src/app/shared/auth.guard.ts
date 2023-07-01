@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { AlertifyService } from '../services/alertify.service';
 import { TokenPayload } from '../model/token-payload';
@@ -32,51 +32,29 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const token = localStorage.getItem('token');
 
-    if (!token) {
-      this.alertifyService.dialogAlert('Session Expired');
-      this.authService.logout();
-      return false;
-    }
+    if (token) {
+      const decodedToken: TokenPayload = jwt_decode(token);
 
-    const payload: TokenPayload = jwt_decode(token);
-    const expiredDate = payload.exp < Date.now() / 1000;
-
-    if (expiredDate) {
-      this.router.navigate(['/login']); // Navigate user to the login page
-      this.alertifyService.dialogAlert('Session Expired');
-      return false;
+      if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
+        // Token is valid, allow access
+        return true;
+      } else {
+        // Token has expired, initiate token refresh
+        return this.authService.refreshTokens().pipe(
+          switchMap(() => of(true)), // Continue with the guard when token refresh is successful
+          catchError(() => {
+            // Token refresh failed, logout the user and redirect to login
+            // this.authService.logout();
+            this.router.navigate(['/login']);
+            // this.alertifyService.error('Session expired. Please log in again.');
+            return of(false);
+          })
+        );
+      }
     } else {
-      // Token is not expired, call the refresh token function
-      return this.authService.refreshTokens().pipe(
-        map((refreshedToken) => {
-          if (refreshedToken) {
-            localStorage.setItem('token', refreshedToken);
-            return this.checkAccess(route, payload);
-          } else {
-            this.alertifyService.dialogAlert('Session Expired');
-            throw new Error('Token refresh failed');
-          }
-        })
-      );
-    }
-  }
-  private checkAccess(
-    route: ActivatedRouteSnapshot,
-    payload: TokenPayload
-  ): boolean {
-    const authorities = payload.authorities;
-    const requiredAuthorities = route.data?.['authorities'];
-
-    if (
-      requiredAuthorities &&
-      !requiredAuthorities.every((authority: string) =>
-        authorities.includes(authority)
-      )
-    ) {
-      this.router.navigate(['/profiles-main']);
+      // Token not found, redirect to login
+      this.router.navigate(['/login']);
       return false;
     }
-
-    return true;
   }
 }
