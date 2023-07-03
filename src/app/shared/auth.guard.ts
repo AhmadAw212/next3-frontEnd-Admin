@@ -46,13 +46,16 @@ export class AuthGuard implements CanActivate {
             // Token refresh failed, logout the user and redirect to login
             // this.authService.logout();
             this.router.navigate(['/login']);
-            // this.alertifyService.error('Session expired. Please log in again.');
+            this.alertifyService.dialogAlert(
+              'Session expired. Please log in again.'
+            );
             return of(false);
           })
         );
       }
     } else {
       // Token not found, redirect to login
+
       this.router.navigate(['/login']);
       return false;
     }

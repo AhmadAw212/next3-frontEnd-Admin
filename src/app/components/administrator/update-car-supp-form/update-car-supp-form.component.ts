@@ -6,8 +6,14 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { CarSupplier } from 'src/app/model/car-supplier';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -16,6 +22,8 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ThemePalette } from '@angular/material/core';
+
 @Component({
   selector: 'app-update-car-supp-form',
   templateUrl: './update-car-supp-form.component.html',
@@ -36,7 +44,32 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   dico?: any;
   dateFormats?: any;
   selectedDate!: Date;
-  datePickerConfig!: Partial<BsDatepickerConfig>;
+
+  @ViewChild('picker') picker: any;
+
+  public options = [
+    { value: true, label: 'True' },
+    { value: false, label: 'False' },
+  ];
+
+  public listColors = ['primary', 'accent', 'warn'];
+
+  public stepHours = [1, 2, 3, 4, 5];
+  public stepMinutes = [1, 5, 10, 15, 20, 25];
+  public stepSeconds = [1, 5, 10, 15, 20, 25];
+  // public date: moment.Moment;
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  // public minDate: moment.Moment;
+  // public maxDate: moment.Moment;
+  public stepHour = 1;
+  public stepMinute = 1;
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+  public dateControl = new FormControl(new Date(2021, 9, 4, 5, 6, 7));
   constructor(
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
@@ -44,12 +77,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
     private dateFormatService: DateFormatterService
-  ) {
-    this.datePickerConfig = {
-      dateInputFormat: this.dateFormat('reportDateTimeFormat'), // Customize the date format as per your preference
-      containerClass: 'theme-blue', // Add any custom CSS class for styling the date picker
-    };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getSupplierGrade();
@@ -78,6 +106,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       this.dico = data;
     });
   }
+
   buildForm(): void {
     this.carSupplierForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -109,7 +138,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       show_in_list: [false],
       fullName: [''],
       out_network: [false],
-      fdate: ['', Validators.required],
+      fdate: new FormControl({ fdate: '' }),
       inAcctD: [''],
       coreUserId: [''],
       initialCount: ['', Validators.pattern(/^\d+$/)],

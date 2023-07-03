@@ -16,7 +16,7 @@ html, body {
 table thead {
   position: sticky;
   /* top:0 */
-  top: 40px;
+  top: 42px;
   /* background-color: #f2f2f2; */
   
 }

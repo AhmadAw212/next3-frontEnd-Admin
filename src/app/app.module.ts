@@ -111,7 +111,10 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
-
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+// import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -200,6 +203,8 @@ import {
     MatSidenavModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    MatInputModule,
+    MatNativeDateModule,
     MatToolbarModule,
     MatListModule,
     MatIconModule,
