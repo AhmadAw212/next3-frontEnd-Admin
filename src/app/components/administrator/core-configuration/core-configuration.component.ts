@@ -161,7 +161,7 @@ export class CoreConfigurationComponent implements OnInit {
         const config = [configId];
         this.dataService.deleteConfig(config).subscribe({
           next: (res) => {
-            this.alertifyService.success(res.title);
+            this.alertifyService.error(res.title);
             this.coreConfigSearch();
             // console.log(res);
           },

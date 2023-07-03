@@ -84,7 +84,7 @@ export class AuthService {
 
     if (!refreshToken) {
       this.logout();
-      console.log('Refresh token not found');
+      // console.log('Refresh token not found');
       return throwError(() => 'Refresh token not found');
     }
 

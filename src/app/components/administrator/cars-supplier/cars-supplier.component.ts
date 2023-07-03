@@ -69,12 +69,10 @@ export class CarsSupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRolesService.getUserRoles();
-
     this.getSupplierType();
     // this.getCompaniesPerUser();
-
     this.dateFormatterService();
-    // this.getSupplierGrade();
+    this.getSupplierGrade();
     this.getDico();
   }
   exportToExcel() {

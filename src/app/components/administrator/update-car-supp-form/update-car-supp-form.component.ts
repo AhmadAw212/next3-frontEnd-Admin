@@ -15,6 +15,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'app-update-car-supp-form',
   templateUrl: './update-car-supp-form.component.html',
@@ -33,6 +34,9 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   @Output() supplierUpdated: EventEmitter<CarSupplier> =
     new EventEmitter<CarSupplier>();
   dico?: any;
+  dateFormats?: any;
+  selectedDate!: Date;
+  datePickerConfig!: Partial<BsDatepickerConfig>;
   constructor(
     private dataService: DataServiceService,
     private formBuilder: FormBuilder,
@@ -40,7 +44,12 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
     private dateFormatService: DateFormatterService
-  ) {}
+  ) {
+    this.datePickerConfig = {
+      dateInputFormat: this.dateFormat('reportDateTimeFormat'), // Customize the date format as per your preference
+      containerClass: 'theme-blue', // Add any custom CSS class for styling the date picker
+    };
+  }
 
   ngOnInit(): void {
     this.getSupplierGrade();
@@ -48,11 +57,20 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     this.getAddressLov();
     this.buildForm();
     this.getDico();
+    this.dateFormatterService();
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedSupplier'] && this.carSupplierForm) {
       this.carSupplierForm.patchValue(changes['selectedSupplier'].currentValue);
     }
+  }
+  dateFormatterService() {
+    this.dateFormatService.date.subscribe((data) => {
+      this.dateFormats = data;
+    });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
     this.dicoService.getDico();
@@ -69,7 +87,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       titre: [''],
       email: ['', Validators.email],
       prefixFam: [''],
-      firstname: ['', Validators.required],
+      firstname: [''],
       fathersName: [''],
       lastname: ['', Validators.required],
       home_building: [''],
@@ -91,7 +109,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       show_in_list: [false],
       fullName: [''],
       out_network: [false],
-      fdate: [''],
+      fdate: ['', Validators.required],
       inAcctD: [''],
       coreUserId: [''],
       initialCount: ['', Validators.pattern(/^\d+$/)],

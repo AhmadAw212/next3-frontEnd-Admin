@@ -2,7 +2,6 @@
 <hr />
 <div class="container-fluid">
   <form [formGroup]="carSupplierForm" (ngSubmit)="updateCarSupplier()">
-    
     <div class="form-group">
       <label for="supplierID"
         >{{ dico?.dico_supplier_id || "dico_supplier_id" }} :</label
@@ -91,6 +90,18 @@
         formControlName="lastname"
         required
       />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['lastname'].errors &&
+          (formControl['lastname'].dirty || formControl['lastname'].touched)
+        "
+      >
+        <div *ngIf="formControl['lastname']?.errors?.['required']">
+          Required
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="supplierName"
@@ -103,6 +114,17 @@
         formControlName="fullName"
         required
       />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['fullName'].errors &&
+          (formControl['fullName'].dirty || formControl['fullName'].touched)
+        "
+      >
+        <div *ngIf="formControl['fullName']?.errors?.['required']">
+          Required
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="supplierArabicName">
@@ -178,7 +200,6 @@
         formControlName="fax"
       />
     </div>
-  
 
     <div class="form-group">
       <label for="supplierGradeID"
@@ -196,8 +217,6 @@
       </select>
     </div>
 
-   
-
     <div class="form-group">
       <label for="supplierFDate">
         {{ dico?.dico_active_date || "dico_active_date" }}:</label
@@ -209,6 +228,15 @@
         formControlName="fdate"
         required
       />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['fdate'].errors &&
+          (formControl['fdate'].dirty || formControl['fdate'].touched)
+        "
+      >
+        <div *ngIf="formControl['fdate']?.errors?.['required']">Required</div>
+      </div>
     </div>
     <div class="form-group">
       <label for="supplierInactD"
@@ -333,7 +361,13 @@
       />
     </div>
     <div class="btn-group">
-      <button class="btn btn-primary" type="submit" style="padding: 10px">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        style="padding: 10px"
+        [disabled]="!carSupplierForm.valid"
+        [ngClass]="{ 'disabled-button': !carSupplierForm.valid }"
+      >
         {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>

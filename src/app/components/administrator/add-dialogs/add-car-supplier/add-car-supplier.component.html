@@ -42,17 +42,6 @@
         name="supplierFirstName"
         formControlName="firstname"
       />
-      <div
-        style="color: red"
-        *ngIf="
-          formControl['firstname'].errors &&
-          (formControl['firstname'].dirty || formControl['firstname'].touched)
-        "
-      >
-        <div *ngIf="formControl['firstname']?.errors?.['required']">
-          {{ dico?.dico_required || "dico_required" }}
-        </div>
-      </div>
     </div>
     <div class="form-group">
       <label for="supplierFatherName"
@@ -212,6 +201,17 @@
         formControlName="fdate"
         required
       />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['fdate'].errors &&
+          (formControl['fdate'].dirty || formControl['fdate'].touched)
+        "
+      >
+        <div *ngIf="formControl['fdate']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="supplierInactD"
@@ -260,6 +260,18 @@
         name="supplierInitialCount"
         formControlName="initialCount"
       />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['initialCount'].errors &&
+          (formControl['initialCount'].dirty ||
+            formControl['initialCount'].touched)
+        "
+      >
+        <div *ngIf="formControl['initialCount']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="supplierRegNum"
