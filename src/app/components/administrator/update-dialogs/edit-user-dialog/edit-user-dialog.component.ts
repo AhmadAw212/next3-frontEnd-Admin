@@ -8,7 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyBranchService } from 'src/app/services/company-branch.service';
-import { Editor } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -26,6 +26,15 @@ export class EditUserDialogComponent implements OnInit {
   editor!: Editor;
   isLoading?: boolean = false;
   dico: any;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    // ['link'],
+    // ['image'],
+  ];
   constructor(
     private dataService: DataServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -101,7 +110,9 @@ export class EditUserDialogComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]*$')],
       ],
       userEmailSignature: [
-        this.usersInfo.userEmailSignature,
+        this.usersInfo.userEmailSignature !== null
+          ? this.usersInfo.userEmailSignature
+          : '',
         Validators.required,
       ],
       paymentLimit: [
@@ -137,7 +148,6 @@ export class EditUserDialogComponent implements OnInit {
       },
     });
   }
-
   Cancle() {
     this.dialogRef.close();
   }

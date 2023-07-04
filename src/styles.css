@@ -225,7 +225,7 @@ tr:nth-child(odd) {
 
 .admin-container {
   background-color: #f5f5f5;
-  padding: 10px;
+  /* padding: 10px; */
   margin: 10px;
   /* width: 1100px; */
   border: 1px solid gray;
@@ -410,7 +410,7 @@ tr:nth-child(odd) {
   display: flex;
   justify-content:space-around;
   position: sticky;
-  background-color: #ffffffc9;
+  background-color:white;
   padding: 8px;
   top: 0;
   z-index: 1;

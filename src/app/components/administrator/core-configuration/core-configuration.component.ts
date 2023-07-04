@@ -144,8 +144,10 @@ export class CoreConfigurationComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401) {
-           
-             this.alertifyService.dialogAlert('Error');
+            // this.authService.refreshTokens();
+            // this.alertifyService.dialogAlert('Error');
+          } else {
+            this.alertifyService.dialogAlert('Error');
           }
           
         },
@@ -160,15 +162,17 @@ export class CoreConfigurationComponent implements OnInit {
         const config = [configId];
         this.dataService.deleteConfig(config).subscribe({
           next: (res) => {
-            this.alertifyService.success(res.title);
+            this.alertifyService.error(res.title);
             this.coreConfigSearch();
             // console.log(res);
           },
           error: (err) => {
             if (err.status === 401) {
-              //this.authService.refreshTokens();
-               this.alertifyService.dialogAlert('Error');
-            } 
+              // this.authService.refreshTokens();
+              // this.alertifyService.dialogAlert('Error');
+            } else {
+              this.alertifyService.dialogAlert('Error');
+            }
           },
         });
       }

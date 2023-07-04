@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ConfigData } from 'src/app/model/config-data';
@@ -17,15 +18,24 @@ export class AddConfigDialogComponent implements OnInit {
   configDescription?: string;
   configValue?: string;
   dico?: any;
+  configurationForm!: FormGroup;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private authService: AuthService,
     private dialogRef: MatDialogRef<AddConfigDialogComponent>,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private formBuilder: FormBuilder
   ) {}
+
   ngOnInit(): void {
     this.getDico();
+
+    this.configurationForm = this.formBuilder.group({
+      configKey: ['', Validators.required],
+      configValue: ['', Validators.required],
+      configDescription: ['', Validators.required],
+    });
   }
   getDico() {
     this.dicoService.getDico();
@@ -34,17 +44,21 @@ export class AddConfigDialogComponent implements OnInit {
     });
   }
   addConfiguration() {
-    const configData: ConfigData = {
-      configKey: this.configKey,
-      description: this.configDescription,
-      configValue: this.configValue,
-    };
+    if (this.configurationForm.valid) {
+      const configKey = this.configurationForm.get('configKey')?.value;
+      const configValue = this.configurationForm.get('configValue')?.value;
+      const configDescription =
+        this.configurationForm.get('configDescription')?.value;
 
-    this.dataService.addConfig(configData).subscribe({
+      // Process the form values as needed
+      // For example, you can assign them to component properties or make API calls
+    }
+
+    this.dataService.addConfig(this.configurationForm.value).subscribe({
       next: (data) => {
         this.alertifyService.success(data.title);
         this.dialogRef.close();
-        console.log(data);
+        // console.log(data);
       },
       error: (err) => {
         // this.authService.logout();

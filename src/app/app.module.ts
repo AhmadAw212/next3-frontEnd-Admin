@@ -104,6 +104,17 @@ import { SendEmailButtonComponent } from './components/send-email-button/send-em
 import { NgxEditorModule } from 'ngx-editor';
 import { UpdateDocumentComponent } from './components/administrator/update-dialogs/update-document/update-document.component';
 import { DatePipe } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+// import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -188,13 +199,20 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
     MatSidenavModule,
+    MatDatepickerModule,
+    NgxMatNativeDateModule,
+    MatInputModule,
+    MatNativeDateModule,
     MatToolbarModule,
     MatListModule,
     MatIconModule,
     MatSelectModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
     FormsModule,
     MatDialogModule,
     MatPaginatorModule,
@@ -214,6 +232,7 @@ import { DatePipe } from '@angular/common';
       useClass: AuthInterceptorInterceptor,
       multi: true,
     },
+
     DataServiceService,
   ],
   bootstrap: [AppComponent],

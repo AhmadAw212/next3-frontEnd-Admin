@@ -41,7 +41,6 @@ export class AddCarSupplierComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -51,12 +50,12 @@ export class AddCarSupplierComponent implements OnInit {
     this.carSupplierForm = this.formBuilder.group({
       id: ['', Validators.required],
       companyId: this.companyId,
-      interm: [''],
+      interm: ['', Validators.required],
       number: ['', Validators.pattern(/^\d+$/)],
       titre: [''],
       email: ['', Validators.email],
       prefixFam: [''],
-      firstname: ['', Validators.required],
+      firstname: [''],
       fathersName: [''],
       lastname: ['', Validators.required],
       home_building: [''],
@@ -76,9 +75,9 @@ export class AddCarSupplierComponent implements OnInit {
       bus_id: [''],
       grade_id: [''],
       show_in_list: [false],
-      fullName: [''],
+      fullName: ['', Validators.required],
       out_network: [false],
-      fdate: [''],
+      fdate: ['', Validators.required],
       inAcctD: [''],
       coreUserId: [''],
       initialCount: ['', Validators.pattern(/^\d+$/)],
@@ -97,6 +96,9 @@ export class AddCarSupplierComponent implements OnInit {
     });
   }
 
+  get formControl() {
+    return this.carSupplierForm.controls;
+  }
   getAddressLov() {
     this.dataService.getAddresses(this.addressName!).subscribe({
       next: (res) => {

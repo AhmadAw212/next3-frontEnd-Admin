@@ -1,44 +1,39 @@
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
-  HttpHandler,
   HttpRequest,
+  HttpHandler,
   HttpEvent,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  EMPTY,
-  Observable,
-  catchError,
-  filter,
-  from,
-  switchMap,
-  take,
-  throwError,
-} from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import jwt_decode from 'jwt-decode';
 import { AlertifyService } from '../services/alertify.service';
+import { EMPTY } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
-  private tokenRefreshedSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-  private tokenRefreshed$: Observable<boolean> =
-    this.tokenRefreshedSubject.asObservable();
-
+  private refreshingToken = false;
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private router: Router
   ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // Check if the request is for the token refresh endpoint, and skip adding the token if it is
+    if (request.url.includes('/refreshtoken')) {
+      return next.handle(request);
+    }
+
     const token = localStorage.getItem('token');
-    if (token && !this.shouldExcludeToken(request.url)) {
+    if (token) {
+      // Clone the request and add the Authorization header with the token
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
@@ -47,41 +42,46 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(
-      catchError((error) => {
-        if (error.status === 401) {
-          const expiredToken = error.headers.get('Expired-Token');
-          if (expiredToken) {
-            this.authService.logout(); // Logout user if the token is expired
-            this.router.navigate(['/login']); // Navigate user to the login page
-            this.alertifyService.dialogAlert('Session Expired');
-            return throwError(() => error); // Return an error to propagate it further
-          } else {
+      catchError((error: any) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          if (!this.refreshingToken) {
+            this.refreshingToken = true;
+
             return this.authService.refreshTokens().pipe(
-              switchMap((refreshedToken) => {
-                if (refreshedToken) {
-                  this.tokenRefreshedSubject.next(true);
-                  request = request.clone({
-                    setHeaders: {
-                      Authorization: `Bearer ${refreshedToken}`,
-                    },
-                  });
-                  return next.handle(request);
-                } else {
-                  this.alertifyService.dialogAlert('Session Expired');
-                  this.router.navigate(['/login']);
-                  throw new Error('Token refresh failed');
-                }
+              switchMap((response: any) => {
+                this.refreshingToken = false;
+                // Refresh token successful, update the token in local storage
+                localStorage.setItem('token', response.token);
+
+                // Clone the original request with the updated token and resend it
+                const newRequest = request.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${response.token}`,
+                  },
+                });
+
+                return next.handle(newRequest);
+              }),
+              catchError((refreshError: any) => {
+                this.refreshingToken = false;
+                // Refresh token failed or expired as well, logout the user and redirect to login
+                this.authService.logout();
+                this.router.navigate(['/login']);
+                this.alertifyService.dialogAlert(
+                  'Session expired. Please log in again.'
+                );
+                return throwError(() => refreshError);
               })
             );
+          } else {
+            // Token refresh is already in progress, return an empty observable to prevent infinite loop
+            return EMPTY;
           }
         } else {
-          throw error;
+          // Handle other errors
+          return throwError(() => error);
         }
       })
     );
-  }
-
-  shouldExcludeToken(url: string): boolean {
-    return url.includes('/api/refresh/refreshtoken');
   }
 }

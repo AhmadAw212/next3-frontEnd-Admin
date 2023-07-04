@@ -1,0 +1,13 @@
+.error{
+    color:red;
+    
+}
+
+.ng-invalid.ng-touched {
+    border-color: #dc3545;
+  }
+
+  .disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

@@ -2,19 +2,16 @@
   {{ dico?.dico_add_config || "dico_add_config" }}
 </h2>
 <div class="dialog">
-  <form (ngSubmit)="addConfiguration()">
+  <form [formGroup]="configurationForm" (ngSubmit)="addConfiguration()">
     <label>{{ dico?.dico_config_key || "dico_config_key" }}:</label>
-    <input type="text" id="id" [(ngModel)]="configKey" name="id" />
+    <input type="text" formControlName="configKey" />
 
     <label>{{ dico?.dico_config_value || "dico_config_value" }}:</label>
-    <input type="text" [(ngModel)]="configValue" name="configValue" />
+    <input type="text" formControlName="configValue" />
 
     <label>{{ dico?.dico_description || "dico_description" }}:</label>
-    <input
-      type="text"
-      [(ngModel)]="configDescription"
-      name="configDescription "
-    />
+    <input type="text" formControlName="configDescription" />
+
     <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
   </form>
 </div>
