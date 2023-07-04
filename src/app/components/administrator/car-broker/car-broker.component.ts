@@ -134,7 +134,7 @@ export class CarBrokerComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -151,7 +151,7 @@ export class CarBrokerComponent implements OnInit {
           // console.log(this.brokers);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.dialogAlert('Error');
         },
         complete: () => {
           this.isLoading = false;
@@ -170,7 +170,7 @@ export class CarBrokerComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -220,7 +220,7 @@ export class CarBrokerComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

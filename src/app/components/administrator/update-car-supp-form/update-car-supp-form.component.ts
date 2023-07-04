@@ -160,6 +160,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -170,6 +171,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         this.titleLov = res.data;
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -183,6 +185,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -196,7 +199,8 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.error(err.error.message);
+        this.alertifyService.dialogAlert('Error');
+        //this.alertifyService.error(err.error.message);
       },
     });
   }

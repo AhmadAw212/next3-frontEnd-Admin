@@ -126,6 +126,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
         // console.log(this.companies);
       },
       error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -196,7 +197,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+             // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -213,7 +214,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          //this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -234,7 +235,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
             },
             error: (err) => {
               if (err.status === 401 || err.status === 500) {
-                this.authService.logout();
+               // this.authService.logout();
                 this.alertifyService.dialogAlert('Error');
               }
             },

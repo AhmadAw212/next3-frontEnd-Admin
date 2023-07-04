@@ -149,6 +149,7 @@ export class CoreConfigurationComponent implements OnInit {
           } else {
             this.alertifyService.dialogAlert('Error');
           }
+          
         },
       });
     }

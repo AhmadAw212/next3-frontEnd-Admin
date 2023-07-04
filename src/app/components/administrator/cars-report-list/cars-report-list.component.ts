@@ -133,7 +133,7 @@ export class CarsReportListComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          //this.authService.logout();
           this.alertifyService.dialogAlert('Error');
           // this.alertifyService.error(err.error.message);
         }
@@ -234,7 +234,7 @@ export class CarsReportListComponent implements OnInit {
           error: (err) => {
             this.alertifyService.error(err.error.message);
             if (err.status === 401 || err.status === 500) {
-              this.authService.logout();
+              //this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -260,7 +260,7 @@ export class CarsReportListComponent implements OnInit {
         error: (err) => {
           this.alertifyService.error(err.error.message);
           if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
+           // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

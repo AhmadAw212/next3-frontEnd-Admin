@@ -64,7 +64,7 @@ export class LoginNavComponent implements OnInit {
         if (err.status === 401) {
           // this.authService.refreshTokens();
           // this.authService.logout();
-          // this.alertifyService.dialogAlert('Error');
+           this.alertifyService.dialogAlert('Error');
         }
       },
     });
