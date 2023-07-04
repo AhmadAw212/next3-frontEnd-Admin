@@ -13,149 +13,140 @@
   </h3>
 </div>
 <div class="admin-container container-fluid" style="height: 200px">
-  <div class="admin-button">
-    <button
-      type="button"
-      (click)="openAddCarInfoDialog()"
-      *ngIf="hasPerm('admAddData')"
-    >
-      {{ dico?.dico_add || "dico_add" }}
-    </button>
-    <button
-      type="button"
-      style="margin-left: 5px"
-      (click)="updateCarInfo()"
-      *ngIf="hasPerm('admUpdateData')"
-    >
-      {{ dico?.dico_save || "dico_save" }}
-    </button>
+  <div class="user-inputs">
+    <div class="admin-button">
+      <button
+        type="button"
+        (click)="openAddCarInfoDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
+        {{ dico?.dico_add || "dico_add" }}
+      </button>
+      <button
+        type="button"
+        style="margin-left: 5px"
+        (click)="updateCarInfo()"
+        *ngIf="hasPerm('admUpdateData')"
+      >
+        {{ dico?.dico_save || "dico_save" }}
+      </button>
+    </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_id || "dico_id" }}</th>
-            <th>{{ dico?.dico_from_year || "dico_from_year" }}</th>
-            <th>{{ dico?.dico_to_year || "dico_to_year" }}</th>
-            <th>{{ dico?.dico_body_type_old || "dico_body_type_old" }}</th>
-            <th>{{ dico?.dico_body_type || "dico_body_type" }}</th>
-            <th>{{ dico?.dico_doors || "dico_doors" }}</th>
-            <th>{{ dico?.dico_size || "dico_size" }}</th>
-            <th>{{ dico?.dico_body_type_code || "dico_body_type_code" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <!-- <th>{{ dico?.dico_denting || "dico_denting" }}</th> -->
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="carInfo?.length! > 0; else noData"
-          (click)="highlightRow($event)"
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_from_year || "dico_from_year" }}</th>
+        <th>{{ dico?.dico_to_year || "dico_to_year" }}</th>
+        <th>{{ dico?.dico_body_type_old || "dico_body_type_old" }}</th>
+        <th>{{ dico?.dico_body_type || "dico_body_type" }}</th>
+        <th>{{ dico?.dico_doors || "dico_doors" }}</th>
+        <th>{{ dico?.dico_size || "dico_size" }}</th>
+        <th>{{ dico?.dico_body_type_code || "dico_body_type_code" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <!-- <th>{{ dico?.dico_denting || "dico_denting" }}</th> -->
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="carInfo?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let carInfo of carInfo; trackBy: trackInfoById">
+        <td>{{ carInfo.id }}</td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, carInfo, 'fromYear')"
         >
-          <tr *ngFor="let carInfo of carInfo; trackBy: trackInfoById">
-            <td>{{ carInfo.id }}</td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, carInfo, 'fromYear')"
+          {{ carInfo.fromYear }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, carInfo, 'toYear')">
+          {{ carInfo.toYear }}
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="carInfo.bodyType_lov_new_code"
+            id="bodyTypeNew"
+            name="bodyTypeNew"
+            (change)="
+              onDropdownChange($event, carInfo, 'bodyType_lov_new_code')
+            "
+          >
+            <option
+              *ngFor="let bodyType of bodyTypeNew"
+              [value]="bodyType.code"
             >
-              {{ carInfo.fromYear }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, carInfo, 'toYear')"
-            >
-              {{ carInfo.toYear }}
-            </td>
-            <td>
-              <select
-                class="select-class"
-                [(ngModel)]="carInfo.bodyType_lov_new_code"
-                id="bodyTypeNew"
-                name="bodyTypeNew"
-                (change)="
-                  onDropdownChange($event, carInfo, 'bodyType_lov_new_code')
-                "
-              >
-                <option
-                  *ngFor="let bodyType of bodyTypeNew"
-                  [value]="bodyType.code"
-                >
-                  {{ bodyType.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                class="select-class"
-                [(ngModel)]="carInfo.bodyType_lov_old_code"
-                id="bodyType"
-                name="bodyType"
-                (change)="
-                  onDropdownChange($event, carInfo, 'bodyType_lov_old_code')
-                "
-              >
-                <option
-                  *ngFor="let bodyType of bodyType"
-                  [value]="bodyType.code"
-                >
-                  {{ bodyType.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                class="select-class"
-                [(ngModel)]="carInfo.doors_lov_code"
-                id="door"
-                name="door"
-                (change)="onDropdownChange($event, carInfo, 'doors_lov_code')"
-              >
-                <option *ngFor="let door of doors" [value]="door.code">
-                  {{ door.description }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                class="select-class"
-                [(ngModel)]="carInfo.vehicle_size_lov_code"
-                id="size"
-                name="size"
-                (change)="
-                  onDropdownChange($event, carInfo, 'vehicle_size_lov_code')
-                "
-              >
-                <option *ngFor="let size of vehicleSize" [value]="size.code">
-                  {{ size.description }}
-                </option>
-              </select>
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, carInfo, 'bodyTypeCode')"
-            >
-              {{ carInfo.bodyTypeCode }}
-            </td>
-            <td>
-              {{
-                carInfo.created_date | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ carInfo.createdBy }}</td>
-            <td>
-              {{
-                carInfo.updated_date | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ carInfo.updatedBy }}</td>
-            <!-- <td>
+              {{ bodyType.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="carInfo.bodyType_lov_old_code"
+            id="bodyType"
+            name="bodyType"
+            (change)="
+              onDropdownChange($event, carInfo, 'bodyType_lov_old_code')
+            "
+          >
+            <option *ngFor="let bodyType of bodyType" [value]="bodyType.code">
+              {{ bodyType.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="carInfo.doors_lov_code"
+            id="door"
+            name="door"
+            (change)="onDropdownChange($event, carInfo, 'doors_lov_code')"
+          >
+            <option *ngFor="let door of doors" [value]="door.code">
+              {{ door.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            class="select-class"
+            [(ngModel)]="carInfo.vehicle_size_lov_code"
+            id="size"
+            name="size"
+            (change)="
+              onDropdownChange($event, carInfo, 'vehicle_size_lov_code')
+            "
+          >
+            <option *ngFor="let size of vehicleSize" [value]="size.code">
+              {{ size.description }}
+            </option>
+          </select>
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, carInfo, 'bodyTypeCode')"
+        >
+          {{ carInfo.bodyTypeCode }}
+        </td>
+        <td>
+          {{ carInfo.created_date | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ carInfo.createdBy }}</td>
+        <td>
+          {{ carInfo.updated_date | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ carInfo.updatedBy }}</td>
+        <!-- <td>
                 <input
                   type="checkbox"
                   name="denting"
@@ -164,23 +155,21 @@
                   (change)="onCheckboxChange(carInfo)"
                 />
               </td> -->
-            <td>
-              <mat-icon
-                *ngIf="hasPerm('admDeleteData')"
-                (click)="deleteCarInfo(carInfo.id!)"
-                >delete</mat-icon
-              >
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="5">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+        <td>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteCarInfo(carInfo.id!)"
+            >delete</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>

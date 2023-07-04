@@ -116,6 +116,15 @@ th {
 table.table thead th {
   background-color: #025696;
 }
+.required {
+  color: red;
+  margin-left: 3px;
+  font-size: 15px;
+}
+.disabled-button {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .h3-header{
     /* margin: 0; */
     margin-top: 5px;
@@ -133,9 +142,9 @@ table.table thead th {
     padding: 10px;
     margin-bottom: 10px;
 }
-.admin-container {
+/* .admin-container {
   position: relative;
-}
+} */
 .dialog-content {
   padding: 10px;
 }
@@ -242,6 +251,9 @@ tr:nth-child(odd) {
 } */
 .admin-button {
   text-align: right;
+  
+  /* margin: 10px; */
+  /* padding: 10px; */
   /* margin-top: 2px; */
   /* margin-right: 8px; */
 }

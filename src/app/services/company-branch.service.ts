@@ -29,7 +29,8 @@ export class CompanyBranchService {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
+          console.log(err);
         }
       },
     });
@@ -44,7 +45,8 @@ export class CompanyBranchService {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-          this.authService.logout();
+          // this.authService.logout();
+          console.log(err);
         }
       },
     });

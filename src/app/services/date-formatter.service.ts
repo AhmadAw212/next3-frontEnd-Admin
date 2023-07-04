@@ -26,11 +26,7 @@ export class DateFormatterService {
         this.dateFormatterSubject.next(res.data);
       },
       error: (err) => {
-        if (err.status === 401) {
-          // this.authService.refreshTokens();
-        } else {
-          console.log(err);
-        }
+        console.log(err);
       },
     });
   }

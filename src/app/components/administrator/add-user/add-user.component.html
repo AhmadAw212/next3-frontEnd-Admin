@@ -2,7 +2,7 @@
 <div *ngIf="dico">
   <h3 class="h3-header">{{ dico?.dico_add_user || "dico_add_user" }}</h3>
 
-  <div class="admin-container container-fluid">
+  <div class="admin-container container-fluid" style="padding: 8px">
     <form [formGroup]="userForm" (ngSubmit)="addUser()">
       <div class="form-row">
         <div class="form-group">

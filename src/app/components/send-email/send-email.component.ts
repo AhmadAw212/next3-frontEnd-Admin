@@ -28,15 +28,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   sanitizedSignature?: SafeHtml;
   editor!: Editor;
   selectedRecipients: string[] = [];
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    // ['link'],
-    // ['image'],
-  ];
+
   private searchTerms = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
   constructor(

@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
   dateFormats?: any;
-
+  userName?: string = '';
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -41,7 +41,9 @@ export class EditUserComponent implements OnInit {
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    this.userName = this.selectedUser?.userName!;
+  }
 
   ngOnInit(): void {
     this.subscribedUsers();
@@ -50,13 +52,14 @@ export class EditUserComponent implements OnInit {
     this.userRolesService.getUserRoles();
   }
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedField = event.target as HTMLElement;
+    const clickedRow = clickedField.closest('tr') as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
   exportToExcel() {
@@ -188,8 +191,7 @@ export class EditUserComponent implements OnInit {
     });
   }
 
-  resetPassword() {
-    const userName = this.selectedUser?.userName!;
+  resetPassword(userName: string) {
     this.alertify.confirmDialog(
       `Are You sure you want to reset user ${userName} password`,
       () => {

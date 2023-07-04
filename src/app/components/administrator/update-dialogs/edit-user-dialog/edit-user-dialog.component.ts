@@ -27,13 +27,12 @@ export class EditUserDialogComponent implements OnInit {
   isLoading?: boolean = false;
   dico: any;
   toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
+    ['bold', 'italic', 'align_center'],
+    ['underline', 'strike', 'align_justify'],
+    ['code', 'blockquote', 'horizontal_rule'],
     ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    // ['link'],
-    // ['image'],
+    ['background_color', 'text_color'],
   ];
   constructor(
     private dataService: DataServiceService,

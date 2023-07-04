@@ -60,6 +60,7 @@ export class CarProductsComponent implements OnInit {
     return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
+    const dico_products = this.dico.dico_product;
     const data = this.carProducts?.map((data) => {
       return {
         ID: data.id,
@@ -88,7 +89,7 @@ export class CarProductsComponent implements OnInit {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
+    XLSX.utils.book_append_sheet(workbook, worksheet, dico_products);
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -100,7 +101,9 @@ export class CarProductsComponent implements OnInit {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Products.xlsx');
+
+    const fileName = dico_products + '.xlsx';
+    saveAs(excelBlob, fileName);
   }
   getDico() {
     this.isLoading = true;

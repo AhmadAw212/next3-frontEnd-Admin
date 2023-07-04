@@ -34,7 +34,7 @@ export class AddConfigDialogComponent implements OnInit {
     this.configurationForm = this.formBuilder.group({
       configKey: ['', Validators.required],
       configValue: ['', Validators.required],
-      configDescription: ['', Validators.required],
+      configDescription: [''],
     });
   }
   getDico() {
@@ -42,6 +42,9 @@ export class AddConfigDialogComponent implements OnInit {
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
+  }
+  get formControl() {
+    return this.configurationForm.controls;
   }
   addConfiguration() {
     if (this.configurationForm.valid) {

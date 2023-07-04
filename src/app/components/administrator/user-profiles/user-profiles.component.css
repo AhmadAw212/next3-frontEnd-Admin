@@ -1,9 +1,10 @@
 .user-permissions-list {
   border: 1px solid #ccc;
   padding: 15px;
-  margin-top: 15px;
+  margin: 15px;
+  /* margin-top: 15px; */
   width: 300px;
-  height: auto;
+  /* height: auto; */
   float: left;
   background-color: rgb(230, 235, 243);
 }

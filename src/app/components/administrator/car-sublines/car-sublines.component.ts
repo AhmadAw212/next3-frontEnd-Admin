@@ -51,6 +51,7 @@ export class CarSublinesComponent implements OnInit {
     return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
+    const dico_subline = this.dico.dico_subline_desc;
     const data = this.carSubline?.map((data) => {
       return {
         ID: data.id,
@@ -75,7 +76,7 @@ export class CarSublinesComponent implements OnInit {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Subline');
+    XLSX.utils.book_append_sheet(workbook, worksheet, dico_subline);
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -87,7 +88,9 @@ export class CarSublinesComponent implements OnInit {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Subline.xlsx');
+
+    const fileName = dico_subline + '.xlsx';
+    saveAs(excelBlob, fileName);
   }
   getDico() {
     this.isLoading = true;

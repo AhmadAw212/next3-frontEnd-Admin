@@ -14,16 +14,17 @@
 </div>
 
 <div class="admin-container container-fluid" style="height: 200px">
-  <div class="admin-button">
-    <button
-      type="button"
-      (click)="openAddCarShapeDialog()"
-      *ngIf="hasPerm('admAddData')"
-    >
-      {{ dico?.dico_add || "dico_add" }}
-    </button>
+  <div class="user-inputs">
+    <div class="admin-button">
+      <button
+        type="button"
+        (click)="openAddCarShapeDialog()"
+        *ngIf="hasPerm('admAddData')"
+      >
+        {{ dico?.dico_add || "dico_add" }}
+      </button>
+    </div>
   </div>
-
   <table>
     <thead style="top: 25px">
       <tr>

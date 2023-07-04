@@ -34,8 +34,8 @@ export class UsersRolesService {
           // console.log('Role names:', this.roleNames);
         },
         error: (err) => {
-          this.alertifyService.error(err.error.message);
-          // console.log(err);
+          // this.alertifyService.error(err.error.message);
+          console.log(err);
         },
       });
     }
