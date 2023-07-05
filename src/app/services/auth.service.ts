@@ -51,8 +51,9 @@ export class AuthService {
             this.storeTokens(token, refreshToken);
             this.openChangePasswordDialog();
           }
-        } else if (result.statusCode === 423)
-          this.alertifyService.dialogAlert(result.message);
+        } else if (result.statusCode === 423) {
+          this.alertifyService.error(result.message);
+        }
       },
       error: (err) => {
         let errorMessage = 'An error occurred';

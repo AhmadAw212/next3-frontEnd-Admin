@@ -1,10 +1,13 @@
 <h2 style="margin: 10px; font-size: large">
-  {{ dico?.dico_add_car_cover || "dico_add_car_cover" }}
+  {{ dico?.dico_add_supplier || "dico_add_supplier" }}
 </h2>
 <div class="dialog">
   <form [formGroup]="carSupplierForm" (ngSubmit)="addCarSupplier()">
     <div class="form-group">
-      <label>{{ dico?.dico_Supplier_Type || "dico_Supplier_Type" }}:</label>
+      <label
+        >{{ dico?.dico_Supplier_Type || "dico_Supplier_Type" }}
+        <span class="required"> * </span>:</label
+      >
       <select class="input-dropdown" formControlName="interm">
         <option *ngFor="let type of supplierType" [value]="type.code">
           {{ type.description }}
@@ -69,7 +72,8 @@
     </div>
     <div class="form-group">
       <label for="supplierFamilyName"
-        >{{ dico?.dico_sup_family_name || "dico_sup_family_name" }}:</label
+        >{{ dico?.dico_sup_family_name || "dico_sup_family_name" }}
+        <span class="required"> * </span>:</label
       >
       <input
         type="text"
@@ -192,7 +196,8 @@
 
     <div class="form-group">
       <label for="supplierFDate"
-        >{{ dico?.dico_active_date || "dico_active_date" }}:</label
+        >{{ dico?.dico_active_date || "dico_active_date" }}
+        <span class="required"> * </span>:</label
       >
       <input
         type="datetime-local"

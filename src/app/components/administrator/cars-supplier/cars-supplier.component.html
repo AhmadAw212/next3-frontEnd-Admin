@@ -14,8 +14,7 @@
 </div>
 
 <div class="admin-container container-fluid" style="height: 200px">
-  <app-spinner *ngIf="isLoading" style="margin-top: 30px"></app-spinner>
-
+  <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
     <form (ngSubmit)="searchCarSupplier()">
       <label for="name"
