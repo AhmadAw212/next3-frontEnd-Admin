@@ -30,7 +30,7 @@
     </select>
   </div>
 
-  <div class="admin-container container-fluid">
+  <div class="admin-container container-fluid" style="height: 250px">
     <div class="user-inputs">
       <form (ngSubmit)="searchCarProducts()">
         <label>{{ dico?.dico_code || " dico_code" }}:</label>
@@ -92,7 +92,10 @@
         *ngIf="carProducts?.length! > 0; else noData"
         (click)="highlightRow($event)"
       >
-        <tr *ngFor="let product of carProducts; trackBy: trackProductById">
+        <tr
+          *ngFor="let product of carProducts; trackBy: trackProductById"
+          (click)="showProductReserve(product)"
+        >
           <td>{{ product.id }}</td>
           <td contenteditable="true" (blur)="onTdBlur($event, product, 'code')">
             {{ product.code }}
@@ -146,11 +149,6 @@
               >delete</mat-icon
             >
           </td>
-          <!-- <td>
-                  <mat-icon (click)="updateCarProductDialog(product)"
-                    >edit</mat-icon
-                  >
-                </td> -->
         </tr>
       </tbody>
       <ng-template #noData>
@@ -167,3 +165,9 @@
 <ng-template #spinner>
   <app-spinner></app-spinner>
 </ng-template>
+
+<div *ngIf="showProductRes">
+  <app-car-products-reserve
+    [selectedProduct]="selectedProduct"
+  ></app-car-products-reserve>
+</div>

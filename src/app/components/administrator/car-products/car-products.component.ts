@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AddCarProductComponent } from '../add-dialogs/add-car-product/add-car-product.component';
-
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -35,6 +34,8 @@ export class CarProductsComponent implements OnInit {
   dico?: any;
   isLoading?: boolean = false;
   dateFormats?: any;
+  showProductRes?: boolean = false;
+  selectedProduct?: CarProducts;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -52,6 +53,10 @@ export class CarProductsComponent implements OnInit {
     this.getProductsTypes();
     this.getDico();
     this.userRolesService.getUserRoles();
+  }
+  showProductReserve(selectedProduct: CarProducts) {
+    this.selectedProduct = selectedProduct;
+    this.showProductRes = true;
   }
   trackProductById(index: number, product: CarProducts) {
     return product.id;
@@ -113,13 +118,14 @@ export class CarProductsComponent implements OnInit {
     });
   }
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedField = event.target as HTMLElement;
+    const clickedRow = clickedField.closest('tr') as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
 
@@ -169,7 +175,7 @@ export class CarProductsComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -190,7 +196,7 @@ export class CarProductsComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-             // this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -270,7 +276,7 @@ export class CarProductsComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

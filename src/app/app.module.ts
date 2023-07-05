@@ -114,6 +114,8 @@ import {
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CarProductsReserveComponent } from './components/administrator/car-products-reserve/car-products-reserve.component';
+import { AddProductReserveComponent } from './components/administrator/car-products-reserve/add-product-reserve/add-product-reserve.component';
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
@@ -193,6 +195,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     SendEmailComponent,
     SendEmailButtonComponent,
     UpdateDocumentComponent,
+    CarProductsReserveComponent,
+    AddProductReserveComponent,
   ],
   imports: [
     BrowserModule,

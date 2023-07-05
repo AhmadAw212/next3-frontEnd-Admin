@@ -1,0 +1,155 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add || "dico_add" }}
+  {{ dico?.dico_product_reserve || "dico_product_reserve" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="carProductForm" (ngSubmit)="addCarProductReserve()">
+    <div class="form-group">
+      <label for="date">{{ dico?.dico_date || "dico_date" }}:</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        formControlName="productsResAsOfDate"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productsResAsOfDate'].errors &&
+          (formControl['productsResAsOfDate'].dirty ||
+            formControl['productsResAsOfDate'].touched)
+        "
+      >
+        <div *ngIf="formControl['productsResAsOfDate']?.errors?.['required']">
+          Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productsResInsured"
+        >{{ dico?.dico_insured || "dico_insured" }}:</label
+      >
+      <input
+        type="text"
+        id="productsResInsured"
+        name="productsResInsured"
+        formControlName="productsResInsured"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productsResInsured'].errors &&
+          (formControl['productsResInsured'].dirty ||
+            formControl['productsResInsured'].touched)
+        "
+      >
+        <div *ngIf="formControl['productsResInsured']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['productsResInsured']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productsResBodily"
+        >{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label
+      >
+      <input
+        type="text"
+        id="productsResBodily"
+        name="productsResBodily"
+        formControlName="productsResBodily"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productsResBodily'].errors &&
+          (formControl['productsResBodily'].dirty ||
+            formControl['productsResBodily'].touched)
+        "
+      >
+        <div *ngIf="formControl['productsResBodily']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['productsResBodily']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lob">{{ dico?.dico_material || "dico_material" }}:</label>
+      <input
+        type="text"
+        id="productsResMaterial"
+        name="productsResMaterial"
+        formControlName="productsResMaterial"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productsResMaterial'].errors &&
+          (formControl['productsResMaterial'].dirty ||
+            formControl['productsResMaterial'].touched)
+        "
+      >
+        <div *ngIf="formControl['productsResMaterial']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['productsResMaterial']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>{{ dico?.dico_tp || "dico_tp" }}:</label>
+      <input
+        type="text"
+        formControlName="productsResTp"
+        id="productsResTp"
+        name="productsResTp"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productsResTp'].errors &&
+          (formControl['productsResTp'].dirty ||
+            formControl['productsResTp'].touched)
+        "
+      >
+        <div *ngIf="formControl['productsResTp']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['productsResTp']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label>{{ dico?.dico_active || "dico_active" }}:</label>
+      <input
+        type="checkbox"
+        formControlName="productsResActive"
+        id="productsResActive"
+        name="productsResActive"
+        style="margin-left: 30px"
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!carProductForm.valid"
+      [ngClass]="{ 'disabled-button': !carProductForm.valid }"
+    >
+      {{ dico?.dico_save || "dico_save" }}
+    </button>
+  </form>
+</div>

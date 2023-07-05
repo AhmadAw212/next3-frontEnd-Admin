@@ -36,6 +36,7 @@ import { CarApprovalType } from '../model/car-approval-type';
 import { NearRegionTerritory } from '../model/near-region-territory';
 import { Email } from '../model/email';
 import { environment } from '../../environments/environment.development';
+import { ProductsReserve } from '../model/products-reserve';
 
 interface User {
   username: string;
@@ -1022,5 +1023,35 @@ export class DataServiceService {
 
   logout(): Observable<any> {
     return this.http.post<any>(`${this.userUrl}/refresh/signout`, {});
+  }
+
+  getCarProductReserve(productId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/car-product-reserve/getReserve?productId=${productId}`
+    );
+  }
+
+  addCarProductReserve(
+    productReserve: ProductsReserve
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-product-reserve/addProductReserve`,
+      productReserve
+    );
+  }
+
+  deleteProductReserve(productReserveId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/car-product-reserve/deleteProductReserve?productReserveId=${productReserveId}`
+    );
+  }
+
+  updateProductReserve(
+    productReserve: ProductsReserve[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/car-product-reserve/editProductReserve`,
+      productReserve
+    );
   }
 }

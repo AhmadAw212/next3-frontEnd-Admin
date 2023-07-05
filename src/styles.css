@@ -299,6 +299,15 @@ tr:nth-child(odd) {
   box-sizing: border-box;
   margin-bottom: 10px;
 }
+.dialog input[type="datetime-local"]{
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
 .dialog button:hover {
   background-color: #4da9f0;
 }
