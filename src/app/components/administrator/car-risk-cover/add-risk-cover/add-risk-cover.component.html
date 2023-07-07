@@ -1,0 +1,73 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_car_cover_risk || "dico_add_car_cover_risk" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="carCoverRiskForm" (ngSubmit)="addCoverRisk()">
+    <div class="form-group">
+      <label for="cardType_code">
+        {{ dico?.dico_card_type || "dico_card_type" }}
+        <span class="required"> * </span>:</label
+      >
+
+      <select
+        id="cardType_code"
+        name="cardType_code"
+        formControlName="cardType_code"
+      >
+        <option *ngFor="let type of cardTypes" [value]="type.code">
+          {{ type.description }}
+        </option>
+      </select>
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['cardType_code'].errors &&
+          (formControl['cardType_code'].dirty ||
+            formControl['cardType_code'].touched)
+        "
+      >
+        <div *ngIf="formControl['cardType_code']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="risk_cover"
+        >{{ dico?.risk_cover || "risk_cover" }}
+        <span class="required"> * </span> :</label
+      >
+      <select
+        id="risk_cover"
+        name="risk_cover"
+        formControlName="financialTypeLov_code"
+      >
+        <option *ngFor="let type of coverRisk" [value]="type.code">
+          {{ type.description }}
+        </option>
+      </select>
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['financialTypeLov_code'].errors &&
+          (formControl['financialTypeLov_code'].dirty ||
+            formControl['financialTypeLov_code'].touched)
+        "
+      >
+        <div *ngIf="formControl['financialTypeLov_code']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!carCoverRiskForm.valid"
+      [ngClass]="{ 'disabled-button': !carCoverRiskForm.valid }"
+    >
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+    </button>
+  </form>
+</div>

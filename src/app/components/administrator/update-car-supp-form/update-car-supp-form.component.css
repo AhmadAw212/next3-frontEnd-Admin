@@ -20,7 +20,7 @@
   
   input[type="text"],
   select,
-  input[type="date"] {
+  input[type="datetime-local"] {
     /* width: 50%; */
     padding: 5px;
     border: 1px solid #ccc;

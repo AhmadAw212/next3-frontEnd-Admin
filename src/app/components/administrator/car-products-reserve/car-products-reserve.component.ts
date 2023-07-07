@@ -27,7 +27,7 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
   selectedRow!: HTMLElement;
   dateFormats?: any;
   isLoading?: boolean = false;
-  dico?: any;
+  @Input() dico?: any;
   @Input() selectedProduct?: CarProducts;
   carProdReserve?: ProductsReserve[];
   updatedCarProductReserve: ProductsReserve[] = [];
@@ -49,8 +49,8 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.dateFormatService.dateFormatter();
     this.dateFormatterService();
-    this.searchCarProductsReserve();
-    this.getDico();
+    // this.searchCarProductsReserve();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
   getDico() {

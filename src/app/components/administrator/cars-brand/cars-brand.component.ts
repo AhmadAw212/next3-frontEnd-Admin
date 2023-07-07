@@ -31,6 +31,7 @@ export class CarsBrandComponent implements OnInit {
   isLoading: boolean = false;
   dico?: any;
   dateFormats?: any;
+  showBrandMatchingTable?: boolean = true;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -137,7 +138,7 @@ export class CarsBrandComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-         // this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -206,6 +207,7 @@ export class CarsBrandComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
       this.carsBrandSearch();
+      this.showTrademark = true;
     });
   }
 }

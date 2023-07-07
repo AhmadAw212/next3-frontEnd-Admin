@@ -1,0 +1,123 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_expert_default_fees || "dico_add_expert_default_fees" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="expertDefFeesForm" (ngSubmit)="addExpertDefaultFees()">
+    <div class="form-group">
+      <label for="fromHour">
+        {{ dico?.dico_from_hour || "dico_from_hour" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="fromHour"
+        name="fromHour"
+        formControlName="fromHour"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['fromHour'].errors &&
+          (formControl['fromHour'].dirty || formControl['fromHour'].touched)
+        "
+      >
+        <div *ngIf="formControl['fromHour']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['fromHour']?.errors?.['pattern']">
+          Please enter a valid hour (0-23) for the 'From Hour' field.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fromHour">
+        {{ dico?.dico_to_hour || "dico_to_hour" }}
+        <span class="required"> * </span>:</label
+      >
+      <input type="text" id="toHour" name="toHour" formControlName="toHour" />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['toHour'].errors &&
+          (formControl['toHour'].dirty || formControl['toHour'].touched)
+        "
+      >
+        <div *ngIf="formControl['toHour']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['toHour']?.errors?.['pattern']">
+          Please enter a valid hour (0-23) for the 'To Hour' field.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="currency"
+        >{{ dico?.dico_currency || "dico_currency" }}
+        <span class="required"> * </span> :</label
+      >
+      <select id="currency" name="currency" formControlName="currency">
+        <option *ngFor="let type of currency" [value]="type.code">
+          {{ type.description }}
+        </option>
+      </select>
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['currency'].errors &&
+          (formControl['currency'].dirty || formControl['currency'].touched)
+        "
+      >
+        <div *ngIf="formControl['currency']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="defaultAccessFessAmount">
+        {{
+          dico?.dico_default_access_fees_amount ||
+            "dico_default_access_fees_amount"
+        }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="defaultAccessFessAmount"
+        name="defaultAccessFessAmount"
+        formControlName="defaultAccessFessAmount"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['defaultAccessFessAmount'].errors &&
+          (formControl['defaultAccessFessAmount'].dirty ||
+            formControl['defaultAccessFessAmount'].touched)
+        "
+      >
+        <div
+          *ngIf="formControl['defaultAccessFessAmount']?.errors?.['required']"
+        >
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['fromHour']?.errors?.['pattern']">
+          Number is required
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!expertDefFeesForm.valid"
+      [ngClass]="{ 'disabled-button': !expertDefFeesForm.valid }"
+    >
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+    </button>
+  </form>
+</div>

@@ -198,6 +198,7 @@ export class CarTrademarkComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       this.carTrademarkSearch();
+      this.showCarShape = true;
     });
   }
 }

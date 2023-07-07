@@ -37,6 +37,8 @@ import { NearRegionTerritory } from '../model/near-region-territory';
 import { Email } from '../model/email';
 import { environment } from '../../environments/environment.development';
 import { ProductsReserve } from '../model/products-reserve';
+import { CoverRisk } from '../model/cover-risk';
+import { ExpertDefaultFees } from '../model/expert-default-fees';
 
 interface User {
   username: string;
@@ -1052,6 +1054,83 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/car-product-reserve/editProductReserve`,
       productReserve
+    );
+  }
+
+  searchCarModels(
+    insCode: string,
+    modelCodeSearch: string,
+    modelNameSearch: string,
+    showList: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/carDtModels/search?insCode=${insCode}&modelCodeSearch=${modelCodeSearch}&modelNameSearch=${modelNameSearch}&showList=${showList}`
+    );
+  }
+
+  searchRiskCover(insurancecId: string, coverType: string) {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/risk-cover/${insurancecId}?coverType=${coverType}`
+    );
+  }
+
+  getCardTypes(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/getCardTypes`);
+  }
+
+  getFinancialType(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getFinancialTypes`
+    );
+  }
+
+  addCoverRisk(coverRisk: CoverRisk): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/risk-cover/new`,
+      coverRisk
+    );
+  }
+
+  deleteCoverRisk(riskId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/risk-cover/delete?id=${riskId}`
+    );
+  }
+
+  updateCoverRisk(CoverRisk: CoverRisk[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/risk-cover/update`,
+      CoverRisk
+    );
+  }
+
+  getCarsExpertDefaultFees(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/expert-fees/${insuranceId}`
+    );
+  }
+
+  addExpertDefaultFees(ExpertDefaultFees: ExpertDefaultFees) {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/expert-fees/new`,
+      ExpertDefaultFees
+    );
+  }
+
+  getCurrencies(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/currencies`);
+  }
+
+  deleteExpertFees(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/expert-fees/delete?id=${id}`
+    );
+  }
+
+  updateExpertFees(expertFees: ExpertDefaultFees[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/expert-fees/update`,
+      expertFees
     );
   }
 }

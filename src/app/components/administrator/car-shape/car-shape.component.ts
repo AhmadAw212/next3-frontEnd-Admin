@@ -186,6 +186,7 @@ export class CarShapeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       this.searchCarShape();
+      this.showCarInfo = true;
     });
   }
 }

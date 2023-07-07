@@ -23,6 +23,7 @@ import { CarBrokerComponent } from './components/administrator/car-broker/car-br
 import { TownTerritoryComponent } from './components/administrator/town-territory/town-territory.component';
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
+import { CarsExpertDefaultFeesComponent } from './components/administrator/cars-expert-default-fees/cars-expert-default-fees.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -125,6 +126,11 @@ const routes: Routes = [
       {
         path: 'carTerritoryTown',
         component: TownTerritoryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'carsExpertDefaultFees',
+        component: CarsExpertDefaultFeesComponent,
         canActivate: [AuthGuard],
       },
     ],

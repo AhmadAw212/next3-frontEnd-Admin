@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarCover } from 'src/app/model/car-cover';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
@@ -35,6 +35,8 @@ export class CarsCoverComponent implements OnInit {
   dico?: any;
   isLoading: boolean = false;
   dateFormats?: any;
+  selectedCover?: CarCover;
+  showRiskCover?: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -49,13 +51,17 @@ export class CarsCoverComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.getCoverTypes();
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
     this.userRolesService.getUserRoles();
   }
   trackCoverById(index: number, brand: CarCover) {
     return brand.id;
+  }
+
+  showCoverRisk(selectCover: CarCover) {
+    this.selectedCover = selectCover;
+    this.showRiskCover = true;
   }
 
   hasPerm(role: string): boolean {
@@ -119,6 +125,7 @@ export class CarsCoverComponent implements OnInit {
     saveAs(excelBlob, 'Covers.xlsx');
   }
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });
@@ -261,7 +268,7 @@ export class CarsCoverComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

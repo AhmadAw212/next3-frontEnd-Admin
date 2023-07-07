@@ -47,7 +47,6 @@ export class CarProductsComponent implements OnInit {
     private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getProductsTypes();
@@ -130,6 +129,7 @@ export class CarProductsComponent implements OnInit {
   }
 
   dateFormatterService() {
+    this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });

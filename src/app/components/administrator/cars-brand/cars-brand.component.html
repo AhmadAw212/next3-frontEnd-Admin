@@ -12,7 +12,7 @@
     </button>
   </h3>
 </div>
-<div class="admin-container container-fluid" style="height: 150px">
+<div class="admin-container container-fluid" style="height: 200px">
   <!-- <app-spinner *ngIf="isLoading" style="margin-top: 50px"></app-spinner> -->
   <div class="user-inputs">
     <form (ngSubmit)="carsBrandSearch()">
@@ -130,4 +130,8 @@
     [carBrand]="carBrandData"
     [carTrademark]="carTrademark"
   ></app-car-trademark>
+</div>
+
+<div *ngIf="showBrandMatchingTable">
+  <app-car-brand-matching></app-car-brand-matching>
 </div>

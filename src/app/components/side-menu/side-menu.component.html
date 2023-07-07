@@ -92,7 +92,8 @@
             hasPerm('admCarsExpertConfig') ||
             hasPerm('admCarsBranch') ||
             hasPerm('admCarsBroker') ||
-            hasPerm('admCarsTerritoryTown')
+            hasPerm('admCarsTerritoryTown') ||
+            hasPerm('admCarsExpertDefaultFeesConfig')
           "
         >
           <mat-expansion-panel-header>
@@ -155,6 +156,13 @@
             *ngIf="hasPerm('admCarsExpertConfig')"
           >
             {{ dico?.dico_expert_config || "dico_expert_config" }}
+          </a>
+          <a
+            mat-list-item
+            routerLink="/Administrator/carsExpertDefaultFees"
+            *ngIf="hasPerm('admCarsExpertDefaultFeesConfig')"
+          >
+            {{ dico?.dico_expert_default_fees || "dico_expert_default_fees" }}
           </a>
           <a
             mat-list-item

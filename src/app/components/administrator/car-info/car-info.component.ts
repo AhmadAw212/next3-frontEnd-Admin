@@ -34,6 +34,7 @@ export class CarInfoComponent implements OnInit {
   selectedRow!: HTMLElement;
   dateFormats?: any;
   dico?: any;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -55,6 +56,7 @@ export class CarInfoComponent implements OnInit {
     this.getDico();
     this.userRolesService.getUserRoles();
   }
+
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }

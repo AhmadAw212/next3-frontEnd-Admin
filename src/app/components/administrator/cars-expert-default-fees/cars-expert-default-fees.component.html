@@ -1,6 +1,6 @@
 <div class="h3-header">
   <h3>
-    {{ dico?.dico_cars_cover || "dico_cars_cover" }}
+    {{ dico?.dico_expert_default_fees || "dico_expert_default_fees" }}
     <button
       type="button"
       (click)="exportToExcel()"
@@ -26,53 +26,52 @@
     </option>
   </select>
 </div>
-<div class="admin-container container-fluid" style="height: 250px">
+
+<div class="admin-container container-fluid">
   <div class="user-inputs">
-    <form (ngSubmit)="searchCarCover()">
-      <label>{{ dico?.dico_code || "dico_code" }}:</label>
-      <input type="text" id="code" name="code" [(ngModel)]="code" />
-
-      <label>{{ dico?.dico_description || "dico_description" }}:</label>
-      <input
-        type="text"
-        id="description"
-        name="description"
-        [(ngModel)]="description"
-      />
-
-      <button class="btn btn-primary" type="submit">
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-      </button>
-    </form>
     <div class="btn-group">
       <button
         class="btn btn-primary"
         type="button"
         *ngIf="hasPerm('admAddData')"
-        (click)="openAddCoverDialog()"
+        (click)="openAddExpertFeesDialog()"
       >
-        {{ dico?.dico_add_cover || "dico_add_cover" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
 
       <button
         class="btn btn-primary"
         type="button"
         style="margin-left: 8px"
-        (click)="updateCarInfo()"
         *ngIf="hasPerm('admUpdateData')"
+        (click)="updateExpertFees()"
       >
-        {{ dico?.dico_update_cover || "dico_update_cover" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="getCarExpertDefaultFees()"
+    >
+      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+    </button>
   </div>
 
-  <table class="table table-responsive-sm">
+  <table class="table table-responsive">
     <thead>
       <tr>
         <th scope="col">{{ dico?.dico_id || "dico_id" }}</th>
-        <th scope="col">{{ dico?.dico_code || "dico_code" }}</th>
-        <th scope="col">{{ dico?.dico_description || "dico_description" }}</th>
-        <th scope="col">{{ dico?.dico_type || "dico_type" }}</th>
+        <th scope="col">{{ dico?.dico_from_hour || "dico_from_hour" }}</th>
+
+        <th scope="col">{{ dico?.dico_to_hour || "dico_to_hour" }}</th>
+        <th scope="col">{{ dico?.dico_currency || "dico_currency" }}</th>
+        <th scope="col">
+          {{
+            dico?.dico_default_access_fees_amount ||
+              "dico_default_access_fees_amount"
+          }}
+        </th>
         <th scope="col">
           {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
         </th>
@@ -89,35 +88,36 @@
       </tr>
     </thead>
     <tbody
-      *ngIf="carCover?.length! > 0; else noData"
+      *ngIf="expertDefaultFees?.length! > 0; else noData"
       (click)="highlightRow($event)"
     >
-      <tr
-        *ngFor="let cover of carCover; trackBy: trackCoverById"
-        (click)="showCoverRisk(cover)"
-      >
+      <tr *ngFor="let cover of expertDefaultFees; trackBy: trackCoverById">
         <td>{{ cover.id }}</td>
-        <td contenteditable="true" (blur)="onTdBlur($event, cover, 'code')">
-          {{ cover.code }}
+        <td>
+          {{ cover.fromHour }}
         </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, cover, 'description')"
-        >
-          {{ cover.description }}
+
+        <td>
+          {{ cover.toHour }}
         </td>
         <td>
           <select
-            required
-            [(ngModel)]="cover.type"
-            style="width: 150px"
+            id="currency"
+            name="currency"
             class="select-class"
-            (change)="onDropdownChange($event, cover, 'type')"
+            [(ngModel)]="cover.currency"
+            (change)="onDropdownChange($event, cover, 'currency')"
           >
-            <option *ngFor="let type of coverTypes" [value]="type.code">
+            <option *ngFor="let type of currency" [value]="type.code">
               {{ type.description }}
             </option>
           </select>
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, cover, 'defaultAccessFessAmount')"
+        >
+          {{ cover.defaultAccessFessAmount }}
         </td>
 
         <td>
@@ -146,11 +146,4 @@
       </td>
     </tr>
   </ng-template>
-</div>
-
-<div *ngIf="showRiskCover">
-  <app-car-risk-cover
-    [selectedCover]="selectedCover"
-    [dico]="dico"
-  ></app-car-risk-cover>
 </div>

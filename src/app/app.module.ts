@@ -116,6 +116,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CarProductsReserveComponent } from './components/administrator/car-products-reserve/car-products-reserve.component';
 import { AddProductReserveComponent } from './components/administrator/car-products-reserve/add-product-reserve/add-product-reserve.component';
+import { CarBrandMatchingComponent } from './components/administrator/car-brand-matching/car-brand-matching.component';
+import { CarRiskCoverComponent } from './components/administrator/car-risk-cover/car-risk-cover.component';
+import { AddRiskCoverComponent } from './components/administrator/car-risk-cover/add-risk-cover/add-risk-cover.component';
+import { CarsExpertDefaultFeesComponent } from './components/administrator/cars-expert-default-fees/cars-expert-default-fees.component';
+import { AddExpertFeesComponent } from './components/administrator/cars-expert-default-fees/add-expert-fees/add-expert-fees.component';
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
@@ -197,6 +202,11 @@ import { AddProductReserveComponent } from './components/administrator/car-produ
     UpdateDocumentComponent,
     CarProductsReserveComponent,
     AddProductReserveComponent,
+    CarBrandMatchingComponent,
+    CarRiskCoverComponent,
+    AddRiskCoverComponent,
+    CarsExpertDefaultFeesComponent,
+    AddExpertFeesComponent,
   ],
   imports: [
     BrowserModule,

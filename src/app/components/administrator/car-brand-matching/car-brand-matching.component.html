@@ -1,0 +1,110 @@
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_car_brand_Matching || "dico_car_brand_Matching" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div class="admin-container container-fluid" style="height: 200px">
+  <!-- <app-spinner *ngIf="isLoading" style="margin-top: 50px"></app-spinner> -->
+  <div class="user-inputs">
+    <form>
+      <label>{{ dico?.dico_company || "dico_company" }}:</label>
+      <select
+        id="company"
+        name="company"
+        required
+        class="select-class"
+        [(ngModel)]="company"
+        [disabled]="companies?.length! <= 1"
+      >
+        <option *ngFor="let company of companies" [value]="company.companyId">
+          {{ company.companyName }}
+        </option>
+      </select>
+
+      <label for="show">{{ dico?.dico_show || "dico_show" }}:</label>
+      <select [(ngModel)]="selectedShow" class="select-class">
+        <option *ngFor="let show of ShowOptions" [value]="show">
+          {{ show }}
+        </option>
+      </select>
+      <button type="submit">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
+    </form>
+    <div class="admin-button">
+      <button type="button" *ngIf="hasPerm('admAddData')">
+        {{ dico?.dico_add_car || "dico_add_car" }}
+      </button>
+      <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_brand_id || "dico_brand_id" }}</th>
+        <th>{{ dico?.dico_brand_code || "dico_brand_code" }}</th>
+        <th>
+          {{ dico?.dico_brand_description || "dico_brand_description" }}
+        </th>
+        <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody (click)="highlightRow($event)">
+      <tr *ngFor="let cars of carModelMatch; trackBy: trackByBrandId">
+        <td>{{ cars.carBrandId }}</td>
+        <td>{{ cars.carBrandCode }}</td>
+        <td>{{ cars.carBrandDescription }}</td>
+        <td>
+          <div class="car-logo-container">
+            <img [src]="cars.content" class="car-logo" />
+            <div class="car-logo-dialog">
+              <img [src]="cars.content" class="car-logo-dialog-image" />
+            </div>
+          </div>
+        </td>
+        <td>
+          {{ cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysCreatedBy }}</td>
+        <td>
+          {{ cars.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysUpdatedBy }}</td>
+
+        <td>
+          <mat-icon *ngIf="hasPerm('admDeleteData')">delete</mat-icon>
+        </td>
+        <td>
+          <mat-icon *ngIf="hasPerm('admUpdateData')">edit</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</div>
