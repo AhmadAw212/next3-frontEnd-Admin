@@ -1,0 +1,152 @@
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_cars_policy_car || "dico_cars_policy_car" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+
+<div class="admin-container container-fluid" style="height: 250px">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div class="user-inputs">
+    <form>
+      <label for="makeCode"
+        >{{ dico?.dico_max_year || "dico_max_year" }}:</label
+      >
+      <input type="text" id="maxYear" name="maxYear" [(ngModel)]="maxYear" />
+
+      <label for="modelName"
+        >{{ dico?.dico_min_year || "dico_min_year" }}:</label
+      >
+      <input type="text" id="minYear" name="minYear" [(ngModel)]="minYear" />
+
+      <button type="submit" (click)="getcarsPolicyCar()">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
+    </form>
+    <div class="admin-button">
+      <!-- <button type="button" *ngIf="hasPerm('admAddData')">
+        {{ dico?.dico_add_car || "dico_add_car" }}
+      </button> -->
+      <button
+        type="button"
+        style="margin-left: 8px"
+        *ngIf="hasPerm('admUpdateData')"
+        (click)="updateExpertFees()"
+      >
+        Update Car
+      </button>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_car_brand_desc || "dico_car_brand_desc" }}</th>
+        <th>{{ dico?.dico_trademark_desc || "dico_trademark_desc" }}</th>
+        <th>
+          {{ dico?.dico_car_brand_id || "dico_car_brand_id" }}
+        </th>
+        <th>
+          {{ dico?.dico_trademark_id || "dico_trademark_id" }}
+        </th>
+        <th>{{ dico?.dico_car_shape_id || "dico_car_shape_id" }}</th>
+        <th>
+          {{ dico?.dico_brand_code || "dico_brand_code" }}
+        </th>
+        <th>
+          {{ dico?.dico_trademark_code || "dico_trademark_code" }}
+        </th>
+        <th>{{ dico?.dico_shape_code || "dico_shape_code" }}</th>
+        <th>{{ dico?.dico_policy_number || "dico_policy_number" }}</th>
+        <th>{{ dico?.dico_car_year || "dico_car_year" }}</th>
+        <th>{{ dico?.dico_car_chasis || "dico_car_chasis" }}</th>
+        <th>{{ dico?.dico_car_plate || "dico_car_plate" }}</th>
+        <th>{{ dico?.dico_car_id || "dico_car_id" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <!-- <th></th> -->
+      </tr>
+    </thead>
+    <tbody
+      (click)="highlightRow($event)"
+      *ngIf="carsPolicyCar?.length! > 0; else noData"
+    >
+      <tr *ngFor="let cars of carsPolicyCar; trackBy: trackById">
+        <td>{{ cars.carBrandDesc }}</td>
+
+        <td>
+          {{ cars.carTrademarkDesc }}
+        </td>
+        <td contenteditable="true" (dblclick)="onTdDoubleClickBrandId(cars)">
+          {{ cars.brandId }}
+        </td>
+        <td contenteditable="true" (dblclick)="onTdDoubleClickTrademark(cars)">
+          {{ cars.carTrademarkId }}
+        </td>
+        <td>
+          {{ cars.carShapeId }}
+        </td>
+        <td>
+          {{ cars.carBrandCode }}
+        </td>
+        <td>
+          {{ cars.carTrademarkCode }}
+        </td>
+        <td>
+          {{ cars.shape }}
+        </td>
+        <td>
+          {{ cars.policyNumber }}
+        </td>
+        <td>
+          {{ cars.carYear }}
+        </td>
+        <td>
+          {{ cars.carChassis }}
+        </td>
+        <td>
+          {{ cars.carPlate }}
+        </td>
+        <td>
+          {{ cars.carId }}
+        </td>
+        <td>
+          {{ cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysCreatedBy }}</td>
+        <td>
+          {{ cars.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysUpdatedBy }}</td>
+
+        <!-- <td>
+          <mat-icon *ngIf="hasPerm('admDeleteData')">delete</mat-icon>
+        </td> -->
+        <!-- <td>
+            <mat-icon >edit</mat-icon>
+          </td> -->
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

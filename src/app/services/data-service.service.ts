@@ -43,6 +43,7 @@ import { CaseMngrSetup } from '../model/case-mngr-setup';
 import { CarsCell } from '../model/cars-cell';
 import { CarsCellSetup } from '../model/cars-cell-setup';
 import { CarsbrandMatching } from '../model/carsbrand-matching';
+import { CarsPolicyCar } from '../model/cars-policy-car';
 
 interface User {
   username: string;
@@ -1251,6 +1252,19 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/carDtModels/add`,
       brandMatching
+    );
+  }
+
+  getCarsPolicyCar(modelName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/carsPolicyCar/search?modelNameSearch=${modelName}`
+    );
+  }
+
+  updateCarsPolicyCar(policyCar: CarsPolicyCar[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/carsPolicyCar/update`,
+      policyCar
     );
   }
 }

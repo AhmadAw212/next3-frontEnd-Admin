@@ -111,7 +111,10 @@
       (click)="highlightRow($event)"
       *ngIf="carModelMatch?.length! > 0; else noData"
     >
-      <tr *ngFor="let cars of carModelMatch; trackBy: trackByBrandId">
+      <tr
+        *ngFor="let cars of carModelMatch; trackBy: trackByBrandId"
+        (click)="showCarsPolicyCar(cars)"
+      >
         <td>{{ cars.dtId }}</td>
         <td>
           <select
@@ -189,4 +192,13 @@
       </tr>
     </ng-template>
   </table>
+</div>
+
+<div *ngIf="showPolicyCar">
+  <app-cars-policy-car
+    [dico]="dico"
+    [selectedBrand]="selectedCarsPolicyCar"
+    [brandId]="brandId"
+    [trademarkId]="selectedTrademarkId"
+  ></app-cars-policy-car>
 </div>

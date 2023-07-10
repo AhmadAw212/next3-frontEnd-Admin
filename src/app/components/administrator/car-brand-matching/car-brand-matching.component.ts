@@ -42,6 +42,8 @@ export class CarBrandMatchingComponent implements OnInit {
   modelName: string = '';
   @Input() selectedTrademarkId?: string;
   updatedBrandMatching: CarsbrandMatching[] = [];
+  selectedCarsPolicyCar?: CarsbrandMatching;
+  showPolicyCar?: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -59,7 +61,10 @@ export class CarBrandMatchingComponent implements OnInit {
     this.getBrandMatchingLov();
     this.userRolesService.getUserRoles();
   }
-
+  showCarsPolicyCar(selectedbrand: CarsbrandMatching) {
+    this.showPolicyCar = true;
+    this.selectedCarsPolicyCar = selectedbrand;
+  }
   trackByBrandId(index: number, brandMatching: CarsbrandMatching) {
     return brandMatching.dtId;
   }
