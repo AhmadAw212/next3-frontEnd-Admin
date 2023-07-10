@@ -5,6 +5,7 @@ import * as saveAs from 'file-saver';
 import { CarProducts } from 'src/app/model/car-products';
 import { CarsbrandMatching } from 'src/app/model/carsbrand-matching';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
+import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -32,9 +33,9 @@ export class CarBrandMatchingComponent implements OnInit {
   dateFormats?: any;
   company?: string;
   selectedShow?: Show;
-  ShowOptions: Show[] = Object.values(Show);
+  showOptions?: type[];
   insuranceCode?: string;
-
+  @Input() brandId?: string;
   carModelMatch?: CarsbrandMatching[];
   makeCode: string = '';
   modelName: string = '';
@@ -52,7 +53,7 @@ export class CarBrandMatchingComponent implements OnInit {
     this.dateFormatterService();
     this.getCompaniesPerUser();
     // this.getDico();
-    // console.log(Show);
+    this.getBrandMatchingLov();
     this.userRolesService.getUserRoles();
   }
 
@@ -143,6 +144,17 @@ export class CarBrandMatchingComponent implements OnInit {
       },
       error: (err) => {
         this.alertifyService.dialogAlert('Error');
+        console.log(err);
+      },
+    });
+  }
+
+  getBrandMatchingLov() {
+    this.dataService.getBrandMatchingLov().subscribe({
+      next: (res) => {
+        this.showOptions = res.data;
+      },
+      error: (err) => {
         console.log(err);
       },
     });

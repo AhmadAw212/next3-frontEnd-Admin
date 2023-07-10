@@ -37,7 +37,7 @@
       <input type="text" id="makeCode" name="makeCode" [(ngModel)]="makeCode" />
 
       <label for="modelName"
-        >{{ dico?.dico_model_name || "dico_model_name" }}:</label
+        >{{ dico?.dico_model_code || "dico_model_code" }}:</label
       >
       <input
         type="text"
@@ -56,8 +56,8 @@
         class="select-class"
         style="margin-right: 10px"
       >
-        <option *ngFor="let show of ShowOptions" [value]="show">
-          {{ show }}
+        <option *ngFor="let show of showOptions" [value]="show.code">
+          {{ show.description }}
         </option>
       </select>
 
@@ -87,7 +87,7 @@
         <th>
           {{ dico?.dico_brand_id || "dico_brand_id" }}
         </th>
-        <th>{{ dico?.dico_ins_make_code || "dico_ins_make_code" }}</th>
+        <th>{{ dico?.dico_model_code || "dico_model_code" }}</th>
         <th>{{ dico?.dico_trademark_id || "dico_trademark_id" }}</th>
         <th>{{ dico?.dico_ins_model_code || "dico_ins_model_code" }}</th>
         <th>{{ dico?.dico_model_name || "dico_model_name" }}</th>

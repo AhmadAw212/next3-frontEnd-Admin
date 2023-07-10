@@ -1067,7 +1067,13 @@ export class DataServiceService {
     showList: string
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/carDtModels/search?insCode=${insCode}&modelCodeSearch=${modelCodeSearch}&modelNameSearch=${modelNameSearch}&showList=${showList}`
+      `${
+        this.userUrl
+      }/carDtModels/search?insCode=${insCode}&modelCodeSearch=${encodeURIComponent(
+        modelCodeSearch
+      )}&modelNameSearch=${encodeURIComponent(
+        modelNameSearch
+      )}&showList=${showList}`
     );
   }
 
@@ -1218,6 +1224,12 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/cars-cellSetup/update`,
       CarsCellSetup
+    );
+  }
+
+  getBrandMatchingLov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/carDtModels/getBrandMatchingLov`
     );
   }
 }

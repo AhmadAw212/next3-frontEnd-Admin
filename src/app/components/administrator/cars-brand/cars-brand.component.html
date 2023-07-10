@@ -70,7 +70,7 @@
     >
       <tr
         *ngFor="let cars of carsBrandData; trackBy: trackBrandById"
-        (click)="carsTrademarkSearch(cars.carBrandId!, cars)"
+        (click)="carsTrademarkSearch(cars.carBrandId!, cars); savebrandId(cars)"
       >
         <td>{{ cars.carBrandId }}</td>
         <td>{{ cars.carBrandCode }}</td>
@@ -126,5 +126,8 @@
 </div>
 
 <div *ngIf="showBrandMatchingTable">
-  <app-car-brand-matching [dico]="dico"></app-car-brand-matching>
+  <app-car-brand-matching
+    [dico]="dico"
+    [brandId]="brandId"
+  ></app-car-brand-matching>
 </div>

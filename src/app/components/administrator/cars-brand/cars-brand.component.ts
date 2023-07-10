@@ -31,6 +31,7 @@ export class CarsBrandComponent implements OnInit {
   isLoading: boolean = false;
   dico?: any;
   dateFormats?: any;
+  brandId?: string;
   showBrandMatchingTable?: boolean = true;
   constructor(
     private dataService: DataServiceService,
@@ -52,6 +53,10 @@ export class CarsBrandComponent implements OnInit {
 
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
+  }
+
+  savebrandId(brand: CarsBrand) {
+    this.brandId = brand.carBrandId;
   }
 
   exportToExcel() {
