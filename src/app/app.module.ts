@@ -65,7 +65,7 @@ import { AddCarCoverComponent } from './components/administrator/add-dialogs/add
 import { UpdateCarCoverComponent } from './components/administrator/update-dialogs/update-car-cover/update-car-cover.component';
 import { CarProductsComponent } from './components/administrator/car-products/car-products.component';
 import { AddCarProductComponent } from './components/administrator/add-dialogs/add-car-product/add-car-product.component';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CarSublinesComponent } from './components/administrator/car-sublines/car-sublines.component';
 import { AddCarSublineComponent } from './components/administrator/add-dialogs/add-car-subline/add-car-subline.component';
 import { AddCarClientComponent } from './components/administrator/add-dialogs/add-car-client/add-car-client.component';
@@ -121,6 +121,13 @@ import { CarRiskCoverComponent } from './components/administrator/car-risk-cover
 import { AddRiskCoverComponent } from './components/administrator/car-risk-cover/add-risk-cover/add-risk-cover.component';
 import { CarsExpertDefaultFeesComponent } from './components/administrator/cars-expert-default-fees/cars-expert-default-fees.component';
 import { AddExpertFeesComponent } from './components/administrator/cars-expert-default-fees/add-expert-fees/add-expert-fees.component';
+import { CarsCaseMngrSetupComponent } from './components/administrator/cars-case-mngr-setup/cars-case-mngr-setup.component';
+import { AddCaseMngrSetupComponent } from './components/administrator/cars-case-mngr-setup/add-case-mngr-setup/add-case-mngr-setup.component';
+import { CarsCellComponent } from './components/administrator/cars-cell/cars-cell.component';
+import { AddCellComponent } from './components/administrator/cars-cell/add-cell/add-cell.component';
+import { CarsCellSetupComponent } from './components/administrator/cars-cell-setup/cars-cell-setup.component';
+import { AddCarCellSetupComponent } from './components/administrator/cars-cell-setup/add-car-cell-setup/add-car-cell-setup.component';
+
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
@@ -207,6 +214,12 @@ import { AddExpertFeesComponent } from './components/administrator/cars-expert-d
     AddRiskCoverComponent,
     CarsExpertDefaultFeesComponent,
     AddExpertFeesComponent,
+    CarsCaseMngrSetupComponent,
+    AddCaseMngrSetupComponent,
+    CarsCellComponent,
+    AddCellComponent,
+    CarsCellSetupComponent,
+    AddCarCellSetupComponent,
   ],
   imports: [
     BrowserModule,
@@ -215,11 +228,13 @@ import { AddExpertFeesComponent } from './components/administrator/cars-expert-d
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     MatSidenavModule,
+    MatAutocompleteModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
     MatInputModule,
     MatNativeDateModule,
     MatToolbarModule,
+
     MatListModule,
     MatIconModule,
     MatSelectModule,

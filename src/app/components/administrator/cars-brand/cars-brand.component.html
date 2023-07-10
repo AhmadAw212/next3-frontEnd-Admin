@@ -42,87 +42,80 @@
       <!-- <button type="button" style="margin-left: 8px">Update Car</button> -->
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_brand_id || "dico_brand_id" }}</th>
-            <th>{{ dico?.dico_brand_code || "dico_brand_code" }}</th>
-            <th>
-              {{ dico?.dico_brand_description || "dico_brand_description" }}
-            </th>
-            <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="carsBrandData?.length! > 0; else noData"
-          (click)="highlightRow($event)"
-        >
-          <tr
-            *ngFor="let cars of carsBrandData; trackBy: trackBrandById"
-            (click)="carsTrademarkSearch(cars.carBrandId!, cars)"
-          >
-            <td>{{ cars.carBrandId }}</td>
-            <td>{{ cars.carBrandCode }}</td>
-            <td>{{ cars.carBrandDescription }}</td>
-            <td>
-              <div class="car-logo-container">
-                <img [src]="cars.content" class="car-logo" />
-                <div class="car-logo-dialog">
-                  <img [src]="cars.content" class="car-logo-dialog-image" />
-                </div>
-              </div>
-            </td>
-            <td>
-              {{
-                cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ cars.sysCreatedBy }}</td>
-            <td>
-              {{
-                cars.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ cars.sysUpdatedBy }}</td>
 
-            <td>
-              <mat-icon
-                *ngIf="hasPerm('admDeleteData')"
-                (click)="deleteCarBrand(cars.carBrandCode!)"
-                >delete</mat-icon
-              >
-            </td>
-            <td>
-              <mat-icon
-                *ngIf="hasPerm('admUpdateData')"
-                (click)="updateCarBrandDialog(cars)"
-                >edit</mat-icon
-              >
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="9">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_code || "dico_code" }}</th>
+        <th>
+          {{ dico?.dico_description || "dico_description" }}
+        </th>
+        <th>{{ dico?.dico_content || "dico_content" }}</th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="carsBrandData?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr
+        *ngFor="let cars of carsBrandData; trackBy: trackBrandById"
+        (click)="carsTrademarkSearch(cars.carBrandId!, cars)"
+      >
+        <td>{{ cars.carBrandId }}</td>
+        <td>{{ cars.carBrandCode }}</td>
+        <td>{{ cars.carBrandDescription }}</td>
+        <td>
+          <div class="car-logo-container">
+            <img [src]="cars.content" class="car-logo" />
+            <div class="car-logo-dialog">
+              <img [src]="cars.content" class="car-logo-dialog-image" />
+            </div>
+          </div>
+        </td>
+        <td>
+          {{ cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysCreatedBy }}</td>
+        <td>
+          {{ cars.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ cars.sysUpdatedBy }}</td>
+
+        <td>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteCarBrand(cars.carBrandCode!)"
+            >delete</mat-icon
+          >
+        </td>
+        <td>
+          <mat-icon
+            *ngIf="hasPerm('admUpdateData')"
+            (click)="updateCarBrandDialog(cars)"
+            >edit</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>
 
 <div *ngIf="showTrademark">
@@ -133,5 +126,5 @@
 </div>
 
 <div *ngIf="showBrandMatchingTable">
-  <app-car-brand-matching></app-car-brand-matching>
+  <app-car-brand-matching [dico]="dico"></app-car-brand-matching>
 </div>

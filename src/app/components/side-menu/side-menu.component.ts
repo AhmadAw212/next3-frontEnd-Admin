@@ -34,7 +34,6 @@ export class SideMenuComponent implements OnInit {
   }
 
   getDico() {
-    this.isLoading = true;
     const language = localStorage.getItem('selectedLanguage')!;
     this.dataService.Dico(language).subscribe({
       next: (language) => {

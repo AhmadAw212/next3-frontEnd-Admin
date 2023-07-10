@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CarCover } from 'src/app/model/car-cover';
@@ -13,7 +13,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   templateUrl: './add-risk-cover.component.html',
   styleUrls: ['./add-risk-cover.component.css'],
 })
-export class AddRiskCoverComponent {
+export class AddRiskCoverComponent implements OnInit {
   dico?: any;
   carCoverRiskForm!: FormGroup;
   cardTypes?: type[];

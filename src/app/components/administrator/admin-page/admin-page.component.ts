@@ -16,21 +16,5 @@ export class AdminPageComponent implements OnInit {
   navBarTitle = 'Administrator';
   constructor(private dataService: DataServiceService) {}
 
-  ngOnInit(): void {
-    // this.getUserRoles();
-  }
-
-  // getUserRoles() {
-  //   const selectedProfile = localStorage.getItem('selectedProfile');
-  //   this.dataService.getUserRoles(selectedProfile!).subscribe({
-  //     next: (res) => {
-  //       this.dataService.getUserRole.next(res.data);
-
-  //       // console.log(res);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
+  ngOnInit(): void {}
 }

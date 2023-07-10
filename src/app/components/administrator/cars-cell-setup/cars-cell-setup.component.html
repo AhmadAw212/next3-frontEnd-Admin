@@ -1,0 +1,148 @@
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_cars_cell_setup || "dico_cars_cell_setup" }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div class="admin-container container-fluid" style="height: 250px">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div class="user-inputs">
+    <div class="admin-button">
+      <button
+        type="button"
+        *ngIf="hasPerm('admAddData')"
+        (click)="openAddCellSetupDialog()"
+      >
+        {{ dico?.dico_add || "dico_add" }}
+      </button>
+      <button
+        type="button"
+        style="margin-left: 8px"
+        *ngIf="hasPerm('admUpdateData')"
+        (click)="updateCellSetup()"
+      >
+        {{ dico?.dico_save || "dico_save" }}
+      </button>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_insurance || "dico_insurance" }}</th>
+        <th>{{ dico?.dico_product_type || "dico_product_type" }}</th>
+        <th>{{ dico?.dico_material_damage || "dico_material_damage" }}</th>
+        <th>{{ dico?.dico_car_count || "dico_car_count" }}</th>
+        <th>{{ dico?.dico_expert_exist || "dico_expert_exist" }}</th>
+
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        (click)="highlightRow($event)"
+        *ngFor="let case of cellSetup; trackBy: trackById"
+      >
+        <td>{{ case.id }}</td>
+        <td>
+          <select
+            id="insuranceId"
+            name="insuranceId"
+            required
+            class="company-select select-class"
+            [(ngModel)]="case.insuranceId"
+            [disabled]="companies?.length! <= 1"
+            (ngModelChange)="onDropdownChange($event, case, 'insuranceId')"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyId"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="product"
+            id="product"
+            [(ngModel)]="case.productType_code"
+            class="select-class"
+            (ngModelChange)="onDropdownChange($event, case, 'productType_code')"
+          >
+            <option *ngFor="let product of productTypes" [value]="product.code">
+              {{ product.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="materialDmg_code"
+            id="materialDmg_code"
+            [(ngModel)]="case.materialDmg_code"
+            class="select-class"
+            (ngModelChange)="onDropdownChange($event, case, 'materialDmg_code')"
+          >
+            <option
+              *ngFor="let material of materialDamage"
+              [value]="material.code"
+            >
+              {{ material.description }}
+            </option>
+          </select>
+        </td>
+
+        <td contenteditable="true" (blur)="onTdBlur($event, case, 'car_count')">
+          {{ case.car_count }}
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="case.expert_exist"
+            (ngModelChange)="onCheckboxChange(case)"
+          />
+        </td>
+
+        <td>
+          {{ case.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ case.sysCreatedBy }}</td>
+        <td>
+          {{ case.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
+        </td>
+        <td>{{ case.sysUpdatedBy }}</td>
+        <td>
+          <mat-icon
+            (click)="deleteCell(case.id!)"
+            *ngIf="hasPerm('admDeleteData')"
+            >delete</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

@@ -1,0 +1,94 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_case_mngr_setup || "dico_add_case_mngr_setup" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="caseMngrSetup" (ngSubmit)="addCaseMngrSetup()">
+    <div class="form-group">
+      <label for="cmsCell">
+        {{ dico?.dico_cell || "dico_cell" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="cmsCell"
+        name="cmsCell"
+        formControlName="cmsCell"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['cmsCell'].errors &&
+          (formControl['cmsCell'].dirty || formControl['cmsCell'].touched)
+        "
+      >
+        <div *ngIf="formControl['cmsCell']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['cmsCell']?.errors?.['maxlength']">
+          Maximum 3 characters are allowed
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cmsType">
+        {{ dico?.dico_type || "dico_type" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="cmsType"
+        name="cmsType"
+        formControlName="cmsType"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['cmsType'].errors &&
+          (formControl['cmsType'].dirty || formControl['cmsType'].touched)
+        "
+      >
+        <div *ngIf="formControl['cmsType']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+        <div *ngIf="formControl['cmsType']?.errors?.['maxlength']">
+          Maximum 1 characters are allowed
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description"
+        >{{ dico?.dico_description || "dico_description" }} :</label
+      >
+      <input
+        type="text"
+        id="description"
+        name="description"
+        formControlName="description"
+      />
+      <!-- <div
+        style="color: red"
+        *ngIf="
+          formControl['description'].errors &&
+          (formControl['description'].dirty ||
+            formControl['description'].touched)
+        "
+      >
+        <div *ngIf="formControl['description']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div> -->
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!caseMngrSetup.valid"
+      [ngClass]="{ 'is-disabled': !caseMngrSetup.valid }"
+    >
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+    </button>
+  </form>
+</div>

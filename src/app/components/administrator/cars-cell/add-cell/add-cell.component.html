@@ -1,0 +1,168 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_case_mngr_setup || "dico_add_case_mngr_setup" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="cellFrom" (ngSubmit)="addCarCell()">
+    <div class="form-group">
+      <label for="managerId">
+        {{ dico?.dico_manager_id || "dico_manager_id" }}
+        <span class="required"> * </span>:</label
+      >
+      <ng-select appendTo="body" name="managerId" formControlName="managerId">
+        <ng-option *ngFor="let user of users" [value]="user.username">{{
+          user.username
+        }}</ng-option>
+      </ng-select>
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['managerId'].errors &&
+          (formControl['managerId'].dirty || formControl['managerId'].touched)
+        "
+      >
+        <div *ngIf="formControl['managerId']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cmsType">
+        {{ dico?.dico_manager_first_name || "dico_manager_first_name" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="managerFirstName"
+        name="managerFirstName"
+        formControlName="managerFirstName"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['managerFirstName'].errors &&
+          (formControl['managerFirstName'].dirty ||
+            formControl['managerFirstName'].touched)
+        "
+      >
+        <div *ngIf="formControl['managerFirstName']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="familyName">
+        {{ dico?.dico_manager_family_name || "dico_manager_family_name" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="text"
+        id="managerLastName"
+        name="managerLastName"
+        formControlName="managerLastName"
+      />
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['managerLastName'].errors &&
+          (formControl['managerLastName'].dirty ||
+            formControl['managerLastName'].touched)
+        "
+      >
+        <div *ngIf="formControl['managerLastName']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="cellManager">
+        {{ dico?.dico_cell_manager || "dico_cell_manager" }}
+        :</label
+      >
+      <input
+        type="checkbox"
+        id="cellManager"
+        name="cellManager"
+        formControlName="cellManager"
+        style="margin-left: 30px"
+      />
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="cellOut">
+        {{ dico?.dico_cell_out || "dico_cell_out" }}
+        :</label
+      >
+      <input
+        type="checkbox"
+        id="cellOUt"
+        name="cellOUt"
+        formControlName="cellOUt"
+        style="margin-left: 30px"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="cellOutDate">
+        {{ dico?.dico_cell_out_date || "dico_cell_out_date" }}
+        <span class="required"> * </span>:</label
+      >
+      <input
+        type="date"
+        id="cellOutDate"
+        name="cellOutDate"
+        formControlName="cellOutDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="cellRatio"
+        >{{ dico?.dico_cell_ratio || "dico_cell_ratio" }} :</label
+      >
+      <input
+        type="text"
+        id="cellRatio"
+        name="cellRatio"
+        formControlName="cellRatio"
+      />
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['cellRatio'].errors &&
+          (formControl['cellRatio'].dirty || formControl['cellRatio'].touched)
+        "
+      >
+        <div *ngIf="formControl['cellRatio']?.errors?.['pattern']">
+          Number is Required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="showInList">
+        {{ dico?.dico_show_in_list || "dico_show_in_list" }}
+        :</label
+      >
+      <input
+        type="checkbox"
+        id="showInList"
+        name="showInList"
+        formControlName="showInList"
+        style="margin-left: 30px"
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!cellFrom.valid"
+      [ngClass]="{ 'is-disabled': !cellFrom.valid }"
+    >
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+    </button>
+  </form>
+</div>

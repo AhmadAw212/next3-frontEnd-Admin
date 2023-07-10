@@ -185,6 +185,13 @@
           >
             {{ dico?.dico_territory || "dico_territory" }}
           </a>
+          <a
+            mat-list-item
+            routerLink="/Administrator/carsCaseMngrSetup"
+            *ngIf="hasPerm('admCarsCaseMngrSetup')"
+          >
+            {{ dico?.dico_cars_case_mngr_setup || "dico_cars_case_mngr_setup" }}
+          </a>
         </mat-expansion-panel>
       </mat-nav-list>
     </div>

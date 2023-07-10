@@ -49,9 +49,9 @@ export class CoreConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
 
   hasPerm(role: string): boolean {
@@ -149,7 +149,6 @@ export class CoreConfigurationComponent implements OnInit {
           } else {
             this.alertifyService.dialogAlert('Error');
           }
-          
         },
       });
     }

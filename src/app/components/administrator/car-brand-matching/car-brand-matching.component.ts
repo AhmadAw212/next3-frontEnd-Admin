@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as saveAs from 'file-saver';
 import { CarProducts } from 'src/app/model/car-products';
+import { CarsbrandMatching } from 'src/app/model/carsbrand-matching';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,8 +14,8 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 import * as XLSX from 'xlsx';
 enum Show {
   ALL = 'ALL',
-  'NOT MATCHED' = 'NOT MATCHED',
-  'MODEL ZZZZ' = 'MODEL ZZZZ',
+  'NOT MATCHED' = 'NOTMATCHED',
+  'MODEL ZZZZ' = 'MODELZZZZ',
   MATCHED = 'MATCHED',
 }
 @Component({
@@ -33,9 +34,10 @@ export class CarBrandMatchingComponent implements OnInit {
   selectedShow?: Show;
   ShowOptions: Show[] = Object.values(Show);
   insuranceCode?: string;
-  modelCode?: string;
-  ModelName?: string;
-  carModelMatch?: any;
+
+  carModelMatch?: CarsbrandMatching[];
+  makeCode: string = '';
+  modelName: string = '';
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -49,27 +51,27 @@ export class CarBrandMatchingComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatterService();
     this.getCompaniesPerUser();
-    this.getDico();
+    // this.getDico();
+    // console.log(Show);
     this.userRolesService.getUserRoles();
   }
 
-  trackByBrandId(index: number, brandMatching: any) {
-    return brandMatching.id;
+  trackByBrandId(index: number, brandMatching: CarsbrandMatching) {
+    return brandMatching.dtId;
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
   exportToExcel() {
-    const dico_products = this.dico.dico_product;
-    const data = this.carModelMatch?.map((data: any) => {
+    const data = this.carModelMatch?.map((data) => {
       return {
-        ID: data.id,
-        Code: data.code,
-        Description: data.description,
-        Type: data.type_description,
-        Tarif: data.tarif,
-        LOB: data.lob,
-        Company: data.insuranceDesc,
+        ID: data.dtId,
+        ' Model Code': data.insModelCode,
+        ' Make Code': data.insMakeCode,
+        'Model Name': data.modelName,
+        'Brand Id': data.brandId,
+        'Trademark Id': data.trademarkId,
+
         'Created Date': this.datePipe.transform(
           data.sysCreatedDate,
           this.dateFormat('excelDateTimeFormat')
@@ -89,7 +91,7 @@ export class CarBrandMatchingComponent implements OnInit {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, dico_products);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Model Matching');
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -102,11 +104,10 @@ export class CarBrandMatchingComponent implements OnInit {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
 
-    const fileName = dico_products + '.xlsx';
-    saveAs(excelBlob, fileName);
+    saveAs(excelBlob, 'Model_Matching.xlsx');
   }
   getDico() {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -153,8 +154,8 @@ export class CarBrandMatchingComponent implements OnInit {
     this.dataService
       .searchCarModels(
         this.company!,
-        this.modelCode!,
-        this.ModelName!,
+        this.makeCode!,
+        this.modelName!,
         this.selectedShow!
       )
       .subscribe({

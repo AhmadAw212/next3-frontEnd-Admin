@@ -44,17 +44,14 @@
     </div>
 
     <div class="form-group">
-      <label
-        >{{ dico?.dico_description || "dico_description" }}
-        <span class="required"> * </span> :</label
-      >
+      <label>{{ dico?.dico_description || "dico_description" }} :</label>
       <input type="text" formControlName="configDescription" />
     </div>
 
     <button
       type="submit"
       [disabled]="!configurationForm.valid"
-      [ngClass]="{ 'disabled-button': !configurationForm.valid }"
+      [ngClass]="{ 'is-disabled': !configurationForm.valid }"
     >
       {{ dico?.dico_save || "dico_save" }}
     </button>

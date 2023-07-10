@@ -1,0 +1,130 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_add_cell_setup || "dico_add_cell_setup" }}
+</h2>
+<div class="dialog">
+  <form [formGroup]="cellSetupForm" (ngSubmit)="addCarCell()">
+    <div class="form-group">
+      <label for="managerId">
+        {{ dico?.dico_insurance || "dico_insurance" }}
+        <span class="required"> * </span>:</label
+      >
+      <select
+        id="insuranceId"
+        name="insuranceId"
+        class="company-select select-class"
+        [disabled]="companies?.length! <= 1"
+        formControlName="insuranceId"
+      >
+        <option *ngFor="let company of companies" [value]="company.companyId">
+          {{ company.companyName }}
+        </option>
+      </select>
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['insuranceId'].errors &&
+          (formControl['insuranceId'].dirty ||
+            formControl['insuranceId'].touched)
+        "
+      >
+        <div *ngIf="formControl['insuranceId']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="product">
+        {{ dico?.dico_product_type || "dico_product_type" }}
+        <span class="required"> * </span>:</label
+      >
+      <select
+        name="product"
+        id="product"
+        class="select-class"
+        formControlName="productType_code"
+      >
+        <option *ngFor="let product of products" [value]="product.code">
+          {{ product.description }}
+        </option>
+      </select>
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['productType_code'].errors &&
+          (formControl['productType_code'].dirty ||
+            formControl['productType_code'].touched)
+        "
+      >
+        <div *ngIf="formControl['productType_code']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cmsType">
+        {{ dico?.dico_material_damage || "dico_material_damage" }}
+        <span class="required"> * </span>:</label
+      >
+      <select
+        name="materialDmg_code"
+        id="materialDmg_code"
+        formControlName="materialDmg_code"
+        class="select-class"
+      >
+        <option *ngFor="let material of materialDamage" [value]="material.code">
+          {{ material.description }}
+        </option>
+      </select>
+
+      <div
+        style="color: red"
+        *ngIf="
+          formControl['materialDmg_code'].errors &&
+          (formControl['materialDmg_code'].dirty ||
+            formControl['materialDmg_code'].touched)
+        "
+      >
+        <div *ngIf="formControl['materialDmg_code']?.errors?.['required']">
+          {{ dico?.dico_required || "dico_required" }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="car_count">
+        {{ dico?.dico_car_count || "dico_car_count" }}
+        :</label
+      >
+      <input
+        type="text"
+        id="car_count"
+        name="car_count"
+        formControlName="car_count"
+      />
+    </div>
+
+    <div class="form-group" style="flex-direction: row">
+      <label for="expert_exist">
+        {{ dico?.dico_expert_exist || "dico_expert_exist" }}
+        :</label
+      >
+      <input
+        type="checkbox"
+        id="expert_exist"
+        name="expert_exist"
+        formControlName="expert_exist"
+        style="margin-left: 10px"
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!cellSetupForm.valid"
+      [ngClass]="{ 'is-disabled': !cellSetupForm.valid }"
+    >
+      {{ dico?.BASIC_SAVE || "BASIC_SAVE" }}
+    </button>
+  </form>
+</div>

@@ -54,7 +54,6 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
     this.userRolesService.getUserRoles();
   }
   getDico() {
-    this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
@@ -74,7 +73,7 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
         ID: data.productsResId,
         Date: this.datePipe.transform(
           data.productsResAsOfDate,
-          this.dateFormat('excelDateTimeFormat')
+          this.dateFormat('reportDateTimeFormat')
         ),
         Insured: data.productsResInsured,
         Tp: data.productsResTp,

@@ -94,7 +94,7 @@ export class CarsBrandComponent implements OnInit {
     saveAs(excelBlob, 'Cars_Brands.xlsx');
   }
   getDico() {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;

@@ -39,6 +39,9 @@ import { environment } from '../../environments/environment.development';
 import { ProductsReserve } from '../model/products-reserve';
 import { CoverRisk } from '../model/cover-risk';
 import { ExpertDefaultFees } from '../model/expert-default-fees';
+import { CaseMngrSetup } from '../model/case-mngr-setup';
+import { CarsCell } from '../model/cars-cell';
+import { CarsCellSetup } from '../model/cars-cell-setup';
 
 interface User {
   username: string;
@@ -1131,6 +1134,90 @@ export class DataServiceService {
     return this.http.post<ApiResponse>(
       `${this.userUrl}/expert-fees/update`,
       expertFees
+    );
+  }
+
+  getCarsCaseMngrSetup(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/case-setup/all`);
+  }
+
+  addCaseMngrSetup(caseMngr: CaseMngrSetup): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/case-setup/new`,
+      caseMngr
+    );
+  }
+
+  deleteCaseMngrSetup(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/case-setup/delete?id=${id}`
+    );
+  }
+
+  updateCaseMngrSetup(caseMngr: CaseMngrSetup[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/case-setup/update`,
+      caseMngr
+    );
+  }
+
+  getCarsCells(caseId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/cars-cell/${caseId}`);
+  }
+  getAllUsers(substring: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/users-search?usernameSubstring=${substring}`
+    );
+  }
+
+  addCell(carCell: CarsCell): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-cell/new`,
+      carCell
+    );
+  }
+
+  deleteCell(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-cell/delete?id=${id}`
+    );
+  }
+
+  updateCell(carCell: CarsCell[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-cell/update`,
+      carCell
+    );
+  }
+
+  getCellSetup(setupId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-cellSetup/${setupId}`
+    );
+  }
+
+  getMaterialDamage(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/materialDamage`
+    );
+  }
+
+  addCellSetup(cellSetup: CarsCellSetup): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-cellSetup/new`,
+      cellSetup
+    );
+  }
+  deleteCellSetup(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/cars-cellSetup/delete?id=${id}`
+    );
+  }
+
+  updateCellSetup(CarsCellSetup: CarsCellSetup[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/cars-cellSetup/update`,
+      CarsCellSetup
     );
   }
 }
