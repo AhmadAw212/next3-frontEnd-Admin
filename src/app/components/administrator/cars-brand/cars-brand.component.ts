@@ -32,6 +32,7 @@ export class CarsBrandComponent implements OnInit {
   dico?: any;
   dateFormats?: any;
   brandId?: string;
+  selectedTrademarkId?: string;
   showBrandMatchingTable?: boolean = true;
   constructor(
     private dataService: DataServiceService,
@@ -58,7 +59,10 @@ export class CarsBrandComponent implements OnInit {
   savebrandId(brand: CarsBrand) {
     this.brandId = brand.carBrandId;
   }
-
+  selectTrademarkId(data: string) {
+    this.selectedTrademarkId = data;
+    // console.log(this.selectedTrademarkId);
+  }
   exportToExcel() {
     const data = this.carsBrandData?.map((data) => {
       return {

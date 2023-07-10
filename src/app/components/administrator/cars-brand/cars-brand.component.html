@@ -122,6 +122,7 @@
   <app-car-trademark
     [carBrand]="carBrandData"
     [carTrademark]="carTrademark"
+    (sendTrademarkId)="selectTrademarkId($event)"
   ></app-car-trademark>
 </div>
 
@@ -129,5 +130,6 @@
   <app-car-brand-matching
     [dico]="dico"
     [brandId]="brandId"
+    [selectedTrademarkId]="selectedTrademarkId"
   ></app-car-brand-matching>
 </div>

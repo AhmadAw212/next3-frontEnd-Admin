@@ -42,6 +42,7 @@ import { ExpertDefaultFees } from '../model/expert-default-fees';
 import { CaseMngrSetup } from '../model/case-mngr-setup';
 import { CarsCell } from '../model/cars-cell';
 import { CarsCellSetup } from '../model/cars-cell-setup';
+import { CarsbrandMatching } from '../model/carsbrand-matching';
 
 interface User {
   username: string;
@@ -1230,6 +1231,26 @@ export class DataServiceService {
   getBrandMatchingLov(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/carDtModels/getBrandMatchingLov`
+    );
+  }
+
+  updateCarDtModels(carsdt: CarsbrandMatching[]): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/carDtModels/update`,
+      carsdt
+    );
+  }
+
+  deleteCarDtModels(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/carDtModels/delete?dtId=${encodeURIComponent(id)}`
+    );
+  }
+
+  addCarMatching(brandMatching: CarsbrandMatching): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/carDtModels/add`,
+      brandMatching
     );
   }
 }

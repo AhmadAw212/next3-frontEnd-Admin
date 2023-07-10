@@ -13,6 +13,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import * as XLSX from 'xlsx';
+import { AddbrandMatchingComponent } from './addbrand-matching/addbrand-matching.component';
 enum Show {
   ALL = 'ALL',
   'NOT MATCHED' = 'NOTMATCHED',
@@ -39,6 +40,8 @@ export class CarBrandMatchingComponent implements OnInit {
   carModelMatch?: CarsbrandMatching[];
   makeCode: string = '';
   modelName: string = '';
+  @Input() selectedTrademarkId?: string;
+  updatedBrandMatching: CarsbrandMatching[] = [];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -159,7 +162,124 @@ export class CarBrandMatchingComponent implements OnInit {
       },
     });
   }
+  findAndReplaceExpert(
+    updatedBrand: CarsbrandMatching[],
+    brandMatch: CarsbrandMatching
+  ): void {
+    const index = updatedBrand.findIndex(
+      (item) => item.dtId === brandMatch.dtId
+    );
+    if (index !== -1) {
+      updatedBrand.splice(index, 1);
+    }
 
+    updatedBrand.push({
+      dtId: brandMatch.dtId,
+      insId: brandMatch.insId,
+      brandId: brandMatch.brandId,
+      insMakeCode: brandMatch.insMakeCode,
+      trademarkId: brandMatch.trademarkId,
+      insModelCode: brandMatch.insModelCode,
+      modelName: brandMatch.modelName,
+    });
+  }
+
+  onDropdownChange(
+    event: Event,
+    brandMatching: CarsbrandMatching,
+    property: 'insId'
+  ): void {
+    const updatedCell = this.updatedBrandMatching ?? {};
+
+    this.findAndReplaceExpert(updatedCell, brandMatching);
+
+    console.log(this.updatedBrandMatching);
+  }
+  onTdDoubleClickBrandId(car: CarsbrandMatching): void {
+    const updatedCell = this.updatedBrandMatching ?? [];
+    car.brandId = this.brandId;
+
+    this.findAndReplaceExpert(updatedCell, car);
+    console.log(this.updatedBrandMatching);
+  }
+
+  onTdDoubleClickTrademarkId(car: CarsbrandMatching) {
+    const updatedCell = this.updatedBrandMatching ?? [];
+    car.trademarkId = this.selectedTrademarkId;
+    this.findAndReplaceExpert(updatedCell, car);
+    console.log(this.updatedBrandMatching);
+  }
+  onTdBlur(
+    event: FocusEvent,
+    car: CarsbrandMatching,
+    property: keyof CarsbrandMatching
+  ): void {
+    const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = car[property];
+    const newValue = tdElement.innerText.trim();
+    const updatedCell = this.updatedBrandMatching ?? [];
+
+    if (oldValue !== newValue) {
+      car[property] = newValue;
+
+      this.findAndReplaceExpert(updatedCell, car);
+
+      console.log(this.updatedBrandMatching);
+    }
+  }
+
+  updateProductReserve() {
+    if (this.updatedBrandMatching?.length) {
+      this.dataService.updateCarDtModels(this.updatedBrandMatching).subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.title);
+          this.updatedBrandMatching = [];
+
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            // this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
+  }
+  openAddBrandDialog() {
+    const dialogRef = this.dialog.open(AddbrandMatchingComponent, {
+      data: {
+        dico: this.dico,
+        company: this.company,
+        brandId: this.brandId,
+        trademarkId: this.selectedTrademarkId,
+      },
+      width: '350px',
+      // maxHeight: '500px',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.searchCarModel();
+    });
+  }
+  deleteBrand(id: string) {
+    this.alertifyService.confirmDialog(
+      'Are you sure you want to delete this resource',
+      () => {
+        this.dataService.deleteCarDtModels(id).subscribe({
+          next: (data) => {
+            this.alertifyService.error(data.title);
+            this.searchCarModel();
+          },
+          error: (err) => {
+            if (err.status === 401 || err.status === 500) {
+              // this.authService.logout();
+              this.alertifyService.dialogAlert(err.error.message);
+            }
+          },
+        });
+      }
+    );
+  }
   searchCarModel() {
     this.isLoading = true;
 

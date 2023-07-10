@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarTrademark } from 'src/app/model/car-trademark';
 import { CarsBrand } from 'src/app/model/cars-brand';
@@ -31,6 +31,8 @@ export class CarTrademarkComponent implements OnInit {
   selectedRow!: HTMLElement;
   dico?: any;
   dateFormats?: any;
+  selectedTrademarkId?: string;
+  @Output() sendTrademarkId = new EventEmitter<string>();
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -51,7 +53,11 @@ export class CarTrademarkComponent implements OnInit {
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
+  saveTrademarkId(trademarkId: CarTrademark) {
+    this.selectedTrademarkId = trademarkId.id;
 
+    this.sendTrademarkId.emit(this.selectedTrademarkId);
+  }
   exportToExcel() {
     const data = this.carTrademark?.map((data) => {
       return {

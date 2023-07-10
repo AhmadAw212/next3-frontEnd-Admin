@@ -6,8 +6,8 @@ export interface CarsbrandMatching {
   insMakeCode?: string;
   brandId?: string;
   trademarkId?: string;
-  sysCreatedDate?: Date;
+  sysCreatedDate?: string;
   sysCreatedBy?: string;
-  sysUpdatedDate?: Date;
+  sysUpdatedDate?: string;
   sysUpdatedBy?: string;
 }

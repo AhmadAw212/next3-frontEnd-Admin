@@ -68,7 +68,9 @@
       >
         <tr
           *ngFor="let trademark of carTrademark; trackBy: trackTrademarkById"
-          (click)="searchCarShape(trademark.id, trademark)"
+          (click)="
+            searchCarShape(trademark.id, trademark); saveTrademarkId(trademark)
+          "
         >
           <td>{{ trademark.id }}</td>
           <td>{{ trademark.code }}</td>

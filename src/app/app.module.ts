@@ -127,6 +127,7 @@ import { CarsCellComponent } from './components/administrator/cars-cell/cars-cel
 import { AddCellComponent } from './components/administrator/cars-cell/add-cell/add-cell.component';
 import { CarsCellSetupComponent } from './components/administrator/cars-cell-setup/cars-cell-setup.component';
 import { AddCarCellSetupComponent } from './components/administrator/cars-cell-setup/add-car-cell-setup/add-car-cell-setup.component';
+import { AddbrandMatchingComponent } from './components/administrator/car-brand-matching/addbrand-matching/addbrand-matching.component';
 
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
@@ -220,6 +221,7 @@ import { AddCarCellSetupComponent } from './components/administrator/cars-cell-s
     AddCellComponent,
     CarsCellSetupComponent,
     AddCarCellSetupComponent,
+    AddbrandMatchingComponent,
   ],
   imports: [
     BrowserModule,

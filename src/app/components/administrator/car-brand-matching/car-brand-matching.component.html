@@ -66,13 +66,18 @@
       </button>
     </form>
     <div class="admin-button">
-      <button type="button" *ngIf="hasPerm('admAddData')">
+      <button
+        type="button"
+        *ngIf="hasPerm('admAddData')"
+        (click)="openAddBrandDialog()"
+      >
         {{ dico?.dico_add_car || "dico_add_car" }}
       </button>
       <button
         type="button"
         style="margin-left: 8px"
         *ngIf="hasPerm('admUpdateData')"
+        (click)="updateProductReserve()"
       >
         Update Car
       </button>
@@ -83,13 +88,13 @@
     <thead>
       <tr>
         <th>{{ dico?.dico_id || "dico_id" }}</th>
-        <!-- <th>{{ dico?.dico_insurance_id || "dico_insurance_id" }}</th> -->
+        <th>{{ dico?.dico_insurance || "dico_insurance" }}</th>
         <th>
           {{ dico?.dico_brand_id || "dico_brand_id" }}
         </th>
-        <th>{{ dico?.dico_model_code || "dico_model_code" }}</th>
+        <th>{{ dico?.dico_make_code || "dico_make_code" }}</th>
         <th>{{ dico?.dico_trademark_id || "dico_trademark_id" }}</th>
-        <th>{{ dico?.dico_ins_model_code || "dico_ins_model_code" }}</th>
+        <th>{{ dico?.dico_ins_model_code || "dico_model_code" }}</th>
         <th>{{ dico?.dico_model_name || "dico_model_name" }}</th>
         <th>
           {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
@@ -108,12 +113,53 @@
     >
       <tr *ngFor="let cars of carModelMatch; trackBy: trackByBrandId">
         <td>{{ cars.dtId }}</td>
-        <!-- <td>{{ cars.insId }}</td> -->
-        <td>{{ cars.brandId }}</td>
-        <td>{{ cars.insMakeCode }}</td>
-        <td>{{ cars.trademarkId }}</td>
-        <td>{{ cars.insModelCode }}</td>
-        <td>{{ cars.modelName }}</td>
+        <td>
+          <select
+            id="company"
+            name="company"
+            required
+            class="company-select select-class"
+            [(ngModel)]="cars.insId"
+            [disabled]="companies?.length! <= 1"
+            (ngModelChange)="onDropdownChange($event, cars, 'insId')"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyId"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+        </td>
+        <td
+          contenteditable="true"
+          (dblclick)="onTdDoubleClickBrandId(cars)"
+          (blur)="onTdBlur($event, cars, 'brandId')"
+        >
+          {{ cars.brandId }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, cars, 'insMakeCode')"
+        >
+          {{ cars.insMakeCode }}
+        </td>
+        <td
+          contenteditable="true"
+          (dblclick)="onTdDoubleClickTrademarkId(cars)"
+          (blur)="onTdBlur($event, cars, 'trademarkId')"
+        >
+          {{ cars.trademarkId }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, cars, 'insModelCode')"
+        >
+          {{ cars.insModelCode }}
+        </td>
+        <td contenteditable="true" (blur)="onTdBlur($event, cars, 'modelName')">
+          {{ cars.modelName }}
+        </td>
         <td>
           {{ cars.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
         </td>
@@ -124,7 +170,11 @@
         <td>{{ cars.sysUpdatedBy }}</td>
 
         <td>
-          <mat-icon *ngIf="hasPerm('admDeleteData')">delete</mat-icon>
+          <mat-icon
+            *ngIf="hasPerm('admDeleteData')"
+            (click)="deleteBrand(cars.dtId!)"
+            >delete</mat-icon
+          >
         </td>
         <!-- <td>
           <mat-icon >edit</mat-icon>
