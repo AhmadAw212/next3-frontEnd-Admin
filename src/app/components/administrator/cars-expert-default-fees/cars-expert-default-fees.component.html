@@ -29,6 +29,13 @@
 
 <div class="admin-container container-fluid">
   <div class="user-inputs">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="getCarExpertDefaultFees()"
+    >
+      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+    </button>
     <div class="btn-group">
       <button
         class="btn btn-primary"
@@ -49,13 +56,6 @@
         {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      (click)="getCarExpertDefaultFees()"
-    >
-      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-    </button>
   </div>
 
   <table class="table table-responsive">

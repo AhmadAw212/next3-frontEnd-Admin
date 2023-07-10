@@ -31,28 +31,10 @@
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
     <form (ngSubmit)="searchCarModel()">
-      <label for="show">{{ dico?.dico_show || "dico_show" }}:</label>
-      <select
-        id="show"
-        name="show"
-        [(ngModel)]="selectedShow"
-        class="select-class"
-      >
-        <option *ngFor="let show of ShowOptions" [value]="show">
-          {{ show }}
-        </option>
-      </select>
-
       <label for="makeCode"
         >{{ dico?.dico_make_code || "dico_make_code" }}:</label
       >
-      <input
-        type="text"
-        id="makeCode"
-        name="makeCode"
-        [(ngModel)]="makeCode"
-        class="select-class"
-      />
+      <input type="text" id="makeCode" name="makeCode" [(ngModel)]="makeCode" />
 
       <label for="modelName"
         >{{ dico?.dico_model_name || "dico_model_name" }}:</label
@@ -62,8 +44,22 @@
         id="modelName"
         name="modelName"
         [(ngModel)]="modelName"
-        class="select-class"
       />
+      <label for="show"
+        >{{ dico?.dico_show || "dico_show" }}
+        <span class="required">*</span>:</label
+      >
+      <select
+        id="show"
+        name="show"
+        [(ngModel)]="selectedShow"
+        class="select-class"
+        style="margin-right: 10px"
+      >
+        <option *ngFor="let show of ShowOptions" [value]="show">
+          {{ show }}
+        </option>
+      </select>
 
       <button type="submit">
         {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
