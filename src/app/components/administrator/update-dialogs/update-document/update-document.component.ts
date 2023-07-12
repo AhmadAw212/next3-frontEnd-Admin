@@ -61,7 +61,9 @@ export class UpdateDocumentComponent implements OnInit {
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
-
+  closeDialog() {
+    this.dialogRef.close();
+  }
   updateDocument() {
     const id = this.data.id!;
     const company = this.data.company!;

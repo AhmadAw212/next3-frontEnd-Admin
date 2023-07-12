@@ -34,7 +34,7 @@ export class CarsBrandComponent implements OnInit {
   brandId?: string;
   selectedTrademarkId?: string;
   showBrandMatchingTable?: boolean = true;
-  @Input() selectedShapeId?: string;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,

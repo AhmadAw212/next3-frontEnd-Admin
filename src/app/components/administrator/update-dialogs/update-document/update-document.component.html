@@ -30,6 +30,7 @@
       class="btn btn-danger"
       style="margin: 10px"
       *ngIf="hasPerm('admUpdateData')"
+      (click)="closeDialog()"
     >
       {{ dico?.dico_cancel || "dico_cancel" }}
     </button>
