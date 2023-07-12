@@ -60,8 +60,8 @@ export class CarTrademarkComponent implements OnInit {
 
     this.sendTrademarkId.emit(this.selectedTrademarkId);
   }
-  selectShapeId(data: string) {
-    this.selectedShapeId = data;
+  selectTrademarkId(data: string) {
+    this.selectedTrademarkId = data;
     console.log(this.selectedTrademarkId);
   }
 

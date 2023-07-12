@@ -478,14 +478,26 @@
             </ngx-editor>
           </div>
         </div>
-        <button
-          class="btn"
-          [disabled]="!userForm.valid"
-          *ngIf="hasPerm('admAddData')"
-        >
-          {{ dico?.dico_add_user || "dico_add_user" }}
-        </button>
+
+        <div class="form-group">
+          <label for="user Picture"
+            >{{ dico?.dico_user_picture || "dico_user_picture" }}:</label
+          >
+          <input
+            type="file"
+            name="file"
+            id="file"
+            (change)="onFileSelected($event)"
+          />
+        </div>
       </div>
+      <button
+        class="btn"
+        [disabled]="!userForm.valid"
+        *ngIf="hasPerm('admAddData')"
+      >
+        {{ dico?.dico_add_user || "dico_add_user" }}
+      </button>
     </form>
   </div>
 </div>

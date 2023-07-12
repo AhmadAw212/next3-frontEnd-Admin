@@ -21,6 +21,8 @@ export class LoginNavComponent implements OnInit {
   reportDateTimeFormat?: string;
   dateFormats?: any;
   dico?: any;
+  logo?: string;
+  userPic!: string;
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -64,7 +66,7 @@ export class LoginNavComponent implements OnInit {
         if (err.status === 401) {
           // this.authService.refreshTokens();
           // this.authService.logout();
-           this.alertifyService.dialogAlert('Error');
+          this.alertifyService.dialogAlert('Error');
         }
       },
     });
@@ -80,6 +82,9 @@ export class LoginNavComponent implements OnInit {
     this.dataService.loginUserInfo().subscribe({
       next: (data) => {
         this.loginInfo = data.data;
+        this.logo = `data:image/jpeg;base64,${this.loginInfo?.logo}`;
+        this.userPic = `data:image/jpeg;base64,${this.loginInfo?.userPicture}`;
+
         // console.log(data.data);
       },
       error: (err) => {

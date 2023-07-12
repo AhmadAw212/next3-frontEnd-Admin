@@ -28,6 +28,7 @@ export class AddUserComponent implements OnInit {
   dico?: any;
   editor!: Editor;
   isLoading: boolean = false;
+  file?: File;
   toolbar: Toolbar = [
     ['bold', 'italic', 'align_center'],
     ['underline', 'strike', 'align_justify'],
@@ -156,15 +157,22 @@ export class AddUserComponent implements OnInit {
   get form() {
     return this.userForm.controls;
   }
-
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    this.file = file;
+    console.log(file);
+    // this.contentType = file.type;
+    // this.fileName = file.name;
+    // this.filePath = event.target.value;
+  }
   addUser(): void {
     if (this.userForm.valid) {
       const formData = { ...this.userForm.value };
-      const wrappedValue = `<div><p>${formData.userEmailSignature}</p></div>`;
+      // const wrappedValue = `<div><p>${formData.userEmailSignature}</p></div>`;
 
-      formData.userEmailSignature = wrappedValue;
+      // formData.userEmailSignature = wrappedValue;
 
-      this.dataService.addUser(formData).subscribe({
+      this.dataService.addUser(formData, this.file!).subscribe({
         next: (res: ApiResponse) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
             this.alertify.error(res.message!);

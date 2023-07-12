@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,8 +35,10 @@ export class CarsCellComponent implements OnChanges, OnInit {
   substring?: string = '';
   users?: any[];
   updatedCell: CarsCell[] = [];
-  showCellSetup?: boolean = false;
+  @Input() showCellSetup?: boolean = false;
   selectedCell?: CarsCell;
+  // @Output() showCellSetupEmit = new EventEmitter<boolean>();
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -127,6 +131,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
   }
 
   getCarsCell() {
+    this.showCellSetup = false;
     const id = this.selectedCase?.id!;
     this.dataService.getCarsCells(id).subscribe({
       next: (res) => {

@@ -1,8 +1,6 @@
 <nav class="navbar-class">
   <div class="navbar-left">
-    <a routerLink="/profiles-main"
-      ><img src="assets/images/basicLogo.jpg" alt="Logo"
-    /></a>
+    <a routerLink="/profiles-main"><img [src]="logo" alt="Logo" /></a>
   </div>
   <div class="navbar-right">
     <span class="navbar-date">
@@ -12,7 +10,16 @@
     >
     <div class="navbar-dropdown">
       <button class="navbar-username">
-        <img src="assets/images/cs.png" alt="Avatar" />
+        <ng-container
+          *ngIf="userPic && userPic !== 'data:image/jpeg;base64,null'"
+        >
+          <img [src]="userPic" alt="Avatar" />
+        </ng-container>
+        <ng-container
+          *ngIf="!userPic || userPic === 'data:image/jpeg;base64,null'"
+        >
+          <img src="../../../assets/images/cs.png" alt="Avatar" />
+        </ng-container>
         {{ loginInfo?.displayName }}
       </button>
       <div class="navbar-dropdown-content">

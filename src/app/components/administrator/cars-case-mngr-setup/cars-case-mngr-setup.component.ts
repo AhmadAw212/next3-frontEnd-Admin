@@ -25,6 +25,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
   updatedCaseMngr: CaseMngrSetup[] = [];
   showCarsCell?: boolean = false;
   selectedCaseMngr?: CaseMngrSetup;
+  showCellSetup?: boolean;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -122,6 +123,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
   }
 
   getCaseMngrSetup() {
+    this.showCellSetup = false;
     this.isLoading = true;
     this.dataService.getCarsCaseMngrSetup().subscribe({
       next: (res) => {

@@ -98,10 +98,25 @@ export class DataServiceService {
     );
   }
 
-  addUser(user: CoreUser): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.userUrl}/user/addUser`, user);
-  }
+  // addUser(user: CoreUser, file: File): Observable<ApiResponse> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file);
 
+  //   return this.http.post<ApiResponse>(`${this.userUrl}/user/addUser`, user);
+  // }
+  addUser(addUserRequest: CoreUser, file?: File): Observable<ApiResponse> {
+    const formData = new FormData();
+    formData.append('addUserRequest', JSON.stringify(addUserRequest));
+
+    if (file) {
+      formData.append('file', file);
+    }
+
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/user/addUser`,
+      formData
+    );
+  }
   getCompanyId(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/companiesList`);
   }
