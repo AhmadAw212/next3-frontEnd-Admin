@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class MaterialDamageComponent {
   @Input() matDamage: any;
+  @Input() dico?: any;
 }

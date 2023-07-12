@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarsBrand } from 'src/app/model/cars-brand';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -34,6 +34,7 @@ export class CarsBrandComponent implements OnInit {
   brandId?: string;
   selectedTrademarkId?: string;
   showBrandMatchingTable?: boolean = true;
+  @Input() selectedShapeId?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -61,8 +62,9 @@ export class CarsBrandComponent implements OnInit {
   }
   selectTrademarkId(data: string) {
     this.selectedTrademarkId = data;
-    // console.log(this.selectedTrademarkId);
+    console.log(this.selectedTrademarkId);
   }
+
   exportToExcel() {
     const data = this.carsBrandData?.map((data) => {
       return {

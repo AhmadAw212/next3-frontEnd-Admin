@@ -7,20 +7,18 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   styleUrls: ['./bodily-injury.component.css'],
 })
 export class BodilyInjuryComponent {
-  dico?: any;
+  @Input() dico?: any;
   @Input() Injured!: any;
 
   constructor(private dicoService: DicoServiceService) {}
 
-
-ngOnInit(): void {
-  
-  this.getDico();
-}
-getDico() {
-  this.dicoService.getDico();
-  this.dicoService.dico.subscribe((data) => {
-    this.dico = data;
-  });
-}
+  ngOnInit(): void {
+    // this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
 }

@@ -8,9 +8,11 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 })
 export class DataEntryDetailsComponent implements OnInit {
   @Input() lossCarList: any;
-  dico?: any;
+  @Input() dico?: any;
 
-  ngOnInit(): void {this.getDico();}
+  ngOnInit(): void {
+    // this.getDico();
+  }
 
   getDico() {
     this.dicoService.getDico();

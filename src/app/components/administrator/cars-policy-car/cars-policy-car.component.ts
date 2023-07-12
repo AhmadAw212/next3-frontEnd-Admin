@@ -27,6 +27,7 @@ export class CarsPolicyCarComponent implements OnChanges {
   updatingPolicyCar: CarsPolicyCar[] = [];
   @Input() brandId?: string;
   @Input() trademarkId?: string;
+  @Input() shapeId?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -156,6 +157,13 @@ export class CarsPolicyCarComponent implements OnChanges {
   onTdDoubleClickTrademark(car: CarsPolicyCar): void {
     const updatedCell = this.updatingPolicyCar ?? [];
     car.carTrademarkId = this.trademarkId;
+
+    this.findAndReplaceExpert(updatedCell, car);
+    console.log(this.updatingPolicyCar);
+  }
+  onTdDoubleClickShape(car: CarsPolicyCar): void {
+    const updatedCell = this.updatingPolicyCar ?? [];
+    car.carShapeId = this.shapeId;
 
     this.findAndReplaceExpert(updatedCell, car);
     console.log(this.updatingPolicyCar);

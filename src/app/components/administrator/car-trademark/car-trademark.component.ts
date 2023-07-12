@@ -33,6 +33,7 @@ export class CarTrademarkComponent implements OnInit {
   dateFormats?: any;
   selectedTrademarkId?: string;
   @Output() sendTrademarkId = new EventEmitter<string>();
+  @Input() selectedShapeId?: string;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -58,6 +59,11 @@ export class CarTrademarkComponent implements OnInit {
 
     this.sendTrademarkId.emit(this.selectedTrademarkId);
   }
+  selectShapeId(data: string) {
+    this.selectedShapeId = data;
+    console.log(data);
+  }
+
   exportToExcel() {
     const data = this.carTrademark?.map((data) => {
       return {

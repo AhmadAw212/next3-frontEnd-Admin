@@ -44,6 +44,7 @@ export class CarBrandMatchingComponent implements OnInit {
   updatedBrandMatching: CarsbrandMatching[] = [];
   selectedCarsPolicyCar?: CarsbrandMatching;
   showPolicyCar?: boolean = false;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -198,22 +199,23 @@ export class CarBrandMatchingComponent implements OnInit {
 
     this.findAndReplaceExpert(updatedCell, brandMatching);
 
-    console.log(this.updatedBrandMatching);
+    // console.log(this.updatedBrandMatching);
   }
   onTdDoubleClickBrandId(car: CarsbrandMatching): void {
     const updatedCell = this.updatedBrandMatching ?? [];
     car.brandId = this.brandId;
 
     this.findAndReplaceExpert(updatedCell, car);
-    console.log(this.updatedBrandMatching);
+    // console.log(this.updatedBrandMatching);
   }
 
   onTdDoubleClickTrademarkId(car: CarsbrandMatching) {
     const updatedCell = this.updatedBrandMatching ?? [];
     car.trademarkId = this.selectedTrademarkId;
     this.findAndReplaceExpert(updatedCell, car);
-    console.log(this.updatedBrandMatching);
+    // console.log(this.updatedBrandMatching);
   }
+
   onTdBlur(
     event: FocusEvent,
     car: CarsbrandMatching,
@@ -229,7 +231,7 @@ export class CarBrandMatchingComponent implements OnInit {
 
       this.findAndReplaceExpert(updatedCell, car);
 
-      console.log(this.updatedBrandMatching);
+      // console.log(this.updatedBrandMatching);
     }
   }
 
@@ -240,7 +242,7 @@ export class CarBrandMatchingComponent implements OnInit {
           this.alertifyService.success(res.title);
           this.updatedBrandMatching = [];
 
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {

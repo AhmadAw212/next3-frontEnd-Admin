@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarShape } from 'src/app/model/car-shape';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -28,7 +28,8 @@ export class CarShapeComponent implements OnInit {
   showCarInfo = false;
   selectedRow!: HTMLElement;
   dico?: any;
-
+  @Output() sendShapeId = new EventEmitter<string>();
+  selectedShapeId?: string;
   dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
@@ -188,5 +189,11 @@ export class CarShapeComponent implements OnInit {
       this.searchCarShape();
       this.showCarInfo = true;
     });
+  }
+
+  saveShapeId(shapeId: CarShape) {
+    this.selectedShapeId = shapeId.carShapeId;
+    this.sendShapeId.emit(this.selectedShapeId);
+    // console.log(this.selectedShapeId);
   }
 }

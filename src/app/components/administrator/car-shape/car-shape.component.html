@@ -50,7 +50,7 @@
     >
       <tr
         *ngFor="let shape of carShape; trackBy: trackShapeById"
-        (click)="searchCarInfo(shape.carShapeId, shape)"
+        (click)="searchCarInfo(shape.carShapeId, shape); saveShapeId(shape)"
       >
         <td>{{ shape.carShapeId }}</td>
         <td>{{ shape.carShapeCode }}</td>

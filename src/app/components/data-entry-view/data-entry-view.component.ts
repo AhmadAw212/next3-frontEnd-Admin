@@ -28,7 +28,6 @@ export class DataEntryViewComponent implements OnInit {
   selectedMatDamage?: any;
   dico?: any;
 
-
   constructor(
     private dataService: DataServiceService,
     private router: Router,
@@ -80,23 +79,25 @@ export class DataEntryViewComponent implements OnInit {
 
   //10.9091591
   getDataEntry() {
-    this.dataService.getDataEntry('2a53e157-3713-42a3-87cd-099d9efb4bc6').subscribe({
-      next: (res) => {
-        this.dataEntry = res.data;
-        this.lossCarList = res.data.lossCarList;
-        this.bodilyInjuryList = res.data.bodilyInjuryList;
-        this.materialDamageList = res.data.materialDamageList;
-        console.log(res);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+    this.dataService
+      .getDataEntry('fff5c353-887c-4e02-873e-47dc7f947410')
+      .subscribe({
+        next: (res) => {
+          this.dataEntry = res.data;
+          this.lossCarList = res.data.lossCarList;
+          this.bodilyInjuryList = res.data.bodilyInjuryList;
+          this.materialDamageList = res.data.materialDamageList;
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            //this.authService.logout();
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
   }
 }

@@ -80,7 +80,7 @@ export class UpdateDocumentComponent implements OnInit {
         this.filePath!,
         this.contentType!,
         company,
-        file
+        this.file!
       )
       .subscribe({
         next: (res) => {
