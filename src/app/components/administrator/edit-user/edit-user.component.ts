@@ -132,6 +132,7 @@ export class EditUserComponent implements OnInit {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       data: {
         selectedUser: this.selectedUser,
+        dico: this.dico,
       },
       width: '900px',
       maxHeight: '500px',

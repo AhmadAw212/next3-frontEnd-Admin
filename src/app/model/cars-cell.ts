@@ -9,6 +9,7 @@ export interface CarsCell {
   cellManager?: boolean;
   cellOUt?: boolean;
   cellOutDate?: Date;
+  cellOutDateValue?: Date;
   cellRatio?: number;
   showInList?: boolean;
   sysCreatedBy?: string;

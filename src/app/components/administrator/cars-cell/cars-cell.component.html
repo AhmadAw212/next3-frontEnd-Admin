@@ -98,10 +98,21 @@
         <td>
           <input
             type="date"
-            [(ngModel)]="case.cellOutDate"
             class="select-class"
+            [ngModel]="formatDate(case.cellOutDateValue!)"
+            [(ngModel)]="case.cellOutDateValue"
             (ngModelChange)="onDateChange(case)"
           />
+
+          <!-- withTimepicker: true, -->
+
+          <!-- <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="case.cellOutDateValue"
+            (ngModelChange)="onDateChange(case)"
+          /> -->
+
           <!-- {{ case.cellOutDate | date : dateFormat("reportDateFormat") }} -->
         </td>
         <td contenteditable="true" (blur)="onTdBlur($event, case, 'cellRatio')">

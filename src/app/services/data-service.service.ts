@@ -133,9 +133,18 @@ export class DataServiceService {
     );
   }
 
-  editUser(user: CoreUser): Observable<ApiResponse> {
+  editUser(editUserRequest: CoreUser, file?: File): Observable<ApiResponse> {
     // const coreUser = CoreUser.fromJSON(user);
-    return this.http.post<ApiResponse>(`${this.userUrl}/user/editUser`, user);
+    const formData = new FormData();
+    formData.append('editUserRequest', JSON.stringify(editUserRequest));
+    if (file) {
+      formData.append('file', file);
+    }
+
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/user/editUser`,
+      formData
+    );
   }
 
   editUserStatus(userId: string, status: number): Observable<ApiResponse> {
@@ -282,6 +291,7 @@ export class DataServiceService {
   }
 
   addDocument(
+    id: string,
     fileName: string,
     filePath: string,
     contentType: string,
@@ -293,7 +303,7 @@ export class DataServiceService {
 
     const url = `${
       this.userUrl
-    }/core-document/new?&fileName=${encodeURIComponent(
+    }/core-document/new?id=${id}&fileName=${encodeURIComponent(
       fileName
     )}&filePath=${encodeURIComponent(
       filePath
