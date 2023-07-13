@@ -37,8 +37,10 @@ export class CarsCellComponent implements OnChanges, OnInit {
   updatedCell: CarsCell[] = [];
   @Input() showCellSetup?: boolean = false;
   selectedCell?: CarsCell;
+  reportDateFormat?: string;
+  isDateVisible: boolean = true;
   // @Output() showCellSetupEmit = new EventEmitter<boolean>();
-
+  myDateValue?: Date;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -48,7 +50,21 @@ export class CarsCellComponent implements OnChanges, OnInit {
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService
-  ) {}
+  ) {
+    // this.reportDateFormat = this.dateFormat('reportDateFormat');
+    // console.log(this.reportDateFormat);
+  }
+  formatDate(date: Date) {
+    const formattedDate = this.datePipe.transform(
+      date,
+      this.dateFormat('reportDateFormat')
+    );
+    // console.log(formattedDate);
+    // return formattedDate || '';
+  }
+  showDate() {
+    this.isDateVisible = true;
+  }
   ngOnInit(): void {
     this.getUsers();
   }
@@ -79,6 +95,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
     this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
+
   exportToExcel() {
     const dico_products_reserve = this.dico.dico_product_reserve;
     const data = this.carsCell?.map((data) => {
@@ -90,7 +107,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
         'Cell Manager': data.cellManager,
         Out: data.cellOUt,
         'Out Date': this.datePipe.transform(
-          data.cellOutDate,
+          data.cellOutDateValue,
           this.dateFormat('reportDateFormat')
         ),
         'Cell Ratio': data.cellRatio,
@@ -169,9 +186,10 @@ export class CarsCellComponent implements OnChanges, OnInit {
       cellType: carsCell.cellType,
       managerFirstName: carsCell.managerFirstName,
       managerLastName: carsCell.managerLastName,
+      cellOutDateValue: carsCell.cellOutDateValue,
       cellManager: carsCell.cellManager,
       cellOUt: carsCell.cellOUt,
-      cellOutDate: carsCell.cellOutDate,
+      // cellOutDate: carsCell.cellOutDate,
       cellRatio: carsCell.cellRatio,
       showInList: carsCell.showInList,
     });

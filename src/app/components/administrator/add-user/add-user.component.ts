@@ -160,7 +160,6 @@ export class AddUserComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     this.file = file;
-    console.log(file);
     // this.contentType = file.type;
     // this.fileName = file.name;
     // this.filePath = event.target.value;

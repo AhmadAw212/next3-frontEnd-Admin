@@ -37,7 +37,7 @@
         <td (click)="RoleList(profile)">{{ profile.description }}</td>
         <td>
           <mat-icon
-            *ngIf="hasPerm('admDeleteDatas')"
+            *ngIf="hasPerm('admDeleteData')"
             (click)="deleteProfile(profile.id!)"
             >delete</mat-icon
           >

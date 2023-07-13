@@ -16,17 +16,24 @@
 <div class="admin-container container-fluid" style="height: 250px">
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="user-inputs">
+    <label for="modelName">{{ dico?.dico_min_year || "dico_min_year" }}:</label>
+    <input
+      type="text"
+      id="minYear"
+      name="minYear"
+      [disabled]="true"
+      [(ngModel)]="minYear"
+    />
+
+    <label for="makeCode">{{ dico?.dico_max_year || "dico_max_year" }}:</label>
+    <input
+      type="text"
+      id="maxYear"
+      name="maxYear"
+      [(ngModel)]="maxYear"
+      [disabled]="true"
+    />
     <form>
-      <label for="makeCode"
-        >{{ dico?.dico_max_year || "dico_max_year" }}:</label
-      >
-      <input type="text" id="maxYear" name="maxYear" [(ngModel)]="maxYear" />
-
-      <label for="modelName"
-        >{{ dico?.dico_min_year || "dico_min_year" }}:</label
-      >
-      <input type="text" id="minYear" name="minYear" [(ngModel)]="minYear" />
-
       <button type="submit" (click)="getcarsPolicyCar()">
         {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
       </button>

@@ -48,7 +48,7 @@ export class AddCarSupplierComponent implements OnInit {
   }
   buildForm(): void {
     this.carSupplierForm = this.formBuilder.group({
-      id: ['', Validators.required],
+      id: [''],
       companyId: this.companyId,
       interm: ['', Validators.required],
       number: ['', Validators.pattern(/^\d+$/)],
@@ -75,7 +75,7 @@ export class AddCarSupplierComponent implements OnInit {
       bus_id: [''],
       grade_id: [''],
       show_in_list: [false],
-      fullName: ['', Validators.required],
+      fullName: [''],
       out_network: [false],
       fdate: ['', Validators.required],
       inAcctD: [''],

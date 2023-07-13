@@ -26,6 +26,8 @@ export class EditUserDialogComponent implements OnInit {
   editor!: Editor;
   isLoading?: boolean = false;
   dico: any;
+  userPic?: string;
+  file?: File;
   toolbar: Toolbar = [
     ['bold', 'italic', 'align_center'],
     ['underline', 'strike', 'align_justify'],
@@ -44,12 +46,26 @@ export class EditUserDialogComponent implements OnInit {
     private authService: AuthService
   ) {
     this.usersInfo = data.selectedUser;
-    console.log(this.usersInfo);
+    this.dico = data.dico;
+    this.userPic = `data:image/jpeg;base64,${data.selectedUser.userPicture}`;
+    // console.log(this.usersInfo);
   }
   stripHtmlTags(html: string): string {
     return html?.replace(/<[^>]+>/g, '');
   }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    this.file = file;
+    // console.log(file);
 
+    // this.editForm.get('userPicture')?.setValue(file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.userPic = reader.result as string; // store the base64 representation of the image
+    };
+    reader.readAsDataURL(file);
+  }
   getDico() {
     const language = localStorage.getItem('selectedLanguage')!;
     this.dataService.Dico(language).subscribe({
@@ -128,12 +144,12 @@ export class EditUserDialogComponent implements OnInit {
     this.companyBranchService.getCompanyId();
     this.companyBranchService.getBranchId(this.usersInfo.companyId);
     this.editUserForm();
-    this.getDico();
+    // this.getDico();
     this.editor = new Editor();
   }
 
   editUser() {
-    this.dataService.editUser(this.editForm.value).subscribe({
+    this.dataService.editUser(this.editForm.value, this.file).subscribe({
       next: (res) => {
         this.alertifyService.success(res.message!);
         this.dataService.getUsers.next(res.data);

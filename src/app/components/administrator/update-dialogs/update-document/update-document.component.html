@@ -6,8 +6,12 @@
     <div class="logo-preview-container">
       <img [src]="data.content" alt="Preview Logo" class="preview-logo" />
     </div>
+
     <label>{{ dico?.dico_upload_file || "dico_upload_file" }}:</label>
     <input type="file" name="file" (change)="onFileSelected($event)" />
+    <!-- 
+    <label>{{ dico?.dico_id || "dico_id" }}:</label>
+    <input type="text" name="id" [(ngModel)]="id" /> -->
 
     <label>{{ dico?.dico_file_name || "dico_file_name" }}:</label>
     <input type="text" name="fileName" [(ngModel)]="fileName" />

@@ -20,10 +20,11 @@ import { DatePipe } from '@angular/common';
 })
 export class UpdateDocumentComponent implements OnInit {
   dico?: any;
-  file?: File;
+  file?: any;
   contentType?: string;
   fileName?: string;
   filePath?: string;
+  id?: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CoreDocument,
     private dataService: DataServiceService,
@@ -34,6 +35,7 @@ export class UpdateDocumentComponent implements OnInit {
     private dicoService: DicoServiceService,
     private userRolesService: UsersRolesService
   ) {
+    this.id = data.id;
     this.fileName = data.fileName;
     this.filePath = data.filePath;
     this.contentType = data.contentType;
@@ -66,36 +68,66 @@ export class UpdateDocumentComponent implements OnInit {
   }
   updateDocument() {
     const id = this.data.id!;
-    const company = this.data.company!;
-    const byteCharacters = window.atob(this.data.content.split(',')[1]);
-    const byteArrays = [];
+    if (!this.file) {
+      const company = this.data.company!;
+      const byteCharacters = window.atob(this.data.content.split(',')[1]);
+      const byteArrays = [];
 
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteArrays.push(byteCharacters.charCodeAt(i));
-    }
-    const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/png' });
-    const file = new File([blob], this.fileName!, { type: 'image/png' });
-    this.dataService
-      .updateDocument(
-        id,
-        this.fileName!,
-        this.filePath!,
-        this.contentType!,
-        company,
-        this.file!
-      )
-      .subscribe({
-        next: (res) => {
-          this.dialogRef.close();
-          this.alertifyService.success(res.message!);
-          // console.log(res);
-        },
-        error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            //this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
-        },
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays.push(byteCharacters.charCodeAt(i));
+      }
+      const blob = new Blob([new Uint8Array(byteArrays)], {
+        type: 'image/png',
       });
+      const file = new File([blob], this.fileName!, { type: 'image/png' });
+
+      this.dataService
+        .updateDocument(
+          id!,
+          this.fileName!,
+          this.filePath!,
+          this.contentType!,
+          company,
+          file
+        )
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close();
+            this.alertifyService.success(res.message!);
+            // console.log(res);
+          },
+          error: (err) => {
+            if (err.status === 401 || err.status === 500) {
+              //this.authService.logout();
+              this.alertifyService.dialogAlert('Error');
+            }
+          },
+        });
+    } else {
+      const company = this.data.company!;
+      const id = this.data.id!;
+      this.dataService
+        .updateDocument(
+          id,
+          this.fileName!,
+          this.filePath!,
+          this.contentType!,
+          company,
+          this.file
+        )
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close();
+            this.alertifyService.success(res.message!);
+            // console.log(res);
+          },
+          error: (err) => {
+            if (err.status === 401 || err.status === 500) {
+              //this.authService.logout();
+              this.alertifyService.dialogAlert('Error');
+            }
+          },
+        });
+    }
   }
 }

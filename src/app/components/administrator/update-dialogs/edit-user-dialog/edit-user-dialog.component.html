@@ -3,6 +3,16 @@
     <legend><h2>User Info</h2></legend>
     <div class="form-row">
       <div class="form-group">
+        <label for="userPic"
+          >{{ dico?.dico_user_picture || "dico_user_picture" }} :</label
+        >
+        <img [src]="userPic" alt="Preview Logo" class="preview-logo" />
+        <br />
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
         <label for="username"
           >{{ dico?.dico_user_name || "dico_user_name" }} :</label
         >
