@@ -464,7 +464,9 @@
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label for="emailSignature">Email Signature:</label>
+          <label for="emailSignature"
+            >{{ dico?.dico_email_signature || "dico_email_signature" }}:</label
+          >
           <div class="NgxEditor__Wrapper">
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
             </ngx-editor-menu>
