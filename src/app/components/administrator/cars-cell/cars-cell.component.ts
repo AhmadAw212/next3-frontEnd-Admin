@@ -55,12 +55,14 @@ export class CarsCellComponent implements OnChanges, OnInit {
     // console.log(this.reportDateFormat);
   }
   formatDate(date: Date) {
-    const formattedDate = this.datePipe.transform(
-      date,
-      this.dateFormat('reportDateFormat')
-    );
-    // console.log(formattedDate);
-    // return formattedDate || '';
+    if (date) {
+      const formattedDate = new Date(date);
+      return this.datePipe.transform(
+        formattedDate,
+        this.dateFormat('reportDateFormat')
+      );
+    }
+    return null;
   }
   showDate() {
     this.isDateVisible = true;
