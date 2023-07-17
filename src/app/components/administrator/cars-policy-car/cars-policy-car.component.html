@@ -1,6 +1,6 @@
 <div class="h3-header">
   <h3>
-    {{ dico?.dico_cars_policy_car || "dico_cars_policy_car" }}
+    {{ dico?.dico_policy || "dico_policy" }}
 
     <button
       type="button"
@@ -56,10 +56,10 @@
   <table>
     <thead>
       <tr>
-        <th>{{ dico?.dico_car_brand_desc || "dico_car_brand_desc" }}</th>
-        <th>{{ dico?.dico_trademark_desc || "dico_trademark_desc" }}</th>
+        <th>{{ dico?.dico_brand_description || "dico_brand_description" }}</th>
+        <th>{{ dico?.dico_trademark || "dico_trademark" }}</th>
         <th>
-          {{ dico?.dico_car_brand_id || "dico_car_brand_id" }}
+          {{ dico?.dico_brand_id || "dico_brand_id" }}
         </th>
         <th>
           {{ dico?.dico_trademark_id || "dico_trademark_id" }}
@@ -69,13 +69,13 @@
           {{ dico?.dico_brand_code || "dico_brand_code" }}
         </th>
         <th>
-          {{ dico?.dico_trademark_code || "dico_trademark_code" }}
+          {{ dico?.dico_model_code || "dico_model_code" }}
         </th>
-        <th>{{ dico?.dico_shape_code || "dico_shape_code" }}</th>
+        <th>{{ dico?.dico_body || "dico_body" }}</th>
         <th>{{ dico?.dico_policy_number || "dico_policy_number" }}</th>
-        <th>{{ dico?.dico_car_year || "dico_car_year" }}</th>
-        <th>{{ dico?.dico_car_chasis || "dico_car_chasis" }}</th>
-        <th>{{ dico?.dico_car_plate || "dico_car_plate" }}</th>
+        <th>{{ dico?.dico_year || "dico_year" }}</th>
+        <th>{{ dico?.dico_chassis || "dico_chassis" }}</th>
+        <th>{{ dico?.dico_plate || "dico_plate" }}</th>
         <th>{{ dico?.dico_car_id || "dico_car_id" }}</th>
         <th>
           {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
