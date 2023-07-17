@@ -20,7 +20,7 @@ export class AddCarSupplierComponent implements OnInit {
   addressName?: string = '';
   carSupplierForm!: FormGroup;
   dico?: any;
-
+  savedUserData: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dataService: DataServiceService,
@@ -34,6 +34,7 @@ export class AddCarSupplierComponent implements OnInit {
     this.companyId = this.data.company;
     console.log(data);
   }
+
   ngOnInit(): void {
     this.buildForm();
     this.getTitleLov();
@@ -114,9 +115,10 @@ export class AddCarSupplierComponent implements OnInit {
   addCarSupplier() {
     this.dataService.addCarSupplier(this.carSupplierForm.value).subscribe({
       next: (res) => {
-        this.dialogRef.close();
+        this.dialogRef.close(res.data);
         this.alertifyService.success(res.message);
-        console.log(res);
+        // this.dialogRef.close();
+        // console.log(res.data);
       },
       error: (err) => {
         console.log(err);

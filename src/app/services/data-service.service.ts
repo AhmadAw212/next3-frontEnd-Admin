@@ -405,6 +405,19 @@ export class DataServiceService {
     );
   }
 
+  updateBrandSerial(
+    company: string,
+    matchDate: string,
+    brandId: string,
+    modelName: string
+  ): Observable<ApiResponse> {
+    const UpdateBrandRequest = { company, matchDate, brandId, modelName };
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/carDtModels/update-brand-serial`,
+      UpdateBrandRequest
+    );
+  }
+
   addCarBrand(
     code: string,
     description: string,
@@ -718,11 +731,15 @@ export class DataServiceService {
     return this.http.get<ApiResponse>(`${this.userUrl}/constant/getGenderList`);
   }
 
-  findCarSupplier(nameSubstring: string, interm_code: string) {
+  findCarSupplier(
+    nameSubstring: string,
+    interm_code: string,
+    phoneNumber: string
+  ) {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/cars-supplier/search?nameSubstring=${encodeURIComponent(
         nameSubstring
-      )}&interm_code=${interm_code}`
+      )}&interm_code=${interm_code}&phoneNumber=${phoneNumber}`
     );
   }
 

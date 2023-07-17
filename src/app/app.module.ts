@@ -129,7 +129,7 @@ import { CarsCellSetupComponent } from './components/administrator/cars-cell-set
 import { AddCarCellSetupComponent } from './components/administrator/cars-cell-setup/add-car-cell-setup/add-car-cell-setup.component';
 import { AddbrandMatchingComponent } from './components/administrator/car-brand-matching/addbrand-matching/addbrand-matching.component';
 import { CarsPolicyCarComponent } from './components/administrator/cars-policy-car/cars-policy-car.component';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
@@ -238,7 +238,8 @@ import { CarsPolicyCarComponent } from './components/administrator/cars-policy-c
     MatInputModule,
     MatNativeDateModule,
     MatToolbarModule,
-
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatListModule,
     MatIconModule,
     MatSelectModule,
@@ -259,6 +260,7 @@ import { CarsPolicyCarComponent } from './components/administrator/cars-policy-c
     NgxEditorModule,
   ],
   providers: [
+    // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

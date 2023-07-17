@@ -22,7 +22,10 @@
       >
       <input type="text" id="name" name="name" [(ngModel)]="name" />
 
-      <label for="type">{{ dico?.dico_type || "dico_type" }}:</label>
+      <label for="type"
+        >{{ dico?.dico_type || "dico_type" }}
+        <span class="required">*</span>:</label
+      >
       <select
         id="type"
         name="type"
@@ -33,6 +36,12 @@
           {{ type.description }}
         </option>
       </select>
+
+      <label for="mobile"
+        >{{ dico?.dico_mobile_number || "dico_mobile_number" }}:</label
+      >
+      <input type="text" id="mobile" name="mobile" [(ngModel)]="mobile" />
+
       <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
     </form>
     <div class="admin-button">

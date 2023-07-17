@@ -96,21 +96,42 @@
           />
         </td>
         <td>
-          <input
-            type="date"
-            class="select-class"
-            [ngModel]="formatDate(case.cellOutDateValue!)"
-            (ngModelChange)="onDateChange(case)"
-          />
+          <!-- <input
+            type="text"
+            bsDaterangepicker
+            triggers="keydown click"
+            class="form-control"
+            [bsConfig]="{
+              containerClass: 'theme-default',
+              rangeInputFormat: 'MMM DD, YYYY'
+            }"
+          /> -->
 
           <!-- withTimepicker: true, -->
 
+          <input
+            type="text"
+            class="select-class"
+            bsDatepicker
+            [ngModel]="formatDate(case.cellOutDate!)"
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY'
+            }"
+            (ngModelChange)="onDateChange(case, $event)"
+          />
+
           <!-- <input
-            type="date"
-            class="form-control"
-            [(ngModel)]="case.cellOutDateValue"
-            (ngModelChange)="onDateChange(case)"
-          /> -->
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="case.cellOutDate"
+            (ngModelChange)="onDateChange(case, $event)"
+            class="select-class"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker> -->
 
           <!-- {{ case.cellOutDate | date : dateFormat("reportDateFormat") }} -->
         </td>

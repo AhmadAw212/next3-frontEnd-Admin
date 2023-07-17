@@ -37,7 +37,7 @@
       <input type="text" id="makeCode" name="makeCode" [(ngModel)]="makeCode" />
 
       <label for="modelName"
-        >{{ dico?.dico_model_code || "dico_model_code" }}:</label
+        >{{ dico?.dico_model_name || "dico_model_name" }}:</label
       >
       <input
         type="text"
@@ -60,6 +60,19 @@
           {{ show.description }}
         </option>
       </select>
+
+      <button type="button" (click)="UpdateSerialBrand()">
+        {{ dico?.dico_run_match || "dico_run_match" }}
+      </button>
+
+      <input
+        class="select-class"
+        style="margin-left: 10px"
+        type="date"
+        id="date"
+        name="date"
+        [(ngModel)]="date"
+      />
 
       <button type="submit">
         {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}

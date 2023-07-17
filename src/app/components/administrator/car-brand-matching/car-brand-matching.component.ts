@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as saveAs from 'file-saver';
@@ -44,7 +44,7 @@ export class CarBrandMatchingComponent implements OnInit {
   updatedBrandMatching: CarsbrandMatching[] = [];
   selectedCarsPolicyCar?: CarsbrandMatching;
   showPolicyCar?: boolean = false;
-
+  date?: Date;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -310,6 +310,27 @@ export class CarBrandMatchingComponent implements OnInit {
         },
         complete: () => {
           this.isLoading = false;
+        },
+      });
+  }
+
+  UpdateSerialBrand() {
+    // const date = this.datePipe.transform(this.date, 'dd-MM-yyyy')!;
+    const formattedDate = formatDate(this.date!, 'dd-MMM-yyyy', 'en-US');
+    this.dataService
+      .updateBrandSerial(
+        this.company!,
+        formattedDate,
+        this.brandId!,
+        this.modelName!
+      )
+      .subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message);
+          console.log(res);
+        },
+        error: (err) => {
+          this.alertifyService.error(err.error.message);
         },
       });
   }

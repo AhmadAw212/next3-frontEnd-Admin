@@ -22,10 +22,10 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 export class CarsSupplierComponent implements OnInit {
   showMoreInfo?: boolean = false;
   suppType?: type[];
-  selectedType?: string = '';
+  selectedType: string = '';
   companies?: CompanyBranchList[];
   company?: string;
-  name?: string = '';
+  name: string = '';
   carSupplier?: CarSupplier[];
   selectedSupplier?: CarSupplier;
   reportDateTimeFormat?: string;
@@ -34,6 +34,7 @@ export class CarsSupplierComponent implements OnInit {
   isLoading: boolean = false;
   dateFormats?: any;
   dico?: any;
+  mobile: string = '';
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -170,7 +171,7 @@ export class CarsSupplierComponent implements OnInit {
       error: (err) => {
         this.alertifyService.dialogAlert('Error');
         console.log(err);
-        	 this.alertifyService.dialogAlert('Error');
+        this.alertifyService.dialogAlert('Error');
         // this.alertifyService.error(err.error.message);
       },
     });
@@ -193,19 +194,21 @@ export class CarsSupplierComponent implements OnInit {
 
   searchCarSupplier() {
     this.isLoading = true;
-    this.dataService.findCarSupplier(this.name!, this.selectedType!).subscribe({
-      next: (res) => {
-        this.carSupplier = res.data;
-        // console.log(res);
-      },
-      error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+    this.dataService
+      .findCarSupplier(this.name!, this.selectedType!, this.mobile!)
+      .subscribe({
+        next: (res) => {
+          this.carSupplier = res.data;
+          // console.log(res);
+        },
+        error: (err) => {
+          this.alertifyService.dialogAlert('Error');
+          console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
   }
   handleSupplierUpdated(event: any) {
     this.carSupplier = event;
@@ -254,8 +257,13 @@ export class CarsSupplierComponent implements OnInit {
       width: '350px',
       maxHeight: '600px',
     });
-    dialogRef.afterClosed().subscribe(() => {
-      this.searchCarSupplier();
+    dialogRef.afterClosed().subscribe((data: CarSupplier) => {
+      // console.log(data);
+      if (data) {
+        this.name = data.fullName;
+        this.selectedType = data.interm;
+        this.searchCarSupplier();
+      }
     });
   }
 }

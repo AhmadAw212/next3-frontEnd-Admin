@@ -20,6 +20,9 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { CarsCell } from 'src/app/model/cars-cell';
 import { AddCellComponent } from './add-cell/add-cell.component';
+import { DateTime } from 'luxon';
+import * as moment from 'moment';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-cars-cell',
   templateUrl: './cars-cell.component.html',
@@ -41,6 +44,8 @@ export class CarsCellComponent implements OnChanges, OnInit {
   isDateVisible: boolean = true;
   // @Output() showCellSetupEmit = new EventEmitter<boolean>();
   myDateValue?: Date;
+  formattedDate: string | null = null;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -54,19 +59,13 @@ export class CarsCellComponent implements OnChanges, OnInit {
     // this.reportDateFormat = this.dateFormat('reportDateFormat');
     // console.log(this.reportDateFormat);
   }
-  formatDate(date: Date) {
-    if (date) {
-      const formattedDate = new Date(date);
-      return this.datePipe.transform(
-        formattedDate,
-        this.dateFormat('reportDateFormat')
-      );
-    }
-    return null;
+  formatDate(date: string) {
+    // const backendDate = new Date(date);
+    // Replace 'yyyy-MM-dd' with your desired date format
+    return this.datePipe.transform(date, this.dateFormat('reportDateFormat'));
+    // console.log(dates);
   }
-  showDate() {
-    this.isDateVisible = true;
-  }
+
   ngOnInit(): void {
     this.getUsers();
   }
@@ -78,7 +77,8 @@ export class CarsCellComponent implements OnChanges, OnInit {
     this.showCellSetup = true;
   }
   dateFormat(dateId: string) {
-    return this.dateFormatService.getDateFormat(dateId);
+    const dateFormat = this.dateFormatService.getDateFormat(dateId);
+    return dateFormat;
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -165,14 +165,30 @@ export class CarsCellComponent implements OnChanges, OnInit {
     const selectedUser = this.users?.find(
       (user) => user.username === cases.managerId
     );
+
     if (selectedUser) {
+      // Update the managerId, managerFirstName, and managerLastName properties
+      cases.managerId = selectedUser.username;
       cases.managerFirstName = selectedUser.firstName;
       cases.managerLastName = selectedUser.lastName;
     }
-    const updatedCell = this.updatedCell ?? {};
-    this.findAndReplaceExpert(updatedCell, cases);
 
-    console.log(updatedCell);
+    // Find the existing cell in the updatedCell array, if it exists
+    const existingCell = this.updatedCell.find((item) => item.id === cases.id);
+
+    if (existingCell) {
+      // If the existing cell is found, update the specific properties and keep the date
+      existingCell.managerId = cases.managerId;
+      existingCell.managerFirstName = cases.managerFirstName;
+      existingCell.managerLastName = cases.managerLastName;
+    } else {
+      // If the cell does not exist in the updatedCell array, add it with the current properties
+      this.updatedCell.push({
+        ...cases,
+      });
+    }
+
+    console.log(this.updatedCell);
   }
   findAndReplaceExpert(updatedCell: CarsCell[], carsCell: CarsCell): void {
     const index = updatedCell.findIndex((item) => item.id === carsCell.id);
@@ -188,47 +204,80 @@ export class CarsCellComponent implements OnChanges, OnInit {
       cellType: carsCell.cellType,
       managerFirstName: carsCell.managerFirstName,
       managerLastName: carsCell.managerLastName,
-      cellOutDateValue: carsCell.cellOutDateValue,
+      // cellOutDateValue: carsCell.cellOutDateValue,
       cellManager: carsCell.cellManager,
       cellOUt: carsCell.cellOUt,
-      // cellOutDate: carsCell.cellOutDate,
+      cellOutDate: carsCell.cellOutDate,
       cellRatio: carsCell.cellRatio,
       showInList: carsCell.showInList,
     });
   }
-  onDropdownChange(event: Event, cell: CarsCell, property: 'managerId'): void {
-    // const selectedValue = (event.target as HTMLSelectElement).value;
-    const updatedCell = this.updatedCell ?? {};
+  onDropdownChange(event: Event, cell: CarsCell): void {
+    const events = (event.target as HTMLSelectElement).value;
+    this.updatedCell.push({
+      ...cell,
+      managerId: events,
+    });
 
-    this.findAndReplaceExpert(updatedCell, cell);
-
-    // console.log(this.updatedExpert);
+    console.log(this.updatedCell);
   }
-  onCheckboxChange(carsCell: CarsCell): void {
+  onCheckboxChange(carsCell: CarsCell) {
     const cellManager = carsCell.cellManager ?? false;
     const cellOUt = carsCell.cellOUt ?? false;
     const showInList = carsCell.showInList ?? false;
 
-    const updatedCell = this.updatedCell ?? {};
+    // Find the existing cell in the updatedCell array, if it exists
+    const existingCell = this.updatedCell.find(
+      (item) => item.id === carsCell.id
+    );
 
-    this.findAndReplaceExpert(updatedCell, carsCell);
+    if (existingCell) {
+      // If the existing cell is found, update the specific properties and keep the date
+      existingCell.cellManager = cellManager;
+      existingCell.cellOUt = cellOUt;
+      existingCell.showInList = showInList;
+    } else {
+      // If the cell does not exist in the updatedCell array, add it with the current properties
+      this.updatedCell.push({
+        ...carsCell,
+      });
+    }
+
     console.log(this.updatedCell);
   }
-  onDateChange(carsCell: CarsCell) {
-    const updatedCell = this.updatedCell ?? {};
-    this.findAndReplaceExpert(updatedCell, carsCell);
+  onDateChange(carsCell: CarsCell, event: any) {
+    const updatedCell = this.updatedCell ?? [];
+    const formattedDate = formatDate(event, 'yyyy-MM-dd', 'en');
+    updatedCell.push({
+      ...carsCell,
+      cellOutDate: formattedDate,
+    });
+    // this.findAndReplaceExpert(updatedCell, carsCell);
     console.log(this.updatedCell);
   }
+
   onTdBlur(event: FocusEvent, cell: CarsCell, property: 'cellRatio'): void {
     const tdElement = event.target as HTMLTableCellElement;
     const oldValue = cell[property];
     const newValue = tdElement.innerText.trim();
-    const updatedExpert = this.updatedCell ?? [];
+    const updatedCell = this.updatedCell ?? [];
 
     if (oldValue !== parseFloat(newValue)) {
       cell[property] = parseFloat(newValue);
 
-      this.findAndReplaceExpert(updatedExpert, cell);
+      // Find the existing cell in the updatedCell array, if it exists
+      const existingCell = updatedCell.find((item) => item.id === cell.id);
+
+      if (existingCell) {
+        // If the existing cell is found, update the specific property and keep the date
+        existingCell[property] = parseFloat(newValue);
+      } else {
+        // If the cell does not exist in the updatedCell array, add it with the current properties
+        updatedCell.push({
+          ...cell,
+        });
+      }
+
       console.log(this.updatedCell);
     }
   }

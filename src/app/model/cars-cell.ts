@@ -8,8 +8,8 @@ export interface CarsCell {
   managerLastName?: string;
   cellManager?: boolean;
   cellOUt?: boolean;
-  cellOutDate?: Date;
-  cellOutDateValue?: Date;
+  cellOutDate?: string;
+  cellOutDateValue?: string;
   cellRatio?: number;
   showInList?: boolean;
   sysCreatedBy?: string;
