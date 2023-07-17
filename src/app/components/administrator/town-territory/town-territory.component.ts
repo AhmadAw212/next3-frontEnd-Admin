@@ -37,7 +37,7 @@ export class TownTerritoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCompaniesPerUser();
+    // this.getCompaniesPerUser();
     this.getDico();
     this.userRolesService.getUserRoles();
   }

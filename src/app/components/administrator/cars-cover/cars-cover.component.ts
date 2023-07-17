@@ -125,7 +125,7 @@ export class CarsCoverComponent implements OnInit {
     saveAs(excelBlob, 'Covers.xlsx');
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });
