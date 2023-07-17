@@ -17,11 +17,16 @@ table thead {
   position: sticky;
   /* top:0 */
   top: 42px;
-  z-index: 2;
+  z-index: 1;
   /* background-color: #f2f2f2; */
   
 }
-
+.bs-datepicker-body table thead {
+  top: 0;
+  position: relative;
+  /* z-index: 0; */
+  /* background-color:#1884d7; */
+}
 table tr.highlight{
   background-color: #e0f2db;
 }
@@ -64,6 +69,7 @@ th {
   /* font-size:medium ; */
   /* font-weight:normal; */
 }
+
 .car-logo-container {
   position: relative;
   display: inline-block;

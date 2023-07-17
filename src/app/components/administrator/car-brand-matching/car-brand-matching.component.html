@@ -61,10 +61,28 @@
         </option>
       </select>
 
+      <button type="submit">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
+
+      <input
+        type="text"
+        class="select-class"
+        name="datePicker"
+        id="datePicker"
+        bsDatepicker
+        style="margin-left: 70px"
+        [(ngModel)]="date"
+        [bsConfig]="{
+          dateInputFormat: 'DD/MM/YYYY',
+          containerClass: 'theme-dark-blue'
+        }"
+      />
       <button type="button" (click)="UpdateSerialBrand()">
         {{ dico?.dico_run_match || "dico_run_match" }}
       </button>
 
+      <!-- 
       <input
         class="select-class"
         style="margin-left: 10px"
@@ -72,11 +90,7 @@
         id="date"
         name="date"
         [(ngModel)]="date"
-      />
-
-      <button type="submit">
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-      </button>
+      /> -->
     </form>
     <div class="admin-button">
       <button

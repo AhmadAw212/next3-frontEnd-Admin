@@ -44,7 +44,7 @@ export class CarBrandMatchingComponent implements OnInit {
   updatedBrandMatching: CarsbrandMatching[] = [];
   selectedCarsPolicyCar?: CarsbrandMatching;
   showPolicyCar?: boolean = false;
-  date?: Date;
+  date?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -54,11 +54,15 @@ export class CarBrandMatchingComponent implements OnInit {
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService
-  ) {}
+  ) {
+    //
+  }
   ngOnInit(): void {
     this.dateFormatterService();
     this.getCompaniesPerUser();
     // this.getDico();
+    this.date = new Date();
+    // this.date = formatDate(currentDate, 'dd/MM/yyyy', 'en')!;
     this.getBrandMatchingLov();
     this.userRolesService.getUserRoles();
   }
@@ -316,11 +320,12 @@ export class CarBrandMatchingComponent implements OnInit {
 
   UpdateSerialBrand() {
     // const date = this.datePipe.transform(this.date, 'dd-MM-yyyy')!;
-    const formattedDate = formatDate(this.date!, 'dd-MMM-yyyy', 'en-US');
+    // const formattedDate = formatDate(this.date!, 'dd/MM/yyyy', 'en-US');
+    this.date = formatDate(this.date, 'dd/MM/yyyy', 'en-US');
     this.dataService
       .updateBrandSerial(
         this.company!,
-        formattedDate,
+        this.date!,
         this.brandId!,
         this.modelName!
       )
