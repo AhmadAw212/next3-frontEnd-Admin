@@ -15,19 +15,22 @@
   </div>
   <div class="admin-container container-fluid" style="height: 200px">
     <div class="user-inputs">
-      <form
-        (ngSubmit)="userSearch(userCodeInput.value, displayNameInput.value)"
-      >
+      <form (ngSubmit)="userSearch()">
         <label for="user-code"
           >{{ dico?.dico_user_code || "dico_user_code" }}:</label
         >
         <!-- or you can user [(ngModel)]="userCode" -->
-        <input type="text" id="user-code" name="user-code" #userCodeInput />
+        <input
+          type="text"
+          id="user-code"
+          name="user-code"
+          [(ngModel)]="username"
+        />
 
         <label for="user-name"
           >{{ dico?.dico_display_name || "dico_display_name" }}:
         </label>
-        <input type="text" id="user-name" name="user-name" #displayNameInput />
+        <input type="text" id="user-name" name="user-name" [(ngModel)]="name" />
 
         <label for="role">{{ dico?.dico_role || "dico_role" }}: </label>
         <ng-select

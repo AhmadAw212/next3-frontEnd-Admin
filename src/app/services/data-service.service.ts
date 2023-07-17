@@ -127,9 +127,13 @@ export class DataServiceService {
     );
   }
 
-  userSearch(username: string, displayName: string): Observable<ApiResponse> {
+  userSearch(
+    username: string,
+    displayName: string,
+    role: string
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/user/userSearch?username=${username}&name=${displayName}`
+      `${this.userUrl}/user/userSearch?username=${username}&name=${displayName}&roleId=${role}`
     );
   }
 

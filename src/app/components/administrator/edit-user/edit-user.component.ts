@@ -34,7 +34,9 @@ export class EditUserComponent implements OnInit {
   userName?: string = '';
   private searchTimer: any;
   roles?: type[];
-  selectedRole?: any;
+  selectedRole: string = '';
+  username: string = '';
+  name: string = '';
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -169,7 +171,7 @@ export class EditUserComponent implements OnInit {
       next: (data) => {
         const userName = data.userName!;
         const displayName = data.displayName!;
-        this.userSearch(userName, displayName);
+        this.userSearch();
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
@@ -180,20 +182,22 @@ export class EditUserComponent implements OnInit {
     });
   }
 
-  userSearch(username: string, name: string) {
+  userSearch() {
     this.showProfileList = false;
-    this.dataService.userSearch(username, name).subscribe({
-      next: (res) => {
-        this.users = res.data;
-        // console.log(this.users);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
-      },
-    });
+    this.dataService
+      .userSearch(this.username!, this.name!, this.selectedRole!)
+      .subscribe({
+        next: (res) => {
+          this.users = res.data;
+          // console.log(this.users);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            // this.authService.logout();
+            this.alertify.dialogAlert('Error');
+          }
+        },
+      });
   }
 
   editUserStatus(userId: string, active: number) {
@@ -201,7 +205,7 @@ export class EditUserComponent implements OnInit {
     this.dataService.editUserStatus(userId, activeStat).subscribe({
       next: (res) => {
         this.alertify.success(res.title!);
-        this.userSearch(userId, '');
+        this.userSearch();
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {

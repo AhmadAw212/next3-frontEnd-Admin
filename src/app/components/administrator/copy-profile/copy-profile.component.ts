@@ -37,7 +37,7 @@ export class CopyProfileComponent implements OnInit {
   }
 
   getUsers() {
-    this.dataService.userSearch('', '').subscribe({
+    this.dataService.userSearch('', '', '').subscribe({
       next: (users) => {
         this.users = users.data;
       },
