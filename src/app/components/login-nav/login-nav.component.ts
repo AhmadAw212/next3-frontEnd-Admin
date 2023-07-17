@@ -9,6 +9,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { LoginInfo } from 'src/app/model/login-info';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 
 @Component({
   selector: 'app-login-nav',
@@ -31,12 +32,39 @@ export class LoginNavComponent implements OnInit {
     private alertifyService: AlertifyService,
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private loginDataService: LoadingServiceService
   ) {}
   ngOnInit(): void {
-    this.loginUserInfo();
+    this.loadLoginData();
     this.dateFormatterService();
     this.getDico();
+  }
+  private loadLoginData() {
+    const storedLoginData = this.loginDataService.getLoginInfo();
+    if (storedLoginData) {
+      this.setLoginInfo(storedLoginData);
+    } else {
+      this.fetchLoginInfoFromServer();
+    }
+  }
+
+  private fetchLoginInfoFromServer() {
+    this.dataService.loginUserInfo().subscribe({
+      next: (data) => {
+        this.loginDataService.setLoginInfo(data.data);
+        this.setLoginInfo(data.data);
+        // ... other response handling code
+      },
+      error: (err) => {
+        this.alertifyService.error(err.error.message);
+      },
+    });
+  }
+  private setLoginInfo(loginInfo: LoginInfo) {
+    this.loginInfo = loginInfo;
+    this.logo = `data:image/jpeg;base64,${this.loginInfo?.logo}`;
+    this.userPic = `data:image/jpeg;base64,${this.loginInfo?.userPicture}`;
   }
   dateFormatterService() {
     this.dateFormatService.dateFormatter();

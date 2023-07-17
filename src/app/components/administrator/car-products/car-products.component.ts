@@ -110,8 +110,8 @@ export class CarProductsComponent implements OnInit {
     saveAs(excelBlob, fileName);
   }
   getDico() {
-    this.isLoading = true;
-    this.dicoService.getDico();
+    // this.isLoading = true;
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -129,7 +129,7 @@ export class CarProductsComponent implements OnInit {
   }
 
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });

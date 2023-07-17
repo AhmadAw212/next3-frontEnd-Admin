@@ -11,9 +11,9 @@ export class AppComponent {
   imgUrl = 'https://picsum.photos/id/237/200/300';
   isLoading: boolean = false;
   constructor(private loadingService: LoadingServiceService) {
-    this.loadingService.loading.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
+    // this.loadingService.loading.subscribe((isLoading) => {
+    //   this.isLoading = isLoading;
+    // });
   }
   changeImage(e: KeyboardEvent) {
     this.imgUrl = (e.target as HTMLInputElement).value;

@@ -50,7 +50,7 @@ export class CarsClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getTitleLov();
     this.getGenderList();
@@ -116,8 +116,8 @@ export class CarsClientComponent implements OnInit {
     return client.id;
   }
   getDico() {
-    this.isLoading = true;
-    this.dicoService.getDico();
+    // this.isLoading = true;
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -292,7 +292,7 @@ export class CarsClientComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -355,7 +355,7 @@ export class CarsClientComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-             // this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

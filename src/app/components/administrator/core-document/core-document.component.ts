@@ -53,7 +53,6 @@ export class CoreDocumentComponent implements OnInit {
     return doc.id;
   }
   getDico() {
-    this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -111,7 +110,7 @@ export class CoreDocumentComponent implements OnInit {
   }
 
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });

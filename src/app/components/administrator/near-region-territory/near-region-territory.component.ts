@@ -46,7 +46,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     this.getRegionTerritory();
   }
   ngOnInit(): void {
-    this.getRegionTerritory();
+    // this.getRegionTerritory();
     this.dateFormatterService();
     this.getDico();
     this.userRolesService.getUserRoles();
@@ -98,7 +98,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
     saveAs(excelBlob, 'Core_Config.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

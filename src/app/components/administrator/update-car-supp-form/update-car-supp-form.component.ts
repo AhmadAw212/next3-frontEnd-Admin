@@ -101,7 +101,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

@@ -21,7 +21,6 @@
         <label for="user-code"
           >{{ dico?.dico_user_code || "dico_user_code" }}:</label
         >
-
         <!-- or you can user [(ngModel)]="userCode" -->
         <input type="text" id="user-code" name="user-code" #userCodeInput />
 
@@ -30,6 +29,17 @@
         </label>
         <input type="text" id="user-name" name="user-name" #displayNameInput />
 
+        <label for="role">{{ dico?.dico_role || "dico_role" }}: </label>
+        <ng-select
+          appendTo="body"
+          name="supplierName"
+          (search)="searchRoles($event)"
+          [(ngModel)]="selectedRole"
+        >
+          <ng-option *ngFor="let role of roles" [value]="role.code">{{
+            role.description
+          }}</ng-option>
+        </ng-select>
         <button type="submit">
           {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
         </button>

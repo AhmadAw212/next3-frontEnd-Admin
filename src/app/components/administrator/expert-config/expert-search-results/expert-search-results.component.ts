@@ -113,7 +113,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   }
 
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

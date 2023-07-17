@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LoginInfo } from '../model/login-info';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadingServiceService {
-  loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private loginInfoSubject = new BehaviorSubject<LoginInfo | null>(null);
+  public loginInfo$ = this.loginInfoSubject.asObservable();
   constructor() {}
 
-  show(): void {
-    this.loading.next(true);
+  setLoginInfo(loginInfo: LoginInfo) {
+    this.loginInfoSubject.next(loginInfo);
   }
 
-  hide(): void {
-    this.loading.next(false);
+  getLoginInfo(): LoginInfo | null {
+    return this.loginInfoSubject.getValue();
   }
 }

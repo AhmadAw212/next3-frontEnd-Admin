@@ -47,7 +47,6 @@ export class CarsBrandComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
     this.userRolesService.getUserRoles();
@@ -105,8 +104,6 @@ export class CarsBrandComponent implements OnInit {
     saveAs(excelBlob, 'Cars_Brands.xlsx');
   }
   getDico() {
-    // this.isLoading = true;
-    this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

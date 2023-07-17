@@ -67,7 +67,7 @@ export class CarsExpertDefaultFeesComponent implements OnInit {
     return this.userRolesService.hasPermission(role);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -125,7 +125,7 @@ export class CarsExpertDefaultFeesComponent implements OnInit {
     saveAs(excelBlob, 'Expert_Fees.xlsx');
   }
   dateFormatterService() {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
       this.dateFormats = data;
     });

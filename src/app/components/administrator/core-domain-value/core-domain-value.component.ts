@@ -24,7 +24,7 @@ export class CoreDomainValueComponent implements OnInit {
   description: string = '';
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
-  dico?: any;
+  @Input() dico?: any;
   dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
@@ -54,18 +54,13 @@ export class CoreDomainValueComponent implements OnInit {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  getDico() {
-    this.dicoService.getDico();
-    this.dicoService.dico.subscribe((data) => {
-      this.dico = data;
-    });
-  }
+
   trackDomainById(index: number, domain: CoreDomainValue) {
     return domain.id;
   }
   ngOnInit(): void {
     this.dateFormatterService();
-    this.getDico();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {

@@ -60,12 +60,7 @@ export class CarRiskCoverComponent implements OnInit, OnChanges {
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
-  getDico() {
-    this.dicoService.getDico();
-    this.dicoService.dico.subscribe((data) => {
-      this.dico = data;
-    });
-  }
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

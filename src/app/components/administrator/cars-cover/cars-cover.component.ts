@@ -68,7 +68,7 @@ export class CarsCoverComponent implements OnInit {
     return this.userRolesService.hasPermission(role);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

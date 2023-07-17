@@ -418,6 +418,12 @@ export class DataServiceService {
     );
   }
 
+  searchRoles(roleName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/role-search?roleSubstring=${roleName}`
+    );
+  }
+
   addCarBrand(
     code: string,
     description: string,

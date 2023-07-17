@@ -50,7 +50,7 @@ export class ExpertConfigComponent implements OnInit {
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
     private datePipe: DatePipe,
-    private alertifyService : AlertifyService
+    private alertifyService: AlertifyService
   ) {}
 
   ngOnInit(): void {
@@ -62,8 +62,8 @@ export class ExpertConfigComponent implements OnInit {
   }
 
   getDico() {
-    this.isLoading = true;
-    this.dicoService.getDico();
+    // this.isLoading = true;
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

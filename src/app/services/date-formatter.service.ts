@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { ConfigData } from '../model/config-data';
 import { DataServiceService } from './data-service.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
+//dateFormatterSubject
+//date
 export class DateFormatterService {
   dateFormat?: any;
   reportDateTimeFormat?: string;
   reportDateTime?: string;
-  private dateFormatterSubject = new Subject<ConfigData>();
-  date = this.dateFormatterSubject.asObservable();
+  private dateFormatterSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
+  public date: Observable<any> = this.dateFormatterSubject.asObservable();
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService
@@ -22,7 +26,6 @@ export class DateFormatterService {
     this.dataService.dateTimeFormatter().subscribe({
       next: (res) => {
         this.dateFormat = res.data;
-
         this.dateFormatterSubject.next(res.data);
       },
       error: (err) => {

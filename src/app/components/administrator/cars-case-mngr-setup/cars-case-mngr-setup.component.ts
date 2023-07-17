@@ -45,7 +45,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
     this.showCarsCell = true;
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

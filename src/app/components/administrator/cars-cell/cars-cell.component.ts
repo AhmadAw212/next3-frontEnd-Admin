@@ -318,7 +318,11 @@ export class CarsCellComponent implements OnChanges, OnInit {
         this.users = res.data;
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+        } else {
+          this.alertifyService.error(err.error.message);
+        }
       },
     });
   }

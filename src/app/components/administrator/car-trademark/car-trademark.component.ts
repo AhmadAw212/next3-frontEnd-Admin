@@ -29,7 +29,7 @@ export class CarTrademarkComponent implements OnInit {
   showCarShape = false;
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
-  dico?: any;
+  @Input() dico?: any;
   dateFormats?: any;
   selectedTrademarkId?: string;
   @Output() sendTrademarkId = new EventEmitter<string>();
@@ -47,9 +47,8 @@ export class CarTrademarkComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
     this.dateFormatterService();
-    this.getDico();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {

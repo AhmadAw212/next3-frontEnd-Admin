@@ -163,8 +163,6 @@ export class CoreDomainComponent implements OnInit {
     saveAs(excelBlob, 'Core_Domain_Value.xlsx');
   }
   getDico() {
-    this.isLoading = true;
-    this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -241,8 +239,8 @@ export class CoreDomainComponent implements OnInit {
         this.domainValuesList = res.data;
         // console.log(res);
       },
-      error: (err) => {	
-         this.alertifyService.dialogAlert('Error');
+      error: (err) => {
+        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -279,7 +277,7 @@ export class CoreDomainComponent implements OnInit {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-             // this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },

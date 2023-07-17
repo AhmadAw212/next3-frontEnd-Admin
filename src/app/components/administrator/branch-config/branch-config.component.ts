@@ -50,7 +50,7 @@ export class BranchConfigComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCompaniesPerUser();
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
     this.userRolesService.getUserRoles();
@@ -103,7 +103,7 @@ export class BranchConfigComponent implements OnInit {
     saveAs(excelBlob, 'Branch.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

@@ -99,7 +99,7 @@ export class CarBrokerComponent implements OnInit {
     saveAs(excelBlob, 'Broker.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

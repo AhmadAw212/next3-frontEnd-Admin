@@ -15,6 +15,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
+import { type } from 'src/app/model/type';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -31,6 +32,9 @@ export class EditUserComponent implements OnInit {
   selectedRow!: HTMLElement;
   dateFormats?: any;
   userName?: string = '';
+  private searchTimer: any;
+  roles?: type[];
+  selectedRole?: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -112,10 +116,26 @@ export class EditUserComponent implements OnInit {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
+  }
+  searchRoles(event: any) {
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      const name = event.term;
+      this.dataService.searchRoles(name).subscribe({
+        next: (res) => {
+          this.roles = res.data;
+          // console.log(res);
+        },
+        error: (err) => {
+          this.alertify.error(err.error.message);
+          console.log(err);
+        },
+      });
+    }, 300);
   }
 
   hasPerm(role: string): boolean {

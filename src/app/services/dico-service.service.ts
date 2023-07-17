@@ -24,7 +24,7 @@ export class DicoServiceService {
         this.dicoSubject.next(languageData.data);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('ERROR');
+        this.alertifyService.dialogAlert(err.error.message);
       },
     });
   }

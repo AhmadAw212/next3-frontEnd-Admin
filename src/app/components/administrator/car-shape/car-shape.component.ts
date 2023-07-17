@@ -27,7 +27,7 @@ export class CarShapeComponent implements OnInit {
   reportDateTimeFormat?: string;
   showCarInfo = false;
   selectedRow!: HTMLElement;
-  dico?: any;
+  @Input() dico?: any;
   @Output() sendShapeId = new EventEmitter<string>();
   selectedShapeId?: string;
   dateFormats?: any;
@@ -43,9 +43,9 @@ export class CarShapeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
-    this.getDico();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {

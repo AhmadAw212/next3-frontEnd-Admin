@@ -41,7 +41,7 @@ export class CarSublinesComponent implements OnInit {
     private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getDico();
@@ -93,8 +93,8 @@ export class CarSublinesComponent implements OnInit {
     saveAs(excelBlob, fileName);
   }
   getDico() {
-    this.isLoading = true;
-    this.dicoService.getDico();
+    // this.isLoading = true;
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -175,7 +175,7 @@ export class CarSublinesComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },
@@ -195,7 +195,7 @@ export class CarSublinesComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

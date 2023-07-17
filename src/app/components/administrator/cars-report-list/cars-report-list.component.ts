@@ -39,7 +39,7 @@ export class CarsReportListComponent implements OnInit {
     private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
     this.getDico();
     this.userRolesService.getUserRoles();
@@ -98,7 +98,7 @@ export class CarsReportListComponent implements OnInit {
     saveAs(excelBlob, 'Report_List.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -260,7 +260,7 @@ export class CarsReportListComponent implements OnInit {
         error: (err) => {
           this.alertifyService.error(err.error.message);
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

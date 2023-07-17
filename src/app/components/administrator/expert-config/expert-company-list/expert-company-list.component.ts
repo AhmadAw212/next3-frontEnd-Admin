@@ -49,7 +49,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     this.getCompaniesPerUser();
     this.userRolesService.getUserRoles();
     this.dateFormatterService();
-    console.log(this.selectedExpert);
+    // console.log(this.selectedExpert);
     this.getDico();
   }
   hasPerm(role: string): boolean {
@@ -97,7 +97,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     saveAs(excelBlob, 'Expert_Companies.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -197,7 +197,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
           },
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
-             // this.authService.logout();
+              // this.authService.logout();
               this.alertifyService.dialogAlert('Error');
             }
           },
@@ -235,7 +235,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
             },
             error: (err) => {
               if (err.status === 401 || err.status === 500) {
-               // this.authService.logout();
+                // this.authService.logout();
                 this.alertifyService.dialogAlert('Error');
               }
             },

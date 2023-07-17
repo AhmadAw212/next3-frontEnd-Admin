@@ -97,7 +97,7 @@ export class CoreConfigurationComponent implements OnInit {
     saveAs(excelBlob, 'Core_Config.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

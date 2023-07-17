@@ -74,7 +74,7 @@ export class TownTerritoryComponent implements OnInit {
     saveAs(excelBlob, 'Territories.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -104,7 +104,7 @@ export class TownTerritoryComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
-         // this.authService.logout();
+          // this.authService.logout();
           this.alertifyService.dialogAlert('Error');
         }
       },
@@ -122,7 +122,7 @@ export class TownTerritoryComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {
-           // this.authService.logout();
+            // this.authService.logout();
             this.alertifyService.dialogAlert('Error');
           }
         },

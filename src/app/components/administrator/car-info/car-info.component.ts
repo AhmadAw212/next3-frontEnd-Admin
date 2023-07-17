@@ -33,7 +33,7 @@ export class CarInfoComponent implements OnInit {
   updatedCarInfoVal?: CarInfo[] = [];
   selectedRow!: HTMLElement;
   dateFormats?: any;
-  dico?: any;
+  @Input() dico?: any;
 
   constructor(
     private dataService: DataServiceService,
@@ -51,9 +51,9 @@ export class CarInfoComponent implements OnInit {
     this.getVehicleSize();
     this.getOldBodyType();
     this.getNewBodyType();
-    this.dateFormatService.dateFormatter();
+    // this.dateFormatService.dateFormatter();
     this.dateFormatterService();
-    this.getDico();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
 
