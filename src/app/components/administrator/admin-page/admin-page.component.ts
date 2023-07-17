@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { Role } from 'src/app/model/role';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -14,7 +15,19 @@ export class AdminPageComponent implements OnInit {
   userProfiles?: CoreProfile;
   userRoles?: Role;
   navBarTitle = 'Administrator';
-  constructor(private dataService: DataServiceService) {}
+  dico?: any;
+  constructor(
+    private dataService: DataServiceService,
+    private dicoService: DicoServiceService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getDico();
+  }
+  getDico() {
+    this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
 }

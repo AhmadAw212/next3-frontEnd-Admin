@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ChangePassDialogComponent } from '../administrator/change-pass-dialog/change-pass-dialog.component';
@@ -20,9 +20,10 @@ export class LoginNavComponent implements OnInit {
   loginInfo?: LoginInfo;
   reportDateTimeFormat?: string;
   dateFormats?: any;
-  dico?: any;
+  // dico?: any;
   logo?: string;
   userPic!: string;
+  @Input() dico?: any;
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -34,7 +35,6 @@ export class LoginNavComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.loginUserInfo();
-
     this.dateFormatterService();
     this.getDico();
   }

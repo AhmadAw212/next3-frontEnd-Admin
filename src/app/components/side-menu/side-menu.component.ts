@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -20,35 +20,35 @@ export class SideMenuComponent implements OnInit {
   searchIcon = faSearch;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  dico?: any;
+  @Input() dico?: any;
   isLoading: boolean = false;
   toggleMenu() {
     this.sidenav.toggle();
   }
   ngOnInit(): void {
-    this.getDico();
+    // this.getDico();
     this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
 
-  getDico() {
-    const language = localStorage.getItem('selectedLanguage')!;
-    this.dataService.Dico(language).subscribe({
-      next: (language) => {
-        this.dico = language.data;
-        // console.log(language);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
-  }
+  // getDico() {
+  //   const language = localStorage.getItem('selectedLanguage')!;
+  //   this.dataService.Dico(language).subscribe({
+  //     next: (language) => {
+  //       this.dico = language.data;
+  //       // console.log(language);
+  //     },
+  //     error: (err) => {
+  //       if (err.status === 401 || err.status === 500) {
+  //         // this.authService.logout();
+  //         this.alertifyService.dialogAlert('Error');
+  //       }
+  //     },
+  //     complete: () => {
+  //       this.isLoading = false;
+  //     },
+  //   });
+  // }
 }

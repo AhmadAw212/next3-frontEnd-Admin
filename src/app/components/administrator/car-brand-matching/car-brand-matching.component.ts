@@ -58,13 +58,13 @@ export class CarBrandMatchingComponent implements OnInit {
     //
   }
   ngOnInit(): void {
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getCompaniesPerUser();
     // this.getDico();
     this.date = new Date();
     // this.date = formatDate(currentDate, 'dd/MM/yyyy', 'en')!;
     this.getBrandMatchingLov();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   showCarsPolicyCar(selectedbrand: CarsbrandMatching) {
     this.showPolicyCar = true;
@@ -332,7 +332,7 @@ export class CarBrandMatchingComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.alertifyService.success(res.message);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           this.alertifyService.error(err.error.message);
