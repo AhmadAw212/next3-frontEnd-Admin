@@ -39,9 +39,9 @@ export class LanguageConfigComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
 
   hasPerm(role: string): boolean {

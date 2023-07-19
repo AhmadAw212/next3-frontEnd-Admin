@@ -16,6 +16,7 @@ import { finalize } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private refreshingToken = false;
+
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,

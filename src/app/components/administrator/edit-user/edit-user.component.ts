@@ -54,8 +54,8 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
-    this.dateFormatterService();
-    this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
   }
   highlightRow(event: Event) {
     const clickedField = event.target as HTMLElement;
@@ -192,10 +192,8 @@ export class EditUserComponent implements OnInit {
           // console.log(this.users);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertify.dialogAlert('Error');
-          }
+          // this.authService.logout();
+          this.alertify.dialogAlert(err.error.message);
         },
       });
   }

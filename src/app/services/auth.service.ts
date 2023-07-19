@@ -15,6 +15,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { LoadingServiceService } from './loading-service.service';
 
 interface User {
   username: string;
@@ -33,7 +34,8 @@ export class AuthService {
     private dataService: DataServiceService,
     private router: Router,
     private alertifyService: AlertifyService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loadingService: LoadingServiceService
   ) {}
 
   authenticate(user: User) {

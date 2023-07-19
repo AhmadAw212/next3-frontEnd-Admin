@@ -47,8 +47,8 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getExpertCompany();
     this.getCompaniesPerUser();
-    this.userRolesService.getUserRoles();
-    this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
     // console.log(this.selectedExpert);
     this.getDico();
   }

@@ -45,7 +45,7 @@ export class AddUserComponent implements OnInit {
     this.editor = new Editor();
     this.getDefaultPass();
     this.user();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

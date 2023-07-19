@@ -42,10 +42,10 @@ export class CarSublinesComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     // this.dateFormatService.dateFormatter();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

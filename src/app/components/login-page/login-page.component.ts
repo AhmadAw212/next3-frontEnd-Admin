@@ -5,6 +5,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 
 interface language {
   key: string;
@@ -28,13 +29,15 @@ export class LoginPageComponent implements OnInit {
     private dataService: DataServiceService,
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private loginDataService: LoadingServiceService
   ) {}
 
   ngOnInit(): void {
     this.clearData();
     this.getLanguages();
     this.Dico(this.defaultLang!);
+    this.loginDataService.clearLoginInfo();
   }
 
   login() {

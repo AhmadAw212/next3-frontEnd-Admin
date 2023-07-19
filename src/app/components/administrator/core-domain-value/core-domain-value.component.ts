@@ -61,7 +61,7 @@ export class CoreDomainValueComponent implements OnInit {
   ngOnInit(): void {
     this.dateFormatterService();
     // this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

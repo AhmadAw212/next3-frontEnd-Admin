@@ -51,11 +51,11 @@ export class CarsClientComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
     // this.dateFormatService.dateFormatter();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getTitleLov();
     this.getGenderList();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

@@ -105,8 +105,8 @@ export class ExpertSearchResultsComponent implements OnInit {
     this.territoryAddress();
     this.getSchedule();
     this.getDico();
-    this.userRolesService.getUserRoles();
-    this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

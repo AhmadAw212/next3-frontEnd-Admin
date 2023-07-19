@@ -47,11 +47,11 @@ export class CarProductsComponent implements OnInit {
     private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getCompaniesPerUser();
     this.getProductsTypes();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   showProductReserve(selectedProduct: CarProducts) {
     this.selectedProduct = selectedProduct;

@@ -321,7 +321,8 @@ export class CarBrandMatchingComponent implements OnInit {
   UpdateSerialBrand() {
     // const date = this.datePipe.transform(this.date, 'dd-MM-yyyy')!;
     // const formattedDate = formatDate(this.date!, 'dd/MM/yyyy', 'en-US');
-    this.date = formatDate(this.date, 'dd/MM/yyyy', 'en-US');
+    this.date = this.datePipe.transform(this.date, 'dd/MM/yyyy');
+    console.log(this.date);
     this.dataService
       .updateBrandSerial(
         this.company!,

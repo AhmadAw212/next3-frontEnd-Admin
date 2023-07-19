@@ -39,7 +39,7 @@ export class TownTerritoryComponent implements OnInit {
   ngOnInit(): void {
     // this.getCompaniesPerUser();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
 
   hasPerm(role: string): boolean {

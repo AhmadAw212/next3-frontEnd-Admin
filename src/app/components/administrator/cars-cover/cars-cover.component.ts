@@ -51,9 +51,9 @@ export class CarsCoverComponent implements OnInit {
   ngOnInit(): void {
     this.getCompaniesPerUser();
     this.getCoverTypes();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   trackCoverById(index: number, brand: CarCover) {
     return brand.id;

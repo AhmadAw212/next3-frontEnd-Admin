@@ -40,7 +40,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
   ) {}
   ngOnInit(): void {
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -50,7 +50,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
     this.getUserRoles(selectedProfile);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

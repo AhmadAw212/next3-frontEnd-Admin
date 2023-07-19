@@ -5,6 +5,7 @@ import { CoreProfile } from 'src/app/model/core-profile';
 import { Role } from 'src/app/model/role';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -18,13 +19,19 @@ export class AdminPageComponent implements OnInit {
   dico?: any;
   constructor(
     private dataService: DataServiceService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRolesService: UsersRolesService
   ) {}
 
   ngOnInit(): void {
     this.getDico();
+    this.userRolesService.getUserRoles();
   }
+  // hasPerm(role: string): boolean {
+  //   return this.userRolesService.hasPermission(role);
+  // }
   getDico() {
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

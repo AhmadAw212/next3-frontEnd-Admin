@@ -46,8 +46,8 @@ export class CarBrokerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
-    this.userRolesService.getUserRoles();
-    this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
     this.getDico();
   }
   exportToExcel() {

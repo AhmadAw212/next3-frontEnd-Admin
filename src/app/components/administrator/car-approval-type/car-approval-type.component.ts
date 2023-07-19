@@ -39,7 +39,7 @@ export class CarApprovalTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompaniesPerUser();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getDico();
   }
   exportToExcel() {
@@ -84,7 +84,7 @@ export class CarApprovalTypeComponent implements OnInit {
     saveAs(excelBlob, 'Approval Type.xlsx');
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

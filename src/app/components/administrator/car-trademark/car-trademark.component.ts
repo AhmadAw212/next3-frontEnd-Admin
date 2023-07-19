@@ -47,9 +47,9 @@ export class CarTrademarkComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateFormatterService();
+    // this.dateFormatterService();
     // this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

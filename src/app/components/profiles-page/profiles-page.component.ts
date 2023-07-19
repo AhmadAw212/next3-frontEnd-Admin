@@ -5,6 +5,7 @@ import { CoreProfile } from 'src/app/model/core-profile';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',
@@ -13,17 +14,20 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class ProfilesPageComponent implements OnInit {
   userProfiles?: CoreProfile[];
   selectedProfile?: CoreProfile;
+  dico?: any;
   // subscription?: Subscription;
   payload?: any;
   constructor(
     private authService: AuthService,
     private router: Router,
     private dataService: DataServiceService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.getUserProfiles();
+    this.getDico();
     localStorage.removeItem('selectedProfile');
   }
   redirectToProfile(profile: CoreProfile) {
@@ -34,7 +38,11 @@ export class ProfilesPageComponent implements OnInit {
       this.router.navigate(['/profiles-main', profile.description]);
     }
   }
-
+  getDico() {
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   getUserProfiles() {
     this.dataService.getUserListProfiles().subscribe({
       next: (profiles) => {

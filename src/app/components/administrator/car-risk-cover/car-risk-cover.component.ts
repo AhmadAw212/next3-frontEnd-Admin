@@ -50,8 +50,8 @@ export class CarRiskCoverComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.dateFormatterService();
-    this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
   }
   trackCoverById(index: number, coverRisk: CoverRisk) {
     return coverRisk.id;

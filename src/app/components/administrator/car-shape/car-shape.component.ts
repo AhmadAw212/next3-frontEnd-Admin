@@ -44,9 +44,9 @@ export class CarShapeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.dateFormatService.dateFormatter();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     // this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

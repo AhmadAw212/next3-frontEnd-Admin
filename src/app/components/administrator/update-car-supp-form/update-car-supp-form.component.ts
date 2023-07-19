@@ -23,7 +23,8 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { DatePipe } from '@angular/common';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ThemePalette } from '@angular/material/core';
-
+import { formatDate } from 'ngx-bootstrap/chronos';
+import * as moment from 'moment';
 @Component({
   selector: 'app-update-car-supp-form',
   templateUrl: './update-car-supp-form.component.html',
@@ -138,8 +139,8 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       show_in_list: [false],
       fullName: [''],
       out_network: [false],
-      fdate: new FormControl({ fdate: '' }),
-      inAcctD: [''],
+      fdate: [null],
+      inAcctD: [null],
       coreUserId: [''],
       initialCount: ['', Validators.pattern(/^\d+$/)],
       registration_number: [''],
@@ -148,6 +149,16 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
 
     if (this.carSupplierForm) {
       this.carSupplierForm.patchValue(this.selectedSupplier!);
+      this.formatDate('fdate');
+      this.formatDate('inAcctD');
+    }
+  }
+  formatDate(controlName: string): void {
+    const control = this.carSupplierForm.get(controlName)?.value;
+    if (control) {
+      const parsedDate = moment(control, 'YYYY-MM-DDTHH:mm:ss');
+      const formattedDate = parsedDate.format('DD/MM/YYYY HH:mm:ss');
+      this.carSupplierForm.patchValue({ [controlName]: formattedDate });
     }
   }
   get formControl() {
@@ -160,8 +171,8 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
+        this.alertifyService.error(err.error.message);
+        // console.log(err);
       },
     });
   }
@@ -171,8 +182,8 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
         this.titleLov = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
+        this.alertifyService.error(err.error.message);
+        // console.log(err);
       },
     });
   }
@@ -190,17 +201,35 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       },
     });
   }
+  // formatDateSend(date: string): string {
+  //   const parsedDate = moment(date, 'DD/MM/YYYY HH:mm:ss');
+  //   return parsedDate.format('YYYY-MM-DDTHH:mm:ss');
+  // }
   updateCarSupplier() {
+    // Reformat the displayed date to 'YYYY-MM-DDTHH:mm:ss' before sending
+    this.carSupplierForm.patchValue({
+      inAcctD: moment(
+        this.carSupplierForm.value.inAcctD,
+        'DD/MM/YYYY HH:mm:ss'
+      ).format('YYYY-MM-DDTHH:mm:ss'),
+      fdate: moment(
+        this.carSupplierForm.value.fdate,
+        'DD/MM/YYYY HH:mm:ss'
+      ).format('YYYY-MM-DDTHH:mm:ss'),
+    });
+
+    // Now you can proceed with the API call to update the car supplier
     this.dataService.updateCarSupplier([this.carSupplierForm.value]).subscribe({
       next: (res) => {
         const updatedSupplier: CarSupplier = res.data;
+
         this.supplierUpdated.emit(updatedSupplier); // Emit the updated data
         this.alertifyService.success(res.message);
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        //this.alertifyService.error(err.error.message);
+        // this.alertifyService.dialogAlert('Error');
+        this.alertifyService.error(err.error.message);
       },
     });
   }

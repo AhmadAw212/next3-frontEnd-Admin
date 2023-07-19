@@ -52,9 +52,9 @@ export class CarInfoComponent implements OnInit {
     this.getOldBodyType();
     this.getNewBodyType();
     // this.dateFormatService.dateFormatter();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     // this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
 
   hasPerm(role: string): boolean {

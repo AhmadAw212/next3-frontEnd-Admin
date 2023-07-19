@@ -47,9 +47,9 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     // this.getRegionTerritory();
-    this.dateFormatterService();
+    // this.dateFormatterService();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
   }
 
   hasPerm(role: string): boolean {

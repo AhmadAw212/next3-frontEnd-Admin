@@ -221,13 +221,31 @@
       <label for="supplierFDate">
         {{ dico?.dico_active_date || "dico_active_date" }}:</label
       >
+
+      <!-- <pre *ngIf="carSupplierForm?.value?.fdate" class="code-preview">{{
+        carSupplierForm?.value?.fdate
+          | date : dateFormat("reportDateTimeFormat")
+      }}</pre> -->
       <input
+        type="text"
+        name="fdate"
+        id="fdate"
+        bsDatepicker
+        placement="left"
+        formControlName="fdate"
+        [bsConfig]="{
+          dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+          containerClass: 'theme-dark-blue',
+          withTimepicker: true
+        }"
+      />
+      <!-- <input
         type="datetime-local"
         id="supplierFDate"
         name="supplierFDate"
-        formControlName="fdate"
+ 
         required
-      />
+      /> -->
       <div
         style="color: red"
         *ngIf="
@@ -243,11 +261,23 @@
         >{{ dico?.dico_inactive_date || "dico_inactive_date" }}:</label
       >
       <input
+        type="text"
+        name="inAcctD"
+        id="inAcctD"
+        bsDatepicker
+        formControlName="inAcctD"
+        [bsConfig]="{
+          dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+          containerClass: 'theme-dark-blue',
+          withTimepicker: true
+        }"
+      />
+      <!-- <input
         type="datetime-local"
         id="supplierInactD"
         name="supplierInactD"
         formControlName="inAcctD"
-      />
+      /> -->
     </div>
     <div class="form-group">
       <label for="supplierEmail">

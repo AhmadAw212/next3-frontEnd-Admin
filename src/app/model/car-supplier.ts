@@ -40,8 +40,8 @@ export interface CarSupplier {
   show_in_list: boolean;
   fullName: string;
   out_network: boolean;
-  fdate: Date;
-  inAcctD: Date;
+  fdate: string;
+  inAcctD: string;
   coreUserId: string;
   initialCount: number;
   registration_number: string;

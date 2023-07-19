@@ -4,6 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-side-menu',
@@ -15,7 +16,8 @@ export class SideMenuComponent implements OnInit {
     private dataService: DataServiceService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private userRolesService: UsersRolesService
+    private userRolesService: UsersRolesService,
+    private dicoService: DicoServiceService
   ) {}
   searchIcon = faSearch;
   @ViewChild(MatSidenav)
@@ -26,13 +28,17 @@ export class SideMenuComponent implements OnInit {
     this.sidenav.toggle();
   }
   ngOnInit(): void {
-    // this.getDico();
-    this.userRolesService.getUserRoles();
+    this.getDico();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
-
+  getDico() {
+    // this.dicoService.getDico();
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   // getDico() {
   //   const language = localStorage.getItem('selectedLanguage')!;
   //   this.dataService.Dico(language).subscribe({

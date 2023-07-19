@@ -39,8 +39,8 @@ export class CarsExpertDefaultFeesComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getDico();
-    this.dateFormatterService();
-    this.userRolesService.getUserRoles();
+    // this.dateFormatterService();
+    // this.userRolesService.getUserRoles();
     this.getCompaniesPerUser();
     this.getCurrency();
   }

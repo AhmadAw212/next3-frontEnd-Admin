@@ -13,7 +13,9 @@ export class LoadingServiceService {
   setLoginInfo(loginInfo: LoginInfo) {
     this.loginInfoSubject.next(loginInfo);
   }
-
+  clearLoginInfo() {
+    this.loginInfoSubject.next(null);
+  }
   getLoginInfo(): LoginInfo | null {
     return this.loginInfoSubject.getValue();
   }
