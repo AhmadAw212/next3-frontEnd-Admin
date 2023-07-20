@@ -130,6 +130,8 @@ import { AddCarCellSetupComponent } from './components/administrator/cars-cell-s
 import { AddbrandMatchingComponent } from './components/administrator/car-brand-matching/addbrand-matching/addbrand-matching.component';
 import { CarsPolicyCarComponent } from './components/administrator/cars-policy-car/cars-policy-car.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ViewNotesComponent } from './components/view-notes/view-notes.component';
+import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialog/view-note-dialog.component';
 // import { MatTimepickerModule } from 'mat-timepicker';
 @NgModule({
   declarations: [
@@ -224,6 +226,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     AddCarCellSetupComponent,
     AddbrandMatchingComponent,
     CarsPolicyCarComponent,
+    ViewNotesComponent,
+    ViewNoteDialogComponent,
   ],
   imports: [
     BrowserModule,

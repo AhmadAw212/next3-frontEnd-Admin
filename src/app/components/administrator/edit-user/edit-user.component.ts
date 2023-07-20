@@ -184,6 +184,9 @@ export class EditUserComponent implements OnInit {
 
   userSearch() {
     this.showProfileList = false;
+    if (this.selectedRole === null) {
+      this.selectedRole = '';
+    }
     this.dataService
       .userSearch(this.username!, this.name!, this.selectedRole!)
       .subscribe({

@@ -16,7 +16,7 @@
   <div class="admin-container container-fluid" style="height: 200px">
     <div class="user-inputs">
       <form (ngSubmit)="userSearch()">
-        <label for="user-code"
+        <label for="user-code" class="user-label"
           >{{ dico?.dico_user_code || "dico_user_code" }}:</label
         >
         <!-- or you can user [(ngModel)]="userCode" -->
@@ -27,12 +27,14 @@
           [(ngModel)]="username"
         />
 
-        <label for="user-name"
+        <label for="user-name" class="user-label"
           >{{ dico?.dico_display_name || "dico_display_name" }}:
         </label>
         <input type="text" id="user-name" name="user-name" [(ngModel)]="name" />
 
-        <label for="role">{{ dico?.dico_role || "dico_role" }}: </label>
+        <label class="user-label" for="role"
+          >{{ dico?.dico_role || "dico_role" }}:
+        </label>
         <ng-select
           appendTo="body"
           name="supplierName"
@@ -140,7 +142,7 @@
 </div>
 <mat-tab-group *ngIf="showProfileList">
   <mat-tab label="Profiles">
-    <div class="admin-container" style="height: fit-content">
+    <div class="admin-container">
       <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
     </div>
   </mat-tab>

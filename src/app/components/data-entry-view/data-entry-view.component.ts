@@ -41,7 +41,7 @@ export class DataEntryViewComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -80,14 +80,14 @@ export class DataEntryViewComponent implements OnInit {
   //10.9091591
   getDataEntry() {
     this.dataService
-      .getDataEntry('fff5c353-887c-4e02-873e-47dc7f947410')
+      .getDataEntry('2a53e157-3713-42a3-87cd-099d9efb4bc6')
       .subscribe({
         next: (res) => {
           this.dataEntry = res.data;
           this.lossCarList = res.data.lossCarList;
           this.bodilyInjuryList = res.data.bodilyInjuryList;
           this.materialDamageList = res.data.materialDamageList;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           if (err.status === 401 || err.status === 500) {

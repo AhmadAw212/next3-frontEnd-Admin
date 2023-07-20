@@ -23,23 +23,25 @@ export class ViewPolicyDialogComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
   }
   viewPolicy() {
-    this.dataService.viewPolicy('10.7.MO.3200803267.0.0.1').subscribe({
-      next: (data) => {
-        this.policyData = data.data;
-        this.policyCoverlist = data.data?.policyCoverlist;
-        console.log(data.data);
-      },
-      error: (error) => {
-        // console.log(error);
-      },
-      complete: () => {},
-    });
+    this.dataService
+      .viewPolicy('02de27c8-c00c-4286-9b76-1fe0f85b3ed2')
+      .subscribe({
+        next: (data) => {
+          this.policyData = data.data;
+          this.policyCoverlist = data.data?.policyCoverlist;
+          // console.log(data.data);
+        },
+        error: (error) => {
+          // console.log(error);
+        },
+        complete: () => {},
+      });
   }
 
   close() {

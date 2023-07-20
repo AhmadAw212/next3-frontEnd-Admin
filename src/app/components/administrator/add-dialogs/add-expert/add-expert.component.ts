@@ -41,7 +41,7 @@ export class AddExpertComponent implements OnInit {
     this.getDico();
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

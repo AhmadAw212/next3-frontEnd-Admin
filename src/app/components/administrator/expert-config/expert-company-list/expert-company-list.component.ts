@@ -231,6 +231,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
           .subscribe({
             next: (data) => {
               this.alertifyService.error(data.title);
+              this.getExpertCompany();
               // this.expertSearchResult = data.data;
             },
             error: (err) => {
@@ -245,8 +246,13 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   }
 
   openAddExpertDialog() {
-    this.dialog.open(AddExpertCompanyComponent, {
+    const dialogRef = this.dialog.open(AddExpertCompanyComponent, {
       data: { companies: this.companies, selectedExpert: this.selectedExpert },
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getExpertCompany();
+      }
     });
   }
 }
