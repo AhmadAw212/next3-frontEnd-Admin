@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -113,6 +114,18 @@ export class AddCarSupplierComponent implements OnInit {
   }
 
   addCarSupplier() {
+    let formattedInAcctD = moment(
+      this.carSupplierForm.value.inAcctD,
+      'DD/MM/YYYY HH:mm:ss'
+    ).format('YYYY-MM-DDTHH:mm:ss');
+    let formattedFdate = moment(
+      this.carSupplierForm.value.fdate,
+      'DD/MM/YYYY HH:mm:ss'
+    ).format('YYYY-MM-DDTHH:mm:ss');
+    this.carSupplierForm.patchValue({
+      inAcctD: formattedInAcctD,
+      fdate: formattedFdate,
+    });
     this.dataService.addCarSupplier(this.carSupplierForm.value).subscribe({
       next: (res) => {
         this.dialogRef.close(res.data);
