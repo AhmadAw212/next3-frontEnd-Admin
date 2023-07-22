@@ -34,7 +34,8 @@ export class ProfilesPageComponent implements OnInit {
     if (profile.description === 'Administrator') {
       localStorage.setItem('selectedProfile', profile.id!);
       this.router.navigate(['Administrator']);
-    } else {
+    } else if (profile.description === 'CallCenter') {
+      localStorage.setItem('selectedProfile', profile.id!);
       this.router.navigate(['/profiles-main', profile.description]);
     }
   }
@@ -68,7 +69,7 @@ export class ProfilesPageComponent implements OnInit {
           // this.authService.logout();
           // this.alertifyService.dialogAlert('Error');
         } else {
-          this.alertifyService.dialogAlert('Error');
+          this.alertifyService.dialogAlert(err.error.message);
         }
       },
     });

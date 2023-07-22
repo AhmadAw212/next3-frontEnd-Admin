@@ -199,13 +199,27 @@
         >{{ dico?.dico_active_date || "dico_active_date" }}
         <span class="required"> * </span>:</label
       >
+
       <input
+        type="text"
+        name="fdate"
+        id="fdate"
+        bsDatepicker
+        placement="left"
+        formControlName="fdate"
+        [bsConfig]="{
+          dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+          containerClass: 'theme-dark-blue',
+          withTimepicker: true
+        }"
+      />
+      <!-- <input
         type="datetime-local"
         id="supplierFDate"
         name="supplierFDate"
         formControlName="fdate"
         required
-      />
+      /> -->
       <div
         style="color: red"
         *ngIf="
@@ -224,11 +238,24 @@
           dico?.dico_Supplier_Inactive_Date || "dico_Supplier_Inactive_Date"
         }}:</label
       >
-      <input
+      <!-- <input
         type="datetime-local"
         id="supplierInactD"
         name="supplierInactD"
         formControlName="inAcctD"
+      /> -->
+      <input
+        type="text"
+        name="fdate"
+        id="fdate"
+        bsDatepicker
+        placement="left"
+        formControlName="inAcctD"
+        [bsConfig]="{
+          dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+          containerClass: 'theme-dark-blue',
+          withTimepicker: true
+        }"
       />
     </div>
     <div class="form-group">

@@ -16,7 +16,6 @@ import { finalize } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private refreshingToken = false;
-
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,
@@ -66,7 +65,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
               catchError((refreshError: any) => {
                 this.refreshingToken = false;
                 // Refresh token failed or expired as well, logout the user and redirect to login
-                localStorage.removeItem('token'); // Remove the expired token
+                this.authService.logout();
                 this.router.navigate(['/login']);
                 this.alertifyService.dialogAlert(
                   'Session expired. Please log in again.'

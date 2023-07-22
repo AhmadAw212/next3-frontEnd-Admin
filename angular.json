@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "file-saver"
+              "file-saver","moment"
            ],
             "outputPath": "dist/next3",
             "index": "src/index.html",

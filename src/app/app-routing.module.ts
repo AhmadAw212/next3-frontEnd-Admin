@@ -141,6 +141,11 @@ const routes: Routes = [
       },
     ],
   },
+  // {
+  //   path: 'CallCenter',
+  //   component: CarsCaseMngrSetupComponent,
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'dataEntryView',
     component: DataEntryViewComponent,

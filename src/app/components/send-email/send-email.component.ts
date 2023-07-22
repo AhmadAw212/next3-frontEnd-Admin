@@ -101,6 +101,9 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   getEmailFrom() {
     this.dataService.getFromEmail().subscribe({
       next: (res) => {
+        if (res.data.signature === null) {
+          res.data.signature = '';
+        }
         this.emailFormBuild.get('from')?.setValue(res.data.email);
         const signature = res.data.signature;
 

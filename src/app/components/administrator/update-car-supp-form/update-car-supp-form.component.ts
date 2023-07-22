@@ -45,7 +45,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   dico?: any;
   dateFormats?: any;
   selectedDate!: Date;
-
+  @Input() showDetails?: boolean;
   @ViewChild('picker') picker: any;
 
   public options = [
@@ -88,9 +88,31 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
     this.getDico();
     this.dateFormatterService();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedSupplier'] && this.carSupplierForm) {
-      this.carSupplierForm.patchValue(changes['selectedSupplier'].currentValue);
+      const selectedSupplier = changes['selectedSupplier'].currentValue;
+      const fdatess = selectedSupplier.fdate;
+      const inActivess = selectedSupplier.inAcctD;
+
+      const fdates = moment(fdatess, 'YYYY-MM-DDTHH:mm:ss').format(
+        'DD/MM/YYYY HH:mm:ss'
+      );
+      const inAcctDs = moment(fdatess, 'YYYY-MM-DDTHH:mm:ss').format(
+        'DD/MM/YYYY HH:mm:ss'
+      );
+
+      this.carSupplierForm.patchValue({
+        fdate: fdates,
+        inAcctD: inAcctDs,
+      });
+
+      console.log(fdates);
+
+      // Ensure to only patch the selectedSupplier properties except for 'fdate' and 'inAcctD'
+      const { fdate, inAcctD, ...selectedSupplierWithoutDates } =
+        selectedSupplier;
+      this.carSupplierForm.patchValue(selectedSupplierWithoutDates);
     }
   }
   dateFormatterService() {
@@ -201,30 +223,44 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       },
     });
   }
-  // formatDateSend(date: string): string {
-  //   const parsedDate = moment(date, 'DD/MM/YYYY HH:mm:ss');
-  //   return parsedDate.format('YYYY-MM-DDTHH:mm:ss');
+  formatDateSend(date: string): string {
+    const parsedDate = moment(date, 'DD/MM/YYYY HH:mm:ss');
+    return parsedDate.format('YYYY-MM-DDTHH:mm:ss');
+  }
+  // searchCarSupplier() {
+  //   const name = this.carSupplierForm.get('fullName')?.value;
+  //   const type = this.carSupplierForm.get('interm')?.value;
+  //   const mobile = this.carSupplierForm.get('mobile_number')?.value;
+  //   this.dataService.findCarSupplier(name, type, mobile).subscribe({
+  //     next: (res) => {
+  //       // console.log(res);
+  //     },
+  //     error: (err) => {
+  //       this.alertifyService.dialogAlert('Error');
+  //       console.log(err);
+  //     },
+  //   });
   // }
   updateCarSupplier() {
-    // Reformat the displayed date to 'YYYY-MM-DDTHH:mm:ss' before sending
+    const formattedInAcctD = moment(
+      this.carSupplierForm.value.inAcctD,
+      'DD/MM/YYYY HH:mm:ss'
+    ).format('YYYY-MM-DDTHH:mm:ss');
+    const formattedFdate = moment(
+      this.carSupplierForm.value.fdate,
+      'DD/MM/YYYY HH:mm:ss'
+    ).format('YYYY-MM-DDTHH:mm:ss');
     this.carSupplierForm.patchValue({
-      inAcctD: moment(
-        this.carSupplierForm.value.inAcctD,
-        'DD/MM/YYYY HH:mm:ss'
-      ).format('YYYY-MM-DDTHH:mm:ss'),
-      fdate: moment(
-        this.carSupplierForm.value.fdate,
-        'DD/MM/YYYY HH:mm:ss'
-      ).format('YYYY-MM-DDTHH:mm:ss'),
+      inAcctD: formattedInAcctD,
+      fdate: formattedFdate,
     });
 
-    // Now you can proceed with the API call to update the car supplier
     this.dataService.updateCarSupplier([this.carSupplierForm.value]).subscribe({
       next: (res) => {
         const updatedSupplier: CarSupplier = res.data;
-
         this.supplierUpdated.emit(updatedSupplier); // Emit the updated data
         this.alertifyService.success(res.message);
+
         // console.log(res);
       },
       error: (err) => {

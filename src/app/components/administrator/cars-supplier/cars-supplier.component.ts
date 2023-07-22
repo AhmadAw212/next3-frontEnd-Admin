@@ -14,6 +14,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-cars-supplier',
   templateUrl: './cars-supplier.component.html',
@@ -193,7 +194,6 @@ export class CarsSupplierComponent implements OnInit {
   }
 
   searchCarSupplier() {
-    this.isLoading = true;
     this.dataService
       .findCarSupplier(this.name!, this.selectedType!, this.mobile!)
       .subscribe({
@@ -210,9 +210,21 @@ export class CarsSupplierComponent implements OnInit {
         },
       });
   }
+
   handleSupplierUpdated(event: any) {
-    this.carSupplier = event;
-    // console.log(this.selectedSupplier);
+    this.carSupplier = event.map((item: any) => ({
+      ...item,
+      fdate: moment(item.fdate, 'YYYY-MM-DDTHH:mm:ss').format(
+        'DD/MM/YYYY HH:mm:ss'
+      ),
+      inAcctD: moment(item.inAcctD, 'YYYY-MM-DDTHH:mm:ss').format(
+        'DD/MM/YYYY HH:mm:ss'
+      ),
+    }));
+
+    this.showMoreInfo = false;
+
+    console.log(this.carSupplier);
   }
   deactivateUser(id: string) {
     this.alertifyService.confirmDialog(

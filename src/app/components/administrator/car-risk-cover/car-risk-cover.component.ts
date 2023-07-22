@@ -123,7 +123,10 @@ export class CarRiskCoverComponent implements OnInit, OnChanges {
 
   searchCarCoverRisk() {
     const companyId = this.selectedCover?.insuranceId!;
-    const coverType = this.selectedCover?.type!;
+    let coverType = this.selectedCover?.type!;
+    if (coverType === null) {
+      coverType = '';
+    }
     this.dataService.searchRiskCover(companyId, coverType).subscribe({
       next: (res) => {
         this.carCoverRisk = res.data;
