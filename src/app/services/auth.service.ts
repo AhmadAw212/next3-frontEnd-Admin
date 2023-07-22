@@ -79,7 +79,7 @@ export class AuthService {
     localStorage.setItem('refreshToken', refreshToken);
   }
 
-  private clearTokens() {
+  clearTokens() {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
   }
@@ -138,6 +138,7 @@ export class AuthService {
       next: (response) => {
         this.alertifyService.dialogAlert(response.message!);
         this.clearTokens();
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.alertifyService.dialogAlert('Session Timeout');

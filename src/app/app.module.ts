@@ -133,6 +133,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ViewNotesComponent } from './components/view-notes/view-notes.component';
 import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialog/view-note-dialog.component';
 // import { MatTimepickerModule } from 'mat-timepicker';
+import { provideUserIdleConfig } from 'angular-user-idle';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -231,6 +232,7 @@ import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialo
   ],
   imports: [
     BrowserModule,
+
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,

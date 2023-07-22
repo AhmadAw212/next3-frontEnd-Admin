@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserIdleService } from 'angular-user-idle';
 import { Subscription } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
+import { UsersIdleService } from 'src/app/services/users-idle.service';
 
 interface language {
   key: string;
@@ -24,13 +26,15 @@ export class LoginPageComponent implements OnInit {
   subscription?: Subscription;
   // message?: string;
   defaultLang: string = 'en';
+  private userIdleSub?: Subscription;
   constructor(
     private authService: AuthService,
     private dataService: DataServiceService,
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private alertify: AlertifyService,
-    private loginDataService: LoadingServiceService
+    private loginDataService: LoadingServiceService,
+    private userIdlesService: UsersIdleService
   ) {}
 
   ngOnInit(): void {
@@ -38,8 +42,15 @@ export class LoginPageComponent implements OnInit {
     this.getLanguages();
     this.Dico(this.defaultLang!);
     this.loginDataService.clearLoginInfo();
+    this.userIdlesService.stopWatching();
   }
 
+  ngOnDestroy() {
+    // Unsubscribe from the UserIdleService when the component is destroyed to avoid memory leaks.
+    if (this.userIdleSub) {
+      this.userIdleSub.unsubscribe();
+    }
+  }
   login() {
     const lang = localStorage.getItem('selectedLanguage');
     const user = {
@@ -48,6 +59,7 @@ export class LoginPageComponent implements OnInit {
     };
     if (this.userName && this.password && this.languages && lang) {
       this.authService.authenticate(user);
+      this.userIdleSub = this.userIdlesService.startWatching()!;
     } else {
       this.alertify.error('Please enter your username and password');
       // return;

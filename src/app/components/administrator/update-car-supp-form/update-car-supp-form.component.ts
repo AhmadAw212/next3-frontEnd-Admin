@@ -245,31 +245,27 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   //   });
   // }
   updateCarSupplier() {
-    let formattedInAcctD = moment(
-      this.carSupplierForm.value.inAcctD,
-      'DD/MM/YYYY HH:mm:ss'
-    ).format('YYYY-MM-DDTHH:mm:ss');
-    let formattedFdate = moment(
-      this.carSupplierForm.value.fdate,
-      'DD/MM/YYYY HH:mm:ss'
-    ).format('YYYY-MM-DDTHH:mm:ss');
-    this.carSupplierForm.patchValue({
-      inAcctD: formattedInAcctD,
-      fdate: formattedFdate,
-    });
-    if (formattedInAcctD === 'Invalid date') {
-      this.carSupplierForm.patchValue({
-        inAcctD: null,
-      });
-      if (formattedFdate === 'Invalid date') {
-        this.carSupplierForm.patchValue({
-          fdate: null,
-        });
-      }
-    }
+    const inAcctDValue = this.carSupplierForm.value.inAcctD;
+    const fdateValue = this.carSupplierForm.value.fdate;
+
+    const formattedInAcctD = moment(inAcctDValue, 'DD/MM/YYYY HH:mm:ss').format(
+      'YYYY-MM-DDTHH:mm:ss'
+    );
+    const formattedFdate = moment(fdateValue, 'DD/MM/YYYY HH:mm:ss').format(
+      'YYYY-MM-DDTHH:mm:ss'
+    );
+
+    const updatedFormValues = {
+      inAcctD: formattedInAcctD === 'Invalid date' ? null : formattedInAcctD,
+      fdate: formattedFdate === 'Invalid date' ? null : formattedFdate,
+    };
+
+    this.carSupplierForm.patchValue(updatedFormValues);
+
     this.dataService.updateCarSupplier([this.carSupplierForm.value]).subscribe({
       next: (res) => {
         const updatedSupplier: CarSupplier = res.data;
+
         this.supplierUpdated.emit(updatedSupplier); // Emit the updated data
         this.alertifyService.success(res.message);
 

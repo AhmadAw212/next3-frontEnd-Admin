@@ -67,6 +67,7 @@
           <ng-select
             appendTo="body"
             name="managerId"
+            (search)="searchUsers($event)"
             [(ngModel)]="case.managerId"
             (ngModelChange)="updateManagerDetails(case)"
           >

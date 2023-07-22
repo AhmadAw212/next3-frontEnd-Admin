@@ -45,7 +45,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
   // @Output() showCellSetupEmit = new EventEmitter<boolean>();
   myDateValue?: Date;
   formattedDate: string | null = null;
-
+  private searchTimer: any;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -67,7 +67,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.getCarsCell();
@@ -312,21 +312,38 @@ export class CarsCellComponent implements OnChanges, OnInit {
     });
   }
 
-  getUsers() {
-    this.dataService.getAllUsers(this.substring!).subscribe({
-      next: (res) => {
-        this.users = res.data;
-      },
-      error: (err) => {
-        if (err.status === 401) {
-          this.authService.refreshTokens();
-        } else {
+  // getUsers() {
+  //   clearTimeout(this.searchTimer);
+  //   this.searchTimer = setTimeout(() => {
+  //     const name = event.term;
+  //     this.dataService.searchRoles(name).subscribe({
+  //       next: (res) => {
+  //         this.roles = res.data;
+  //         // console.log(res);
+  //       },
+  //       error: (err) => {
+  //         this.alertify.error(err.error.message);
+  //         console.log(err);
+  //       },
+  //     });
+  //   }, 300);
+  // }
+  searchUsers(event: any) {
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      const name = event.term;
+      this.dataService.getAllUsers(name).subscribe({
+        next: (res) => {
+          this.users = res.data;
+          // console.log(res);
+        },
+        error: (err) => {
           this.alertifyService.error(err.error.message);
-        }
-      },
-    });
+          console.log(err);
+        },
+      });
+    }, 300);
   }
-
   deleteCell(id: string) {
     this.alertifyService.confirmDialog(
       'Are you sure you want to delete this resource',
