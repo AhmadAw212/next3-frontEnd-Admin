@@ -95,12 +95,15 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       const fdatess = selectedSupplier.fdate;
       const inActivess = selectedSupplier.inAcctD;
 
-      const fdates = moment(fdatess, 'YYYY-MM-DDTHH:mm:ss').format(
-        'DD/MM/YYYY HH:mm:ss'
-      );
-      const inAcctDs = moment(fdatess, 'YYYY-MM-DDTHH:mm:ss').format(
-        'DD/MM/YYYY HH:mm:ss'
-      );
+      // Check if the date values are not null before formatting them
+      const fdates = fdatess
+        ? moment(fdatess, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm:ss')
+        : '';
+      const inAcctDs = inActivess
+        ? moment(inActivess, 'YYYY-MM-DDTHH:mm:ss').format(
+            'DD/MM/YYYY HH:mm:ss'
+          )
+        : '';
 
       this.carSupplierForm.patchValue({
         fdate: fdates,
@@ -242,11 +245,11 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
   //   });
   // }
   updateCarSupplier() {
-    const formattedInAcctD = moment(
+    let formattedInAcctD = moment(
       this.carSupplierForm.value.inAcctD,
       'DD/MM/YYYY HH:mm:ss'
     ).format('YYYY-MM-DDTHH:mm:ss');
-    const formattedFdate = moment(
+    let formattedFdate = moment(
       this.carSupplierForm.value.fdate,
       'DD/MM/YYYY HH:mm:ss'
     ).format('YYYY-MM-DDTHH:mm:ss');
@@ -254,7 +257,16 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       inAcctD: formattedInAcctD,
       fdate: formattedFdate,
     });
-
+    if (formattedInAcctD === 'Invalid date') {
+      this.carSupplierForm.patchValue({
+        inAcctD: null,
+      });
+      if (formattedFdate === 'Invalid date') {
+        this.carSupplierForm.patchValue({
+          fdate: null,
+        });
+      }
+    }
     this.dataService.updateCarSupplier([this.carSupplierForm.value]).subscribe({
       next: (res) => {
         const updatedSupplier: CarSupplier = res.data;

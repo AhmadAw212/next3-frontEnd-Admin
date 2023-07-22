@@ -212,16 +212,16 @@ export class CarsSupplierComponent implements OnInit {
   }
 
   handleSupplierUpdated(event: any) {
-    this.carSupplier = event.map((item: any) => ({
-      ...item,
-      fdate: moment(item.fdate, 'YYYY-MM-DDTHH:mm:ss').format(
-        'DD/MM/YYYY HH:mm:ss'
-      ),
-      inAcctD: moment(item.inAcctD, 'YYYY-MM-DDTHH:mm:ss').format(
-        'DD/MM/YYYY HH:mm:ss'
-      ),
-    }));
-
+    // this.carSupplier = event.map((item: any) => ({
+    //   ...item,
+    //   fdate: moment(item.fdate, 'YYYY-MM-DDTHH:mm:ss').format(
+    //     'DD/MM/YYYY HH:mm:ss'
+    //   ),
+    //   inAcctD: moment(item.inAcctD, 'YYYY-MM-DDTHH:mm:ss').format(
+    //     'DD/MM/YYYY HH:mm:ss'
+    //   ),
+    // }));
+    this.carSupplier = event;
     this.showMoreInfo = false;
 
     console.log(this.carSupplier);
