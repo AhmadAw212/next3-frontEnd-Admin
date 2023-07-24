@@ -10,7 +10,7 @@ export class NavbarComponent {
   @Input() title?: string;
   @Input() showDataEntryButton?: boolean = false;
   @Input() sendEmailButton?: boolean = false;
-  @Input() viewPolicy?: boolean = true;
+  @Input() viewPolicy?: boolean = false;
   @Input() note?: boolean = false;
   constructor(private router: Router) {}
 

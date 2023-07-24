@@ -1,6 +1,194 @@
 <h2 style="margin: 10px; font-size: large">
   {{ dico?.dico_note || "dico_note" }}
 </h2>
+<br />
 <h3 class="h3-header">
-  {{ dico?.dico_user || "dico_user" }} : {{ notes?.sysCreatedByFullName }}
+  {{ dico?.dico_user || "dico_user" }} : {{ displayName }}
 </h3>
+<br />
+<div class="section" style="padding: 10px">
+  <div class="panel">
+    <table>
+      <thead style="position: static">
+        <tr>
+          <th>{{ dico?.dico_text || "dico_text" }}</th>
+          <th>{{ dico?.dico_subject || "dico_subject" }}</th>
+          <th>{{ dico?.dico_department || "dico_department" }}</th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by " }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let notes of notes"
+          (click)="highlightRow($event); selectedNote(notes)"
+        >
+          <td>{{ notes?.text }}</td>
+          <td>{{ notes?.subject }}</td>
+          <td>{{ notes?.text }}</td>
+          <td>{{ notes?.sysCreatedBy }}</td>
+          <td>
+            {{
+              notes?.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</div>
+
+<div class="section" style="padding: 10px">
+  <div class="panel">
+    <div class="column">
+      <form [formGroup]="noteForm">
+        <div class="form-group">
+          <label for="Subject">Subject</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Subject"
+            formControlName="subject"
+          />
+        </div>
+        <div class="form-group">
+          <label for="Level">Level</label>
+          <select
+            name=""
+            id="Level"
+            formControlName="level"
+            class="select-class"
+          >
+            <option value="">Test</option>
+          </select>
+          <!-- <input
+            type="text"
+            class="form-control"
+            id="Level"
+            formControlName="level"
+          /> -->
+        </div>
+
+        <div class="form-group">
+          <label for="text">Text</label>
+          <div class="NgxEditor__Wrapper">
+            <!-- <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+            </ngx-editor-menu> -->
+
+            <ngx-editor
+              [editor]="editor"
+              [placeholder]="'Type here...'"
+              formControlName="text"
+            >
+            </ngx-editor>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="callCenter">
+              Call Center
+            </label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="callCenter"
+              formControlName="callCenter"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="dataManagement">
+              Data Management</label
+            >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="dataManagement"
+              formControlName="dataManagement"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="Assessment"> Assessment</label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="Assessment"
+              formControlName="assessment"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="claimResolution">
+              Claim Resolution</label
+            >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="claimResolution"
+              formControlName="claimResolution"
+            />
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="surveyor"> Surveyor</label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="surveyor"
+              formControlName="surveyor"
+            />
+          </div>
+        </div> -->
+        <!-- <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="repairShop">
+              Repair Shop</label
+            >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="repairShop"
+              formControlName="repairShop"
+            />
+          </div>
+        </div> -->
+        <!-- <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label" for="expert"> Expert</label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="expert"
+              formControlName="expert"
+            />
+          </div>
+        </div> -->
+      </form>
+    </div>
+  </div>
+</div>
+<div class="dialog-footer">
+  <button
+    mat-button
+    (click)="close()"
+    class="btn btn-danger"
+    style="margin: 10px"
+  >
+    Close
+  </button>
+</div>

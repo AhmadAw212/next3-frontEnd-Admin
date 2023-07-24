@@ -44,13 +44,16 @@ export class AuthService {
         if (result.statusCode === 200) {
           const token = result.data.token;
           const profiles = result.data.profiles;
+          const timeout = result.data.timeout_value;
           const refreshToken = result.data.refreshToken;
           if (token && result.data.firstLogin === false) {
             this.storeTokens(token, refreshToken);
+            localStorage.setItem('timeout', timeout);
             this.router.navigate(['/profiles-main']);
             this.userProfiles = profiles;
           } else if (result.data.firstLogin === true) {
             this.storeTokens(token, refreshToken);
+            localStorage.setItem('timeout', timeout);
             this.openChangePasswordDialog();
           }
         } else if (result.statusCode === 423) {

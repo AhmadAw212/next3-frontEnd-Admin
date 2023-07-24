@@ -40,7 +40,13 @@ export class UsersIdleService {
     this.userIdle.onTimeout().subscribe(() => this.logout());
   }
   configureUserIdle() {
-    this.userIdle.setConfigValues({ idle: 300, timeout: 30, ping: 120 });
+    let timeout = localStorage.getItem('timeout');
+    const idleTimeout = timeout ? parseInt(timeout, 10) : 300;
+    this.userIdle.setConfigValues({
+      idle: idleTimeout,
+      timeout: 30,
+      ping: 120,
+    });
   }
   stop() {
     this.userIdle.stopTimer();

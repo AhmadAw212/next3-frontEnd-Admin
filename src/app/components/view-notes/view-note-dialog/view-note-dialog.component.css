@@ -1,0 +1,11 @@
+.form-check {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-check-label {
+    flex: 1; /* This will make the label take up all the available space on the left */
+    margin-right: 5px; 
+    /* Add some space between the label and the input */
+  }
+  
