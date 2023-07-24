@@ -1,3 +1,6 @@
 <h2 style="margin: 10px; font-size: large">
-  <!-- {{ dico?.dico_note || "dico_note" }} -->
+  {{ dico?.dico_note || "dico_note" }}
 </h2>
+<h3 class="h3-header">
+  {{ dico?.dico_user || "dico_user" }} : {{ notes?.sysCreatedByFullName }}
+</h3>

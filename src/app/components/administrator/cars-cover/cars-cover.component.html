@@ -51,7 +51,7 @@
         *ngIf="hasPerm('admAddData')"
         (click)="openAddCoverDialog()"
       >
-        {{ dico?.dico_add_cover || "dico_add_cover" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
 
       <button
@@ -61,7 +61,7 @@
         (click)="updateCarInfo()"
         *ngIf="hasPerm('admUpdateData')"
       >
-        {{ dico?.dico_update_cover || "dico_update_cover" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
   </div>

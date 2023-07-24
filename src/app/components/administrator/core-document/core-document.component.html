@@ -24,11 +24,14 @@
       <label for="path">{{ dico?.dico_path || "dico_path" }}:</label>
       <input type="text" id="path" name="path" [(ngModel)]="path" />
 
-      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+      <button type="submit" class="btn btn-primary">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
     </form>
-    <div class="admin-button">
+    <div class="btn-group">
       <button
         type="button"
+        class="btn btn-primary"
         (click)="openCoreDocDialog()"
         *ngIf="hasPerm('admAddData')"
       >
@@ -40,7 +43,7 @@
     </div>
   </div>
 
-  <table>
+  <table class="table table-responsive-sm">
     <thead>
       <tr>
         <th>{{ dico?.dico_id || "dico_id" }}</th>

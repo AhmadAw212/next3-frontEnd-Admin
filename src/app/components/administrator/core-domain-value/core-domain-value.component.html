@@ -6,11 +6,14 @@
     <label>{{ dico?.dico_description || "dico_description" }}:</label>
     <input type="text" id="value" name="value" [(ngModel)]="description" />
 
-    <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+    <button type="submit" class="btn btn-primary">
+      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+    </button>
   </form>
-  <div class="admin-button">
+  <div class="btn-group">
     <button
       type="button"
+      class="btn btn-primary"
       (click)="openAddDomainValueDialog()"
       *ngIf="hasPerm('admAddData')"
     >
@@ -18,6 +21,7 @@
     </button>
     <button
       type="button"
+      class="btn btn-primary"
       style="margin-left: 8px"
       (click)="updateDomainValue()"
       *ngIf="hasPerm('admUpdateData')"
@@ -27,7 +31,7 @@
   </div>
 </div>
 
-<table>
+<table class="table table-responsive-sm">
   <thead>
     <tr>
       <th>{{ dico?.dico_id || "dico_id" }}</th>

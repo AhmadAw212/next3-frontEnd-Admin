@@ -40,4 +40,8 @@ export class UsersRolesService {
       });
     }
   }
+  clearRoles(): void {
+    this.userRoles = [];
+    this.roleNames = [];
+  }
 }

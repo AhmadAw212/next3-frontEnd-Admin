@@ -6,6 +6,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { Subscription } from 'rxjs';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',
@@ -15,28 +17,32 @@ export class ProfilesPageComponent implements OnInit {
   userProfiles?: CoreProfile[];
   selectedProfile?: CoreProfile;
   dico?: any;
-  // subscription?: Subscription;
+  subscription?: Subscription;
   payload?: any;
   constructor(
     private authService: AuthService,
     private router: Router,
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRoles: UsersRolesService
   ) {}
 
   ngOnInit(): void {
     this.getUserProfiles();
     this.getDico();
     localStorage.removeItem('selectedProfile');
+    this.userRoles.clearRoles();
   }
-  redirectToProfile(profile: CoreProfile) {
-    if (profile.description === 'Administrator') {
+  redirectToProfile(profile: CoreProfile): void {
+    const description = profile.description;
+
+    if (description === 'Administrator' || description === 'CallCenter') {
       localStorage.setItem('selectedProfile', profile.id!);
-      this.router.navigate(['Administrator']);
-    } else if (profile.description === 'CallCenter') {
-      localStorage.setItem('selectedProfile', profile.id!);
-      this.router.navigate(['/profiles-main', profile.description]);
+      this.router.navigate([`/${description}`]);
+    } else {
+      // Handle other profile descriptions or show an error message.
+      console.error('Unknown profile description:', description);
     }
   }
   getDico() {
@@ -58,8 +64,7 @@ export class ProfilesPageComponent implements OnInit {
           })
           .filter(
             (profile: CoreProfile) =>
-              profile.description === 'Administrator' ||
-              profile.description === 'Administrator'
+              profile.name === 'Admin' || profile.name === 'cc'
           );
         console.log(this.userProfiles);
       },

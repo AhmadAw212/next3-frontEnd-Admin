@@ -22,102 +22,100 @@
       <label>{{ dico?.dico_resource_value || "dico_resource_value" }}:</label>
       <input type="text" id="value" name="value" [(ngModel)]="value" />
 
-      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
+      <button type="submit" class="btn btn-primary">
+        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+      </button>
     </form>
-    <div class="admin-button">
+    <div class="btn-group">
       <button
         type="button"
+        class="btn btn-primary"
         (click)="openCoreConfigDialog()"
         *ngIf="hasPerm('admAddData')"
       >
-        {{ dico?.dico_add_language || "dico_add_language" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
       <button
         type="button"
         (click)="updateResouce()"
+        class="btn btn-primary"
         *ngIf="hasPerm('admUpdateData')"
         style="margin-left: 8px"
       >
-        {{ dico?.dico_Update || "dico_Update" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ dico?.dico_id || "dico_id" }}</th>
-            <th>{{ dico?.dico_locale || "dico_locale" }}</th>
-            <th>{{ dico?.dico_resource_key || "dico_resource_key" }}</th>
-            <th style="width: 150px">
-              {{ dico?.dico_resource_value || "dico_resource_value" }}
-            </th>
-            <th>
-              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-            </th>
-            <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-            <th>
-              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-            </th>
-            <th>{{ dico?.dico_updated_by || "dico_updated_by" }}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody
-          *ngIf="resourceData!.length > 0; else noData"
-          (click)="highlightRow($event)"
+  <table class="table table-responsive-sm">
+    <thead>
+      <tr>
+        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <th>{{ dico?.dico_locale || "dico_locale" }}</th>
+        <th>{{ dico?.dico_resource_key || "dico_resource_key" }}</th>
+        <th style="width: 150px">
+          {{ dico?.dico_resource_value || "dico_resource_value" }}
+        </th>
+        <th>
+          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+        </th>
+        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+        <th>
+          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+        </th>
+        <th>{{ dico?.dico_updated_by || "dico_updated_by" }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="resourceData!.length > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let resource of resourceData; trackBy: trackLangById">
+        <td>{{ resource.id }}</td>
+        <td>
+          {{ resource.locale }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, resource, 'resourceKey')"
         >
-          <tr *ngFor="let resource of resourceData; trackBy: trackLangById">
-            <td>{{ resource.id }}</td>
-            <td>
-              {{ resource.locale }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, resource, 'resourceKey')"
-            >
-              {{ resource.resourceKey }}
-            </td>
-            <td
-              contenteditable="true"
-              (blur)="onTdBlur($event, resource, 'resourceValue')"
-              style="max-width: 200px"
-            >
-              {{ resource.resourceValue }}
-            </td>
-            <td>
-              {{
-                resource.sysCreatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ resource.sysCreatedBy }}</td>
-            <td>
-              {{
-                resource.sysUpdatedDate
-                  | date : dateFormat("reportDateTimeFormat")
-              }}
-            </td>
-            <td>{{ resource.sysUpdatedBy }}</td>
-            <td>
-              <mat-icon
-                (click)="deleteResource(resource.id!)"
-                *ngIf="hasPerm('admDeleteData')"
-                >delete</mat-icon
-              >
-            </td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="9">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
-    </div>
-  </div>
+          {{ resource.resourceKey }}
+        </td>
+        <td
+          contenteditable="true"
+          (blur)="onTdBlur($event, resource, 'resourceValue')"
+          style="max-width: 200px"
+        >
+          {{ resource.resourceValue }}
+        </td>
+        <td>
+          {{
+            resource.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ resource.sysCreatedBy }}</td>
+        <td>
+          {{
+            resource.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+          }}
+        </td>
+        <td>{{ resource.sysUpdatedBy }}</td>
+        <td>
+          <mat-icon
+            (click)="deleteResource(resource.id!)"
+            *ngIf="hasPerm('admDeleteData')"
+            >delete</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
 </div>

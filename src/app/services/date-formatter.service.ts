@@ -3,6 +3,7 @@ import { ConfigData } from '../model/config-data';
 import { DataServiceService } from './data-service.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class DateFormatterService {
   public date: Observable<any> = this.dateFormatterSubject.asObservable();
   constructor(
     private dataService: DataServiceService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertifyService: AlertifyService
   ) {}
 
   dateFormatter() {
@@ -29,7 +31,11 @@ export class DateFormatterService {
         this.dateFormatterSubject.next(res.data);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.authService.refreshTokens();
+        } else {
+          this.alertifyService.dialogAlert(err.error.message);
+        }
       },
     });
   }

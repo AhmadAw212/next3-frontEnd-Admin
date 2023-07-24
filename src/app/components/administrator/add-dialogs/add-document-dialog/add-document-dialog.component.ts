@@ -63,7 +63,7 @@ export class AddDocumentDialogComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
-          this.dialogRef.close();
+          this.dialogRef.close(res.data);
           this.alertifyService.success(res.message!);
           console.log(res);
         },

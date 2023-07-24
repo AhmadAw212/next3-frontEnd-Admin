@@ -172,7 +172,13 @@ export class CoreDocumentComponent implements OnInit {
   }
 
   openCoreDocDialog() {
-    this.dialog.open(AddDocumentDialogComponent);
+    const dialogRef = this.dialog.open(AddDocumentDialogComponent);
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.coreDocSearch();
+      }
+    });
   }
   UpdateDocDialog(selectedDoc: CoreDocument) {
     // this.selectedDoc = selectedDoc;
@@ -180,8 +186,10 @@ export class CoreDocumentComponent implements OnInit {
       data: selectedDoc,
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.coreDocSearch();
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.coreDocSearch();
+      }
     });
   }
   // openUpdateDocumentDialog(document: CoreDocument) {

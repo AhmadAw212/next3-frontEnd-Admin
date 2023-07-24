@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
 
@@ -20,7 +21,7 @@ interface language {
 })
 export class LoginPageComponent implements OnInit {
   languages?: language[];
-  selectedLanguage?: string;
+  selectedLanguage: string = 'en';
   userName: string = '';
   password: string = '';
   subscription?: Subscription;
@@ -34,17 +35,23 @@ export class LoginPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alertify: AlertifyService,
     private loginDataService: LoadingServiceService,
-    private userIdlesService: UsersIdleService
+    private userIdlesService: UsersIdleService,
+    private dicoService: DicoServiceService
   ) {}
 
   ngOnInit(): void {
     this.clearData();
     this.getLanguages();
-    this.Dico(this.defaultLang!);
+    // this.Dico(this.selectedLanguage!)
+    this.getDico();
     this.loginDataService.clearLoginInfo();
     this.userIdlesService.stopWatching();
   }
 
+  getDico() {
+    this.dicoService.getDico();
+    localStorage.setItem('selectedLanguage', this.selectedLanguage);
+  }
   ngOnDestroy() {
     // Unsubscribe from the UserIdleService when the component is destroyed to avoid memory leaks.
     if (this.userIdleSub) {
@@ -76,12 +83,16 @@ export class LoginPageComponent implements OnInit {
       },
     });
   }
-
+  languageChanged() {
+    localStorage.setItem('selectedLanguage', this.selectedLanguage!);
+    this.dicoService.getDico();
+  }
   Dico(lang: string) {
     this.dataService.multiLang(lang).subscribe({
       next: (res) => {
         this.selectedLanguage = lang;
-        localStorage.setItem('selectedLanguage', this.selectedLanguage);
+
+        // this.dicoService.getDico(); // Call getDico() to update language data
         // console.log(res.data);
       },
       error: (err) => {
@@ -89,7 +100,6 @@ export class LoginPageComponent implements OnInit {
       },
     });
   }
-
   clearData() {
     localStorage.clear();
   }

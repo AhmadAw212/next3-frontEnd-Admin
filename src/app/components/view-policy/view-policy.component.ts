@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewPolicyDialogComponent } from '../view-policy-dialog/view-policy-dialog.component';
+import { ViewPolicyDialogComponent } from './view-policy-dialog/view-policy-dialog.component';
 
 @Component({
   selector: 'app-view-policy',

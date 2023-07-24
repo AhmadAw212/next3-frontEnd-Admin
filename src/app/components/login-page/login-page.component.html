@@ -27,13 +27,13 @@
           id="language"
           name="language"
           [(ngModel)]="selectedLanguage"
-          (change)="Dico(selectedLanguage!)"
+          (change)="languageChanged()"
           disabled
         >
           <option
             *ngFor="let lang of languages"
             [value]="lang.key"
-            selected="defaultLang"
+            [selected]="selectedLanguage === lang.key"
           >
             {{ lang.value }}
           </option>

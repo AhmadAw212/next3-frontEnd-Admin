@@ -2,7 +2,6 @@
   <div class="buttons-container">
     <button
       class="add-remove-profile-btn"
-      aria-label="Add Profile"
       (click)="openProfileDialog()"
       *ngIf="hasPerm('admAddData')"
     >
@@ -10,7 +9,6 @@
     </button>
     <button
       class="copy-profile-btn"
-      aria-label="Copy Profile"
       (click)="CopyProfileDialog()"
       *ngIf="hasPerm('admAddData')"
     >

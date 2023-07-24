@@ -45,13 +45,13 @@
             role.description
           }}</ng-option>
         </ng-select>
-        <button type="submit">
+        <button type="submit" class="btn-group">
           {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
         </button>
       </form>
     </div>
-    <table>
-      <thead>
+    <table class="table table-responsive-sm">
+      <thead style="top: 55px">
         <tr>
           <th>{{ dico?.dico_code || "dico_code" }}</th>
           <th>{{ dico?.dico_display_name || "dico_display_name" }}</th>

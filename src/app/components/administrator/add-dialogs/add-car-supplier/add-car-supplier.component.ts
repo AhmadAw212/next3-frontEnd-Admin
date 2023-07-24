@@ -122,10 +122,15 @@ export class AddCarSupplierComponent implements OnInit {
       this.carSupplierForm.value.fdate,
       'DD/MM/YYYY HH:mm:ss'
     ).format('YYYY-MM-DDTHH:mm:ss');
-    this.carSupplierForm.patchValue({
-      inAcctD: formattedInAcctD,
-      fdate: formattedFdate,
-    });
+    // this.carSupplierForm.patchValue({
+    //   inAcctD: formattedInAcctD,
+    //   fdate: formattedFdate,
+    // });
+    const updatedFormValues = {
+      inAcctD: formattedInAcctD === 'Invalid date' ? null : formattedInAcctD,
+      fdate: formattedFdate === 'Invalid date' ? null : formattedFdate,
+    };
+    this.carSupplierForm.patchValue(updatedFormValues);
     this.dataService.addCarSupplier(this.carSupplierForm.value).subscribe({
       next: (res) => {
         this.dialogRef.close(res.data);

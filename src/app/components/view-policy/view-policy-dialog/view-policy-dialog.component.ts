@@ -11,13 +11,14 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 })
 export class ViewPolicyDialogComponent implements OnInit {
   dico?: any;
+  policyData?: any;
+  policyCoverlist?: any;
   constructor(
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<ViewPolicyDialogComponent>,
     private dicoService: DicoServiceService
   ) {}
-  policyData?: any;
-  policyCoverlist?: any;
+
   ngOnInit(): void {
     this.viewPolicy();
     this.getDico();

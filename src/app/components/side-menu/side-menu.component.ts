@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -19,6 +19,9 @@ export class SideMenuComponent implements OnInit {
     private userRolesService: UsersRolesService,
     private dicoService: DicoServiceService
   ) {}
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
   searchIcon = faSearch;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;

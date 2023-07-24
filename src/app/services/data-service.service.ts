@@ -1319,4 +1319,21 @@ export class DataServiceService {
       policyCar
     );
   }
+
+  getNotificationMessageByDep(
+    remarkFromDep: string,
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getNotificationMessageByDep?remarkFromDep=${remarkFromDep}&notificationId=${notificationId}`
+    );
+  }
+  getNotificationMessageByDepCount(
+    remarkFromDep: string,
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getNotificationMessageByDepCount?remarkFromDep=${remarkFromDep}&notificationId=${notificationId}`
+    );
+  }
 }

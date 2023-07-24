@@ -76,7 +76,7 @@ import { UpdateCarSuppFormComponent } from './components/administrator/update-ca
 import { AddCarSupplierComponent } from './components/administrator/add-dialogs/add-car-supplier/add-car-supplier.component';
 import { ExpertConfigComponent } from './components/administrator/expert-config/expert-config.component';
 import { ViewPolicyComponent } from './components/view-policy/view-policy.component';
-import { ViewPolicyDialogComponent } from './components/view-policy-dialog/view-policy-dialog.component';
+import { ViewPolicyDialogComponent } from './components/view-policy/view-policy-dialog/view-policy-dialog.component';
 import { ExpertSearchResultsComponent } from './components/administrator/expert-config/expert-search-results/expert-search-results.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -134,6 +134,7 @@ import { ViewNotesComponent } from './components/view-notes/view-notes.component
 import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialog/view-note-dialog.component';
 // import { MatTimepickerModule } from 'mat-timepicker';
 import { provideUserIdleConfig } from 'angular-user-idle';
+import { CallCenterComponent } from './components/call-center/call-center.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -229,6 +230,7 @@ import { provideUserIdleConfig } from 'angular-user-idle';
     CarsPolicyCarComponent,
     ViewNotesComponent,
     ViewNoteDialogComponent,
+    CallCenterComponent,
   ],
   imports: [
     BrowserModule,

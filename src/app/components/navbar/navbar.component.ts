@@ -10,11 +10,11 @@ export class NavbarComponent {
   @Input() title?: string;
   @Input() showDataEntryButton?: boolean = false;
   @Input() sendEmailButton?: boolean = false;
-  @Input() viewPolicy?: boolean = false;
+  @Input() viewPolicy?: boolean = true;
   @Input() note?: boolean = false;
   constructor(private router: Router) {}
 
   goBack(): void {
-    this.router.navigate(['/Administrator']);
+    this.router.navigate(['/profiles-main']);
   }
 }

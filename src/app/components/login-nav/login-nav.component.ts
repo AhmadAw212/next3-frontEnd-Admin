@@ -10,6 +10,7 @@ import { LoginInfo } from 'src/app/model/login-info';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-nav',
@@ -25,6 +26,9 @@ export class LoginNavComponent implements OnInit {
   logo?: string;
   userPic!: string;
   @Input() dico?: any;
+
+  private loginInfoSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public loginInfo$: Observable<any> = this.loginInfoSubject.asObservable();
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -113,7 +117,7 @@ export class LoginNavComponent implements OnInit {
         this.loginInfo = data.data;
         this.logo = `data:image/jpeg;base64,${this.loginInfo?.logo}`;
         this.userPic = `data:image/jpeg;base64,${this.loginInfo?.userPicture}`;
-
+        this.loginInfoSubject.next(data);
         // console.log(data.data);
       },
       error: (err) => {
