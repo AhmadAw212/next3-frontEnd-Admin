@@ -72,7 +72,7 @@ export class ProfilesPageComponent implements OnInit {
           })
           .filter(
             (profile: CoreProfile) =>
-              profile.code === 'adm' || profile.code === 'cc'
+              profile.code === 'adm' || profile.code === 'adm'
           );
         console.log(this.userProfiles);
       },
