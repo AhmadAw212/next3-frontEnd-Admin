@@ -20,6 +20,7 @@ export class ViewNoteDialogComponent implements OnInit {
   selectedRow!: HTMLElement;
   editor!: Editor;
   noteForm!: FormGroup;
+  level?: any;
   toolbar: Toolbar = [
     ['bold', 'italic', 'align_center', 'underline', 'strike'],
 
@@ -40,7 +41,7 @@ export class ViewNoteDialogComponent implements OnInit {
       subject: [''],
       level: [''],
       text: [''],
-      callCenter: [false],
+      callCenter: [true ? 'Y' : 'N'],
       dataManagement: [false],
       assessment: [false],
       claimResolution: [false],
@@ -58,6 +59,12 @@ export class ViewNoteDialogComponent implements OnInit {
     this.data();
     this.buildForm();
     this.editor = new Editor();
+    this.getLossCarDataByNotificationId();
+  }
+  submit() {
+    if (this.noteForm.valid) {
+      console.log(this.noteForm.value);
+    }
   }
   close() {
     this.dialogRef.close();
@@ -116,8 +123,23 @@ export class ViewNoteDialogComponent implements OnInit {
           console.log(this.notes);
         },
         error: (err) => {
+          this.close();
           console.log(err);
         },
       });
+  }
+
+  getLossCarDataByNotificationId() {
+    this.dataService.getLossCarDataByNotificationId('10.114011920').subscribe({
+      next: (data) => {
+        this.level = data.data;
+        console.log(this.level);
+      },
+      error: (err) => {
+        this.close();
+
+        console.log(err);
+      },
+    });
   }
 }

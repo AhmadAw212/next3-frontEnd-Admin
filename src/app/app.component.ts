@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingServiceService } from './services/loading-service.service';
 import { UserIdleService } from 'angular-user-idle';
 import { Subscription } from 'rxjs';
@@ -26,10 +26,18 @@ export class AppComponent implements OnInit {
     private dateFormatService: DateFormatterService
   ) {}
   ngOnInit(): void {
-    this.userIdlesService.initializeIdleService();
     // this.getDico();
     // this.dateFormatterService();
+    if (this.authService.isAuthenticated()) {
+      this.userIdlesService.initializeIdleService();
+    }
   }
+  // ngOnDestroy(): void {
+  //   // Clear local storage data when the AppComponent is destroyed (i.e., on logout).
+  //   if (!this.authService.isAuthenticated()) {
+  //     localStorage.removeItem('timeout');
+  //   }
+  // }
   dateFormatterService() {
     // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {

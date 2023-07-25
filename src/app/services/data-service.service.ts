@@ -1336,4 +1336,12 @@ export class DataServiceService {
       `${this.userUrl}/common-service/getNotificationMessageByDepCount?remarkFromDep=${remarkFromDep}&notificationId=${notificationId}`
     );
   }
+
+  getLossCarDataByNotificationId(
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getLossCarDataByNotificationId?notificationId=${notificationId}`
+    );
+  }
 }

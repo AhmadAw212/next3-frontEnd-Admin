@@ -1,12 +1,12 @@
 <h2 style="margin: 10px; font-size: large">
   {{ dico?.dico_note || "dico_note" }}
 </h2>
-<br />
+
 <h3 class="h3-header">
   {{ dico?.dico_user || "dico_user" }} : {{ displayName }}
 </h3>
-<br />
-<div class="section" style="padding: 10px">
+
+<div class="section" style="margin: 10px">
   <div class="panel">
     <table>
       <thead style="position: static">
@@ -45,10 +45,10 @@
   </div>
 </div>
 
-<div class="section" style="padding: 10px">
+<div class="section" style="margin: 10px">
   <div class="panel">
     <div class="column">
-      <form [formGroup]="noteForm">
+      <form [formGroup]="noteForm" (ngSubmit)="submit()">
         <div class="form-group">
           <label for="Subject">Subject</label>
           <input
@@ -178,6 +178,18 @@
             />
           </div>
         </div> -->
+        <div class="btn-group" style="float: right">
+          <button type="button" class="btn btn-primary">
+            {{ dico?.dico_add || "dico_add" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="margin-left: 8px"
+          >
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
       </form>
     </div>
   </div>

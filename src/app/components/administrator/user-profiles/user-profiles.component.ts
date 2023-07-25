@@ -11,6 +11,7 @@ import { CopyProfileComponent } from '../copy-profile/copy-profile.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { UsersIdleService } from 'src/app/services/users-idle.service';
 // import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -34,6 +35,7 @@ export class UserProfilesComponent implements OnInit, OnChanges {
   ) {}
   ngOnInit(): void {
     this.getDico();
+
     // this.userRolesService.getUserRoles();
   }
 

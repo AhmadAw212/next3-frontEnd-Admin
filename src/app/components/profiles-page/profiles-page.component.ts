@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { Subscription } from 'rxjs';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { UsersIdleService } from 'src/app/services/users-idle.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',
@@ -18,6 +19,7 @@ export class ProfilesPageComponent implements OnInit {
   selectedProfile?: CoreProfile;
   dico?: any;
   subscription?: Subscription;
+  // private subscriptions: Subscription[] = [];
   payload?: any;
   constructor(
     private authService: AuthService,
@@ -25,14 +27,20 @@ export class ProfilesPageComponent implements OnInit {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
-    private userRoles: UsersRolesService
+    private userRoles: UsersRolesService,
+    private userIdlesService: UsersIdleService
   ) {}
-
+  // ngOnDestroy(): void {
+  //   // Unsubscribe from all subscriptions to avoid memory leaks
+  //   this.subscriptions.forEach((sub) => sub.unsubscribe());
+  //   console.log(this.subscriptions.forEach((sub) => sub.unsubscribe()));
+  // }
   ngOnInit(): void {
     this.getUserProfiles();
     this.getDico();
     localStorage.removeItem('selectedProfile');
     this.userRoles.clearRoles();
+    this.userIdlesService.initializeIdleService();
   }
   redirectToProfile(profile: CoreProfile): void {
     const description = profile.description;
@@ -64,7 +72,7 @@ export class ProfilesPageComponent implements OnInit {
           })
           .filter(
             (profile: CoreProfile) =>
-              profile.code === 'adm' || profile.code === 'adm'
+              profile.code === 'adm' || profile.code === 'cc'
           );
         console.log(this.userProfiles);
       },

@@ -9,6 +9,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 interface language {
   key: string;
@@ -28,6 +29,7 @@ export class LoginPageComponent implements OnInit {
   // message?: string;
   defaultLang: string = 'en';
   private userIdleSub?: Subscription;
+
   constructor(
     private authService: AuthService,
     private dataService: DataServiceService,
@@ -36,7 +38,8 @@ export class LoginPageComponent implements OnInit {
     private alertify: AlertifyService,
     private loginDataService: LoadingServiceService,
     private userIdlesService: UsersIdleService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private userRoles: UsersRolesService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,7 @@ export class LoginPageComponent implements OnInit {
     this.getDico();
     this.loginDataService.clearLoginInfo();
     this.userIdlesService.stopWatching();
+    this.userRoles.clearRoles();
   }
 
   getDico() {
@@ -66,7 +70,8 @@ export class LoginPageComponent implements OnInit {
     };
     if (this.userName && this.password && this.languages && lang) {
       this.authService.authenticate(user);
-      this.userIdleSub = this.userIdlesService.startWatching()!;
+      // this.userIdlesService.initializeIdleService();
+      // this.userIdlesService.startWatching();
     } else {
       this.alertify.error('Please enter your username and password');
       // return;

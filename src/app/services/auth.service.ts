@@ -76,7 +76,10 @@ export class AuthService {
       },
     });
   }
-
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token; // Return true if the token exists, otherwise false
+  }
   private storeTokens(token: string, refreshToken: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('refreshToken', refreshToken);

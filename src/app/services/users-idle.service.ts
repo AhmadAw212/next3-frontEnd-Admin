@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { fromEvent, throttleTime } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Subscription, fromEvent, throttleTime } from 'rxjs';
 import { AuthService } from './auth.service';
 import {
   UserIdleService as NgxUserIdleService,
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class UsersIdleService {
+  private idleSub: Subscription | undefined;
   constructor(
     private userIdle: NgxUserIdleService,
     private authService: AuthService,
@@ -22,8 +23,8 @@ export class UsersIdleService {
 
   initializeIdleService(): void {
     this.configureUserIdle();
-    // Start watching for user inactivity.
     this.userIdle.startWatching();
+    // Start watching for user inactivity.
 
     // Add event listeners for user activity (e.g., mousemove and click events).
     fromEvent(document, 'mousemove')
@@ -34,20 +35,37 @@ export class UsersIdleService {
       .subscribe(() => this.restart());
 
     // Start watching when user idle is starting.
-    this.userIdle.onTimerStart().subscribe();
+    this.idleSub = this.userIdle
+      .onTimerStart()
+      .subscribe((res) => console.log(res));
 
     // Start watch when time is up.
-    this.userIdle.onTimeout().subscribe(() => this.logout());
-  }
-  configureUserIdle() {
-    let timeout = localStorage.getItem('timeout');
-    const idleTimeout = timeout ? parseInt(timeout, 10) : 300;
-    this.userIdle.setConfigValues({
-      idle: idleTimeout,
-      timeout: 30,
-      ping: 120,
+    this.userIdle.onTimeout().subscribe({
+      next: () => {
+        this.stop();
+        this.logout();
+      },
     });
   }
+  ngOnDestroy(): void {
+    // Unsubscribe from the onTimerStart subscription when the service is destroyed.
+    if (this.idleSub) {
+      this.idleSub.unsubscribe();
+    }
+  }
+  configureUserIdle() {
+    this.userIdle.stopWatching();
+    let timeout = localStorage.getItem('timeout');
+    const idleTimeout = timeout ? parseInt(timeout, 10) * 60 : 0;
+
+    console.log(idleTimeout);
+    this.userIdle.setConfigValues({
+      idle: idleTimeout,
+      timeout: 10,
+      ping: 60,
+    });
+  }
+
   stop() {
     this.userIdle.stopTimer();
   }

@@ -31,7 +31,7 @@ export class ViewNotesComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.count = data.data;
-          console.log(data.data);
+          // console.log(data.data);
         },
         error: (err) => {
           console.log(err);
