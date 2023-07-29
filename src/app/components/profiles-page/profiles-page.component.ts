@@ -14,7 +14,7 @@ import { UsersIdleService } from 'src/app/services/users-idle.service';
   templateUrl: './profiles-page.component.html',
   styleUrls: ['./profiles-page.component.css'],
 })
-export class ProfilesPageComponent implements OnInit {
+export class ProfilesPageComponent implements OnInit, OnDestroy {
   userProfiles?: CoreProfile[];
   selectedProfile?: CoreProfile;
   dico?: any;
@@ -30,6 +30,12 @@ export class ProfilesPageComponent implements OnInit {
     private userRoles: UsersRolesService,
     private userIdlesService: UsersIdleService
   ) {}
+  ngOnDestroy(): void {
+    // Unsubscribe from the subscription when the component is destroyed
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   // ngOnDestroy(): void {
   //   // Unsubscribe from all subscriptions to avoid memory leaks
   //   this.subscriptions.forEach((sub) => sub.unsubscribe());
@@ -44,7 +50,7 @@ export class ProfilesPageComponent implements OnInit {
   }
   redirectToProfile(profile: CoreProfile): void {
     const description = profile.description;
-
+    // console.log(profile);
     if (description === 'Administrator' || description === 'CallCenter') {
       localStorage.setItem('selectedProfile', profile.id!);
       this.router.navigate([`/${description}`]);
@@ -72,7 +78,7 @@ export class ProfilesPageComponent implements OnInit {
           })
           .filter(
             (profile: CoreProfile) =>
-              profile.code === 'adm' || profile.code === 'adm'
+              profile.code === 'adm' || profile.code === 'cc'
           );
         console.log(this.userProfiles);
       },

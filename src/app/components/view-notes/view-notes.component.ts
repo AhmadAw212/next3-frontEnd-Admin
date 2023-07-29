@@ -19,15 +19,22 @@ export class ViewNotesComponent implements OnInit {
     this.getNotificationMessageByDepCount();
   }
   viewNoteDialog() {
-    this.dialog.open(ViewNoteDialogComponent, {
+    const dialogRef = this.dialog.open(ViewNoteDialogComponent, {
       width: '1000px',
       maxHeight: '600px',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getNotificationMessageByDepCount();
     });
   }
 
   getNotificationMessageByDepCount() {
+    const selectedProfile = localStorage
+      .getItem('selectedProfile')
+      ?.split('.')[2];
+    const department = selectedProfile?.toUpperCase();
     this.dataService
-      .getNotificationMessageByDepCount('ER', '10.114011920')
+      .getNotificationMessageByDepCount(department!, '10.9100729')
       .subscribe({
         next: (data) => {
           this.count = data.data;

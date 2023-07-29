@@ -1,0 +1,38 @@
+/* .form-row {
+    display: flex;
+    align-items: center;
+    gap:50px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+  } */
+  /* ng-select{
+    width: 200px;
+  } */
+  /* .form-field select {
+    width: 90px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-field input{
+
+    width: 90px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .disabled-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .disabled-inputs label{
+    width: 100px;
+  } */

@@ -1,22 +1,85 @@
 <h2 style="margin: 10px; font-size: large">Add Domain</h2>
 <div class="dialog">
-  <form (ngSubmit)="addNewDomain()">
-    <label for="id">{{ dico?.dico_id || "dico_id" }}:</label>
-    <input type="text" id="id" name="id" [(ngModel)]="id" />
+  <form [formGroup]="domainForm" (ngSubmit)="addNewDomain()">
+    <label for="id"
+      >{{ dico?.dico_id || "dico_id" }}
+      <span class="required"> * </span> :</label
+    >
 
-    <label for="id">{{ dico?.dico_code || "dico_code" }}:</label>
-    <input type="text" id="code" name="code" [(ngModel)]="code" />
+    <input type="text" id="id" name="id" formControlName="id" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['id'].errors &&
+        (formControl['id'].dirty || formControl['id'].touched)
+      "
+    >
+      <div *ngIf="formControl['id']?.errors?.['required']">
+        {{ dico?.dico_required || "dico_required" }}
+      </div>
+    </div>
+    <label for="code"
+      >{{ dico?.dico_code || "dico_code" }}
+      <span class="required"> * </span> :</label
+    >
 
+    <input type="text" id="code" name="code" formControlName="code" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['code'].errors &&
+        (formControl['code'].dirty || formControl['code'].touched)
+      "
+    >
+      <div *ngIf="formControl['code']?.errors?.['required']">
+        {{ dico?.dico_required || "dico_required" }}
+      </div>
+    </div>
     <label for="description"
-      >{{ dico?.dico_description || "dico_description" }}:</label
+      >{{ dico?.dico_description || "dico_description" }}
+      <span class="required"> * </span>:</label
     >
-    <input type="text" name="description" [(ngModel)]="description" />
 
+    <input type="text" name="description" formControlName="description" />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['description'].errors &&
+        (formControl['description'].dirty || formControl['description'].touched)
+      "
+    >
+      <div *ngIf="formControl['description']?.errors?.['required']">
+        {{ dico?.dico_required || "dico_required" }}
+      </div>
+    </div>
     <label for="preference_code"
-      >{{ dico?.dico_preference_code || "dico_preference_code" }}:</label
+      >{{ dico?.dico_preference_code || "dico_preference_code" }}
+      <span class="required"> * </span> :</label
     >
-    <input type="text" name="preference_code" [(ngModel)]="preferenceCode" />
 
-    <button type="submit">{{ dico?.dico_save || "dico_save" }}</button>
+    <input
+      type="text"
+      name="preference_code"
+      formControlName="preference_code"
+    />
+    <div
+      style="color: red"
+      *ngIf="
+        formControl['preference_code'].errors &&
+        (formControl['preference_code'].dirty ||
+          formControl['preference_code'].touched)
+      "
+    >
+      <div *ngIf="formControl['preference_code']?.errors?.['required']">
+        {{ dico?.dico_required || "dico_required" }}
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!domainForm.valid"
+      [ngClass]="{ 'disabled-button': !domainForm.valid }"
+    >
+      {{ dico?.dico_save || "dico_save" }}
+    </button>
   </form>
 </div>

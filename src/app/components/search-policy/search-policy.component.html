@@ -1,0 +1,192 @@
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_policy_search || "dico_policy_search" }}
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+
+<div
+  class="admin-container container-fluid"
+  style="height: 150px; overflow: hidden"
+>
+  <form (ngSubmit)="searchPolicy()">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>{{ dico?.dico_search_by || "dico_search_by" }}:</label>
+          <select
+            name="policySearch"
+            class="form-select"
+            [(ngModel)]="searchByValue"
+          >
+            <option *ngFor="let policy of policySearch" [value]="policy.code">
+              {{ policy.description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>{{ dico?.dico_search_value || "dico_search_value" }}:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="searchValue"
+            [(ngModel)]="searchValue"
+          />
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>{{ dico?.dico_as_of_date || "dico_as_of_date" }}:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="datePicker"
+            id="datePicker"
+            bsDatepicker
+            [(ngModel)]="asOfDateValue"
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY',
+              containerClass: 'theme-dark-blue'
+            }"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="vip">
+            {{ dico?.dico_policy_type || "dico_policy_type" }}:</label
+          >
+          <select
+            class="form-select"
+            name="policyTypeValue"
+            [(ngModel)]="policyTypeValue"
+          >
+            <option *ngFor="let policy of policyType" [value]="policy.code">
+              {{ policy.description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="group"
+            >{{ dico?.dico_insurance || "dico_insurance" }}:</label
+          >
+          <select
+            class="form-select"
+            name="insuranceValue"
+            [(ngModel)]="insuranceValue"
+          >
+            <option *ngFor="let ins of insurance" [value]="ins.insuranceCode">
+              {{ ins.insuranceDesc }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <button type="submit" class="btn btn-primary">
+    {{ dico?.dico_search || "dico_search" }}
+  </button>
+</div>
+
+<div class="h3-header">
+  <h3>
+    {{ dico?.dico_search_result || "dico_search_result" }}
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div
+  class="admin-container container-fluid"
+  style="height: 200px; padding: 10px"
+>
+  <table class="table table-responsive-sm">
+    <thead style="top: 0">
+      <tr>
+        <th scope="col">{{ dico?.dico_company || "dico_company" }}</th>
+        <th scope="col">{{ dico?.dico_client_name || "dico_client_name" }}</th>
+
+        <th scope="col">{{ dico?.dico_plate || "dico_plate" }}</th>
+        <th scope="col">{{ dico?.dico_car_model || "dico_car_model" }}</th>
+        <th scope="col">
+          {{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}
+        </th>
+        <th scope="col">{{ dico?.dico_policy_type || "dico_policy_type" }}</th>
+        <th scope="col">
+          {{
+            dico?.dico_pre_risk_policy_number || "dico_pre_risk_policy_number"
+          }}
+        </th>
+        <th scope="col">
+          {{ dico?.dico_policy_amendment || "dico_policy_amendment" }}
+        </th>
+        <th scope="col">{{ dico?.dico_status || "dico_status" }}</th>
+        <th scope="col">{{ dico?.dico_issue_date || "dico_issue_date" }}</th>
+        <th scope="col">
+          {{ dico?.dico_effective_date || "dico_effective_date" }}
+        </th>
+        <th scope="col">{{ dico?.dico_expiry_date || "dico_expiry_date" }}</th>
+        <th scope="col">{{ dico?.dico_car_chassis || "dico_car_chassis" }}</th>
+        <th scope="col">{{ dico?.dico_branch || "dico_branch" }}</th>
+        <th scope="col">{{ dico?.dico_broker || "dico_broker" }}</th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="policyResult?.length! > 0; else noData"
+      (click)="highlightRow($event)"
+    >
+      <tr *ngFor="let policy of policyResult">
+        <td>{{ policy.insuranceDesc }}</td>
+
+        <td>{{ policy.clientName }}</td>
+        <td>{{ policy.carPlate }}</td>
+        <td>{{ policy.brandDescription }}</td>
+        <td>{{ policy.carYear }}</td>
+        <td>{{ policy.policyTypeDesc }}</td>
+        <td>{{ policy.policyNumber }}</td>
+        <td>{{ policy.policyAmendment }}</td>
+        <td>{{ policy.amendmentDesc }}</td>
+        <td>
+          {{ policy.policyIssueDate | date : dateFormat("reportDateFormat") }}
+        </td>
+        <td>
+          {{
+            policy.policyEffectiveDate | date : dateFormat("reportDateFormat")
+          }}
+        </td>
+        <td>
+          {{ policy.policyExpiryDate | date : dateFormat("reportDateFormat") }}
+        </td>
+        <td>{{ policy.carChassis }}</td>
+        <td>{{ policy.branchDesc }}</td>
+        <td>{{ policy.brokerName }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noData>
+    <tr>
+      <td colspan="5">
+        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+      </td>
+    </tr>
+  </ng-template>
+</div>

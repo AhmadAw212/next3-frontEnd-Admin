@@ -135,6 +135,7 @@ import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialo
 // import { MatTimepickerModule } from 'mat-timepicker';
 import { provideUserIdleConfig } from 'angular-user-idle';
 import { CallCenterComponent } from './components/call-center/call-center.component';
+import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -231,6 +232,7 @@ import { CallCenterComponent } from './components/call-center/call-center.compon
     ViewNotesComponent,
     ViewNoteDialogComponent,
     CallCenterComponent,
+    SearchPolicyComponent,
   ],
   imports: [
     BrowserModule,

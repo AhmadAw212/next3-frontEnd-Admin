@@ -26,6 +26,7 @@ import { SendEmailComponent } from './components/send-email/send-email.component
 import { CarsExpertDefaultFeesComponent } from './components/administrator/cars-expert-default-fees/cars-expert-default-fees.component';
 import { CarsCaseMngrSetupComponent } from './components/administrator/cars-case-mngr-setup/cars-case-mngr-setup.component';
 import { CallCenterComponent } from './components/call-center/call-center.component';
+import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -146,6 +147,13 @@ const routes: Routes = [
     path: 'CallCenter',
     component: CallCenterComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'searchPolicy',
+        component: SearchPolicyComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
     path: 'dataEntryView',

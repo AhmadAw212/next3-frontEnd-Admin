@@ -25,7 +25,7 @@
         >
           <td>{{ notes?.text }}</td>
           <td>{{ notes?.subject }}</td>
-          <td>{{ notes?.text }}</td>
+          <td>{{ notes?.remarkFromDepDescription }}</td>
           <td>{{ notes?.sysCreatedBy }}</td>
           <td>
             {{
@@ -48,7 +48,7 @@
 <div class="section" style="margin: 10px">
   <div class="panel">
     <div class="column">
-      <form [formGroup]="noteForm" (ngSubmit)="submit()">
+      <form [formGroup]="noteForm" (ngSubmit)="updateNote()">
         <div class="form-group">
           <label for="Subject">Subject</label>
           <input
@@ -61,19 +61,15 @@
         <div class="form-group">
           <label for="Level">Level</label>
           <select
-            name=""
+            name="Level"
             id="Level"
-            formControlName="level"
-            class="select-class"
+            formControlName="msgTypeRelated"
+            class="form-select"
           >
-            <option value="">Test</option>
+            <option *ngFor="let level of levels" [value]="level.id">
+              {{ level.description }}
+            </option>
           </select>
-          <!-- <input
-            type="text"
-            class="form-control"
-            id="Level"
-            formControlName="level"
-          /> -->
         </div>
 
         <div class="form-group">
@@ -84,6 +80,7 @@
 
             <ngx-editor
               [editor]="editor"
+              class="form-control"
               [placeholder]="'Type here...'"
               formControlName="text"
             >
@@ -100,7 +97,7 @@
               type="checkbox"
               value=""
               id="callCenter"
-              formControlName="callCenter"
+              formControlName="remarkShowToCallCenter"
             />
           </div>
         </div>
@@ -114,7 +111,7 @@
               type="checkbox"
               value=""
               id="dataManagement"
-              formControlName="dataManagement"
+              formControlName="remarkShowToDataManagement"
             />
           </div>
         </div>
@@ -126,7 +123,7 @@
               class="form-check-input"
               type="checkbox"
               id="Assessment"
-              formControlName="assessment"
+              formControlName="remarkShowToAssessment"
             />
           </div>
         </div>
@@ -139,55 +136,33 @@
               class="form-check-input"
               type="checkbox"
               id="claimResolution"
-              formControlName="claimResolution"
+              formControlName="remarkShowToClaimResolution"
             />
           </div>
         </div>
-        <!-- <div class="form-group">
-          <div class="form-check">
-            <label class="form-check-label" for="surveyor"> Surveyor</label>
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="surveyor"
-              formControlName="surveyor"
-            />
-          </div>
-        </div> -->
-        <!-- <div class="form-group">
-          <div class="form-check">
-            <label class="form-check-label" for="repairShop">
-              Repair Shop</label
-            >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="repairShop"
-              formControlName="repairShop"
-            />
-          </div>
-        </div> -->
-        <!-- <div class="form-group">
-          <div class="form-check">
-            <label class="form-check-label" for="expert"> Expert</label>
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="expert"
-              formControlName="expert"
-            />
-          </div>
-        </div> -->
-        <div class="btn-group" style="float: right">
-          <button type="button" class="btn btn-primary">
+
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="addNotificationMessageBean()"
+          >
             {{ dico?.dico_add || "dico_add" }}
           </button>
           <button
-            type="button"
+            type="submit"
             class="btn btn-primary"
             style="margin-left: 8px"
           >
             {{ dico?.dico_save || "dico_save" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            style="margin-left: 8px"
+            (click)="clearForm()"
+          >
+            {{ dico?.dico_cancel || "dico_cancel" }}
           </button>
         </div>
       </form>

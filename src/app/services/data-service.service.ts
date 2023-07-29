@@ -44,6 +44,7 @@ import { CarsCell } from '../model/cars-cell';
 import { CarsCellSetup } from '../model/cars-cell-setup';
 import { CarsbrandMatching } from '../model/carsbrand-matching';
 import { CarsPolicyCar } from '../model/cars-policy-car';
+import { Note } from '../model/note';
 
 interface User {
   username: string;
@@ -1342,6 +1343,42 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/common-service/getLossCarDataByNotificationId?notificationId=${notificationId}`
+    );
+  }
+
+  addnote(note: any): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/common-service/addNotificationMessageBean`,
+      note
+    );
+  }
+
+  policySearchLov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/policy-search-lov`
+    );
+  }
+
+  getInsuranceLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getInsuranceLovFindAll`
+    );
+  }
+  getPolicyTypeLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getPolicyTypeLovFindAll`
+    );
+  }
+  searchPolicy(
+    iSearchBy: string,
+    iSearchValue: string,
+    iPolicyType: string,
+    iAsOfDate: string,
+    iInsurance: string,
+    productType: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getPolicy?iSearchBy=${iSearchBy}&iSearchValue=${iSearchValue}&iPolicyType=${iPolicyType}&iAsOfDate=${iAsOfDate}&iInsurance=${iInsurance}&productType=${productType}`
     );
   }
 }

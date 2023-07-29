@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   dateFormats?: any;
   dico?: any;
+  private idleServiceInitialized = false;
   constructor(
     private authService: AuthService,
     private userIdlesService: UsersIdleService,
@@ -26,8 +27,6 @@ export class AppComponent implements OnInit {
     private dateFormatService: DateFormatterService
   ) {}
   ngOnInit(): void {
-    // this.getDico();
-    // this.dateFormatterService();
     if (this.authService.isAuthenticated()) {
       this.userIdlesService.initializeIdleService();
     }

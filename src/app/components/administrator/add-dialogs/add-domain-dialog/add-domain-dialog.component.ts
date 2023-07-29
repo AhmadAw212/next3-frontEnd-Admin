@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CoreDomain } from 'src/app/model/core-domain';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -17,15 +18,23 @@ export class AddDomainDialogComponent implements OnInit {
   description?: string;
   preferenceCode?: string;
   dico?: any;
+  domainForm!: FormGroup;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddDomainDialogComponent>,
     private authService: AuthService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     this.getDico();
+    this.domainForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      code: ['', Validators.required],
+      description: ['', Validators.required],
+      preference_code: ['', Validators.required],
+    });
   }
   getDico() {
     this.dicoService.getDico();
@@ -33,24 +42,25 @@ export class AddDomainDialogComponent implements OnInit {
       this.dico = data;
     });
   }
+
+  get formControl() {
+    return this.domainForm.controls;
+  }
   addNewDomain() {
-    const newDomain: CoreDomain = {
-      id: this.id,
-      code: this.code,
-      description: this.description,
-      preference_code: this.preferenceCode,
-    };
-    this.dataService.addDomain(newDomain).subscribe({
-      next: (res) => {
-        this.dialogRef.close();
-        this.alertifyService.success(res.message!);
-        console.log(res);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          this.alertifyService.dialogAlert('Error');
-        }
-      },
-    });
+    const formValues = this.domainForm.value;
+    if (this.domainForm.valid) {
+      this.dataService.addDomain(formValues).subscribe({
+        next: (res) => {
+          this.dialogRef.close();
+          this.alertifyService.success(res.message!);
+          console.log(res);
+        },
+        error: (err) => {
+          if (err.status === 401 || err.status === 500) {
+            this.alertifyService.dialogAlert('Error');
+          }
+        },
+      });
+    }
   }
 }

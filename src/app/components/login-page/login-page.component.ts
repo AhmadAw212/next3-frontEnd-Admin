@@ -48,7 +48,7 @@ export class LoginPageComponent implements OnInit {
     // this.Dico(this.selectedLanguage!)
     this.getDico();
     this.loginDataService.clearLoginInfo();
-    this.userIdlesService.stopWatching();
+    // this.userIdlesService.stop();
     this.userRoles.clearRoles();
   }
 
