@@ -48,14 +48,13 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
     this.userRoles.clearRoles();
     this.userIdlesService.initializeIdleService();
   }
+
   redirectToProfile(profile: CoreProfile): void {
     const description = profile.description;
-    // console.log(profile);
-    if (description === 'Administrator' || description === 'CallCenter') {
+    if (description) {
       localStorage.setItem('selectedProfile', profile.id!);
-      this.router.navigate([`/${description}`]);
+      this.router.navigate([`profiles-main`, description]); // Pass the profile id as a parameter
     } else {
-      // Handle other profile descriptions or show an error message.
       console.error('Unknown profile description:', description);
     }
   }

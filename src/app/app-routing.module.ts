@@ -39,12 +39,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'Administrator',
+    path: 'profiles-main/Administrator',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
-    data: {
-      // authorities: ['Admin'],
-    },
+    // data: {
+    //   // authorities: ['Admin'],
+    // },
     children: [
       {
         path: 'addUser',
@@ -144,7 +144,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'CallCenter',
+    path: 'profiles-main/CallCenter',
     component: CallCenterComponent,
     canActivate: [AuthGuard],
     children: [

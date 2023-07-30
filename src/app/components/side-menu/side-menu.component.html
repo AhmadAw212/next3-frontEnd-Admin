@@ -17,11 +17,19 @@
               {{ dico?.dico_user_management || "dico_user_management" }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/Administrator/addUser" class="btn">
+          <a
+            mat-list-item
+            routerLink="/profiles-main/Administrator/addUser"
+            class="btn"
+          >
             <!-- <i class="fas fa-user-plus"></i> -->
             {{ dico?.dico_add_user || "dico_add_user" }}
           </a>
-          <a mat-list-item routerLink="/Administrator/editUser" class="btn">
+          <a
+            mat-list-item
+            routerLink="/profiles-main/Administrator/editUser"
+            class="btn"
+          >
             <!-- <i class="fas fa-user-edit"></i> -->
             {{ dico?.dico_edit_user || "dico_edit_user" }}
           </a>
@@ -47,7 +55,7 @@
           <hr class="hr" />
           <a
             mat-list-item
-            routerLink="/Administrator/coreConfig"
+            routerLink="/profiles-main/Administrator/coreConfig"
             *ngIf="hasPerm('admCoreConfiguration')"
           >
             {{ dico?.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}
@@ -55,7 +63,7 @@
           <hr class="hr" />
           <a
             mat-list-item
-            routerLink="/Administrator/languageConfig"
+            routerLink="/profiles-main/Administrator/languageConfig"
             *ngIf="hasPerm('admCoreResourceBundle')"
           >
             {{ dico?.dico_language || "dico_language" }}
@@ -63,7 +71,7 @@
           <hr class="hr" />
           <a
             mat-list-item
-            routerLink="/Administrator/coreDocument"
+            routerLink="/profiles-main/Administrator/coreDocument"
             *ngIf="hasPerm('admCoreDocumentFile')"
           >
             {{ dico?.dico_document || "dico_document" }}
@@ -71,7 +79,7 @@
           <hr class="hr" />
           <a
             mat-list-item
-            routerLink="/Administrator/coreDomain"
+            routerLink="/profiles-main/Administrator/coreDomain"
             *ngIf="hasPerm('admCoreDomainValue')"
           >
             {{ dico?.dico_domain || "dico_domain" }}
@@ -103,98 +111,98 @@
           </mat-expansion-panel-header>
           <a
             mat-list-item
-            routerLink="/Administrator/carsBrand"
+            routerLink="/profiles-main/Administrator/carsBrand"
             *ngIf="hasPerm('admCarsBrand')"
           >
             {{ dico?.dico_car_brand || "dico_car_brand" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carCovers"
+            routerLink="/profiles-main/Administrator/carCovers"
             *ngIf="hasPerm('admCarsCovers')"
           >
             {{ dico?.dico_cover || "dico_cover" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carsClient"
+            routerLink="/profiles-main/Administrator/carsClient"
             *ngIf="hasPerm('admCarsClient')"
           >
             {{ dico?.dico_cars_clients || "dico_cars_clients" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carProducts"
+            routerLink="/profiles-main/Administrator/carProducts"
             *ngIf="hasPerm('admCarsProducts')"
           >
             {{ dico?.dico_product || "dico_product" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carSublines"
+            routerLink="/profiles-main/Administrator/carSublines"
             *ngIf="hasPerm('admCarsSublines')"
           >
             {{ dico?.dico_subline_desc || "dico_subline_desc" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carReportList"
+            routerLink="/profiles-main/Administrator/carReportList"
             *ngIf="hasPerm('admReportList')"
           >
             {{ dico?.dico_report_list || "dico_report_list" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carSupplier"
+            routerLink="/profiles-main/Administrator/carSupplier"
             *ngIf="hasPerm('admCarsSupplier')"
           >
             {{ dico?.dico_supplier || "dico_supplier" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/expertConfig"
+            routerLink="/profiles-main/Administrator/expertConfig"
             *ngIf="hasPerm('admCarsExpertConfig')"
           >
             {{ dico?.dico_expert_config || "dico_expert_config" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carsExpertDefaultFees"
+            routerLink="/profiles-main/Administrator/carsExpertDefaultFees"
             *ngIf="hasPerm('admCarsExpertDefaultFeesConfig')"
           >
             {{ dico?.dico_expert_default_fees || "dico_expert_default_fees" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/branchConfig"
+            routerLink="/profiles-main/Administrator/branchConfig"
             *ngIf="hasPerm('admCarsBranch')"
           >
             {{ dico?.dico_branch || "dico_branch" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carBroker"
+            routerLink="/profiles-main/Administrator/carBroker"
             *ngIf="hasPerm('admCarsBroker')"
           >
             {{ dico?.dico_broker || "dico_broker" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carTerritoryTown"
+            routerLink="/profiles-main/Administrator/carTerritoryTown"
             *ngIf="hasPerm('admCarsTerritoryTown')"
           >
             {{ dico?.dico_territory || "dico_territory" }}
           </a>
           <a
             mat-list-item
-            routerLink="/Administrator/carsCaseMngrSetup"
+            routerLink="/profiles-main/Administrator/carsCaseMngrSetup"
             *ngIf="hasPerm('admCarsCaseMngrSetup')"
           >
             {{ dico?.dico_cars_case_mngr_setup || "dico_cars_case_mngr_setup" }}
           </a>
         </mat-expansion-panel>
         <hr class="hr" />
-        <a mat-list-item routerLink="/CallCenter/searchPolicy">
+        <a mat-list-item routerLink="/profiles-main/CallCenter/searchPolicy">
           {{ dico?.dico_search_policy || "dico_search_policy" }}
         </a>
       </mat-nav-list>
@@ -208,8 +216,10 @@
         (click)="toggleMenu()"
       ></i>
     </div>
+
     <div class="component-content">
       <router-outlet></router-outlet>
+      <!-- <app-gauges *ngIf="callCenter"></app-gauges> -->
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

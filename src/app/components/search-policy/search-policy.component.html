@@ -1,14 +1,6 @@
 <div class="h3-header">
   <h3>
-    {{ dico?.dico_policy_search || "dico_policy_search" }}
-    <button
-      type="button"
-      (click)="exportToExcel()"
-      *ngIf="hasPerm('admExportToFile')"
-      class="export-excel btn btn-primary"
-    >
-      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
-    </button>
+    {{ dico?.dico_search_policy || "dico_search_policy" }}
   </h3>
 </div>
 
@@ -96,10 +88,10 @@
         </div>
       </div>
     </div>
+    <button type="submit" class="btn btn-primary">
+      {{ dico?.dico_search || "dico_search" }}
+    </button>
   </form>
-  <button type="submit" class="btn btn-primary">
-    {{ dico?.dico_search || "dico_search" }}
-  </button>
 </div>
 
 <div class="h3-header">

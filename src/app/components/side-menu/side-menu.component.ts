@@ -27,6 +27,7 @@ export class SideMenuComponent implements OnInit {
   sidenav!: MatSidenav;
   @Input() dico?: any;
   isLoading: boolean = false;
+  @Input() callCenter: boolean = false;
   toggleMenu() {
     this.sidenav.toggle();
   }

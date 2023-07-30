@@ -136,6 +136,8 @@ import { ViewNoteDialogComponent } from './components/view-notes/view-note-dialo
 import { provideUserIdleConfig } from 'angular-user-idle';
 import { CallCenterComponent } from './components/call-center/call-center.component';
 import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
+import { AppContentComponent } from './app-content/app-content.component';
+import { GaugesComponent } from './components/call-center/gauges/gauges.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -233,6 +235,8 @@ import { SearchPolicyComponent } from './components/search-policy/search-policy.
     ViewNoteDialogComponent,
     CallCenterComponent,
     SearchPolicyComponent,
+    AppContentComponent,
+    GaugesComponent,
   ],
   imports: [
     BrowserModule,

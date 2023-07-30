@@ -1,0 +1,48 @@
+.mat-sidenav {
+    width: 240px;
+    border-style: none;
+  }
+  
+  .row {
+    background-color: rgb(237, 243, 245);
+  }
+  
+  .col {
+    /* margin-top: 20px; */
+    /* margin-left: 10px; */
+    font-weight: bold;
+  }
+  
+  .component-content {
+    /* display: flex; */
+    margin-left: 20px;
+  }
+  
+  .arrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    margin-top: 140px;
+  }
+  
+  .mat-list-item-active {
+    background-color: #e5f5ff;
+  }
+  
+  .btn {
+    /* display: flex; */
+    align-items: center;
+    color: #333;
+    /* font-size: 13px; */
+  
+  }
+  
+  .hr {
+    border-top: 1px solid #ccc;
+    /* margin: 10px 0; */
+  }
+  
+  .list-class{
+   font-size: 12px;
+   font-weight: bold;
+  }
