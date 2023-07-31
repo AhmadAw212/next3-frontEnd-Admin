@@ -52,6 +52,11 @@
           />
         </div>
       </div>
+      <div class="col-md-3 mt-4">
+        <button type="submit" class="btn btn-primary">
+          {{ dico?.dico_search || "dico_search" }}
+        </button>
+      </div>
     </div>
 
     <div class="row">
@@ -77,6 +82,20 @@
             >{{ dico?.dico_insurance || "dico_insurance" }}:</label
           >
           <select
+            id="insuranceValue"
+            class="form-select"
+            name="insuranceValue"
+            [(ngModel)]="insuranceValue"
+            [disabled]="insurance?.length! <= 1"
+          >
+            <option
+              *ngFor="let company of insurance"
+              [value]="company.companyId"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+          <!-- <select
             class="form-select"
             name="insuranceValue"
             [(ngModel)]="insuranceValue"
@@ -84,13 +103,30 @@
             <option *ngFor="let ins of insurance" [value]="ins.insuranceCode">
               {{ ins.insuranceDesc }}
             </option>
-          </select>
+          </select> -->
+        </div>
+        <!--  -->
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="group"
+            >{{ dico?.dico_product_type || "dico_product_type" }}:</label
+          >
+          <ng-select
+            appendTo="body"
+            name="supplierName"
+            (search)="searchProductTypes($event)"
+            [(ngModel)]="productTypeValue"
+          >
+            <ng-option
+              *ngFor="let product of productTypes"
+              [value]="product.productId"
+              >{{ product.productDescription }}</ng-option
+            >
+          </ng-select>
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">
-      {{ dico?.dico_search || "dico_search" }}
-    </button>
   </form>
 </div>
 
@@ -100,7 +136,7 @@
     <button
       type="button"
       (click)="exportToExcel()"
-      *ngIf="hasPerm('admExportToFile')"
+      *ngIf="hasPerm('ccExportToFile')"
       class="export-excel btn btn-primary"
     >
       {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
@@ -111,9 +147,12 @@
   class="admin-container container-fluid"
   style="height: 200px; padding: 10px"
 >
+  <app-spinner *ngIf="loading"></app-spinner>
+
   <table class="table table-responsive-sm">
     <thead style="top: 0">
       <tr>
+        <th scope="col">{{ dico?.dico_view_policy || "dico_view_policy" }}</th>
         <th scope="col">{{ dico?.dico_company || "dico_company" }}</th>
         <th scope="col">{{ dico?.dico_client_name || "dico_client_name" }}</th>
 
@@ -147,6 +186,9 @@
       (click)="highlightRow($event)"
     >
       <tr *ngFor="let policy of policyResult">
+        <td (click)="viewPolicyComponent(policy.carId)">
+          <mat-icon>search</mat-icon>
+        </td>
         <td>{{ policy.insuranceDesc }}</td>
 
         <td>{{ policy.clientName }}</td>

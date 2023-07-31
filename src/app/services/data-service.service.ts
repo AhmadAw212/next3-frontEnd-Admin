@@ -1257,6 +1257,11 @@ export class DataServiceService {
     );
   }
 
+  getNotificationNature(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getNotificationNatureLovVw`
+    );
+  }
   getMaterialDamage(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/constant/materialDamage`
@@ -1379,6 +1384,21 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/getPolicy?iSearchBy=${iSearchBy}&iSearchValue=${iSearchValue}&iPolicyType=${iPolicyType}&iAsOfDate=${iAsOfDate}&iInsurance=${iInsurance}&productType=${productType}`
+    );
+  }
+
+  getProductType(
+    insuranceId: string,
+    description: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/insurance-products/${insuranceId}?description=${description}`
+    );
+  }
+
+  getCompanyLogo(companyId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/constant/getCompanyLogo?companyId=${companyId}`
     );
   }
 }

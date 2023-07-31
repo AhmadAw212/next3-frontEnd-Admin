@@ -1,10 +1,8 @@
-<div class="dialog-header">
-  <h2>{{ dico?.dico_view_policy || "dico_view_policy" }}</h2>
-</div>
+<h3 class="h3-header">{{ dico?.dico_view_policy || "dico_view_policy" }}</h3>
 <div class="dialog-logo" *ngIf="policyData">
-  <img src="../../../assets/images/basicLogo.jpg" alt="Logo" class="logo" />
+  <img [src]="companyLogo" alt="Logo" class="logo" />
 </div>
-<div *ngIf="!policyData && !dico">
+<div *ngIf="!policyData">
   <app-spinner></app-spinner>
 </div>
 <div class="dialog-content">

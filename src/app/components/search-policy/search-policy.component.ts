@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,12 +12,13 @@ import { saveAs } from 'file-saver';
 import { Subscription } from 'rxjs';
 import { type } from 'src/app/model/type';
 import { Policy } from 'src/app/model/policy';
+import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/view-policy-dialog.component';
 @Component({
   selector: 'app-search-policy',
   templateUrl: './search-policy.component.html',
   styleUrls: ['./search-policy.component.css'],
 })
-export class SearchPolicyComponent {
+export class SearchPolicyComponent implements OnInit, OnDestroy {
   dico?: any;
   selectedRow!: HTMLElement;
   policies?: any;
@@ -27,12 +28,16 @@ export class SearchPolicyComponent {
   insurance?: any[];
   policyTypeSubscription?: Subscription;
   policyType?: type[];
-  searchByValue?: string = '';
-  policyTypeValue?: string = '';
+  searchByValue?: string = 'PlateNumber';
+  policyTypeValue?: string = 'ALL_TPL';
   searchValue?: string = '';
   insuranceValue?: string = 'ALL';
   asOfDateValue?: Date;
   policyResult?: Policy[];
+  productTypeValue?: string;
+  private searchTimer: any;
+  productTypes?: any;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -46,12 +51,23 @@ export class SearchPolicyComponent {
     // Step 1: Parse the date string in Angular to get a JavaScript Date object
     this.asOfDateValue = new Date();
   }
+  ngOnDestroy(): void {
+    if (
+      this.policySearchSubscribtion ||
+      this.getInsuranceSubscription ||
+      this.policyTypeSubscription
+    ) {
+      this.policySearchSubscribtion?.unsubscribe();
+      this.getInsuranceSubscription?.unsubscribe();
+      this.policyTypeSubscription?.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     // this.dateFormatterService();
     this.getDico();
     // this.userRolesService.getUserRoles();
     this.policySearchLov();
-    this.getInsuranceLovFindAll();
+    this.getCompaniesPerUser();
     this.getPolicyTypeLovFindAll();
   }
   highlightRow(event: Event) {
@@ -68,6 +84,16 @@ export class SearchPolicyComponent {
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
+  viewPolicyComponent(selectedPolicy: string) {
+    // console.log(selectedPolicy);
+    this.dialog.open(ViewPolicyDialogComponent, {
+      data: {
+        carId: selectedPolicy,
+      },
+      width: '1000px',
+      maxHeight: '600px',
+    });
+  }
   getDico() {
     // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
@@ -78,23 +104,32 @@ export class SearchPolicyComponent {
     return this.dateFormatService.getDateFormat(dateId);
   }
   exportToExcel() {
-    const data = this.policies?.map((data: any) => {
+    const data = this.policyResult?.map((data) => {
       return {
-        ID: data.id,
-        Code: data.code,
-        Description: data.description,
-        Type: data.coverTypeDescription,
-        // Company: cover.insuranceDesc,
-        'Created Date': this.datePipe.transform(
-          data.sysCreatedDate,
-          this.dateFormat('excelDateTimeFormat')
+        Company: data.insuranceDesc,
+        'Client Name': data.clientName,
+        Plate: data.carPlate,
+        'Car Model': data.brandDescription,
+        YOM: data.carYear,
+        'Policy Type': data.policyTypeDesc,
+        'Policy Number': data.policyNumber,
+        'Policy Amendment': data.policyAmendment,
+        Status: data.amendmentDesc,
+        'Issue Date': this.datePipe.transform(
+          data.policyIssueDate,
+          this.dateFormat('reportDateFormat')
         ),
-        'Created By': data.sysCreatedBy,
-        'Updated Date': this.datePipe.transform(
-          data.sysUpdatedDate,
-          this.dateFormat('excelDateTimeFormat')
+        'Effective Date': this.datePipe.transform(
+          data.policyEffectiveDate,
+          this.dateFormat('reportDateFormat')
         ),
-        'Updated By': data.sysUpdatedBy,
+        'Expiry Date': this.datePipe.transform(
+          data.policyExpiryDate,
+          this.dateFormat('reportDateFormat')
+        ),
+        'Car Chasis': data.carChassis,
+        Branch: data.branchDesc,
+        Broker: data.brokerName,
       };
     });
 
@@ -103,7 +138,7 @@ export class SearchPolicyComponent {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Covers');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Policy');
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -115,7 +150,7 @@ export class SearchPolicyComponent {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Covers.xlsx');
+    saveAs(excelBlob, 'Policy.xlsx');
   }
 
   policySearchLov() {
@@ -131,24 +166,44 @@ export class SearchPolicyComponent {
         },
       });
   }
-  getInsuranceLovFindAll() {
+  getCompaniesPerUser() {
     this.getInsuranceSubscription = this.dataService
-      .getInsuranceLovFindAll()
+      .getCompaniesListByCurrentUser()
       .subscribe({
         next: (res) => {
-          this.insurance = res.data;
+          this.insurance = res.companyList;
+          // this.insuranceValue = this.insurance![0].companyId;
           const newRecord = {
-            insuranceCode: 'ALL',
-            insuranceDesc: 'ALL',
+            companyId: 'ALL',
+            companyName: 'ALL',
           };
           this.insurance?.push(newRecord);
-          // console.log(res);
+          // console.log(this.companies);
         },
         error: (err) => {
-          this.alertifyService.error(err.error.message);
+          this.alertifyService.dialogAlert('Error');
+          console.log(err);
         },
       });
   }
+  // getInsuranceLovFindAll() {
+  //   this.getInsuranceSubscription = this.dataService
+  //     .getInsuranceLovFindAll()
+  //     .subscribe({
+  //       next: (res) => {
+  //         this.insurance = res.data;
+  //         const newRecord = {
+  //           insuranceCode: 'ALL',
+  //           insuranceDesc: 'ALL',
+  //         };
+  //         this.insurance?.push(newRecord);
+  //         // console.log(res);
+  //       },
+  //       error: (err) => {
+  //         this.alertifyService.error(err.error.message);
+  //       },
+  //     });
+  // }
   getPolicyTypeLovFindAll() {
     this.policyTypeSubscription = this.dataService
       .getPolicyTypeLovFindAll()
@@ -163,6 +218,7 @@ export class SearchPolicyComponent {
       });
   }
   searchPolicy() {
+    this.loading = true;
     const formattedDate = this.datePipe.transform(
       this.asOfDateValue,
       'dd-MMM-YYYY'
@@ -185,6 +241,25 @@ export class SearchPolicyComponent {
         error: (err) => {
           console.log(err);
         },
+        complete: () => {
+          this.loading = false;
+        },
       });
+  }
+  searchProductTypes(event: any) {
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      const name = event.term;
+      this.dataService.getProductType(this.insuranceValue!, name).subscribe({
+        next: (res) => {
+          this.productTypes = res.data;
+          // console.log(res);
+        },
+        error: (err) => {
+          this.alertifyService.error(err.error.message);
+          console.log(err);
+        },
+      });
+    }, 300);
   }
 }

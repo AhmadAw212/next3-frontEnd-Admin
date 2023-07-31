@@ -132,7 +132,7 @@ export class CarsCellSetupComponent implements OnChanges, OnInit {
   }
 
   getMaterialDamage() {
-    this.dataService.getMaterialDamage().subscribe({
+    this.dataService.getNotificationNature().subscribe({
       next: (res) => {
         this.materialDamage = res.data;
       },

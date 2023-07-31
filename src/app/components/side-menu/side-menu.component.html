@@ -3,11 +3,18 @@
     <div class="row border border-3 mt-2 rounded-0 ms-2">
       <div class="col">{{ dico?.dico_menu || "dico_menu" }}</div>
 
-      <div class="rounded mt-3">
+      <div class="mt-3">
         <hr class="hr" />
       </div>
-
+      <!-- <hr class="hr" /> -->
       <mat-nav-list>
+        <a
+          mat-list-item
+          routerLink="/profiles-main/CallCenter/searchPolicy"
+          *ngIf="hasPerm('ccSearchPolicy')"
+        >
+          {{ dico?.dico_search_policy || "dico_search_policy" }}
+        </a>
         <mat-expansion-panel
           style="background-color: rgb(237, 243, 245)"
           *ngIf="hasPerm('admUserManagment')"
@@ -34,7 +41,8 @@
             {{ dico?.dico_edit_user || "dico_edit_user" }}
           </a>
         </mat-expansion-panel>
-        <hr class="hr" />
+        <br />
+        <!-- <hr class="hr" /> -->
         <mat-expansion-panel
           style="background-color: rgb(237, 243, 245)"
           *ngIf="
@@ -52,7 +60,9 @@
               }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <hr class="hr" />
+          <!-- <div class="rounded mt-3">
+            <hr class="hr" />
+          </div> -->
           <a
             mat-list-item
             routerLink="/profiles-main/Administrator/coreConfig"
@@ -60,7 +70,9 @@
           >
             {{ dico?.DRAWER_CONFIGURATION || "DRAWER_CONFIGURATION" }}
           </a>
-          <hr class="hr" />
+          <!-- <div class="rounded mt-3">
+            <hr class="hr" />
+          </div> -->
           <a
             mat-list-item
             routerLink="/profiles-main/Administrator/languageConfig"
@@ -68,7 +80,9 @@
           >
             {{ dico?.dico_language || "dico_language" }}
           </a>
-          <hr class="hr" />
+          <!-- <div class="rounded mt-3">
+            <hr class="hr" />
+          </div> -->
           <a
             mat-list-item
             routerLink="/profiles-main/Administrator/coreDocument"
@@ -76,7 +90,9 @@
           >
             {{ dico?.dico_document || "dico_document" }}
           </a>
-          <hr class="hr" />
+          <!-- <div class="rounded mt-3">
+            <hr class="hr" />
+          </div> -->
           <a
             mat-list-item
             routerLink="/profiles-main/Administrator/coreDomain"
@@ -85,8 +101,10 @@
             {{ dico?.dico_domain || "dico_domain" }}
           </a>
         </mat-expansion-panel>
-
-        <hr class="hr" />
+        <br />
+        <!-- <div class="rounded mt-3">
+          <hr class="hr" />
+        </div> -->
         <mat-expansion-panel
           style="background-color: rgb(237, 243, 245)"
           *ngIf="
@@ -201,10 +219,7 @@
             {{ dico?.dico_cars_case_mngr_setup || "dico_cars_case_mngr_setup" }}
           </a>
         </mat-expansion-panel>
-        <hr class="hr" />
-        <a mat-list-item routerLink="/profiles-main/CallCenter/searchPolicy">
-          {{ dico?.dico_search_policy || "dico_search_policy" }}
-        </a>
+        <!-- <hr class="hr" /> -->
       </mat-nav-list>
     </div>
   </mat-sidenav>

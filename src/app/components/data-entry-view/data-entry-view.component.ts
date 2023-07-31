@@ -80,7 +80,7 @@ export class DataEntryViewComponent implements OnInit {
   //10.9091591
   getDataEntry() {
     this.dataService
-      .getDataEntry('bae96c94-ef1b-472c-8e1d-b3b33180fb41')
+      .getDataEntry('fff5c353-887c-4e02-873e-47dc7f947410')
       .subscribe({
         next: (res) => {
           this.dataEntry = res.data;
