@@ -150,10 +150,7 @@ export class LanguageConfigComponent implements OnInit {
         // console.log(data);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        this.alertifyService.error(err.error.message);
       },
       complete: () => {
         console.log('HTTP request completed');
@@ -173,10 +170,7 @@ export class LanguageConfigComponent implements OnInit {
             // console.log(data);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.error(err.error.message);
           },
         });
       }
@@ -191,10 +185,7 @@ export class LanguageConfigComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          this.alertifyService.error(err.error.message);
         },
       });
     }

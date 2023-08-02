@@ -34,7 +34,7 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
   insuranceValue?: string = 'ALL';
   asOfDateValue?: Date;
   policyResult?: Policy[];
-  productTypeValue?: string;
+  productTypeValue: string = 'ALL';
   private searchTimer: any;
   productTypes?: any;
   loading: boolean = false;
@@ -173,6 +173,7 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.insurance = res.companyList;
           // this.insuranceValue = this.insurance![0].companyId;
+
           const newRecord = {
             companyId: 'ALL',
             companyName: 'ALL',
@@ -223,7 +224,9 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
       this.asOfDateValue,
       'dd-MMM-YYYY'
     );
-
+    if (this.productTypeValue === null) {
+      this.productTypeValue = '';
+    }
     this.dataService
       .searchPolicy(
         this.searchByValue!,
@@ -231,7 +234,7 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
         this.policyTypeValue!,
         formattedDate!,
         this.insuranceValue!,
-        ''
+        this.productTypeValue!
       )
       .subscribe({
         next: (res) => {
@@ -250,6 +253,7 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => {
       const name = event.term;
+
       this.dataService.getProductType(this.insuranceValue!, name).subscribe({
         next: (res) => {
           this.productTypes = res.data;

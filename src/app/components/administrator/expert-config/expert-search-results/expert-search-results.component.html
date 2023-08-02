@@ -28,7 +28,7 @@
         (click)="openAddExpertDialog()"
         *ngIf="hasPerm('admAddData')"
       >
-        {{ dico?.dico_Add_Expert_to || "dico_Add_Expert_to" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
 
       <button
@@ -37,7 +37,7 @@
         (click)="updateExpert()"
         *ngIf="hasPerm('admUpdateData')"
       >
-        {{ dico?.dico_update_Expert || "dico_update_Expert" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
   </div>
@@ -84,6 +84,21 @@
           </select>
         </td>
         <td>
+          <!-- <ng-select
+          appendTo="body"
+          name="territory"
+          id="territory"
+          
+          (search)="territoryAddress($event)"
+               [(ngModel)]="expert.territory_code"
+               (change)="onDropdownChange($event, expert, 'territory_code')"
+        >
+          <ng-option
+          *ngFor="let terirtoy of terrAddress"
+            [value]="terirtoy.code"
+            >       {{ terirtoy.description }}</ng-option
+          >
+        </ng-select> -->
           <select
             class="select-class-schedule"
             [(ngModel)]="expert.territory_code"

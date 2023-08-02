@@ -51,7 +51,7 @@ export class AddDomainDialogComponent implements OnInit {
     if (this.domainForm.valid) {
       this.dataService.addDomain(formValues).subscribe({
         next: (res) => {
-          this.dialogRef.close();
+          this.dialogRef.close(res.data);
           this.alertifyService.success(res.message!);
           console.log(res);
         },

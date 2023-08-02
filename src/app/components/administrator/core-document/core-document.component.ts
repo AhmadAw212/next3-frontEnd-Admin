@@ -135,12 +135,7 @@ export class CoreDocumentComponent implements OnInit {
         });
       },
       error: (err) => {
-        if (err.status === 401) {
-          // this.authService.refreshTokens();
-        } else {
-          this.alertifyService.error(err.error.message);
-          console.log(err);
-        }
+        this.alertifyService.error(err.error.message);
       },
       complete: () => {
         this.isLoading = false;

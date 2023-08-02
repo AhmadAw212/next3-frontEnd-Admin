@@ -240,8 +240,7 @@ export class CoreDomainComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
     });
   }
@@ -252,12 +251,9 @@ export class CoreDomainComponent implements OnInit {
     this.dataService.coreDomainSearch(this.code, this.description).subscribe({
       next: (res) => {
         this.domainData = res.data;
-
-        // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
+        this.alertifyService.error(err.error.message);
       },
       complete: () => {
         this.isLoading = false;
@@ -276,10 +272,7 @@ export class CoreDomainComponent implements OnInit {
             // console.log(data);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.error(err.error.message);
           },
         });
       }
@@ -295,10 +288,7 @@ export class CoreDomainComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            //this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          this.alertifyService.error(err.error.message);
         },
       });
     }
@@ -306,8 +296,10 @@ export class CoreDomainComponent implements OnInit {
 
   openAddDomainDialog() {
     const dialogRef = this.dialog.open(AddDomainDialogComponent);
-    dialogRef.afterClosed().subscribe(() => {
-      // this.getDomainValuesData();
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.coreDomainSearch();
+      }
     });
   }
 }

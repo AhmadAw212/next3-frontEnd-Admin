@@ -138,6 +138,7 @@ import { CallCenterComponent } from './components/call-center/call-center.compon
 import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
 import { AppContentComponent } from './app-content/app-content.component';
 import { GaugesComponent } from './components/call-center/gauges/gauges.component';
+import { DateFormatterService } from './services/date-formatter.service';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -274,7 +275,8 @@ import { GaugesComponent } from './components/call-center/gauges/gauges.componen
     NgxEditorModule,
   ],
   providers: [
-    // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },d
+
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

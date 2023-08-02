@@ -35,9 +35,7 @@ export class UsersIdleService {
       .subscribe(() => this.restart());
 
     // Start watching when user idle is starting.
-    this.idleSub = this.userIdle
-      .onTimerStart()
-      .subscribe((res) => console.log(res));
+    this.idleSub = this.userIdle.onTimerStart().subscribe();
 
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe({
@@ -58,10 +56,10 @@ export class UsersIdleService {
     let timeout = localStorage.getItem('timeout');
     const idleTimeout = timeout ? parseInt(timeout, 10) * 60 : 0;
 
-    console.log(idleTimeout);
+    // console.log(idleTimeout);
     this.userIdle.setConfigValues({
       idle: idleTimeout,
-      timeout: 10,
+      timeout: 5,
       ping: 60,
     });
   }

@@ -13,6 +13,10 @@ html, body {
   /* max-height: 766px; */
   /* min-height: 766px; */
 }
+/* table tbody tr .ng-star-inserted  {
+  background-color: transparent;
+} */
+
 table thead {
   position: sticky;
   /* top:0 */
@@ -327,6 +331,15 @@ tr:nth-child(odd) {
   max-width: 600px;
   margin: 0 auto;
 }
+  
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  }
+  
 .dialog-header {
   background-color: #007bff;
   color: #fff;

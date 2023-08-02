@@ -174,10 +174,7 @@ export class EditUserComponent implements OnInit {
         this.userSearch();
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
+        this.alertify.error(err.error.message);
       },
     });
   }
@@ -209,10 +206,7 @@ export class EditUserComponent implements OnInit {
         this.userSearch();
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
+        this.alertify.error(err.error.message);
       },
     });
   }
@@ -227,10 +221,7 @@ export class EditUserComponent implements OnInit {
             // console.log(res);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertify.dialogAlert('Error');
-            }
+            this.alertify.error(err.error.message);
           },
         });
       }

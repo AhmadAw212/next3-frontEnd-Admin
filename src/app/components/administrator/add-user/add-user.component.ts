@@ -68,7 +68,7 @@ export class AddUserComponent implements OnInit {
         this.userForm.get('password')?.setValue(res.data);
       },
       error: (err) => {
-        console.log(err);
+        this.alertify.error(err.error.message);
       },
     });
   }
@@ -178,10 +178,7 @@ export class AddUserComponent implements OnInit {
           } else this.alertify.success(res.message!);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertify.dialogAlert('Error');
-          }
+          this.alertify.error(err.error.message);
         },
       });
     }

@@ -20,7 +20,7 @@ export class CoreConfigurationComponent implements OnInit {
   description: string = '';
   id: string = '';
   configData?: ConfigData[] = [];
-  updatedConfigValues?: ConfigData[] = [];
+  updatedConfigValues: ConfigData[] = [];
   reportDateTimeFormat?: string;
   selectedConfigId?: string;
   selectedRow!: HTMLElement;
@@ -114,6 +114,22 @@ export class CoreConfigurationComponent implements OnInit {
   trackConfigById(index: number, config: any): string {
     return config.id;
   }
+  findAndReplaceExpert(
+    updatedConfig: ConfigData[],
+    coreconfig: ConfigData
+  ): void {
+    const index = updatedConfig.findIndex((item) => item.id === coreconfig.id);
+    if (index !== -1) {
+      updatedConfig.splice(index, 1);
+    }
+
+    updatedConfig.push({
+      id: coreconfig.id,
+      description: coreconfig.description,
+      configValue: coreconfig.configValue,
+      configKey: coreconfig.configKey,
+    });
+  }
   onTdBlur(
     event: FocusEvent,
     config: ConfigData,
@@ -121,16 +137,12 @@ export class CoreConfigurationComponent implements OnInit {
   ) {
     const tdElement = event.target as HTMLTableCellElement;
     const oldValue = config[property];
-    const newValue = tdElement.innerText.trim();
+    const newValue = tdElement.textContent?.trim() || '';
+    const updatedConfig = this.updatedConfigValues ?? [];
 
     if (oldValue !== newValue) {
-      config[property] = newValue;
-      this.updatedConfigValues?.push({
-        id: config.id,
-        configKey: config.configKey,
-        configValue: config.configValue,
-        description: config.description,
-      });
+      const updatedConfigItem = { ...config, [property]: newValue };
+      this.findAndReplaceExpert(updatedConfig, updatedConfigItem);
       // console.log(this.updatedConfigValues);
     }
   }
@@ -143,12 +155,7 @@ export class CoreConfigurationComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401) {
-            // this.authService.refreshTokens();
-            // this.alertifyService.dialogAlert('Error');
-          } else {
-            this.alertifyService.dialogAlert('Error');
-          }
+          this.alertifyService.error(err.error.message);
         },
       });
     }
@@ -166,12 +173,7 @@ export class CoreConfigurationComponent implements OnInit {
             // console.log(res);
           },
           error: (err) => {
-            if (err.status === 401) {
-              // this.authService.refreshTokens();
-              // this.alertifyService.dialogAlert('Error');
-            } else {
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.error(err.error.message);
           },
         });
       }
@@ -187,7 +189,7 @@ export class CoreConfigurationComponent implements OnInit {
         // console.log(this.configData);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        this.alertifyService.error(err.error.message);
       },
       complete: () => {
         this.isLoading = false;

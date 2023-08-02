@@ -6,7 +6,9 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
@@ -22,18 +24,21 @@ export class ViewPolicyDialogComponent implements OnInit, OnDestroy {
   companyLogo?: string;
   policySubscription?: Subscription;
   companyLogoSubscription?: Subscription;
+  isLoading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<ViewPolicyDialogComponent>,
     private dicoService: DicoServiceService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dateFormatService: DateFormatterService,
+    private alertifyService: AlertifyService
   ) {
     this.carId = data.carId;
   }
   ngOnDestroy(): void {
     if (this.policySubscription || this.companyLogoSubscription) {
       this.policySubscription?.unsubscribe();
-      // this.companyLogoSubscription?.unsubscribe();
+      this.companyLogoSubscription?.unsubscribe();
     }
   }
 
@@ -52,9 +57,12 @@ export class ViewPolicyDialogComponent implements OnInit, OnDestroy {
           // console.log(data);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.error(err.error.message);
         },
       });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
     // this.dicoService.getDico();
@@ -75,9 +83,11 @@ export class ViewPolicyDialogComponent implements OnInit, OnDestroy {
           // console.log(data.data);
         },
         error: (error) => {
-          console.log(error);
+          // this.policyData = [];
+          this.close();
+          this.alertifyService.error(error.error.message);
+          // console.log(error);
         },
-        complete: () => {},
       });
   }
 

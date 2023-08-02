@@ -33,7 +33,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Unsubscribe from the subscription when the component is destroyed
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.userIdlesService.ngOnDestroy();
     }
   }
   // ngOnDestroy(): void {
@@ -82,13 +82,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
         console.log(this.userProfiles);
       },
       error: (err) => {
-        if (err.status === 401) {
-          // this.authService.refreshTokens();
-          // this.authService.logout();
-          // this.alertifyService.dialogAlert('Error');
-        } else {
-          this.alertifyService.dialogAlert(err.error.message);
-        }
+        this.alertifyService.dialogAlert(err.error.message);
       },
     });
   }

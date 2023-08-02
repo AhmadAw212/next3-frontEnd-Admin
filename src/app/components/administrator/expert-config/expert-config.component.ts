@@ -40,7 +40,7 @@ export class ExpertConfigComponent implements OnInit {
   mobilePhone?: string;
   sms?: boolean;
   expertSearchResult?: CarExpert[];
-  showExpertResult: boolean = false;
+  showExpertResult: boolean = true;
   private searchTimer: any;
   isLoading: boolean = false;
   dico?: any;
@@ -80,9 +80,9 @@ export class ExpertConfigComponent implements OnInit {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  showExpResult() {
-    this.showExpertResult = true;
-  }
+  // showExpResult() {
+  //   this.showExpertResult = true;
+  // }
   onSupplierChange(): void {
     // console.log('Selected supplier:', this.selectedSupplier);
     this.fullName = this.selectedSupplier.fullName;

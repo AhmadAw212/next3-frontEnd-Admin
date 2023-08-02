@@ -48,7 +48,7 @@ export class LoginPageComponent implements OnInit {
     // this.Dico(this.selectedLanguage!)
     this.getDico();
     this.loginDataService.clearLoginInfo();
-    // this.userIdlesService.stop();
+    this.userIdlesService.stopWatching();
     this.userRoles.clearRoles();
   }
 
@@ -57,10 +57,11 @@ export class LoginPageComponent implements OnInit {
     localStorage.setItem('selectedLanguage', this.selectedLanguage);
   }
   ngOnDestroy() {
+    this.userIdlesService.ngOnDestroy();
     // Unsubscribe from the UserIdleService when the component is destroyed to avoid memory leaks.
-    if (this.userIdleSub) {
-      this.userIdleSub.unsubscribe();
-    }
+    // if (this.userIdleSub) {
+    //   this.userIdleSub.unsubscribe();
+    // }
   }
   login() {
     const lang = localStorage.getItem('selectedLanguage');

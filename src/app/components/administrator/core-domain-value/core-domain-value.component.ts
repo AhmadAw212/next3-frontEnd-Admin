@@ -77,7 +77,7 @@ export class CoreDomainValueComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          console.log(err);
+          this.alertifyService.error(err.error.message);
         },
       });
   }
@@ -179,7 +179,7 @@ export class CoreDomainValueComponent implements OnInit {
       maxHeight: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((res) => {
       this.domainValues = dialogData.domainValues;
     });
   }
@@ -190,8 +190,8 @@ export class CoreDomainValueComponent implements OnInit {
         this.domainValues = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
+        this.alertifyService.error(err.error.message);
+        // console.log(err);
       },
     });
   }
@@ -206,10 +206,7 @@ export class CoreDomainValueComponent implements OnInit {
             this.getDomainValuesData(this.domain?.id!);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.error(err.error.message);
           },
         });
       }
@@ -227,10 +224,7 @@ export class CoreDomainValueComponent implements OnInit {
             console.log(res);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.error(err.error.message);
           },
         });
     }

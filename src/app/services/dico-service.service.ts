@@ -12,6 +12,7 @@ export class DicoServiceService {
   public dico: Observable<any> = this.dicoSubject.asObservable();
 
   private selectedLanguage: string | null = null;
+  private dataFetched = false; // Track whether data has been fetched to avoid redundant API calls.
 
   constructor(
     private dataService: DataServiceService,
@@ -22,11 +23,12 @@ export class DicoServiceService {
   // Method to get the language data
   getDico() {
     const language = localStorage.getItem('selectedLanguage') || 'en'; // Default language if none is set
-    if (language !== this.selectedLanguage) {
+    if (!this.dataFetched || language !== this.selectedLanguage) {
       this.selectedLanguage = language;
       this.dataService.Dico(language).subscribe({
         next: (languageData) => {
           this.dicoSubject.next(languageData.data);
+          this.dataFetched = true; // Mark data as fetched after the first call.
         },
         error: (err) => {
           if (err.status === 401) {

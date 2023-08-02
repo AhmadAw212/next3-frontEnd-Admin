@@ -86,7 +86,6 @@
             class="form-select"
             name="insuranceValue"
             [(ngModel)]="insuranceValue"
-            [disabled]="insurance?.length! <= 1"
           >
             <option
               *ngFor="let company of insurance"
@@ -109,9 +108,7 @@
       </div>
       <div class="col-md-2">
         <div class="form-group">
-          <label for="group"
-            >{{ dico?.dico_product_type || "dico_product_type" }}:</label
-          >
+          <label for="group">{{ dico?.dico_product || "dico_product" }}:</label>
           <ng-select
             appendTo="body"
             name="supplierName"

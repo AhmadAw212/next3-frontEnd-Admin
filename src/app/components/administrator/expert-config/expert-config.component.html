@@ -194,10 +194,8 @@
   </div>
 </div>
 
-<div *ngIf="showExpertResult">
-  <app-expert-search-results
-    [expertSearchResult]="expertSearchResult"
-    [expGroup]="expGroup"
-    [selectedSupplier]="selectedSupplier"
-  ></app-expert-search-results>
-</div>
+<app-expert-search-results
+  [expertSearchResult]="expertSearchResult"
+  [expGroup]="expGroup"
+  [selectedSupplier]="selectedSupplier"
+></app-expert-search-results>

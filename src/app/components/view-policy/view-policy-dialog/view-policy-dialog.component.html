@@ -1,3 +1,7 @@
+<span class="close-btn" style="background-color: white" (click)="close()"
+  >&#x2716;</span
+>
+
 <h3 class="h3-header">{{ dico?.dico_view_policy || "dico_view_policy" }}</h3>
 <div class="dialog-logo" *ngIf="policyData">
   <img [src]="companyLogo" alt="Logo" class="logo" />
@@ -122,7 +126,12 @@
           <label for="policyIssueDate">{{
             dico?.dico_issue_date || "dico_issue_date"
           }}</label>
-          <p>{{ policyData?.policyIssueDate }}</p>
+          <p>
+            {{
+              policyData?.policyIssueDate
+                | date : dateFormat("reportDateFormat")
+            }}
+          </p>
         </div>
       </div>
 
@@ -131,13 +140,23 @@
           <label for="policyExpiryDate">{{
             dico?.dico_expiry_date || "dico_expiry_date"
           }}</label>
-          <p>{{ policyData?.policyExpiryDate }}</p>
+          <p>
+            {{
+              policyData?.policyExpiryDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
         </div>
         <div class="panel-item">
           <label for="policyEffectiveDate">{{
             dico?.dico_effective_date || "dico_effective_date"
           }}</label>
-          <p>{{ policyData?.policyEffectiveDate }}</p>
+          <p>
+            {{
+              policyData?.policyEffectiveDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
         </div>
       </div>
 
@@ -146,13 +165,23 @@
           <label for="firstInceptionDate">{{
             dico?.dico_first_inception || "dico_first_inception"
           }}</label>
-          <p>{{ policyData?.firstInceptionDate }}</p>
+          <p>
+            {{
+              policyData?.firstInceptionDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
         </div>
         <div class="panel-item">
           <label for="firstEffectiveDate">{{
             dico?.dico_first_effective || "dico_first_effective"
           }}</label>
-          <p>{{ policyData?.firstEffectiveDate }}</p>
+          <p>
+            {{
+              policyData?.firstEffectiveDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
         </div>
       </div>
 
@@ -265,7 +294,9 @@
           <label for="bidate">{{
             dico?.dico_blacklist_set_on || "dico_blacklist_set_on"
           }}</label>
-          <p>{{ policyData?.bidate }}</p>
+          <p>
+            {{ policyData?.bidate | date : dateFormat("reportDateTimeFormat") }}
+          </p>
         </div>
         <div class="panel-item">
           <label for="binote1">{{
@@ -390,7 +421,9 @@
           <label for="policyInsuranceBlSetOn">{{
             dico?.dico_InsuranceBlSetOn || "dico_InsuranceBlSetOn"
           }}</label>
-          <p>{{ policyData?.policyInsuranceBISetOn }}</p>
+          <p>
+            {{ policyData?.policyInsuranceBISetOn }}
+          </p>
         </div>
         <div class="panel-item">
           <label for="policyInsuranceBISetBy">{{
@@ -411,7 +444,7 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <table>
-        <thead>
+        <thead style="position: static">
           <tr>
             <th>{{ dico?.dico_cover || "dico_cover" }}</th>
             <th>{{ dico?.dico_description || "dico_description" }}</th>
@@ -645,6 +678,6 @@
     </div>
   </div>
   <div class="dialog-footer">
-    <button mat-button (click)="close()">Close</button>
+    <button class="btn btn-danger" (click)="close()">Close</button>
   </div>
 </div>

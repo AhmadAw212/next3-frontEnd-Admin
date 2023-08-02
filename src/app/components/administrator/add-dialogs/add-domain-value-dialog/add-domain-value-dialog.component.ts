@@ -78,7 +78,7 @@ export class AddDomainValueDialogComponent implements OnInit {
     this.dataService.addDomainValue(id, domainData).subscribe({
       next: (res) => {
         this.alertifyService.success(res.message!);
-        this.dialogRef.close();
+        this.dialogRef.close(res.data);
         this.getDomainValuesData(id);
       },
       error: (err) => {

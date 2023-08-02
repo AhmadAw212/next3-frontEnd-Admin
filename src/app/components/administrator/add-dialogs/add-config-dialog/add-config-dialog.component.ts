@@ -52,9 +52,6 @@ export class AddConfigDialogComponent implements OnInit {
       const configValue = this.configurationForm.get('configValue')?.value;
       const configDescription =
         this.configurationForm.get('configDescription')?.value;
-
-      // Process the form values as needed
-      // For example, you can assign them to component properties or make API calls
     }
 
     this.dataService.addConfig(this.configurationForm.value).subscribe({
@@ -64,8 +61,7 @@ export class AddConfigDialogComponent implements OnInit {
         // console.log(data);
       },
       error: (err) => {
-        // this.authService.logout();
-        this.alertifyService.dialogAlert('Error');
+        this.alertifyService.error(err.error.message);
       },
     });
   }

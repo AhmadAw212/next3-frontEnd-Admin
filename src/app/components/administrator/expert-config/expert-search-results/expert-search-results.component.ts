@@ -191,8 +191,24 @@ export class ExpertSearchResultsComponent implements OnInit {
     this.findAndReplaceExpert(updatedExpert, expert);
     console.log(this.updatedExpert);
   }
+  // territoryAddress(event: any) {
+  //   clearTimeout(this.searchTimer);
+  //   this.searchTimer = setTimeout(() => {
+  //     const name = event.term;
+  //     this.dataService.territoryAddress(name).subscribe({
+  //       next: (res) => {
+  //         this.terrAddress = res.data;
+  //         // console.log(res);
+  //       },
+  //       error: (err) => {
+  //         this.alertifyService.dialogAlert('Error');
+  //         console.log(err);
+  //       },
+  //     });
+  //   }, 300);
+  // }
   territoryAddress() {
-    // this.isLoading = true;
+    this.isLoading = true;
     this.dataService.territoryAddress(this.territoryName!).subscribe({
       next: (res) => {
         this.terrAddress = res.data;
