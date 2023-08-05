@@ -2,7 +2,9 @@
   >&#x2716;</span
 >
 
-<h3 class="h3-header">{{ dico?.dico_view_policy || "dico_view_policy" }}</h3>
+<h3 class="h3-header" style="margin-top: 0">
+  {{ dico?.dico_view_policy || "dico_view_policy" }}
+</h3>
 <div class="dialog-logo" *ngIf="policyData">
   <img [src]="companyLogo" alt="Logo" class="logo" />
 </div>
@@ -14,23 +16,21 @@
     <h5>{{ dico?.dico_policy_information || "dico_policy_information" }}</h5>
     <div class="panel">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.branchCode">
           <label for="branch">{{ dico?.dico_branch || "dico_branch" }}</label>
           <p>{{ policyData?.branchCode }} {{ policyData?.brancheDesc }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyCar">
           <label for="certificate">{{
             dico?.dico_certificate || "dico_certificate"
           }}</label>
           <p>{{ policyData?.policyCar }}</p>
         </div>
-        <div class="panel-item">
-          <label for="certificate">{{
-            dico?.dico_policy || "dico_policy"
-          }}</label>
+        <div class="panel-item" *ngIf="policyData?.policyReference">
+          <label for="policy">{{ dico?.dico_policy || "dico_policy" }}</label>
           <p>{{ policyData?.policyReference }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyEndorsmentTypeCode">
           <label for="policyEndorsmentTypeCode">{{
             dico?.dico_policy_endorsment_type_code ||
               "dico_policy_endorsment_type_code"
@@ -39,26 +39,29 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div
+          class="panel-item"
+          *ngIf="policyData?.policyEndorsmentTypeDescription"
+        >
           <label for="policyEndorsmentTypeDescription">{{
             dico?.dico_policy_endorsment_type_desc ||
               "dico_policy_endorsment_type_desc"
           }}</label>
           <p>{{ policyData?.policyEndorsmentTypeDescription }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyCurrency">
           <label for="policyCurrency">{{
             dico?.dico_policy_currency || "dico_policy_currency"
           }}</label>
           <p>{{ policyData?.policyCurrency }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyAmendment">
           <label for="policyAmendment">{{
             dico?.dico_endorsment || "dico_endorsment"
           }}</label>
           <p>{{ policyData?.policyAmendment }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyBlacklistNote">
           <label for="policyBlacklistNote">{{
             dico?.dico_policy_blacklist_note || "dico_policy_blacklist_note"
           }}</label>
@@ -66,25 +69,28 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyBlackistReason">
           <label for="policyBlackistReason">{{
             dico?.dico_policy_blacklist_reason || "dico_policy_blacklist_reason"
           }}</label>
           <p>{{ policyData?.policyBlackistReason }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyEndorsmentSubTypeCode">
           <label for="policyEndorsmentSubTypeCode">{{
             dico?.dico_pol_end_sub_type_code || "dico_pol_end_sub_type_code"
           }}</label>
           <p>{{ policyData?.policyEndorsmentSubTypeCode }}</p>
         </div>
-        <div class="panel-item">
+        <div
+          class="panel-item"
+          *ngIf="policyData?.policyEndorsmentSubTypeDescrion"
+        >
           <label for="policyEndorsmentSubTypeDescrion">{{
             dico?.dico_pol_end_sub_type_desc || "dico_pol_end_sub_type_desc"
           }}</label>
           <p>{{ policyData?.policyEndorsmentSubTypeDescrion }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyHolderCode">
           <label for="policyHolderCode">{{
             dico?.dico_policy_holder_code || "dico_policy_holder_code"
           }}</label>
@@ -92,25 +98,25 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyHolderId">
           <label for="policyHolderId">{{
             dico?.dico_policy_holder_id || "dico_policy_holder_id"
           }}</label>
           <p>{{ policyData?.policyHolderId }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyHolderName">
           <label for="policyHolderName">{{
             dico?.dico_policy_holder_name || "dico_policy_holder_name"
           }}</label>
           <p>{{ policyData?.policyHolderName }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyHolderPhone">
           <label for="policyHolderPhone">{{
             dico?.dico_policy_holder_phone || "dico_policy_holder_phone"
           }}</label>
           <p>{{ policyData?.policyHolderPhone }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyRemarks">
           <label for="policyRemarks">{{
             dico?.dico_note || "dico_note"
           }}</label>
@@ -122,7 +128,7 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyIssueDate">
           <label for="policyIssueDate">{{
             dico?.dico_issue_date || "dico_issue_date"
           }}</label>
@@ -136,7 +142,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyExpiryDate">
           <label for="policyExpiryDate">{{
             dico?.dico_expiry_date || "dico_expiry_date"
           }}</label>
@@ -147,7 +153,7 @@
             }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyEffectiveDate">
           <label for="policyEffectiveDate">{{
             dico?.dico_effective_date || "dico_effective_date"
           }}</label>
@@ -161,7 +167,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.firstInceptionDate">
           <label for="firstInceptionDate">{{
             dico?.dico_first_inception || "dico_first_inception"
           }}</label>
@@ -172,7 +178,7 @@
             }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.firstEffectiveDate">
           <label for="firstEffectiveDate">{{
             dico?.dico_first_effective || "dico_first_effective"
           }}</label>
@@ -186,7 +192,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyAction">
           <label for="policyAction">{{
             dico?.dico_policy_type || "dico_policy_type"
           }}</label>
@@ -199,7 +205,7 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.productsDescription">
           <label for="productsDescription">{{
             dico?.dico_product || "dico_product"
           }}</label>
@@ -208,7 +214,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyProduct">
           <label for="policyProduct">{{
             dico?.dico_policy_product || "dico_policy_product"
           }}</label>
@@ -217,7 +223,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.sublineCode">
           <label for="sublineCode">{{
             dico?.dico_subline_code || "dico_subline_code"
           }}</label>
@@ -226,7 +232,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.sublineDesc">
           <label for="sublineDesc">{{
             dico?.dico_subline_desc || "dico_subline_desc"
           }}</label>
@@ -235,7 +241,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.productsType">
           <label for="productsType">{{
             dico?.dico_product_category || "dico_product_category"
           }}</label>
@@ -248,49 +254,49 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyBroker">
           <label for="policyBroker">{{
             dico?.dico_broker || "dico_broker"
           }}</label>
           <p>{{ policyData?.policyBroker }}</p>
         </div>
 
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.brokerDesc">
           <label for="brokerDesc">{{
             dico?.dico_broker_name || "dico_broker_name"
           }}</label>
           <p>{{ policyData?.brokerDesc }}</p>
         </div>
 
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.brokerTelephone">
           <label for="brokerTelephone">{{
             dico?.dico_broker_phone || "dico_broker_phone"
           }}</label>
           <p>{{ policyData?.brokerTelephone }}</p>
         </div>
 
-        <div class="panel-item">
+        <!-- <div class="panel-item"  *ngIf="policyData?.bibrokerid">
           <label for="bibrokerid">{{
             dico?.dico_broker_blackList || "dico_broker_blackList"
           }}</label>
           <p>{{ policyData?.bibrokerid }}</p>
-        </div>
+        </div> -->
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyBrokerWebOrigin">
           <label for="policyBrokerWebOrigin">{{
             dico?.dico_BrokerWebOrigin || "dico_BrokerWebOrigin"
           }}</label>
           <p>{{ policyData?.policyBrokerWebOrigin }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyIsDirectBroker">
           <label for="policyIsDirectBroker">{{
             dico?.dico_IsDirectBroker || "dico_IsDirectBroker"
           }}</label>
           <p>{{ policyData?.policyIsDirectBroker }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.bidate">
           <label for="bidate">{{
             dico?.dico_blacklist_set_on || "dico_blacklist_set_on"
           }}</label>
@@ -298,7 +304,7 @@
             {{ policyData?.bidate | date : dateFormat("reportDateTimeFormat") }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.binote1">
           <label for="binote1">{{
             dico?.dico_Blacklist_note || "dico_Blacklist_note"
           }}</label>
@@ -307,19 +313,19 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.bisetBy">
           <label for="bisetBy">{{
             dico?.dico_blacklist_set_by || "dico_blacklist_set_by"
           }}</label>
           <p>{{ policyData?.bisetBy }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.bireason">
           <label for="bireason">{{
             dico?.dico_blacklist_reason || "dico_blacklist_reason"
           }}</label>
           <p>{{ policyData?.bireason }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.brokerEmail">
           <label for="brokerEmail">{{
             dico?.dico_broker_email || "dico_broker_email"
           }}</label>
@@ -332,13 +338,13 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyTowFlag">
           <label for="policyTowFlag">{{
             dico?.dico_tow_allowed || "dico_tow_allowed"
           }}</label>
           <p>{{ policyData?.policyTowFlag }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyReplacementiag">
           <label for="policyReplacementiag">{{
             dico?.dico_car_replacement || "dico_car_replacement"
           }}</label>
@@ -347,13 +353,13 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyAgencyRepairDesc">
           <label for="policyAgencyRepairDesc">{{
             dico?.dico_dealer_repair || "dico_dealer_repair"
           }}</label>
           <p>{{ policyData?.policyAgencyRepairDesc }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyDeductible">
           <label for="policyDeductible">{{
             dico?.dico_policy_deductible || "dico_policy_deductible"
           }}</label>
@@ -361,7 +367,7 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyDeductibleAmt">
           <label for="policyDeductibleAmt">
             {{
               dico?.dico_deductible_amount || "dico_deductible_amount"
@@ -376,17 +382,17 @@
   <div class="section">
     <div class="panel" *ngIf="policyData">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyweb">
           <label for="policyweb">{{ dico?.dico_Web || "dico_Web" }}</label>
           <p>{{ policyData?.policyweb }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyIssuingUser">
           <label for="policyIssuingUser">{{
             dico?.dico_IssuingUser || "dico_IssuingUser"
           }}</label>
           <p>{{ policyData?.policyIssuingUser }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyModifiedUser">
           <label for="policyModifiedUser">{{
             dico?.dico_ModifiedUser || "dico_ModifiedUser"
           }}</label>
@@ -394,13 +400,13 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyPremiumCurrency">
           <label for="policyPremiumCurrency">
             {{ dico?.dico_PremiumCurrency || "dico_PremiumCurrency" }}</label
           >
           <p>{{ policyData?.policyPremiumCurrency }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyPremiumCurrencyRate">
           <label for="policyPremiumCurrencyRate">
             {{
               dico?.dico_PremiumCurrencyRate || "dico_PremiumCurrencyRate"
@@ -408,7 +414,7 @@
           >
           <p>{{ policyData?.policyPremiumCurrencyRate }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policySumInsCurrencyRate">
           <label for="policySumInsCurrencyRate">{{
             dico?.dico_SumInsCurrencyRate || "dico_SumInsCurrencyRate"
           }}</label>
@@ -417,7 +423,7 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyInsuranceBISetOn">
           <label for="policyInsuranceBlSetOn">{{
             dico?.dico_InsuranceBlSetOn || "dico_InsuranceBlSetOn"
           }}</label>
@@ -425,13 +431,13 @@
             {{ policyData?.policyInsuranceBISetOn }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyInsuranceBISetBy">
           <label for="policyInsuranceBISetBy">{{
             dico?.dico_InsuranceBlSetBy || "dico_InsuranceBlSetBy"
           }}</label>
           <p>{{ policyData?.policyInsuranceBISetBy }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policySpecialNotes">
           <label for="policySpecialNotes">{{
             dico?.dico_special_notes || "dico_special_notes"
           }}</label>
@@ -497,13 +503,13 @@
             {{ policyData?.clientFamilyName }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.policyPrintName">
           <label for="policyPrintName">{{
             dico?.dico_policyPrintName || "dico_policyPrintName"
           }}</label>
           <p>{{ policyData?.policyPrintName }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.clientNum1">
           <label for="clientNum1">{{
             dico?.dico_client_code || "dico_client_code"
           }}</label>
@@ -511,13 +517,13 @@
         </div>
       </div>
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.clientMobilePhone">
           <label for="clientMobilePhone">
             {{ dico?.dico_phone_number || "dico_phone_number" }}</label
           >
           <p>{{ policyData?.clientMobilePhone }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.blNote">
           <label for="blPolicyNum">
             {{ dico?.dico_insured_bl_note || "dico_insured_bl_note" }}</label
           >
@@ -536,7 +542,7 @@
     <h5>{{ dico?.dico_vehicle_info || "dico_vehicle_info" }}</h5>
     <div class="panel">
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carBrandDescription">
           <label for="carBrandDescription">{{
             dico?.dico_car_brand || "dico_car_brand"
           }}</label>
@@ -544,7 +550,7 @@
             {{ policyData?.carBrandDescription }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carTrademarkDescription">
           <label for="carTrademarkDescription">{{
             dico?.dico_car_trademark || "dico_car_trademark"
           }}</label>
@@ -552,7 +558,7 @@
             {{ policyData?.carTrademarkDescription }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carModelToPrint">
           <label for="carModelToPrint">{{
             dico?.dico_model_print || "dico_model_print"
           }}</label>
@@ -560,7 +566,7 @@
             {{ policyData?.carModelToPrint }}
           </p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carYear">
           <label for="carYear">{{
             dico?.dico_car_yom || "dico_car_yom"
           }}</label>
@@ -571,25 +577,25 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carChassis">
           <label for="carChassis">{{
-            dico?.dico_policyPrintName || "dico_policyPrintName"
+            dico?.dico_chasis_number || "dico_chasis_number"
           }}</label>
           <p>{{ policyData?.carChassis }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carValue">
           <label for="carValue">{{
             dico?.dico_vehicle_value || "dico_vehicle_value"
           }}</label>
           <p>{{ policyData?.carValue }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carPlate">
           <label for="carPlate">{{
             dico?.dico_plate_number || "dico_plate_number"
           }}</label>
           <p>{{ policyData?.carPlate }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carEngine">
           <label for="carEngine">{{
             dico?.dico_engine_number || "dico_engine_number"
           }}</label>
@@ -598,23 +604,23 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carVip">
           <label for="carVip"> {{ dico?.dico_vip || "dico_vip" }}</label>
           <p>{{ policyData?.carVip }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carUnPaidPremium">
           <label for="carUnPaidPremium">{{
             dico?.dico_un_paid_premium || "dico_un_paid_premium"
           }}</label>
           <p>{{ policyData?.carUnPaidPremium }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carUnPaidPremiumDate">
           <label for="carUnPaidPremiumDate">{{
             dico?.dico_un_paid_premium_date || "dico_un_paid_premium_date"
           }}</label>
           <p>{{ policyData?.carUnPaidPremiumDate }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carDealerWorkshopName">
           <label for="carDealerWorkshopName">{{
             dico?.dico_DealerWorkshopName || "dico_DealerWorkshopName"
           }}</label>
@@ -623,25 +629,25 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carUsage">
           <label for="carUsage">{{
             dico?.dico_car_usage || "dico_car_usage"
           }}</label>
           <p>{{ policyData?.carUsage }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.beneficiaryDesc">
           <label for="beneficiaryDesc">{{
             dico?.dico_beneficiary || "dico_beneficiary"
           }}</label>
           <p>{{ policyData?.beneficiaryDesc }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carObjectNumber">
           <label for="carObjectNumber">{{
             dico?.dico_car_object_number || "dico_car_object_number"
           }}</label>
           <p>{{ policyData?.carObjectNumber }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carCertifBlackListed">
           <label for="carCertifBlackListed"
             >{{ dico?.dico_blacklist || "dico_blacklist" }}
           </label>
@@ -650,25 +656,25 @@
       </div>
 
       <div class="column">
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carCertifBlackListNote">
           <label for="carCertifBlackListNote">{{
             dico?.dico_Blacklist_note || "dico_Blacklist_note"
           }}</label>
           <p>{{ policyData?.carCertifBlackListNote }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carCertifBlackListReason">
           <label for="carCertifBlackListReason">{{
             dico?.dico_blacklist_reason || "dico_blacklist_reason"
           }}</label>
           <p>{{ policyData?.carCertifBlackListReason }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carCertifBlackListSetBy">
           <label for="carCertifBlackListSetBy">{{
             dico?.dico_blacklist_set_by || "dico_blacklist_set_by"
           }}</label>
           <p>{{ policyData?.carCertifBlackListSetBy }}</p>
         </div>
-        <div class="panel-item">
+        <div class="panel-item" *ngIf="policyData?.carCertifBlackListSetOn">
           <label for="carCertifBlackListSetOn">{{
             dico?.dico_blacklist_set_on || "dico_blacklist_set_on"
           }}</label>

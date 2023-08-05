@@ -99,16 +99,16 @@ export class CoreDocumentComponent implements OnInit {
     saveAs(excelBlob, 'Core_Document.xlsx');
   }
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedField = event.target as HTMLElement;
+    const clickedRow = clickedField.closest('tr') as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
-
   dateFormatterService() {
     // this.dateFormatService.dateFormatter();
     this.dateFormatService.date.subscribe((data) => {
