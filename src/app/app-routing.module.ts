@@ -27,6 +27,8 @@ import { CarsExpertDefaultFeesComponent } from './components/administrator/cars-
 import { CarsCaseMngrSetupComponent } from './components/administrator/cars-case-mngr-setup/cars-case-mngr-setup.component';
 import { CallCenterComponent } from './components/call-center/call-center.component';
 import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
+import { GaugesComponent } from './components/call-center/gauges/gauges.component';
+import { FollowUpComponent } from './components/call-center/follow-up/follow-up.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -149,8 +151,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        component: GaugesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'searchPolicy',
         component: SearchPolicyComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'followUp', // Change the path to 'followUp'
+        component: FollowUpComponent,
         canActivate: [AuthGuard],
       },
     ],

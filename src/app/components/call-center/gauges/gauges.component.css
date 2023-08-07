@@ -1,0 +1,25 @@
+
+.panel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* This places the label at the top */
+  }
+  
+  .gauge-label {
+    margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  /* .gauge-label a:hover {
+    text-decoration: underline;
+  } */
+
+.gauge-label-link{
+  margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  color: #0674CB !important;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}

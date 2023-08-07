@@ -27,9 +27,9 @@ export class UsersIdleService {
     // Start watching for user inactivity.
 
     // Add event listeners for user activity (e.g., mousemove and click events).
-    fromEvent(document, 'mousemove')
-      .pipe(throttleTime(1000))
-      .subscribe(() => this.restart());
+    // fromEvent(document, 'mousemove')
+    //   .pipe(throttleTime(1000))
+    //   .subscribe(() => this.restart());
     fromEvent(document, 'click')
       .pipe(throttleTime(1000))
       .subscribe(() => this.restart());

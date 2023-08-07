@@ -132,13 +132,14 @@ export class CarsClientComponent implements OnInit {
     return this.dateFormatService.getDateFormat(dateId);
   }
   highlightRow(event: Event) {
-    const clickedRow = event.target as HTMLElement;
+    const clickedField = event.target as HTMLElement;
+    const clickedRow = clickedField.closest('tr') as HTMLElement;
 
     if (this.selectedRow) {
       this.selectedRow.classList.remove('highlight');
     }
 
-    this.selectedRow = clickedRow.parentNode as HTMLElement;
+    this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
 
@@ -150,7 +151,7 @@ export class CarsClientComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        this.alertifyService.dialogAlert(err.error.message);
         console.log(err);
       },
     });
@@ -324,6 +325,7 @@ export class CarsClientComponent implements OnInit {
     });
   }
   searchCarClients() {
+    this.isLoading = true;
     this.dataService
       .searchCarClient(
         this.company!,
@@ -335,11 +337,14 @@ export class CarsClientComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.carClients = res.data;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
+          this.alertifyService.dialogAlert(err.error.message);
           console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }
@@ -354,10 +359,7 @@ export class CarsClientComponent implements OnInit {
             this.searchCarClients();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            this.alertifyService.dialogAlert(err.error.message);
           },
         });
       }

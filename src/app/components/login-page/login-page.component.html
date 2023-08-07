@@ -30,11 +30,7 @@
           (change)="languageChanged()"
           disabled
         >
-          <option
-            *ngFor="let lang of languages"
-            [value]="lang.key"
-            [selected]="selectedLanguage === lang.key"
-          >
+          <option *ngFor="let lang of languages" [value]="lang.key">
             {{ lang.value }}
           </option>
         </select>

@@ -1401,4 +1401,10 @@ export class DataServiceService {
       `${this.userUrl}/constant/getCompanyLogo?companyId=${companyId}`
     );
   }
+
+  getGaugesValues(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getCallCenterMainBeanPageData`
+    );
+  }
 }

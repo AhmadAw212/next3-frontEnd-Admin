@@ -44,7 +44,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserProfiles();
     this.getDico();
-    localStorage.removeItem('selectedProfile');
+    // localStorage.removeItem('selectedProfile');
     this.userRoles.clearRoles();
     this.userIdlesService.initializeIdleService();
   }

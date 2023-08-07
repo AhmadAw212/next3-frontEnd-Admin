@@ -67,9 +67,10 @@ export class AuthService {
           // Send the error message here
           this.alertifyService.error(errorMessage);
         } else if (err.status === 500) {
-          errorMessage = 'An error occurred. Please try again later.';
+          errorMessage = 'Incorrect username or password ';
+          // errorMessage = 'An error occurred. Please try again later.';
           // Send the error message here
-          this.alertifyService.error(err.error.message);
+          this.alertifyService.error(errorMessage);
         } else if (err.status === 404) {
           this.alertifyService.error(err.error.message);
         }

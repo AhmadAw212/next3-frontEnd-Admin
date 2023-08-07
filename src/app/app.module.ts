@@ -139,6 +139,8 @@ import { SearchPolicyComponent } from './components/search-policy/search-policy.
 import { AppContentComponent } from './app-content/app-content.component';
 import { GaugesComponent } from './components/call-center/gauges/gauges.component';
 import { DateFormatterService } from './services/date-formatter.service';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { FollowUpComponent } from './components/call-center/follow-up/follow-up.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -238,10 +240,11 @@ import { DateFormatterService } from './services/date-formatter.service';
     SearchPolicyComponent,
     AppContentComponent,
     GaugesComponent,
+    FollowUpComponent,
   ],
   imports: [
     BrowserModule,
-
+    NgxGaugeModule,
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -179,6 +179,7 @@ export class ExpertConfigComponent implements OnInit {
 
   expertSearch() {
     this.showExpertResult = true;
+
     const supplierId = this.selectedSupplier.id;
     const insurance_id = this.insuranceId!;
     const groupCode = this.group!;

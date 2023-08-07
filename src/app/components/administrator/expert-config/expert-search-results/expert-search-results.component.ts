@@ -36,7 +36,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   selectedRow!: HTMLElement;
   reportDateTimeFormat?: string;
   updatedExpert: CarExpert[] = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   showExpertCompany?: boolean = false;
   selectedExpert?: CarExpert;
   dico?: any;
