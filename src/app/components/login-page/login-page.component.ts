@@ -58,10 +58,6 @@ export class LoginPageComponent implements OnInit {
   }
   ngOnDestroy() {
     this.userIdlesService.ngOnDestroy();
-    // Unsubscribe from the UserIdleService when the component is destroyed to avoid memory leaks.
-    // if (this.userIdleSub) {
-    //   this.userIdleSub.unsubscribe();
-    // }
   }
   login() {
     const lang = localStorage.getItem('selectedLanguage');

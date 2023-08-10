@@ -11,15 +11,7 @@
             </a>
           </label>
 
-          <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="expertOverDue"
-            [max]="expertAllCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge>
+          <google-chart [data]="ExpertFollowUpChartData"></google-chart>
         </div>
       </div>
       <div class="column" *ngIf="expertToDispatchCount > 0">
@@ -31,15 +23,15 @@
               >{{ dico?.dico_expert_to_dispatch }}</a
             >
           </label>
-
-          <ngx-gauge
+          <!-- <google-chart [data]="ExpertDispatchChartData"></google-chart> -->
+          <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
             [thick]="15"
             [value]="expertToDispatchCount"
             [thresholds]="thresholdConfig"
           >
-          </ngx-gauge>
+          </ngx-gauge> -->
         </div>
       </div>
       <div class="column" *ngIf="towingAllCount > 0">
@@ -51,7 +43,8 @@
               >{{ dico?.dico_towing_follow_up }}</a
             >
           </label>
-          <ngx-gauge
+          <google-chart [data]="towingFollowUpChartData"></google-chart>
+          <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
             [thick]="15"
@@ -60,7 +53,7 @@
             [max]="towingAllCount"
             [thresholds]="thresholdConfig"
           >
-          </ngx-gauge>
+          </ngx-gauge> -->
         </div>
       </div>
 
@@ -73,7 +66,7 @@
               >{{ dico?.dico_towing_to_dispatch }}</a
             >
           </label>
-          <ngx-gauge
+          <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
             [thick]="15"
@@ -82,7 +75,7 @@
             [max]="towingToDispatchCount"
             [thresholds]="thresholdConfig"
           >
-          </ngx-gauge>
+          </ngx-gauge> -->
         </div>
       </div>
     </div>
@@ -99,7 +92,7 @@
               >{{ dico?.dico_no_data_follow_up }}</a
             >
           </label>
-          <ngx-gauge
+          <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
             [thick]="15"
@@ -108,7 +101,7 @@
             [max]="noDataAllCount"
             [thresholds]="thresholdConfig"
           >
-          </ngx-gauge>
+          </ngx-gauge> -->
         </div>
       </div>
 
@@ -121,7 +114,7 @@
               >{{ dico?.dico_no_data_all_list }}</a
             >
           </label>
-          <ngx-gauge
+          <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
             [thick]="15"
@@ -130,7 +123,7 @@
             [max]="notificationComplaintsCount"
             [thresholds]="thresholdConfig"
           >
-          </ngx-gauge>
+          </ngx-gauge> -->
         </div>
       </div>
     </div>
