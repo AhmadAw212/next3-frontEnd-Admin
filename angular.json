@@ -35,8 +35,7 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "./node_modules/material-icons/iconfont/material-icons.css",
-              "./node_modules/fusioncharts/fusioncharts.theme.fusion.css"
+              "./node_modules/material-icons/iconfont/material-icons.css"
               
             ],
             "scripts": ["./node_modules/alertifyjs/build/alertify.min.js", "./node_modules/bootstrap/dist/js/bootstrap.min.js"]
