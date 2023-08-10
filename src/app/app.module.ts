@@ -142,6 +142,8 @@ import { DateFormatterService } from './services/date-formatter.service';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { FollowUpComponent } from './components/call-center/follow-up/follow-up.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { UpdateCompanyListComponent } from './components/expert-config/update-company-list/update-company-list.component';
+
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -242,6 +244,7 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
     AppContentComponent,
     GaugesComponent,
     FollowUpComponent,
+    UpdateCompanyListComponent,
   ],
   imports: [
     BrowserModule,

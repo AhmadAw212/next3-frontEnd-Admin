@@ -18,7 +18,10 @@ export class AddExpertCompanyComponent {
   form!: FormGroup;
   companies?: CompanyBranchList[];
   selectedExpert?: CarExpert;
+  searchTimer?: any;
   dico?: any;
+  temaUser?: any;
+  selectedUser?: string;
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: any,

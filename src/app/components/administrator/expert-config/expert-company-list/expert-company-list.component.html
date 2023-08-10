@@ -52,6 +52,7 @@
         <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
         <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -109,6 +110,9 @@
             (click)="deleteExpertCompany(exptCompany.expertCompanyId!)"
             >delete</mat-icon
           >
+        </td>
+        <td (click)="openUpdateCompanyListDialog(exptCompany)">
+          <mat-icon>edit</mat-icon>
         </td>
       </tr>
     </tbody>

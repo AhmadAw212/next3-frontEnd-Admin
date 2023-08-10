@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { UpdateCompanyListComponent } from 'src/app/components/expert-config/update-company-list/update-company-list.component';
 @Component({
   selector: 'app-expert-company-list',
   templateUrl: './expert-company-list.component.html',
@@ -253,6 +254,14 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
       if (data) {
         this.getExpertCompany();
       }
+    });
+  }
+  openUpdateCompanyListDialog(selectExpert: ExpertCompany) {
+    this.dialog.open(UpdateCompanyListComponent, {
+      data: {
+        id: this.selectedExpert?.id,
+        selectedExpert: selectExpert,
+      },
     });
   }
 }

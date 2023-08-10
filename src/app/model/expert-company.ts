@@ -4,6 +4,7 @@ export interface ExpertCompany {
   insuranceDesc?: string;
   initialCount?: number;
   ratio?: number;
+  userId?: string;
   dispatchCount?: number;
   sysCreatedBy?: string;
   sysCreatedDate?: string;

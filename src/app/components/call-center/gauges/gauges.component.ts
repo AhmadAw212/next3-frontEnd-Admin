@@ -40,7 +40,7 @@ export class GaugesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.towingFollowUpGauge();
-    // this.ExpertFollowUpGauge();
+    this.ExpertFollowUpGauge();
     this.getDico();
     this.getGaugesValuesCC();
   }
@@ -153,7 +153,6 @@ export class GaugesComponent implements OnInit {
         console.log(err);
       },
     });
-    this.ExpertFollowUpGauge();
   }
   getDico() {
     // this.dicoService.getDico();

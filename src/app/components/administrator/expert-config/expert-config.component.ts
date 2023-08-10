@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { UpdateCompanyListComponent } from '../../expert-config/update-company-list/update-company-list.component';
+import { ExpertCompany } from 'src/app/model/expert-company';
 @Component({
   selector: 'app-expert-config',
   templateUrl: './expert-config.component.html',
@@ -45,11 +47,13 @@ export class ExpertConfigComponent implements OnInit {
   isLoading: boolean = false;
   dico?: any;
   dateFormats?: any;
+
   constructor(
     private dataService: DataServiceService,
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
     private datePipe: DatePipe,
+    private dialog: MatDialog,
     private alertifyService: AlertifyService
   ) {}
 

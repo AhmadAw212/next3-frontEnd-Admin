@@ -1,0 +1,19 @@
+<h2 style="margin: 10px; font-size: large">Update Expert Company</h2>
+<div class="dialog" style="padding: 10px">
+  <form (ngSubmit)="updateExpertCompany()">
+    <div class="form-group">
+      <label for="user">User</label>
+      <ng-select
+        appendTo="body"
+        name="supplierName"
+        (search)="searchTemaExpert($event)"
+        [(ngModel)]="selectedUser"
+      >
+        <ng-option *ngFor="let expert of temaUser" [value]="expert">{{
+          expert
+        }}</ng-option>
+      </ng-select>
+    </div>
+    <button type="submit">Save</button>
+  </form>
+</div>
