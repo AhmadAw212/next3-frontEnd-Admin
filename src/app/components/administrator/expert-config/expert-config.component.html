@@ -70,11 +70,8 @@
             [(ngModel)]="insuranceId"
             [disabled]="companies?.length! <= 1"
           >
-            <option
-              *ngFor="let company of companies"
-              [value]="company.companyId"
-            >
-              {{ company.companyName }}
+            <option *ngFor="let company of companies" [value]="company.code">
+              {{ company.description }}
             </option>
           </select>
         </div>
@@ -115,6 +112,19 @@
         id="fullName"
         name="fullName"
         [(ngModel)]="fullName"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="firstName"
+        >{{ dico?.dico_first_name || "dico_first_name" }}:</label
+      >
+      <input
+        type="text"
+        id="fullName"
+        name="fullName"
+        [(ngModel)]="firstName"
         [disabled]="true"
       />
     </div>
@@ -177,6 +187,7 @@
         type="text"
         id="mobilePhone"
         name="mobilePhone"
+        [(ngModel)]="mobilePhone"
         [disabled]="true"
       />
     </div>

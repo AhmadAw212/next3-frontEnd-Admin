@@ -20,7 +20,7 @@
         (click)="openAddExpertDialog()"
         *ngIf="hasPerm('admAddData')"
       >
-        {{ dico?.dico_add_company || "dico_add_company" }}
+        {{ dico?.dico_add || "dico_add" }}
       </button>
       <button
         type="button"
@@ -28,7 +28,7 @@
         (click)="updateExpertCompany()"
         *ngIf="hasPerm('admUpdateData')"
       >
-        {{ dico?.dico_update_company || "dico_update_company" }}
+        {{ dico?.dico_save || "dico_save" }}
       </button>
     </div>
   </div>
@@ -68,12 +68,8 @@
             [(ngModel)]="exptCompany.insuranceId"
             (change)="onDropdownChange($event, exptCompany, 'insuranceId')"
           >
-            <option
-              *ngFor="let company of companies"
-              [value]="company.companyId"
-              [disabled]="companies?.length! <= 1"
-            >
-              {{ company.companyName }}
+            <option *ngFor="let company of companies" [value]="company.code">
+              {{ company.description }}
             </option>
           </select>
         </td>

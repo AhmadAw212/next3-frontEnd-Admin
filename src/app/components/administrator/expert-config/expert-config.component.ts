@@ -25,7 +25,7 @@ export class ExpertConfigComponent implements OnInit {
   domainYN?: type[];
   expGroup?: type[];
   terrAddress?: type[];
-  insuranceId!: string;
+  insuranceId: string = 'ALL';
   selectedValue?: string;
   selectedSupplier!: CarSupplier;
   bodilyInjury: string = 'ALL';
@@ -40,6 +40,7 @@ export class ExpertConfigComponent implements OnInit {
   familyName?: string;
   arabicName?: string;
   mobilePhone?: string;
+  firstName?: string;
   sms?: boolean;
   expertSearchResult?: CarExpert[];
   showExpertResult: boolean = true;
@@ -88,21 +89,28 @@ export class ExpertConfigComponent implements OnInit {
   //   this.showExpertResult = true;
   // }
   onSupplierChange(): void {
-    // console.log('Selected supplier:', this.selectedSupplier);
+    console.log('Selected supplier:', this.selectedSupplier);
     this.fullName = this.selectedSupplier.fullName;
     this.fatherName = this.selectedSupplier.fathersName;
     this.prefixFamily = this.selectedSupplier.prefixFam;
     this.familyName = this.selectedSupplier.lastname;
     this.arabicName = this.selectedSupplier.arabic_name;
     this.mobilePhone = this.selectedSupplier.mobile_number;
+    this.firstName = this.selectedSupplier.firstname;
     this.sms = this.selectedSupplier.sms;
   }
 
   getCompaniesPerUser() {
-    this.dataService.getCompaniesListByCurrentUser().subscribe({
+    this.dataService.getCarsInsuranceCompany().subscribe({
       next: (res) => {
-        this.companies = res.companyList;
-        this.insuranceId = this.companies![0].companyId;
+        this.companies = res.data;
+        const all = {
+          code: 'ALL',
+          description: 'ALL',
+        };
+        this.companies?.push(all);
+
+        // this.insuranceId = this.companies![0].companyId;
         // console.log(res);
       },
       error: (err) => {

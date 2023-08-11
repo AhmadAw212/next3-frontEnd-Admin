@@ -1408,6 +1408,10 @@ export class DataServiceService {
     );
   }
 
+  getCarsInsuranceCompany(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/constant/carsInsurance`);
+  }
+
   getTemaUser(temaUser: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/car-expert/getTemaUsers?user=${temaUser}`

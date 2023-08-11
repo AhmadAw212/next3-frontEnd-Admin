@@ -20,6 +20,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { UpdateCompanyListComponent } from 'src/app/components/expert-config/update-company-list/update-company-list.component';
+import { type } from 'src/app/model/type';
 @Component({
   selector: 'app-expert-company-list',
   templateUrl: './expert-company-list.component.html',
@@ -28,7 +29,7 @@ import { UpdateCompanyListComponent } from 'src/app/components/expert-config/upd
 export class ExpertCompanyListComponent implements OnInit, OnChanges {
   @Input() selectedExpert?: CarExpert;
   expertCompanies?: ExpertCompany[];
-  companies?: CompanyBranchList[];
+  companies?: type[];
   company?: string;
   updatedExpCompany?: ExpertCompany[] = [];
   reportDateTimeFormat?: string;
@@ -120,10 +121,10 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     return expertComp.expertCompanyId;
   }
   getCompaniesPerUser() {
-    this.dataService.getCompaniesListByCurrentUser().subscribe({
+    this.dataService.getCarsInsuranceCompany().subscribe({
       next: (res) => {
-        this.companies = res.companyList;
-        this.company = this.companies![0].companyId;
+        this.companies = res.data;
+        // this.company = this.companies![0].companyId;
         // console.log(this.companies);
       },
       error: (err) => {
