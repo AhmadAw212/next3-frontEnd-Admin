@@ -11,7 +11,7 @@
             </a>
           </label>
 
-          <google-chart [data]="ExpertFollowUpChartData"></google-chart>
+          <google-chart [data]="expertFollowUpChartData"></google-chart>
         </div>
       </div>
       <div class="column" *ngIf="expertToDispatchCount > 0">
@@ -23,7 +23,7 @@
               >{{ dico?.dico_expert_to_dispatch }}</a
             >
           </label>
-          <!-- <google-chart [data]="ExpertDispatchChartData"></google-chart> -->
+          <google-chart [data]="expertDispatchCountGauge"></google-chart>
           <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
@@ -66,6 +66,7 @@
               >{{ dico?.dico_towing_to_dispatch }}</a
             >
           </label>
+          <google-chart [data]="towingDispatchGauge"></google-chart>
           <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
@@ -92,6 +93,7 @@
               >{{ dico?.dico_no_data_follow_up }}</a
             >
           </label>
+          <google-chart [data]="noDataCountGauge"></google-chart>
           <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"
@@ -114,6 +116,7 @@
               >{{ dico?.dico_no_data_all_list }}</a
             >
           </label>
+          <google-chart [data]="notificationComplaintsGauge"></google-chart>
           <!-- <ngx-gauge
             [type]="'arch'"
             [cap]="'butt'"

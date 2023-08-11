@@ -14,82 +14,150 @@ import { GaugesServiceService } from 'src/app/services/gauges-service.service';
 })
 export class GaugesComponent implements OnInit {
   gaugesValues!: CallCenterGauges;
-  expertToDispatchCount!: number;
-  expertAllCount!: number;
+  expertToDispatchCount: number = 0;
+  expertAllCount: number = 0;
   towingOverDue: number = 0;
-  towingToDispatchCount!: number;
+  towingToDispatchCount: number = 0;
   towingAllCount: number = 0;
-  noDataPolicyFound!: number;
-  noDataAllCount!: number;
+  noDataPolicyFound: number = 0;
+  noDataAllCount: number = 0;
   expertOverDue: number = 0;
-  notificationComplaintsCount!: number;
+  notificationComplaintsCount: number = 0;
   dico?: any;
-  ExpertFollowUpChartData!: GoogleChartInterface;
+  expertFollowUpChartData!: GoogleChartInterface;
   towingFollowUpChartData!: GoogleChartInterface;
+  expertDispatchCountGauge!: GoogleChartInterface;
+  towingDispatchGauge!: GoogleChartInterface;
+  noDataCountGauge!: GoogleChartInterface;
+  notificationComplaintsGauge!: GoogleChartInterface;
   subscribtion?: Subscription;
+
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
     private expertService: GaugesServiceService
-  ) {
-    this.expertOverDue = this.expertService.getExpertOverDue();
-    this.expertAllCount = this.expertService.getExpertAllCount();
-    this.towingOverDue = this.expertService.getTowingOverDue();
-    this.towingAllCount = this.expertService.getTowingAllCount();
-  }
+  ) {}
   ngOnInit(): void {
-    this.towingFollowUpGauge();
-    this.ExpertFollowUpGauge();
-    this.getDico();
     this.getGaugesValuesCC();
+    this.getDico();
+  }
+  createGaugeOptions(value: number, maxValue: number): any {
+    const half = maxValue / 2;
+    const tickCount = 6; // Set the desired number of major ticks
+    const tickStep = Math.ceil(maxValue / tickCount);
+    const majorTicks = [];
+
+    for (let i = 0; i <= maxValue; i += tickStep) {
+      majorTicks.push(i.toString());
+    }
+
+    return {
+      width: 400,
+      height: 180,
+      redFrom: half,
+      redTo: maxValue,
+      yellowFrom: half / 2,
+      yellowTo: half,
+      greenFrom: 0,
+      greenTo: half / 2,
+      majorTicks: majorTicks,
+      minorTicks: tickStep,
+      max: maxValue,
+    };
   }
   ExpertFollowUpGauge() {
-    this.ExpertFollowUpChartData = {
-      chartType: 'Gauge',
-      dataTable: [
-        ['Label', 'Value'],
-        ['', this.expertOverDue],
-      ],
-      options: {
-        width: 400,
-        height: 180,
-        redFrom: 70,
-        redTo: 100,
-        yellowFrom: 30,
-        yellowTo: 70,
-        greenFrom: 0,
-        greenTo: 30,
-        minorTicks: 10,
-        majorTicks: ['0', '50', '100'],
-        max: this.expertAllCount,
-      },
-    };
-    this.updateChartOptions();
+    if (this.expertAllCount > 0) {
+      this.expertFollowUpChartData = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.expertOverDue],
+        ],
+        options: this.createGaugeOptions(
+          this.expertOverDue,
+          this.expertAllCount
+        ),
+      };
+    }
+  }
+  towingFollowUpGauge() {
+    if (this.towingAllCount > 0) {
+      this.towingFollowUpChartData = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.towingOverDue],
+        ],
+        options: this.createGaugeOptions(
+          this.towingOverDue,
+          this.towingAllCount
+        ),
+      };
+    }
+  }
+  expertToDispatchGauge() {
+    if (this.expertToDispatchCount > 0) {
+      this.expertDispatchCountGauge = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.expertToDispatchCount],
+        ],
+        options: this.createGaugeOptions(
+          this.expertToDispatchCount,
+          this.expertToDispatchCount
+        ),
+      };
+    }
   }
 
-  towingFollowUpGauge() {
-    this.towingFollowUpChartData = {
-      chartType: 'Gauge',
-      dataTable: [
-        ['Label', 'Value'],
-        ['', this.towingOverDue],
-      ],
-      options: {
-        width: 400,
-        height: 180,
-        redFrom: 70,
-        redTo: 100,
-        yellowFrom: 30,
-        yellowTo: 70,
-        greenFrom: 0,
-        greenTo: 30,
-        minorTicks: 10,
-        majorTicks: ['0', '50', '100'],
-        max: this.towingAllCount,
-      },
-    };
+  towingToDispatchGauge() {
+    if (this.towingToDispatchCount > 0) {
+      this.towingDispatchGauge = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.towingToDispatchCount],
+        ],
+        options: this.createGaugeOptions(
+          this.towingToDispatchCount,
+          this.towingToDispatchCount
+        ),
+      };
+    }
   }
+  noDataAllCountGauge() {
+    if (this.noDataAllCount > 0) {
+      this.noDataCountGauge = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.noDataPolicyFound],
+        ],
+        options: this.createGaugeOptions(
+          this.noDataPolicyFound,
+          this.noDataAllCount
+        ),
+      };
+    }
+  }
+  notificationComplaintsCountGauge() {
+    if (this.notificationComplaintsCount > 0) {
+      this.notificationComplaintsGauge = {
+        chartType: 'Gauge',
+        dataTable: [
+          ['Label', 'Value'],
+          ['', this.notificationComplaintsCount],
+        ],
+        options: this.createGaugeOptions(
+          this.notificationComplaintsCount,
+          this.notificationComplaintsCount
+        ),
+      };
+    }
+  }
+
   handleGaugesValuesResponse(gaugesValues: CallCenterGauges) {
     ({
       expertToDispatchCount: this.expertToDispatchCount,
@@ -102,47 +170,14 @@ export class GaugesComponent implements OnInit {
       expertOverDue: this.expertOverDue,
       notificationComplaintsCount: this.notificationComplaintsCount,
     } = gaugesValues);
-    this.expertService.setExpertOverDue(this.expertOverDue);
-    this.expertService.setExpertAllCount(this.expertAllCount);
-    this.expertService.setTowingOverDue(this.towingOverDue);
-    this.expertService.setTowingAllCount(this.towingAllCount);
-    this.updateChartOptions();
+    this.ExpertFollowUpGauge();
+    this.towingFollowUpGauge();
+    this.expertToDispatchGauge();
+    this.towingToDispatchGauge();
+    this.noDataAllCountGauge();
+    this.notificationComplaintsCountGauge();
   }
-  private updateChartOptions(): void {
-    this.ExpertFollowUpChartData.options.max = this.expertAllCount;
-    this.ExpertFollowUpChartData.dataTable[1][1] = this.expertOverDue;
 
-    this.towingFollowUpChartData.options.max = this.towingAllCount;
-    this.towingFollowUpChartData.dataTable[1][1] = this.towingOverDue;
-    const minorTickStep = Math.floor(this.expertAllCount / 10); // Adjust the divisor as needed
-    const majorTickStep = Math.floor(this.expertAllCount / 2); // Adjust the divisor as needed
-
-    // Update the tick values in options
-    this.ExpertFollowUpChartData.options.minorTicks = minorTickStep;
-    this.ExpertFollowUpChartData.options.majorTicks = [
-      '0',
-      `${majorTickStep}`,
-      `${this.expertAllCount}`,
-    ];
-    if (
-      this.expertOverDue === this.expertAllCount ||
-      this.towingOverDue === this.towingAllCount
-    ) {
-      // Set gauge color to red
-      this.ExpertFollowUpChartData.options.redFrom = 0; // Change these values to customize the red color range
-      this.ExpertFollowUpChartData.options.redTo = 100;
-
-      this.towingFollowUpChartData.options.redFrom = 0;
-      this.towingFollowUpChartData.options.redTo = 100;
-    } else {
-      // Set gauge color to the default values
-      this.ExpertFollowUpChartData.options.redFrom = 70;
-      this.ExpertFollowUpChartData.options.redTo = 100;
-
-      this.towingFollowUpChartData.options.redFrom = 70;
-      this.towingFollowUpChartData.options.redTo = 100;
-    }
-  }
   getGaugesValuesCC(): void {
     this.subscribtion = this.dataService.getGaugesValues().subscribe({
       next: (res) => {
