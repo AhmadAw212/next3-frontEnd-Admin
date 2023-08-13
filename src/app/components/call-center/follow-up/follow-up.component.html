@@ -1,1 +1,151 @@
+<div class="h3-header">
+  <h3>
+    {{ getTableTitle() }}
 
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('ccExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div class="admin-container container-fluid">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <table class="table table-responsive-sm">
+    <thead style="position: static">
+      <tr>
+        <th></th>
+        <th>{{ dico?.dico_visa || "dico_visa" }}</th>
+        <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+        <ng-container
+          *ngIf="
+            paramValue === 'E' || paramValue === 'N' || paramValue === 'NALL'
+          "
+        >
+          <th>
+            {{ dico?.dico_expert || "dico_expert" }}
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <th>
+            {{ dico?.dico_expert_disp_date || "dico_expert_disp_date" }}
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>{{ dico?.dico_reported_date || "dico_reported_date" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <th>{{ dico?.dico_accident_town || "dico_accident_town" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>{{ dico?.dico_nature || "dico_nature" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>{{ dico?.dico_towing_disp_date || "dico_towing_disp_date" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>{{ dico?.dico_towing_from || "dico_towing_from" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>{{ dico?.dico_towing_to || "dico_towing_to" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>{{ dico?.dico_towing_com || "dico_towing_com" }}</th>
+        </ng-container>
+        <th>{{ dico?.dico_owner_name || "dico_owner_name" }}</th>
+        <th>{{ dico?.dico_brand_trademark || "dico_brand_trademark" }}</th>
+        <th>{{ dico?.dico_operator || "dico_operator" }}</th>
+        <th>{{ dico?.dico_insurance_company || "dico_insurance_company" }}</th>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>{{ dico?.dico_no_data_type || "dico_no_data_type" }}</th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>{{ dico?.dico_policy || "dico_policy" }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody (click)="highlightRow($event)">
+      <tr *ngFor="let list of listData">
+        <td><button class="btn btn-primary">Hotline</button></td>
+        <td>{{ list.notification }}</td>
+        <td>{{ list.plate }}</td>
+        <ng-container
+          *ngIf="
+            paramValue === 'E' || paramValue === 'N' || paramValue === 'NALL'
+          "
+        >
+          <td>{{ list.expert }}</td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <td>
+            {{
+              list.expertDispDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <td>
+            {{
+              list.reportedDateTime | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <td>{{ list.accidentTown }}</td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <td>{{ list.nature }}</td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <td>
+            {{
+              list.towingDispDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <td>
+            {{ list.towingFrom }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <td>
+            {{ list.towingTo }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <td>
+            {{ list.towingCom }}
+          </td>
+        </ng-container>
+
+        <td>{{ list.ownerName }}</td>
+        <td>{{ list.brandTrademark }}</td>
+        <td>{{ list.operator }}</td>
+        <td>{{ list.insCompany }}</td>
+
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <td>
+            {{ list.noDataType }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <td>
+            {{ list.noDataPolicyFound }}
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="9">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

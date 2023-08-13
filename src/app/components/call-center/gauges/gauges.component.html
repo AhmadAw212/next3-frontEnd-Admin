@@ -1,19 +1,6 @@
 <div class="dialog-content">
   <div class="section">
     <div class="panel">
-      <div class="column">
-        <div class="panel-item" *ngIf="expertAllCount > 0">
-          <label class="gauge-label">
-            <a
-              routerLink="/profiles-main/CallCenter/followUp"
-              class="gauge-label-link"
-              >{{ dico?.dico_expert_follow_up }}
-            </a>
-          </label>
-
-          <google-chart [data]="expertFollowUpChartData"></google-chart>
-        </div>
-      </div>
       <div class="column" *ngIf="expertToDispatchCount > 0">
         <div class="panel-item">
           <label class="gauge-label">
@@ -34,6 +21,21 @@
           </ngx-gauge> -->
         </div>
       </div>
+      <div class="column" *ngIf="expertAllCount > 0">
+        <div class="panel-item">
+          <label class="gauge-label">
+            <a
+              routerLink="/profiles-main/CallCenter/followUp"
+              [queryParams]="{ code: 'E' }"
+              class="gauge-label-link"
+              >{{ dico?.dico_expert_follow_up }}
+            </a>
+          </label>
+
+          <google-chart [data]="expertFollowUpChartData"></google-chart>
+        </div>
+      </div>
+
       <div class="column" *ngIf="towingAllCount > 0">
         <div class="panel-item">
           <label class="gauge-label">
@@ -89,6 +91,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
+              [queryParams]="{ code: 'N' }"
               class="gauge-label-link"
               >{{ dico?.dico_no_data_follow_up }}</a
             >
@@ -104,6 +107,14 @@
             [thresholds]="thresholdConfig"
           >
           </ngx-gauge> -->
+          <label class="gauge-label">
+            <a
+              routerLink="/profiles-main/CallCenter/followUp"
+              [queryParams]="{ code: 'NALL' }"
+              class="gauge-label-link"
+              >{{ dico?.dico_no_data_all_list }}</a
+            >
+          </label>
         </div>
       </div>
 

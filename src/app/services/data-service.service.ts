@@ -1417,4 +1417,10 @@ export class DataServiceService {
       `${this.userUrl}/car-expert/getTemaUsers?user=${temaUser}`
     );
   }
+
+  getCallCenterListBeanByType(type: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/follow-up?type=${type}`
+    );
+  }
 }

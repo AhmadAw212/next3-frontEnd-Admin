@@ -8,6 +8,7 @@
   :host ::ng-deep google-chart tr:nth-child(odd) {
     background-color: transparent;
   }
+
   .gauge-label {
     margin-bottom: 10px; /* Add some spacing between the label and the gauge */
   }

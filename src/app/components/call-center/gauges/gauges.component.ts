@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { Subscription } from 'rxjs';
 import { CallCenterGauges } from 'src/app/model/call-center-gauges';
@@ -12,7 +12,7 @@ import { GaugesServiceService } from 'src/app/services/gauges-service.service';
   templateUrl: './gauges.component.html',
   styleUrls: ['./gauges.component.css'],
 })
-export class GaugesComponent implements OnInit {
+export class GaugesComponent implements OnInit, OnDestroy {
   gaugesValues!: CallCenterGauges;
   expertToDispatchCount: number = 0;
   expertAllCount: number = 0;
@@ -38,6 +38,11 @@ export class GaugesComponent implements OnInit {
     private dicoService: DicoServiceService,
     private expertService: GaugesServiceService
   ) {}
+  ngOnDestroy(): void {
+    if (this.subscribtion) {
+      this.subscribtion.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.getGaugesValuesCC();
     this.getDico();
@@ -64,6 +69,9 @@ export class GaugesComponent implements OnInit {
       majorTicks: majorTicks,
       minorTicks: tickStep,
       max: maxValue,
+      redColor: 'rgb(255, 33, 33)', // Standard red range color
+      // yellowColor: '#FFFF00', // Standard yellow range color
+      greenColor: 'rgb(0, 231, 0)', // Standard green range color
     };
   }
   ExpertFollowUpGauge() {

@@ -68,7 +68,6 @@
             name="insurance"
             required
             [(ngModel)]="insuranceId"
-            [disabled]="companies?.length! <= 1"
           >
             <option *ngFor="let company of companies" [value]="company.code">
               {{ company.description }}
