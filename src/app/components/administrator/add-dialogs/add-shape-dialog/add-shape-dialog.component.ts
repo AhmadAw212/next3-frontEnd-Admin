@@ -17,13 +17,18 @@ export class AddShapeDialogComponent implements OnInit {
   file?: File;
   id?: string;
   dico?: any;
+  textToShow: string = '';
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddShapeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public carShape: CarTrademark,
+    @Inject(MAT_DIALOG_DATA) public carShape: any,
     private dicoService: DicoServiceService
   ) {
+    if (carShape.showText) {
+      this.code = 'ZZZZZ'; // Set the predefined text
+      this.description = 'Not Listed'; // Set the predefined text
+    }
     // console.log(carShape);
   }
   ngOnInit(): void {
@@ -31,7 +36,7 @@ export class AddShapeDialogComponent implements OnInit {
   }
 
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -42,7 +47,7 @@ export class AddShapeDialogComponent implements OnInit {
   }
 
   addCarShape() {
-    const tradeMarkId = this.carShape.id;
+    const tradeMarkId = this.carShape.trademark.id;
 
     this.dataService
       .saveCarShape(

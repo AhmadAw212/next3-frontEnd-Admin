@@ -173,9 +173,12 @@ export class CarShapeComponent implements OnInit {
     );
   }
 
-  openAddCarShapeDialog() {
+  openAddCarShapeDialog(showText: boolean) {
     const dialog = this.dialog.open(AddShapeDialogComponent, {
-      data: this.selectedTrademark,
+      data: {
+        trademark: this.selectedTrademark,
+        showText: showText,
+      },
     });
     dialog.afterClosed().subscribe(() => this.searchCarShape());
   }

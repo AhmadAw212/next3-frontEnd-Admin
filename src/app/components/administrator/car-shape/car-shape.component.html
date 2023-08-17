@@ -18,10 +18,17 @@
     <div class="admin-button">
       <button
         type="button"
-        (click)="openAddCarShapeDialog()"
+        (click)="openAddCarShapeDialog(false)"
         *ngIf="hasPerm('admAddData')"
       >
         {{ dico?.dico_add || "dico_add" }}
+      </button>
+      <button
+        type="button"
+        (click)="openAddCarShapeDialog(true)"
+        style="margin-left: 5px"
+      >
+        {{ dico?.dico_add_not_listed || "dico_add_not_listed" }}
       </button>
     </div>
   </div>

@@ -25,10 +25,10 @@ export class AddTrademarkDialogComponent implements OnInit {
     private dicoService: DicoServiceService
   ) {}
   ngOnInit(): void {
-    this.dico();
+    this.getDico();
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
