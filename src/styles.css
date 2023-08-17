@@ -245,7 +245,9 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: rgba(184, 181, 181, 0.634);
 }
-
+.hidden-gauge {
+  display: none;
+}
 .admin-container {
   background-color: #f5f5f5;
   /* padding: 10px; */

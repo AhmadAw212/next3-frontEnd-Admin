@@ -9,8 +9,8 @@
         class="input-dropdown"
         formControlName="insuranceId"
       >
-        <option *ngFor="let company of companies" [value]="company.companyId">
-          {{ company.companyName }}
+        <option *ngFor="let company of companies" [value]="company.code">
+          {{ company.description }}
         </option>
       </select>
     </div>

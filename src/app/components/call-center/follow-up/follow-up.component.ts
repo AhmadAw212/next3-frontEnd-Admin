@@ -54,9 +54,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     if (this.paramValue === 'E') {
       return this.dico?.dico_expert_follow_up || 'dico_expert_follow_up';
     } else if (this.paramValue === 'ED') {
-      return (
-        this.dico?.dico_expert_dispatch_count || 'dico_expert_dispatch_count'
-      );
+      return this.dico?.dico_expert_disp_count || 'dico_expert_disp_count';
     } else if (this.paramValue === 'T') {
       return this.dico?.dico_towing || 'dico_towing';
     } else if (this.paramValue === 'TD') {
@@ -99,7 +97,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.listData = res.data.data;
 
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);
@@ -107,22 +105,35 @@ export class FollowUpComponent implements OnInit, OnDestroy {
       });
   }
   exportToExcel() {
-    const data = this.gaugesData?.map((data: any) => {
+    const data = this.listData?.map((data: GaugesDataList) => {
       return {
-        ID: data.id,
-        Locale: data.locale,
-        'Language Key': data.resourceKey,
-        'Language Value': data.resourceValue,
-        'Created Date': this.datePipe.transform(
-          data.sysCreatedDate,
-          this.dateFormat('excelDateTimeFormat')
+        Visa: data.notification,
+        Plate: data.plate,
+
+        Expert: data.expert,
+        'Expert Disp Date': this.datePipe.transform(
+          data.expertDispDate,
+          this.dateFormat('reportDateTimeFormat')
         ),
-        'Created By': data.sysCreatedBy,
-        'Updated Date': this.datePipe.transform(
-          data.sysUpdatedDate,
-          this.dateFormat('excelDateTimeFormat')
+        'Reported Date': this.datePipe.transform(
+          data.reportedDateTime,
+          this.dateFormat('reportDateTimeFormat')
         ),
-        'Updated By': data.sysUpdatedBy,
+        'Accident Town': data.accidentTown,
+        Nature: data.nature,
+        'Towing Disp Date': this.datePipe.transform(
+          data.towingDispDate,
+          this.dateFormat('reportDateTimeFormat')
+        ),
+        'Towing From': data.towingFrom,
+        'Towing To': data.towingTo,
+        'Towing Com': data.towingCom,
+        'Owner Name': data.ownerName,
+        'Brand/Trademark': data.brandTrademark,
+        Operator: data.operator,
+        'Insurance Company': data.insCompany,
+        'No Data Type': data.noDataType,
+        'No Data Policy Found': data.noDataPolicyFound,
       };
     });
     // Save the Excel file.
@@ -131,7 +142,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
 
     // Create a workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Language Configuration');
+    XLSX.utils.book_append_sheet(workbook, worksheet, this.getTableTitle());
 
     // Generate an Excel file
     const excelBuffer = XLSX.write(workbook, {
@@ -143,6 +154,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     const excelBlob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(excelBlob, 'Language_Config.xlsx');
+    const name = this.getTableTitle() + '.xlsx';
+    saveAs(excelBlob, name);
   }
 }

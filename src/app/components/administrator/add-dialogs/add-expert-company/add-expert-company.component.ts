@@ -8,6 +8,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AddExpertComponent } from '../add-expert/add-expert.component';
 import { CarExpert } from 'src/app/model/car-expert';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
+import { type } from 'src/app/model/type';
 
 @Component({
   selector: 'app-add-expert-company',
@@ -16,7 +17,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 })
 export class AddExpertCompanyComponent {
   form!: FormGroup;
-  companies?: CompanyBranchList[];
+  companies?: type[];
   selectedExpert?: CarExpert;
   searchTimer?: any;
   dico?: any;
@@ -49,7 +50,7 @@ export class AddExpertCompanyComponent {
   buildForm() {
     this.form = this.formBuilder.group({
       expertId: this.selectedExpert?.id,
-      insuranceId: [this.companies![0].companyId, Validators.required],
+      insuranceId: [this.companies![0].code, Validators.required],
       initialCount: [0, [Validators.required, Validators.pattern('[0-9]+')]],
       ratio: [1, [Validators.required, Validators.pattern('[0-9]+')]],
       // dispatchCount: [0, [Validators.required, Validators.pattern('[0-9]+')]],

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarExpert } from 'src/app/model/car-expert';
 import { CarSupplier } from 'src/app/model/car-supplier';
@@ -36,12 +36,13 @@ export class ExpertSearchResultsComponent implements OnInit {
   selectedRow!: HTMLElement;
   reportDateTimeFormat?: string;
   updatedExpert: CarExpert[] = [];
-  isLoading: boolean = false;
-  showExpertCompany?: boolean = false;
+  @Input() isLoading?: boolean;
+  @Input() showExpertCompany?: boolean;
   selectedExpert?: CarExpert;
   dico?: any;
   dateFormats?: any;
   @Input() selectedSupplier?: CarSupplier;
+  @Output() showcompany: EventEmitter<any> = new EventEmitter();
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -121,7 +122,7 @@ export class ExpertSearchResultsComponent implements OnInit {
   showExpertCompanies(expert: CarExpert) {
     this.showExpertCompany = true;
     this.selectedExpert = expert;
-
+    this.showcompany.emit(this.showExpertCompany);
     // console.log(expert);
   }
 
@@ -208,7 +209,6 @@ export class ExpertSearchResultsComponent implements OnInit {
   //   }, 300);
   // }
   territoryAddress() {
-    this.isLoading = true;
     this.dataService.territoryAddress(this.territoryName!).subscribe({
       next: (res) => {
         this.terrAddress = res.data;
@@ -216,9 +216,6 @@ export class ExpertSearchResultsComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-      },
-      complete: () => {
-        this.isLoading = false;
       },
     });
   }

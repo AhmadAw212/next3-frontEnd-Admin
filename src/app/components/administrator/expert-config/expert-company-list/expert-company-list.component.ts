@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +37,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   reportDateTimeFormat?: string;
   dico?: any;
   dateFormats?: any;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -47,12 +50,16 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.getExpertCompany();
+    // this.getExpertCompany();
     this.getCompaniesPerUser();
     // this.userRolesService.getUserRoles();
     // this.dateFormatterService();
     // console.log(this.selectedExpert);
     this.getDico();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes);
+    this.getExpertCompany();
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -113,10 +120,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes);
-    this.getExpertCompany();
-  }
+
   trackExpCompanyeById(index: number, expertComp: ExpertCompany) {
     return expertComp.expertCompanyId;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CarExpert } from 'src/app/model/car-expert';
 import { CarSupplier } from 'src/app/model/car-supplier';
@@ -14,12 +14,13 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { UpdateCompanyListComponent } from '../../expert-config/update-company-list/update-company-list.component';
 import { ExpertCompany } from 'src/app/model/expert-company';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-expert-config',
   templateUrl: './expert-config.component.html',
   styleUrls: ['./expert-config.component.css'],
 })
-export class ExpertConfigComponent implements OnInit {
+export class ExpertConfigComponent implements OnInit, OnDestroy {
   companies?: any[];
   expertSupplier?: CarSupplier[] = [];
   domainYN?: type[];
@@ -43,11 +44,13 @@ export class ExpertConfigComponent implements OnInit {
   firstName?: string;
   sms?: boolean;
   expertSearchResult?: CarExpert[];
-  showExpertResult: boolean = true;
+  showExpertResult: boolean = false;
   private searchTimer: any;
   isLoading: boolean = false;
   dico?: any;
   dateFormats?: any;
+  showExpertCompany: boolean = false;
+  subscription?: Subscription;
 
   constructor(
     private dataService: DataServiceService,
@@ -57,7 +60,15 @@ export class ExpertConfigComponent implements OnInit {
     private dialog: MatDialog,
     private alertifyService: AlertifyService
   ) {}
-
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  onShowCompany(show: any) {
+    this.showExpertCompany = show;
+    // console.log(this.showExpertCompany);
+  }
   ngOnInit(): void {
     this.getCompaniesPerUser();
     // this.getSupplierExpert();
@@ -89,7 +100,7 @@ export class ExpertConfigComponent implements OnInit {
   //   this.showExpertResult = true;
   // }
   onSupplierChange(): void {
-    console.log('Selected supplier:', this.selectedSupplier);
+    // console.log('Selected supplier:', this.selectedSupplier);
     this.fullName = this.selectedSupplier.fullName;
     this.fatherName = this.selectedSupplier.fathersName;
     this.prefixFamily = this.selectedSupplier.prefixFam;
@@ -190,8 +201,9 @@ export class ExpertConfigComponent implements OnInit {
   }
 
   expertSearch() {
+    this.isLoading = true;
+    this.showExpertCompany = false;
     this.showExpertResult = true;
-
     const supplierId = this.selectedSupplier.id;
     const insurance_id = this.insuranceId!;
     const groupCode = this.group!;
@@ -200,7 +212,7 @@ export class ExpertConfigComponent implements OnInit {
     const vip = this.vipCode!;
     const territory = this.territoryCode === null ? '' : this.territoryCode;
 
-    this.dataService
+    this.subscription = this.dataService
       .searchExpert(
         supplierId,
         insurance_id,
@@ -213,11 +225,14 @@ export class ExpertConfigComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.expertSearchResult = res.data;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           this.alertifyService.dialogAlert('Error');
           console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

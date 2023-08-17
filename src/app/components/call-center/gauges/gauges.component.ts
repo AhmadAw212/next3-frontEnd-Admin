@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { Subscription } from 'rxjs';
 import { CallCenterGauges } from 'src/app/model/call-center-gauges';
@@ -6,13 +15,13 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { GaugesServiceService } from 'src/app/services/gauges-service.service';
-
+import * as Gauge from 'canvas-gauges';
 @Component({
   selector: 'app-gauges',
   templateUrl: './gauges.component.html',
   styleUrls: ['./gauges.component.css'],
 })
-export class GaugesComponent implements OnInit, OnDestroy {
+export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   gaugesValues!: CallCenterGauges;
   expertToDispatchCount: number = 0;
   expertAllCount: number = 0;
@@ -24,20 +33,79 @@ export class GaugesComponent implements OnInit, OnDestroy {
   expertOverDue: number = 0;
   notificationComplaintsCount: number = 0;
   dico?: any;
-  expertFollowUpChartData!: GoogleChartInterface;
-  towingFollowUpChartData!: GoogleChartInterface;
-  expertDispatchCountGauge!: GoogleChartInterface;
-  towingDispatchGauge!: GoogleChartInterface;
-  noDataCountGauge!: GoogleChartInterface;
-  notificationComplaintsGauge!: GoogleChartInterface;
-  subscribtion?: Subscription;
 
+  subscribtion?: Subscription;
+  @Input() gaugeValue: number = 0;
+  @ViewChild('expertToDispatch', { static: false })
+  expertToDispatch!: ElementRef;
+  @ViewChild('expertFollowUp', { static: false }) expertFollowUp!: ElementRef;
+  @ViewChild('towingFollowUp', { static: false }) towingFollowUp!: ElementRef;
+  @ViewChild('towingToDispatch', { static: false })
+  towingToDispatch!: ElementRef;
+  @ViewChild('noDataFollowUp', { static: false })
+  noDataFollowUp!: ElementRef;
+  @ViewChild('notificationComplaints', { static: false })
+  notificationComplaints!: ElementRef;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
     private expertService: GaugesServiceService
   ) {}
+  ngAfterViewInit(): void {}
+
+  createGauge(maxValue: number, value: number, target: HTMLElement): any {
+    const tickCount = 6; // Set the desired number of major ticks
+    const half = maxValue / 2;
+    const tickStep = Math.ceil(half / tickCount);
+    const majorTicks = [];
+
+    for (let i = 0; i <= half; i += tickStep) {
+      majorTicks.push(i.toString());
+    }
+    majorTicks.push(maxValue.toString()); // Include the incoming max value
+
+    return new Gauge.RadialGauge({
+      renderTo: target,
+      // Other gauge configuration options here
+      value: value,
+      maxValue: maxValue,
+      majorTicks: majorTicks,
+      minorTicks: 2,
+      strokeTicks: true,
+      highlights: [
+        {
+          from: 0,
+          to: half / 2,
+          color: 'rgb(0, 231, 0)', // Green for values 0 to 30
+        },
+        {
+          from: half / 2,
+          to: half * 1.34,
+          color: 'rgba(255, 165, 0, .75)', // Orange for values 30 to 70
+        },
+        {
+          from: half * 1.34,
+          to: maxValue,
+          color: 'rgb(255, 33, 33)', // Red for values 70 to max
+        },
+      ],
+      colorPlate: '#fff',
+      borderShadowWidth: 0,
+      borders: true,
+      needleType: 'arrow',
+      colorNeedle: 'black',
+      needleWidth: 4,
+      needleCircleSize: 7,
+      needleCircleOuter: true,
+      needleCircleInner: true,
+      animationDuration: 1500,
+      animationRule: 'linear',
+      width: 242,
+      height: 180,
+    });
+  }
+
   ngOnDestroy(): void {
     if (this.subscribtion) {
       this.subscribtion.unsubscribe();
@@ -47,125 +115,66 @@ export class GaugesComponent implements OnInit, OnDestroy {
     this.getGaugesValuesCC();
     this.getDico();
   }
-  createGaugeOptions(value: number, maxValue: number): any {
-    const half = maxValue / 2;
-    const tickCount = 6; // Set the desired number of major ticks
-    const tickStep = Math.ceil(maxValue / tickCount);
-    const majorTicks = [];
 
-    for (let i = 0; i <= maxValue; i += tickStep) {
-      majorTicks.push(i.toString());
-    }
-
-    return {
-      width: 400,
-      height: 180,
-      redFrom: half,
-      redTo: maxValue,
-      yellowFrom: half / 2,
-      yellowTo: half,
-      greenFrom: 0,
-      greenTo: half / 2,
-      majorTicks: majorTicks,
-      minorTicks: tickStep,
-      max: maxValue,
-      redColor: 'rgb(255, 33, 33)', // Standard red range color
-      // yellowColor: '#FFFF00', // Standard yellow range color
-      greenColor: 'rgb(0, 231, 0)', // Standard green range color
-    };
+  createAndDrawGauge(
+    maxValue: number,
+    value: number,
+    target: HTMLElement
+  ): void {
+    const gauge = this.createGauge(maxValue, value, target);
+    gauge.draw();
   }
-  ExpertFollowUpGauge() {
-    if (this.expertAllCount > 0) {
-      this.expertFollowUpChartData = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.expertOverDue],
-        ],
-        options: this.createGaugeOptions(
-          this.expertOverDue,
-          this.expertAllCount
-        ),
-      };
-    }
-  }
-  towingFollowUpGauge() {
-    if (this.towingAllCount > 0) {
-      this.towingFollowUpChartData = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.towingOverDue],
-        ],
-        options: this.createGaugeOptions(
-          this.towingOverDue,
-          this.towingAllCount
-        ),
-      };
-    }
-  }
-  expertToDispatchGauge() {
+  updateExpertFollowUpGauge(): void {
     if (this.expertToDispatchCount > 0) {
-      this.expertDispatchCountGauge = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.expertToDispatchCount],
-        ],
-        options: this.createGaugeOptions(
-          this.expertToDispatchCount,
-          this.expertToDispatchCount
-        ),
-      };
+      const expertDispatchCount = this.expertToDispatch.nativeElement;
+      this.createAndDrawGauge(
+        this.expertToDispatchCount,
+        this.expertToDispatchCount,
+        expertDispatchCount
+      );
     }
-  }
-
-  towingToDispatchGauge() {
+    if (this.expertAllCount > 0) {
+      const expertAllCount = this.expertFollowUp.nativeElement;
+      this.createAndDrawGauge(
+        this.expertAllCount,
+        this.expertOverDue,
+        expertAllCount
+      );
+    }
+    if (this.towingAllCount > 0) {
+      const towingAllCount = this.towingFollowUp.nativeElement;
+      this.createAndDrawGauge(
+        this.towingAllCount,
+        this.towingOverDue,
+        towingAllCount
+      );
+    }
     if (this.towingToDispatchCount > 0) {
-      this.towingDispatchGauge = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.towingToDispatchCount],
-        ],
-        options: this.createGaugeOptions(
-          this.towingToDispatchCount,
-          this.towingToDispatchCount
-        ),
-      };
+      const towingToDispatchCount = this.towingToDispatch.nativeElement;
+      this.createAndDrawGauge(
+        this.towingToDispatchCount,
+        this.towingToDispatchCount,
+        towingToDispatchCount
+      );
     }
-  }
-  noDataAllCountGauge() {
     if (this.noDataAllCount > 0) {
-      this.noDataCountGauge = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.noDataPolicyFound],
-        ],
-        options: this.createGaugeOptions(
-          this.noDataPolicyFound,
-          this.noDataAllCount
-        ),
-      };
+      const noDataAllCount = this.noDataFollowUp.nativeElement;
+      this.createAndDrawGauge(
+        this.noDataAllCount,
+        this.noDataPolicyFound,
+        noDataAllCount
+      );
     }
-  }
-  notificationComplaintsCountGauge() {
     if (this.notificationComplaintsCount > 0) {
-      this.notificationComplaintsGauge = {
-        chartType: 'Gauge',
-        dataTable: [
-          ['Label', 'Value'],
-          ['', this.notificationComplaintsCount],
-        ],
-        options: this.createGaugeOptions(
-          this.notificationComplaintsCount,
-          this.notificationComplaintsCount
-        ),
-      };
+      const notificationComplaintsCount =
+        this.notificationComplaints.nativeElement;
+      this.createAndDrawGauge(
+        this.notificationComplaintsCount,
+        this.notificationComplaintsCount,
+        notificationComplaintsCount
+      );
     }
   }
-
   handleGaugesValuesResponse(gaugesValues: CallCenterGauges) {
     ({
       expertToDispatchCount: this.expertToDispatchCount,
@@ -178,12 +187,13 @@ export class GaugesComponent implements OnInit, OnDestroy {
       expertOverDue: this.expertOverDue,
       notificationComplaintsCount: this.notificationComplaintsCount,
     } = gaugesValues);
-    this.ExpertFollowUpGauge();
-    this.towingFollowUpGauge();
-    this.expertToDispatchGauge();
-    this.towingToDispatchGauge();
-    this.noDataAllCountGauge();
-    this.notificationComplaintsCountGauge();
+    this.updateExpertFollowUpGauge();
+    // this.ExpertFollowUpGauge();
+    // this.towingFollowUpGauge();
+    // this.expertToDispatchGauge();
+    // this.towingToDispatchGauge();
+    // this.noDataAllCountGauge();
+    // this.notificationComplaintsCountGauge();
   }
 
   getGaugesValuesCC(): void {

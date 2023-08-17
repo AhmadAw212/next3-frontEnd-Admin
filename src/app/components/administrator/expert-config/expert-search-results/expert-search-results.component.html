@@ -1,90 +1,92 @@
-<div class="h3-header" *ngIf="expertSearchResult && terrAddress">
-  <h3>
-    {{ dico?.dico_expert_config || "dico_expert_config" }}
-
-    <button
-      type="button"
-      (click)="exportToExcel()"
-      class="export-excel btn btn-primary"
-      *ngIf="hasPerm('admExportToFile')"
-    >
-      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
-    </button>
-  </h3>
-</div>
 <div *ngIf="isLoading">
   <app-spinner></app-spinner>
 </div>
-
-<div
-  class="admin-container container-fluid"
-  style="height: 250px"
-  *ngIf="expertSearchResult && terrAddress"
->
-  <div class="user-inputs">
-    <div class="admin-button">
-      <button
-        type="button"
-        (click)="openAddExpertDialog()"
-        *ngIf="hasPerm('admAddData')"
-      >
-        {{ dico?.dico_add || "dico_add" }}
-      </button>
+<div *ngIf="!isLoading">
+  <div class="h3-header" *ngIf="expertSearchResult">
+    <h3>
+      {{ dico?.dico_expert_config || "dico_expert_config" }}
 
       <button
         type="button"
-        style="margin-left: 8px"
-        (click)="updateExpert()"
-        *ngIf="hasPerm('admUpdateData')"
+        (click)="exportToExcel()"
+        class="export-excel btn btn-primary"
+        *ngIf="hasPerm('admExportToFile')"
       >
-        {{ dico?.dico_save || "dico_save" }}
+        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
       </button>
-    </div>
+    </h3>
   </div>
 
-  <table
-    id="table table-responsive"
-    *ngIf="expertSearchResult?.length! > 0; else noData"
+  <div
+    class="admin-container container-fluid"
+    style="height: 250px"
+    *ngIf="expertSearchResult"
   >
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_expert || "dico_expert" }}</th>
-        <th>{{ dico?.dico_group || "dico_group" }}</th>
-        <th>{{ dico?.dico_territory || "dico_territory" }}</th>
-        <th>{{ dico?.dico_bodily_injury || "dico_bodily_injury" }}</th>
-        <th>{{ dico?.dico_vip || "dico_vip" }}</th>
-        <th>{{ dico?.dico_exclusive || "dico_exclusive" }}</th>
-        <th>{{ dico?.dico_second_expert || "dico_second_expert" }}</th>
-        <th>{{ dico?.dico_contract || "dico_contract" }}</th>
-        <th>{{ dico?.dico_schedule || "dico_schedule" }}</th>
-        <th>{{ dico?.dico_remarks || "dico_remarks" }}</th>
-        <th>{{ dico?.dico_ratio || "dico_ratio" }}</th>
-        <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
-        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
-        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody *ngIf="expertSearchResult?.length! > 0; else noData">
-      <tr
-        *ngFor="let expert of expertSearchResult; trackBy: trackExpertById"
-        (click)="highlightRow($event); showExpertCompanies(expert)"
-      >
-        <td>{{ expert.expertName }}</td>
-        <td>
-          <select
-            [(ngModel)]="expert.groupCode"
-            (change)="onDropdownChange($event, expert, 'groupCode')"
-            class="select-class"
-          >
-            <option *ngFor="let group of expGroup" [value]="group.code">
-              {{ group.description }}
-            </option>
-          </select>
-        </td>
-        <td>
-          <!-- <ng-select
+    <div class="user-inputs">
+      <div class="admin-button">
+        <button
+          type="button"
+          (click)="openAddExpertDialog()"
+          *ngIf="hasPerm('admAddData')"
+        >
+          {{ dico?.dico_add || "dico_add" }}
+        </button>
+
+        <button
+          type="button"
+          style="margin-left: 8px"
+          (click)="updateExpert()"
+          *ngIf="hasPerm('admUpdateData')"
+        >
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+      </div>
+    </div>
+
+    <table
+      id="table table-responsive"
+      *ngIf="expertSearchResult?.length! > 0; else noData"
+    >
+      <thead>
+        <tr>
+          <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+          <th>{{ dico?.dico_group || "dico_group" }}</th>
+          <th>{{ dico?.dico_territory || "dico_territory" }}</th>
+          <th>{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}</th>
+          <th>{{ dico?.dico_vip || "dico_vip" }}</th>
+          <th>{{ dico?.dico_exclusive || "dico_exclusive" }}</th>
+          <th>{{ dico?.dico_second_expert || "dico_second_expert" }}</th>
+          <th>{{ dico?.dico_contract || "dico_contract" }}</th>
+          <th>{{ dico?.dico_schedule || "dico_schedule" }}</th>
+          <th>{{ dico?.dico_remarks || "dico_remarks" }}</th>
+          <th>{{ dico?.dico_ratio || "dico_ratio" }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="expertSearchResult?.length! > 0; else noData">
+        <tr
+          *ngFor="let expert of expertSearchResult; trackBy: trackExpertById"
+          (click)="highlightRow($event); showExpertCompanies(expert)"
+        >
+          <td>{{ expert.expertName }}</td>
+          <td>
+            <select
+              [(ngModel)]="expert.groupCode"
+              (change)="onDropdownChange($event, expert, 'groupCode')"
+              class="select-class"
+              style="width: 50px"
+            >
+              <option *ngFor="let group of expGroup" [value]="group.code">
+                {{ group.description }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <!-- <ng-select
           appendTo="body"
           name="territory"
           id="territory"
@@ -99,100 +101,105 @@
             >       {{ terirtoy.description }}</ng-option
           >
         </ng-select> -->
-          <select
-            class="select-class-schedule"
-            [(ngModel)]="expert.territory_code"
-            (change)="onDropdownChange($event, expert, 'territory_code')"
-          >
-            <option
-              *ngFor="let terirtoy of terrAddress"
-              [value]="terirtoy.code"
+            <select
+              class="select-class-schedule"
+              style="width: 210px"
+              [(ngModel)]="expert.territory_code"
+              (change)="onDropdownChange($event, expert, 'territory_code')"
             >
-              {{ terirtoy.description }}
-            </option>
-          </select>
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="expert.bodily_injury"
-            (change)="onCheckboxChange(expert)"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="expert.vip"
-            (change)="onCheckboxChange(expert)"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="expert.exclusive"
-            (change)="onCheckboxChange(expert)"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="expert.secondExpert"
-            (change)="onCheckboxChange(expert)"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [(ngModel)]="expert.contract"
-            (change)="onCheckboxChange(expert)"
-          />
-        </td>
-        <td>
-          <select
-            [(ngModel)]="expert.schedule_code"
-            (change)="onDropdownChange($event, expert, 'schedule_code')"
-            class="select-class"
+              <option
+                *ngFor="let terirtoy of terrAddress"
+                [value]="terirtoy.code"
+              >
+                {{ terirtoy.description }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="expert.bodily_injury"
+              (change)="onCheckboxChange(expert)"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="expert.vip"
+              (change)="onCheckboxChange(expert)"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="expert.exclusive"
+              (change)="onCheckboxChange(expert)"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="expert.secondExpert"
+              (change)="onCheckboxChange(expert)"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="expert.contract"
+              (change)="onCheckboxChange(expert)"
+            />
+          </td>
+          <td>
+            <select
+              [(ngModel)]="expert.schedule_code"
+              (change)="onDropdownChange($event, expert, 'schedule_code')"
+              class="select-class"
+            >
+              <option *ngFor="let schedule of schedule" [value]="schedule.code">
+                {{ schedule.description }}
+              </option>
+            </select>
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, expert, 'remarks')"
           >
-            <option *ngFor="let schedule of schedule" [value]="schedule.code">
-              {{ schedule.description }}
-            </option>
-          </select>
+            {{ expert.remarks }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, expert, 'ratio')">
+            {{ expert.ratio }}
+          </td>
+          <td>
+            {{ expert.createdDate | date : dateFormat("reportDateTimeFormat") }}
+          </td>
+          <td>{{ expert.createdBy }}</td>
+          <td>
+            {{ expert.updatedDate | date : dateFormat("reportDateTimeFormat") }}
+          </td>
+          <td>{{ expert.updatedBy }}</td>
+          <td>
+            <mat-icon
+              *ngIf="hasPerm('admDeleteData')"
+              (click)="deleteExpert(expert.id!)"
+              >delete</mat-icon
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noData>
+      <tr>
+        <td colspan="5">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
         </td>
-        <td contenteditable="true" (blur)="onTdBlur($event, expert, 'remarks')">
-          {{ expert.remarks }}
-        </td>
-        <td contenteditable="true" (blur)="onTdBlur($event, expert, 'ratio')">
-          {{ expert.ratio }}
-        </td>
-        <td>
-          {{ expert.createdDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ expert.createdBy }}</td>
-        <td>
-          {{ expert.updatedDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ expert.updatedBy }}</td>
-        <td>
-          <mat-icon
-            *ngIf="hasPerm('admDeleteData')"
-            (click)="deleteExpert(expert.id!)"
-            >delete</mat-icon
-          >
-        </td>
+        <!-- <div *ngIf="!isLoading">No data to display</div> -->
       </tr>
-    </tbody>
-  </table>
-  <ng-template #noData>
-    <tr>
-      <td colspan="5">
-        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-      </td>
-      <!-- <div *ngIf="!isLoading">No data to display</div> -->
-    </tr>
-  </ng-template>
-</div>
-<div *ngIf="showExpertCompany">
-  <app-expert-company-list
-    [selectedExpert]="selectedExpert"
-  ></app-expert-company-list>
+    </ng-template>
+  </div>
+  <div *ngIf="showExpertCompany">
+    <app-expert-company-list
+      [selectedExpert]="selectedExpert"
+    ></app-expert-company-list>
+  </div>
 </div>
