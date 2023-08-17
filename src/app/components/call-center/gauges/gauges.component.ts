@@ -36,15 +36,15 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   subscribtion?: Subscription;
   @Input() gaugeValue: number = 0;
-  @ViewChild('expertToDispatch', { static: false })
+  @ViewChild('expertToDispatch', { static: true })
   expertToDispatch!: ElementRef;
-  @ViewChild('expertFollowUp', { static: false }) expertFollowUp!: ElementRef;
-  @ViewChild('towingFollowUp', { static: false }) towingFollowUp!: ElementRef;
-  @ViewChild('towingToDispatch', { static: false })
+  @ViewChild('expertFollowUp', { static: true }) expertFollowUp!: ElementRef;
+  @ViewChild('towingFollowUp', { static: true }) towingFollowUp!: ElementRef;
+  @ViewChild('towingToDispatch', { static: true })
   towingToDispatch!: ElementRef;
-  @ViewChild('noDataFollowUp', { static: false })
+  @ViewChild('noDataFollowUp', { static: true })
   noDataFollowUp!: ElementRef;
-  @ViewChild('notificationComplaints', { static: false })
+  @ViewChild('notificationComplaints', { static: true })
   notificationComplaints!: ElementRef;
   constructor(
     private dataService: DataServiceService,
@@ -56,14 +56,14 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createGauge(maxValue: number, value: number, target: HTMLElement): any {
     const tickCount = 6; // Set the desired number of major ticks
-    const half = maxValue / 2;
-    const tickStep = Math.ceil(half / tickCount);
-    const majorTicks = [];
+    const tickStep = maxValue / (tickCount - 1); // Calculate tick step based on tick count
 
-    for (let i = 0; i <= half; i += tickStep) {
-      majorTicks.push(i.toString());
+    const majorTicks = [];
+    for (let i = 0; i < tickCount; i++) {
+      majorTicks.push((i * tickStep).toFixed(1));
     }
-    majorTicks.push(maxValue.toString()); // Include the incoming max value
+
+    // majorTicks.push(maxValue.toString()); // Include the incoming max value
 
     return new Gauge.RadialGauge({
       renderTo: target,
@@ -71,36 +71,38 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
       value: value,
       maxValue: maxValue,
       majorTicks: majorTicks,
-      minorTicks: 2,
+      // minorTicks: 2,
       strokeTicks: true,
+      valueText: (value * 1).toLocaleString(),
       highlights: [
         {
           from: 0,
-          to: half / 2,
-          color: 'rgb(0, 231, 0)', // Green for values 0 to 30
+          to: maxValue * 0.3,
+          color: 'rgb(0, 231, 0)', // Green for values 0 to 30% of max
         },
         {
-          from: half / 2,
-          to: half * 1.34,
-          color: 'rgba(255, 165, 0, .75)', // Orange for values 30 to 70
+          from: maxValue * 0.3,
+          to: maxValue * 0.7,
+          color: 'rgba(255, 165, 0, .75)', // Orange for values 30% to 70% of max
         },
         {
-          from: half * 1.34,
+          from: maxValue * 0.7,
           to: maxValue,
-          color: 'rgb(255, 33, 33)', // Red for values 70 to max
+          color: 'rgb(255, 33, 33)', // Red for values 70% to max
         },
       ],
       colorPlate: '#fff',
-      borderShadowWidth: 0,
+      borderShadowWidth: 1,
       borders: true,
       needleType: 'arrow',
+      colorNeedleEnd: 'black',
       colorNeedle: 'black',
       needleWidth: 4,
       needleCircleSize: 7,
       needleCircleOuter: true,
       needleCircleInner: true,
-      animationDuration: 1500,
-      animationRule: 'linear',
+      animationDuration: 500,
+      animationRule: 'bounce',
       width: 242,
       height: 180,
     });
