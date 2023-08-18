@@ -13,252 +13,215 @@
   </h3>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="getCallCenterListBeanByTypeWithSearch()">
-  <div class="row mt-1">
-    <div class="col-md-1">
-      <label for="visa" class="form-label"
-        >{{ dico?.dico_visa || "dico_visa" }}:</label
-      >
-      <input
-        type="text"
-        id="visa"
-        formControlName="notification"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-1">
-      <label for="plate" class="form-label"
-        >{{ dico?.dico_plate || "dico_plate" }}:</label
-      >
-      <input
-        type="text"
-        id="plate"
-        formControlName="plate"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-1">
-      <label for="ownerName" class="form-label"
-        >{{ dico?.dico_owner_name || "dico_owner_name" }}:</label
-      >
-      <input
-        type="text"
-        id="ownerName"
-        formControlName="ownerName"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-1">
-      <label for="brandTrademark" class="form-label"
-        >{{ dico?.dico_brand_trademark || "dico_brand_trademark" }}:</label
-      >
-      <input
-        type="text"
-        id="brandTrademark"
-        formControlName="brandTrademark"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-1">
-      <label for="operator" class="form-label"
-        >{{ dico?.dico_operator || "dico_operator" }}:</label
-      >
-      <input
-        type="text"
-        id="operator"
-        formControlName="operator"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-2">
-      <label for="insurance" class="form-label"
-        >{{ dico?.dico_insurance_company || "dico_insurance_company" }}:</label
-      >
-      <input
-        type="text"
-        id="insurance"
-        formControlName="insCompany"
-        class="form-control"
-      />
-    </div>
-
-    <ng-container
-      *ngIf="paramValue === 'E' || paramValue === 'N' || paramValue === 'NALL'"
-    >
-      <div class="col-md-1">
-        <label for="expert" class="form-label"
-          >{{ dico?.dico_expert || "dico_expert" }}:</label
-        >
-        <input
-          type="text"
-          id="expert"
-          formControlName="expert"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'E'">
-      <div class="col-md-1">
-        <label for="expertDispDate" class="form-label"
-          >{{ dico?.dico_expert_disp_date || "dico_expert_disp_date" }}:</label
-        >
-        <input
-          type="date"
-          id="expertDispDate"
-          formControlName="expertDispDate"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
-      <div class="col-md-1">
-        <label for="reportedDate" class="form-label"
-          >{{ dico?.dico_reported_date || "dico_reported_date" }}:</label
-        >
-        <input
-          type="date"
-          id="reportedDate"
-          formControlName="reportedDate"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'E'">
-      <div class="col-md-1">
-        <label for="accidentTown" class="form-label"
-          >{{ dico?.dico_accident_town || "dico_accident_town" }}:</label
-        >
-        <input
-          type="text"
-          id="accidentTown"
-          formControlName="accidentTown"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
-      <div class="col-md-1">
-        <label for="nature" class="form-label"
-          >{{ dico?.dico_nature || "dico_nature" }}:</label
-        >
-        <input
-          type="text"
-          id="nature"
-          formControlName="nature"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'T'">
-      <div class="col-md-2" style="width: 150px">
-        <label for="towingDispDate" class="form-label"
-          >{{ dico?.dico_towing_disp_date || "dico_towing_disp_date" }}:</label
-        >
-        <input
-          type="date"
-          id="towingDispDate"
-          formControlName="towingDispDate"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'T'">
-      <div class="col-md-1">
-        <label for="towingFrom" class="form-label"
-          >{{ dico?.dico_towing_from || "dico_towing_from" }}:</label
-        >
-        <input
-          type="text"
-          id="towingFrom"
-          formControlName="towingFrom"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'T'">
-      <div class="col-md-1">
-        <label for="towingTo" class="form-label"
-          >{{ dico?.dico_towing_to || "dico_towing_to" }}:</label
-        >
-        <input
-          type="text"
-          id="towingTo"
-          formControlName="towingTo"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'T'">
-      <div class="col-md-1">
-        <label for="towingCom" class="form-label"
-          >{{ dico?.dico_towing_com || "dico_towing_com" }}:</label
-        >
-        <input
-          type="text"
-          id="towingCom"
-          formControlName="towingCom"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
-      <div class="col-md-1">
-        <label for="noDataType" class="form-label"
-          >{{ dico?.dico_no_data_type || "dico_no_data_type" }}:</label
-        >
-        <input
-          type="text"
-          id="noDataType"
-          formControlName="noDataPolicyFound"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
-      <div class="col-md-1">
-        <label for="policy" class="form-label"
-          >{{ dico?.dico_policy || "dico_policy" }}:</label
-        >
-        <input
-          type="text"
-          id="policy"
-          formControlName="policy"
-          class="form-control"
-        />
-      </div>
-    </ng-container>
-
-    <div class="col-md-1">
-      <button type="submit" class="btn btn-primary" style="margin-top: 20px">
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-      </button>
-    </div>
-  </div>
-</form>
-
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
 
   <table class="table table-responsive-sm">
     <thead style="top: 0">
+      <tr (keyup.enter)="getCallCenterListBeanByTypeWithSearch()">
+        <th></th>
+        <th>
+          <!-- <div><input type="text" /></div> -->
+
+          <input
+            type="text"
+            id="visa"
+            [(ngModel)]="notification"
+            class="form-control"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            id="plate"
+            [(ngModel)]="plate"
+            class="form-control"
+          />
+        </th>
+
+        <ng-container
+          *ngIf="
+            paramValue === 'E' || paramValue === 'N' || paramValue === 'NALL'
+          "
+        >
+          <th>
+            <input
+              type="text"
+              id="expert"
+              [(ngModel)]="expert"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <th>
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="expertDispDate"
+            />
+            <!-- <input
+              type="text"
+              bsDatepicker
+              class="form-control"
+              [(ngModel)]="expertDispDate"
+              [bsConfig]="{
+                dateInputFormat: 'DD/MM/YYYY',
+                containerClass: 'theme-dark-blue'
+              }"
+            /> -->
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="reportedDateTime"
+              placeholder="YYYY-MM-DD"
+            />
+            <!-- <input
+              type="text"
+              bsDatepicker
+              class="form-control"
+              [(ngModel)]="reportedDateTime"
+              [bsConfig]="{
+                dateInputFormat: 'DD/MM/YYYY',
+                containerClass: 'theme-dark-blue'
+              }"
+            /> -->
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'E'">
+          <th>
+            <input
+              type="text"
+              id="accidentTown"
+              [(ngModel)]="accidentTown"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>
+            <input
+              type="text"
+              id="nature"
+              [(ngModel)]="nature"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="towingDispDate"
+            />
+            <!-- <input
+              type="text"
+              bsDatepicker
+              class="form-control"
+              [(ngModel)]="towingDispDate"
+              [bsConfig]="{
+                dateInputFormat: 'DD/MM/YYYY',
+                containerClass: 'theme-dark-blue'
+              }"
+            /> -->
+          </th>
+        </ng-container>
+
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>
+            <input
+              type="text"
+              id="nature"
+              [(ngModel)]="towingFrom"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>
+            <input
+              type="text"
+              id="nature"
+              [(ngModel)]="towingCom"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+        <ng-container *ngIf="paramValue === 'T'">
+          <th>
+            <input
+              type="text"
+              id="towingTo"
+              [(ngModel)]="towingTo"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+        <th>
+          <input
+            type="text"
+            id="ownerName"
+            [(ngModel)]="ownerName"
+            class="form-control"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            id="brandTrademark"
+            [(ngModel)]="brandTrademark"
+            class="form-control"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            id="operator"
+            [(ngModel)]="operator"
+            class="form-control"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            id="insurance"
+            [(ngModel)]="insCompany"
+            class="form-control"
+          />
+        </th>
+
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>
+            <input
+              type="text"
+              id="noDataPolicyFound"
+              [(ngModel)]="noDataPolicyFound"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+
+        <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
+          <th>
+            <input
+              type="text"
+              id="policy"
+              [(ngModel)]="policy"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
+      </tr>
+
       <tr>
         <th></th>
-        <th>{{ dico?.dico_visa || "dico_visa" }}</th>
+        <th class="header-label">{{ dico?.dico_visa || "dico_visa" }}</th>
         <th>{{ dico?.dico_plate || "dico_plate" }}</th>
         <ng-container
           *ngIf="

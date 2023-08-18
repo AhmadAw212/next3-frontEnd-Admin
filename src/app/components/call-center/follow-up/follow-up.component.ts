@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GaugesDataList } from 'src/app/model/gauges-data-list';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationSearchCriteria } from 'src/app/model/notification-search-criteria';
 @Component({
   selector: 'app-follow-up',
   templateUrl: './follow-up.component.html',
@@ -27,6 +28,23 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   listData?: GaugesDataList[];
   subsciption?: Subscription;
   form!: FormGroup;
+  notification?: string;
+  plate?: string;
+  ownerName?: string;
+  brandTrademark?: string;
+  operator?: string;
+  insCompany?: string;
+  expert?: string;
+  expertDispDate?: string;
+  reportedDateTime?: string;
+  accidentTown?: string;
+  nature?: string;
+  towingDispDate?: string;
+  towingFrom?: string;
+  towingCom?: string;
+  towingTo?: string;
+  noDataPolicyFound?: string;
+  policy?: string;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -116,6 +134,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     this.selectedRow.classList.add('highlight');
   }
   getCallCenterListBeanByType() {
+    this.isLoading = true;
     this.subsciption = this.dataService
       .getCallCenterListBeanByType(this.paramValue!)
       .subscribe({
@@ -126,6 +145,9 @@ export class FollowUpComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }
@@ -184,7 +206,29 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   }
 
   getCallCenterListBeanByTypeWithSearch() {
-    const formData = this.form.value;
+    this.isLoading = true;
+
+    const formData: NotificationSearchCriteria = {
+      notification: this.notification,
+      plate: this.plate,
+      ownerName: this.ownerName,
+      brandTrademark: this.brandTrademark,
+      operator: this.operator,
+      insCompany: this.insCompany,
+      expert: this.expert,
+      expertDispDate: this.expertDispDate,
+      reportedDateTime: this.reportedDateTime,
+      accidentTown: this.accidentTown,
+      nature: this.nature,
+      towingDispDate: this.towingDispDate,
+      towingFrom: this.towingFrom,
+      towingCom: this.towingCom,
+      towingTo: this.towingTo,
+      noDataPolicyFound: this.noDataPolicyFound,
+      policy: this.policy,
+    };
+
+    // const formData = this.form.value;
     this.dataService
       .getCallCenterListBeanByTypeWithSearch(this.paramValue!, formData)
       .subscribe({
@@ -194,6 +238,9 @@ export class FollowUpComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { NavigationEnd, Router } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { filter } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -17,7 +19,8 @@ export class SideMenuComponent implements OnInit {
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private userRolesService: UsersRolesService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private router: Router
   ) {}
   // ngOnDestroy(): void {
   //   throw new Error('Method not implemented.');
@@ -33,6 +36,15 @@ export class SideMenuComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getDico();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.sidenav.opened) {
+          this.sidenav.close();
+        } else {
+          this.sidenav.open();
+        }
+      });
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

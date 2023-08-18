@@ -243,7 +243,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
       });
     }
 
-    console.log(this.updatedCell);
+    // console.log(this.updatedCell);
   }
   onDateChange(carsCell: CarsCell, event: any) {
     const updatedCell = this.updatedCell ?? [];
