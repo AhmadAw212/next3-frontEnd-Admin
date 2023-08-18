@@ -45,6 +45,7 @@ import { CarsCellSetup } from '../model/cars-cell-setup';
 import { CarsbrandMatching } from '../model/carsbrand-matching';
 import { CarsPolicyCar } from '../model/cars-policy-car';
 import { Note } from '../model/note';
+import { NotificationSearchCriteria } from '../model/notification-search-criteria';
 
 interface User {
   username: string;
@@ -1421,6 +1422,16 @@ export class DataServiceService {
   getCallCenterListBeanByType(type: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/follow-up?type=${type}`
+    );
+  }
+
+  getCallCenterListBeanByTypeWithSearch(
+    type: string,
+    NotificationSearch: NotificationSearchCriteria
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/follow-up-criteria?type=${type}`,
+      NotificationSearch
     );
   }
 }

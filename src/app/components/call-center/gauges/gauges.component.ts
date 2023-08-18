@@ -55,7 +55,7 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {}
 
   createGauge(maxValue: number, value: number, target: HTMLElement): any {
-    const tickCount = 6; // Set the desired number of major ticks
+    const tickCount = 7; // Set the desired number of major ticks
     const tickStep = maxValue / (tickCount - 1); // Calculate tick step based on tick count
 
     const majorTicks = [];
@@ -99,9 +99,11 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
       colorNeedle: 'rgb(49, 56, 66)',
       needleWidth: 4,
       colorValueText: 'rgb(51, 51, 51)',
+      fontValueWeight: 'bold',
+      fontValueSize: 35,
       // colorValueBoxShadow: 'rgb(49, 56, 66)',
       // colorValueTextShadow: 'rgb(188, 199, 210)',
-      colorValueBoxBackground: 'rgb(239, 239, 241)',
+      colorValueBoxBackground: 'white',
       needleCircleSize: 7,
       needleCircleOuter: true,
       needleCircleInner: true,

@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 import { ActivatedRoute } from '@angular/router';
 import { GaugesDataList } from 'src/app/model/gauges-data-list';
 import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-follow-up',
   templateUrl: './follow-up.component.html',
@@ -25,6 +26,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   paramValue?: string;
   listData?: GaugesDataList[];
   subsciption?: Subscription;
+  form!: FormGroup;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -34,15 +36,38 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
   ngOnDestroy(): void {
     if (this.subsciption) {
       this.subsciption.unsubscribe();
     }
   }
+  createForm() {
+    this.form = this.fb.group({
+      notification: [null],
+      plate: [null],
+      ownerName: [null],
+      brandTrademark: [null],
+      operator: [null],
+      insCompany: [null],
+      expert: [null],
+      expertDispDate: [null],
+      reportedDate: [null],
+      accidentTown: [null],
+      nature: [null],
+      towingDispDate: [null],
+      towingFrom: [null],
+      towingTo: [null],
+      towingCom: [null],
+      noDataPolicyFound: [null],
+      policy: [null],
+    });
+  }
   ngOnInit(): void {
     this.getDico();
+    this.createForm();
     this.route.queryParams.subscribe((params) => {
       this.paramValue = params['code'];
       // console.log(this.paramValue);
@@ -156,5 +181,20 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     });
     const name = this.getTableTitle() + '.xlsx';
     saveAs(excelBlob, name);
+  }
+
+  getCallCenterListBeanByTypeWithSearch() {
+    const formData = this.form.value;
+    this.dataService
+      .getCallCenterListBeanByTypeWithSearch(this.paramValue!, formData)
+      .subscribe({
+        next: (res) => {
+          this.listData = res.data;
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }
