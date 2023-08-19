@@ -204,7 +204,10 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     const name = this.getTableTitle() + '.xlsx';
     saveAs(excelBlob, name);
   }
-
+  formatDate(inputDate: any) {
+    // const parsedDate = new Date(inputDate);
+    return this.datePipe.transform(inputDate, 'yyyy-MM-dd') || '';
+  }
   getCallCenterListBeanByTypeWithSearch() {
     this.isLoading = true;
 
@@ -216,8 +219,8 @@ export class FollowUpComponent implements OnInit, OnDestroy {
       operator: this.operator,
       insCompany: this.insCompany,
       expert: this.expert,
-      expertDispDate: this.expertDispDate,
-      reportedDateTime: this.reportedDateTime,
+      expertDispDate: this.formatDate(this.expertDispDate!),
+      reportedDateTime: this.formatDate(this.reportedDateTime!),
       accidentTown: this.accidentTown,
       nature: this.nature,
       towingDispDate: this.towingDispDate,

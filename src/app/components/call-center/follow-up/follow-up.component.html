@@ -59,6 +59,7 @@
               type="date"
               class="form-control"
               [(ngModel)]="expertDispDate"
+              (ngModelChange)="getCallCenterListBeanByTypeWithSearch()"
             />
             <!-- <input
               type="text"
@@ -74,13 +75,13 @@
         </ng-container>
         <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
           <th>
-            <input
+            <!-- <input
               type="date"
               class="form-control"
               [(ngModel)]="reportedDateTime"
-              placeholder="YYYY-MM-DD"
-            />
-            <!-- <input
+              
+            /> -->
+            <input
               type="text"
               bsDatepicker
               class="form-control"
@@ -89,7 +90,8 @@
                 dateInputFormat: 'DD/MM/YYYY',
                 containerClass: 'theme-dark-blue'
               }"
-            /> -->
+              (ngModelChange)="getCallCenterListBeanByTypeWithSearch()"
+            />
           </th>
         </ng-container>
         <ng-container *ngIf="paramValue === 'E'">
@@ -115,12 +117,12 @@
         </ng-container>
         <ng-container *ngIf="paramValue === 'T'">
           <th>
-            <input
+            <!-- <input
               type="date"
               class="form-control"
               [(ngModel)]="towingDispDate"
-            />
-            <!-- <input
+            /> -->
+            <input
               type="text"
               bsDatepicker
               class="form-control"
@@ -129,7 +131,8 @@
                 dateInputFormat: 'DD/MM/YYYY',
                 containerClass: 'theme-dark-blue'
               }"
-            /> -->
+              (ngModelChange)="getCallCenterListBeanByTypeWithSearch()"
+            />
           </th>
         </ng-container>
 
