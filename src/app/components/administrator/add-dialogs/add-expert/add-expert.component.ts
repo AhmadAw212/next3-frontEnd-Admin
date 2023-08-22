@@ -57,7 +57,7 @@ export class AddExpertComponent implements OnInit {
       remarks: [''],
       ratio: ['1', Validators.pattern(/^\d+$/)],
       priority: ['', Validators.pattern(/^\d+$/)],
-      schedule_code: ['', Validators.required],
+      schedule_code: ['1', Validators.required],
       bodily_injury: [false],
       vip: [false],
       exclusive: [false],
