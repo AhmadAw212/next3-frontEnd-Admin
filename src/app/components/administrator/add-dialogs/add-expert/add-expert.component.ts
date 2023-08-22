@@ -50,7 +50,7 @@ export class AddExpertComponent implements OnInit {
     this.expertForm = this.formBuilder.group({
       expertName: this.selectedSupplier?.fullName,
       supplier_id: this.selectedSupplier?.id,
-      companyId: this.selectedSupplier?.companyId,
+      // companyId: this.selectedSupplier?.companyId,
       code: this.selectedSupplier?.number,
       groupCode: ['X', Validators.required],
       territory_code: ['', Validators.required],
