@@ -1,12 +1,12 @@
 <div class="h3-header">
   <h3>
-    {{ dico?.dico_search_policy  || "dico_search_policy" }}
+    {{ dico?.dico_search_policy || "dico_search_policy" }}
   </h3>
 </div>
 
 <div
   class="admin-container container-fluid"
-  style="height: 150px; overflow: hidden"
+  style="height: 150px; overflow-x: hidden"
 >
   <form (ngSubmit)="searchPolicy()">
     <div class="row">

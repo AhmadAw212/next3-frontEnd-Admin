@@ -57,7 +57,7 @@ export class AddConfigDialogComponent implements OnInit {
     this.dataService.addConfig(this.configurationForm.value).subscribe({
       next: (data) => {
         this.alertifyService.success(data.title);
-        this.dialogRef.close();
+        this.dialogRef.close(data.data);
         // console.log(data);
       },
       error: (err) => {

@@ -14,6 +14,8 @@ import { GaugesDataList } from 'src/app/model/gauges-data-list';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationSearchCriteria } from 'src/app/model/notification-search-criteria';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
+import { CoreProfile } from 'src/app/model/core-profile';
 @Component({
   selector: 'app-follow-up',
   templateUrl: './follow-up.component.html',
@@ -45,6 +47,8 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   towingTo?: string;
   noDataPolicyFound?: string;
   policy?: string;
+  selectedProfile?: CoreProfile;
+  company?: string;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -55,37 +59,25 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private profileService: LoadingServiceService
+  ) {
+    // console.log(company);
+  }
+  getCompany() {
+    this.selectedProfile = this.profileService.getSelectedProfile()!;
+    this.company = this.selectedProfile?.companyId;
+  }
   ngOnDestroy(): void {
     if (this.subsciption) {
       this.subsciption.unsubscribe();
     }
   }
-  createForm() {
-    this.form = this.fb.group({
-      notification: [null],
-      plate: [null],
-      ownerName: [null],
-      brandTrademark: [null],
-      operator: [null],
-      insCompany: [null],
-      expert: [null],
-      expertDispDate: [null],
-      reportedDate: [null],
-      accidentTown: [null],
-      nature: [null],
-      towingDispDate: [null],
-      towingFrom: [null],
-      towingTo: [null],
-      towingCom: [null],
-      noDataPolicyFound: [null],
-      policy: [null],
-    });
-  }
+
   ngOnInit(): void {
     this.getDico();
-    this.createForm();
+    this.getCompany();
+    // this.createForm();
     this.route.queryParams.subscribe((params) => {
       this.paramValue = params['code'];
       // console.log(this.paramValue);
@@ -93,6 +85,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     });
     this.getCallCenterListBeanByType();
   }
+
   getTableTitle(): string {
     if (this.paramValue === 'E') {
       return this.dico?.dico_expert_follow_up || 'dico_expert_follow_up';

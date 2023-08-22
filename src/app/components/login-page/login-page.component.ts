@@ -104,5 +104,6 @@ export class LoginPageComponent implements OnInit {
   }
   clearData() {
     localStorage.clear();
+    sessionStorage.clear();
   }
 }

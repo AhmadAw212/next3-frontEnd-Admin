@@ -1,0 +1,15 @@
+<div class="select-container">
+  <span> {{ dico?.dico_company || "dico_company" }} :</span>
+  <select
+    id="company"
+    name="company"
+    class="select-class"
+    [(ngModel)]="selectedCompany"
+    (ngModelChange)="onCompanyChange()"
+    [disabled]="companies?.length! <= 2"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+</div>

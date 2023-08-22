@@ -1,7 +1,7 @@
 export interface CoreProfile {
   id?: string;
   code?: string;
-  companyId: number;
+  companyId: string;
   description?: string;
   name?: string;
   userCode?: string;

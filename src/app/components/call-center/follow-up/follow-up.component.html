@@ -56,12 +56,6 @@
         <ng-container *ngIf="paramValue === 'E'">
           <th>
             <input
-              type="date"
-              class="form-control"
-              [(ngModel)]="expertDispDate"
-              (ngModelChange)="getCallCenterListBeanByTypeWithSearch()"
-            />
-            <!-- <input
               type="text"
               bsDatepicker
               class="form-control"
@@ -70,7 +64,9 @@
                 dateInputFormat: 'DD/MM/YYYY',
                 containerClass: 'theme-dark-blue'
               }"
-            /> -->
+              [(ngModel)]="expertDispDate"
+              (ngModelChange)="getCallCenterListBeanByTypeWithSearch()"
+            />
           </th>
         </ng-container>
         <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
@@ -190,14 +186,16 @@
             class="form-control"
           />
         </th>
-        <th>
-          <input
-            type="text"
-            id="insurance"
-            [(ngModel)]="insCompany"
-            class="form-control"
-          />
-        </th>
+        <ng-container *ngIf="company === '1'">
+          <th>
+            <input
+              type="text"
+              id="insurance"
+              [(ngModel)]="insCompany"
+              class="form-control"
+            />
+          </th>
+        </ng-container>
 
         <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
           <th>
@@ -264,7 +262,11 @@
         <th>{{ dico?.dico_owner_name || "dico_owner_name" }}</th>
         <th>{{ dico?.dico_brand_trademark || "dico_brand_trademark" }}</th>
         <th>{{ dico?.dico_operator || "dico_operator" }}</th>
-        <th>{{ dico?.dico_insurance_company || "dico_insurance_company" }}</th>
+        <ng-container *ngIf="company === '1'">
+          <th>
+            {{ dico?.dico_insurance_company || "dico_insurance_company" }}
+          </th>
+        </ng-container>
         <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
           <th>{{ dico?.dico_no_data_type || "dico_no_data_type" }}</th>
         </ng-container>
@@ -331,8 +333,9 @@
         <td>{{ list.ownerName }}</td>
         <td>{{ list.brandTrademark }}</td>
         <td>{{ list.operator }}</td>
-        <td>{{ list.insCompany }}</td>
-
+        <ng-container *ngIf="company === '1'">
+          <td>{{ list.insCompany }}</td>
+        </ng-container>
         <ng-container *ngIf="paramValue === 'N' || paramValue === 'NALL'">
           <td>
             {{ list.noDataType }}

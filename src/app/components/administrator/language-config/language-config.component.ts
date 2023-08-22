@@ -137,8 +137,10 @@ export class LanguageConfigComponent implements OnInit {
   }
   openCoreConfigDialog() {
     const dialogRef = this.dialog.open(AddLanguageComponent);
-    dialogRef.afterClosed().subscribe(() => {
-      this.resourceBundleSearch();
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.resourceBundleSearch();
+      }
     });
   }
 

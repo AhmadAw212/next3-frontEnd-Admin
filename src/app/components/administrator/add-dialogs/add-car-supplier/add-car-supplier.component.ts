@@ -49,6 +49,7 @@ export class AddCarSupplierComponent implements OnInit {
     });
   }
   buildForm(): void {
+    const date = new Date();
     this.carSupplierForm = this.formBuilder.group({
       id: [''],
       companyId: this.companyId,
@@ -79,7 +80,7 @@ export class AddCarSupplierComponent implements OnInit {
       show_in_list: [false],
       fullName: [''],
       out_network: [false],
-      fdate: [null, Validators.required],
+      fdate: [date, Validators.required],
       inAcctD: [null],
       coreUserId: [''],
       initialCount: ['', Validators.pattern(/^\d+$/)],

@@ -1403,9 +1403,9 @@ export class DataServiceService {
     );
   }
 
-  getGaugesValues(): Observable<ApiResponse> {
+  getGaugesValues(insuranceId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getCallCenterMainBeanPageData`
+      `${this.userUrl}/call_center/getCallCenterMainBeanPageData/${insuranceId}`
     );
   }
 

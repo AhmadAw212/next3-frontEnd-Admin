@@ -89,6 +89,7 @@ export class AuthService {
   clearTokens() {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('selectedProfile');
   }
   refreshTokens(): Observable<any> {
     const refreshToken = localStorage.getItem('refreshToken');

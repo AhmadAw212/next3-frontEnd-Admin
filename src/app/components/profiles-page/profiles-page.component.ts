@@ -9,6 +9,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { Subscription } from 'rxjs';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 @Component({
   selector: 'app-profiles-page',
   templateUrl: './profiles-page.component.html',
@@ -28,7 +29,8 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
     private userRoles: UsersRolesService,
-    private userIdlesService: UsersIdleService
+    private userIdlesService: UsersIdleService,
+    private profileService: LoadingServiceService
   ) {}
   ngOnDestroy(): void {
     // Unsubscribe from the subscription when the component is destroyed
@@ -51,8 +53,12 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
 
   redirectToProfile(profile: CoreProfile): void {
     const description = profile.description;
+    // const id = profile.id!;
     if (description) {
-      localStorage.setItem('selectedProfile', profile.id!);
+      delete profile?.logo;
+      localStorage.setItem('selectedProfile', JSON.stringify(profile));
+      // localStorage.setItem('selectedProfile', id);
+      // localStorage.setItem('company', company!);
       this.router.navigate([`profiles-main`, description]); // Pass the profile id as a parameter
     } else {
       console.error('Unknown profile description:', description);
@@ -67,7 +73,9 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
     this.dataService.getUserListProfiles().subscribe({
       next: (profiles) => {
         // this.userProfiles = profiles.data;
+
         this.userProfiles = profiles.data
+
           .map((profile: CoreProfile) => {
             // console.log(`data:image/jpeg;base64,${profile.logo}`);
             return {

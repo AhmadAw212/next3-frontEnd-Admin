@@ -41,7 +41,8 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     private loginDataService: LoadingServiceService,
     private dateFormatService: DateFormatterService,
     private fb: FormBuilder,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private profileService: LoadingServiceService
   ) {}
   ngOnDestroy(): void {
     if (this.notificationsSubscribtion || this.LossCarDataByNotificationSub) {
@@ -51,10 +52,9 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const selectedProfile = localStorage
-      .getItem('selectedProfile')
-      ?.split('.')[2];
-    const department = selectedProfile?.toUpperCase();
+    const profile = this.profileService.getSelectedProfile();
+    const department = profile.code.toUpperCase();
+    // const department = selectedProfile?.toUpperCase();
     this.department = department;
     this.noteForm = this.fb.group({
       id: [null],

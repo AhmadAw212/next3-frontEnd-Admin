@@ -9,13 +9,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { GoogleChartInterface } from 'ng2-google-charts';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, tap, throwError } from 'rxjs';
 import { CallCenterGauges } from 'src/app/model/call-center-gauges';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { GaugesServiceService } from 'src/app/services/gauges-service.service';
 import * as Gauge from 'canvas-gauges';
+import { CompanyBranchList } from 'src/app/model/company-branch-list';
 @Component({
   selector: 'app-gauges',
   templateUrl: './gauges.component.html',
@@ -33,7 +34,8 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   expertOverDue: number = 0;
   notificationComplaintsCount: number = 0;
   dico?: any;
-
+  companies?: CompanyBranchList[];
+  company?: string;
   subscribtion?: Subscription;
   @Input() gaugeValue: number = 0;
   @ViewChild('expertToDispatch', { static: true })
@@ -46,6 +48,7 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   noDataFollowUp!: ElementRef;
   @ViewChild('notificationComplaints', { static: true })
   notificationComplaints!: ElementRef;
+  selectedCompany: any;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -120,10 +123,12 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit(): void {
-    this.getGaugesValuesCC();
     this.getDico();
   }
-
+  onCompanyChange(event: any) {
+    this.selectedCompany = event;
+    this.getGaugesValuesCC(event);
+  }
   createAndDrawGauge(
     maxValue: number,
     value: number,
@@ -196,16 +201,10 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
       notificationComplaintsCount: this.notificationComplaintsCount,
     } = gaugesValues);
     this.updateExpertFollowUpGauge();
-    // this.ExpertFollowUpGauge();
-    // this.towingFollowUpGauge();
-    // this.expertToDispatchGauge();
-    // this.towingToDispatchGauge();
-    // this.noDataAllCountGauge();
-    // this.notificationComplaintsCountGauge();
   }
 
-  getGaugesValuesCC(): void {
-    this.subscribtion = this.dataService.getGaugesValues().subscribe({
+  getGaugesValuesCC(companyId: string): void {
+    this.subscribtion = this.dataService.getGaugesValues(companyId).subscribe({
       next: (res) => {
         this.handleGaugesValuesResponse(res.data);
       },
@@ -216,7 +215,6 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getDico() {
-    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

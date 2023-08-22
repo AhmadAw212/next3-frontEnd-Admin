@@ -1,8 +1,11 @@
 <div class="dialog-content">
+  <app-company-select
+    (companyChanged)="onCompanyChange($event)"
+  ></app-company-select>
   <div class="section">
-    <div class="panel">
+    <div class="panel row">
       <div
-        class="column"
+        class="column col-md-6 col-lg-3"
         [ngClass]="{ 'hidden-gauge': expertToDispatchCount <= 0 }"
       >
         <div class="panel-item">
@@ -27,7 +30,10 @@
           </ngx-gauge> -->
         </div>
       </div>
-      <div [ngClass]="{ 'hidden-gauge': expertAllCount <= 0 }" class="column">
+      <div
+        [ngClass]="{ 'hidden-gauge': expertAllCount <= 0 }"
+        class="column col-md-6 col-lg-3"
+      >
         <div class="panel-item">
           <label class="gauge-label">
             <a
@@ -42,7 +48,10 @@
         </div>
       </div>
 
-      <div class="column" [ngClass]="{ 'hidden-gauge': towingAllCount <= 0 }">
+      <div
+        class="column col-md-6 col-lg-3"
+        [ngClass]="{ 'hidden-gauge': towingAllCount <= 0 }"
+      >
         <div class="panel-item">
           <label class="gauge-label">
             <a
@@ -68,7 +77,7 @@
       </div>
 
       <div
-        class="column"
+        class="column col-md-6 col-lg-3"
         [ngClass]="{ 'hidden-gauge': towingToDispatchCount <= 0 }"
       >
         <div class="panel-item">
@@ -98,8 +107,11 @@
   </div>
 
   <div class="section">
-    <div class="panel">
-      <div class="column" [ngClass]="{ 'hidden-gauge': noDataAllCount <= 0 }">
+    <div class="panel row">
+      <div
+        class="column col-md-6 col-lg-3"
+        [ngClass]="{ 'hidden-gauge': noDataAllCount <= 0 }"
+      >
         <div class="panel-item">
           <label class="gauge-label">
             <a
@@ -134,7 +146,7 @@
       </div>
 
       <div
-        class="column"
+        class="column col-md-6 col-lg-3"
         [ngClass]="{ 'hidden-gauge': notificationComplaintsCount <= 0 }"
       >
         <div class="panel-item">

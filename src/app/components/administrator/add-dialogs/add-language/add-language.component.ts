@@ -56,7 +56,7 @@ export class AddLanguageComponent implements OnInit {
       next: (res) => {
         if (res.statusCode === 201) {
           this.alertifyService.success(res.message!);
-          this.dialogRef.close();
+          this.dialogRef.close(res.data);
           console.log(res);
         }
       },

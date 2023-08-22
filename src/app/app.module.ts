@@ -144,6 +144,7 @@ import { FollowUpComponent } from './components/call-center/follow-up/follow-up.
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { UpdateCompanyListComponent } from './components/expert-config/update-company-list/update-company-list.component';
 import { TableComponent } from './components/table/table.component';
+import { CompanySelectComponent } from './components/company-select/company-select.component';
 
 @NgModule({
   declarations: [
@@ -247,6 +248,7 @@ import { TableComponent } from './components/table/table.component';
     FollowUpComponent,
     UpdateCompanyListComponent,
     TableComponent,
+    CompanySelectComponent,
   ],
   imports: [
     BrowserModule,

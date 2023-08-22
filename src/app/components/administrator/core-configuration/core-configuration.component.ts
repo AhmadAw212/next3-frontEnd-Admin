@@ -199,8 +199,10 @@ export class CoreConfigurationComponent implements OnInit {
 
   openCoreConfigDialog() {
     const dialogRef = this.dialog.open(AddConfigDialogComponent);
-    dialogRef.afterClosed().subscribe(() => {
-      this.coreConfigSearch();
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.coreConfigSearch();
+      }
     });
   }
 }

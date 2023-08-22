@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewNoteDialogComponent } from './view-note-dialog/view-note-dialog.component';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 
 @Component({
   selector: 'app-view-notes',
@@ -13,7 +14,8 @@ export class ViewNotesComponent implements OnInit {
   count?: number;
   constructor(
     private dialog: MatDialog,
-    private dataService: DataServiceService
+    private dataService: DataServiceService,
+    private profileService: LoadingServiceService
   ) {}
   ngOnInit(): void {
     this.getNotificationMessageByDepCount();
@@ -29,10 +31,9 @@ export class ViewNotesComponent implements OnInit {
   }
 
   getNotificationMessageByDepCount() {
-    const selectedProfile = localStorage
-      .getItem('selectedProfile')
-      ?.split('.')[2];
-    const department = selectedProfile?.toUpperCase();
+    const profile = this.profileService.getSelectedProfile();
+    const department = profile.code.toUpperCase();
+    // console.log(department);
     this.dataService
       .getNotificationMessageByDepCount(department!, '10.9100729')
       .subscribe({
