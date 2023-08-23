@@ -169,7 +169,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
     if (oldValue !== parseFloat(newValue)) {
       expert[property] = parseFloat(newValue);
       this.findAndReplaceExpert(updatedExpCompany, expert);
-      console.log(this.updatedExpCompany);
+      // console.log(this.updatedExpCompany);
     }
   }
 

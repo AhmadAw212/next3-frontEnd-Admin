@@ -49,6 +49,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   policy?: string;
   selectedProfile?: CoreProfile;
   company?: string;
+  selectedCompany?: string;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -83,7 +84,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
       // console.log(this.paramValue);
       // Now you can use this.paramValue in your component logic
     });
-    this.getCallCenterListBeanByType();
+    // this.getCallCenterListBeanByType();
   }
 
   getTableTitle(): string {
@@ -126,10 +127,16 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
   }
-  getCallCenterListBeanByType() {
+  onCompanyChange(event: any) {
+    this.selectedCompany = event;
+    // console.log(this.selectedCompany);
+    this.getCallCenterListBeanByType(event);
+    // this.getGaugesValuesCC(event);
+  }
+  getCallCenterListBeanByType(company: string) {
     this.isLoading = true;
     this.subsciption = this.dataService
-      .getCallCenterListBeanByType(this.paramValue!)
+      .getCallCenterListBeanByType(company, this.paramValue!)
       .subscribe({
         next: (res) => {
           this.listData = res.data.data;
@@ -226,11 +233,15 @@ export class FollowUpComponent implements OnInit, OnDestroy {
 
     // const formData = this.form.value;
     this.dataService
-      .getCallCenterListBeanByTypeWithSearch(this.paramValue!, formData)
+      .getCallCenterListBeanByTypeWithSearch(
+        this.paramValue!,
+        this.selectedCompany!,
+        formData
+      )
       .subscribe({
         next: (res) => {
           this.listData = res.data;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);

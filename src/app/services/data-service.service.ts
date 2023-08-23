@@ -1419,18 +1419,22 @@ export class DataServiceService {
     );
   }
 
-  getCallCenterListBeanByType(type: string): Observable<ApiResponse> {
+  getCallCenterListBeanByType(
+    type: string,
+    insuranceCompanyId: string
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/follow-up?type=${type}`
+      `${this.userUrl}/call_center/follow-up/${insuranceCompanyId}?type=${type}`
     );
   }
 
   getCallCenterListBeanByTypeWithSearch(
     type: string,
+    insuranceCompanyId: string,
     NotificationSearch: NotificationSearchCriteria
   ): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
-      `${this.userUrl}/call_center/follow-up-criteria?type=${type}`,
+      `${this.userUrl}/call_center/follow-up-criteria/${insuranceCompanyId}?type=${type}`,
       NotificationSearch
     );
   }

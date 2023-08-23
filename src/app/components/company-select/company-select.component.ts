@@ -11,7 +11,6 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   styleUrls: ['./company-select.component.css'],
 })
 export class CompanySelectComponent {
-  @Input() label: string = 'Label';
   @Output() companyChanged = new EventEmitter<string>();
 
   selectedCompany?: string;

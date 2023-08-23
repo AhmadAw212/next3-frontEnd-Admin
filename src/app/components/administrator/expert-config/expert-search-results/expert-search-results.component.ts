@@ -253,7 +253,9 @@ export class ExpertSearchResultsComponent implements OnInit {
       maxHeight: '600px',
     });
     dialogRef.afterClosed().subscribe((res) => {
-      this.getSupplierExpert();
+      if (res) {
+        this.expertSearchResult;
+      }
     });
   }
   updateExpert() {
@@ -271,10 +273,8 @@ export class ExpertSearchResultsComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          this.authService.logout();
+          this.alertifyService.dialogAlert(err.error.message);
         },
       });
     }

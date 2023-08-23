@@ -1,7 +1,7 @@
-<mat-sidenav-container class="Background container-fluid">
-  <mat-sidenav #sidenav mode="side" opened>
-    <div fxLayout="column">
-      <div class="row mt-3 ms-2" style="border: 1px solid #ccc">
+<div class="sidenav-container">
+  <mat-sidenav-container class="Background container-fluid">
+    <mat-sidenav #sidenav mode="side" opened>
+      <div class="row-class mt-3 ms-2">
         <div class="col">{{ dico?.dico_menu || "dico_menu" }}</div>
 
         <div class="col-12">
@@ -42,6 +42,7 @@
               {{ dico?.dico_edit_user || "dico_edit_user" }}
             </a>
           </mat-expansion-panel>
+
           <br />
           <!-- <hr class="hr" /> -->
           <mat-expansion-panel
@@ -225,19 +226,19 @@
           <!-- <hr class="hr" /> -->
         </mat-nav-list>
       </div>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="arrow">
-      <i
-        class="fa fa-caret-left"
-        style="font-size: 20px"
-        (click)="toggleMenu()"
-      ></i>
-    </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="arrow">
+        <i
+          class="fa fa-caret-left"
+          style="font-size: 20px"
+          (click)="toggleMenu()"
+        ></i>
+      </div>
 
-    <div class="component-content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+      <div class="component-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

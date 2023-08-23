@@ -12,7 +12,9 @@
     </button>
   </h3>
 </div>
-
+<app-company-select
+  (companyChanged)="onCompanyChange($event)"
+></app-company-select>
 <div class="admin-container container-fluid">
   <app-spinner *ngIf="isLoading"></app-spinner>
 

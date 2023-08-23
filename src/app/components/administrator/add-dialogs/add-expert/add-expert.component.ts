@@ -73,10 +73,10 @@ export class AddExpertComponent implements OnInit {
   addExpert() {
     this.dataService.addExpert(this.expertForm.value).subscribe({
       next: (res) => {
-        this.dialogRef.close();
+        this.dialogRef.close(res.data);
         this.alertifyService.success(res.message);
 
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         if (err.error.statusCode === 409) {

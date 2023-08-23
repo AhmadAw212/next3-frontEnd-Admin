@@ -52,7 +52,9 @@
         <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
         <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
         <th></th>
-        <th></th>
+        <ng-container *ngIf="hasPerm('admTemaAddUser')">
+          <th></th>
+        </ng-container>
       </tr>
     </thead>
     <tbody>
@@ -107,9 +109,11 @@
             >delete</mat-icon
           >
         </td>
-        <td (click)="openUpdateCompanyListDialog(exptCompany)">
-          <mat-icon>edit</mat-icon>
-        </td>
+        <ng-container *ngIf="hasPerm('admTemaAddUser')">
+          <td (click)="openUpdateCompanyListDialog(exptCompany)">
+            <mat-icon>edit</mat-icon>
+          </td>
+        </ng-container>
       </tr>
     </tbody>
     <ng-template #noData>
