@@ -48,10 +48,7 @@ export class AddProfileDialogComponent implements OnInit {
         }
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -60,14 +57,11 @@ export class AddProfileDialogComponent implements OnInit {
     this.dataService.grantProfileToUser(userId, profId).subscribe({
       next: (res) => {
         this.selectedProfile = profId;
-        this.alertifyService.dialogAlert('Profile Added Successfully');
+        this.alertifyService.success('Profile Added Successfully');
         this.dialogRef.close(res.data);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }

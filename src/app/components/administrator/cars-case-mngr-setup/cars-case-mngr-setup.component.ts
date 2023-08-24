@@ -131,10 +131,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
       complete: () => {
         this.isLoading = false;
@@ -151,10 +148,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
             this.getCaseMngrSetup();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert(err.error.message);
-            }
+            console.log(err);
           },
         });
       }
@@ -193,9 +187,7 @@ export class CarsCaseMngrSetupComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }

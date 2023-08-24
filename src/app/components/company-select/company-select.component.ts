@@ -46,7 +46,7 @@ export class CompanySelectComponent {
         ];
       }),
       catchError((err) => {
-        this.alertifyService.dialogAlert(err.error.message);
+        console.log(err);
         return throwError(() => err);
       })
     );

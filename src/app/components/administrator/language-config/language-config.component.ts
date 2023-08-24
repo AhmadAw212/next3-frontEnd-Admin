@@ -167,7 +167,7 @@ export class LanguageConfigComponent implements OnInit {
       () => {
         this.dataService.deleteResource(id).subscribe({
           next: (data) => {
-            this.alertifyService.dialogAlert(data.message!);
+            this.alertifyService.error(data.message!);
             this.resourceBundleSearch();
             // console.log(data);
           },

@@ -159,7 +159,6 @@ export class CarsCellSetupComponent implements OnChanges, OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -247,9 +246,7 @@ export class CarsCellSetupComponent implements OnChanges, OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }
@@ -264,9 +261,7 @@ export class CarsCellSetupComponent implements OnChanges, OnInit {
             this.getCellSetup();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              this.alertifyService.dialogAlert(err.error.message);
-            }
+            console.log(err);
           },
         });
       }

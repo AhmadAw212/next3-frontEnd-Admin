@@ -144,12 +144,12 @@ export class AuthService {
   logout() {
     this.dataService.logout().subscribe({
       next: (response) => {
-        this.alertifyService.dialogAlert(response.message!);
+        this.alertifyService.dialogAlert(response.message!, response.title);
         this.clearTokens();
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Session Timeout');
+        this.alertifyService.dialogAlert('Session Timeout', 'Timeout');
       },
     });
   }

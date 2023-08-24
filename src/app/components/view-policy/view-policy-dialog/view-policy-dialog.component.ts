@@ -85,7 +85,7 @@ export class ViewPolicyDialogComponent implements OnInit, OnDestroy {
         error: (error) => {
           // this.policyData = [];
           this.close();
-          this.alertifyService.dialogAlert(error.error.message);
+          console.log(error);
           // console.log(error);
         },
       });

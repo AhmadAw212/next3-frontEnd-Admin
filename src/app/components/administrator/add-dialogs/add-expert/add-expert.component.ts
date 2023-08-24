@@ -82,7 +82,7 @@ export class AddExpertComponent implements OnInit {
         if (err.error.statusCode === 409) {
           this.alertifyService.error('Duplicate Records');
         } else {
-          this.alertifyService.dialogAlert('Error');
+          console.log(err);
         }
       },
     });

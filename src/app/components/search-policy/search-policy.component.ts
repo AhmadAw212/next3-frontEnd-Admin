@@ -182,7 +182,6 @@ export class SearchPolicyComponent implements OnInit, OnDestroy {
           // console.log(this.companies);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });

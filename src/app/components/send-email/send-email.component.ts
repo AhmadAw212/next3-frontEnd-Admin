@@ -81,10 +81,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }
@@ -115,10 +112,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
           ?.setValue('<br><br><br><br>' + signature);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -174,13 +168,10 @@ export class SendEmailComponent implements OnInit, OnDestroy {
       .sendEmail(recipients, fileName, body, subject, file, bcc, cc)
       .subscribe({
         next: (res) => {
-          this.alertifyService.dialogAlert('Email Sent');
+          this.alertifyService.dialogAlert('Email Sent', 'Success');
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
   }

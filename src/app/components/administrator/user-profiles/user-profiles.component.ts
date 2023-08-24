@@ -94,14 +94,11 @@ export class UserProfilesComponent implements OnInit, OnChanges {
       () => {
         this.dataService.deleteProfile(userName, profId).subscribe({
           next: (res) => {
-            this.alertify.dialogAlert(res.message!);
+            this.alertify.success(res.message!);
             this.profiles = res.data;
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertify.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
       }

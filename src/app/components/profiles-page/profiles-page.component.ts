@@ -90,7 +90,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
         console.log(this.userProfiles);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert(err.error.message);
+        console.log(err);
       },
     });
   }

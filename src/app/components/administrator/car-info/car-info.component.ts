@@ -242,10 +242,7 @@ export class CarInfoComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }
@@ -295,7 +292,7 @@ export class CarInfoComponent implements OnInit {
         console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        console.log(err);
       },
     });
   }
@@ -311,10 +308,7 @@ export class CarInfoComponent implements OnInit {
             // console.log(data);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
       }

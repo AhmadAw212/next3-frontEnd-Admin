@@ -45,7 +45,7 @@ export class AddCarBrandDialogComponent {
           // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
+          console.log(err);
         },
       });
   }

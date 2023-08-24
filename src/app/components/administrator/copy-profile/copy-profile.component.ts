@@ -42,10 +42,7 @@ export class CopyProfileComponent implements OnInit {
         this.users = users.data;
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -57,10 +54,7 @@ export class CopyProfileComponent implements OnInit {
         // console.log(profiles);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -74,14 +68,11 @@ export class CopyProfileComponent implements OnInit {
 
     this.dataService.copyProfiles(copyProfile).subscribe({
       next: (res) => {
-        this.alertify.dialogAlert(res.title!);
+        this.alertify.dialogAlert(res.title!, 'success');
         this.dialogRef.close();
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertify.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }

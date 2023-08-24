@@ -125,7 +125,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
         // console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -138,7 +137,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
         console.log(res);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -150,7 +148,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
         this.domainYN = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -162,7 +159,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
         this.expGroup = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -178,7 +174,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
           // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });
@@ -193,10 +188,7 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
         this.terrAddress = res.data;
         // console.log(res);
       },
-      error: (err) => {
-        this.alertifyService.dialogAlert('Error');
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 
@@ -228,7 +220,6 @@ export class ExpertConfigComponent implements OnInit, OnDestroy {
           // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
         complete: () => {

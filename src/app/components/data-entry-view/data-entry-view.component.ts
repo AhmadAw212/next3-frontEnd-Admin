@@ -90,10 +90,7 @@ export class DataEntryViewComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            //this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
         complete: () => {
           this.isLoading = false;

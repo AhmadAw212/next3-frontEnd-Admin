@@ -132,7 +132,6 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
         // console.log(this.companies);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -202,10 +201,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
             console.log(res);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
     }
@@ -219,10 +215,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -241,10 +234,7 @@ export class ExpertCompanyListComponent implements OnInit, OnChanges {
               // this.expertSearchResult = data.data;
             },
             error: (err) => {
-              if (err.status === 401 || err.status === 500) {
-                // this.authService.logout();
-                this.alertifyService.dialogAlert('Error');
-              }
+              console.log(err);
             },
           });
       }

@@ -82,7 +82,7 @@ export class AddDomainValueDialogComponent implements OnInit {
         this.getDomainValuesData(id);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        console.log(err);
       },
     });
   }

@@ -209,10 +209,7 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
         // console.log(res);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
       complete: () => {
         this.isLoading = false;
@@ -232,10 +229,7 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
             console.log(res);
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
     }
@@ -251,10 +245,7 @@ export class CarProductsReserveComponent implements OnInit, OnChanges {
             this.searchCarProductsReserve();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert(err.error.message);
-            }
+            console.log(err);
           },
         });
       }

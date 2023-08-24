@@ -63,7 +63,7 @@ export class AddLanguageComponent implements OnInit {
       error: (err) => {
         if (err.status === 401 || err.status === 500) {
           // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
+          console.log(err);
         } else if (err.status === 409) {
           this.alertifyService.error('ID exist');
         }

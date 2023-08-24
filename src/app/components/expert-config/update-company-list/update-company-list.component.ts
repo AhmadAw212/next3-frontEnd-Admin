@@ -39,7 +39,6 @@ export class UpdateCompanyListComponent {
           // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert('Error');
           console.log(err);
         },
       });
@@ -72,7 +71,7 @@ export class UpdateCompanyListComponent {
         },
         error: (err) => {
           // this.authService.logout();
-          this.alertifyService.dialogAlert(err.error.message);
+          console.log(err);
           this.dialogRef.close();
         },
       });

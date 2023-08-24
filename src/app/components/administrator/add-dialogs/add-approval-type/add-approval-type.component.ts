@@ -76,7 +76,7 @@ export class AddApprovalTypeComponent implements OnInit {
         error: (err) => {
           if (err.error.statusCode === 409) {
             this.alertifyService.error('Duplicate Records');
-          } else this.alertifyService.dialogAlert('Error');
+          } else console.log(err);
         },
       });
     }

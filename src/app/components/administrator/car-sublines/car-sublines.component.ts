@@ -129,10 +129,7 @@ export class CarSublinesComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -174,10 +171,7 @@ export class CarSublinesComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
         complete: () => {
           this.isLoading = false;
@@ -194,10 +188,7 @@ export class CarSublinesComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }
@@ -212,10 +203,7 @@ export class CarSublinesComponent implements OnInit {
             this.searchCarSublines();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
       }

@@ -31,10 +31,10 @@ export class AlertifyService {
       .show();
   }
 
-  dialogAlert(message: string) {
+  dialogAlert(message: string, title: string) {
     alertify
       .alert()
-      .setHeader('Response')
+      .setHeader(title)
       .setting({
         closable: true,
         message: message,

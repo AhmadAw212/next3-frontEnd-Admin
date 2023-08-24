@@ -80,7 +80,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
     const profileId = this.selectedProfile!;
     this.dataService.updateRoles(userId, profileId).subscribe({
       next: (roles) => {
-        this.alertify.dialogAlert(roles.message!);
+        this.alertify.success(roles.message!);
         // console.log(roles.data);
       },
       error: (err) => {
@@ -125,10 +125,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
               this.updateRoles();
             },
             error: (err) => {
-              if (err.status === 401 || err.status === 500) {
-                // this.authService.logout();
-                this.alertify.dialogAlert('Error');
-              }
+              console.log(err);
             },
           });
       }

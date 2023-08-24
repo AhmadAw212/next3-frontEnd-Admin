@@ -283,7 +283,7 @@ export class CoreDomainComponent implements OnInit {
     if (this.updatedDomainValues?.length) {
       this.dataService.updateDomain(this.updatedDomainValues).subscribe({
         next: (res) => {
-          this.alertifyService.dialogAlert(res.title!);
+          this.alertifyService.dialogAlert(res.title!, 'Success');
           this.updatedDomainValues = [];
           console.log(res);
         },

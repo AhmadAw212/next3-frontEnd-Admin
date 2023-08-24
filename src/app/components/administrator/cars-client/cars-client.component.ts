@@ -151,7 +151,6 @@ export class CarsClientComponent implements OnInit {
         // console.log(this.companies);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert(err.error.message);
         console.log(err);
       },
     });
@@ -292,10 +291,7 @@ export class CarsClientComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }
@@ -307,7 +303,6 @@ export class CarsClientComponent implements OnInit {
         this.genderList = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -319,7 +314,6 @@ export class CarsClientComponent implements OnInit {
         this.titleLov = res.data;
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
         console.log(err);
       },
     });
@@ -340,7 +334,6 @@ export class CarsClientComponent implements OnInit {
           // console.log(res);
         },
         error: (err) => {
-          this.alertifyService.dialogAlert(err.error.message);
           console.log(err);
         },
         complete: () => {
@@ -359,7 +352,7 @@ export class CarsClientComponent implements OnInit {
             this.searchCarClients();
           },
           error: (err) => {
-            this.alertifyService.dialogAlert(err.error.message);
+            console.log(err);
           },
         });
       }

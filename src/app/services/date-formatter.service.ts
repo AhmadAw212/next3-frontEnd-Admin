@@ -35,7 +35,7 @@ export class DateFormatterService {
           if (err.status === 401) {
             this.authService.refreshTokens();
           } else {
-            this.alertifyService.dialogAlert(err.error.message);
+            console.log(err);
           }
         },
       });

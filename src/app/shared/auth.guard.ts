@@ -47,7 +47,8 @@ export class AuthGuard implements CanActivate {
             // this.authService.logout();
             this.router.navigate(['/login']);
             this.alertifyService.dialogAlert(
-              'Session expired. Please log in again.'
+              'Session expired. Please log in again.',
+              'Timeout'
             );
             return of(false);
           })

@@ -47,7 +47,7 @@ export class ChangePassDialogComponent implements OnInit {
               if (res.statusCode === 505) {
                 this.alertify.error(res.title);
               } else if (res.statusCode === 200 || res.statusCode === 201) {
-                this.alertify.dialogAlert(res.title);
+                this.alertify.success(res.title);
                 this.router.navigate(['/login']);
                 localStorage.removeItem('token');
                 this.dialogRef.close();
@@ -55,10 +55,7 @@ export class ChangePassDialogComponent implements OnInit {
               // console.log(res);
             },
             error: (err) => {
-              if (err.status === 401 || err.status === 500) {
-                //this.authService.logout();
-                this.alertify.dialogAlert('Error');
-              }
+              console.log(err);
             },
           });
       }

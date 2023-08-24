@@ -133,7 +133,7 @@ export class CarRiskCoverComponent implements OnInit, OnChanges {
         // console.log(res.data);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        console.log(err);
         // console.log(err);
       },
     });
@@ -149,10 +149,7 @@ export class CarRiskCoverComponent implements OnInit, OnChanges {
             this.searchCarCoverRisk();
           },
           error: (err) => {
-            if (err.status === 401 || err.status === 500) {
-              // this.authService.logout();
-              this.alertifyService.dialogAlert(err.error.message);
-            }
+            console.log(err);
           },
         });
       }

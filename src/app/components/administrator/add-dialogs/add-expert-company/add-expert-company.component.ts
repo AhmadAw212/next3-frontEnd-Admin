@@ -75,8 +75,8 @@ export class AddExpertCompanyComponent {
         error: (err) => {
           if (err.error.statusCode === 409) {
             this.alertifyService.error('Duplicate Records');
-          } else if (err.status === 401 || err.status === 500) {
-            this.alertifyService.dialogAlert('Error');
+          } else {
+            console.log(err);
           }
         },
       });

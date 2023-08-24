@@ -55,7 +55,7 @@ export class AddCarCoverComponent {
         this.alertifyService.success(res.message!);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Error');
+        console.log(err);
       },
     });
   }

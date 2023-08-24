@@ -193,7 +193,7 @@ export class EditUserComponent implements OnInit {
         },
         error: (err) => {
           // this.authService.logout();
-          this.alertify.dialogAlert(err.error.message);
+          console.log(err);
         },
       });
   }
@@ -217,7 +217,7 @@ export class EditUserComponent implements OnInit {
       () => {
         this.dataService.resetPassword(userName).subscribe({
           next: (res) => {
-            this.alertify.dialogAlert(res.title!);
+            this.alertify.success(res.title!);
             // console.log(res);
           },
           error: (err) => {

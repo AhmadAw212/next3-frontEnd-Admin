@@ -93,17 +93,13 @@ export class LoginNavComponent implements OnInit {
   logout(): void {
     this.dataService.logout().subscribe({
       next: (response) => {
-        this.alertifyService.dialogAlert(response.message!);
+        this.alertifyService.dialogAlert(response.message!, response.title);
         localStorage.clear();
         this.router.navigate(['/login']);
         // console.log(response);
       },
       error: (err) => {
-        if (err.status === 401) {
-          // this.authService.refreshTokens();
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }

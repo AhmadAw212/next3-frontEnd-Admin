@@ -132,11 +132,7 @@ export class CarsReportListComponent implements OnInit {
         // console.log(res);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          //this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-          // this.alertifyService.error(err.error.message);
-        }
+        console.log(err);
       },
     });
   }
@@ -232,11 +228,7 @@ export class CarsReportListComponent implements OnInit {
             this.searchCarReport();
           },
           error: (err) => {
-            this.alertifyService.error(err.error.message);
-            if (err.status === 401 || err.status === 500) {
-              //this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
-            }
+            console.log(err);
           },
         });
       }
@@ -258,11 +250,7 @@ export class CarsReportListComponent implements OnInit {
           console.log(res);
         },
         error: (err) => {
-          this.alertifyService.error(err.error.message);
-          if (err.status === 401 || err.status === 500) {
-            // this.authService.logout();
-            this.alertifyService.dialogAlert('Error');
-          }
+          console.log(err);
         },
       });
     }

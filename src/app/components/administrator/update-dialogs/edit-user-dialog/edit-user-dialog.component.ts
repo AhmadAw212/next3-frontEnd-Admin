@@ -74,10 +74,7 @@ export class EditUserDialogComponent implements OnInit {
         // console.log(language);
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }
@@ -156,10 +153,7 @@ export class EditUserDialogComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 500) {
-          // this.authService.logout();
-          this.alertifyService.dialogAlert('Error');
-        }
+        console.log(err);
       },
     });
   }

@@ -83,12 +83,12 @@ export class UsersIdleService {
   logout() {
     this.dataService.logout().subscribe({
       next: (response) => {
-        this.alertifyService.dialogAlert('Session Timeout');
+        this.alertifyService.dialogAlert('Session Timeout', 'Timeout');
         this.authService.clearTokens();
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert(err.error.message);
+        console.log(err);
       },
     });
   }

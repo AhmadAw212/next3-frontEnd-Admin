@@ -274,7 +274,7 @@ export class ExpertSearchResultsComponent implements OnInit {
         },
         error: (err) => {
           this.authService.logout();
-          this.alertifyService.dialogAlert(err.error.message);
+          console.log(err);
         },
       });
     }
@@ -291,7 +291,7 @@ export class ExpertSearchResultsComponent implements OnInit {
           error: (err) => {
             if (err.status === 401 || err.status === 500) {
               this.authService.logout();
-              this.alertifyService.dialogAlert('Error');
+              console.log(err);
             }
           },
         });

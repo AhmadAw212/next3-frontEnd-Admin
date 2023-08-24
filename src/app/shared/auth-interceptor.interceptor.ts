@@ -68,7 +68,8 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
                 this.authService.logout();
                 this.router.navigate(['/login']);
                 this.alertifyService.dialogAlert(
-                  'Session expired. Please log in again.'
+                  'Session expired. Please log in again.',
+                  'Timeout'
                 );
                 return throwError(() => refreshError);
               })
@@ -79,7 +80,12 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           }
         } else {
           // Handle other errors
-          return throwError(() => error);
+          return throwError(() =>
+            this.alertifyService.dialogAlert(
+              error.error.message,
+              error.error.title
+            )
+          );
         }
       })
     );

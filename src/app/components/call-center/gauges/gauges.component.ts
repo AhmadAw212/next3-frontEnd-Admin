@@ -209,7 +209,6 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
         this.handleGaugesValuesResponse(res.data);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert(err.error.message);
         console.log(err);
       },
     });
