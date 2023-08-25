@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { tap, catchError, throwError } from 'rxjs';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -19,15 +20,19 @@ export class CompanySelectComponent {
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getCompaniesPerUser().subscribe(() => {
-      this.selectedCompany =
-        this.companies!.length >= 3
-          ? 'ALL'
-          : this.companies![0]?.companyId || '';
+      this.route.queryParams.subscribe((params) => {
+        this.selectedCompany = params['selectedCompany'];
+        if (!this.selectedCompany) {
+          this.selectedCompany = this.companies![0]?.companyId;
+        }
+      });
+
       this.onCompanyChange();
     });
     this.getDico();
@@ -53,6 +58,7 @@ export class CompanySelectComponent {
   }
   onCompanyChange() {
     this.companyChanged.emit(this.selectedCompany);
+
     // console.log(this.selectedCompany);
   }
 }

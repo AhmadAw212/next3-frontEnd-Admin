@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -51,7 +51,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   selectedProfile?: CoreProfile;
   company?: string;
   selectedCompany?: string;
-  pageSize: number = 5;
+  pageSize: number = 20;
   pageNumber: number = 1;
   totalPages: number = 0;
   currentPage: number = 1;
@@ -88,10 +88,10 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     // this.createForm();
     this.route.queryParams.subscribe((params) => {
       this.paramValue = params['code'];
+      this.selectedCompany = params['selectedCompany'];
       // console.log(this.paramValue);
       // Now you can use this.paramValue in your component logic
     });
-    // this.getCallCenterListBeanByType(this.company!);
   }
 
   getTableTitle(): string {

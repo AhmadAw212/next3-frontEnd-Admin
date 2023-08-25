@@ -12,7 +12,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'ED' }"
+              [queryParams]="{ code: 'ED', selectedCompany: selectedCompany }"
               class="gauge-label-link"
               >{{ dico?.dico_expert_to_dispatch }}</a
             >
@@ -38,7 +38,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'E' }"
+              [queryParams]="{ code: 'E', selectedCompany: selectedCompany }"
               class="gauge-label-link"
             >
               {{ dico?.dico_expert_follow_up }}
@@ -56,7 +56,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'T' }"
+              [queryParams]="{ code: 'T', selectedCompany: selectedCompany }"
               class="gauge-label-link"
               >{{ dico?.dico_towing_follow_up }}</a
             >
@@ -84,7 +84,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'TD' }"
+              [queryParams]="{ code: 'TD', selectedCompany: selectedCompany }"
               class="gauge-label-link"
               >{{ dico?.dico_towing_to_dispatch }}</a
             >
@@ -116,7 +116,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'N' }"
+              [queryParams]="{ code: 'N', selectedCompany: selectedCompany }"
               class="gauge-label-link"
               >{{ dico?.dico_no_data_follow_up }}</a
             >
@@ -137,7 +137,7 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'NALL' }"
+              [queryParams]="{ code: 'NALL', selectedCompany: selectedCompany }"
               class="gauge-label-link"
               >{{ dico?.dico_no_data_all_list }}</a
             >
