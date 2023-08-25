@@ -569,6 +569,9 @@ tr:nth-child(odd) {
   border: none;
   padding: 5px 16px;
 }
+.mat-mdc-paginator-container{
+  background-color: #f5f5f5;
+}
 /* @media(max-width:1300px) {
   .user-inputs input {
     margin: 5px;
@@ -704,7 +707,7 @@ button.is-disabled {
 } */
 
 
-.pagination-wrapper {
+/* .pagination-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -769,4 +772,4 @@ button.is-disabled {
     font-weight: bold;
     background-color: #007bff;
     color: #fff;
-  }
+  } */

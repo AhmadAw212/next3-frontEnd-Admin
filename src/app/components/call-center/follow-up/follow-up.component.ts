@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationSearchCriteria } from 'src/app/model/notification-search-criteria';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { CoreProfile } from 'src/app/model/core-profile';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-follow-up',
   templateUrl: './follow-up.component.html',
@@ -50,6 +51,12 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   selectedProfile?: CoreProfile;
   company?: string;
   selectedCompany?: string;
+  pageSize: number = 5;
+  pageNumber: number = 1;
+  totalPages: number = 0;
+  currentPage: number = 1;
+  totalItems?: number;
+  isUsingSearchCriteria?: boolean;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -84,7 +91,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
       // console.log(this.paramValue);
       // Now you can use this.paramValue in your component logic
     });
-    // this.getCallCenterListBeanByType();
+    // this.getCallCenterListBeanByType(this.company!);
   }
 
   getTableTitle(): string {
@@ -129,17 +136,36 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   }
   onCompanyChange(event: any) {
     this.selectedCompany = event;
-    // console.log(this.selectedCompany);
+    this.pageNumber = 1;
     this.getCallCenterListBeanByType(event);
     // this.getGaugesValuesCC(event);
   }
+  onPageChange(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+
+    if (this.isUsingSearchCriteria) {
+      this.getCallCenterListBeanByTypeWithSearch();
+    } else {
+      this.getCallCenterListBeanByType(this.selectedCompany!);
+    }
+  }
   getCallCenterListBeanByType(company: string) {
+    this.isUsingSearchCriteria = false;
     this.isLoading = true;
     this.subsciption = this.dataService
-      .getCallCenterListBeanByType(company, this.paramValue!)
+      .getCallCenterListBeanByType(
+        this.paramValue!,
+        company,
+        this.pageSize,
+        this.pageNumber
+      )
       .subscribe({
         next: (res) => {
-          this.listData = res.data.data;
+          this.listData = res.data.data.result;
+          this.totalPages = res.data.data.totalPages;
+          this.totalItems = res.data.data.totalItems;
+          this.currentPage = res.data.data.currentPage;
 
           // console.log(res);
         },
@@ -210,7 +236,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   }
   getCallCenterListBeanByTypeWithSearch() {
     this.isLoading = true;
-
+    this.isUsingSearchCriteria = true;
     const formData: NotificationSearchCriteria = {
       notification: this.notification,
       plate: this.plate,
@@ -236,11 +262,15 @@ export class FollowUpComponent implements OnInit, OnDestroy {
       .getCallCenterListBeanByTypeWithSearch(
         this.paramValue!,
         this.selectedCompany!,
-        formData
+        formData,
+        this.pageSize,
+        this.pageNumber
       )
       .subscribe({
         next: (res) => {
-          this.listData = res.data;
+          this.listData = res.data.result;
+          this.totalItems = res.data.totalItems;
+
           // console.log(res);
         },
         error: (err) => {

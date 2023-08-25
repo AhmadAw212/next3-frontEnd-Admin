@@ -224,7 +224,9 @@
 
       <tr>
         <th></th>
-        <th class="header-label">{{ dico?.dico_visa || "dico_visa" }}</th>
+        <th class="header-label">
+          {{ dico?.dico_notification || "dico_notification" }}
+        </th>
         <th>{{ dico?.dico_plate || "dico_plate" }}</th>
         <ng-container
           *ngIf="
@@ -359,3 +361,12 @@
     </ng-template>
   </table>
 </div>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  aria-label="Select page"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>
