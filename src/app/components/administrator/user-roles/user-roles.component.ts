@@ -29,7 +29,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
   roleCodeFilter: string = '';
   roleDescFilter: string = '';
   rolesPage: number = 1;
-  maxSizeValue = 5;
+  maxSizeValue = 10;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
