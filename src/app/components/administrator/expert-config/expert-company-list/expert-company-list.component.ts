@@ -21,7 +21,7 @@ import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
-import { UpdateCompanyListComponent } from 'src/app/components/expert-config/update-company-list/update-company-list.component';
+import { UpdateCompanyListComponent } from 'src/app/components/administrator/expert-config/update-company-list/update-company-list.component';
 import { type } from 'src/app/model/type';
 @Component({
   selector: 'app-expert-company-list',

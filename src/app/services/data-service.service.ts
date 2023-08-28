@@ -1442,4 +1442,14 @@ export class DataServiceService {
       NotificationSearch
     );
   }
+
+  getNotificationSearch(
+    type: string,
+    cmp: string,
+    value: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getCallCenterSearchMainByParam?type=${type}&cmp=${cmp}&value=${value}`
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,7 @@ export class NavbarComponent {
   @Input() sendEmailButton: boolean = false;
   // @Input() viewPolicy: boolean = true;
   @Input() note: boolean = false;
+  title2?: string;
   constructor(private router: Router) {}
 
   goBack(): void {

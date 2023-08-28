@@ -12,7 +12,7 @@ import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { UpdateCompanyListComponent } from '../../expert-config/update-company-list/update-company-list.component';
+import { UpdateCompanyListComponent } from './update-company-list/update-company-list.component';
 import { ExpertCompany } from 'src/app/model/expert-company';
 import { Subscription } from 'rxjs';
 @Component({

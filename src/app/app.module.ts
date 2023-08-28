@@ -29,7 +29,7 @@ import { CopyProfileComponent } from './components/administrator/copy-profile/co
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { AdminPageComponent } from './components/administrator/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/administrator/admin-page.component';
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
 import { AuthInterceptorInterceptor } from './shared/auth-interceptor.interceptor';
 import { DataServiceService } from './services/data-service.service';
@@ -142,10 +142,12 @@ import { GaugesComponent } from './components/call-center/gauges/gauges.componen
 import { NgxGaugeModule } from 'ngx-gauge';
 import { FollowUpComponent } from './components/call-center/follow-up/follow-up.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-import { UpdateCompanyListComponent } from './components/expert-config/update-company-list/update-company-list.component';
+import { UpdateCompanyListComponent } from './components/administrator/expert-config/update-company-list/update-company-list.component';
 import { TableComponent } from './components/table/table.component';
 import { CompanySelectComponent } from './components/company-select/company-select.component';
-
+import { SearchNotificationComponent } from './components/call-center/search-notification/search-notification.component';
+import { NotificationSearchComponent } from './components/call-center/notification-search/notification-search.component';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -249,12 +251,15 @@ import { CompanySelectComponent } from './components/company-select/company-sele
     UpdateCompanyListComponent,
     TableComponent,
     CompanySelectComponent,
+    SearchNotificationComponent,
+    NotificationSearchComponent,
   ],
   imports: [
     BrowserModule,
     Ng2GoogleChartsModule,
     NgxGaugeModule,
     CommonModule,
+    MatMenuModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
@@ -296,7 +301,7 @@ import { CompanySelectComponent } from './components/company-select/company-sele
       multi: true,
     },
 
-    DataServiceService,
+    // DataServiceService,
   ],
   bootstrap: [AppComponent],
 

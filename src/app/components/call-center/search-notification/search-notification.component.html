@@ -1,0 +1,200 @@
+<app-login-nav></app-login-nav>
+
+<nav class="navbar navbar-class navbar-expand-lg navbar-dark">
+  <span class="navbar-brand" (click)="goBack()" style="color: white">{{
+    title
+  }}</span>
+  <div class="mx-auto">
+    <form
+      class="d-flex align-items-center justify-content-center"
+      (ngSubmit)="searchNotification()"
+    >
+      <label class="label-class mb-0 me-2"
+        >{{ dico?.dico_search_by || "dico_search_by" }}:</label
+      >
+      <select
+        class="form-select label-class"
+        id="type"
+        name="type"
+        [(ngModel)]="selectedValue"
+      >
+        <option *ngFor="let item of searchTypes" [value]="item.code">
+          {{ item.description }}
+        </option>
+      </select>
+      <label class="label-class mb-0 ms-3"
+        >{{ dico?.dico_search_value || "dico_search_value" }}:</label
+      >
+      <input
+        id="value"
+        name="value"
+        type="text"
+        class="form-control me-2"
+        [(ngModel)]="value"
+      />
+      <button class="btn text-white" type="submit">
+        {{ dico?.dico_search || "dico_search" }}
+      </button>
+    </form>
+  </div>
+</nav>
+<mat-sidenav-container class="Background container-fluid">
+  <mat-sidenav #sidenav mode="side" opened>
+    <div class="row mt-4 ms-2">
+      <div class="col-md-20">
+        <mat-nav-list>
+          <mat-expansion-panel
+            class="panel-margin"
+            style="background-color: rgb(237, 243, 245)"
+            *ngFor="let notification of notificationData"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title
+                class="label"
+                (click)="navigateToDetails(notification.notificationId!)"
+                [style.color]="
+                  notification.notificationNature === 'Accident'
+                    ? 'red'
+                    : notification.notificationNature === 'Accident+Towing'
+                    ? 'blue'
+                    : notification.notificationNature === 'Towing'
+                    ? 'green'
+                    : notification.notificationNature === 'Existing Damages'
+                    ? 'purple'
+                    : 'black'
+                "
+              >
+                {{ notification.notification }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list class="list">
+              <mat-list-item>
+                <img
+                  src="../../../../assets/icons/accident-date-blue-24.png"
+                  alt=""
+                />
+                {{
+                  notification.accidentDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}</mat-list-item
+              >
+              <mat-list-item>
+                <img
+                  src="../../../../assets/icons/accident-nature-blue.png"
+                  alt=""
+                />
+
+                {{ notification.notificationNature }}
+              </mat-list-item>
+              <mat-list-item>
+                <ng-container
+                  *ngIf="notification.notificationStatusCode === '9'"
+                >
+                  <img src="../../../../assets/icons/" alt="" />
+                </ng-container>
+                <ng-container
+                  *ngIf="notification.notificationStatusCode === '8'"
+                >
+                  <img
+                    src="../../../../assets/icons/status-closed-blue-24.png"
+                    alt=""
+                  />
+                </ng-container>
+                <ng-container
+                  *ngIf="notification.notificationStatusCode === '0'"
+                >
+                  <img
+                    src="../../../../assets/icons/status-new-blue-24.png"
+                    alt=""
+                  />
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    notification.notificationStatusCode === '1' ||
+                    notification.notificationStatusCode === '2'
+                  "
+                >
+                  <img
+                    src="../../../../assets/icons/status-opened-blue-24.png"
+                    alt=""
+                  />
+                </ng-container>
+                {{ notification.notificationStatusDesc }}
+              </mat-list-item>
+              <mat-list-item
+                *ngIf="
+                  notification.notificationMatDamage === '5' ||
+                  notification.notificationMatDamage === '6' ||
+                  notification.notificationMatDamage === '10'
+                "
+              >
+                <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                Towing from : {{ notification.towingFrom }}
+              </mat-list-item>
+              <mat-list-item
+                *ngIf="
+                  notification.notificationMatDamage === '5' ||
+                  notification.notificationMatDamage === '6' ||
+                  notification.notificationMatDamage === '10'
+                "
+              >
+                <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                Towing to: {{ notification.towingTo }}
+              </mat-list-item>
+              <mat-list-item
+                *ngIf="
+                  notification.notificationMatDamage === '5' ||
+                  notification.notificationMatDamage === '6' ||
+                  notification.notificationMatDamage === '10'
+                "
+              >
+                <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                Towing count : {{ notification.towingCount }}
+              </mat-list-item>
+
+              <mat-list-item
+                class="custom-list-item"
+                [matMenuTriggerFor]="carMenu"
+              >
+                <img
+                  src="../../../../assets/icons/car-count-blue-24.png"
+                  alt=""
+                />
+
+                {{ notification.carCount }} Cars
+
+                <mat-menu #carMenu="matMenu">
+                  <ng-container *ngIf="notification?.callCenterSearchCarsList">
+                    <button
+                      [style.width]="'250px'"
+                      mat-menu-item
+                      class="custom-list-item"
+                      *ngFor="let car of notification.callCenterSearchCarsList"
+                    >
+                      {{ car.insuredTp }} - {{ car.plate }} -
+                      {{ car.carModel }}
+                    </button>
+                  </ng-container>
+                </mat-menu>
+                <img src="../../../../assets/icons/dropdown_n_hc.png" alt="" />
+              </mat-list-item>
+
+              <mat-list-item>
+                <img
+                  src="../../../../assets/icons/hostpital-blue-24.png"
+                  alt=""
+                />
+                {{ notification.injuryCount }}
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-nav-list>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="component-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddUserComponent } from './components/administrator/add-user/add-user.component';
-import { AdminPageComponent } from './components/administrator/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/administrator/admin-page.component';
 import { EditUserComponent } from './components/administrator/edit-user/edit-user.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProfilesPageComponent } from './components/profiles-page/profiles-page.component';
@@ -29,6 +29,8 @@ import { CallCenterComponent } from './components/call-center/call-center.compon
 import { SearchPolicyComponent } from './components/search-policy/search-policy.component';
 import { GaugesComponent } from './components/call-center/gauges/gauges.component';
 import { FollowUpComponent } from './components/call-center/follow-up/follow-up.component';
+import { SearchNotificationComponent } from './components/call-center//search-notification/search-notification.component';
+import { NotificationDetailsComponent } from './components/call-center/notification-details/notification-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -37,135 +39,37 @@ const routes: Routes = [
   // { path: '', component: AppComponent },
   {
     path: 'profiles-main',
-    component: ProfilesPageComponent,
+    loadChildren: () =>
+      import('./components/profiles-page/profiles.module').then(
+        (m) => m.ProfilesModule
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'profiles-main/Administrator',
-    component: AdminPageComponent,
+    loadChildren: () =>
+      import('./components/administrator/admin.module').then(
+        (m) => m.AdminModule
+      ),
     canActivate: [AuthGuard],
-    // data: {
-    //   // authorities: ['Admin'],
-    // },
-    children: [
-      {
-        path: 'addUser',
-        component: AddUserComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'editUser',
-        component: EditUserComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'coreConfig',
-        component: CoreConfigurationComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'languageConfig',
-        component: LanguageConfigComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'coreDocument',
-        component: CoreDocumentComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'coreDomain',
-        component: CoreDomainComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carsBrand',
-        component: CarsBrandComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carsClient',
-        component: CarsClientComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carCovers',
-        component: CarsCoverComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carProducts',
-        component: CarProductsComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carSublines',
-        component: CarSublinesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carReportList',
-        component: CarsReportListComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carSupplier',
-        component: CarsSupplierComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'expertConfig',
-        component: ExpertConfigComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'branchConfig',
-        component: BranchConfigComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carBroker',
-        component: CarBrokerComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carTerritoryTown',
-        component: TownTerritoryComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carsExpertDefaultFees',
-        component: CarsExpertDefaultFeesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'carsCaseMngrSetup',
-        component: CarsCaseMngrSetupComponent,
-        canActivate: [AuthGuard],
-      },
-    ],
   },
   {
     path: 'profiles-main/CallCenter',
-    component: CallCenterComponent,
+    loadChildren: () =>
+      import('./components/call-center/call-center.module').then(
+        (m) => m.CallCenterModule
+      ),
+
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: GaugesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'searchPolicy',
-        component: SearchPolicyComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'followUp', // Change the path to 'followUp'
-        component: FollowUpComponent,
-        canActivate: [AuthGuard],
-      },
-    ],
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./components/call-center/call-center.module').then(
+        (m) => m.CallCenterModule
+      ),
+
+    canActivate: [AuthGuard],
   },
   {
     path: 'dataEntryView',

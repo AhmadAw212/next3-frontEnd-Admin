@@ -6,7 +6,7 @@
     class="select-class"
     [(ngModel)]="selectedCompany"
     (ngModelChange)="onCompanyChange()"
-    [disabled]="companies?.length! <= 2"
+    [disabled]="disabled!"
   >
     <option *ngFor="let company of companies" [value]="company.companyId">
       {{ company.companyName }}

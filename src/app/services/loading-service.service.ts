@@ -11,6 +11,8 @@ export class LoadingServiceService {
   public loginInfo$ = this.loginInfoSubject.asObservable();
   private profileInfoSubject = new BehaviorSubject<CoreProfile | null>(null);
   public profileInfo$ = this.profileInfoSubject.asObservable();
+  private companySubject = new BehaviorSubject<string | null>(null);
+  public company = this.companySubject.asObservable();
   constructor() {}
 
   setLoginInfo(loginInfo: LoginInfo) {
@@ -34,5 +36,14 @@ export class LoadingServiceService {
     const selectedProfile = localStorage.getItem('selectedProfile');
     const profile = JSON.parse(selectedProfile!);
     return profile || null;
+  }
+  getCompany(): string | null {
+    return this.companySubject.getValue();
+  }
+  setCompany(company: string) {
+    this.companySubject.next(company);
+  }
+  clearCompany() {
+    this.companySubject.next(null);
   }
 }

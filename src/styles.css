@@ -215,6 +215,61 @@ td {
   background-color: #f5f5f5;
 } */
 
+
+
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Make the container fill the viewport height */
+}
+
+.row-class {
+  border-color: #BFC6C9;
+  background-color: #eff2f5;
+  color: #252525;
+  border: 1px solid #ccc
+  /* width: 230px; */
+}
+
+.col {
+  margin-top: 20px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.component-content {
+  /* display: flex; */
+  margin-left: 20px;
+}
+
+.arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin-top: 140px;
+}
+
+.mat-list-item-active {
+  background-color: #e5f5ff;
+}
+
+.btn {
+  /* display: flex; */
+  align-items: center;
+  color: #333;
+  /* font-size: 13px; */
+
+}
+
+.hr {
+  border-top: 1px solid #ccc;
+  /* margin: 10px 0; */
+}
+
+.list-class{
+ font-size: 12px;
+ font-weight: bold;
+}
 tr:nth-child(even):hover {
   background-color: #e5e1e1c3;
 
@@ -437,6 +492,16 @@ tr:nth-child(odd) {
   border: 1px solid #ccc;
 
 }
+.label-link{
+  margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  color: #0674CB !important;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.label-link:hover {
+  text-decoration: underline;
+}
 .select-container {
     /* width: 10%; */
     display: flex;
@@ -451,6 +516,7 @@ tr:nth-child(odd) {
 .dialog select option {
   padding: 8px;
 }
+
 .form-group {
   margin-bottom: 15px;
   display: flex;
@@ -510,12 +576,33 @@ tr:nth-child(odd) {
 .car-logo {
   max-width: 200px;
 }
-.navbar {
-    margin-top: 50px;
-    margin-left: 2px;
-    margin-right: 10px;
-    background-color: #0674CB;
+.navbar-class{
+  background-color: #0674cb;
+  /* height: 40px; */
+  /* padding: 20px; */
+  font-size: small;
+}
 
+.btn {
+  /* display: flex; */
+  align-items: center;
+  color: #333;
+  /* font-size: 13px; */
+
+}
+
+.hr {
+  border-top: 1px solid #ccc;
+  /* margin: 10px 0; */
+}
+
+.list-class{
+ font-size: 12px;
+ font-weight: bold;
+}
+.navigate-btn{
+  float: right; 
+  margin-right: 10px
 }
 .user-inputs {
   display: flex;
@@ -572,6 +659,7 @@ tr:nth-child(odd) {
 .mat-mdc-paginator-container{
   background-color: #f5f5f5;
 }
+
 /* @media(max-width:1300px) {
   .user-inputs input {
     margin: 5px;

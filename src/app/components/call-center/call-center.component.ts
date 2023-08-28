@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 
@@ -13,10 +14,12 @@ export class CallCenterComponent implements OnInit {
   constructor(
     private userRolesService: UsersRolesService,
     private userIdlesService: UsersIdleService,
-    private router: Router
+    private router: Router,
+    private companyService: LoadingServiceService
   ) {}
   ngOnInit(): void {
     this.userRolesService.getUserRoles();
+    this.companyService.clearCompany();
     // this.userIdlesService.initializeIdleService();
   }
 }

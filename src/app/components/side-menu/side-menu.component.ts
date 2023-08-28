@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { filter } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -20,7 +20,8 @@ export class SideMenuComponent implements OnInit {
     private alertifyService: AlertifyService,
     private userRolesService: UsersRolesService,
     private dicoService: DicoServiceService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   // ngOnDestroy(): void {
   //   throw new Error('Method not implemented.');
@@ -31,6 +32,7 @@ export class SideMenuComponent implements OnInit {
   @Input() dico?: any;
   isLoading: boolean = false;
   @Input() callCenter: boolean = false;
+  isOpened: boolean = false;
   toggleMenu() {
     this.sidenav.toggle();
   }
@@ -40,8 +42,10 @@ export class SideMenuComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.sidenav.opened) {
+          this.isOpened = true;
           this.sidenav.close();
         } else {
+          this.isOpened = false;
           this.sidenav.open();
         }
       });
@@ -55,22 +59,4 @@ export class SideMenuComponent implements OnInit {
       this.dico = data;
     });
   }
-  // getDico() {
-  //   const language = localStorage.getItem('selectedLanguage')!;
-  //   this.dataService.Dico(language).subscribe({
-  //     next: (language) => {
-  //       this.dico = language.data;
-  //       // console.log(language);
-  //     },
-  //     error: (err) => {
-  //       if (err.status === 401 || err.status === 500) {
-  //         // this.authService.logout();
-  //         this.alertifyService.dialogAlert('Error');
-  //       }
-  //     },
-  //     complete: () => {
-  //       this.isLoading = false;
-  //     },
-  //   });
-  // }
 }

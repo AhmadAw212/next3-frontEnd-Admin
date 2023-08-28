@@ -17,6 +17,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { GaugesServiceService } from 'src/app/services/gauges-service.service';
 import * as Gauge from 'canvas-gauges';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
 @Component({
   selector: 'app-gauges',
   templateUrl: './gauges.component.html',
@@ -54,7 +55,8 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
-    private expertService: GaugesServiceService
+    private expertService: GaugesServiceService,
+    private companyService: LoadingServiceService
   ) {}
   ngAfterViewInit(): void {}
 
@@ -128,8 +130,7 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onCompanyChange(event: any) {
     this.selectedCompany = event;
-
-    console.log(this.selectedCompany);
+    this;
     this.getGaugesValuesCC(event);
   }
   createAndDrawGauge(

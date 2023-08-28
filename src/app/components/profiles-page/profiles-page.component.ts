@@ -60,6 +60,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
       // localStorage.setItem('selectedProfile', id);
       // localStorage.setItem('company', company!);
       this.router.navigate([`profiles-main`, description]); // Pass the profile id as a parameter
+      // console.log(description);
     } else {
       console.error('Unknown profile description:', description);
     }

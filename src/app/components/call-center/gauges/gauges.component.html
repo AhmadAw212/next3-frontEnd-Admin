@@ -12,22 +12,14 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'ED', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
-              >{{ dico?.dico_expert_to_dispatch }}</a
+              [queryParams]="{ code: 'ED' }"
+              class="label-link"
+              >{{
+                dico?.dico_expert_to_dispatch || "dico_expert_to_dispatch"
+              }}</a
             >
           </label>
           <canvas #expertToDispatch></canvas>
-          <!-- <google-chart [data]="expertDispatchCountGauge"></google-chart> -->
-          <!-- <canvas #gaugeCanvas></canvas> -->
-          <!-- <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="expertToDispatchCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge> -->
         </div>
       </div>
       <div
@@ -38,10 +30,10 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'E', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
+              [queryParams]="{ code: 'E' }"
+              class="label-link"
             >
-              {{ dico?.dico_expert_follow_up }}
+              {{ dico?.dico_expert_follow_up || "dico_expert_follow_up" }}
             </a>
           </label>
           <canvas #expertFollowUp></canvas>
@@ -56,23 +48,12 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'T', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
-              >{{ dico?.dico_towing_follow_up }}</a
+              [queryParams]="{ code: 'T' }"
+              class="label-link"
+              >{{ dico?.dico_towing_follow_up || "dico_towing_follow_up" }}</a
             >
           </label>
           <canvas #towingFollowUp></canvas>
-          <!-- <google-chart [data]="towingFollowUpChartData"></google-chart> -->
-          <!-- <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="towingOverDue"
-            [min]="0"
-            [max]="towingAllCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge> -->
         </div>
       </div>
 
@@ -84,23 +65,14 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'TD', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
-              >{{ dico?.dico_towing_to_dispatch }}</a
+              [queryParams]="{ code: 'TD' }"
+              class="label-link"
+              >{{
+                dico?.dico_towing_to_dispatch || "dico_towing_to_dispatch"
+              }}</a
             >
           </label>
           <canvas #towingToDispatch></canvas>
-          <!-- <google-chart [data]="towingDispatchGauge"></google-chart> -->
-          <!-- <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="towingToDispatchCount"
-            [min]="0"
-            [max]="towingToDispatchCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge> -->
         </div>
       </div>
     </div>
@@ -116,59 +88,41 @@
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'N', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
-              >{{ dico?.dico_no_data_follow_up }}</a
+              [queryParams]="{ code: 'N' }"
+              class="label-link"
+              >{{ dico?.dico_no_data_follow_up || "dico_no_data_follow_up" }}</a
             >
           </label>
           <canvas #noDataFollowUp></canvas>
 
-          <!-- <google-chart [data]="noDataCountGauge"></google-chart> -->
-          <!-- <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="noDataPolicyFound"
-            [min]="0"
-            [max]="noDataAllCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge> -->
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              [queryParams]="{ code: 'NALL', selectedCompany: selectedCompany }"
-              class="gauge-label-link"
-              >{{ dico?.dico_no_data_all_list }}</a
+              [queryParams]="{ code: 'NALL' }"
+              class="label-link"
+              >{{ dico?.dico_no_data_all_list || "dico_no_data_all_list" }}</a
             >
           </label>
         </div>
       </div>
 
       <div
-        class="column col-md-6 col-lg-3"
+        class="column col-md-6 col-lg-2"
         [ngClass]="{ 'hidden-gauge': notificationComplaintsCount <= 0 }"
       >
         <div class="panel-item">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
-              class="gauge-label-link"
-              >New Complaints</a
+              [queryParams]="{
+                code: 'CR_NEW_REQ'
+              }"
+              class="label-link"
+            >
+              {{ dico?.dico_complaints || "dico_complaints" }}</a
             >
           </label>
           <canvas #notificationComplaints></canvas>
-          <!-- <google-chart [data]="notificationComplaintsGauge"></google-chart> -->
-          <!-- <ngx-gauge
-            [type]="'arch'"
-            [cap]="'butt'"
-            [thick]="15"
-            [value]="notificationComplaintsCount"
-            [min]="0"
-            [max]="notificationComplaintsCount"
-            [thresholds]="thresholdConfig"
-          >
-          </ngx-gauge> -->
         </div>
       </div>
     </div>

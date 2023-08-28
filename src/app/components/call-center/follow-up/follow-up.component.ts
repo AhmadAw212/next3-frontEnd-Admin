@@ -1,5 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -57,6 +64,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   totalItems?: number;
   isUsingSearchCriteria?: boolean;
+  @Output() companyChange = new EventEmitter<string>();
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -88,9 +96,8 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     // this.createForm();
     this.route.queryParams.subscribe((params) => {
       this.paramValue = params['code'];
-      this.selectedCompany = params['selectedCompany'];
-      // console.log(this.paramValue);
-      // Now you can use this.paramValue in your component logic
+      // this.selectedCompany = params['selectedCompany'];
+      // this.profileService.setCompany(this.selectedCompany!);
     });
   }
 
