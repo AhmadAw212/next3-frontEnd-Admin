@@ -72,7 +72,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'dataEntryView',
+    path: 'profiles-main/CallCenter/dataEntryView/:notificationId',
     component: DataEntryViewComponent,
     canActivate: [AuthGuard],
   },

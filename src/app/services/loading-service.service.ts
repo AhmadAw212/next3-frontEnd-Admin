@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginInfo } from '../model/login-info';
 import { CoreProfile } from '../model/core-profile';
+import { DataServiceService } from './data-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class LoadingServiceService {
   public profileInfo$ = this.profileInfoSubject.asObservable();
   private companySubject = new BehaviorSubject<string | null>(null);
   public company = this.companySubject.asObservable();
-  constructor() {}
+  constructor(private dataService: DataServiceService) {}
 
   setLoginInfo(loginInfo: LoginInfo) {
     this.loginInfoSubject.next(loginInfo);
@@ -45,5 +46,8 @@ export class LoadingServiceService {
   }
   clearCompany() {
     this.companySubject.next(null);
+  }
+  getCompanyLogo(companyId: string) {
+    return this.dataService.getCompanyLogo(companyId);
   }
 }

@@ -1,1 +1,378 @@
-<p>notification-details works!</p>
+<div class="dialog-content">
+  <div class="section first-section">
+    <div class="row" style="margin: 5px; padding: 5px">
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_notification || "dico_notification"
+          }}</label>
+          <p>{{ selectedNotification?.notification }}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_reported_date || "dico_reported_date"
+          }}</label>
+          <p>
+            {{
+              selectedNotification?.notificationDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_loss_date || "dico_loss_date"
+          }}</label>
+          <p>
+            {{
+              selectedNotification?.accidentDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_claim_status || "dico_claim_status"
+          }}</label>
+          <p>{{ selectedNotification?.notificationStatusDesc }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <ng-container
+          *ngFor="let car of selectedNotification?.callCenterSearchCarsList"
+        >
+          <div class="panel-item" *ngIf="car.sequence === 0">
+            <label class="label-color">{{
+              dico?.dico_policy_type || "dico_policy_type"
+            }}</label>
+            <p>
+              {{ car.policyProd }}
+            </p>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_nature || "dico_nature"
+          }}</label>
+          <p>{{ selectedNotification?.notificationNature }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_place || "dico_place"
+          }}</label>
+          <p>{{ selectedNotification?.accidentLocation }}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_claim_number || "dico_claim_number"
+          }}</label>
+          <p>{{ selectedNotification?.claimNumber }}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="panel-item">
+          <label class="label-color">{{
+            dico?.dico_expert || "dico_expert"
+          }}</label>
+          <p>{{ selectedNotification?.expertName }}</p>
+        </div>
+      </div>
+      <ng-container
+        *ngIf="
+          hasPerm('ccDataEntryView') &&
+          selectedNotification?.notificationMatDamage !== '6'
+        "
+      >
+        <div class="col-md-2">
+          <div class="panel-item">
+            <app-data-entry-button
+              (click)="
+                navigateToComponent(selectedNotification?.notificationId!)
+              "
+            ></app-data-entry-button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="masonry-container">
+    <div
+      class="masonry-item"
+      *ngFor="let car of selectedNotification?.callCenterSearchCarsList"
+    >
+      <div class="masonry-title">
+        <img
+          src="../../../../assets/icons/outlook.png"
+          alt=""
+          class="title-icon"
+        />
+        <h2 class="h3 label-color">{{ car.insuredTp }}</h2>
+      </div>
+
+      <div class="container">
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_plate }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ car.plate }}</span>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_car_model }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ car.carMakeModel }}</span>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <label class="h5 label-color"
+              >{{ dico?.dico_pre_risk_year }}:</label
+            >
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ car.yom }}</span>
+          </div>
+        </div>
+        <ng-container *ngIf="shouldShowCarInfo(car)">
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label class="h5 label-color">{{ dico?.dico_lifter }}:</label>
+            </div>
+            <div class="col-md-9">
+              <span class="h5">{{ car.lifter === "Y" ? "Yes" : "No" }}</span>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="shouldShowCarInfo(car)">
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label class="h5 label-color"
+                >{{ dico?.dico_towing_from }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <span class="h5">{{
+                car.fromTown !== null ? car.fromTown : "N/A"
+              }}</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="shouldShowCarInfo(car)">
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label class="h5 label-color">{{ dico?.dico_towing_to }}:</label>
+            </div>
+            <div class="col-md-9">
+              <span class="h5">{{
+                car.toTown !== null ? car.toTown : "N/A"
+              }}</span>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="selectedNotification?.notificationMatDamage !== '6'"
+        >
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label class="h5 label-color"
+                >{{ dico?.dico_survey_date }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <span class="h5">
+                {{
+                  car?.survey !== null
+                    ? (car.survey | date : dateFormat("reportDateFormat"))
+                    : "N/A"
+                }}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="car.sequence !== 0 && car.tpCmp !== null">
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label class="h5 label-color">{{ dico?.dico_tp_company }}:</label>
+            </div>
+            <div class="col-md-9">
+              <span class="h5">{{ car.tpCmp }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="container">
+        <div class="row btn-container">
+          <ng-container *ngIf="car.sequence === 0">
+            <div class="col-md-2">
+              <button class="btn button-class">
+                {{ dico?.dico_hotline || "dico_hotline" }}
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container
+            *ngIf="selectedNotification?.notificationMatDamage !== '6'"
+          >
+            <div class="col-md-2">
+              <button class="btn button-class">
+                {{ dico?.dico_survey || "dico_survey" }}
+              </button>
+            </div>
+          </ng-container>
+          <ng-container
+            *ngIf="
+              selectedNotification?.notificationMatDamage !== '6' &&
+              hasPerm('ccSelfSurvey')
+            "
+          >
+            <div class="col-md-2">
+              <button class="btn button-class">
+                {{ dico?.dico_self_survey || "dico_self_survey" }}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="masonry-container">
+    <div
+      class="masonry-item"
+      *ngFor="
+        let bodily of selectedNotification?.callCenterSearchBodilyInjuryList
+      "
+    >
+      <div class="masonry-title">
+        <h2 class="label-color">Bodily</h2>
+      </div>
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_first_name }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ bodily.injuredFirstName }}</span>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_father_name }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ bodily.injuredFatherName }}</span>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_family_name }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ bodily.injuredFamilyName }}</span>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_mobile_phone }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ bodily.injuredMobile }}</span>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_hospital }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{ bodily.injuredHospital }}</span>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <label class="h5 label-color">{{ dico?.dico_dob }}:</label>
+          </div>
+          <div class="col-md-9">
+            <span class="h5">{{
+              bodily.injuredDOB | date : dateFormat("reportDateFormat")
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="masonry-item"
+      *ngFor="
+        let material of selectedNotification?.callCenterSearchMaterialBeanList
+      "
+    >
+      <div class="masonry-title">
+        <h2 class="label-color">
+          {{ dico?.dico_material || "dico_material" }}
+        </h2>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label class="h5 label-color">{{ dico?.dico_owner_name }}:</label>
+        </div>
+        <div class="col-md-9">
+          <span class="h5">{{ material.matDamageOwnerName }}</span>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label class="h5 label-color">{{ dico?.dico_phone_number }}:</label>
+        </div>
+        <div class="col-md-9">
+          <span class="h5">{{ material.matDamageOwnerPhone }}</span>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label class="h5 label-color">{{ dico?.dico_damage_type }}:</label>
+        </div>
+        <div class="col-md-9">
+          <span class="h5">{{ material.matDamageType }}</span>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label class="h5 label-color">{{ dico?.dico_insurance }}:</label>
+        </div>
+        <div class="col-md-9">
+          <span class="h5">{{ material.matDamageInsurance }}</span>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label class="h5 label-color">{{ dico?.dico_d_type_desc }}:</label>
+        </div>
+        <div class="col-md-9">
+          <span class="h5">{{ material.matDamageTypeDesc }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

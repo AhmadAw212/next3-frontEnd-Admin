@@ -1,21 +1,21 @@
 export interface CallCenterSearchCars {
   carId?: string;
   insuredTp?: string;
-  sequense?: number;
+  sequence?: number;
   ownerName?: string;
   plate?: string;
-  carModel?: string;
+  carMakeModel?: string;
   modelId?: string;
   assessor?: string;
   yom?: string;
   vehicleStatus?: string;
   assessmentDate?: Date;
-  surveyDate?: Date;
+  survey?: string;
   fromTown?: string;
   toTown?: string;
   towingDate?: Date;
-  policyType?: string;
+  policyProd?: string;
   lifter?: string;
   matdamage?: string;
-  tpCompany?: string;
+  tpCmp?: string;
 }

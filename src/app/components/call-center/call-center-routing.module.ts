@@ -7,6 +7,7 @@ import { SearchNotificationComponent } from './search-notification/search-notifi
 import { SearchPolicyComponent } from '../search-policy/search-policy.component';
 import { AuthGuard } from '../../shared/auth.guard';
 import { NotificationDetailsComponent } from './notification-details/notification-details.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [CommonModule, RouterModule],
 })
 export class CallCenterRoutingModule {}

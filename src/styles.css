@@ -184,7 +184,11 @@ label{
   width: 20%;
   margin-right: 20px;
 }
-
+.label-color{
+  color: #0674CB !important;
+  /* font-size: 13px; */
+  font-weight: bold;
+}
 .panel-item {
   margin-bottom: 10px;
 

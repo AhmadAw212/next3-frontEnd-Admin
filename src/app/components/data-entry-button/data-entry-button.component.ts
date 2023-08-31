@@ -8,9 +8,4 @@ import { Router } from '@angular/router';
 })
 export class DataEntryButtonComponent {
   constructor(private router: Router) {}
-  navigateToComponent() {
-    const componentRoute = '/dataEntryView';
-
-    this.router.navigateByUrl(componentRoute);
-  }
 }

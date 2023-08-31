@@ -41,9 +41,9 @@ export interface SearchNotification {
 
   brokerRefferal?: string;
 
-  callCenterSearchCarsList: any;
+  callCenterSearchCarsList?: CallCenterSearchCars[];
 
-  callCenterSearchBodilyInjuryList?: CallCenterSearchBodilyInjury;
+  callCenterSearchBodilyInjuryList?: CallCenterSearchBodilyInjury[];
 
-  callCenterSearchMaterialBeanList?: CallCenterSearchMaterialBean;
+  callCenterSearchMaterialBeanList?: CallCenterSearchMaterialBean[];
 }

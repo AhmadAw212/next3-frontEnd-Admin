@@ -20,11 +20,11 @@
     width:95%
   }
   :host ::ng-deep .mat-drawer-inner-container {
-    background-color: #f5f5f5 !important;
+    background-color: rgb(239,242,245);
   }
   
   :host ::ng-deep .mat-drawer-content{
-    background-color: #f5f5f5 !important;
+    background-color: rgb(239,242,245);
     
   }
   .sidenav-container {
@@ -40,7 +40,20 @@
     border: 1px solid #ccc
     /* width: 230px; */
   }
-
+.list-item{
+  min-height: 16px;
+  padding: 0px 0px 0px 5px;
+  white-space: nowrap;
+  cursor: default;
+  text-decoration: none;
+  color: #000000;
+  padding-left: 0px;
+  padding-right: 4px;
+  height: 24px;
+  vertical-align: middle;
+  display: table-cell;
+  text-align: center;
+}
   .list{
     font-weight: bolder; font-size: small; font-style: italic
   }

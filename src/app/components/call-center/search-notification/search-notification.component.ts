@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { CallCenterSearchCars } from 'src/app/model/call-center-search-cars';
 import { SearchNotification } from 'src/app/model/search-notification';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -16,7 +16,7 @@ interface NotificationType {
   templateUrl: './search-notification.component.html',
   styleUrls: ['./search-notification.component.css'],
 })
-export class SearchNotificationComponent {
+export class SearchNotificationComponent implements OnInit, OnDestroy {
   title?: string = 'Call Center Search';
   selectedValue: string = 'PLATE';
   searchTypes: NotificationType[] = [];
@@ -27,30 +27,58 @@ export class SearchNotificationComponent {
   notificationData?: SearchNotification[];
   dateFormats?: any;
   callCenterSearchCarsList?: CallCenterSearchCars[];
+  selectedNotification?: SearchNotification;
+  showPanelContent: boolean = false;
+  notificationSubscription?: Subscription;
+  companyLogo: { [companyId: string]: string } = {};
   constructor(
     private router: Router,
     private dicoService: DicoServiceService,
     private dataService: DataServiceService,
     private profileService: LoadingServiceService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private companyLogoService: LoadingServiceService
   ) {
     const profile = this.profileService.getSelectedProfile();
     this.company = profile.companyId;
+  }
+
+  ngOnDestroy(): void {
+    if (this.notificationSubscription) {
+      this.notificationSubscription.unsubscribe();
+    }
   }
   ngOnInit(): void {
     this.getDico().subscribe(() => {
       this.initializeSearchTypes();
     });
   }
+  getNotificationColor(notificationNature: string): string {
+    switch (notificationNature) {
+      case 'Accident':
+        return 'red';
+      case 'Accident+Towing':
+        return 'blue';
+      case 'Towing':
+        return 'green';
+      case 'Existing Damages':
+        return 'purple';
+      default:
+        return 'black';
+    }
+  }
 
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  navigateToDetails(notificationId: string) {
-    this.router.navigate([
-      'profiles-main/CallCenter/searchNotification/notification-details',
-    ]);
+  togglePanelContent(notification: SearchNotification) {
+    this.showPanelContent = true;
+    this.selectedNotification = notification;
+    // console.log(notification);
   }
+  // navigateToDetails(notification: SearchNotification) {
+
+  // }
   getDico() {
     // this.dicoService.getDico();
     return this.dicoService.dico.pipe(
@@ -78,19 +106,44 @@ export class SearchNotificationComponent {
       { code: 'SIM_PLATE', description: 'Similar Plate' },
     ];
   }
-
   searchNotification() {
-    this.dataService
+    this.notificationSubscription = this.dataService
       .getNotificationSearch(this.selectedValue!, this.company!, this.value!)
       .subscribe({
         next: (res) => {
           this.notificationData = res.data;
-          this.callCenterSearchCarsList = res.data;
-          console.log(res.data);
+          const uniqueCompanyIds = Array.from(
+            new Set(this.notificationData?.map((data) => data.insuranceCmp))
+          );
+
+          // Fetch all company logos
+          uniqueCompanyIds.forEach((companyId) => {
+            this.getCompanyLogo(companyId!);
+          });
         },
         error: (err) => {
           console.log(err);
         },
       });
+  }
+
+  getCompanyLogo(companyId: any) {
+    this.dataService.getCompanyLogo(companyId).subscribe({
+      next: (res) => {
+        this.companyLogo![companyId] = `data:image/jpeg;base64,${res.data}`;
+        this.updateLogoOnNotifications(companyId);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  updateLogoOnNotifications(companyId: any) {
+    this.notificationData?.forEach((data) => {
+      if (data.insuranceCmp === companyId) {
+        data.insuranceCmp = this.companyLogo![companyId];
+      }
+    });
   }
 }

@@ -146,8 +146,10 @@ import { UpdateCompanyListComponent } from './components/administrator/expert-co
 import { TableComponent } from './components/table/table.component';
 import { CompanySelectComponent } from './components/company-select/company-select.component';
 import { SearchNotificationComponent } from './components/call-center/search-notification/search-notification.component';
-import { NotificationSearchComponent } from './components/call-center/notification-search/notification-search.component';
+
 import { MatMenuModule } from '@angular/material/menu';
+import { NotificationDetailsComponent } from './components/call-center/notification-details/notification-details.component';
+
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -252,7 +254,8 @@ import { MatMenuModule } from '@angular/material/menu';
     TableComponent,
     CompanySelectComponent,
     SearchNotificationComponent,
-    NotificationSearchComponent,
+
+    NotificationDetailsComponent,
   ],
   imports: [
     BrowserModule,

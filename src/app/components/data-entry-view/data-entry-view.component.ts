@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -27,18 +27,24 @@ export class DataEntryViewComponent implements OnInit {
   selectedLossCar?: any;
   selectedMatDamage?: any;
   dico?: any;
-
+  notificationId: string = '';
   constructor(
     private dataService: DataServiceService,
     private router: Router,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private dicoService: DicoServiceService
+    private dicoService: DicoServiceService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getDataEntry();
     this.getDico();
+    this.route.params.subscribe((params) => {
+      const notificationId = params['notificationId'];
+      this.getDataEntry(notificationId);
+      console.log(notificationId);
+      // Now you have access to the notificationId parameter, and you can use it in your component logic.
+    });
   }
   getDico() {
     // this.dicoService.getDico();
@@ -78,23 +84,21 @@ export class DataEntryViewComponent implements OnInit {
   }
 
   //10.9091591
-  getDataEntry() {
-    this.dataService
-      .getDataEntry('fff5c353-887c-4e02-873e-47dc7f947410')
-      .subscribe({
-        next: (res) => {
-          this.dataEntry = res.data;
-          this.lossCarList = res.data.lossCarList;
-          this.bodilyInjuryList = res.data.bodilyInjuryList;
-          this.materialDamageList = res.data.materialDamageList;
-          // console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+  getDataEntry(notification: string) {
+    this.dataService.getDataEntry(notification).subscribe({
+      next: (res) => {
+        this.dataEntry = res.data;
+        this.lossCarList = res.data.lossCarList;
+        this.bodilyInjuryList = res.data.bodilyInjuryList;
+        this.materialDamageList = res.data.materialDamageList;
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 }

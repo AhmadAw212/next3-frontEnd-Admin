@@ -1,0 +1,75 @@
+.masonry-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 20px;
+  }
+  p,span{
+    font-size: small;
+    font-weight: bold;
+  }
+
+  .masonry-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / -1; /* Span all columns */
+  }
+  
+  .masonry-title h2 {
+/* margin-top: 10px; */
+padding-right: 10px
+  }
+
+  .btn-container {
+    padding-top: 50px;
+    background-color: #eff2f5;
+  }
+  .btn-class-2{
+    display: inline-block;
+    position: absolute;
+    inset: 5px auto auto 5px;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+  }
+  .button-class {
+    text-decoration: none;
+    cursor: default;
+    display: block;
+    white-space: nowrap;
+    padding: 5px 8px 4px 8px;
+    color: #ffffff;
+    min-width: 38px;
+    text-align: center;
+    background-color: #0674cb;
+    border: 0;
+    border-radius: 0;
+    text-shadow: 0 0 0 #ffffff;
+  }
+  .title-icon {
+    width: 30px; /* Adjust the size as needed */
+    height: 30px; /* Adjust the size as needed */
+    margin-right: 10px;
+    padding-right: 3px;
+    display: inline;
+    vertical-align: middle;
+  }
+  .masonry-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-style: outset;
+    border-width: medium;
+     width:500px;
+     height: 420px;
+     background: rgb(239,242,245);
+     float: left;
+     margin-left: 9px;
+  }
+
+  .first-section{
+    background: rgb(239,242,245);
+    border: 1px solid #ccc;
+    border-style: outset;
+    border-width: medium;
+  }

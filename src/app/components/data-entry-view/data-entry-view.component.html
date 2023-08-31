@@ -7,35 +7,41 @@
         <div class="panel">
           <div class="column">
             <div class="panel-item">
-              <label>{{ dico?.dico_pas_info || "dico_pas_info" }}</label>
+              <label class="label-color">{{
+                dico?.dico_pas_info || "dico_pas_info"
+              }}</label>
               <p>{{ dataEntry?.notificationVisa }}</p>
             </div>
             <div class="panel-item">
-              <label>{{ dico?.dico_related || "dico_related" }}</label>
+              <label class="label-color">{{
+                dico?.dico_related || "dico_related"
+              }}</label>
               <p>{{ dataEntry?.lossTowRelated }}</p>
             </div>
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_accident_date || "dico_accident_date"
               }}</label>
               <p>{{ dataEntry?.lossTowLossDate }}</p>
             </div>
             <div class="panel-item">
-              <label>{{ dico?.dico_status || "dico_status" }}</label>
+              <label class="label-color">{{
+                dico?.dico_status || "dico_status"
+              }}</label>
               <p>{{ dataEntry?.notificationsStatus }}</p>
             </div>
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_dispatch_address || "dico_dispatch_address"
               }}</label>
               <p>{{ dataEntry?.dico_dispatch_address }}</p>
             </div>
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_accident_address || "dico_accident_address"
               }}</label>
               <p>{{ dataEntry?.distributionTownName }}</p>
@@ -44,11 +50,13 @@
 
           <div class="column">
             <div class="panel-item">
-              <label>{{ dico?.dico_expert || "dico_expert" }}</label>
+              <label class="label-color">{{
+                dico?.dico_expert || "dico_expert"
+              }}</label>
               <p>{{ dataEntry?.supplierExpertName }}</p>
             </div>
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_claim_officer || "dico_claim_officer"
               }}</label>
               <p>{{ dataEntry?.claimOfficerFullName }}</p>

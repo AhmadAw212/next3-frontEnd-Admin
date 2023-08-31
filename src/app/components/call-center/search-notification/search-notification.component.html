@@ -38,8 +38,11 @@
     </form>
   </div>
 </nav>
-<mat-sidenav-container class="Background container-fluid">
-  <mat-sidenav #sidenav mode="side" opened>
+<mat-sidenav-container
+  class="Background container-fluid"
+  *ngIf="notificationData"
+>
+  <mat-sidenav #sidenav mode="side" opened [style.width]="'300px'">
     <div class="row mt-4 ms-2">
       <div class="col-md-20">
         <mat-nav-list>
@@ -48,27 +51,26 @@
             style="background-color: rgb(237, 243, 245)"
             *ngFor="let notification of notificationData"
           >
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header
+              (click)="togglePanelContent(notification)"
+            >
+              <!-- <img [src]="getCompanyLogo(notification.insuranceCmp!)" alt="Company Logo"> -->
               <mat-panel-title
                 class="label"
-                (click)="navigateToDetails(notification.notificationId!)"
                 [style.color]="
-                  notification.notificationNature === 'Accident'
-                    ? 'red'
-                    : notification.notificationNature === 'Accident+Towing'
-                    ? 'blue'
-                    : notification.notificationNature === 'Towing'
-                    ? 'green'
-                    : notification.notificationNature === 'Existing Damages'
-                    ? 'purple'
-                    : 'black'
+                  getNotificationColor(notification.notificationNature!)
                 "
               >
                 {{ notification.notification }}
               </mat-panel-title>
+              <img
+                [src]="notification.insuranceCmp"
+                alt=""
+                style="width: 60px; margin-right: 20px"
+              />
             </mat-expansion-panel-header>
             <mat-list class="list">
-              <mat-list-item>
+              <mat-list-item class="list-item">
                 <img
                   src="../../../../assets/icons/accident-date-blue-24.png"
                   alt=""
@@ -121,26 +123,41 @@
                 </ng-container>
                 {{ notification.notificationStatusDesc }}
               </mat-list-item>
-              <mat-list-item
-                *ngIf="
-                  notification.notificationMatDamage === '5' ||
-                  notification.notificationMatDamage === '6' ||
-                  notification.notificationMatDamage === '10'
-                "
+              <ng-container
+                *ngFor="let car of notification.callCenterSearchCarsList"
               >
-                <img src="../../../../assets/icons/tow_tr.png" alt="" />
-                Towing from : {{ notification.towingFrom }}
-              </mat-list-item>
-              <mat-list-item
-                *ngIf="
-                  notification.notificationMatDamage === '5' ||
-                  notification.notificationMatDamage === '6' ||
-                  notification.notificationMatDamage === '10'
-                "
+                <mat-list-item
+                  *ngIf="
+                    (car.sequence === 0 &&
+                      notification.notificationMatDamage === '5') ||
+                    notification.notificationMatDamage === '6' ||
+                    notification.notificationMatDamage === '10'
+                  "
+                >
+                  <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                  Towing from: {{ car.fromTown }}
+                  <!-- Display other properties of the selected car object if needed -->
+                </mat-list-item>
+              </ng-container>
+              <ng-container
+                *ngFor="let car of notification.callCenterSearchCarsList"
               >
-                <img src="../../../../assets/icons/tow_tr.png" alt="" />
-                Towing to: {{ notification.towingTo }}
-              </mat-list-item>
+                <mat-list-item
+                  *ngIf="
+                    (car.sequence === 0 &&
+                      notification.notificationMatDamage === '5') ||
+                    notification.notificationMatDamage === '6' ||
+                    notification.notificationMatDamage === '10'
+                  "
+                >
+                  <ng-container>
+                    <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                    Towing to:
+                    {{ car.toTown }}
+                  </ng-container>
+                </mat-list-item>
+              </ng-container>
+
               <mat-list-item
                 *ngIf="
                   notification.notificationMatDamage === '5' ||
@@ -166,13 +183,14 @@
                 <mat-menu #carMenu="matMenu">
                   <ng-container *ngIf="notification?.callCenterSearchCarsList">
                     <button
+                      [style.margin]="'10px'"
                       [style.width]="'250px'"
                       mat-menu-item
                       class="custom-list-item"
                       *ngFor="let car of notification.callCenterSearchCarsList"
                     >
                       {{ car.insuredTp }} - {{ car.plate }} -
-                      {{ car.carModel }}
+                      {{ car.carMakeModel }}
                     </button>
                   </ng-container>
                 </mat-menu>
@@ -192,9 +210,11 @@
       </div>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content *ngIf="showPanelContent">
     <div class="component-content">
-      <router-outlet></router-outlet>
+      <app-notification-details
+        [selectedNotification]="selectedNotification"
+      ></app-notification-details>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

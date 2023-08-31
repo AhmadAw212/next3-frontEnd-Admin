@@ -3,7 +3,7 @@
     <mat-tab label="Material Damage">
       <div class="section">
         <div class="header">
-          <label
+          <label class="label-color"
             >{{ dico?.dico_material_damage || "dico_material_damage" }}-
             {{ matDamage.matDamageSeq }}</label
           >
@@ -11,15 +11,19 @@
         <div class="panel">
           <div class="column">
             <div class="panel-item">
-              <label>{{ dico?.dico_type || "dico_type" }}</label>
+              <label class="label-color">{{
+                dico?.dico_type || "dico_type"
+              }}</label>
               <p>{{ matDamage.matDamageMaterialTypeDesc }}</p>
             </div>
             <div class="panel-item">
-              <label>{{ dico?.dico_owner_name || "dico_owner_name" }}</label>
+              <label class="label-color">{{
+                dico?.dico_owner_name || "dico_owner_name"
+              }}</label>
               <p>{{ matDamage.matDamageOwnerName }}</p>
             </div>
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_insurance_company || "dico_insurance_company"
               }}</label>
               <p>{{ matDamage.supplierName }}</p>
@@ -27,17 +31,19 @@
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_policy_number || "dico_policy_number"
               }}</label>
               <p>{{ matDamage.matDamagePolicyNumber }}</p>
             </div>
             <div class="panel-item">
-              <label>{{ dico?.dico_owner_phone || "dico_owner_phone" }}</label>
+              <label class="label-color">{{
+                dico?.dico_owner_phone || "dico_owner_phone"
+              }}</label>
               <p>{{ matDamage.matDamageOwnerPhone }}</p>
             </div>
             <div class="panel-item">
-              <label>{{
+              <label class="label-color">{{
                 dico?.dico_material_vehicle_seq_link ||
                   "dico_material_vehicle_seq_link"
               }}</label>
@@ -46,7 +52,9 @@
           </div>
           <div class="column">
             <div class="panel-item">
-              <label>{{ dico?.dico_note || "dico_note" }}</label>
+              <label class="label-color">{{
+                dico?.dico_note || "dico_note"
+              }}</label>
               <p>{{ matDamage.maDamageNote }}</p>
             </div>
           </div>
