@@ -12,7 +12,8 @@
   .image-container {
     display: flex;
     justify-content: flex-end; /* Align the image to the right */
-    margin-top: 10px; /* Adjust margin as needed */
+    /* margin-top: 10px; */
+     /* Adjust margin as needed */
   }
   
   .image-container img {
@@ -70,6 +71,7 @@ padding-right: 10px
     padding-right: 3px;
     display: inline;
     vertical-align: middle;
+    cursor: pointer;
   }
   .masonry-item {
     border: 1px solid #ccc;

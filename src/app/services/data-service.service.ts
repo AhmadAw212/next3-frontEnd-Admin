@@ -1050,7 +1050,8 @@ export class DataServiceService {
     subject: string,
     file: File[],
     bcc: string[],
-    cc: string[]
+    cc: string[],
+    carId: string
   ): Observable<ApiResponse> {
     const formData: FormData = new FormData();
     for (let i = 0; i < file.length; i++) {
@@ -1061,7 +1062,7 @@ export class DataServiceService {
         this.userUrl
       }/email/sendEmail?recipients=${recipients}&filename=${fileName}&body=${encodeURIComponent(
         body
-      )}&subject=${subject}&BCC=${bcc}&CC=${cc}`,
+      )}&subject=${subject}&BCC=${bcc}&CC=${cc}&carId=${carId}`,
       formData
     );
   }

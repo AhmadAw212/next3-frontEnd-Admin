@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { Editor, Toolbar } from 'ngx-editor';
 import { debounceTime, takeUntil, switchMap, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
@@ -28,7 +29,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
   sanitizedSignature?: SafeHtml;
   editor!: Editor;
   selectedRecipients: string[] = [];
-
+  carId?: string;
   private searchTerms = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
   constructor(
@@ -38,7 +39,8 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private sanitizer: DomSanitizer,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,13 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     this.getEmailFrom();
     this.editor = new Editor();
     this.searchRecipient();
+
+    this.route.params.subscribe((params) => {
+      const carId = params['carId'];
+      this.carId = carId;
+      console.log(carId);
+      // Now you have access to the notificationId parameter, and you can use it in your component logic.
+    });
   }
   ngOnDestroy(): void {
     this.editor.destroy();
@@ -165,7 +174,16 @@ export class SendEmailComponent implements OnInit, OnDestroy {
     const cc = this.emailFormBuild.get('CC')?.value;
     // return console.log(this.emailFormBuild.value);
     this.dataService
-      .sendEmail(recipients, fileName, body, subject, file, bcc, cc)
+      .sendEmail(
+        recipients,
+        fileName,
+        body,
+        subject,
+        file,
+        bcc,
+        cc,
+        this.carId!
+      )
       .subscribe({
         next: (res) => {
           this.alertifyService.dialogAlert('Email Sent', 'Success');

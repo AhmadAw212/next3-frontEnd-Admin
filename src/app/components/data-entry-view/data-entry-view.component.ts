@@ -12,7 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
   styleUrls: ['./data-entry-view.component.css'],
 })
 export class DataEntryViewComponent implements OnInit {
-  navBarTitle = 'Data Entry';
+  navBarTitle = 'Data Entry View';
   isLoading: boolean = false;
   showDataEntryDetails = false;
   showBodilyInjury: boolean = false;

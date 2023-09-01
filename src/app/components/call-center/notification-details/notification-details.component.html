@@ -102,7 +102,7 @@
           <div class="panel-item">
             <app-data-entry-button
               (click)="
-                navigateToComponent(selectedNotification?.notificationId!)
+                navigateToDataEntry(selectedNotification?.notificationId!)
               "
             ></app-data-entry-button>
           </div>
@@ -122,6 +122,7 @@
             src="../../../../assets/icons/outlook.png"
             alt=""
             class="title-icon"
+            (click)="navigateToMail(car.carId!)"
           />
         </ng-container>
 
@@ -242,7 +243,7 @@
           </div>
         </div>
       </ng-container>
-      <div class="container">
+      <div class="container-class">
         <div class="row btn-container">
           <ng-container *ngIf="car.sequence === 0">
             <div class="col-md-2">

@@ -41,8 +41,12 @@ export class NotificationDetailsComponent implements OnInit {
       notificationMatDamage === '10'
     );
   }
-  navigateToComponent(notificationId: string) {
-    const componentRoute = `profiles-main/CallCenter/dataEntryView/${notificationId}`;
+  navigateToDataEntry(notificationId: string) {
+    const componentRoute = `dataEntryView/${notificationId}`;
+    this.router.navigateByUrl(componentRoute);
+  }
+  navigateToMail(carId: string) {
+    const componentRoute = `sendEmail/${carId}`;
     this.router.navigateByUrl(componentRoute);
   }
 
