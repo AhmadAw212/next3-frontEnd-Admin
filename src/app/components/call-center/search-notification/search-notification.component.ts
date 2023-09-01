@@ -31,6 +31,9 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   showPanelContent: boolean = false;
   notificationSubscription?: Subscription;
   companyLogo?: string;
+  isHidden = false;
+  showTrademark?: any;
+  selectedPanelIndex: number | null = null;
   constructor(
     private router: Router,
     private dicoService: DicoServiceService,
@@ -71,10 +74,11 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  togglePanelContent(notification: SearchNotification) {
+  togglePanelContent(notification: SearchNotification, index: number) {
     this.showPanelContent = true;
     this.selectedNotification = notification;
-    // console.log(notification);
+    this.selectedPanelIndex = index;
+    console.log(notification);
   }
   // navigateToDetails(notification: SearchNotification) {
 
@@ -112,10 +116,13 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
       .getNotificationSearch(this.selectedValue!, this.company!, this.value!)
       .subscribe({
         next: (res) => {
-          this.notificationData = res.data.map((data: SearchNotification) => ({
-            ...data,
-            companyLogo: `data:image/jpeg;base64,${data.companyLogo}`,
-          }));
+          this.notificationData = res.data.callCenterSearchMainBeanList.map(
+            (data: SearchNotification) => ({
+              ...data,
+              companyLogo: `data:image/jpeg;base64,${data.companyLogo}`,
+            })
+          );
+          this.showTrademark = res.data.showCarTrademark;
         },
         error: (err) => {
           console.log(err);

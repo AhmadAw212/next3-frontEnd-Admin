@@ -149,7 +149,7 @@ import { SearchNotificationComponent } from './components/call-center/search-not
 
 import { MatMenuModule } from '@angular/material/menu';
 import { NotificationDetailsComponent } from './components/call-center/notification-details/notification-details.component';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -261,6 +261,7 @@ import { NotificationDetailsComponent } from './components/call-center/notificat
     BrowserModule,
     Ng2GoogleChartsModule,
     NgxGaugeModule,
+    MatTooltipModule,
     CommonModule,
     MatMenuModule,
     AppRoutingModule,

@@ -15,6 +15,7 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 })
 export class NotificationDetailsComponent implements OnInit {
   @Input() selectedNotification?: SearchNotification;
+  @Input() showTrademark?: any;
   dico?: any;
   constructor(
     private dataService: DataServiceService,

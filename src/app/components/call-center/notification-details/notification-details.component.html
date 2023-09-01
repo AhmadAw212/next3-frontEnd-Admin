@@ -225,21 +225,23 @@
           </div>
         </ng-container>
       </div>
-      <div class="image-container">
-        <div class="car-logo-container">
-          <img
-            [src]="'data:image/jpeg;base64,' + car.tradeMarkLogo"
-            alt=""
-            class="car-logo"
-          />
-          <div class="car-logo-dialog">
+      <ng-container *ngIf="showTrademark.configValue === 'true'">
+        <div class="image-container">
+          <div class="car-logo-container">
             <img
               [src]="'data:image/jpeg;base64,' + car.tradeMarkLogo"
-              class="car-logo-dialog-image"
+              alt=""
+              class="car-logo"
             />
+            <!-- <div class="car-logo-dialog">
+              <img
+                [src]="'data:image/jpeg;base64,' + car.tradeMarkLogo"
+                class="car-logo-dialog-image"
+              />
+            </div> -->
           </div>
         </div>
-      </div>
+      </ng-container>
       <div class="container">
         <div class="row btn-container">
           <ng-container *ngIf="car.sequence === 0">

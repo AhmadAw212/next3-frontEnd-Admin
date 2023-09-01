@@ -43,18 +43,18 @@
   *ngIf="notificationData"
 >
   <mat-sidenav #sidenav mode="side" opened [style.width]="'300px'">
-    <div class="row mt-4 ms-2">
+    <div class="row mt-4 ms-1">
       <div class="col-md-20">
         <mat-nav-list>
           <mat-expansion-panel
             class="panel-margin"
             style="background-color: rgb(237, 243, 245)"
-            *ngFor="let notification of notificationData"
+            *ngFor="let notification of notificationData; let i = index"
+            [ngClass]="{ 'selected-title': selectedPanelIndex === i }"
           >
             <mat-expansion-panel-header
-              (click)="togglePanelContent(notification)"
+              (click)="togglePanelContent(notification, i)"
             >
-              <!-- <img [src]="getCompanyLogo(notification.insuranceCmp!)" alt="Company Logo"> -->
               <mat-panel-title
                 class="label"
                 [style.color]="
@@ -214,6 +214,7 @@
     <div class="component-content">
       <app-notification-details
         [selectedNotification]="selectedNotification"
+        [showTrademark]="showTrademark"
       ></app-notification-details>
     </div>
   </mat-sidenav-content>

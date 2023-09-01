@@ -7,16 +7,12 @@
     font-size: small;
     font-weight: bold;
   }
+
+  
   .image-container {
     display: flex;
     justify-content: flex-end; /* Align the image to the right */
     margin-top: 10px; /* Adjust margin as needed */
-  }
-  
-  .image-container {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
   }
   
   .image-container img {
