@@ -4,7 +4,7 @@ import { CallCenterSearchMaterialBean } from './call-center-search-material-bean
 
 export interface SearchNotification {
   notificationId?: string;
-
+  companyLogo?: string;
   notification?: string;
 
   accidentDate?: Date;

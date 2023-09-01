@@ -117,11 +117,14 @@
       *ngFor="let car of selectedNotification?.callCenterSearchCarsList"
     >
       <div class="masonry-title">
-        <img
-          src="../../../../assets/icons/outlook.png"
-          alt=""
-          class="title-icon"
-        />
+        <ng-container *ngIf="hasPerm('ccSendEmail')">
+          <img
+            src="../../../../assets/icons/outlook.png"
+            alt=""
+            class="title-icon"
+          />
+        </ng-container>
+
         <h2 class="h3 label-color">{{ car.insuredTp }}</h2>
       </div>
 
@@ -134,6 +137,7 @@
             <span class="h5">{{ car.plate }}</span>
           </div>
         </div>
+
         <div class="row mt-3">
           <div class="col-md-3">
             <label class="h5 label-color">{{ dico?.dico_car_model }}:</label>
@@ -221,6 +225,21 @@
           </div>
         </ng-container>
       </div>
+      <div class="image-container">
+        <div class="car-logo-container">
+          <img
+            [src]="'data:image/jpeg;base64,' + car.tradeMarkLogo"
+            alt=""
+            class="car-logo"
+          />
+          <div class="car-logo-dialog">
+            <img
+              [src]="'data:image/jpeg;base64,' + car.tradeMarkLogo"
+              class="car-logo-dialog-image"
+            />
+          </div>
+        </div>
+      </div>
       <div class="container">
         <div class="row btn-container">
           <ng-container *ngIf="car.sequence === 0">
@@ -240,6 +259,7 @@
               </button>
             </div>
           </ng-container>
+
           <ng-container
             *ngIf="
               selectedNotification?.notificationMatDamage !== '6' &&
@@ -249,6 +269,23 @@
             <div class="col-md-2">
               <button class="btn button-class">
                 {{ dico?.dico_self_survey || "dico_self_survey" }}
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="hasPerm('ccActivityHistory')">
+            <div class="col-md-3">
+              <button class="btn button-class">
+                {{ dico?.dico_activity_history || "dico_activity_history" }}
+              </button>
+            </div>
+          </ng-container>
+          <ng-container
+            *ngIf="hasPerm('ccCancelNotification') && car.sequence === 0"
+          >
+            <div class="col-md-2">
+              <button class="btn button-class">
+                {{ dico?.dico_flag_to_cancel || "dico_flag_to_cancel" }}
               </button>
             </div>
           </ng-container>

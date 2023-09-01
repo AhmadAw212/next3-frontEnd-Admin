@@ -44,6 +44,7 @@ export class NotificationDetailsComponent implements OnInit {
     const componentRoute = `profiles-main/CallCenter/dataEntryView/${notificationId}`;
     this.router.navigateByUrl(componentRoute);
   }
+
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }

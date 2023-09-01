@@ -7,7 +7,27 @@
     font-size: small;
     font-weight: bold;
   }
-
+  .image-container {
+    display: flex;
+    justify-content: flex-end; /* Align the image to the right */
+    margin-top: 10px; /* Adjust margin as needed */
+  }
+  
+  .image-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .image-container img {
+    max-width: 100px;
+    height: auto;
+    width: 100%;
+    border-radius: 8px;
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
+    margin-left: 10px;
+  }
+  
   .masonry-title {
     display: flex;
     justify-content: center;

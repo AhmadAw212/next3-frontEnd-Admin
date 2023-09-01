@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
@@ -34,7 +35,8 @@ export class DataEntryViewComponent implements OnInit {
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private dicoService: DicoServiceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dateFormatService: DateFormatterService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,9 @@ export class DataEntryViewComponent implements OnInit {
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
   }
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;

@@ -9,6 +9,7 @@ export interface CallCenterSearchCars {
   assessor?: string;
   yom?: string;
   vehicleStatus?: string;
+  tradeMarkLogo?: string;
   assessmentDate?: Date;
   survey?: string;
   fromTown?: string;

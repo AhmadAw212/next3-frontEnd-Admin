@@ -30,7 +30,7 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   selectedNotification?: SearchNotification;
   showPanelContent: boolean = false;
   notificationSubscription?: Subscription;
-  companyLogo: { [companyId: string]: string } = {};
+  companyLogo?: string;
   constructor(
     private router: Router,
     private dicoService: DicoServiceService,
@@ -106,44 +106,20 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
       { code: 'SIM_PLATE', description: 'Similar Plate' },
     ];
   }
+
   searchNotification() {
     this.notificationSubscription = this.dataService
       .getNotificationSearch(this.selectedValue!, this.company!, this.value!)
       .subscribe({
         next: (res) => {
-          this.notificationData = res.data;
-          const uniqueCompanyIds = Array.from(
-            new Set(this.notificationData?.map((data) => data.insuranceCmp))
-          );
-
-          // Fetch all company logos
-          uniqueCompanyIds.forEach((companyId) => {
-            this.getCompanyLogo(companyId!);
-          });
+          this.notificationData = res.data.map((data: SearchNotification) => ({
+            ...data,
+            companyLogo: `data:image/jpeg;base64,${data.companyLogo}`,
+          }));
         },
         error: (err) => {
           console.log(err);
         },
       });
-  }
-
-  getCompanyLogo(companyId: any) {
-    this.dataService.getCompanyLogo(companyId).subscribe({
-      next: (res) => {
-        this.companyLogo![companyId] = `data:image/jpeg;base64,${res.data}`;
-        this.updateLogoOnNotifications(companyId);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  updateLogoOnNotifications(companyId: any) {
-    this.notificationData?.forEach((data) => {
-      if (data.insuranceCmp === companyId) {
-        data.insuranceCmp = this.companyLogo![companyId];
-      }
-    });
   }
 }

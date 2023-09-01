@@ -24,7 +24,12 @@
               <label class="label-color">{{
                 dico?.dico_accident_date || "dico_accident_date"
               }}</label>
-              <p>{{ dataEntry?.lossTowLossDate }}</p>
+              <p>
+                {{
+                  dataEntry?.lossTowLossDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </p>
             </div>
             <div class="panel-item">
               <label class="label-color">{{
