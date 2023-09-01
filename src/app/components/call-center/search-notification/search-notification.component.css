@@ -12,8 +12,12 @@
     overflow-x: hidden;
   }
   .row>* {
-        padding-right: 0px;
+  padding-right: 0px;
    padding-left: 0px;
+  }
+  mat-list-item:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+    cursor: pointer; /* Change cursor on hover */
   }
   .panel-margin {
     margin-bottom: 10px; /* Adjust the value as needed */
@@ -44,7 +48,7 @@
     border: 1px solid #ccc
     /* width: 230px; */
   }
-.list-item{
+/* .list-item{
   min-height: 16px;
   padding: 0px 0px 0px 5px;
   white-space: nowrap;
@@ -57,7 +61,7 @@
   vertical-align: middle;
   display: table-cell;
   text-align: center;
-}
+} */
   .list{
     font-weight: bolder; font-size: small; font-style: italic
   }
