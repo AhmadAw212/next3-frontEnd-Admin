@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
@@ -10,8 +11,13 @@ export class BodilyInjuryComponent {
   @Input() dico?: any;
   @Input() Injured!: any;
 
-  constructor(private dicoService: DicoServiceService) {}
-
+  constructor(
+    private dicoService: DicoServiceService,
+    private dateFormatService: DateFormatterService
+  ) {}
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   ngOnInit(): void {
     // this.getDico();
   }

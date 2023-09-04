@@ -20,7 +20,12 @@
               <label class="label-color">{{
                 dico?.dico_dob || "dico_dob"
               }}</label>
-              <p>{{ Injured.injuredDateOfBirth }}</p>
+              <p>
+                {{
+                  Injured.injuredDateOfBirth
+                    | date : dateFormat("reportDateFormat")
+                }}
+              </p>
             </div>
             <div class="panel-item">
               <label class="label-color">{{
@@ -79,14 +84,14 @@
               <label class="label-color">{{
                 dico?.dico_injured_approved_by || "dico_injured_approved_by"
               }}</label>
-              <p>{{ Injured.injuredApprovedBy }}</p>
+              <p>{{ Injured.iniuredApprovedBy }}</p>
             </div>
             <div class="panel-item">
               <label class="label-color">{{
                 dico?.dico_material_vehicle_seq_link ||
                   "dico_material_vehicle_seq_link"
               }}</label>
-              <p>{{ Injured.injuredVehicleSequenceLink }}</p>
+              <p>{{ Injured.injuredVehicleSequencelink }}</p>
             </div>
             <div class="panel-item">
               <label class="label-color">{{
@@ -103,12 +108,12 @@
               }}</label>
               <p>{{ Injured.injuredGender }}</p>
             </div>
-            <div class="panel-item">
+            <!-- <div class="panel-item">
               <label class="label-color">{{
                 dico?.dico_note || "dico_note"
               }}</label>
               <p>{{ Injured.injuredWording }}</p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
