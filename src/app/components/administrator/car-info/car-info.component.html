@@ -46,7 +46,7 @@
         <th>{{ dico?.dico_body_type || "dico_body_type" }}</th>
         <th>{{ dico?.dico_doors || "dico_doors" }}</th>
         <th>{{ dico?.dico_size || "dico_size" }}</th>
-        <th>{{ dico?.dico_body_type_code || "dico_body_type_code" }}</th>
+        <!-- <th>{{ dico?.dico_body_type_code || "dico_body_type_code" }}</th> -->
         <th>
           {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
         </th>
@@ -135,12 +135,12 @@
             </option>
           </select>
         </td>
-        <td
+        <!-- <td
           contenteditable="true"
           (blur)="onTdBlur($event, carInfo, 'bodyTypeCode')"
         >
           {{ carInfo.bodyTypeCode }}
-        </td>
+        </td> -->
         <td>
           {{ carInfo.created_date | date : dateFormat("reportDateTimeFormat") }}
         </td>

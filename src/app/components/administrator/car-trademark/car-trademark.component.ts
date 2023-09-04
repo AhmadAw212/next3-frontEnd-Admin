@@ -188,9 +188,13 @@ export class CarTrademarkComponent implements OnInit {
       }
     );
   }
-  openAddCarTrademarkDialog() {
+  openAddCarTrademarkDialog(notListed: boolean) {
     const dialogRef = this.dialog.open(AddTrademarkDialogComponent, {
-      data: this.carBrand,
+      data: {
+        carBrand: this.carBrand,
+
+        showNotListed: notListed,
+      },
     });
 
     dialogRef.afterClosed().subscribe(() => {

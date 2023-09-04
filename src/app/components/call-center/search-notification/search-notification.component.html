@@ -1,6 +1,6 @@
 <app-login-nav></app-login-nav>
 
-<nav class="navbar navbar-class navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-class navbar-expand-lg">
   <span class="navbar-brand" (click)="goBack()" style="color: white">{{
     title
   }}</span>
@@ -35,6 +35,30 @@
       <button class="btn text-white" type="submit">
         {{ dico?.dico_search || "dico_search" }}
       </button>
+
+      <div class="icon-class">
+        <img
+          src="../../../../assets/icons/survey-white.png"
+          alt=""
+          matTooltip="VISA Policy"
+        />
+      </div>
+      <div class="icon-class">
+        <img
+          src="../../../../assets/icons/towing-white.png"
+          alt=""
+          matTooltip="Newest Towing"
+          (click)="NewestTowing()"
+        />
+      </div>
+      <div class="icon-class">
+        <img
+          src="../../../../assets/icons/accident-nature-white.png"
+          alt=""
+          matTooltip="Newest Accident"
+          (click)="NewestAccident()"
+        />
+      </div>
     </form>
   </div>
 </nav>

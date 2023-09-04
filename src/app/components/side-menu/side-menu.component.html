@@ -11,6 +11,7 @@
         <a
           mat-list-item
           routerLink="/profiles-main/CallCenter/searchNotification"
+          *ngIf="hasPerm('ccSearchNotification')"
         >
           {{ dico?.dico_search_notification || "dico_search_notification" }}
         </a>

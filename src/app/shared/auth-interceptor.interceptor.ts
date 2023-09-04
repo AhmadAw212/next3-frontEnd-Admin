@@ -83,7 +83,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           return throwError(() =>
             this.alertifyService.dialogAlert(
               error.error.message,
-              error.error.title
+              error.error.error
             )
           );
         }

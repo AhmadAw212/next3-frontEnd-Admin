@@ -18,7 +18,7 @@ interface NotificationType {
 })
 export class SearchNotificationComponent implements OnInit, OnDestroy {
   title?: string = 'Call Center Search';
-  selectedValue: string = 'PLATE';
+  selectedValue: string = '';
   searchTypes: NotificationType[] = [];
   dico?: any;
   notification?: string;
@@ -33,7 +33,11 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   companyLogo?: string;
   isHidden = false;
   showTrademark?: any;
-  selectedPanelIndex: number | null = null;
+  selectedPanelIndex: number = 0;
+  isNewestAccident: boolean = false;
+  lastNotification: string = '';
+  isNewestTowing?: boolean = false;
+  username?: string;
   constructor(
     private router: Router,
     private dicoService: DicoServiceService,
@@ -44,6 +48,7 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   ) {
     const profile = this.profileService.getSelectedProfile();
     this.company = profile.companyId;
+    this.username = profile.userCode;
   }
 
   ngOnDestroy(): void {
@@ -54,7 +59,11 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getDico().subscribe(() => {
       this.initializeSearchTypes();
+      this.getUserLastNotification();
     });
+  }
+  findSearchTypeByCode(code: string): NotificationType | undefined {
+    return this.searchTypes.find((searchType) => searchType.code === code);
   }
   getNotificationColor(notificationNature: string): string {
     switch (notificationNature) {
@@ -78,7 +87,6 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
     this.showPanelContent = true;
     this.selectedNotification = notification;
     this.selectedPanelIndex = index;
-    console.log(notification);
   }
   // navigateToDetails(notification: SearchNotification) {
 
@@ -109,9 +117,42 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
       { code: 'NACCIDENT', description: 'Newest Accident' },
       { code: 'SIM_PLATE', description: 'Similar Plate' },
     ];
+    this.selectedValue = this.searchTypes[1].code;
   }
 
+  NewestAccident() {
+    this.isNewestAccident = true;
+    if (this.isNewestAccident === true) {
+      this.selectedValue = 'NACCIDENT';
+      this.value = this.username!;
+      this.searchNotification();
+    }
+  }
+  NewestTowing() {
+    this.isNewestTowing = true;
+    if (this.isNewestTowing === true) {
+      this.selectedValue = 'NTOW';
+      this.value = this.username!;
+      this.searchNotification();
+    }
+  }
+  getUserLastNotification() {
+    this.dataService.getUserLastNotification().subscribe({
+      next: (res) => {
+        this.lastNotification = res.data;
+        if (this.lastNotification) {
+          this.value = this.lastNotification;
+        }
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   searchNotification() {
+    this.isNewestAccident = false;
+    this.isNewestTowing = false;
     this.notificationSubscription = this.dataService
       .getNotificationSearch(this.selectedValue!, this.company!, this.value!)
       .subscribe({
@@ -122,7 +163,17 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
               companyLogo: `data:image/jpeg;base64,${data.companyLogo}`,
             })
           );
+
           this.showTrademark = res.data.showCarTrademark;
+
+          if (this.notificationData!.length > 0) {
+            this.togglePanelContent(
+              this.notificationData![0],
+              this.selectedPanelIndex
+            );
+          } else {
+            this.showPanelContent = false;
+          }
         },
         error: (err) => {
           console.log(err);

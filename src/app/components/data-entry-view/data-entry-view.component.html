@@ -67,111 +67,121 @@
               <p>{{ dataEntry?.claimOfficerFullName }}</p>
             </div>
           </div>
+          <div class="column">
+            <div class="panel-item">
+              <img
+                [src]="'data:image/jpeg;base64,' + dataEntry?.companyLogo"
+                alt=""
+                style="width: 60px"
+                class="car-logo"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9">
-      <div class="row">
-        <div class="col">
-          <app-data-entry-details
-            [lossCarList]="selectedLossCar"
-            [dico]="dico"
-            *ngIf="showDataEntryDetails"
-          ></app-data-entry-details>
-          <app-bodily-injury
-            [Injured]="selectedInjuredSequence"
-            [dico]="dico"
-            *ngIf="showBodilyInjury"
-          ></app-bodily-injury>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col">
+            <app-data-entry-details
+              [lossCarList]="selectedLossCar"
+              [dico]="dico"
+              *ngIf="showDataEntryDetails"
+            ></app-data-entry-details>
+            <app-bodily-injury
+              [Injured]="selectedInjuredSequence"
+              [dico]="dico"
+              *ngIf="showBodilyInjury"
+            ></app-bodily-injury>
 
-          <app-material-damage
-            [matDamage]="selectedMatDamage"
-            [dico]="dico"
-            *ngIf="showMatDamage"
-          ></app-material-damage>
+            <app-material-damage
+              [matDamage]="selectedMatDamage"
+              [dico]="dico"
+              *ngIf="showMatDamage"
+            ></app-material-damage>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="row">
-        <div class="col">
-          <div class="side-menu">
-            <table class="table table-bordered">
-              <thead style="position: static">
-                <tr>
-                  <th>
-                    {{
-                      dico?.dico_insured_third_party ||
-                        "dico_insured_third_party"
-                    }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let carLoss of lossCarList"
-                  (click)="highlightRow($event)"
-                >
-                  <td (click)="toggleDataEntryDetails(carLoss)">
-                    <a class="data-link">
-                      {{ carLoss?.carSequenceDescription }} -
-                      {{ carLoss?.carPlate }}
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table class="table table-bordered">
-              <thead style="position: static">
-                <tr>
-                  <th>{{ dico?.dico_injured || "dico_injured" }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let bodilyInjury of bodilyInjuryList"
-                  (click)="highlightRow($event)"
-                >
-                  <td (click)="toggleBodilyInjury(bodilyInjury)">
-                    <a class="data-link"
-                      >{{ dico?.dico_injured || "dico_injured" }}
-                      {{ bodilyInjury.injuredSeq }} -
-                      {{ bodilyInjury?.injuredFirstName }}
-                      {{ bodilyInjury?.injuredFamily }}</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table class="table table-bordered">
-              <thead style="position: static">
-                <tr>
-                  <th>
-                    {{ dico?.dico_material_damage || "dico_material_damage" }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let matDamage of materialDamageList"
-                  (click)="highlightRow($event)"
-                >
-                  <td (click)="toggleMaterialDamage(matDamage)">
-                    <a class="data-link"
-                      >{{
-                        dico?.dico_material_damage || "dico_material_damage"
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col">
+            <div class="side-menu">
+              <table class="table table-bordered">
+                <thead style="position: static">
+                  <tr>
+                    <th>
+                      {{
+                        dico?.dico_insured_third_party ||
+                          "dico_insured_third_party"
                       }}
-                      {{ matDamage.matDamageSeq }}</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let carLoss of lossCarList"
+                    (click)="highlightRow($event)"
+                  >
+                    <td (click)="toggleDataEntryDetails(carLoss)">
+                      <a class="label-link">
+                        {{ carLoss?.carSequenceDescription }} -
+                        {{ carLoss?.carPlate }}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered">
+                <thead style="position: static">
+                  <tr>
+                    <th>{{ dico?.dico_injured || "dico_injured" }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let bodilyInjury of bodilyInjuryList"
+                    (click)="highlightRow($event)"
+                  >
+                    <td (click)="toggleBodilyInjury(bodilyInjury)">
+                      <a class="label-link"
+                        >{{ dico?.dico_injured || "dico_injured" }}
+                        {{ bodilyInjury.injuredSeq }} -
+                        {{ bodilyInjury?.injuredFirstName }}
+                        {{ bodilyInjury?.injuredFamily }}</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered">
+                <thead style="position: static">
+                  <tr>
+                    <th>
+                      {{ dico?.dico_material_damage || "dico_material_damage" }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let matDamage of materialDamageList"
+                    (click)="highlightRow($event)"
+                  >
+                    <td (click)="toggleMaterialDamage(matDamage)">
+                      <a class="label-link"
+                        >{{
+                          dico?.dico_material_damage || "dico_material_damage"
+                        }}
+                        {{ matDamage.matDamageSeq }}</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

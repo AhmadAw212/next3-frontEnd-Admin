@@ -44,7 +44,7 @@ export class DataEntryViewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       const notificationId = params['notificationId'];
       this.getDataEntry(notificationId);
-      console.log(notificationId);
+      // console.log(notificationId);
       // Now you have access to the notificationId parameter, and you can use it in your component logic.
     });
   }
@@ -97,6 +97,9 @@ export class DataEntryViewComponent implements OnInit {
         this.bodilyInjuryList = res.data.bodilyInjuryList;
         this.materialDamageList = res.data.materialDamageList;
         // console.log(res);
+        if (this.lossCarList && this.lossCarList.length > 0) {
+          this.toggleDataEntryDetails(this.lossCarList[0]);
+        }
       },
       error: (err) => {
         console.log(err);

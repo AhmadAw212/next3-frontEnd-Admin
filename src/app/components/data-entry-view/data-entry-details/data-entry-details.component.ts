@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
@@ -13,7 +14,12 @@ export class DataEntryDetailsComponent implements OnInit {
   ngOnInit(): void {
     // this.getDico();
   }
-
+  getBase64Image(imageData: string): string {
+    return 'data:image/jpeg;base64,' + imageData;
+  }
+  dateFormat(dateId: string) {
+    return this.dateFormatService.getDateFormat(dateId);
+  }
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
@@ -21,5 +27,8 @@ export class DataEntryDetailsComponent implements OnInit {
     });
   }
 
-  constructor(private dicoService: DicoServiceService) {}
+  constructor(
+    private dicoService: DicoServiceService,
+    private dateFormatService: DateFormatterService
+  ) {}
 }

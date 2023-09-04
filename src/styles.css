@@ -496,6 +496,7 @@ tr:nth-child(odd) {
   border: 1px solid #ccc;
 
 }
+
 .label-link{
   margin-bottom: 10px; /* Add some spacing between the label and the gauge */
   color: #0674CB !important;

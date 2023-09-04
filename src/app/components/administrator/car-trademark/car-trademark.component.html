@@ -34,10 +34,18 @@
       <div class="admin-button">
         <button
           type="button"
-          (click)="openAddCarTrademarkDialog()"
+          (click)="openAddCarTrademarkDialog(false)"
           *ngIf="hasPerm('admAddData')"
         >
           {{ dico?.dico_add || "dico_add" }}
+        </button>
+        <button
+          type="button"
+          (click)="openAddCarTrademarkDialog(true)"
+          *ngIf="hasPerm('admAddData')"
+          style="margin-left: 5px"
+        >
+          {{ dico?.dico_not_listed || "dico_not_listed" }}
         </button>
       </div>
     </div>

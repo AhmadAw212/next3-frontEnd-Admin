@@ -74,7 +74,10 @@
     margin-left: 10px;
     font-weight: bold;
   }
-  
+  .icon-class img{
+    width: 20px;
+    margin-left: 10px;
+  }
   .component-content {
     /* display: flex; */
     margin-left: 20px;

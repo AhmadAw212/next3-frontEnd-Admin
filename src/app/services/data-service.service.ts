@@ -1453,4 +1453,10 @@ export class DataServiceService {
       `${this.userUrl}/call_center/getCallCenterSearchMainByParam?type=${type}&cmp=${cmp}&value=${value}`
     );
   }
+
+  getUserLastNotification(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/userLastNotification`
+    );
+  }
 }

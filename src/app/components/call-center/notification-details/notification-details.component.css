@@ -24,7 +24,9 @@
     /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
     margin-left: 10px;
   }
-  
+  .h5{
+    font-weight: bold;
+  }
   .masonry-title {
     display: flex;
     justify-content: center;

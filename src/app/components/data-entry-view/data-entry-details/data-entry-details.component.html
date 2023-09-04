@@ -4,7 +4,7 @@
       <div class="column">
         <div class="panel-item">
           <label class="label-color">{{
-            dico?.dico_third_party || "dico_third_party"
+            dico?.dico_insured_third_party || "dico_insured_third_party"
           }}</label>
           <p>{{ lossCarList.carSequenceDescription }}</p>
         </div>
@@ -41,6 +41,27 @@
             dico?.dico_brand || "dico_brand"
           }}</label>
           <p>{{ lossCarList.brandTrademarkName }}</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="panel-item">
+          <img
+            [src]="getBase64Image(lossCarList.trademarkLogo)"
+            alt=""
+            style="width: 60px"
+            class="car-logo"
+          />
+        </div>
+      </div>
+      <div class="column">
+        <div class="panel-item">
+          <img
+            [src]="getBase64Image(lossCarList.brandLogo)"
+            alt=""
+            style="width: 60px"
+            class="car-logo"
+          />
         </div>
       </div>
     </div>
@@ -126,7 +147,7 @@
               dico?.dico_driver || "dico_driver"
             }}</label>
             <div class="panel">
-              <div class="column">
+              <div class="col-md-4">
                 <div class="panel-item">
                   <label class="label-color"
                     >{{ dico?.dico_relationship || "dico_relationship" }}
@@ -152,13 +173,13 @@
                   <p>{{ lossCarList.carDriverFamilyName }}</p>
                 </div>
                 <div class="panel-item">
-                  <label>{{
+                  <label class="label-color">{{
                     dico?.dico_nationality || "dico_nationality"
                   }}</label>
                   <p>{{ lossCarList.stateId }}</p>
                 </div>
               </div>
-              <div class="column">
+              <div class="col-md-4">
                 <div class="panel-item">
                   <label class="label-color">{{
                     dico?.dico_d_l_type || "dico_d_l_type"
@@ -172,20 +193,37 @@
                   <p>{{ lossCarList.carDriverLicenseNumber }}</p>
                 </div>
                 <div class="panel-item">
-                  <label> {{ dico?.dico_effective || "dico_effective" }}</label>
-                  <p>{{ lossCarList.carDriverLicenseIssueDate }}</p>
+                  <label class="label-color">
+                    {{ dico?.dico_effective || "dico_effective" }}</label
+                  >
+                  <p>
+                    {{
+                      lossCarList.carDriverLicenseIssueDate
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </p>
                 </div>
                 <div class="panel-item">
                   <label class="label-color"
                     >{{ dico?.dico_expiry || "dico_expiry" }}
                   </label>
-                  <p>{{ lossCarList.carDriverLicenseExpirationDate }}</p>
+                  <p>
+                    {{
+                      lossCarList.carDriverLicenseExpirationDate
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </p>
                 </div>
                 <div class="panel-item">
                   <label class="label-color">
                     {{ dico?.dico_dob || "dico_dob" }}</label
                   >
-                  <p>{{ lossCarList.carDriverDateOfBirth }}</p>
+                  <p>
+                    {{
+                      lossCarList.carDriverDateOfBirth
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </p>
                 </div>
               </div>
 
@@ -221,7 +259,7 @@
           <div class="grid-vehicle">
             <label class="header">{{ dico?.dico_owner || "dico_owner" }}</label>
             <div class="panel">
-              <div class="column">
+              <div class="col-md-3">
                 <div class="panel-item">
                   <label class="label-color">{{
                     dico?.dico_first_name || "dico_first_name"
@@ -242,7 +280,7 @@
                 </div>
               </div>
 
-              <div class="column">
+              <div class="col-md-3">
                 <div class="panel-item">
                   <label class="label-color"
                     >{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}
@@ -257,10 +295,18 @@
                 </div>
               </div>
 
-              <div class="column">
+              <div class="col-md-3" [hidden]="lossCarList.carSequence === '0'">
                 <div class="panel-item">
                   <label class="label-color">Tp Ins Checked </label>
-                  <p>{{ lossCarList.carThrdInsCompanyChecked }}</p>
+                  <div class="row">
+                    <input
+                      type="checkbox"
+                      [ngModel]="lossCarList.carThrdInsCompanyChecked"
+                      [disabled]="true"
+                      [style.width.px]="100"
+                      id="sbc1"
+                    />
+                  </div>
                 </div>
                 <div class="panel-item">
                   <label class="label-color">

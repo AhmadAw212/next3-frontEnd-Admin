@@ -21,9 +21,14 @@ export class AddTrademarkDialogComponent implements OnInit {
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
     private dialogRef: MatDialogRef<AddTrademarkDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public carBrand: CarTrademark,
+    @Inject(MAT_DIALOG_DATA) public carBrand: any,
     private dicoService: DicoServiceService
-  ) {}
+  ) {
+    if (carBrand.showNotListed) {
+      this.code = 'ZZZZZ'; // Set the predefined text
+      this.description = 'Not Listed'; // Set the predefined text
+    }
+  }
   ngOnInit(): void {
     this.getDico();
   }
@@ -36,11 +41,11 @@ export class AddTrademarkDialogComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     this.file = file;
-    console.log(this.carBrand);
+    // console.log(this.carBrand);
   }
 
   saveTrademark() {
-    const carBrandId = this.carBrand.carBrandId!;
+    const carBrandId = this.carBrand.carBrand.carBrandId!;
 
     this.dataService
       .saveCarTrademark(
