@@ -18,7 +18,7 @@ interface NotificationType {
 })
 export class SearchNotificationComponent implements OnInit, OnDestroy {
   title?: string = 'Call Center Search';
-  selectedValue: string = '';
+  selectedValue: string = 'NOTIFICATION';
   searchTypes: NotificationType[] = [];
   dico?: any;
   notification?: string;
@@ -56,14 +56,25 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
       this.notificationSubscription.unsubscribe();
     }
   }
+
   ngOnInit(): void {
-    this.getDico().subscribe(() => {
+    this.getDico().subscribe((res) => {
       this.initializeSearchTypes();
       this.getUserLastNotification();
     });
   }
-  findSearchTypeByCode(code: string): NotificationType | undefined {
-    return this.searchTypes.find((searchType) => searchType.code === code);
+  getSearchData() {
+    const search = this.profileService.getSearchResults();
+    const trademark = this.profileService.getTrademark();
+    if (search && trademark) {
+      const index = this.profileService.getFirstNotificationRecord();
+      this.togglePanelContent(index, this.selectedPanelIndex);
+
+      this.notificationData = search;
+      this.showTrademark = trademark;
+    } else {
+      this.showPanelContent = false;
+    }
   }
   getNotificationColor(notificationNature: string): string {
     switch (notificationNature) {
@@ -107,8 +118,8 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
 
     // Replace with actual header
     this.searchTypes = [
-      { code: 'PLATE', description: 'Plate Number' },
       { code: 'NOTIFICATION', description: `${notification} Number` },
+      { code: 'PLATE', description: 'Plate Number' },
       { code: 'CLAIMNUM', description: 'Claim Number' },
       { code: 'POLICY', description: 'Policy Number' },
       { code: 'PHONE', description: 'Phone Number' },
@@ -117,7 +128,6 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
       { code: 'NACCIDENT', description: 'Newest Accident' },
       { code: 'SIM_PLATE', description: 'Similar Plate' },
     ];
-    this.selectedValue = this.searchTypes[1].code;
   }
 
   NewestAccident() {
@@ -140,6 +150,7 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
     this.dataService.getUserLastNotification().subscribe({
       next: (res) => {
         this.lastNotification = res.data;
+        this.getSearchData();
         if (this.lastNotification) {
           this.value = this.lastNotification;
         }
@@ -165,12 +176,11 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
           );
 
           this.showTrademark = res.data.showCarTrademark;
+          this.profileService.setSearchResults(this.notificationData!);
+          this.profileService.setSearchTrademark(this.showTrademark);
 
-          if (this.notificationData!.length > 0) {
-            this.togglePanelContent(
-              this.notificationData![0],
-              this.selectedPanelIndex
-            );
+          if (this.notificationData && this.notificationData!.length > 0) {
+            this.togglePanelContent(this.notificationData![0], 0);
           } else {
             this.showPanelContent = false;
           }

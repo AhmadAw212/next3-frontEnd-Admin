@@ -57,6 +57,7 @@ export class DataEntryViewComponent implements OnInit {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
+
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
 

@@ -14,6 +14,8 @@ export class LoadingServiceService {
   public profileInfo$ = this.profileInfoSubject.asObservable();
   private companySubject = new BehaviorSubject<string | null>(null);
   public company = this.companySubject.asObservable();
+  private searchResults: any[] = [];
+  private trademark: any;
   constructor(private dataService: DataServiceService) {}
 
   setLoginInfo(loginInfo: LoginInfo) {
@@ -49,5 +51,27 @@ export class LoadingServiceService {
   }
   getCompanyLogo(companyId: string) {
     return this.dataService.getCompanyLogo(companyId);
+  }
+
+  setSearchResults(results: any[]) {
+    this.searchResults = results;
+  }
+
+  getSearchResults() {
+    return this.searchResults;
+  }
+  setSearchTrademark(results: any) {
+    this.trademark = results;
+  }
+
+  getTrademark() {
+    return this.trademark;
+  }
+  getFirstNotificationRecord(): any {
+    return this.searchResults.length > 0 ? this.searchResults[0] : null;
+  }
+  clearSearchResults() {
+    this.searchResults = [];
+    this.trademark = null;
   }
 }

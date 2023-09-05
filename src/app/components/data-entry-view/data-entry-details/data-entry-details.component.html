@@ -301,7 +301,11 @@
                   <div class="row">
                     <input
                       type="checkbox"
-                      [ngModel]="lossCarList.carThrdInsCompanyChecked"
+                      [ngModel]="
+                        lossCarList.carThrdInsCompanyChecked === 'Y'
+                          ? true
+                          : false
+                      "
                       [disabled]="true"
                       [style.width.px]="100"
                       id="sbc1"
