@@ -38,14 +38,14 @@
 
       <div class="icon-class">
         <img
-          src="../../../../assets/icons/survey-white.png"
+          src="./assets/icons/survey-white.png"
           alt=""
           matTooltip="VISA Policy"
         />
       </div>
       <div class="icon-class">
         <img
-          src="../../../../assets/icons/towing-white.png"
+          src="./assets/icons/towing-white.png"
           alt=""
           matTooltip="Newest Towing"
           (click)="NewestTowing()"
@@ -53,7 +53,7 @@
       </div>
       <div class="icon-class">
         <img
-          src="../../../../assets/icons/accident-nature-white.png"
+          src="./assets/icons/accident-nature-white.png"
           alt=""
           matTooltip="Newest Accident"
           (click)="NewestAccident()"
@@ -93,20 +93,14 @@
             </mat-expansion-panel-header>
             <mat-list class="list">
               <mat-list-item>
-                <img
-                  src="../../../../assets/icons/accident-date-blue-24.png"
-                  alt=""
-                />
+                <img src="./assets/icons/accident-date-blue-24.png" alt="" />
                 {{
                   notification.accidentDate
                     | date : dateFormat("reportDateTimeFormat")
                 }}</mat-list-item
               >
               <mat-list-item>
-                <img
-                  src="../../../../assets/icons/accident-nature-blue.png"
-                  alt=""
-                />
+                <img src="./assets/icons/accident-nature-blue.png" alt="" />
 
                 {{ notification.notificationNature }}
               </mat-list-item>
@@ -114,23 +108,17 @@
                 <ng-container
                   *ngIf="notification.notificationStatusCode === '9'"
                 >
-                  <img src="../../../../assets/icons/" alt="" />
+                  <img src="./assets/icons/" alt="" />
                 </ng-container>
                 <ng-container
                   *ngIf="notification.notificationStatusCode === '8'"
                 >
-                  <img
-                    src="../../../../assets/icons/status-closed-blue-24.png"
-                    alt=""
-                  />
+                  <img src="./assets/icons/status-closed-blue-24.png" alt="" />
                 </ng-container>
                 <ng-container
                   *ngIf="notification.notificationStatusCode === '0'"
                 >
-                  <img
-                    src="../../../../assets/icons/status-new-blue-24.png"
-                    alt=""
-                  />
+                  <img src="./assets/icons/status-new-blue-24.png" alt="" />
                 </ng-container>
                 <ng-container
                   *ngIf="
@@ -138,10 +126,7 @@
                     notification.notificationStatusCode === '2'
                   "
                 >
-                  <img
-                    src="../../../../assets/icons/status-opened-blue-24.png"
-                    alt=""
-                  />
+                  <img src="./assets/icons/status-opened-blue-24.png" alt="" />
                 </ng-container>
                 {{ notification.notificationStatusDesc }}
               </mat-list-item>
@@ -156,7 +141,7 @@
                     notification.notificationMatDamage === '10'
                   "
                 >
-                  <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                  <img src="./assets/icons/tow_tr.png" alt="" />
                   Towing from: {{ car.fromTown }}
                   <!-- Display other properties of the selected car object if needed -->
                 </mat-list-item>
@@ -173,7 +158,7 @@
                   "
                 >
                   <ng-container>
-                    <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                    <img src="./assets/icons/tow_tr.png" alt="" />
                     Towing to:
                     {{ car.toTown }}
                   </ng-container>
@@ -187,7 +172,7 @@
                   notification.notificationMatDamage === '10'
                 "
               >
-                <img src="../../../../assets/icons/tow_tr.png" alt="" />
+                <img src="./assets/icons/tow_tr.png" alt="" />
                 Towing count : {{ notification.towingCount }}
               </mat-list-item>
 
@@ -195,10 +180,7 @@
                 class="custom-list-item"
                 [matMenuTriggerFor]="carMenu"
               >
-                <img
-                  src="../../../../assets/icons/car-count-blue-24.png"
-                  alt=""
-                />
+                <img src="./assets/icons/car-count-blue-24.png" alt="" />
 
                 {{ notification.carCount }} Cars
 
@@ -216,14 +198,11 @@
                     </button>
                   </ng-container>
                 </mat-menu>
-                <img src="../../../../assets/icons/dropdown_n_hc.png" alt="" />
+                <img src="./assets/icons/dropdown_n_hc.png" alt="" />
               </mat-list-item>
 
               <mat-list-item>
-                <img
-                  src="../../../../assets/icons/hostpital-blue-24.png"
-                  alt=""
-                />
+                <img src="./assets/icons/hostpital-blue-24.png" alt="" />
                 {{ notification.injuryCount }}
               </mat-list-item>
             </mat-list>
