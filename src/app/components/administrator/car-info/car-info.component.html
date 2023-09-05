@@ -39,7 +39,7 @@
   <table>
     <thead>
       <tr>
-        <th>{{ dico?.dico_id || "dico_id" }}</th>
+        <!-- <th>{{ dico?.dico_id || "dico_id" }}</th> -->
         <th>{{ dico?.dico_from_year || "dico_from_year" }}</th>
         <th>{{ dico?.dico_to_year || "dico_to_year" }}</th>
         <th>{{ dico?.dico_body_type_old || "dico_body_type_old" }}</th>
@@ -64,7 +64,7 @@
       (click)="highlightRow($event)"
     >
       <tr *ngFor="let carInfo of carInfo; trackBy: trackInfoById">
-        <td>{{ carInfo.id }}</td>
+        <!-- <td>{{ carInfo.id }}</td> -->
         <td
           contenteditable="true"
           (blur)="onTdBlur($event, carInfo, 'fromYear')"
