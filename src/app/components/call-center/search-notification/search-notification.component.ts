@@ -58,7 +58,7 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getDico().subscribe((res) => {
+    this.getDico().subscribe(() => {
       this.initializeSearchTypes();
       this.getUserLastNotification();
     });

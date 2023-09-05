@@ -52,7 +52,7 @@ export class AddCarInfoComponent {
   }
   CarInfoForm() {
     this.carForm = this.formBuilder.group({
-      bodyTypeCode: ['', Validators.required],
+      // bodyTypeCode: ['', Validators.required],
       fromYear: [
         '',
         [
