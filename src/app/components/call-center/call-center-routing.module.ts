@@ -8,6 +8,7 @@ import { SearchPolicyComponent } from '../search-policy/search-policy.component'
 import { AuthGuard } from '../../shared/auth.guard';
 import { NotificationDetailsComponent } from './notification-details/notification-details.component';
 import { CommonModule } from '@angular/common';
+import { TowingConditionComponent } from './towing-condition/towing-condition.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,12 @@ const routes: Routes = [
     ],
     canActivate: [AuthGuard],
   },
-  // other routes...
+  {
+    path: 'profiles-main/CallCenter/towingCondition',
+    component: TowingConditionComponent,
+
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

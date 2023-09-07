@@ -150,6 +150,8 @@ import { SearchNotificationComponent } from './components/call-center/search-not
 import { MatMenuModule } from '@angular/material/menu';
 import { NotificationDetailsComponent } from './components/call-center/notification-details/notification-details.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TowingConditionComponent } from './components/call-center/towing-condition/towing-condition.component';
+import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -254,8 +256,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     TableComponent,
     CompanySelectComponent,
     SearchNotificationComponent,
-
+    TowingConditionComponent,
     NotificationDetailsComponent,
+    CompaniesDropdownComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,6 +17,13 @@
         </a>
         <a
           mat-list-item
+          routerLink="/profiles-main/CallCenter/towingCondition"
+          *ngIf="hasPerm('ccTowingCondition')"
+        >
+          {{ dico?.dico_towing_condition || "dico_towing_condition" }}
+        </a>
+        <a
+          mat-list-item
           routerLink="/profiles-main/CallCenter/searchPolicy"
           *ngIf="hasPerm('ccSearchPolicy')"
         >

@@ -9,7 +9,7 @@
       class="d-flex align-items-center justify-content-center"
       (ngSubmit)="searchNotification()"
     >
-      <label class="label-class mb-0 me-2"
+      <label class="label-class mb-0 me-2" style="white-space: nowrap"
         >{{ dico?.dico_search_by || "dico_search_by" }}:</label
       >
       <select
@@ -22,7 +22,7 @@
           {{ item.description }}
         </option>
       </select>
-      <label class="label-class mb-0 ms-3"
+      <label class="label-class mb-0 ms-3" style="white-space: nowrap"
         >{{ dico?.dico_search_value || "dico_search_value" }}:</label
       >
       <input

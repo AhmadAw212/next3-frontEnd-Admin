@@ -1459,4 +1459,10 @@ export class DataServiceService {
       `${this.userUrl}/call_center/userLastNotification`
     );
   }
+
+  getTowingCompanyListByCmp(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towingCompanyList/${insuranceId}`
+    );
+  }
 }

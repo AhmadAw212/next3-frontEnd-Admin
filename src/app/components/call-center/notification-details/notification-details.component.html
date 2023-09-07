@@ -132,7 +132,9 @@
       <div class="container">
         <div class="row mt-3">
           <div class="col-md-3">
-            <label class="h5 label-color">{{ dico?.dico_plate }}:</label>
+            <label class="h5 label-color"
+              >{{ dico?.dico_plate || "dico_plate" }}:</label
+            >
           </div>
           <div class="col-md-9">
             <span class="h5">{{ car.plate }}</span>
@@ -141,7 +143,9 @@
 
         <div class="row mt-3">
           <div class="col-md-3">
-            <label class="h5 label-color">{{ dico?.dico_car_model }}:</label>
+            <label class="h5 label-color"
+              >{{ dico?.dico_car_model || "dico_car_model" }}:</label
+            >
           </div>
           <div class="col-md-9">
             <span class="h5">{{ car.carMakeModel }}</span>

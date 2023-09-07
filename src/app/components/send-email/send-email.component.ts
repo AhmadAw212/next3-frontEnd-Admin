@@ -69,7 +69,7 @@ export class SendEmailComponent implements OnInit, OnDestroy {
       BCC: '',
       subject: ['', Validators.required],
       body: '',
-      CC: ['', Validators.required],
+      CC: [''],
     });
     this.emailFormBuild.get('from')?.disable();
   }

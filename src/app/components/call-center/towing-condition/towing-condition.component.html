@@ -1,0 +1,470 @@
+<app-login-nav></app-login-nav>
+<nav class="navbar navbar-class navbar-expand-lg">
+  <span class="navbar-brand" style="color: white">{{
+    dico?.dico_towing_condition || "dico_towing_condition"
+  }}</span>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Column 1: Towing Company Information -->
+    <div class="col-lg-2 mt-3">
+      <div class="card">
+        <div class="card-header header-class">
+          {{ dico?.dico_towing_company_name || "Towing Company Name" }}
+        </div>
+        <div class="card-body">
+          <p
+            class="text-start hover-text"
+            *ngFor="let towing of towingList"
+            style="font-weight: bold"
+            (click)="getTowingData(towing)"
+          >
+            {{ towing.towingCompanyName }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: General Conditions -->
+    <div class="col mt-3">
+      <div class="section p-3">
+        <form [formGroup]="towingForm" (ngSubmit)="onSubmit()">
+          <div class="ms-auto m-2">
+            <div class="d-flex align-items-center justify-content-end">
+              <app-companies-dropdown
+                [label]="dico?.dico_insurance_company"
+                (selectedCompanyChange)="companySelected($event)"
+              ></app-companies-dropdown>
+
+              <button
+                class="btn text-black"
+                type="button"
+                (click)="getTowingCompanyListByCmp()"
+              >
+                {{ dico?.dico_search || "dico_search" }}
+              </button>
+              <button class="btn text-black" type="submit">
+                {{ dico?.dico_add || "dico_add" }}
+              </button>
+              <button class="btn text-black" type="submit">
+                {{ dico?.dico_save || "dico_save" }}
+              </button>
+            </div>
+          </div>
+          <h2 style="font-size: 13px; padding: 5px">
+            {{ dico?.dico_general_conditions || "dico_general_conditions" }}
+          </h2>
+
+          <div class="grid-container">
+            <div class="row m-4">
+              <div class="col-md-3">
+                <label for="countAllowed" class="h6 label-color"
+                  >{{
+                    dico?.dico_count_allowed || "dico_count_allowed"
+                  }}:</label
+                >
+              </div>
+              <div class="col-md-9">
+                <textarea
+                  id="countAllowed"
+                  class="form-control"
+                  [style.width]="'50%'"
+                  formControlName="towingConditionCountAllowed"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Add more rows as needed for additional fields -->
+
+            <div class="row m-4">
+              <div class="col-md-3">
+                <label for="exception" class="h6 label-color">
+                  {{ dico?.dico_exception || "dico_exception" }}:</label
+                >
+              </div>
+              <div class="col-md-9">
+                <textarea
+                  id="exception"
+                  class="form-control"
+                  [style.width]="'50%'"
+                  formControlName="towingConditionException"
+                  >{{ selectedTowing?.towingConditionException }}</textarea
+                >
+              </div>
+            </div>
+            <div class="row m-4">
+              <div class="col-md-3">
+                <label for="milageLimit" class="h6 label-color">
+                  {{ dico?.dico_milage_limit || "dico_milage_limit" }}:</label
+                >
+              </div>
+              <div class="col-md-9">
+                <textarea
+                  id="milageLimit"
+                  class="form-control"
+                  [style.width]="'50%'"
+                  formControlName="towingConditionMilageLimit"
+                ></textarea>
+              </div>
+            </div>
+            <div class="row m-4">
+              <div class="col-md-3">
+                <label for="notCover" class="h6 label-color">
+                  {{ dico?.dico_not_cover_cas || "dico_not_cover_cas" }}:</label
+                >
+              </div>
+              <div class="col-md-9">
+                <textarea
+                  id="notCover"
+                  class="form-control"
+                  [style.width]="'50%'"
+                  formControlName="towingConditionNotCoverCas"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="row m-4">
+              <div class="col-md-2">
+                <label for="addCost" class="h6 label-color">
+                  {{ dico?.dico_add_cost_curr || "dico_add_cost_curr" }}:</label
+                >
+                <input
+                  type="text"
+                  id="addCost"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionAddCostCurr"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="accCount" class="h6 label-color">
+                  {{ dico?.dico_acc_count || "dico_acc_count" }}:</label
+                >
+                <input
+                  type="text"
+                  id="accCount"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionAccCount"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="addCost" class="h6 label-color">
+                  {{ dico?.dico_add_cost || "dico_add_cost" }}:</label
+                >
+                <input
+                  type="text"
+                  id="addCost"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionAddCost"
+                />
+              </div>
+            </div>
+            <div class="row m-4">
+              <div class="col-md-2">
+                <label for="milageAcc" class="h6 label-color">
+                  {{ dico?.dico_milage_acc || "dico_milage_acc" }}:</label
+                >
+                <input
+                  type="text"
+                  id="milageAcc"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMilageAcc"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="mechCount" class="h6 label-color">
+                  {{ dico?.dico_mech_count || "dico_mech_count" }}:</label
+                >
+                <input
+                  type="text"
+                  id="mechCount"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMechCount"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="milageAll" class="h6 label-color">
+                  {{ dico?.dico_milage_all || "dico_milage_all" }}:</label
+                >
+                <input
+                  type="text"
+                  id="milageAll"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMilageAll"
+                />
+              </div>
+            </div>
+            <div class="row m-4">
+              <div class="col-md-2">
+                <label for="milagePriv" class="h6 label-color">
+                  {{ dico?.dico_milage_priv || "dico_milage_priv" }}:</label
+                >
+                <input
+                  type="text"
+                  id="milagePriv"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMilagePriv"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="milagePub" class="h6 label-color">
+                  {{ dico?.dico_milage_pub || "dico_milage_pub" }}:</label
+                >
+                <input
+                  type="text"
+                  id="milagePub"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMilagePub"
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="milageMech" class="h6 label-color">
+                  {{ dico?.dico_milage_mech || "dico_milage_mech" }}:</label
+                >
+                <input
+                  type="text"
+                  id="milageMech"
+                  class="form-control"
+                  style="width: 128px"
+                  formControlName="towingConditionMilageMech"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="row m-4">
+              <div class="col-md-1">
+                <label for="blocked" class="h6 label-color">
+                  {{ dico?.dico_blocked || "dico_blocked" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="blocked"
+                    class="custom-control-input"
+                    name="towingConditionBlocked"
+                    formControlName="towingConditionBlocked"
+                    [checked]="
+                      selectedTowing?.towingConditionBlocked.code === 'Y'
+                    "
+                  />
+                  <label class="custom-control-label ms-2" for="blocked"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unblocked"
+                    class="custom-control-input"
+                    name="towingConditionBlocked"
+                    formControlName="towingConditionBlocked"
+                    [checked]="
+                      selectedTowing?.towingConditionBlocked.code === 'N'
+                    "
+                  />
+                  <label class="custom-control-label ms-2" for="unblocked"
+                    >No</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="carryingGoods" class="h6 label-color">
+                  {{ dico?.dico_carrying_goods || "dico_carrying_goods" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="carryingGoods"
+                    class="custom-control-input"
+                    name="towingConditionCarryingGood"
+                    formControlName="towingConditionCarryingGood"
+                  />
+                  <label class="custom-control-label ms-2" for="carryingGoods"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="uncarryingGoods"
+                    class="custom-control-input"
+                    name="towingConditionCarryingGood"
+                    formControlName="towingConditionCarryingGood"
+                  />
+                  <label
+                    for="uncarryingGoods"
+                    class="custom-control-label ms-2"
+                  >
+                    No
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="lifter" class="h6 label-color">
+                  {{ dico?.dico_lifter_acc || "dico_lifter_acc" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="lifter"
+                    class="custom-control-input"
+                    name="towingConditionLifterAcc"
+                    formControlName="towingConditionLifterAcc"
+                  />
+                  <label class="custom-control-label ms-2" for="lifter"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unlifter"
+                    class="custom-control-input"
+                    name="towingConditionLifterAcc"
+                    formControlName="towingConditionLifterAcc"
+                  />
+                  <label class="custom-control-label ms-2" for="unlifter"
+                    >No</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="lifterMech" class="h6 label-color">
+                  {{ dico?.dico_lifter_mech || "dico_lifter_mech" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="lifterMech"
+                    class="custom-control-input"
+                    name="towingConditionLifterMech"
+                    formControlName="towingConditionLifterMech"
+                  />
+                  <label class="custom-control-label ms-2" for="lifterMech"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unlifterMech"
+                    class="custom-control-input"
+                    name="towingConditionLifterMech"
+                    formControlName="towingConditionLifterMech"
+                  />
+                  <label class="custom-control-label ms-2" for="unlifterMech"
+                    >No</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="offRoad" class="h6 label-color">
+                  {{ dico?.dico_off_road || "dico_off_road" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="offRoad"
+                    class="custom-control-input"
+                    name="towingConditionOffRoad"
+                    formControlName="towingConditionOffRoad"
+                  />
+                  <label class="custom-control-label ms-2" for="offRoad"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unoffRoad"
+                    class="custom-control-input"
+                    name="towingConditionOffRoad"
+                    formControlName="towingConditionOffRoad"
+                  />
+                  <label class="custom-control-label ms-2" for="unoffRoad"
+                    >No</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="pickUp" class="h6 label-color">
+                  {{ dico?.dico_pick_up || "dico_pick_up" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="pickUp"
+                    class="custom-control-input"
+                    name="towingConditionPickUp"
+                    formControlName="towingConditionPickUp"
+                  />
+                  <label class="custom-control-label ms-2" for="pickUp"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unpickUp"
+                    class="custom-control-input"
+                    name="towingConditionPickUp"
+                    formControlName="towingConditionPickUp"
+                  />
+                  <label class="custom-control-label ms-2" for="unpickUp"
+                    >No</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <label for="pickUp" class="h6 label-color">
+                  {{ dico?.dico_wheel || "dico_wheel" }}:
+                </label>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="wheel"
+                    class="custom-control-input"
+                    name="towingConditionWheel"
+                    formControlName="towingConditionWheel"
+                  />
+                  <label class="custom-control-label ms-2" for="wheel"
+                    >Yes</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    id="unwheel"
+                    class="custom-control-input"
+                    name="towingConditionWheel"
+                    formControlName="towingConditionWheel"
+                  />
+                  <label class="custom-control-label ms-2" for="unwheel"
+                    >No</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Row 1: Input Field for Plate -->
+  </div>
+</div>

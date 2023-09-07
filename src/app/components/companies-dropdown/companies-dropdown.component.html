@@ -1,0 +1,19 @@
+<div class="select-container">
+  <label class="label-class me-2" style="white-space: nowrap"
+    >{{ label || "dico_company" }}:</label
+  >
+  <select
+    id="companySelect"
+    name="companySelect"
+    required
+    class="form-select label-class me-2"
+    style="width: 150px"
+    [(ngModel)]="selectedCompany"
+    [disabled]="companies?.length! <= 1"
+    (ngModelChange)="companyEmit()"
+  >
+    <option *ngFor="let company of companies" [value]="company.companyId">
+      {{ company.companyName }}
+    </option>
+  </select>
+</div>

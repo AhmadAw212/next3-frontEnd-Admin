@@ -47,11 +47,11 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="bcc">BCC:</label>
+            <label for="bcc">CC:</label>
             <div class="recipients-input">
               <ng-select
                 [items]="recipients"
-                formControlName="BCC"
+                formControlName="CC"
                 [multiple]="true"
                 [addTag]="true"
                 (search)="searchRecipients($event)"
@@ -72,11 +72,11 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="bcc">CC:</label>
+            <label for="bcc">BCC:</label>
             <div class="recipients-input">
               <ng-select
                 [items]="recipients"
-                formControlName="CC"
+                formControlName="BCC"
                 [multiple]="true"
                 [addTag]="true"
                 (search)="searchRecipients($event)"

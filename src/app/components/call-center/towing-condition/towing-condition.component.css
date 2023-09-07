@@ -1,0 +1,9 @@
+.header-class{
+    background-color: #055aa0;
+    font-weight: normal;
+    font-size: 11px;
+    color: #fff;
+}
+.hover-text:hover{
+    background-color: aliceblue;
+}
