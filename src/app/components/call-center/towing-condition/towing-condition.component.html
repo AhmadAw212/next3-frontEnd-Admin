@@ -65,7 +65,11 @@
                 >
                   {{ dico?.dico_add || "dico_add" }}
                 </button>
-                <button class="btn-class" type="submit">
+                <button
+                  class="btn-class"
+                  type="submit"
+                  [ngClass]="{ 'disabled-button': !towingForm.valid }"
+                >
                   {{ dico?.dico_save || "dico_save" }}
                 </button>
               </div>
