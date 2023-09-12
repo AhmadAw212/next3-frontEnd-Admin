@@ -4,31 +4,43 @@
     dico?.dico_towing_condition || "dico_towing_condition"
   }}</span>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: rgb(239, 242, 245)">
   <div class="row">
     <!-- Column 1: Towing Company Information -->
     <div class="col-lg-2 mt-3">
       <div class="card">
         <div class="card-header header-class">
-          {{ dico?.dico_towing_company_name || "Towing Company Name" }}
+          {{ dico?.dico_towing_company_name || "dico_towing_company_name" }}
         </div>
+
         <div class="card-body">
-          <p
-            class="text-start hover-text"
-            *ngFor="let towing of towingList"
-            style="font-weight: bold"
-            (click)="getTowingData(towing)"
-          >
-            {{ towing.towingCompanyName }}
-          </p>
+          <mat-list *ngFor="let towing of towingList">
+            <mat-list-item
+              class="text-start hover-text"
+              style="font-weight: bold; position: relative"
+              (click)="getTowingData(towing)"
+            >
+              {{ towing.towingCompanyName }}
+
+              <mat-icon
+                class="delete-icon"
+                (click)="revokeTowingFromInsurance(towing.carTowingCompanyId)"
+                >delete</mat-icon
+              >
+            </mat-list-item>
+          </mat-list>
         </div>
       </div>
+      <mat-icon class="add-icon" (click)="toggleTowingForm()">add</mat-icon>
     </div>
 
     <!-- Column 2: General Conditions -->
     <div class="col mt-3">
       <div class="section p-3">
-        <form [formGroup]="towingForm" (ngSubmit)="onSubmit()">
+        <form
+          [formGroup]="towingForm"
+          (ngSubmit)="addOrUpdateTowingCondition(true)"
+        >
           <div class="ms-auto m-2">
             <div class="d-flex align-items-center justify-content-end">
               <app-companies-dropdown
@@ -36,14 +48,14 @@
                 (selectedCompanyChange)="companySelected($event)"
               ></app-companies-dropdown>
 
+              <!-- <button class="btn text-black" type="button">
+                {{ dico?.dico_search || "dico_search" }}
+              </button> -->
               <button
                 class="btn text-black"
+                (click)="openAddTowingCmpDialog()"
                 type="button"
-                (click)="getTowingCompanyListByCmp()"
               >
-                {{ dico?.dico_search || "dico_search" }}
-              </button>
-              <button class="btn text-black" type="submit">
                 {{ dico?.dico_add || "dico_add" }}
               </button>
               <button class="btn text-black" type="submit">
@@ -58,7 +70,7 @@
           <div class="grid-container">
             <div class="row m-4">
               <div class="col-md-3">
-                <label for="countAllowed" class="h6 label-color"
+                <label for="countAllowed" class="label-color"
                   >{{
                     dico?.dico_count_allowed || "dico_count_allowed"
                   }}:</label
@@ -78,7 +90,7 @@
 
             <div class="row m-4">
               <div class="col-md-3">
-                <label for="exception" class="h6 label-color">
+                <label for="exception" class="label-color">
                   {{ dico?.dico_exception || "dico_exception" }}:</label
                 >
               </div>
@@ -94,7 +106,7 @@
             </div>
             <div class="row m-4">
               <div class="col-md-3">
-                <label for="milageLimit" class="h6 label-color">
+                <label for="milageLimit" class="label-color">
                   {{ dico?.dico_milage_limit || "dico_milage_limit" }}:</label
                 >
               </div>
@@ -109,7 +121,7 @@
             </div>
             <div class="row m-4">
               <div class="col-md-3">
-                <label for="notCover" class="h6 label-color">
+                <label for="notCover" class="label-color">
                   {{ dico?.dico_not_cover_cas || "dico_not_cover_cas" }}:</label
                 >
               </div>
@@ -126,7 +138,7 @@
           <div class="grid-container">
             <div class="row m-4">
               <div class="col-md-2">
-                <label for="addCost" class="h6 label-color">
+                <label for="addCost" class="label-color">
                   {{ dico?.dico_add_cost_curr || "dico_add_cost_curr" }}:</label
                 >
                 <input
@@ -138,7 +150,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="accCount" class="h6 label-color">
+                <label for="accCount" class="label-color">
                   {{ dico?.dico_acc_count || "dico_acc_count" }}:</label
                 >
                 <input
@@ -150,7 +162,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="addCost" class="h6 label-color">
+                <label for="addCost" class="label-color">
                   {{ dico?.dico_add_cost || "dico_add_cost" }}:</label
                 >
                 <input
@@ -164,7 +176,7 @@
             </div>
             <div class="row m-4">
               <div class="col-md-2">
-                <label for="milageAcc" class="h6 label-color">
+                <label for="milageAcc" class="label-color">
                   {{ dico?.dico_milage_acc || "dico_milage_acc" }}:</label
                 >
                 <input
@@ -176,7 +188,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="mechCount" class="h6 label-color">
+                <label for="mechCount" class="label-color">
                   {{ dico?.dico_mech_count || "dico_mech_count" }}:</label
                 >
                 <input
@@ -188,7 +200,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="milageAll" class="h6 label-color">
+                <label for="milageAll" class="label-color">
                   {{ dico?.dico_milage_all || "dico_milage_all" }}:</label
                 >
                 <input
@@ -202,7 +214,7 @@
             </div>
             <div class="row m-4">
               <div class="col-md-2">
-                <label for="milagePriv" class="h6 label-color">
+                <label for="milagePriv" class="label-color">
                   {{ dico?.dico_milage_priv || "dico_milage_priv" }}:</label
                 >
                 <input
@@ -214,7 +226,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="milagePub" class="h6 label-color">
+                <label for="milagePub" class="label-color">
                   {{ dico?.dico_milage_pub || "dico_milage_pub" }}:</label
                 >
                 <input
@@ -226,7 +238,7 @@
                 />
               </div>
               <div class="col-md-2">
-                <label for="milageMech" class="h6 label-color">
+                <label for="milageMech" class="label-color">
                   {{ dico?.dico_milage_mech || "dico_milage_mech" }}:</label
                 >
                 <input
@@ -241,8 +253,8 @@
           </div>
           <div class="grid-container">
             <div class="row m-4">
-              <div class="col-md-1">
-                <label for="blocked" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="blocked" class="label-color">
                   {{ dico?.dico_blocked || "dico_blocked" }}:
                 </label>
                 <div class="form-check">
@@ -252,8 +264,9 @@
                     class="custom-control-input"
                     name="towingConditionBlocked"
                     formControlName="towingConditionBlocked"
+                    [value]="'Y'"
                     [checked]="
-                      selectedTowing?.towingConditionBlocked.code === 'Y'
+                      selectedTowing?.towingConditionBlocked?.code === 'Y'
                     "
                   />
                   <label class="custom-control-label ms-2" for="blocked"
@@ -267,8 +280,9 @@
                     class="custom-control-input"
                     name="towingConditionBlocked"
                     formControlName="towingConditionBlocked"
+                    [value]="'N'"
                     [checked]="
-                      selectedTowing?.towingConditionBlocked.code === 'N'
+                      selectedTowing?.towingConditionBlocked?.code === 'N'
                     "
                   />
                   <label class="custom-control-label ms-2" for="unblocked"
@@ -277,8 +291,8 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="carryingGoods" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="carryingGoods" class="label-color">
                   {{ dico?.dico_carrying_goods || "dico_carrying_goods" }}:
                 </label>
                 <div class="form-check">
@@ -288,6 +302,10 @@
                     class="custom-control-input"
                     name="towingConditionCarryingGood"
                     formControlName="towingConditionCarryingGood"
+                    [checked]="
+                      selectedTowing?.towingConditionCarryingGood?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="carryingGoods"
                     >Yes</label
@@ -300,6 +318,10 @@
                     class="custom-control-input"
                     name="towingConditionCarryingGood"
                     formControlName="towingConditionCarryingGood"
+                    [checked]="
+                      selectedTowing?.towingConditionCarryingGood?.code === 'N'
+                    "
+                    value="N"
                   />
                   <label
                     for="uncarryingGoods"
@@ -310,8 +332,8 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="lifter" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="lifter" class="label-color">
                   {{ dico?.dico_lifter_acc || "dico_lifter_acc" }}:
                 </label>
                 <div class="form-check">
@@ -321,6 +343,10 @@
                     class="custom-control-input"
                     name="towingConditionLifterAcc"
                     formControlName="towingConditionLifterAcc"
+                    [checked]="
+                      selectedTowing?.towingConditionLifterAcc?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="lifter"
                     >Yes</label
@@ -333,6 +359,10 @@
                     class="custom-control-input"
                     name="towingConditionLifterAcc"
                     formControlName="towingConditionLifterAcc"
+                    [checked]="
+                      selectedTowing?.towingConditionLifterAcc?.code === 'N'
+                    "
+                    value="N"
                   />
                   <label class="custom-control-label ms-2" for="unlifter"
                     >No</label
@@ -340,8 +370,8 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="lifterMech" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="lifterMech" class="label-color">
                   {{ dico?.dico_lifter_mech || "dico_lifter_mech" }}:
                 </label>
                 <div class="form-check">
@@ -351,6 +381,10 @@
                     class="custom-control-input"
                     name="towingConditionLifterMech"
                     formControlName="towingConditionLifterMech"
+                    [checked]="
+                      selectedTowing?.towingConditionLifterMech?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="lifterMech"
                     >Yes</label
@@ -363,15 +397,20 @@
                     class="custom-control-input"
                     name="towingConditionLifterMech"
                     formControlName="towingConditionLifterMech"
+                    [checked]="
+                      selectedTowing?.towingConditionLifterMech?.code === 'N'
+                    "
+                    value="N"
                   />
+
                   <label class="custom-control-label ms-2" for="unlifterMech"
                     >No</label
                   >
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="offRoad" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="offRoad" class="label-color">
                   {{ dico?.dico_off_road || "dico_off_road" }}:
                 </label>
                 <div class="form-check">
@@ -381,6 +420,10 @@
                     class="custom-control-input"
                     name="towingConditionOffRoad"
                     formControlName="towingConditionOffRoad"
+                    [checked]="
+                      selectedTowing?.towingConditionOffRoad?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="offRoad"
                     >Yes</label
@@ -393,6 +436,10 @@
                     class="custom-control-input"
                     name="towingConditionOffRoad"
                     formControlName="towingConditionOffRoad"
+                    [checked]="
+                      selectedTowing?.towingConditionOffRoad?.code === 'N'
+                    "
+                    value="N"
                   />
                   <label class="custom-control-label ms-2" for="unoffRoad"
                     >No</label
@@ -400,8 +447,8 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="pickUp" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="pickUp" class="label-color">
                   {{ dico?.dico_pick_up || "dico_pick_up" }}:
                 </label>
                 <div class="form-check">
@@ -411,6 +458,10 @@
                     class="custom-control-input"
                     name="towingConditionPickUp"
                     formControlName="towingConditionPickUp"
+                    [checked]="
+                      selectedTowing?.towingConditionPickUp?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="pickUp"
                     >Yes</label
@@ -423,6 +474,10 @@
                     class="custom-control-input"
                     name="towingConditionPickUp"
                     formControlName="towingConditionPickUp"
+                    [checked]="
+                      selectedTowing?.towingConditionPickUp?.code === 'N'
+                    "
+                    value="N"
                   />
                   <label class="custom-control-label ms-2" for="unpickUp"
                     >No</label
@@ -430,8 +485,8 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <label for="pickUp" class="h6 label-color">
+              <div class="col-md-2">
+                <label for="wheel" class="label-color">
                   {{ dico?.dico_wheel || "dico_wheel" }}:
                 </label>
                 <div class="form-check">
@@ -441,6 +496,10 @@
                     class="custom-control-input"
                     name="towingConditionWheel"
                     formControlName="towingConditionWheel"
+                    [checked]="
+                      selectedTowing?.towingConditionWheel?.code === 'Y'
+                    "
+                    value="Y"
                   />
                   <label class="custom-control-label ms-2" for="wheel"
                     >Yes</label
@@ -453,6 +512,10 @@
                     class="custom-control-input"
                     name="towingConditionWheel"
                     formControlName="towingConditionWheel"
+                    [checked]="
+                      selectedTowing?.towingConditionWheel?.code === 'N'
+                    "
+                    value="N"
                   />
                   <label class="custom-control-label ms-2" for="unwheel"
                     >No</label

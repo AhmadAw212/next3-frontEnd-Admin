@@ -152,6 +152,7 @@ import { NotificationDetailsComponent } from './components/call-center/notificat
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TowingConditionComponent } from './components/call-center/towing-condition/towing-condition.component';
 import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
+import { AddTowingCompanyComponent } from './components/call-center/towing-condition/add-towing-company/add-towing-company.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -259,6 +260,7 @@ import { CompaniesDropdownComponent } from './components/companies-dropdown/comp
     TowingConditionComponent,
     NotificationDetailsComponent,
     CompaniesDropdownComponent,
+    AddTowingCompanyComponent,
   ],
   imports: [
     BrowserModule,

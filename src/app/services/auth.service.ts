@@ -61,19 +61,20 @@ export class AuthService {
         }
       },
       error: (err) => {
-        let errorMessage = 'An error occurred';
-        if (err.error.status === 401) {
-          errorMessage = 'Incorrect username or password';
-          // Send the error message here
-          this.alertifyService.error(errorMessage);
-        } else if (err.error.status === 500) {
-          errorMessage = 'Incorrect username or password ';
-          // errorMessage = 'An error occurred. Please try again later.';
-          // Send the error message here
-          this.alertifyService.error(errorMessage);
-        } else if (err.error.status === 404) {
-          this.alertifyService.error(err.error.message);
-        }
+        console.log(err);
+        // let errorMessage = 'An error occurred';
+        // if (err.error.status === 401) {
+        //   errorMessage = 'Incorrect username or password';
+        //   // Send the error message here
+        //   this.alertifyService.error(errorMessage);
+        // } else if (err.error.status === 500) {
+        //   errorMessage = 'Incorrect username or password ';
+        //   // errorMessage = 'An error occurred. Please try again later.';
+        //   // Send the error message here
+        //   this.alertifyService.error(errorMessage);
+        // } else if (err.error.status === 404) {
+        //   this.alertifyService.error(err.error.message);
+        // }
       },
     });
   }

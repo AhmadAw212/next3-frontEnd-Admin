@@ -49,6 +49,8 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
     // localStorage.removeItem('selectedProfile');
     this.userRoles.clearRoles();
     this.userIdlesService.initializeIdleService();
+    this.profileService.clearCompany();
+    this.profileService.clearSearchResults();
   }
 
   redirectToProfile(profile: CoreProfile): void {

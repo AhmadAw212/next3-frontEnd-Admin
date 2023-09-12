@@ -46,6 +46,7 @@ import { CarsbrandMatching } from '../model/carsbrand-matching';
 import { CarsPolicyCar } from '../model/cars-policy-car';
 import { Note } from '../model/note';
 import { NotificationSearchCriteria } from '../model/notification-search-criteria';
+import { CarsTowingConditionRequest } from '../model/cars-towing-condition-request';
 
 interface User {
   username: string;
@@ -1463,6 +1464,39 @@ export class DataServiceService {
   getTowingCompanyListByCmp(insuranceId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/towingCompanyList/${insuranceId}`
+    );
+  }
+
+  addOrUpdateTowingCondition(
+    carsTowing: CarsTowingConditionRequest[],
+    towingCompanyId: string
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/addOrUpdateTowingConditions?towingCompanyId=${towingCompanyId}`,
+      [carsTowing]
+    );
+  }
+
+  getTowingCompanies(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/availabletowingCompanies/${insuranceId}`
+    );
+  }
+
+  assignTowingSupplierToInsuranceCompany(
+    insuranceId: string,
+    supplierTowingId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/addTowingToInsurance/${insuranceId}?supplierTowingId=${supplierTowingId}`
+    );
+  }
+
+  revokeTowingFromInsurance(
+    towingInsuranceId: string
+  ): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/call_center/revokeTowingFromInsurance?towingInsuranceId=${towingInsuranceId}`
     );
   }
 }

@@ -1,0 +1,55 @@
+<div class="modal-dialog" style="margin: 10px">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title mb-3">Add Towing</h5>
+      <button type="button" class="close" (click)="close()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="addTowingSupplierToInsuranceCompany()">
+        <div class="form-group">
+          <label for="insuranceCompany">Insurance Company</label>
+          <select
+            class="form-select"
+            id="insuranceCompany"
+            name="insuranceCompany"
+            [(ngModel)]="selectedCompany"
+            (ngModelChange)="getAvailableTowingCompanies()"
+          >
+            <option
+              *ngFor="let insurance of companies"
+              [value]="insurance.companyId"
+            >
+              {{ insurance.companyName }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="towingInsurance">Towing Insurance</label>
+          <select
+            class="form-select"
+            id="towingInsurance"
+            name="towingInsurance"
+            [(ngModel)]="selectedTowing"
+          >
+            <option
+              *ngFor="let towing of towingCompanies"
+              [value]="towing.supplierId"
+            >
+              {{ towing.lastname }}
+            </option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Add</button>
+          <button
+            type="button"
+            class="btn btn-secondary ms-2"
+            (click)="close()"
+          >
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

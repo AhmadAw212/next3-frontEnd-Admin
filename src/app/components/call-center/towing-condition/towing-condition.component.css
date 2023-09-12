@@ -7,3 +7,25 @@
 .hover-text:hover{
     background-color: aliceblue;
 }
+.selected-item {
+  background-color: #e0e0e0; /* Change the background color as desired */
+}
+.add-icon {
+  font-size: 24px; /* Adjust the font size as needed */
+  cursor: pointer; /* Add a pointer cursor on hover to indicate interactivity */
+  color: #007bff; /* Change the icon color to your preferred color */
+/* Add some spacing to the left of the icon */
+}
+  .delete-icon {
+    font-size: 24px;
+    color: #ff0000; /* Customize the delete icon color */
+    position: absolute;
+    right: 10px; /* Adjust the distance from the right edge */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .card-body{
+    background-color: #eff2f5;
+  }
+  

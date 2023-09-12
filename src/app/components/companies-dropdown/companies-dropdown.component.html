@@ -6,8 +6,7 @@
     id="companySelect"
     name="companySelect"
     required
-    class="form-select label-class me-2"
-    style="width: 150px"
+    class="select-class label-class me-2"
     [(ngModel)]="selectedCompany"
     [disabled]="companies?.length! <= 1"
     (ngModelChange)="companyEmit()"
