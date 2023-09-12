@@ -32,7 +32,12 @@
           </mat-list>
         </div>
       </div>
-      <mat-icon class="add-icon" (click)="toggleTowingForm()">add</mat-icon>
+      <mat-icon
+        class="add-icon"
+        *ngIf="!selectedTowing"
+        (click)="toggleTowingForm()"
+        >add</mat-icon
+      >
     </div>
 
     <!-- Column 2: General Conditions -->
@@ -52,19 +57,21 @@
               <!-- <button class="btn text-black" type="button">
                 {{ dico?.dico_search || "dico_search" }}
               </button> -->
-              <button
-                class="btn text-black"
-                (click)="openAddTowingCmpDialog()"
-                type="button"
-              >
-                {{ dico?.dico_add || "dico_add" }}
-              </button>
-              <button class="btn text-black" type="submit">
-                {{ dico?.dico_save || "dico_save" }}
-              </button>
+              <div class="btn-group">
+                <button
+                  class="btn-class"
+                  (click)="openAddTowingCmpDialog()"
+                  type="button"
+                >
+                  {{ dico?.dico_add || "dico_add" }}
+                </button>
+                <button class="btn-class" type="submit">
+                  {{ dico?.dico_save || "dico_save" }}
+                </button>
+              </div>
             </div>
           </div>
-          <h2 style="font-size: 13px; padding: 5px">
+          <h2 style="font-size: 13px; padding: 5px; font-weight: bold">
             {{ dico?.dico_general_conditions || "dico_general_conditions" }}
           </h2>
 

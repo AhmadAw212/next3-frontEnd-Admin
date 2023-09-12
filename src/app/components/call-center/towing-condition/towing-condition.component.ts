@@ -210,7 +210,7 @@ export class TowingConditionComponent implements OnInit, OnDestroy {
           this.getTowingCompanyListByCmp();
         },
         error: (err) => {
-          this.alertifyService.error(err.error.message);
+          this.alertifyService.error(err.message);
           console.log(err);
         },
       });

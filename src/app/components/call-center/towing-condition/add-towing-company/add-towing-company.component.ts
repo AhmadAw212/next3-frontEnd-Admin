@@ -13,7 +13,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 })
 export class AddTowingCompanyComponent implements OnInit {
   insuranceCompany?: string;
-  towingCompanies?: any[];
+  towingCompanies?: any[] = [];
   companies?: any[] = [];
   selectedCompany?: string;
   selectedTowing?: string;
@@ -42,6 +42,7 @@ export class AddTowingCompanyComponent implements OnInit {
       );
       this.companies = res.companyList;
       this.selectedCompany = this.companies![0]?.companyId || null;
+
       // console.log(res);
     } catch (err) {
       console.log(err);
@@ -51,7 +52,8 @@ export class AddTowingCompanyComponent implements OnInit {
     this.dataService.getTowingCompanies(this.selectedCompany!).subscribe({
       next: (res) => {
         this.towingCompanies = res.data;
-        console.log(res);
+        this.selectedTowing = this.towingCompanies![0]?.supplierId || null;
+        // console.log(res);
       },
       error: (err) => {
         this.alertifyService.dialogAlert('Error', err.error.message);
@@ -70,7 +72,7 @@ export class AddTowingCompanyComponent implements OnInit {
           this.dialogRef.close(res.data);
         },
         error: (err) => {
-          this.alertifyService.error(err.error.message);
+          this.alertifyService.error(err.message);
         },
       });
   }

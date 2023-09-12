@@ -179,7 +179,13 @@ label{
   padding: 10px;
   color:rgb(26, 178, 239);
 }
-
+.btn-class{
+  background-color: #1884d7;
+    color: white;
+    border: none;
+    padding: 5px 16px;
+    margin-right: 5px;
+}
 .column {
   width: 20%;
   margin-right: 20px;
