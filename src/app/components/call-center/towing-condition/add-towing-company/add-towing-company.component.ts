@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { DicoServiceService } from 'src/app/services/dico-service.service';
 
 @Component({
   selector: 'app-add-towing-company',
@@ -16,13 +17,20 @@ export class AddTowingCompanyComponent implements OnInit {
   companies?: any[] = [];
   selectedCompany?: string;
   selectedTowing?: string;
+  dico?: any;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
-    private dialogRef: MatDialogRef<AddTowingCompanyComponent>
+    private dialogRef: MatDialogRef<AddTowingCompanyComponent>,
+    private dicoService: DicoServiceService
   ) {}
-
+  getDico() {
+    this.dicoService.dico.subscribe((data) => {
+      this.dico = data;
+    });
+  }
   async ngOnInit(): Promise<void> {
+    this.getDico();
     await this.getCompaniesPerUser();
     this.getAvailableTowingCompanies();
   }

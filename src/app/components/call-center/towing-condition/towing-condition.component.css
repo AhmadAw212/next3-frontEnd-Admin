@@ -4,11 +4,12 @@
     font-size: 11px;
     color: #fff;
 }
-.hover-text:hover{
+/* .hover-text:hover{
     background-color: aliceblue;
-}
+} */
 .selected-item {
-  background-color: #e0e0e0; /* Change the background color as desired */
+  background-color: #cae4db;
+  font-weight: bold;
 }
 .add-icon {
   font-size: 24px; /* Adjust the font size as needed */

@@ -14,11 +14,12 @@
         </div>
 
         <div class="card-body">
-          <mat-list *ngFor="let towing of towingList">
+          <mat-list *ngFor="let towing of towingList; let i = index">
             <mat-list-item
               class="text-start hover-text"
               style="font-weight: bold; position: relative"
-              (click)="getTowingData(towing)"
+              [ngClass]="{ 'selected-item ': selectedPanelIndex === i }"
+              (click)="getTowingData(towing, i)"
             >
               {{ towing.towingCompanyName }}
 
