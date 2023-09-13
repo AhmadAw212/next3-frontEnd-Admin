@@ -12,6 +12,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 
 @Component({
   selector: 'app-login-nav',
@@ -39,12 +40,14 @@ export class LoginNavComponent implements OnInit {
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
     private loginDataService: LoadingServiceService,
-    private userIdlesService: UsersIdleService
+    private userIdlesService: UsersIdleService,
+    private userRolesService: UsersRolesService
   ) {}
   ngOnInit(): void {
     this.loadLoginData();
     this.dateFormatterService();
     this.getDico();
+    this.userRolesService.getUserRoles();
     // this.userIdlesService.initializeIdleService();
   }
   private loadLoginData() {

@@ -213,7 +213,9 @@ label{
   transform: scale(1.2);
 }
 
-
+.mat-tab-group {
+  margin-bottom: 48px;
+}
 
 td {
   /* padding: 2px; */

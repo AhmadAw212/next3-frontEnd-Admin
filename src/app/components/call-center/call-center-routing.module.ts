@@ -9,6 +9,7 @@ import { AuthGuard } from '../../shared/auth.guard';
 import { NotificationDetailsComponent } from './notification-details/notification-details.component';
 import { CommonModule } from '@angular/common';
 import { TowingConditionComponent } from './towing-condition/towing-condition.component';
+import { UsersActivityComponent } from './users-activity/users-activity.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,12 @@ const routes: Routes = [
   {
     path: 'profiles-main/CallCenter/towingCondition',
     component: TowingConditionComponent,
+
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profiles-main/CallCenter/usersActivity',
+    component: UsersActivityComponent,
 
     canActivate: [AuthGuard],
   },

@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { LoginInfo } from '../model/login-info';
 import { CoreProfile } from '../model/core-profile';
 import { DataServiceService } from './data-service.service';
-
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root',
 })
@@ -73,5 +74,29 @@ export class LoadingServiceService {
   clearSearchResults() {
     this.searchResults = [];
     this.trademark = null;
+  }
+
+  exportToExcel(data: any[], sheetName: string, fileName: string): void {
+    console.log(sheetName);
+    // Your existing export logic here
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    const excelBlob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    saveAs(excelBlob, fileName);
+  }
+
+  private saveFile(blob: Blob, fileName: string): void {
+    // You can implement the file saving logic here
+    // For example, using the `saveAs` library
   }
 }

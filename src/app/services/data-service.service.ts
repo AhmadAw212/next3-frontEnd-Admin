@@ -1499,4 +1499,22 @@ export class DataServiceService {
       `${this.userUrl}/call_center/revokeTowingFromInsurance?towingInsuranceId=${towingInsuranceId}`
     );
   }
+
+  getCallCenterUsers(cmp: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/call-center-users?cmp=${cmp}`
+    );
+  }
+
+  getUserActivityOpenedNotifications(
+    cmp: string,
+    user: string,
+    fromDate: string,
+    toDate: string,
+    type: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getUserActivityOpenedNotifications?cmp=${cmp}&usr=${user}&fromDate=${fromDate}&toDate=${toDate}&type=${type}`
+    );
+  }
 }

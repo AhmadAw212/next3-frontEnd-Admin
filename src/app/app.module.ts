@@ -153,6 +153,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TowingConditionComponent } from './components/call-center/towing-condition/towing-condition.component';
 import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
 import { AddTowingCompanyComponent } from './components/call-center/towing-condition/add-towing-company/add-towing-company.component';
+import { UsersActivityComponent } from './components/call-center/users-activity/users-activity.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -261,6 +262,7 @@ import { AddTowingCompanyComponent } from './components/call-center/towing-condi
     NotificationDetailsComponent,
     CompaniesDropdownComponent,
     AddTowingCompanyComponent,
+    UsersActivityComponent,
   ],
   imports: [
     BrowserModule,
