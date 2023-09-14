@@ -18,7 +18,7 @@ export class CallCenterComponent implements OnInit {
     private companyService: LoadingServiceService
   ) {}
   ngOnInit(): void {
-    // this.userRolesService.getUserRoles();
+    this.userRolesService.getUserRoles();
     // this.userIdlesService.initializeIdleService();
   }
 }

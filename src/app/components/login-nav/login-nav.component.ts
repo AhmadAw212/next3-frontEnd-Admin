@@ -47,7 +47,7 @@ export class LoginNavComponent implements OnInit {
     this.loadLoginData();
     this.dateFormatterService();
     this.getDico();
-    this.userRolesService.getUserRoles();
+    // this.userRolesService.getUserRoles();
     // this.userIdlesService.initializeIdleService();
   }
   private loadLoginData() {

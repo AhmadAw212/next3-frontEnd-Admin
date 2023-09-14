@@ -2,7 +2,40 @@
 <app-navbar [title]="title"></app-navbar>
 
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-  <mat-tab [label]="dico?.dico_notification_count || 'dico_notification_count'">
+  <mat-tab
+    [label]="dico?.dico_notification_count || 'dico_notification_count'"
+    *ngIf="hasPerm('ccMgrList')"
+  >
+    <div
+      class="container d-flex justify-content-center align-items-center"
+      style="height: 700px"
+    >
+      <div class="container">
+        <div class="panel row" style="height: 700px; background-color: #eff2f5">
+          <div class="col">
+            <span class="label-color">{{
+              dico?.dico_notification_count || "dico_notification_count"
+            }}</span>
+
+            <app-companies-dropdown
+              (selectedCompanyChange)="selectedCompanyAct($event)"
+              [label]="dico?.dico_company"
+            ></app-companies-dropdown>
+          </div>
+          <div style="display: block" class="mt-3">
+            <canvas
+              baseChart
+              [type]="'pie'"
+              [datasets]="[{ data: pieChartData }]"
+              [labels]="pieChartLabels"
+              [options]="pieChartOptions"
+              [plugins]="pieChartPlugins"
+              [legend]="pieChartLegend"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </mat-tab>
   <mat-tab [label]="dico?.dico_search || 'dico_search'">
     <div class="grid-container container-fluid mt-5">
@@ -197,14 +230,14 @@
             </tr>
           </ng-template>
         </table>
-        <!-- <mat-paginator
-          [length]="totalPages"
+        <mat-paginator
+          [length]="totalItems"
           [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10, 15]"
+          [pageSizeOptions]="[20, 50, 100]"
           aria-label="Select page"
           (page)="onPageChange($event)"
         >
-        </mat-paginator> -->
+        </mat-paginator>
       </div>
     </div>
   </mat-tab>

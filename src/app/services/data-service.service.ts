@@ -1509,12 +1509,20 @@ export class DataServiceService {
   getUserActivityOpenedNotifications(
     cmp: string,
     user: string,
-    fromDate: string,
-    toDate: string,
-    type: string
+    fromDate: any,
+    toDate: any,
+    type: string,
+    page: number,
+    pageSize: number
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getUserActivityOpenedNotifications?cmp=${cmp}&usr=${user}&fromDate=${fromDate}&toDate=${toDate}&type=${type}`
+      `${this.userUrl}/call_center/getUserActivityOpenedNotifications?cmp=${cmp}&usr=${user}&fromDate=${fromDate}&toDate=${toDate}&type=${type}&page=${page}&pageSize=${pageSize}`
+    );
+  }
+
+  getUsersActivityByInsComp(insuranceId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/user-activity?insuranceCompany=${insuranceId}`
     );
   }
 }

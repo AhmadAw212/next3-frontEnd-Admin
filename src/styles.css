@@ -192,7 +192,7 @@ label{
 }
 .label-color{
   color: #0674CB !important;
-  /* font-size: 13px; */
+  font-size: 13px;
   font-weight: bold;
 }
 .panel-item {

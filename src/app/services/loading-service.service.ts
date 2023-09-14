@@ -77,7 +77,6 @@ export class LoadingServiceService {
   }
 
   exportToExcel(data: any[], sheetName: string, fileName: string): void {
-    console.log(sheetName);
     // Your existing export logic here
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -93,10 +92,5 @@ export class LoadingServiceService {
     });
 
     saveAs(excelBlob, fileName);
-  }
-
-  private saveFile(blob: Blob, fileName: string): void {
-    // You can implement the file saving logic here
-    // For example, using the `saveAs` library
   }
 }

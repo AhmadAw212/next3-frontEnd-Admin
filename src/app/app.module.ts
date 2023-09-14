@@ -154,6 +154,7 @@ import { TowingConditionComponent } from './components/call-center/towing-condit
 import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
 import { AddTowingCompanyComponent } from './components/call-center/towing-condition/add-towing-company/add-towing-company.component';
 import { UsersActivityComponent } from './components/call-center/users-activity/users-activity.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -301,6 +302,7 @@ import { UsersActivityComponent } from './components/call-center/users-activity/
     FontAwesomeModule,
     MatProgressSpinnerModule,
     NgxEditorModule,
+    NgChartsModule,
   ],
   providers: [
     // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },d

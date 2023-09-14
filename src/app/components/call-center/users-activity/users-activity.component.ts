@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Chart, ChartOptions } from 'chart.js';
 import { tap } from 'rxjs';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { CoreProfile } from 'src/app/model/core-profile';
@@ -23,8 +24,8 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
   dico?: any;
   userActivity: UserActivity[] = [];
   searchTypes?: type[];
-  fromDate: Date = new Date();
-  toDate?: Date = new Date();
+  fromDate: any = new Date();
+  toDate: any = new Date();
   user: string = '';
   type: string = '';
   selectedCompany: string = '1';
@@ -32,12 +33,23 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
   users: any[] = [];
   selectedProfile?: CoreProfile;
   userCompany?: string;
-  pageSize: number = 5;
+  pageSize: number = 20;
   pageNumber: number = 1;
   totalPages?: number;
-  currentPage: number = 1;
-  // totalItems?: number;
+  // currentPage: number = 1;
+  totalItems?: number;
   isUsingSearchCriteria?: boolean;
+  selectedCompanyActivity?: string;
+  // Pie
+  pieChartOptions: ChartOptions = {
+    responsive: true,
+    aspectRatio: 2, // Adjust this value to change the aspect ratio
+  };
+  pieChartLabels: any[] = []; // This will hold the userCodes
+  pieChartData: number[] = []; // This will hold the activityDates
+  pieChartLegend = true;
+  pieChartPlugins = [];
+  userData?: any;
   constructor(
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
@@ -57,13 +69,75 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
     this.getCompaniesPerUser();
     this.getCallCenterUsers();
     this.getCompany();
+    this.userRolesService.getUserRoles();
+  }
+  selectedCompanyAct(event: any) {
+    this.selectedCompanyActivity = event;
+    this.getUsersActivityByInsComp();
+    console.log(this.selectedCompanyActivity);
   }
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    if (this.isUsingSearchCriteria) {
-      this.getUserActivityOpenedNotifications();
-    }
+
+    this.getUserActivityOpenedNotifications();
+  }
+  public chart: any;
+
+  createChart(data: any) {
+    this.pieChartLabels = this.userData.map((item: any) => item.userCode);
+    this.pieChartData = this.userData.map(
+      (item: any) => item.notificationsCount
+    );
+    console.log(this.pieChartLabels, this.pieChartData);
+    this.chart = new Chart('MyChart', {
+      type: 'pie',
+      // type: 'doughnut',
+      data: {
+        labels: [this.pieChartLabels],
+        datasets: [
+          {
+            // label: 'Area and Production of Important Crops (2020-21)',
+            data: [this.pieChartData],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)',
+              'rgb(75, 192, 192)',
+              'rgb(153, 102, 255)',
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+        plugins: {
+          title: {
+            display: true,
+            // text: 'Area and Production of Important Crops (2020-21)',
+            font: {
+              size: 24,
+              weight: 'bold',
+              family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            },
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
+          legend: {
+            display: true,
+            labels: {
+              font: {
+                size: 14,
+                family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+              },
+            },
+          },
+        },
+      },
+    });
   }
   getCompany() {
     this.selectedProfile = this.sharedService.getSelectedProfile()!;
@@ -127,7 +201,12 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
     this.dataService.getCallCenterUsers(this.selectedCompany).subscribe({
       next: (res) => {
         this.users = res.data;
-        console.log(this.users);
+        const all = {
+          c: 'ALLusers',
+          d: 'ALL',
+        };
+        this.users.push(all);
+        // console.log(this.users);
       },
       error: (err) => {
         console.log(err);
@@ -136,22 +215,35 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
   }
   getUserActivityOpenedNotifications() {
     this.isUsingSearchCriteria = true;
-    const toDateFormat = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
-    const formDateFormat = this.datePipe.transform(this.fromDate, 'yyyy-MM-dd');
-    // console.log(toDateFormat);
+
+    // Check if toDate is undefined and set it to null
+    const toDateFormat =
+      this.toDate !== undefined
+        ? this.datePipe.transform(this.toDate, 'yyyy-MM-dd')
+        : '';
+    console.log(toDateFormat);
+    // Check if fromDate is undefined and set it to null
+    const formDateFormat =
+      this.fromDate !== undefined
+        ? this.datePipe.transform(this.fromDate, 'yyyy-MM-dd')
+        : '';
+
     this.dataService
       .getUserActivityOpenedNotifications(
         this.selectedCompany,
         this.user,
         formDateFormat!,
         toDateFormat!,
-        this.type
+        this.type,
+        this.pageNumber,
+        this.pageSize
       )
       .subscribe({
         next: (res) => {
-          this.userActivity = res.data;
-          // this.totalPages = res.data.totalPages;
-          console.log(this.totalPages);
+          this.userActivity = res.data.data;
+          this.totalPages = res.data.totalPages;
+          this.totalItems = res.data.totalItems;
+
           console.log(res);
         },
         error: (err) => {
@@ -191,5 +283,19 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
       'User Activity',
       'User_Activity.xlsx'
     );
+  }
+
+  getUsersActivityByInsComp() {
+    this.dataService
+      .getUsersActivityByInsComp(this.selectedCompanyActivity!)
+      .subscribe({
+        next: (res) => {
+          this.userData = res.data;
+          this.createChart(this.userData);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }
