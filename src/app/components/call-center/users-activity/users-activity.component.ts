@@ -43,7 +43,7 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
   // Pie
   pieChartOptions: ChartOptions = {
     responsive: true,
-    aspectRatio: 2, // Adjust this value to change the aspect ratio
+    aspectRatio: 3, // Adjust this value to change the aspect ratio
   };
   pieChartLabels: any[] = []; // This will hold the userCodes
   pieChartData: number[] = []; // This will hold the activityDates
