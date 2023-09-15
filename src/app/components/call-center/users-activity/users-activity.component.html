@@ -22,13 +22,14 @@
               [label]="dico?.dico_company"
             ></app-companies-dropdown>
           </div>
-          <div style="display: block" class="mt-3">
+          <div style="display: block">
             <canvas
+              #pieChart
               baseChart
               [type]="'pie'"
               [datasets]="[{ data: pieChartData }]"
               [labels]="pieChartLabels"
-              [options]="pieChartOptions"
+              [options]="pieChartOption"
               [plugins]="pieChartPlugins"
               [legend]="pieChartLegend"
             ></canvas>
