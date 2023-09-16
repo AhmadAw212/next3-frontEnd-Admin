@@ -48,34 +48,29 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
   isUsingSearchCriteria?: boolean;
   selectedCompanyActivity?: string;
   // Pie
-
   pieChartLabels: string[] = []; // This will hold the userCodes
   pieChartData: number[] = []; // This will hold the activityDates
   pieChartLegend = true;
   pieChartPlugins: any[] = [];
   userData: any[] = [];
-  @ViewChild('pieChart', { static: false })
+  @ViewChild('pieChart')
   pieChart!: ElementRef<HTMLCanvasElement>;
 
   chart: Chart | null = null;
   pieChartOption: ChartOptions = {
     responsive: true,
-    aspectRatio: 2.8,
-
+    aspectRatio: 3.0,
+    layout: {
+      padding: 30,
+    },
     plugins: {
       datalabels: {
-        formatter: (value, ctx) => {
-          // Check if the value is 0, and return an empty string for those data points
-          if (value === 0) {
-            return '';
-          }
-          return value.toString();
-        },
         labels: {
           title: {
             anchor: 'end',
             align: 'end',
-            padding: 10,
+
+            // padding: 10,
             font: {
               weight: 'bold',
               size: 14,
@@ -83,6 +78,9 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
           },
           // Set the font to bold
         },
+      },
+      legend: {
+        position: 'right',
       },
     },
   };
@@ -109,12 +107,9 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
     this.getCompany();
     this.userRolesService.getUserRoles();
   }
-  selectedCompanyAct(event: any) {
+  async selectedCompanyAct(event: any) {
     this.selectedCompanyActivity = event;
-
-    this.getUsersActivityByInsComp();
-
-    // console.log(this.selectedCompanyActivity);
+    await this.getUsersActivityByInsComp();
   }
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex + 1;
@@ -136,13 +131,6 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.pieChartLabels = data.map((item: any) => item.displayName);
-    this.pieChartData = data.map((item: any) => item.notificationsCount);
-    const labelsWithCount = this.pieChartLabels.map(
-      (label, index) => `${label}: ${this.pieChartData[index]}`
-    );
-    this.pieChartLabels = labelsWithCount;
-
     const config: ChartConfiguration = {
       type: 'pie',
       data: {
@@ -162,6 +150,7 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
 
     if (pieChart !== null) {
       pieChart.destroy();
+      this.chart = null;
     }
   }
 
@@ -320,17 +309,22 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
     );
   }
 
-  getUsersActivityByInsComp() {
-    this.dataService
-      .getUsersActivityByInsComp(this.selectedCompanyActivity!)
-      .subscribe({
-        next: (res) => {
-          this.userData = res.data;
-          this.createChart(this.userData);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+  async getUsersActivityByInsComp() {
+    try {
+      const res = await this.dataService
+        .getUsersActivityByInsComp(this.selectedCompanyActivity!)
+        .toPromise();
+      this.userData = res?.data;
+      this.pieChartLabels = this.userData.map((item: any) => item.displayName);
+      this.pieChartData = this.userData.map(
+        (item: any) => item.notificationsCount
+      );
+      const labelsWithCount = this.pieChartLabels.map(
+        (label, index) => `${label}: ${this.pieChartData[index]}`
+      );
+      this.pieChartLabels = labelsWithCount;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

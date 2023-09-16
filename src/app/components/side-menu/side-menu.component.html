@@ -22,7 +22,11 @@
         >
           {{ dico?.dico_towing_condition || "dico_towing_condition" }}
         </a>
-        <a mat-list-item routerLink="/profiles-main/CallCenter/usersActivity">
+        <a
+          mat-list-item
+          routerLink="/profiles-main/CallCenter/usersActivity"
+          *ngIf="hasPerm('ccUserActivity')"
+        >
           {{ dico?.dico_user_activity || "dico_user_activity" }}
         </a>
         <a

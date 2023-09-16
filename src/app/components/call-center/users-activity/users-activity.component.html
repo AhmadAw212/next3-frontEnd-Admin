@@ -22,9 +22,8 @@
               [label]="dico?.dico_company"
             ></app-companies-dropdown>
           </div>
-          <div style="display: block">
+          <div style="display: block" *ngIf="userData.length > 0; else noData">
             <canvas
-              #pieChart
               baseChart
               [type]="'pie'"
               [datasets]="[{ data: pieChartData }]"
@@ -32,8 +31,18 @@
               [options]="pieChartOption"
               [plugins]="pieChartPlugins"
               [legend]="pieChartLegend"
+              #pieChart
             ></canvas>
           </div>
+          <ng-template #noData>
+            <div class="text-center">
+              <p style="font-weight: bold; font-size: 13px">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </p>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
