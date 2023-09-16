@@ -65,6 +65,13 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
     },
     plugins: {
       datalabels: {
+        formatter: (value, ctx) => {
+          // Check if the value is 0, and return an empty string for those data points
+          if (value === 0) {
+            return '';
+          }
+          return value.toString();
+        },
         labels: {
           title: {
             anchor: 'end',
@@ -320,7 +327,7 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
         (item: any) => item.notificationsCount
       );
       const labelsWithCount = this.pieChartLabels.map(
-        (label, index) => `${label}: ${this.pieChartData[index]}`
+        (label, index) => `${label} : ${this.pieChartData[index]}`
       );
       this.pieChartLabels = labelsWithCount;
     } catch (err) {
