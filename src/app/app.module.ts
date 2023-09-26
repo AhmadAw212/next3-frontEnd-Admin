@@ -155,6 +155,17 @@ import { CompaniesDropdownComponent } from './components/companies-dropdown/comp
 import { AddTowingCompanyComponent } from './components/call-center/towing-condition/add-towing-company/add-towing-company.component';
 import { UsersActivityComponent } from './components/call-center/users-activity/users-activity.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NewHotlineComponent } from './components/call-center/new-hotline/new-hotline.component';
+import { NewHotlineBtnComponent } from './components/call-center/new-hotline-btn/new-hotline-btn.component';
+import { CreateNoDataDialogComponent } from './components/call-center/new-hotline/create-no-data-dialog/create-no-data-dialog.component';
+import { ChangeToAvailableDataComponent } from './components/call-center/new-hotline/change-to-available-data/change-to-available-data.component';
+import { AppExpertDispatchDialogComponent } from './components/call-center/new-hotline/app-expert-dispatch-dialog/app-expert-dispatch-dialog.component';
+import { ChooseManuallyComponent } from './components/call-center/new-hotline/choose-manually/choose-manually.component';
+import { AddBodilyInjuryDialogComponent } from './components/call-center/new-hotline/add-bodily-injury-dialog/add-bodily-injury-dialog.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { CustomerSatisfactionDialogComponent } from './components/call-center/new-hotline/customer-satisfaction-dialog/customer-satisfaction-dialog.component';
+import { SecondExpertDialogComponent } from './components/call-center/new-hotline/second-expert-dialog/second-expert-dialog.component';
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -264,6 +275,16 @@ import { NgChartsModule } from 'ng2-charts';
     CompaniesDropdownComponent,
     AddTowingCompanyComponent,
     UsersActivityComponent,
+    NewHotlineComponent,
+    NewHotlineBtnComponent,
+    CreateNoDataDialogComponent,
+    ChangeToAvailableDataComponent,
+    AppExpertDispatchDialogComponent,
+    ChooseManuallyComponent,
+    AddBodilyInjuryDialogComponent,
+    PaginatorComponent,
+    SecondExpertDialogComponent,
+    CustomerSatisfactionDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -291,6 +312,7 @@ import { NgChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
+    MatSliderModule,
     FormsModule,
     MatDialogModule,
     MatPaginatorModule,

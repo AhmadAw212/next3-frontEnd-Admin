@@ -1,0 +1,69 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_tema_exp_disp || "dico_tema_exp_disp" }}</h2>
+</div>
+
+<div class="container">
+  <div class="row p-3">
+    <div class="col-md-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="mb-0">{{
+          dico?.dico_notification || "dico_notification"
+        }}</label>
+        <input class="form-control ms-5" [value]="notification" disabled />
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="mb-0">{{ dico?.dico_city || "dico_city" }}</label>
+        <input class="form-control ms-5" [value]="city" disabled />
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-3">
+    <div class="col-md-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="mb-0">{{ dico?.dico_company || "dico_company" }}</label>
+        <select
+          name="insuranceCode"
+          id="insuranceCode"
+          class="form-select ms-3"
+          [ngModel]="insuranceId"
+          disabled
+        >
+          <option
+            *ngFor="let insurance of companies"
+            [value]="insurance.companyId"
+          >
+            {{ insurance.companyName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="mb-0">{{ dico?.dico_expert || "dico_expert" }}</label>
+        <input class="form-control ms-4" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-3">
+    <div class="col-md-7">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="mb-0">{{ dico?.dico_note || "dico_note" }}</label>
+        <input class="form-control ms-5" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2">Save</button>
+        <button class="button-class">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

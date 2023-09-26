@@ -1,0 +1,421 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_change_avai_data || "dico_change_avai_data" }}
+</h2>
+
+<div class="grid-container panel-class-style">
+  <div class="p-3">
+    <div class="panel row mb-3 container-class">
+      <div class="col-md-3">
+        <label for="plateChar" class="form-label">{{
+          dico?.dico_plate_char || "dico_plate_char"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="plateChar"
+          name="plateChar"
+          [value]="distributionNoDataPlateB"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="plate" class="form-label">{{
+          dico?.dico_plate || "dico_plate"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="plate"
+          name="plate"
+          [value]="distributionNoDataPlate"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="policy" class="form-label">{{
+          dico?.dico_policy || "dico_policy"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="policy"
+          name="policy"
+          [value]="distributionNoDataPolicy"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="name" class="form-label">{{
+          dico?.dico_name || "dico_name"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [value]="distributionNoDataName"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="note" class="form-label">{{
+          dico?.dico_note || "dico_note"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="note"
+          name="note"
+          [value]="distributionNoDataRemarks"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="note" class="form-label">{{
+          dico?.dico_effective_date || "dico_effective_date"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="note"
+          name="note"
+          [value]="distributionNoDataEffDate"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="note" class="form-label">{{
+          dico?.dico_expiry_date || "dico_expiry_date"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="note"
+          name="note"
+          [value]="distributionNoDataExpDate"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="note" class="form-label">{{
+          dico?.dico_car_make || "dico_car_make"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="note"
+          name="note"
+          [value]="distributionNoDataCarBrand"
+          disabled
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="note" class="form-label">{{
+          dico?.dico_broker || "dico_broker"
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="note"
+          name="note"
+          [value]="distributionNoDataBroker"
+          disabled
+        />
+      </div>
+    </div>
+    <form (ngSubmit)="saveData()">
+      <div class="panel row container-class">
+        <div class="row mb-5">
+          <h2 style="font-size: medium">
+            {{ dico?.dico_policy_information || "dico_policy_information" }}
+          </h2>
+        </div>
+        <div class="grid-container">
+          <div class="row">
+            <div class="col-md-3 me-3">
+              <label for="searchBy" class="form-label">
+                {{ dico?.dico_search_by || "dico_search_by" }}</label
+              >
+              <select
+                name="searchBy"
+                id="searchBy"
+                class="form-select"
+                [(ngModel)]="iSearchBy"
+              >
+                <option
+                  *ngFor="let policy of policySearch"
+                  [value]="policy.code"
+                >
+                  {{ policy.description }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-3 me-3">
+              <label for="searchValue" class="form-label">
+                {{ dico?.dico_search_value || "dico_search_value" }}</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="searchValue"
+                name="searchValue"
+                [(ngModel)]="iSearchValue"
+              />
+            </div>
+
+            <div class="col-md-3">
+              <label for="asOfDate" class="form-label">
+                {{ dico?.dico_as_of_date || "dico_as_of_date" }}</label
+              >
+
+              <input
+                type="text"
+                id="asOfDate"
+                name="asOfDate"
+                class="form-control"
+                bsDatepicker
+                [(ngModel)]="iAsOfDate"
+                [bsConfig]="{
+                  dateInputFormat: 'DD/MM/YYYY',
+                  containerClass: 'theme-dark-blue',
+                  showWeekNumbers: false
+                }"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 me-3">
+              <label for="" class="form-label">
+                {{ dico?.dico_policy_type || "dico_policy_type" }}</label
+              >
+              <select
+                name="policyType"
+                id="policyType"
+                class="form-select"
+                [(ngModel)]="iPolicyType"
+              >
+                <option
+                  *ngFor="let policy of policyTypes"
+                  [value]="policy.code"
+                >
+                  {{ policy.description }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-3 me-3">
+              <label for="insuranceCode" class="form-label">
+                {{ dico?.dico_insurance || "dico_insurance" }}</label
+              >
+              <select
+                name="insuranceCode"
+                id="insuranceCode"
+                class="form-select"
+                [(ngModel)]="insuranceCode"
+                disabled
+              >
+                <option
+                  *ngFor="let insurance of companies"
+                  [value]="insurance.companyId"
+                >
+                  {{ insurance.companyName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-3 m-4">
+              <button
+                type="button"
+                class="button-class"
+                (click)="searchPolicy()"
+              >
+                {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row container-class mt-2">
+        <div class="row mb-5">
+          <div class="panel">
+            <div class="flip-card" *ngFor="let policy of searchPolicyData">
+              <div
+                class="flip-card-inner"
+                [class.flip]="isFlipped"
+                (click)="toggleFlip()"
+              >
+                <div class="flip-card-front">
+                  <!-- Front content goes here -->
+                  <div class="front-content" *ngIf="!isFlipped">
+                    <div class="row">
+                      <div class="col-md-7">
+                        <span class="label-color">{{
+                          policy?.clientName
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-4">
+                        <img src="" alt="" />
+                      </div>
+
+                      <div class="col-md-4">
+                        <p>{{ policy?.carPlate }}</p>
+
+                        <p
+                          *ngIf="policy?.trademarkDescription === 'Not Listed'"
+                        >
+                          {{ policy?.brandDescription }}
+                        </p>
+
+                        <p
+                          *ngIf="policy?.trademarkDescription !== 'Not Listed'"
+                        >
+                          {{ policy?.brandDescription }}.{{
+                            policy?.trademarkDescription
+                          }}
+                        </p>
+
+                        <p>
+                          {{ policy?.carYear }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="row p-2">
+                      <div class="col-md-4">
+                        <p>
+                          {{ policy?.policyTypeDesc }}-{{
+                            policy?.productsCode
+                          }}
+                        </p>
+                        <p>
+                          {{ dico?.dico_expiry_date || "dico_expiry_date" }}
+                        </p>
+                        <p>{{ dico?.dico_issue_date || "dico_issue_date" }}</p>
+                      </div>
+
+                      <div class="col-md-4">
+                        <p>{{ policy?.amendmentDesc }}</p>
+                        <p>
+                          {{
+                            policy?.policyExpiryDate
+                              ? dateFormat("reportDateFormat") !== null
+                                ? (policy?.policyExpiryDate
+                                  | date : dateFormat("reportDateFormat"))
+                                : "N/A"
+                              : "N/A"
+                          }}
+                        </p>
+                        <p>
+                          {{
+                            policy?.policyIssueDate
+                              ? dateFormat("reportDateFormat") !== null
+                                ? (policy?.policyIssueDate
+                                  | date : dateFormat("reportDateFormat"))
+                                : "N/A"
+                              : "N/A"
+                          }}
+                        </p>
+
+                        <p *ngIf="polserno === 'true'">
+                          {{
+                            policy?.policyPolserno !== null
+                              ? policy?.policyPolserno
+                              : "N/A"
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flip-card-back">
+                  <!-- Back content goes here -->
+                  <div class="back-content" *ngIf="isFlipped">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <span class="label-color">{{
+                          policy?.clientName
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_policy_number || "dico_policy_number"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.policyNumber }}</p>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_policy_amendment || "dico_policy_amendment"
+                        }}</label>
+                        <p class="ms-4">
+                          {{
+                            policy?.policyAmendment === 0
+                              ? policy?.policyCar
+                              : policy?.policyAmendment
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_car_chassis || "dico_car_chassis"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.carChassis }}</p>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_branch || "dico_branch"
+                        }}</label>
+                        <p class="ms-4">
+                          {{ policy?.branchCode }} - {{ policy?.branchDesc }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_broker_name || "dico_broker_name"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.brokerName }}</p>
+                      </div>
+                    </div>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_effective_date || "dico_effective_date"
+                        }}</label>
+                        <p class="ms-4">
+                          {{
+                            policy?.policyEffectiveDate
+                              | date : dateFormat("reportDateFormat")
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-20">
+          <button type="submit" class="button-class" style="float: right">
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

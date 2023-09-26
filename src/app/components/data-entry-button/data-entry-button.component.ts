@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,5 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./data-entry-button.component.css'],
 })
 export class DataEntryButtonComponent {
+  @Input() buttonText: string = 'Data Entry';
+  @Input() notificationId: string | undefined;
   constructor(private router: Router) {}
+
+  navigateToDataEntry() {
+    if (this.notificationId) {
+      const componentRoute = `dataEntryView/${this.notificationId}`;
+      this.router.navigateByUrl(componentRoute);
+    }
+  }
 }

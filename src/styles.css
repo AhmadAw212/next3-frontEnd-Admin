@@ -10,6 +10,7 @@ html, body {
   font-size: 11px;
   font-weight: normal;
   font-family: 'Open Sans 300', sans-serif;
+ background-color:  #f5f5f5 !important;
   /* max-height: 766px; */
   /* min-height: 766px; */
 }
@@ -26,7 +27,13 @@ table thead {
   
 }
 
-
+.container-class{
+  border-color: #bfc6c9; 
+  background-color: #ffffff
+}
+.panel-class-style{
+  background-color: #eff2f5; border-color: #bfc6c9
+}
 .bs-datepicker-body table thead {
   top: 0;
   position: relative;
@@ -189,6 +196,20 @@ label{
 .column {
   width: 20%;
   margin-right: 20px;
+}
+.button-class {
+  text-decoration: none;
+  cursor: default;
+  display: block;
+  white-space: nowrap;
+  padding: 5px 8px 4px 8px;
+  color: #ffffff;
+  min-width: 38px;
+  text-align: center;
+  background-color: #0674cb;
+  border: 0;
+  border-radius: 0;
+  text-shadow: 0 0 0 #ffffff;
 }
 .label-color{
   color: #0674CB !important;

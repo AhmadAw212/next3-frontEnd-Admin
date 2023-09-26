@@ -1,0 +1,213 @@
+<h2 style="margin: 10px; font-size: large">
+  {{ dico?.dico_create_no_data || "dico_create_no_data" }}
+</h2>
+<div class="grid-container panel-class-style">
+  <form [formGroup]="myForm" (ngSubmit)="save()">
+    <div class="p-3">
+      <div class="panel row mb-3 container-class">
+        <div class="col-md-2">
+          <label for="noData">{{ dico?.dico_no_data || "dico_no_data" }}</label>
+          <input
+            type="checkbox"
+            class="form-check-input ms-3"
+            id="noData"
+            name="noData"
+            formControlName="noData"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="type" class="form-label">{{
+              dico?.dico_type || "dico_type"
+            }}</label>
+            <select
+              name="type"
+              id="type"
+              class="form-select"
+              formControlName="type"
+            >
+              <option *ngFor="let noData of noDataType" [value]="noData.code">
+                {{ noData.description }}
+              </option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="user" class="form-label">{{
+              dico?.dico_user || "dico_user"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="user"
+              name="user"
+              formControlName="user"
+            />
+            <!-- Add validation messages here if needed -->
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="date" class="form-label">{{
+              dico?.dico_date || "dico_date"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="date"
+              id="date"
+              name="date"
+            />
+            <!-- Add validation messages here if needed -->
+          </div>
+        </div>
+      </div>
+      <div class="panel row container-class">
+        <div class="row mb-3">
+          <div class="col-md-3 me-4">
+            <label for="plateChar" class="form-label">{{
+              dico?.dico_plate_char || "dico_plate_char"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="plateChar"
+              name="plateChar"
+              formControlName="plateChar"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="plate" class="form-label">{{
+              dico?.dico_plate || "dico_plate"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="plate"
+              name="plate"
+              formControlName="plate"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-3 me-4">
+            <label for="policy" class="form-label">{{
+              dico?.dico_policy || "dico_policy"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="policy"
+              name="policy"
+              formControlName="policy"
+            />
+          </div>
+          <div class="col-md-3 me-4">
+            <label for="effDate" class="form-label">{{
+              dico?.dico_effective_date || "dico_effective_date"
+            }}</label>
+            <input
+              type="text"
+              id="effDate"
+              name="effDate"
+              class="form-control"
+              formControlName="effDate"
+              bsDatepicker
+              [bsConfig]="{
+                dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                containerClass: 'theme-dark-blue',
+                showWeekNumbers: false
+              }"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="expDate" class="form-label">{{
+              dico?.dico_expiry_date || "dico_expiry_date"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="expDate"
+              name="expDate"
+              formControlName="expDate"
+              bsDatepicker
+              [bsConfig]="{
+                dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                containerClass: 'theme-dark-blue',
+                showWeekNumbers: false
+              }"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 me-4">
+            <label for="name" class="form-label">{{
+              dico?.dico_name || "dico_name"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              formControlName="name"
+            />
+          </div>
+          <div class="col-md-3 me-4">
+            <label for="carMake" class="form-label">{{
+              dico?.dico_car_make || "dico_car_make"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carMake"
+              name="carMake"
+              formControlName="carMake"
+            />
+          </div>
+          <div class="col-md-3 me-4">
+            <label for="broker" class="form-label">{{
+              dico?.dico_broker || "dico_broker"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broker"
+              name="broker"
+              formControlName="broker"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="note" class="form-label">{{
+              dico?.dico_note || "dico_note"
+            }}</label>
+            <textarea
+              name="note"
+              class="form-control"
+              id="note"
+              cols="0"
+              rows="5"
+              id="note"
+              name="note"
+              formControlName="note"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-20">
+        <button type="submit" class="button-class" style="float: right">
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

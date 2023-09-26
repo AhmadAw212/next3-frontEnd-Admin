@@ -7,6 +7,7 @@ import { AuthGuard } from './shared/auth.guard';
 
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
+import { NewHotlineComponent } from './components/call-center/new-hotline/new-hotline.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -55,6 +56,11 @@ const routes: Routes = [
   {
     path: 'sendEmail/:carId',
     component: SendEmailComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'hotline/:notificationId',
+    component: NewHotlineComponent,
     canActivate: [AuthGuard],
   },
 ];

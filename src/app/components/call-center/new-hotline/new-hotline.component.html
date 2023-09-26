@@ -1,0 +1,863 @@
+<app-login-nav></app-login-nav>
+<app-navbar></app-navbar>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <button type="submit">Save</button>
+  <div class="container-fluid container-class">
+    <div class="panel row">
+      <div class="col-md-3">
+        <div
+          class="card mb-3"
+          style="background-color: #eff2f5; border-color: #bfc6c9"
+        >
+          <div class="card-body">
+            <div class="row">
+              <span class="label-color">{{
+                dico?.dico_policy_information || "dico_policy_information"
+              }}</span>
+            </div>
+            <div class="row p-3">
+              <div class="col-md-4">
+                <label>{{
+                  dico?.dico_policy_number || "dico_policy_number"
+                }}</label>
+                <p>{{ policyData?.policyNumber }}</p>
+              </div>
+              <div class="col-md-4">
+                <label>{{ dico?.dico_endorsment || "dico_endorsment" }}</label>
+                <p>
+                  {{
+                    policyData?.policyAmendment === 0
+                      ? policyData?.policyCar
+                      : policyData?.policyAmendment
+                  }}
+                </p>
+              </div>
+              <!-- *ngIf="coreConfig.polserno ==='true' " -->
+              <div class="col-md-4" *ngIf="polserno === 'true'">
+                <label>{{ dico?.dico_polserno || "dico_polserno" }}</label>
+                <p>{{ policyData?.policyIdIns }}</p>
+              </div>
+            </div>
+            <!-- *ngIf="coreConfig.ccBrokerValid ==='true' " -->
+            <ng-container *ngIf="ccBrokerValid === 'true'">
+              <div class="row p-3">
+                <div class="col-md-4">
+                  <label
+                    >{{ dico?.dico_broker_name || "dico_broker_name" }}
+                  </label>
+                  <p>{{ policyData?.brokerDesc }}</p>
+                </div>
+                <div class="col-md-4">
+                  <label>{{
+                    dico?.dico_broker_phone || "dico_broker_phone"
+                  }}</label>
+                  <p>{{ policyData?.brokerTelephone }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <div class="row p-3">
+              <div class="col-md-4">
+                <label
+                  >{{ dico?.dico_effective_date || "dico_effective_date" }}
+                </label>
+                <p>
+                  {{
+                    policyData?.policyEffectiveDate
+                      | date : dateFormat("reportDateFormat")
+                  }}
+                </p>
+              </div>
+              <div class="col-md-4">
+                <label>{{
+                  dico?.dico_expiry_date || "dico_expiry_date"
+                }}</label>
+                <p>
+                  {{
+                    policyData?.policyExpiryDate
+                      | date : dateFormat("reportDateFormat")
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="row p-3">
+              <!-- *ngIf="coreConfig.policyInfoTypeShow ==='TYPE_CODE' " -->
+
+              <div class="col-md-4" *ngIf="policyInfoTypeShow === 'TYPE_CODE'">
+                <label
+                  >{{ dico?.dico_policy_type || "dico_policy_type" }}
+                </label>
+                <p>
+                  {{ policyData?.productsType }} -
+                  {{ policyData?.productsCode }}
+                </p>
+              </div>
+
+              <!-- *ngIf="coreConfig.policyInfoTypeShow ==='TYPE' " -->
+              <div class="col-md-4" *ngIf="policyInfoTypeShow === 'TYPE'">
+                <label
+                  >{{ dico?.dico_policy_type || "dico_policy_type" }}
+                </label>
+                <p>{{ policyData?.productsType }}</p>
+              </div>
+              <!-- *ngIf="coreConfig.policyInfoTypeShow ==='CODE' " -->
+              <div class="col-md-4" *ngIf="policyInfoTypeShow === 'CODE'">
+                <label
+                  >{{ dico?.dico_policy_type || "dico_policy_type" }}
+                </label>
+                <p>{{ policyData?.productsCode }}</p>
+              </div>
+
+              <!-- *ngIf="coreConfig.ccRepFlag ==='true' " -->
+              <div class="col-md-4" *ngIf="ccRepFlag === 'true'">
+                <label>{{
+                  dico?.dico_car_replacement || "dico_car_replacement"
+                }}</label>
+                <p>{{ policyData?.policyReplacementFlag }}</p>
+              </div>
+              <!-- *ngIf="coreConfig.ccTowFlag ==='true' " -->
+              <div class="col-md-4" *ngIf="ccTowFlag === 'true'">
+                <label>{{
+                  dico?.dico_tow_allowed || "dico_tow_allowed"
+                }}</label>
+                <p>{{ policyData?.policyTowFlag }}</p>
+              </div>
+            </div>
+            <div class="row p-3">
+              <div
+                class="col-md-8 d-flex align-items-center justify-content-start"
+                *ngIf="policyData?.policyExpired === 'Y'"
+              >
+                <mat-icon>warning</mat-icon>
+                <label class="warning-class">{{
+                  dico?.dico_policy_expired || "dico_policy_expired"
+                }}</label>
+              </div>
+              <div
+                class="col-md-8 d-flex align-items-center justify-content-start"
+                *ngIf="policyData?.policyDeleted === 'Y'"
+              >
+                <mat-icon>warning</mat-icon>
+                <label class="warning-class">{{
+                  dico?.dico_policy_deleted || "dico_policy_deleted"
+                }}</label>
+              </div>
+              <div
+                class="col-md-8 d-flex align-items-center justify-content-start"
+                *ngIf="policyData?.policyCanceled === 'Y'"
+              >
+                <mat-icon>warning</mat-icon>
+                <label class="warning-class">{{
+                  dico?.dico_policy_canceled || "dico_policy_canceled"
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          class="card mb-3"
+          style="background-color: #eff2f5; border-color: #bfc6c9"
+        >
+          <div class="card-body">
+            <span class="label-color">{{
+              dico?.dico_vehicle_insured_information ||
+                "dico_vehicle_insured_information"
+            }}</span>
+            <div class="row p-3">
+              <div class="col-md-4">
+                <div class="col-md-4" *ngIf="hasPerm('ccAdmin')">
+                  <img
+                    [matTooltip]="
+                      dico?.dico_fill_no_data || 'dico_fill_no_data'
+                    "
+                    matTooltipPosition="right"
+                    src="./assets/icons/ellipsis.png"
+                    alt=""
+                    style="height: 14px; width: 14px"
+                    [ngClass]="{
+                      'disabled-image': shouldDisableNoData()
+                    }"
+                    (click)="createNoDataDialog()"
+                  />
+                </div>
+
+                <ng-container *ngIf="hasPerm('ccAdmin')">
+                  <img
+                    [matTooltip]="
+                      dico?.dico_change_avai_data || 'dico_change_avai_data'
+                    "
+                    matTooltipPosition="right"
+                    src="./assets/icons/edit.png"
+                    alt=""
+                    style="height: 14px; width: 14px"
+                    [ngClass]="{
+                      'disabled-image': shouldDisableEdit()
+                    }"
+                    (click)="changeToAvaiDataDialog()"
+                  />
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="row p-3">
+              <div class="col-md-4">
+                <label>{{ dico?.dico_car_brand || "dico_car_brand" }}</label>
+                <p>{{ policyData?.brandDescription }}</p>
+              </div>
+              <div class="col-md-4">
+                <label>{{
+                  dico?.dico_car_trademark || "dico_car_trademark"
+                }}</label>
+                <p>{{ policyData?.trademarkDescription }}</p>
+              </div>
+            </div>
+
+            <div
+              class="row p-3"
+              *ngIf="
+                policyData?.brandId === 'ZZ' ||
+                policyData?.carTrademarkCode === 'ZZZZ'
+              "
+            >
+              <div class="col-md-4" *ngIf="policyData?.brandId === 'ZZ'">
+                <label>{{ dico?.dico_car_brand || "dico_car_brand" }}</label>
+                <p>{{ policyData?.carBrandDesc }}</p>
+              </div>
+              <div
+                class="col-md-4"
+                *ngIf="policyData?.carTrademarkCode === 'ZZZZ'"
+              >
+                <label>{{
+                  dico?.dico_car_trademark || "dico_car_trademark"
+                }}</label>
+                <p>{{ policyData?.carTrademarkDesc }}</p>
+              </div>
+            </div>
+
+            <div
+              class="row p-3"
+              *ngIf="policyData?.brandLogo || policyData?.trademarkLogo"
+            >
+              <div class="col-md-4">
+                <img
+                  [src]="'data:image/jpeg;base64,' + policyData?.brandLogo"
+                  alt=""
+                  style="width: 60px"
+                  class="car-logo"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <img
+                  [src]="'data:image/jpeg;base64,' + policyData?.trademarkLogo"
+                  alt=""
+                  style="width: 60px"
+                  class="car-logo"
+                />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-md-4">
+                <img src="./assets/icons/number.png" alt="" />
+                <p>{{ policyData?.carPlate }}</p>
+              </div>
+
+              <div class="col-md-4">
+                <label>{{ dico?.dico_car_yom || "dico_car_yom" }}</label>
+                <p>{{ policyData?.carYear }}</p>
+              </div>
+            </div>
+
+            <div class="row p-3">
+              <div class="col-md-4">
+                <label>{{
+                  dico?.dico_client_name || "dico_client_name"
+                }}</label>
+                <p>{{ policyData?.clientFullNameFromNotification }}</p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <table>
+                <thead [style.position]="'static'">
+                  <tr>
+                    <th>{{ dico?.dico_phone || "dico_phone" }}</th>
+                    <th>{{ dico?.dico_name || "dico_name" }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let contact of policyData?.carsContactsPhoneList">
+                    <td>{{ contact.contactsPhoneNumber }}</td>
+                    <td>{{ contact.contactsPhoneName }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div
+          class="card mb-3"
+          style="background-color: #eff2f5; border-color: #bfc6c9"
+        >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="label-color">
+                  {{
+                    dico?.dico_notification_information ||
+                      "dico_notification_information"
+                  }}
+                </span>
+              </div>
+
+              <!-- Phone Icon and Expert Contact -->
+              <ng-container *ngIf="showTelIcon === 'true'">
+                <div class="col-md-1">
+                  <div class="d-flex justify-content-center">
+                    <img
+                      src="./assets/icons/phone.png"
+                      alt=""
+                      [style.height]="'15px'"
+                      class="me-1"
+                    />
+                    <a
+                      [href]="
+                        'tel:' + telExtension + policyData?.expertMobilePhone
+                      "
+                      class="text-nowrap"
+                      [matTooltip]="policyData?.expertMobilePhone!"
+                    >
+                      {{ dico?.dico_expert || "dico_expert" }}
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Notification Contact Phone Icon and Link -->
+                <div class="col-md-1">
+                  <div class="d-flex">
+                    <img
+                      src="./assets/icons/phone.png"
+                      alt=""
+                      [style.height]="'15px'"
+                      class="me-1"
+                    />
+                    <a
+                      [matTooltip]="policyData?.notificationContactPhone!"
+                      [href]="
+                        'tel:' +
+                        telExtension +
+                        policyData?.notificationContactPhone
+                      "
+                      class="text-nowrap"
+                    >
+                      {{
+                        dico?.dico_notification_contact_phone ||
+                          "dico_notification_contact_phone"
+                      }}
+                    </a>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="row p-3">
+              <div class="col-md-3">
+                <label>{{ dico?.dico_loss_date || "dico_loss_date" }}</label>
+                <input
+                  type="text"
+                  name="lossDate"
+                  id="lossDate"
+                  class="form-control"
+                  bsDatepicker
+                  [bsConfig]="{
+                    dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                    containerClass: 'theme-dark-blue',
+                    showWeekNumbers: false
+                  }"
+                  formControlName="lossTowLossDate"
+                />
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_reported_date || "dico_reported_date"
+                }}</label>
+                <input
+                  type="text"
+                  class="form-control label-class"
+                  name="fromDate"
+                  id="fromDate"
+                  bsDatepicker
+                  [bsConfig]="{
+                    dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                    containerClass: 'theme-dark-blue',
+                    showWeekNumbers: false
+                  }"
+                  formControlName="notificationReportedDate"
+                />
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_reported_by || "dico_reported_by"
+                }}</label>
+                <select
+                  name="reportedBy"
+                  id="reportedBy"
+                  class="form-select"
+                  formControlName="lossTowReportedById"
+                >
+                  <option
+                    *ngFor="let report of reportedByData"
+                    [value]="report.code"
+                  >
+                    {{ report.description }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_contact_name || "dico_contact_name"
+                }}</label>
+                <input
+                  type="text"
+                  name="contactName"
+                  id="contactName"
+                  class="form-control"
+                  formControlName="notificationContactName"
+                />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_relation_to_owner || "dico_relation_to_owner"
+                }}</label>
+                <select
+                  name="relationToDriver"
+                  id="relationToDriver"
+                  class="form-select"
+                  formControlName="lossTowDriverRelationshipId"
+                >
+                  <option
+                    *ngFor="let relation of relationToOwnerData"
+                    [value]="relation.code"
+                  >
+                    {{ relation.description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_driver_name || "dico_driver_name"
+                }}</label>
+                <input
+                  type="text"
+                  name="driverName"
+                  id="driverName"
+                  class="form-control"
+                  formControlName="lossTowDriverName"
+                />
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_phone_number || "dico_phone_number"
+                }}</label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  class="form-control"
+                  formControlName="notificationContactPhone"
+                />
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_involved_vehicles || "dico_involved_vehicles"
+                }}</label>
+                <input
+                  type="number"
+                  name="involvedVehicles"
+                  id="involvedVehicles"
+                  class="form-control"
+                  formControlName="lossTowNbrVehInvolved"
+                />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_expert_source || "dico_expert_source"
+                }}</label>
+                <select
+                  name="expertSource"
+                  id="expertSource"
+                  class="form-select"
+                  formControlName="lossTowEreportedById"
+                >
+                  <option
+                    *ngFor="let reported of eReportedBy"
+                    [value]="reported.code"
+                  >
+                    {{ reported.description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_notification_nature || "dico_notification_nature"
+                }}</label>
+                <select
+                  name="visaNature"
+                  id="visaNature"
+                  class="form-select"
+                  formControlName="notificationMatDamageId"
+                >
+                  <option
+                    *ngFor="let nature of natureLov"
+                    [value]="nature.code"
+                  >
+                    {{ nature.description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label>{{
+                  dico?.dico_sys_created_by || "dico_sys_created_by"
+                }}</label>
+                <input
+                  type="text"
+                  name="createdBy"
+                  id="createdBy"
+                  class="form-control"
+                  formControlName="sysCreatedBy"
+                />
+              </div>
+            </div>
+            <ng-container
+              *ngIf="
+                policyData?.notificationMatDamageId !== '6' &&
+                hasPerm('ccSelfSurvey')
+              "
+            >
+              <div class="row p-3">
+                <div class="col-md-10">
+                  <label>{{
+                    dico?.dico_self_survey || "dico_self_survey"
+                  }}</label>
+                  <input
+                    type="text"
+                    name="selfSurvey"
+                    id="selfSurvey"
+                    class="form-control"
+                    formControlName="carSelfSurveyUrl"
+                    [readOnly]="true"
+                  />
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="row p-3">
+              <div class="col-md-4">
+                <label>{{ dico?.dico_expert || "dico_expert" }}</label>
+                <input
+                  type="text"
+                  name="expert"
+                  id="expert"
+                  class="form-control"
+                  formControlName="lossTowExpertNamePreference"
+                />
+              </div>
+              <div class="col-md-4" *ngIf="hasPerm('ccAllowChangeRespReason')">
+                <label>{{
+                  dico?.dico_resp_reason || "dico_resp_reason"
+                }}</label>
+                <select
+                  name="RespReasonCode"
+                  id="RespReasonCode"
+                  class="form-select"
+                  formControlName="carRespReasonCode"
+                >
+                  <option
+                    *ngFor="let reason of carRespReasonCodeValues"
+                    [value]="reason.code"
+                  >
+                    {{ reason.description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab
+      [label]="dico?.dico_expert_dispatch || 'dico_expert_dispatch'"
+      *ngIf="policyData?.notificationMatDamageId !== '6'"
+    >
+      <div class="container-fluid container-class">
+        <div class="panel row">
+          <div class="col-md-4">
+            <div
+              class="card mb-3"
+              style="background-color: #eff2f5; border-color: #bfc6c9"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <span class="label-color">{{
+                      dico?.dico_expert_city || "dico_expert_city"
+                    }}</span>
+                  </div>
+
+                  <div class="col-md-3">
+                    <button class="button-class">No Expert</button>
+                  </div>
+                  <div class="col-md-1" *ngIf="hasPerm('ccTemaAdmin')">
+                    <img
+                      [src]="'./assets/icons/expert.png'"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_tema_exp_disp || 'dico_tema_exp_disp'
+                      "
+                      [ngClass]="{
+                        'disabled-image': DisableIcons()
+                      }"
+                      (click)="appExpertDispatch()"
+                    />
+                  </div>
+                  <div class="col-md-1" *ngIf="hasPerm('ccExpDispatchRot')">
+                    <img
+                      [src]="'./assets/icons/expert.png'"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_dispatch_expert || 'dico_dispatch_expert'
+                      "
+                      [ngClass]="{
+                        'disabled-image': DisableIcons()
+                      }"
+                    />
+                  </div>
+                  <div class="col-md-1" *ngIf="hasPerm('ccAdmin')">
+                    <img
+                      [src]="'./assets/icons/man_expert.png'"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_choose_manually || 'dico_choose_manually'
+                      "
+                      (click)="chooseManuallyDialog()"
+                      [ngClass]="{
+                        'disabled-image': DisableChooseManually()
+                      }"
+                    />
+                  </div>
+                  <div class="col-md-1" *ngIf="hasPerm('ccAdmin')">
+                    <img
+                      [src]="'./assets/icons/injury.png'"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_bodily_injury || 'dico_bodily_injury'
+                      "
+                      [ngClass]="{
+                        'disabled-image': DisableIcons()
+                      }"
+                      (click)="addBodilyInjuryDialog()"
+                    />
+                  </div>
+                  <div class="col-md-1" *ngIf="hasPerm('ccAdmin')">
+                    <img
+                      [src]="'./assets/icons/add.png'"
+                      [style.height]="'20px'"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_add_second_expert || 'dico_add_second_expert'
+                      "
+                      [ngClass]="{
+                        'disabled-image': DisableIcons()
+                      }"
+                      (click)="secondExpertDialog()"
+                    />
+                  </div>
+                </div>
+                <div class="row p-3">
+                  <div class="col-md-5">
+                    <label for="" class="form-label">{{
+                      dico?.dico_city || "dico_city"
+                    }}</label>
+
+                    <ng-select
+                      appendTo="body"
+                      name="distributionTownName"
+                      formControlName="distributionTownName"
+                      (search)="searchForTerritory($event)"
+                      (change)="getTownFindById()"
+                    >
+                      <ng-option
+                        *ngFor="let suggestion of territoryValues"
+                        [value]="suggestion.code"
+                      >
+                        {{ suggestion.description }}</ng-option
+                      >
+                    </ng-select>
+                  </div>
+                  <div class="col-md-3 mt-4 p-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="distributionTownDescription"
+                    />
+                  </div>
+                  <div class="col-md-4 p-2">
+                    <label class="form-label">{{
+                      dico?.dico_cancel_exp || "dico_cancel_exp"
+                    }}</label>
+                    <select
+                      name="cancelExp"
+                      id="cancelExp"
+                      class="form-select"
+                      formControlName="distributionExpCanceledId"
+                      (change)="onCancelExpReasonChange()"
+                    >
+                      <option
+                        *ngFor="let exp of ExpCancelReas"
+                        [value]="exp.code"
+                      >
+                        {{ exp.description }}
+                      </option>
+                    </select>
+                    <div class="mt-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="distributionExpCanceledUser"
+                      />
+                      <!-- <p>{{ policyData?.distributionExpCanceledUser }}</p> -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="distributionExpCanceledDate"
+                      />
+                      <!-- <p>
+                        {{
+                          policyData?.distributionExpCanceledDate
+                            | date : dateFormat("reportDateTimeFormat")
+                        }}
+                      </p> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row p-2">
+                  <div
+                    class="col-md-8 d-flex align-items-center justify-content-start"
+                  >
+                    <label class="me-3 text-nowrap">{{
+                      dico?.dico_second_expert || "dico_second_expert"
+                    }}</label>
+                    <!-- <label>{{ dico?.dico_expert || "dico_expert" }} : </label> -->
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="supplierName"
+                    />
+                  </div>
+                  <p class="mt-3">{{ policyData?.expertName }}</p>
+                </div>
+                <div class="row p-3">
+                  <div
+                    class="col-md-2"
+                    *ngIf="
+                      policyData?.lossTowExpertMan === 'Y' &&
+                      ccRotationManual === 'true'
+                    "
+                  >
+                    <span class="mt-3">{{
+                      policyData?.distributionTema === "Y"
+                        ? ""
+                        : policyData?.lossTowExpertRot === "Y"
+                        ? "In Rotation"
+                        : "Out Of Rotation"
+                    }}</span>
+                  </div>
+
+                  <div class="col-md-2">
+                    <span class="mt-3">{{
+                      policyData?.distributionTema === "Y"
+                        ? "TEMA Dispatch"
+                        : ""
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-md-2"
+                    *ngIf="policyData?.distributionTema === 'Y'"
+                  >
+                    <span class="mt-3">{{
+                      policyData?.distributionTemaUser
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-md-4"
+                    *ngIf="policyData?.distributionTema === 'Y'"
+                  >
+                    <span class="mt-3">{{
+                      policyData?.distributionTemaDate
+                        | date : dateFormat("reportDateTimeFormat")
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-md-2"
+                    *ngIf="policyData?.distributionTema === 'Y'"
+                  >
+                    <label>{{
+                      dico?.dico_distributionPdfExist || "dico_tema_pdf_exist"
+                    }}</label>
+
+                    <input
+                      type="checkbox"
+                      name="distributionPdfExist"
+                      id="distributionPdfExist"
+                      [value]="
+                        policyData?.distributionPdfExist === 'Y' ? true : false
+                      "
+                      disabled
+                    />
+                  </div>
+                  <div
+                    class="col-md-8 d-flex text-align-end justify-content-end"
+                  >
+                    <img
+                      src="./assets/icons/loop.png"
+                      alt=""
+                      [matTooltip]="
+                        dico?.dico_customer_satisfaction ||
+                        'dico_customer_satisfaction'
+                      "
+                      matTooltipPosition="right"
+                      (click)="customerSatisfactionDialog()"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="card mb-3"
+              style="background-color: #eff2f5; border-color: #bfc6c9"
+            >
+              <div class="card-body">
+                <div class="col-md-5">
+                  <span class="label-color">{{
+                    dico?.dico_expert_city || "dico_expert_city"
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

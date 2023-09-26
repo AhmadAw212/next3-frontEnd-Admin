@@ -85,59 +85,43 @@ export class CoreDomainValueComponent implements OnInit {
   onTdBlur(
     event: FocusEvent,
     domainValue: CoreDomainValue,
-    property:
-      | 'code'
-      | 'description'
-      | 'val1'
-      | 'val2'
-      | 'val3'
-      | 'val4'
-      | 'val5'
-      | 'val6'
-      | 'val7'
-      | 'val8'
-      | 'val9'
-      | 'val10'
-      | 'val11'
-      | 'coreDomainId'
+    property: keyof CoreDomainValue
   ) {
     const tdElement = event.target as HTMLTableCellElement;
-    const oldValue = domainValue[property];
     const newValue = tdElement.innerText.trim();
-    const updatedDomainValues = this.updatedDomainValues ?? [];
 
-    const index = updatedDomainValues.findIndex(
-      (item) => item.id === domainValue.id
-    );
-    if (index !== -1) {
-      updatedDomainValues.splice(index, 1);
-    }
+    // Use object destructuring to extract properties and exclude the unwanted ones
+    const {
+      sysCreatedBy,
+      sysUpdatedBy,
+      sysCreatedDate,
+      sysUpdatedDate,
+      ...restOfDomainValue
+    } = domainValue;
 
-    const sysActiveFlag = domainValue.sysActiveFlag ?? false;
-    if (oldValue !== newValue) {
-      domainValue[property] = newValue;
-      this.updatedDomainValues?.push({
-        id: domainValue.id,
-        code: domainValue.code,
-        description: domainValue.description,
-        val1: domainValue.val1,
-        val2: domainValue.val2,
-        val3: domainValue.val3,
-        val4: domainValue.val4,
-        val5: domainValue.val5,
-        val6: domainValue.val6,
-        val7: domainValue.val7,
-        val8: domainValue.val8,
-        val9: domainValue.val9,
-        val10: domainValue.val10,
-        val11: domainValue.val11,
-        coreDomainId: domainValue.coreDomainId,
-        sysActiveFlag,
-      });
-      console.log(this.updatedDomainValues);
+    // Check if any value has changed
+    if (newValue !== domainValue[property]) {
+      const updatedDomainValue: CoreDomainValue = {
+        ...restOfDomainValue, // Spread the rest of the properties
+        [property]: newValue,
+      };
+
+      const updatedDomainValues = this.updatedDomainValues ?? [];
+
+      // Find the index of the domainValue in the updated list
+      const index = updatedDomainValues.findIndex(
+        (item) => item.id === restOfDomainValue.id
+      );
+
+      if (index !== -1) {
+        updatedDomainValues[index] = updatedDomainValue; // Update the existing item
+      } else {
+        updatedDomainValues.push(updatedDomainValue); // Add the updated item
+      }
+
+      this.updatedDomainValues = [...updatedDomainValues]; // Ensure immutability
     }
   }
-
   onCheckboxChange(domainValue: CoreDomainValue) {
     const sysActiveFlag = domainValue.sysActiveFlag ?? false;
     const updatedDomainValues = this.updatedDomainValues ?? [];

@@ -101,9 +101,8 @@
         <div class="col-md-2">
           <div class="panel-item">
             <app-data-entry-button
-              (click)="
-                navigateToDataEntry(selectedNotification?.notificationId!)
-              "
+              [buttonText]="dico?.dico_data_entry || 'dico_data_entry'"
+              [notificationId]="selectedNotification?.notificationId"
             ></app-data-entry-button>
           </div>
         </div>
@@ -251,9 +250,10 @@
         <div class="row btn-container">
           <ng-container *ngIf="car.sequence === 0">
             <div class="col-md-2">
-              <button class="btn button-class">
-                {{ dico?.dico_hotline || "dico_hotline" }}
-              </button>
+              <app-new-hotline-btn
+                [buttonText]="dico?.dico_hotline || 'dico_hotline'"
+                [notificationId]="selectedNotification?.notificationId"
+              ></app-new-hotline-btn>
             </div>
           </ng-container>
 
@@ -261,7 +261,7 @@
             *ngIf="selectedNotification?.notificationMatDamage !== '6'"
           >
             <div class="col-md-2">
-              <button class="btn button-class">
+              <button class="button-class">
                 {{ dico?.dico_survey || "dico_survey" }}
               </button>
             </div>
@@ -274,7 +274,7 @@
             "
           >
             <div class="col-md-2">
-              <button class="btn button-class">
+              <button class="button-class">
                 {{ dico?.dico_self_survey || "dico_self_survey" }}
               </button>
             </div>
@@ -282,7 +282,7 @@
 
           <ng-container *ngIf="hasPerm('ccActivityHistory')">
             <div class="col-md-3">
-              <button class="btn button-class">
+              <button class="button-class">
                 {{ dico?.dico_activity_history || "dico_activity_history" }}
               </button>
             </div>
@@ -291,7 +291,7 @@
             *ngIf="hasPerm('ccCancelNotification') && car.sequence === 0"
           >
             <div class="col-md-2">
-              <button class="btn button-class">
+              <button class="button-class">
                 {{ dico?.dico_flag_to_cancel || "dico_flag_to_cancel" }}
               </button>
             </div>

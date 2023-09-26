@@ -1525,4 +1525,90 @@ export class DataServiceService {
       `${this.userUrl}/call_center/user-activity?insuranceCompany=${insuranceId}`
     );
   }
+
+  getPolicyCarByNotificationId(
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getPolicyCarByNotificationId/${notificationId}`
+    );
+  }
+
+  getReportedByLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/reportedBy-lov`
+    );
+  }
+
+  getRelationToOwnerLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/relationToOwner-lov`
+    );
+  }
+  getNotificationNatureLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/notification-natureLov`
+    );
+  }
+  getEReportedByLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/EreportedBy-Lov`
+    );
+  }
+  getNoDataTypeLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/nodataTypes-Lov`
+    );
+  }
+  carRespReasonCode(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/carRespReasonCode`
+    );
+  }
+  getExpCancelReasonLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/expCancelReasonLov`
+    );
+  }
+  getTownFindById(townId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/town/${townId}`
+    );
+  }
+  getBodilyInjuryLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/all-bodilyInjuryLov`
+    );
+  }
+  getSeverityTypes(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/severity-types`
+    );
+  }
+  getExpertDelayReasonLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/expertDelayReasonLov`
+    );
+  }
+  getSupplierExpertWithBlackList(
+    insuranceId: string,
+    supplierName: string,
+    inOutNetwork: string,
+    searchType: string,
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getSupplierExpertWithBlackList?insurance=${insuranceId}&supplierName=${supplierName}&inOutNetwork=${inOutNetwork}&searchType=${searchType}&page=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+  getSupplierExpertLov(
+    pageSize: number,
+    pageNumber: number,
+    nameCriteria: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/experts-search?pageSize=${pageSize}&pageNumber=${pageNumber}&nameCriteria=${nameCriteria}`
+    );
+  }
 }

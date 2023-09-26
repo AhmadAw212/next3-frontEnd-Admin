@@ -1,7 +1,7 @@
 .masonry-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    gap: 20px;
+    gap: 2px;
   }
   p,span{
     font-size: small;
@@ -52,20 +52,7 @@ padding-right: 10px
     max-width: none;
     max-height: none;
   }
-  .button-class {
-    text-decoration: none;
-    cursor: default;
-    display: block;
-    white-space: nowrap;
-    padding: 5px 8px 4px 8px;
-    color: #ffffff;
-    min-width: 38px;
-    text-align: center;
-    background-color: #0674cb;
-    border: 0;
-    border-radius: 0;
-    text-shadow: 0 0 0 #ffffff;
-  }
+ 
   .title-icon {
     width: 30px; /* Adjust the size as needed */
     height: 30px; /* Adjust the size as needed */

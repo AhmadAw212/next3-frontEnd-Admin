@@ -183,7 +183,7 @@
       (click)="highlightRow($event)"
     >
       <tr *ngFor="let policy of policyResult">
-        <td (click)="viewPolicyComponent(policy.carId)">
+        <td (click)="viewPolicyComponent(policy.carId!)">
           <mat-icon>search</mat-icon>
         </td>
         <td>{{ policy.insuranceDesc }}</td>

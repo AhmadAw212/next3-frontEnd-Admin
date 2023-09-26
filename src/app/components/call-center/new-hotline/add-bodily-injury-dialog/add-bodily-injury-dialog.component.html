@@ -1,0 +1,62 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_bodily_injury || "dico_bodily_injury" }}</h2>
+</div>
+<div class="container">
+  <div class="row p-2">
+    <div class="col-md-7 d-flex align-items-center justify-content-start">
+      <label class="me-4 text-nowrap"
+        >Bodily Case
+        <!-- {{
+        dico?.dico_bodily_case || "dico_bodily_case"
+      }} -->
+      </label>
+      <select
+        name="bodilyCase"
+        id="bodilyCase"
+        class="form-select"
+        [(ngModel)]="bodilyInjury"
+      >
+        <option *ngFor="let bodily of bodliInjuryLov" [value]="bodily.code">
+          {{ bodily.description }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-md-7 d-flex align-items-center justify-content-start">
+      <label class="me-7">
+        Severity
+        <!-- {{
+        dico?.dico_severity || "dico_severity"
+      }} -->
+      </label>
+      <select
+        name="Severity"
+        id="Severity"
+        class="form-select ms-5"
+        [(ngModel)]="severity"
+      >
+        <option
+          *ngFor="let severity of severityTypesLov"
+          [value]="severity.code"
+        >
+          {{ severity.description }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2" type="button" (click)="save()">
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+        <!-- <button class="button-class" type="button" (click)="cancel()">
+          {{ dico?.dico_cancel || "dico_cancel" }}
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>

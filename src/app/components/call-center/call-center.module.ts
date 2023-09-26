@@ -6,6 +6,12 @@ import { NotificationDetailsComponent } from './notification-details/notificatio
 import { TowingConditionComponent } from './towing-condition/towing-condition.component';
 import { AddTowingCompanyComponent } from './towing-condition/add-towing-company/add-towing-company.component';
 import { UsersActivityComponent } from './users-activity/users-activity.component';
+import { NewHotlineComponent } from './new-hotline/new-hotline.component';
+import { NewHotlineBtnComponent } from './new-hotline-btn/new-hotline-btn.component';
+import { ChooseManuallyComponent } from './new-hotline/choose-manually/choose-manually.component';
+import { AddBodilyInjuryDialogComponent } from './new-hotline/add-bodily-injury-dialog/add-bodily-injury-dialog.component';
+import { SecondExpertDialogComponent } from './new-hotline/second-expert-dialog/second-expert-dialog.component';
+import { CustomerSatisfactionDialogComponent } from './new-hotline/customer-satisfaction-dialog/customer-satisfaction-dialog.component';
 
 @NgModule({
   declarations: [],

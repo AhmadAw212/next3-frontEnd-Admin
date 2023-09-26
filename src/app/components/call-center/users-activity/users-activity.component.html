@@ -22,7 +22,10 @@
               [label]="dico?.dico_company"
             ></app-companies-dropdown>
           </div>
-          <div style="display: block" *ngIf="userData.length > 0; else noData">
+          <div
+            style="display: block"
+            *ngIf="userData?.length! > 0; else noData"
+          >
             <canvas
               baseChart
               [type]="'pie'"
@@ -240,14 +243,11 @@
             </tr>
           </ng-template>
         </table>
-        <mat-paginator
-          [length]="totalItems"
+        <app-paginator
+          [totalItems]="totalItems!"
           [pageSize]="pageSize"
-          [pageSizeOptions]="[20, 50, 100]"
-          aria-label="Select page"
-          (page)="onPageChange($event)"
-        >
-        </mat-paginator>
+          (pageChange)="onPageChange($event)"
+        ></app-paginator>
       </div>
     </div>
   </mat-tab>

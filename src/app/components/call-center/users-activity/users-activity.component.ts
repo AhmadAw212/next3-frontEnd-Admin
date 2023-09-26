@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
-import { tap } from 'rxjs';
+import { lastValueFrom, tap } from 'rxjs';
 import { CompanyBranchList } from 'src/app/model/company-branch-list';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { type } from 'src/app/model/type';
@@ -318,14 +318,18 @@ export class UsersActivityComponent implements OnInit, OnDestroy {
 
   async getUsersActivityByInsComp() {
     try {
-      const res = await this.dataService
-        .getUsersActivityByInsComp(this.selectedCompanyActivity!)
-        .toPromise();
+      const observable = this.dataService.getUsersActivityByInsComp(
+        this.selectedCompanyActivity!
+      );
+
+      const res = await lastValueFrom(observable);
+
       this.userData = res?.data;
       this.pieChartLabels = this.userData.map((item: any) => item.displayName);
       this.pieChartData = this.userData.map(
         (item: any) => item.notificationsCount
       );
+
       const labelsWithCount = this.pieChartLabels.map(
         (label, index) => `${label} : ${this.pieChartData[index]}`
       );

@@ -1,0 +1,132 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_second_expert || "dico_second_expert" }}</h2>
+</div>
+<div class="container">
+  <div class="grid-container">
+    <form (ngSubmit)="searchSupplierExpert()">
+      <div class="row p-2 mb-4">
+        <div class="col-md-7">
+          <label class="me-4 text-nowrap"
+            >{{ dico?.dico_select_expert || "dico_select_expert" }}
+          </label>
+        </div>
+      </div>
+
+      <div class="row p-2">
+        <div class="col-md-3 d-flex align-items-center justify-content-start">
+          <label class="me-3 text-nowrap">{{
+            dico?.dico_expert_name || "dico_expert_name"
+          }}</label>
+          <input
+            type="text"
+            name="expertName"
+            id="expertName"
+            class="form-control"
+            [(ngModel)]="expertName"
+          />
+        </div>
+        <div class="col-md-3">
+          <button class="button-class">
+            {{ dico?.dico_filter || "dico_filter" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row p-3">
+    <table class="table table-responsive-sm">
+      <thead>
+        <!-- <tr (keyup.enter)="getCallCenterListBeanByTypeWithSearch()"> -->
+
+        <tr>
+          <th>
+            <input type="text" id="expert" name="expert" class="form-control" />
+          </th>
+          <th>
+            <!-- <div><input type="text" /></div> -->
+
+            <input type="text" id="phone" name="phone" class="form-control" />
+          </th>
+          <th>
+            <input
+              type="text"
+              id="townName"
+              name="townName"
+              class="form-control"
+            />
+          </th>
+
+          <th>
+            <input type="text" id="caza" name="caza" class="form-control" />
+          </th>
+
+          <th>
+            <input type="text" id="region" name="region" class="form-control" />
+          </th>
+          <th>
+            <input
+              type="text"
+              id="choose"
+              name="choose"
+              class="form-control"
+              disabled
+            />
+          </th>
+        </tr>
+        <tr>
+          <th>{{ dico?.dico_expert_name || "dico_expert_name" }}</th>
+          <th>{{ dico?.dico_phone || "dico_phone" }}</th>
+          <th>{{ dico?.dico_town_name || "dico_town_name" }}</th>
+          <th>{{ dico?.dico_caza_name || "dico_caza_name" }}</th>
+          <th>{{ dico?.dico_region || "dico_region" }}</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expert of experts">
+          <td>{{ expert.expertName }}</td>
+          <td>{{ expert.phone }}</td>
+          <td>{{ expert.townName }}</td>
+          <td>{{ expert.cazaName }}</td>
+          <td>{{ expert.region }}</td>
+          <td class="d-flex justify-content-center align-items-center">
+            <button class="button-class">
+              {{ dico?.dico_choose || "dico_choose" }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+  <div class="row">
+    <app-paginator
+      [totalItems]="totalItems!"
+      [pageSize]="pageSize"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2">
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+        <button class="button-class" (click)="cancel()">
+          {{ dico?.dico_cancel || "dico_cancel" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

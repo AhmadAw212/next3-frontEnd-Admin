@@ -41,14 +41,19 @@ export class NotificationDetailsComponent implements OnInit {
       notificationMatDamage === '10'
     );
   }
-  navigateToDataEntry(notificationId: string) {
-    const componentRoute = `dataEntryView/${notificationId}`;
-    this.router.navigateByUrl(componentRoute);
-  }
+  // navigateToDataEntry(notificationId: string) {
+  //   const componentRoute = `dataEntryView/${notificationId}`;
+  //   this.router.navigateByUrl(componentRoute);
+  // }
   navigateToMail(carId: string) {
     const componentRoute = `sendEmail/${carId}`;
     this.router.navigateByUrl(componentRoute);
   }
+  // navigateToHotline(notificationId: string) {
+  //   const componentRoute = `hotline/${notificationId}`;
+
+  //   this.router.navigateByUrl(componentRoute);
+  // }
 
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);

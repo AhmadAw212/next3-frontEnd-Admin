@@ -1,0 +1,219 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">
+    {{ dico?.dico_customer_satisfaction || "dico_customer_satisfaction" }}
+  </h2>
+</div>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab [label]="dico?.dico_questioner || 'dico_questioner'">
+    <div class="container mt-3">
+      <div class="row">
+        <!-- Section 1 -->
+        <div class="col-md-6 me-5">
+          <div class="section mb-6 p-3">
+            <div class="row pb-4">
+              <label for="" class="label-color">{{
+                dico?.dico_road_ass_follow_dispatch ||
+                  "dico_road_ass_follow_dispatch"
+              }}</label>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <label for="">{{ dico?.dico_plate || "dico_plate" }}</label>
+                <p>{{ carPlate }}</p>
+              </div>
+              <div class="col-md-3">
+                <label for="">{{ dico?.dico_brand || "dico_brand" }}</label>
+                <p>{{ brandDesc }}</p>
+              </div>
+              <div class="col-md-3">
+                <label for="">{{ dico?.dico_insured || "dico_insured" }}</label>
+                <p>{{ notificationContactName }}</p>
+              </div>
+              <div class="col-md-3">
+                <label for="">{{
+                  dico?.dico_phone_number || "dico_phone_number"
+                }}</label>
+                <p>{{ notificationContactPhone }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <label for="">{{
+                  dico?.dico_from_city || "dico_from_city"
+                }}</label>
+                <p>{{ towFromTownDescription }}</p>
+              </div>
+              <div class="col-md-3">
+                <label for="">{{ dico?.dico_to_city || "dico_to_city" }}</label>
+                <p>{{ towToTownDescription }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>{{ towingComDesc }}</p>
+              </div>
+              <div class="col-md-3">
+                <label for="">{{
+                  dico?.dico_notification_nature || "dico_notification_nature"
+                }}</label>
+                <p>{{ notificationMatDamageDesc }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="col-md-5">
+          <div class="section mb-6 p-3">
+            <div class="row pb-4">
+              <label for="" class="label-color">{{
+                dico?.dico_follow_up || "dico_follow_up"
+              }}</label>
+            </div>
+            <div class="row mb-3">
+              <div
+                class="col-md-7 d-flex align-items-center justify-content-center"
+              >
+                <label class="form-label me-3 text-nowrap">{{
+                  dico?.dico_dispatch_date || "dico_dispatch_date"
+                }}</label>
+
+                <input
+                  type="text"
+                  name="dispatchDate"
+                  id="dispatchDate"
+                  class="form-control"
+                  bsDatepicker
+                  [bsConfig]="{
+                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                    containerClass: 'theme-dark-blue',
+                    showWeekNumbers: false
+                  }"
+                  [(ngModel)]="distributionLossDistDate"
+                  [disabled]="
+                    distributionLossDistDate !== null &&
+                    hasPerm('ccChangeExpDispDate')
+                      ? false
+                      : true
+                  "
+                />
+              </div>
+            </div>
+            <div class="row pt-5">
+              <div class="col-md-5">
+                <div class="d-flex flex-row">
+                  <label>{{ dico?.dico_arrived || "dico_arrived" }}</label>
+
+                  <div class="form-check" *ngFor="let domain of domainYn">
+                    <input
+                      type="radio"
+                      id="arrived"
+                      class="custom-control-input"
+                      name="arrived"
+                      [value]="domain.code"
+                      [(ngModel)]="carsDispatchFollowUpList.dispatchFuArrivedId"
+                    />
+                    <label class="ms-2" for="arrived">{{
+                      domain.description
+                    }}</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-5 d-flex justify-content-center">
+                <label for="reason" class="me-3 form-label">{{
+                  dico?.dico_reasons || "dico_reasons"
+                }}</label>
+                <select name="reason" id="reason" class="form-select">
+                  <option
+                    *ngFor="let reason of expertDelayReason"
+                    [value]="reason.code"
+                  >
+                    {{ reason.description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row pt-5">
+              <div class="col-md-5">
+                <label class="me-3">{{
+                  dico?.dico_date_and_time || "dico_date_and_time"
+                }}</label>
+                <input
+                  type="text"
+                  name="dateTime"
+                  id="dateTime"
+                  class="form-control"
+                  bsDatepicker
+                  [bsConfig]="{
+                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                    containerClass: 'theme-dark-blue',
+                    showWeekNumbers: false
+                  }"
+                  [(ngModel)]="dispatchFuArrivedDate"
+                />
+              </div>
+
+              <div class="col-md-5 d-flex justify-content-center">
+                <label class="me-3">{{ dico?.dico_note || "dico_note" }}</label>
+                <textarea
+                  name="note"
+                  id="note"
+                  cols="10"
+                  rows="0"
+                  class="form-control"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <!-- Section 3 -->
+        <div class="col-md-6 me-5">
+          <div class="section mb-6 p-3">
+            <div class="row pb-4">
+              <label for="" class="label-color">Hello</label>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="">Hello</label>
+                <p>hello</p>
+              </div>
+              <div class="col-md-4">
+                <label for="">Hello</label>
+                <p>hello</p>
+              </div>
+              <div class="col-md-4">
+                <label for="" class="pb-4">Hello</label>
+                <p>hello</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="section mb-6 p-3">
+            <div class="row pb-4">
+              <label for="" class="label-color">Hello</label>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for=""></label>
+                <p>hello</p>
+              </div>
+              <div class="col-md-4">
+                <label for="">Hello</label>
+                <p>hello</p>
+              </div>
+              <div class="col-md-4">
+                <label for="" class="pb-4">Hello</label>
+                <p>hello</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab [label]="dico?.dico_history || 'dico_history'"></mat-tab>
+</mat-tab-group>

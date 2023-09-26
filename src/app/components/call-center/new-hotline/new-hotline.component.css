@@ -1,0 +1,10 @@
+.warning-class{
+    font-size: large;
+    color:Red;
+}
+.disabled-image {
+    filter: grayscale(100%); /* Apply grayscale to make it look disabled */
+    opacity: 0.6; /* Reduce opacity for further disabled appearance */
+    pointer-events: none; /* Disable pointer events on the image */
+  }
+  

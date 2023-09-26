@@ -1,0 +1,145 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_choose_manually || "dico_choose_manually" }}</h2>
+</div>
+<div class="container">
+  <form (ngSubmit)="getSupplierExpertWithBlackList()">
+    <div class="row p-2">
+      <div class="col-md-2">
+        <label class="form-label">{{
+          dico?.dico_search_by || "dico_search_by"
+        }}</label>
+        <select
+          name="searchType"
+          id="searchType"
+          class="form-select"
+          [(ngModel)]="searchType"
+        >
+          <option *ngFor="let search of searchByValues" [value]="search.code">
+            {{ search.description }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">{{
+          dico?.dico_search_value || "dico_search_value"
+        }}</label>
+
+        <input
+          class="form-control"
+          [(ngModel)]="searchValue"
+          name="seachValue"
+          id="searchValue"
+        />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">{{
+          dico?.dico_in_out_network || "dico_in_out_network"
+        }}</label>
+        <select
+          name="inOutNet"
+          id="inOutNet"
+          class="form-select"
+          [(ngModel)]="inOutNetworks"
+        >
+          <option *ngFor="let network of inOutNetwork" [value]="network.code">
+            {{ network.description }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2 p-4">
+        <button class="button-class" type="submit">
+          {{ dico?.dico_filter || "dico_filter" }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="row p-3">
+    <table class="table table-responsive-sm">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{ dico?.dico_expert_name || "dico_expert_name" }}</th>
+          <th>
+            {{ dico?.dico_phone || "dico_phone" }}
+          </th>
+          <th>{{ dico?.dico_town_name || "dico_town_name" }}</th>
+          <th>{{ dico?.dico_caza_name || "dico_caza_name" }}</th>
+          <th>{{ dico?.dico_region || "dico_region" }}</th>
+          <th>{{ dico?.dico_in_out || "dico_in_out" }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supp of suppExpert">
+          <td>
+            <button
+              *ngIf="supp.expertBlackList !== 'Y' || hasPerm('ccBLEDispatch')"
+              class="button-class"
+            >
+              {{ dico?.dico_choose || "dico_choose" }}
+            </button>
+          </td>
+          <td>{{ supp.supplierName }}</td>
+          <td>
+            <img
+              src="./assets/icons/phone.png"
+              alt=""
+              [style.height]="'15px'"
+              class="me-1"
+            />
+            <ng-container
+              *ngIf="
+                supp.expertBlackList !== 'Y' ||
+                (hasPerm('ccBLEDispatch') && showTelIcon === 'true')
+              "
+            >
+              <a [href]="'tel:' + telExtension + supp.phone">{{
+                supp.supplierMobilePhone
+              }}</a>
+            </ng-container>
+            <ng-container *ngIf="showTelIcon !== 'true'">
+              {{ supp.supplierMobilePhone }}
+            </ng-container>
+          </td>
+          <td>{{ supp.supplierHome?.townName }}</td>
+          <td>{{ supp.supplierHome?.cazaDescription }}</td>
+          <td>{{ supp.supplierHome?.regionDescription }}</td>
+          <td>{{ supp.supplierOutNetwork === "N" ? "IN" : "OUT" }}</td>
+          <td>
+            {{ supp.expertBlackList === "Y" ? "Expert Is On Black List" : "" }}
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="8">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+  <div class="row">
+    <app-paginator
+      [totalItems]="totalItems!"
+      [pageSize]="pageSize"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2">
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+        <button class="button-class" (click)="cancel()">
+          {{ dico?.dico_cancel || "dico_cancel" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
