@@ -71,10 +71,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let supp of suppExpert">
-          <td>
+          <td *ngIf="suppExpert.length > 0; else noData">
             <button
               *ngIf="supp.expertBlackList !== 'Y' || hasPerm('ccBLEDispatch')"
               class="button-class"
+              (click)="chooseExpert(supp)"
             >
               {{ dico?.dico_choose || "dico_choose" }}
             </button>
@@ -129,7 +130,7 @@
   </div>
 </div>
 
-<div class="container">
+<!-- <div class="container">
   <div class="row p-3">
     <div class="col">
       <div class="d-flex justify-content-end align-items-center">
@@ -142,4 +143,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

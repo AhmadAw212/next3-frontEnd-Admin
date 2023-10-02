@@ -22,7 +22,7 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
   dico?: any;
   inOutNetwork: type[] = [];
   searchByValues: type[] = [];
-  pageSize: number = 20;
+  pageSize: number = 10;
   pageNumber: number = 1;
   totalPages!: number;
   private isFunctionInProgress = false;
@@ -36,6 +36,8 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
   inOutNetworks: string = '';
   insuranceCompany: string;
   suppExpertSubs?: Subscription;
+  supplierId!: string;
+  supplierName!: string;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -140,10 +142,18 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
         },
       });
   }
-  save() {
-    this.dialogRef.close({});
+  chooseExpert(expert: any) {
+    // console.log(expert);
+    if (expert) {
+      this.supplierId = expert.supplierId;
+      this.supplierName = expert.supplierName;
+      this.dialogRef.close({
+        supplierId: this.supplierId,
+        supplierName: this.supplierName,
+        expertInOutNet: this.inOutNetworks,
+        direction: 'Direct',
+      });
+    }
   }
-  cancel() {
-    this.dialogRef.close();
-  }
+  cancel() {}
 }

@@ -46,8 +46,8 @@ export interface Policy {
   policyTowFlag?: string;
   clientFullNameFromNotification?: string;
   carsContactsPhoneList?: any[];
-  lossTowLossDate?: string;
-  notificationReportedDate?: string;
+  lossTowLossDate?: Date;
+  notificationReportedDate?: Date;
   lossTowReportedById?: string;
   notificationContactName?: string;
   lossTowDriverRelationshipId?: string;
@@ -101,6 +101,13 @@ export interface Policy {
   towToTownDescription?: string;
   towingComDesc?: string;
   notificationMatDamageDesc?: string;
-  distributionLossDistDate?: string;
+  distributionLossDistDate?: Date;
   carsDispatchFollowUpList?: any[];
+  distributionLossDistributionBoolean: string;
+  distributionLossArrivedBoolean?: string;
+  distributionLossArrivedDate?: Date;
+  distributionExpTypeDate?: Date;
+  lossTowExpertId?: string;
+  distributionLossArrivedBooleanBinding?: string;
+  expertUnavailableList?: any;
 }

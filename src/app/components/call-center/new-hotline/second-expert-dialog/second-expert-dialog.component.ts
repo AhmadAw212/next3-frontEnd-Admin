@@ -17,12 +17,19 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
 })
 export class SecondExpertDialogComponent implements OnInit {
   dico?: any;
-  pageSize: number = 20;
+  pageSize: number = 10;
   pageNumber: number = 1;
   totalPages!: number;
   totalItems?: number;
   expertName: string = '';
+  expertNameFilter: string = '';
   experts: any[] = [];
+  supplierId?: string;
+  supplierName?: string;
+  phone: string = '';
+  townName: string = '';
+  cazaName: string = '';
+  region: string = '';
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -45,6 +52,7 @@ export class SecondExpertDialogComponent implements OnInit {
       this.dico = data;
     });
   }
+
   onPageChange(event: PageEvent) {
     this.pageNumber = event.pageIndex + 1;
     this.pageSize = event.pageSize;
@@ -52,8 +60,15 @@ export class SecondExpertDialogComponent implements OnInit {
     this.searchSupplierExpert();
   }
   searchSupplierExpert() {
+    const expertBody = {
+      expertName: this.expertName || this.expertNameFilter,
+      phone: this.phone,
+      townName: this.townName,
+      cazaName: this.cazaName,
+      region: this.region,
+    };
     this.dataService
-      .getSupplierExpertLov(this.pageSize, this.pageNumber, this.expertName)
+      .getSupplierExpertLov(this.pageSize, this.pageNumber, expertBody)
       .subscribe({
         next: (data) => {
           this.experts = data.data.data;
@@ -66,6 +81,13 @@ export class SecondExpertDialogComponent implements OnInit {
         },
       });
   }
+  choose(expert: any) {
+    this.dialogRef.close({
+      supplierId: expert.id,
+      experName: expert.expertName,
+    });
+  }
+
   cancel() {
     this.dialogRef.close();
   }

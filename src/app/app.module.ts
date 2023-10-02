@@ -166,6 +166,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { CustomerSatisfactionDialogComponent } from './components/call-center/new-hotline/customer-satisfaction-dialog/customer-satisfaction-dialog.component';
 import { SecondExpertDialogComponent } from './components/call-center/new-hotline/second-expert-dialog/second-expert-dialog.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { RotationDialogComponent } from './components/call-center/new-hotline/rotation-dialog/rotation-dialog.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -285,6 +286,7 @@ import { MatSliderModule } from '@angular/material/slider';
     PaginatorComponent,
     SecondExpertDialogComponent,
     CustomerSatisfactionDialogComponent,
+    RotationDialogComponent,
   ],
   imports: [
     BrowserModule,

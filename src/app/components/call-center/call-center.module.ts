@@ -12,9 +12,13 @@ import { ChooseManuallyComponent } from './new-hotline/choose-manually/choose-ma
 import { AddBodilyInjuryDialogComponent } from './new-hotline/add-bodily-injury-dialog/add-bodily-injury-dialog.component';
 import { SecondExpertDialogComponent } from './new-hotline/second-expert-dialog/second-expert-dialog.component';
 import { CustomerSatisfactionDialogComponent } from './new-hotline/customer-satisfaction-dialog/customer-satisfaction-dialog.component';
+import { RotationDialogComponent } from './new-hotline/rotation-dialog/rotation-dialog.component';
+import { ExpertDispatchComponent } from './new-hotline/expert-dispatch/expert-dispatch.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ExpertDispatchComponent
+  ],
   imports: [CommonModule, CallCenterRoutingModule],
 })
 export class CallCenterModule {}

@@ -5,215 +5,435 @@
 </div>
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
   <mat-tab [label]="dico?.dico_questioner || 'dico_questioner'">
-    <div class="container mt-3">
-      <div class="row">
-        <!-- Section 1 -->
-        <div class="col-md-6 me-5">
-          <div class="section mb-6 p-3">
-            <div class="row pb-4">
-              <label for="" class="label-color">{{
-                dico?.dico_road_ass_follow_dispatch ||
-                  "dico_road_ass_follow_dispatch"
-              }}</label>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <label for="">{{ dico?.dico_plate || "dico_plate" }}</label>
-                <p>{{ carPlate }}</p>
-              </div>
-              <div class="col-md-3">
-                <label for="">{{ dico?.dico_brand || "dico_brand" }}</label>
-                <p>{{ brandDesc }}</p>
-              </div>
-              <div class="col-md-3">
-                <label for="">{{ dico?.dico_insured || "dico_insured" }}</label>
-                <p>{{ notificationContactName }}</p>
-              </div>
-              <div class="col-md-3">
-                <label for="">{{
-                  dico?.dico_phone_number || "dico_phone_number"
+    <div class="container-fluid mt-3">
+      <form [formGroup]="form">
+        <div class="row p-3">
+          <!-- Section 1 -->
+          <div class="col-md-6 me-5">
+            <div class="section mb-6 p-3">
+              <div class="row pb-4">
+                <label for="" class="label-color">{{
+                  dico?.dico_road_ass_follow_dispatch ||
+                    "dico_road_ass_follow_dispatch"
                 }}</label>
-                <p>{{ notificationContactPhone }}</p>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <label for="">{{
-                  dico?.dico_from_city || "dico_from_city"
-                }}</label>
-                <p>{{ towFromTownDescription }}</p>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="">{{ dico?.dico_plate || "dico_plate" }}</label>
+                  <p>{{ carPlate }}</p>
+                </div>
+                <div class="col-md-3">
+                  <label for="">{{ dico?.dico_brand || "dico_brand" }}</label>
+                  <p>{{ brandDesc }}</p>
+                </div>
+                <div class="col-md-3">
+                  <label for="">{{
+                    dico?.dico_insured || "dico_insured"
+                  }}</label>
+                  <p>{{ notificationContactName }}</p>
+                </div>
+                <div class="col-md-3">
+                  <label for="">{{
+                    dico?.dico_phone_number || "dico_phone_number"
+                  }}</label>
+                  <p>{{ notificationContactPhone }}</p>
+                </div>
               </div>
-              <div class="col-md-3">
-                <label for="">{{ dico?.dico_to_city || "dico_to_city" }}</label>
-                <p>{{ towToTownDescription }}</p>
-              </div>
-              <div class="col-md-3">
-                <p>{{ towingComDesc }}</p>
-              </div>
-              <div class="col-md-3">
-                <label for="">{{
-                  dico?.dico_notification_nature || "dico_notification_nature"
-                }}</label>
-                <p>{{ notificationMatDamageDesc }}</p>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="">{{
+                    dico?.dico_from_city || "dico_from_city"
+                  }}</label>
+                  <p>{{ towFromTownDescription }}</p>
+                </div>
+                <div class="col-md-3">
+                  <label for="">{{
+                    dico?.dico_to_city || "dico_to_city"
+                  }}</label>
+                  <p>{{ towToTownDescription }}</p>
+                </div>
+                <div class="col-md-3">
+                  <p>{{ towingComDesc }}</p>
+                </div>
+                <div class="col-md-3">
+                  <label for="">{{
+                    dico?.dico_notification_nature || "dico_notification_nature"
+                  }}</label>
+                  <p>{{ notificationMatDamageDesc }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Section 2 -->
-        <div class="col-md-5">
-          <div class="section mb-6 p-3">
-            <div class="row pb-4">
-              <label for="" class="label-color">{{
-                dico?.dico_follow_up || "dico_follow_up"
-              }}</label>
-            </div>
-            <div class="row mb-3">
-              <div
-                class="col-md-7 d-flex align-items-center justify-content-center"
-              >
-                <label class="form-label me-3 text-nowrap">{{
-                  dico?.dico_dispatch_date || "dico_dispatch_date"
+          <!-- Section 2 -->
+          <div class="col-md-5">
+            <div class="section mb-6 p-4">
+              <div class="row pb-4">
+                <label for="" class="label-color">{{
+                  dico?.dico_follow_up || "dico_follow_up"
                 }}</label>
-
-                <input
-                  type="text"
-                  name="dispatchDate"
-                  id="dispatchDate"
-                  class="form-control"
-                  bsDatepicker
-                  [bsConfig]="{
-                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
-                    containerClass: 'theme-dark-blue',
-                    showWeekNumbers: false
-                  }"
-                  [(ngModel)]="distributionLossDistDate"
-                  [disabled]="
-                    distributionLossDistDate !== null &&
-                    hasPerm('ccChangeExpDispDate')
-                      ? false
-                      : true
-                  "
-                />
               </div>
-            </div>
-            <div class="row pt-5">
-              <div class="col-md-5">
-                <div class="d-flex flex-row">
-                  <label>{{ dico?.dico_arrived || "dico_arrived" }}</label>
+              <div class="row mb-3">
+                <div
+                  class="col-md-7 d-flex align-items-center justify-content-center"
+                >
+                  <label class="form-label me-3 text-nowrap">{{
+                    dico?.dico_dispatch_date || "dico_dispatch_date"
+                  }}</label>
 
-                  <div class="form-check" *ngFor="let domain of domainYn">
-                    <input
-                      type="radio"
-                      id="arrived"
-                      class="custom-control-input"
-                      name="arrived"
-                      [value]="domain.code"
-                      [(ngModel)]="carsDispatchFollowUpList.dispatchFuArrivedId"
-                    />
-                    <label class="ms-2" for="arrived">{{
-                      domain.description
-                    }}</label>
+                  <input
+                    type="text"
+                    name="dispatchDate"
+                    id="dispatchDate"
+                    class="form-control"
+                    bsDatepicker
+                    [bsConfig]="{
+                      dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                      containerClass: 'theme-dark-blue',
+                      showWeekNumbers: false
+                    }"
+                    formControlName="distributionLossDistDate"
+                  />
+                </div>
+              </div>
+              <div class="row pt-5">
+                <div class="col-md-6">
+                  <div class="d-flex flex-row">
+                    <label>{{ dico?.dico_arrived || "dico_arrived" }}</label>
+
+                    <div class="form-check" *ngFor="let domain of domainYn">
+                      <input
+                        type="radio"
+                        id="dispatchFuArrivedId"
+                        class="custom-control-input"
+                        name="dispatchFuArrivedId"
+                        [value]="domain.code"
+                        formControlName="dispatchFuArrivedId"
+                      />
+                      <label class="ms-2" for="arrived">{{
+                        domain.description
+                      }}</label>
+                    </div>
                   </div>
+                </div>
+
+                <div class="col-md-5 d-flex justify-content-center">
+                  <label for="reason" class="me-3 form-label">{{
+                    dico?.dico_reasons || "dico_reasons"
+                  }}</label>
+                  <select
+                    name="reason"
+                    id="reason"
+                    class="form-select"
+                    formControlName="dispatchFuReasonId"
+                  >
+                    <option
+                      *ngFor="let reason of expertDelayReason"
+                      [value]="reason.code"
+                    >
+                      {{ reason.description }}
+                    </option>
+                  </select>
                 </div>
               </div>
 
-              <div class="col-md-5 d-flex justify-content-center">
-                <label for="reason" class="me-3 form-label">{{
-                  dico?.dico_reasons || "dico_reasons"
+              <div class="row pt-5">
+                <div
+                  class="col-md-6 d-flex justify-content-center align-items-center"
+                >
+                  <label class="me-3">{{
+                    dico?.dico_date_and_time || "dico_date_and_time"
+                  }}</label>
+                  <input
+                    type="text"
+                    name="dateTime"
+                    id="dateTime"
+                    class="form-control"
+                    bsDatepicker
+                    [bsConfig]="{
+                      dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                      containerClass: 'theme-dark-blue',
+                      showWeekNumbers: false
+                    }"
+                    formControlName="dispatchFuArrivedDate"
+                  />
+                </div>
+
+                <div class="col-md-5 d-flex justify-content-center">
+                  <label class="me-4">{{
+                    dico?.dico_note || "dico_note"
+                  }}</label>
+                  <textarea
+                    name="note"
+                    id="note"
+                    cols="10"
+                    rows="0"
+                    class="form-control"
+                    formControlName="dispatchFuNote"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <!-- Section 3 -->
+          <div class="col-md-6 me-5">
+            <div class="section mb-6 p-3">
+              <div class="row pb-4">
+                <label class="label-color">{{
+                  dico?.dico_driver_attitude_dispatch ||
+                    "dico_driver_attitude_dispatch"
                 }}</label>
-                <select name="reason" id="reason" class="form-select">
-                  <option
-                    *ngFor="let reason of expertDelayReason"
-                    [value]="reason.code"
-                  >
-                    {{ reason.description }}
-                  </option>
-                </select>
+              </div>
+              <div class="row p-4">
+                <div class="col-md-10">
+                  <div class="d-flex flex-row">
+                    <label for="">{{
+                      dico?.dico_driver_attitude_dispatch ||
+                        "dico_driver_attitude_dispatch"
+                    }}</label>
+                    <div
+                      class="form-check"
+                      *ngFor="let attidude of attidudeLov"
+                    >
+                      <input
+                        type="radio"
+                        id="dispatchFuAttitudeId"
+                        class="custom-control-input"
+                        name="dispatchFuAttitudeId"
+                        [value]="attidude.code"
+                        formControlName="dispatchFuAttitudeId"
+                      />
+                      <label class="ms-2" for="arrived">{{
+                        attidude.description
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
 
-            <div class="row pt-5">
-              <div class="col-md-5">
-                <label class="me-3">{{
-                  dico?.dico_date_and_time || "dico_date_and_time"
+          <div class="col-md-5">
+            <div class="section mb-6 p-3">
+              <div class="row pb-4">
+                <label class="label-color">{{
+                  dico?.dico_any_complaints || "dico_any_complaints"
                 }}</label>
-                <input
-                  type="text"
-                  name="dateTime"
-                  id="dateTime"
-                  class="form-control"
-                  bsDatepicker
-                  [bsConfig]="{
-                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
-                    containerClass: 'theme-dark-blue',
-                    showWeekNumbers: false
-                  }"
-                  [(ngModel)]="dispatchFuArrivedDate"
-                />
               </div>
+              <div class="row">
+                <div class="col-md-4 mt-3">
+                  <div class="d-flex">
+                    <label>{{
+                      dico?.dico_complaint || "dico_complaint"
+                    }}</label>
 
-              <div class="col-md-5 d-flex justify-content-center">
-                <label class="me-3">{{ dico?.dico_note || "dico_note" }}</label>
-                <textarea
-                  name="note"
-                  id="note"
-                  cols="10"
-                  rows="0"
-                  class="form-control"
-                ></textarea>
+                    <div class="form-check" *ngFor="let domain of domainYn">
+                      <input
+                        type="radio"
+                        id="dispatchFuComplaintsId"
+                        class="custom-control-input"
+                        name="dispatchFuComplaintsId"
+                        [value]="domain.code"
+                        formControlName="dispatchFuComplaintsId"
+                      />
+                      <label class="ms-2">{{ domain.description }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="dispatchFuComplaint1Boolean"
+                      class="custom-control-input"
+                      name="dispatchFuComplaint1Boolean"
+                      formControlName="dispatchFuComplaint1Boolean"
+                    />
+                    <label class="ms-2">{{
+                      dico?.dico_expert || "dico_expert"
+                    }}</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="dispatchFuComplaint2Boolean"
+                      class="custom-control-input"
+                      name="dispatchFuComplaint2Boolean"
+                      formControlName="dispatchFuComplaint2Boolean"
+                    />
+                    <label class="ms-2">{{
+                      dico?.dico_tow_truck || "dico_tow_truck"
+                    }}</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="dispatchFuComplaint3Boolean"
+                      class="custom-control-input"
+                      name="dispatchFuComplaint3Boolean"
+                      formControlName="dispatchFuComplaint3Boolean"
+                    />
+                    <label class="ms-2">{{
+                      dico?.dico_repair_shop || "dico_repair_shop"
+                    }}</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="dispatchFuComplaint4Boolean"
+                      class="custom-control-input"
+                      name="dispatchFuComplaint4Boolean"
+                      formControlName="dispatchFuComplaint4Boolean"
+                    />
+                    <label class="ms-2">{{
+                      dico?.dico_pud || "dico_pud"
+                    }}</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="dispatchFuComplaint5Boolean"
+                      class="custom-control-input"
+                      name="dispatchFuComplaint5Boolean"
+                      formControlName="dispatchFuComplaint5Boolean"
+                    />
+                    <label class="ms-2">{{
+                      dico?.dico_call_center || "dico_call_center"
+                    }}</label>
+                  </div>
+                </div>
+                <div
+                  class="col-md-4 d-flex justify-content-center align-items-center"
+                >
+                  <label class="me-3">{{
+                    dico?.dico_note || "dico_note"
+                  }}</label>
+                  <textarea
+                    name="note"
+                    id="note"
+                    cols="10"
+                    rows="0"
+                    class="form-control"
+                    formControlName="dispatchFuComplaintsNote"
+                  ></textarea>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row mt-5">
-        <!-- Section 3 -->
-        <div class="col-md-6 me-5">
-          <div class="section mb-6 p-3">
-            <div class="row pb-4">
-              <label for="" class="label-color">Hello</label>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <label for="">Hello</label>
-                <p>hello</p>
-              </div>
-              <div class="col-md-4">
-                <label for="">Hello</label>
-                <p>hello</p>
-              </div>
-              <div class="col-md-4">
-                <label for="" class="pb-4">Hello</label>
-                <p>hello</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-5">
-          <div class="section mb-6 p-3">
-            <div class="row pb-4">
-              <label for="" class="label-color">Hello</label>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <label for=""></label>
-                <p>hello</p>
-              </div>
-              <div class="col-md-4">
-                <label for="">Hello</label>
-                <p>hello</p>
-              </div>
-              <div class="col-md-4">
-                <label for="" class="pb-4">Hello</label>
-                <p>hello</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      </form>
+    </div>
+  </mat-tab>
+  <mat-tab [label]="dico?.dico_history || 'dico_history'">
+    <div class="grid-container">
+      <div class="row p-3">
+        <table class="table table-responsive-sm">
+          <thead style="top: 0">
+            <tr>
+              <th>{{ dico?.dico_follow_up_note || "dico_follow_up_note" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+              </th>
+              <th>{{ dico?.dico_delay || "dico_delay" }}</th>
+              <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+              <th>{{ dico?.dico_tow_truck || "dico_tow_truck" }}</th>
+              <th>{{ dico?.dico_garage || "dico_garage" }}</th>
+              <th>{{ dico?.dico_pud || "dico_pud" }}</th>
+              <th>{{ dico?.dico_call_center || "dico_call_center" }}</th>
+              <th>{{ dico?.dico_complaint || "dico_complaint" }}</th>
+              <th>{{ dico?.dico_complaint_note || "dico_complaint_note" }}</th>
+              <th>{{ dico?.dico_reasons || "dico_reasons" }}</th>
+              <th>{{ dico?.dico_attitude || "dico_attitude" }}</th>
+              <th>{{ dico?.dico_arrived || "dico_arrived" }}</th>
+              <th>{{ dico?.dico_type || "dico_type" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+              </th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let carsDispatch of carsDispatchFollowUpList;
+                let i = index
+              "
+              [ngClass]="{ 'selected-row': i === selectedRowIndex }"
+              (click)="selectRow(i)"
+            >
+              <td>{{ carsDispatch.dispatchFuNote }}</td>
+              <td>
+                {{
+                  carsDispatch.dispatchFuArrivedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ carsDispatch.delayInMinut }}</td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaint1 === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaint2 === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaint3 === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaint4 === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaint5 === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>
+                {{ carsDispatch.dispatchFuComplaintsId === "Y" ? "Yes" : "No" }}
+              </td>
+              <td>{{ carsDispatch.dispatchFuComplaintsNote }}</td>
+              <td>{{ carsDispatch.dispatchFuReasonDesc }}</td>
+              <td>{{ carsDispatch.dispatchFuAttitudeDesc }}</td>
+              <td>{{ carsDispatch.dispatchFuArrivedDesc }}</td>
+              <td>{{ carsDispatch.dispatchFuTypeDesc }}</td>
+              <td>{{ carsDispatch.userFullName }}</td>
+              <td>
+                {{
+                  carsDispatch.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="16">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
       </div>
     </div>
   </mat-tab>
-  <mat-tab [label]="dico?.dico_history || 'dico_history'"></mat-tab>
 </mat-tab-group>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button
+          class="button-class me-2"
+          type="button"
+          (click)="dialogCustomerSatisfactionListener()"
+        >
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+        <button class="button-class me-2" type="button">
+          {{ dico?.dico_cancel || "dico_cancel" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

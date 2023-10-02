@@ -1572,7 +1572,7 @@ export class DataServiceService {
   }
   getTownFindById(townId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/town/${townId}`
+      `${this.userUrl}/call_center/townCode/${townId}`
     );
   }
   getBodilyInjuryLovFindAll(): Observable<ApiResponse> {
@@ -1605,10 +1605,46 @@ export class DataServiceService {
   getSupplierExpertLov(
     pageSize: number,
     pageNumber: number,
-    nameCriteria: string
+    expertSearchCriteria: any
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/experts-search?pageSize=${pageSize}&pageNumber=${pageNumber}`,
+      expertSearchCriteria
+    );
+  }
+
+  getExpertDispatchTypeLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/expertDispatchTypeLov`
+    );
+  }
+
+  getTownFindByName(townName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/townbyName?townName=${townName}`
+    );
+  }
+
+  getTownById(townId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/town/${townId}`
+    );
+  }
+  getExpertBySupplierNamePreference(
+    supplierName: string
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/experts-search?pageSize=${pageSize}&pageNumber=${pageNumber}&nameCriteria=${nameCriteria}`
+      `${this.userUrl}/call_center/getExpertBySupplierNamePreference?supplierName=${supplierName}`
+    );
+  }
+  getSupplierFindById(supplierId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/supplier/${supplierId}`
+    );
+  }
+  getAttitudeLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getAttitudeLovFindAll`
     );
   }
 }

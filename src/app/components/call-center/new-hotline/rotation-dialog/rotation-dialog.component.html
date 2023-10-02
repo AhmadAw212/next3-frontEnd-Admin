@@ -1,0 +1,45 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_rotation || "dico_rotation" }}</h2>
+</div>
+<form (ngSubmit)="saveRotation()">
+  <div class="container">
+    <div class="row p-2">
+      <div class="col-md-10 d-flex">
+        <label class="me-4 text-nowrap"
+          >{{ dico?.dico_rotation || "dico_rotation" }}
+          <!-- {{
+          dico?.dico_bodily_case || "dico_bodily_case"
+        }} -->
+        </label>
+        <select
+          name="bodilyCase"
+          id="bodilyCase"
+          class="form-select"
+          [(ngModel)]="rotationValue"
+        >
+          <option
+            *ngFor="let rotation of inOrOutRotation"
+            [value]="rotation.code"
+          >
+            {{ rotation.description }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button
+          class="button-class me-2"
+          type="button"
+          (click)="saveRotation()"
+        >
+          {{ dico?.dico_save || "dico_save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

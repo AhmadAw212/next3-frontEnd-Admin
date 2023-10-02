@@ -6,7 +6,7 @@
     <div class="panel row">
       <div class="col-md-3">
         <div
-          class="card mb-3"
+          class="card mb-3 h-100"
           style="background-color: #eff2f5; border-color: #bfc6c9"
         >
           <div class="card-body">
@@ -127,8 +127,8 @@
                 class="col-md-8 d-flex align-items-center justify-content-start"
                 *ngIf="policyData?.policyExpired === 'Y'"
               >
-                <mat-icon>warning</mat-icon>
-                <label class="warning-class">{{
+                <img src="./assets/icons/warning_status.png" alt="" />
+                <label class="warning-class ms-2">{{
                   dico?.dico_policy_expired || "dico_policy_expired"
                 }}</label>
               </div>
@@ -136,8 +136,8 @@
                 class="col-md-8 d-flex align-items-center justify-content-start"
                 *ngIf="policyData?.policyDeleted === 'Y'"
               >
-                <mat-icon>warning</mat-icon>
-                <label class="warning-class">{{
+                <img src="./assets/icons/warning_status.png" alt="" />
+                <label class="warning-class ms-2">{{
                   dico?.dico_policy_deleted || "dico_policy_deleted"
                 }}</label>
               </div>
@@ -145,8 +145,8 @@
                 class="col-md-8 d-flex align-items-center justify-content-start"
                 *ngIf="policyData?.policyCanceled === 'Y'"
               >
-                <mat-icon>warning</mat-icon>
-                <label class="warning-class">{{
+                <img src="./assets/icons/warning_status.png" alt="" />
+                <label class="warning-class ms-2">{{
                   dico?.dico_policy_canceled || "dico_policy_canceled"
                 }}</label>
               </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="col-md-3">
         <div
-          class="card mb-3"
+          class="card mb-3 h-100"
           style="background-color: #eff2f5; border-color: #bfc6c9"
         >
           <div class="card-body">
@@ -298,7 +298,7 @@
       </div>
       <div class="col-md-6">
         <div
-          class="card mb-3"
+          class="card mb-3 h-100"
           style="background-color: #eff2f5; border-color: #bfc6c9"
         >
           <div class="card-body">
@@ -560,13 +560,28 @@
             <div class="row p-3">
               <div class="col-md-4">
                 <label>{{ dico?.dico_expert || "dico_expert" }}</label>
-                <input
+
+                <ng-select
+                  name="distributionTownName"
+                  formControlName="lossTowExpertNamePreference"
+                  [virtualScroll]="true"
+                  (search)="getExpertBySupplierNamePreference($event)"
+                  (change)="lossTowExpertNameValueChangeListener($event)"
+                >
+                  <ng-option
+                    *ngFor="let suggestion of supplierExperts"
+                    [value]="suggestion.supplierId"
+                  >
+                    {{ suggestion.supplierName }}</ng-option
+                  >
+                </ng-select>
+                <!-- <input
                   type="text"
                   name="expert"
                   id="expert"
                   class="form-control"
                   formControlName="lossTowExpertNamePreference"
-                />
+                /> -->
               </div>
               <div class="col-md-4" *ngIf="hasPerm('ccAllowChangeRespReason')">
                 <label>{{
@@ -601,7 +616,7 @@
         <div class="panel row">
           <div class="col-md-4">
             <div
-              class="card mb-3"
+              class="card mb-3 h-100"
               style="background-color: #eff2f5; border-color: #bfc6c9"
             >
               <div class="card-body">
@@ -612,8 +627,14 @@
                     }}</span>
                   </div>
 
-                  <div class="col-md-3">
-                    <button class="button-class">No Expert</button>
+                  <div class="col-md-2">
+                    <button
+                      class="button-class"
+                      type="button"
+                      (click)="noExpert()"
+                    >
+                      No Expert
+                    </button>
                   </div>
                   <div class="col-md-1" *ngIf="hasPerm('ccTemaAdmin')">
                     <img
@@ -628,7 +649,8 @@
                       (click)="appExpertDispatch()"
                     />
                   </div>
-                  <div class="col-md-1" *ngIf="hasPerm('ccExpDispatchRot')">
+                  <div class="col-md-1">
+                    <!-- <div class="col-md-1" *ngIf="hasPerm('ccExpDispatchRot')"> -->
                     <img
                       [src]="'./assets/icons/expert.png'"
                       alt=""
@@ -638,6 +660,7 @@
                       [ngClass]="{
                         'disabled-image': DisableIcons()
                       }"
+                      (click)="openDispatchExpertDialog()"
                     />
                   </div>
                   <div class="col-md-1" *ngIf="hasPerm('ccAdmin')">
@@ -682,7 +705,7 @@
                   </div>
                 </div>
                 <div class="row p-3">
-                  <div class="col-md-5">
+                  <div class="col-md-6">
                     <label for="" class="form-label">{{
                       dico?.dico_city || "dico_city"
                     }}</label>
@@ -691,6 +714,7 @@
                       appendTo="body"
                       name="distributionTownName"
                       formControlName="distributionTownName"
+                      [virtualScroll]="true"
                       (search)="searchForTerritory($event)"
                       (change)="getTownFindById()"
                     >
@@ -702,14 +726,16 @@
                       >
                     </ng-select>
                   </div>
-                  <div class="col-md-3 mt-4 p-3">
+                  <div class="col-md-6 mt-4 p-3">
                     <input
                       type="text"
                       class="form-control"
                       formControlName="distributionTownDescription"
                     />
                   </div>
-                  <div class="col-md-4 p-2">
+                </div>
+                <div class="row p-2">
+                  <div class="col-md-4">
                     <label class="form-label">{{
                       dico?.dico_cancel_exp || "dico_cancel_exp"
                     }}</label>
@@ -727,25 +753,20 @@
                         {{ exp.description }}
                       </option>
                     </select>
-                    <div class="mt-2">
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="distributionExpCanceledUser"
-                      />
-                      <!-- <p>{{ policyData?.distributionExpCanceledUser }}</p> -->
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="distributionExpCanceledDate"
-                      />
-                      <!-- <p>
-                        {{
-                          policyData?.distributionExpCanceledDate
-                            | date : dateFormat("reportDateTimeFormat")
-                        }}
-                      </p> -->
-                    </div>
+                  </div>
+                  <div class="col-md-4 p-3 mt-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="distributionExpCanceledUser"
+                    />
+                  </div>
+                  <div class="col-md-4 p-3 mt-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="distributionExpCanceledDate"
+                    />
                   </div>
                 </div>
 
@@ -763,20 +784,32 @@
                       formControlName="supplierName"
                     />
                   </div>
-                  <p class="mt-3">{{ policyData?.expertName }}</p>
+
+                  <!-- <p class="mt-3">{{ policyData?.expertName }}</p> -->
+                </div>
+                <div class="row p-3">
+                  <div class="col-md-5">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="distributionExpExpertId"
+                      id="distributionExpExpertId2"
+                      name="distributionExpExpertId2"
+                    />
+                  </div>
                 </div>
                 <div class="row p-3">
                   <div
-                    class="col-md-2"
+                    class="col-md-3"
                     *ngIf="
                       policyData?.lossTowExpertMan === 'Y' &&
                       ccRotationManual === 'true'
                     "
                   >
                     <span class="mt-3">{{
-                      policyData?.distributionTema === "Y"
+                      form.get("distributionTema")?.value === "Y"
                         ? ""
-                        : policyData?.lossTowExpertRot === "Y"
+                        : form.get("lossTowExpertRot")?.value === "Y"
                         ? "In Rotation"
                         : "Out Of Rotation"
                     }}</span>
@@ -784,7 +817,7 @@
 
                   <div class="col-md-2">
                     <span class="mt-3">{{
-                      policyData?.distributionTema === "Y"
+                      form.get("distributionTema")?.value === "Y"
                         ? "TEMA Dispatch"
                         : ""
                     }}</span>
@@ -824,34 +857,270 @@
                       disabled
                     />
                   </div>
-                  <div
-                    class="col-md-8 d-flex text-align-end justify-content-end"
-                  >
-                    <img
-                      src="./assets/icons/loop.png"
-                      alt=""
-                      [matTooltip]="
-                        dico?.dico_customer_satisfaction ||
-                        'dico_customer_satisfaction'
-                      "
-                      matTooltipPosition="right"
-                      (click)="customerSatisfactionDialog()"
-                    />
-                  </div>
+                </div>
+                <div
+                  class="col-md-12 d-flex text-align-end justify-content-end"
+                >
+                  <img
+                    src="./assets/icons/loop.png"
+                    alt=""
+                    [matTooltip]="
+                      dico?.dico_customer_satisfaction ||
+                      'dico_customer_satisfaction'
+                    "
+                    matTooltipPosition="right"
+                    (click)="customerSatisfactionDialog()"
+                    style="width: 15px; height: 15px"
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div
-              class="card mb-3"
+              class="card mb-3 h-100"
               style="background-color: #eff2f5; border-color: #bfc6c9"
             >
               <div class="card-body">
-                <div class="col-md-5">
-                  <span class="label-color">{{
-                    dico?.dico_expert_city || "dico_expert_city"
-                  }}</span>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label-color">{{
+                      dico?.dico_disp_date || "dico_disp_date"
+                    }}</span>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-3 d-flex align-items-center">
+                    <label class="me-3 form-check-label">{{
+                      dico?.dico_dispatch || "dico_dispatch"
+                    }}</label>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="distributionLossDistributionBoolean"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      name="lossDistDate"
+                      id="lossDistDate"
+                      class="form-control"
+                      bsDatepicker
+                      [bsConfig]="{
+                        dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                        containerClass: 'theme-dark-blue',
+                        showWeekNumbers: false
+                      }"
+                      formControlName="distributionLossDistDate"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      name="distributionLossDistUser"
+                      id="distributionLossDistUser"
+                      class="form-control"
+                      formControlName="distributionLossDistUser"
+                    />
+                  </div>
+                </div>
+
+                <div class="row mt-5">
+                  <div class="col-md-3 d-flex align-items-center">
+                    <label class="me-4 form-check-label">{{
+                      dico?.dico_arrived || "dico_arrived"
+                    }}</label>
+                    <ng-container *ngIf="hasPerm('ccAdmin')">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="distributionLossArrivedBoolean"
+                        (change)="onDistributionTowArived()"
+                      />
+                    </ng-container>
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      name="distributionLossArrivedDate"
+                      id="distributionLossArrivedDate"
+                      class="form-control"
+                      bsDatepicker
+                      [bsConfig]="{
+                        dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                        containerClass: 'theme-dark-blue',
+                        showWeekNumbers: false
+                      }"
+                      formControlName="distributionLossArrivedDate"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      name="distributionLossArrivedUser"
+                      id="distributionLossArrivedUser"
+                      class="form-control"
+                      formControlName="distributionLossArrivedUser"
+                    />
+                  </div>
+                  <div class="row mt-5">
+                    <div class="col-md-8 d-flex align-items-center">
+                      <label class="text-nowrap me-5">{{
+                        dico?.dico_delayed_dispatch_time ||
+                          "dico_delayed_dispatch_time"
+                      }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="delayedDispatchTime"
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-5">
+                    <div class="col-md-5">
+                      <select
+                        name="distributionExpTypeId"
+                        id="distributionExpTypeId"
+                        class="form-select"
+                        formControlName="distributionExpTypeId"
+                      >
+                        <option
+                          *ngFor="let expert of expertDispatchType"
+                          [value]="expert.code"
+                        >
+                          {{ expert.description }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        name="expertMobilePhone"
+                        id="expertMobilePhone"
+                        class="form-control"
+                        formControlName="expertMobilePhone"
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        name="distributionExpExpertId"
+                        id="distributionExpExpertId"
+                        class="form-control"
+                        formControlName="distributionExpExpertId"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        name="distributionExpTypeDate"
+                        id="distributionExpTypeDate"
+                        class="form-control"
+                        bsDatepicker
+                        [bsConfig]="{
+                          dateInputFormat: 'DD/MM/YYYY HH:mm a',
+                          containerClass: 'theme-dark-blue',
+                          showWeekNumbers: false
+                        }"
+                        formControlName="distributionExpTypeDate"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        name="distributionExpTypeUser"
+                        id="distributionExpTypeUser"
+                        class="form-control"
+                        formControlName="distributionExpTypeUser"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div
+              class="card mb-3 h-100"
+              style="background-color: #eff2f5; border-color: #bfc6c9"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label-color">{{
+                      dico?.dico_disp_problem || "dico_disp_problem"
+                    }}</span>
+                  </div>
+                </div>
+                <div class="row p-3">
+                  <table>
+                    <thead [style.position]="'static'">
+                      <tr>
+                        <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+                        <th>
+                          {{
+                            dico?.dico_unavailable_reason ||
+                              "dico_unavailable_reason"
+                          }}
+                        </th>
+                        <th>{{ dico?.dico_date || "dico_date" }}</th>
+                        <th>{{ dico?.dico_note || "dico_note" }}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      *ngIf="
+                        policyData?.expertUnavailableList.length > 0;
+                        else noData
+                      "
+                    >
+                      <tr
+                        *ngFor="
+                          let expertUnAvailable of policyData?.expertUnavailableList;
+                          let i = index
+                        "
+                        [ngClass]="{ 'selected-row': i === selectedRowIndex }"
+                        (click)="selectRow(i)"
+                      >
+                        <td>{{ expertUnAvailable.supplierName }}</td>
+                        <td>
+                          {{ expertUnAvailable.expertUnavReasonId.description }}
+                        </td>
+                        <td>
+                          {{
+                            expertUnAvailable.expertUnavTime
+                              | date : dateFormat("reportDateTimeFormat")
+                          }}
+                        </td>
+                        <td>{{ expertUnAvailable.expertUnavRemarks }}</td>
+                        <td *ngIf="hasPerm('ccAdmin')">
+                          <mat-icon
+                            [ngClass]="{
+                              'disabled-image': disableDeleteExpertUnAvai()
+                            }"
+                            >delete</mat-icon
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                    <ng-template #noData>
+                      <tr>
+                        <td colspan="8">
+                          {{
+                            dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                              "BASIC_NO_DATA_TO_DISPLAY"
+                          }}
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </table>
                 </div>
               </div>
             </div>
