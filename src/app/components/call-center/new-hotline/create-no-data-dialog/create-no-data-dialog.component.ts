@@ -16,7 +16,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
   templateUrl: './create-no-data-dialog.component.html',
   styleUrls: ['./create-no-data-dialog.component.css'],
 })
-export class CreateNoDataDialogComponent implements OnInit, OnDestroy {
+export class CreateNoDataDialogComponent implements OnInit {
   dico?: any;
   noDataType?: type[] = [];
   myForm!: FormGroup;
@@ -24,6 +24,8 @@ export class CreateNoDataDialogComponent implements OnInit, OnDestroy {
   displayName?: string;
   noDataTypeLoaded?: boolean = false;
   noDataSubscription?: Subscription;
+  noDataTyp: boolean = false;
+  private isGetNoDataTypeCalled = false;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -35,99 +37,69 @@ export class CreateNoDataDialogComponent implements OnInit, OnDestroy {
     private dateFormatService: DateFormatterService,
     private profileService: LoadingServiceService,
     @Inject(MAT_DIALOG_DATA) private data: any
-  ) {}
-  ngOnDestroy(): void {
-    if (this.noDataSubscription) {
-      this.noDataSubscription.unsubscribe();
-    }
+  ) {
+    this.displayName = data.displayname;
   }
-  async getData(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      // Call your service here to fetch data
-      this.profileService.loginInfo$.subscribe({
-        next: (data: any) => {
-          const displayName = data?.displayName;
-          this.displayName = displayName;
-          if (displayName) {
-            this.myForm.get('noData')?.enable();
-          } else {
-            this.myForm.get('noData')?.disable();
-          }
-          resolve(); // Resolve the promise when the data is successfully fetched
-        },
-        error: (error: any) => {
-          console.error('Error fetching data:', error);
-          reject(error); // Reject the promise if there is an error during the service call
-        },
-      });
-    });
-  }
-  async ngOnInit(): Promise<void> {
-    try {
-      this.createForm();
-      await this.getData();
-      if (this.data) {
-        this.myForm.patchValue(this.data.formData);
-      }
-      this.getDico();
-      this.getNoDataTypeLovFindAll();
-    } catch (err) {
-      console.log(err);
-    }
+
+  ngOnInit() {
+    this.getDico();
+    this.getNoDataTypeLovFindAll();
+    this.createForm();
+    this.myForm.patchValue(this.data.formData);
   }
   createForm() {
     this.myForm = this.formBuilder.group({
-      noData: [false],
-      type: { value: '', disabled: true },
-      user: { value: '', disabled: true },
-      date: { value: '', disabled: true },
-      plateChar: { value: '', disabled: true },
-      plate: { value: '', disabled: true },
-      policy: { value: '', disabled: true },
-      effDate: { value: '', disabled: true },
-      expDate: { value: '', disabled: true },
-      name: { value: '', disabled: true },
-      carMake: { value: '', disabled: true },
-      broker: { value: '', disabled: true },
-      note: { value: '', disabled: true },
+      distributionNoDataBoolean: [false],
+      distributionNoDataTypeId: { value: '', disabled: true },
+      distributionNoDataUser: { value: '', disabled: true },
+      distributionNoDataDate: { value: '', disabled: true },
+      distributionNoDataPlateB: { value: '', disabled: true },
+      distributionNoDataPlate: { value: '', disabled: true },
+      distributionNoDataPolicy: { value: '', disabled: true },
+      distributionNoDataEffDate: { value: '', disabled: true },
+      distributionNoDataExpDate: { value: '', disabled: true },
+      distributionNoDataName: { value: '', disabled: true },
+      distributionNoDataCarBrand: { value: '', disabled: true },
+      distributionNoDataBroker: { value: '', disabled: true },
+      distributionNoDataRemarks: { value: '', disabled: true },
     });
 
     const formControlsToEnable = [
-      'type',
-      'user',
-      'date',
-      'plateChar',
-      'plate',
-      'policy',
-      'effDate',
-      'expDate',
-      'name',
-      'carMake',
-      'broker',
-      'note',
+      'distributionNoDataTypeId',
+      'distributionNoDataPlateB',
+      'distributionNoDataPlate',
+      'distributionNoDataPolicy',
+      'distributionNoDataEffDate',
+      'distributionNoDataExpDate',
+      'distributionNoDataName',
+      'distributionNoDataCarBrand',
+      'distributionNoDataBroker',
+      'distributionNoDataRemarks',
     ];
 
-    this.myForm.get('noData')?.valueChanges.subscribe((noDataValue) => {
-      for (const controlName of formControlsToEnable) {
-        const control = this.myForm.get(controlName);
-        if (control) {
-          if (noDataValue) {
-            control.enable();
-          } else {
-            control.disable();
+    this.myForm
+      .get('distributionNoDataBoolean')
+      ?.valueChanges.subscribe((noDataValue) => {
+        for (const controlName of formControlsToEnable) {
+          const control = this.myForm.get(controlName);
+          if (control) {
+            if (noDataValue) {
+              control.enable();
+            } else {
+              control.disable();
+            }
           }
         }
-      }
-      if (noDataValue) {
-        const formattedDate = this.datePipe.transform(
-          new Date(),
-          this.dateFormat('reportDateTimeFormat')
-        ); // Change the format as needed
-        this.myForm.get('date')?.setValue(formattedDate);
+        if (noDataValue) {
+          const formattedDate = this.datePipe.transform(
+            new Date(),
+            this.dateFormat('reportDateTimeFormat')
+          ); // Change the format as needed
+          this.myForm.get('distributionNoDataDate')?.setValue(formattedDate);
 
-        this.myForm.get('user')?.setValue(this.displayName);
-      }
-    });
+          this.myForm.get('distributionNoDataUser')?.setValue(this.displayName);
+        }
+      });
   }
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
@@ -140,21 +112,25 @@ export class CreateNoDataDialogComponent implements OnInit, OnDestroy {
   }
   getNoDataTypeLovFindAll() {
     // Check if the function has already been called
-
-    this.noDataSubscription = this.dataService
-      .getNoDataTypeLovFindAll()
-      .subscribe({
+    if (!this.isGetNoDataTypeCalled) {
+      this.isGetNoDataTypeCalled = true; // Set the flag to true to prevent further calls
+      this.dataService.getNoDataTypeLovFindAll().subscribe({
         next: (data) => {
           this.noDataType = data.data;
+
           // Set the flag to true when data is successfully loaded
         },
         error: (err) => {
           console.log(err);
-          this.noDataTypeLoaded = false; // Reset the flag on error, allowing a retry if needed
+
+          // Reset the flag on error, allowing a retry if needed
+          this.isGetNoDataTypeCalled = false;
         },
       });
+    }
   }
   save() {
     this.dialogRef.close(this.myForm.value);
+    // console.log(this.myForm.value);
   }
 }

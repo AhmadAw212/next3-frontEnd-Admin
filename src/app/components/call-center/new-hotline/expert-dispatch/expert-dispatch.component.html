@@ -1,12 +1,116 @@
 <div class="grid-container panel-class-style">
   <h2 class="h5">{{ dico?.dico_expert_dispatch || "dico_expert_dispatch" }}</h2>
 </div>
+<div class="container p-3">
+  <div class="panel row">
+    <div class="row p-3">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label>{{ dico?.dico_insurance || "dico_insurance" }}</label>
+          <input class="form-control ms-4" />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- [href]="
+            'tel:' + telExtension + policyData?.notificationContactPhone
+          " -->
+          <label>{{ dico?.dico_phone || "dico_phone" }}</label>
+          <a>
+            <img
+              src="./assets/icons/phone.png"
+              [style.height]="'20px'"
+              class="me-1"
+          /></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-3">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label>{{ dico?.dico_expert_name || "dico_expert_name" }}</label>
+          <input class="form-control ms-4" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</label>
+          <input class="form-control ms-5" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-3">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label>{{ dico?.dico_status || "dico_status" }}</label>
+          <input class="form-control ms-5" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label>{{ dico?.dico_dispatch || "dico_dispatch" }}</label>
+          <input class="form-control ms-5" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container p-3">
+  <div class="panel row">
+    <div class="row p-3">
+      <div class="col-md-6">
+        <label class="mb-0">{{
+          dico?.dico_not_available_reason || "dico_not_available_reason"
+        }}</label>
+      </div>
+    </div>
+    <div class="row p-3">
+      <div class="col-md-7">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="ms-5">{{ dico?.dico_reasons || "dico_reasons" }}</label>
+          <select name="reasons" id="reasons" class="form-select ms-5">
+            <option></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row p-3">
+      <div class="col-md-7">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="ms-5">{{
+            dico?.dico_comments || "dico_comments"
+          }}</label>
+          <input class="form-control ms-4" />
+        </div>
+      </div>
+    </div>
+    <div class="row p-3">
+      <div class="col-md-7">
+        <div class="d-flex justify-content-center align-items-center">
+          <button class="button-class ms-5">
+            {{
+              dico?.dico_choose_another_expert || "dico_choose_another_expert"
+            }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
-  <div class="row p-2">
-    <div class="col-md-2">
-      <label class="form-label">{{
-        dico?.dico_insurance || "dico_insurance"
-      }}</label>
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2" type="button">
+          {{ dico?.dico_dispatch || "dico_dispatch" }}
+        </button>
+        <button class="button-class me-2" type="button">
+          {{ dico?.dico_no_expert || "dico_no_expert" }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

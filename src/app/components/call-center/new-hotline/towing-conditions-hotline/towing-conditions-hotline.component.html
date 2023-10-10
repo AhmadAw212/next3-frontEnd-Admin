@@ -1,0 +1,372 @@
+<div class="grid-container panel-class-style mb-0">
+  <h2 class="h5">
+    {{ dico?.dico_towing_condition_list || "dico_towing_condition_list" }}
+  </h2>
+</div>
+<div class="container-fluid" style="background-color: rgb(239, 242, 245)">
+  <div class="row">
+    <!-- Column 1: Towing Company Information -->
+    <div class="col-lg-2 mt-3">
+      <div class="card">
+        <div class="card-header header-class">
+          {{ dico?.dico_towing_company_name || "dico_towing_company_name" }}
+        </div>
+
+        <div class="card-body">
+          <mat-list *ngFor="let towing of towingCmpInfo; let i = index">
+            <mat-list-item
+              class="text-start hover-text"
+              style="font-weight: bold; position: relative"
+              [ngClass]="{ 'selected-item ': selectedPanelIndex === i }"
+              (click)="getTowingData(towing, i)"
+            >
+              {{ towing.name }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: General Conditions -->
+    <div class="col mt-3">
+      <div class="section p-3">
+        <div class="ms-auto m-2">
+          <div class="d-flex align-items-center justify-content-end">
+            <!-- <button class="btn text-black" type="button">
+                {{ dico?.dico_search || "dico_search" }}
+              </button> -->
+          </div>
+        </div>
+        <h2 style="font-size: 13px; padding: 5px; font-weight: bold">
+          {{ dico?.dico_general_conditions || "dico_general_conditions" }}
+        </h2>
+
+        <div class="grid-container">
+          <div class="row m-4">
+            <div class="col-md-3">
+              <label for="countAllowed" class="label-color form-label"
+                >{{ dico?.dico_count_allowed || "dico_count_allowed" }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <textarea
+                id="countAllowed"
+                class="form-control"
+                [style.width]="'50%'"
+                [ngModel]="carTowingCompanyId?.towingConditionCountAllowed"
+                disabled
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Add more rows as needed for additional fields -->
+
+          <div class="row m-4">
+            <div class="col-md-3">
+              <label for="exception" class="label-color form-label">
+                {{ dico?.dico_exception || "dico_exception" }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <textarea
+                id="exception"
+                class="form-control"
+                [style.width]="'50%'"
+                [ngModel]="carTowingCompanyId?.towingConditionException"
+                disabled
+              ></textarea>
+            </div>
+          </div>
+          <div class="row m-4">
+            <div class="col-md-3">
+              <label for="milageLimit" class="label-color form-label">
+                {{ dico?.dico_milage_limit || "dico_milage_limit" }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <textarea
+                id="milageLimit"
+                class="form-control"
+                [style.width]="'50%'"
+                [ngModel]="carTowingCompanyId?.towingConditionMilageLimit"
+                disabled
+              ></textarea>
+            </div>
+          </div>
+          <div class="row m-4">
+            <div class="col-md-3">
+              <label for="notCover" class="label-color form-label">
+                {{ dico?.dico_not_cover_cas || "dico_not_cover_cas" }}:</label
+              >
+            </div>
+            <div class="col-md-9">
+              <textarea
+                id="notCover"
+                class="form-control"
+                [style.width]="'50%'"
+                [ngModel]="carTowingCompanyId?.towingConditionNotCoverCas"
+                disabled
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="grid-container">
+          <div class="row m-4">
+            <div class="col-md-2">
+              <label for="addCost" class="label-color form-label">
+                {{ dico?.dico_add_cost_curr || "dico_add_cost_curr" }}:</label
+              >
+              <input
+                type="text"
+                id="addCost"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionAddCostCurr"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="accCount" class="label-color form-label">
+                {{ dico?.dico_acc_count || "dico_acc_count" }}:</label
+              >
+              <input
+                type="text"
+                id="accCount"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionAccCount"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="addCost" class="label-color form-label">
+                {{ dico?.dico_add_cost || "dico_add_cost" }}:</label
+              >
+              <input
+                type="text"
+                id="addCost"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionAddCost"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="row m-4">
+            <div class="col-md-2">
+              <label for="milageAcc" class="label-color form-label">
+                {{ dico?.dico_milage_acc || "dico_milage_acc" }}:</label
+              >
+              <input
+                type="text"
+                id="milageAcc"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMilageAcc"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="mechCount" class="label-color form-label">
+                {{ dico?.dico_mech_count || "dico_mech_count" }}:</label
+              >
+              <input
+                type="text"
+                id="mechCount"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMechCount"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="milageAll" class="label-color form-label">
+                {{ dico?.dico_milage_all || "dico_milage_all" }}:</label
+              >
+              <input
+                type="text"
+                id="milageAll"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMilageAll"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="row m-4">
+            <div class="col-md-2">
+              <label for="milagePriv" class="label-color form-label">
+                {{ dico?.dico_milage_priv || "dico_milage_priv" }}:</label
+              >
+              <input
+                type="text"
+                id="milagePriv"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMilagePriv"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="milagePub" class="label-color form-label">
+                {{ dico?.dico_milage_pub || "dico_milage_pub" }}:</label
+              >
+              <input
+                type="text"
+                id="milagePub"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMilagePub"
+                disabled
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="milageMech" class="label-color form-label">
+                {{ dico?.dico_milage_mech || "dico_milage_mech" }}:</label
+              >
+              <input
+                type="text"
+                id="milageMech"
+                class="form-control"
+                style="width: 128px"
+                [ngModel]="carTowingCompanyId?.towingConditionMilageMech"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+        <div class="grid-container">
+          <div class="row m-4">
+            <div class="col-sm-2">
+              <label for="blocked" class="label-color form-label">
+                {{ dico?.dico_blocked || "dico_blocked" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="blocked"
+                  class="form-control"
+                  name="towingConditionBlocked"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionBlocked?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="carryingGoods" class="label-color form-label">
+                {{ dico?.dico_carrying_goods || "dico_carrying_goods" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="carryingGoods"
+                  class="form-control"
+                  name="towingConditionCarryingGood"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionCarryingGood?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="lifter" class="label-color form-label">
+                {{ dico?.dico_lifter_acc || "dico_lifter_acc" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="lifter"
+                  class="form-control"
+                  name="towingConditionLifterAcc"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionLifterAcc?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="lifterMech" class="label-color form-label">
+                {{ dico?.dico_lifter_mech || "dico_lifter_mech" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="lifterMech"
+                  class="form-control"
+                  name="towingConditionLifterMech"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionLifterAcc?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="offRoad" class="label-color form-label">
+                {{ dico?.dico_off_road || "dico_off_road" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="offRoad"
+                  class="form-control"
+                  name="towingConditionOffRoad"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionOffRoad?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="pickUp" class="label-color form-label">
+                {{ dico?.dico_pick_up || "dico_pick_up" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="pickUp"
+                  class="form-control"
+                  name="towingConditionPickUp"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionPickUp?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="wheel" class="label-color form-label">
+                {{ dico?.dico_wheel || "dico_wheel" }}:
+              </label>
+              <div class="form-check">
+                <input
+                  type="text"
+                  id="wheel"
+                  class="form-control"
+                  name="towingConditionWheel"
+                  [ngModel]="
+                    carTowingCompanyId?.towingConditionWheel?.description
+                  "
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 1: Input Field for Plate -->
+  </div>
+</div>

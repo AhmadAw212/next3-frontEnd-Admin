@@ -167,6 +167,9 @@ import { CustomerSatisfactionDialogComponent } from './components/call-center/ne
 import { SecondExpertDialogComponent } from './components/call-center/new-hotline/second-expert-dialog/second-expert-dialog.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { RotationDialogComponent } from './components/call-center/new-hotline/rotation-dialog/rotation-dialog.component';
+import { ExpertDispatchComponent } from './components/call-center/new-hotline/expert-dispatch/expert-dispatch.component';
+import { TowingDispatchTabComponent } from './components/call-center/new-hotline/towing-dispatch-tab/towing-dispatch-tab.component';
+import { TowingConditionsHotlineComponent } from './components/call-center/new-hotline/towing-conditions-hotline/towing-conditions-hotline.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -287,6 +290,9 @@ import { RotationDialogComponent } from './components/call-center/new-hotline/ro
     SecondExpertDialogComponent,
     CustomerSatisfactionDialogComponent,
     RotationDialogComponent,
+    ExpertDispatchComponent,
+    TowingDispatchTabComponent,
+    TowingConditionsHotlineComponent,
   ],
   imports: [
     BrowserModule,

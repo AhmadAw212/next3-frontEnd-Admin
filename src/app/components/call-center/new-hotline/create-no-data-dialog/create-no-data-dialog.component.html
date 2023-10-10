@@ -10,9 +10,9 @@
           <input
             type="checkbox"
             class="form-check-input ms-3"
-            id="noData"
-            name="noData"
-            formControlName="noData"
+            id="distributionNoDataBoolean"
+            name="distributionNoDataBoolean"
+            formControlName="distributionNoDataBoolean"
           />
         </div>
 
@@ -22,10 +22,10 @@
               dico?.dico_type || "dico_type"
             }}</label>
             <select
-              name="type"
-              id="type"
+              name="distributionNoDataTypeId"
+              id="distributionNoDataTypeId"
               class="form-select"
-              formControlName="type"
+              formControlName="distributionNoDataTypeId"
             >
               <option *ngFor="let noData of noDataType" [value]="noData.code">
                 {{ noData.description }}
@@ -37,15 +37,15 @@
 
         <div class="col-md-3">
           <div class="form-group">
-            <label for="user" class="form-label">{{
+            <label for="distributionNoDataUser" class="form-label">{{
               dico?.dico_user || "dico_user"
             }}</label>
             <input
               type="text"
               class="form-control"
-              id="user"
-              name="user"
-              formControlName="user"
+              id="distributionNoDataUser"
+              name="distributionNoDataUser"
+              formControlName="distributionNoDataUser"
             />
             <!-- Add validation messages here if needed -->
           </div>
@@ -59,9 +59,9 @@
             <input
               type="text"
               class="form-control"
-              formControlName="date"
-              id="date"
-              name="date"
+              formControlName="distributionNoDataDate"
+              id="distributionNoDataDate"
+              name="distributionNoDataDate"
             />
             <!-- Add validation messages here if needed -->
           </div>
@@ -76,9 +76,9 @@
             <input
               type="text"
               class="form-control"
-              id="plateChar"
-              name="plateChar"
-              formControlName="plateChar"
+              id="distributionNoDataPlateB"
+              name="distributionNoDataPlateB"
+              formControlName="distributionNoDataPlateB"
             />
           </div>
           <div class="col-md-3">
@@ -88,9 +88,9 @@
             <input
               type="text"
               class="form-control"
-              id="plate"
-              name="plate"
-              formControlName="plate"
+              id="distributionNoDataPlate"
+              name="distributionNoDataPlate"
+              formControlName="distributionNoDataPlate"
             />
           </div>
         </div>
@@ -102,9 +102,9 @@
             <input
               type="text"
               class="form-control"
-              id="policy"
-              name="policy"
-              formControlName="policy"
+              id="distributionNoDataPolicy"
+              name="distributionNoDataPolicy"
+              formControlName="distributionNoDataPolicy"
             />
           </div>
           <div class="col-md-3 me-4">
@@ -113,13 +113,13 @@
             }}</label>
             <input
               type="text"
-              id="effDate"
-              name="effDate"
+              id="distributionNoDataEffDate"
+              name="distributionNoDataEffDate"
               class="form-control"
-              formControlName="effDate"
+              formControlName="distributionNoDataEffDate"
               bsDatepicker
               [bsConfig]="{
-                dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                dateInputFormat: 'DD/MM/YYYY',
                 containerClass: 'theme-dark-blue',
                 showWeekNumbers: false
               }"
@@ -132,12 +132,12 @@
             <input
               type="text"
               class="form-control"
-              id="expDate"
-              name="expDate"
-              formControlName="expDate"
+              id="distributionNoDataExpDate"
+              name="distributionNoDataExpDate"
+              formControlName="distributionNoDataExpDate"
               bsDatepicker
               [bsConfig]="{
-                dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                dateInputFormat: 'DD/MM/YYYY',
                 containerClass: 'theme-dark-blue',
                 showWeekNumbers: false
               }"
@@ -153,9 +153,9 @@
             <input
               type="text"
               class="form-control"
-              id="name"
-              name="name"
-              formControlName="name"
+              id="distributionNoDataName"
+              name="distributionNoDataName"
+              formControlName="distributionNoDataName"
             />
           </div>
           <div class="col-md-3 me-4">
@@ -165,9 +165,9 @@
             <input
               type="text"
               class="form-control"
-              id="carMake"
-              name="carMake"
-              formControlName="carMake"
+              id="distributionNoDataCarBrand"
+              name="distributionNoDataCarBrand"
+              formControlName="distributionNoDataCarBrand"
             />
           </div>
           <div class="col-md-3 me-4">
@@ -177,9 +177,9 @@
             <input
               type="text"
               class="form-control"
-              id="broker"
-              name="broker"
-              formControlName="broker"
+              id="distributionNoDataBroker"
+              name="distributionNoDataBroker"
+              formControlName="distributionNoDataBroker"
             />
           </div>
         </div>
@@ -189,14 +189,14 @@
               dico?.dico_note || "dico_note"
             }}</label>
             <textarea
-              name="note"
+              name="distributionNoDataRemarks"
               class="form-control"
-              id="note"
+              id="distributionNoDataRemarks"
               cols="0"
               rows="5"
               id="note"
               name="note"
-              formControlName="note"
+              formControlName="distributionNoDataRemarks"
             ></textarea>
           </div>
         </div>

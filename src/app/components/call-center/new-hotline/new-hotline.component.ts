@@ -1,7 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators } from 'ngx-editor';
 import { Policy } from 'src/app/model/policy';
@@ -23,13 +29,16 @@ import { CustomerSatisfactionDialogComponent } from './customer-satisfaction-dia
 import { RotationDialogComponent } from './rotation-dialog/rotation-dialog.component';
 import { ExpertDispatchComponent } from './expert-dispatch/expert-dispatch.component';
 import * as moment from 'moment';
+import { Subscription, lastValueFrom } from 'rxjs';
+import { TowingConditionComponent } from '../towing-condition/towing-condition.component';
+import { TowingConditionsHotlineComponent } from './towing-conditions-hotline/towing-conditions-hotline.component';
 
 @Component({
   selector: 'app-new-hotline',
   templateUrl: './new-hotline.component.html',
   styleUrls: ['./new-hotline.component.css'],
 })
-export class NewHotlineComponent implements OnInit {
+export class NewHotlineComponent implements OnInit, OnDestroy {
   dico?: any;
   notificationId?: string;
   policyData?: Policy;
@@ -65,6 +74,26 @@ export class NewHotlineComponent implements OnInit {
   supplierExperts?: any;
   showrelated?: string;
   selectedRowIndex: number = 0;
+  towNatureLov: type[] = [];
+  supplierGarageLov: any[] = [];
+  domainYn: type[] = [];
+  towCancelReason: type[] = [];
+  towDelayReasonLov: type[] = [];
+  @ViewChild('suggestTowCompany') suggestTowCompany!: TemplateRef<any>;
+  @ViewChild('towConditions') towConditions!: TemplateRef<any>;
+  // @ViewChild('customerSatisfaction') customerSatisfaction!: TemplateRef<any>;
+  @ViewChild('towingConditions') towingConditions!: TemplateRef<any>;
+  coverByCar?: type;
+  selectedTowingCmp?: any;
+  coverSubscription?: Subscription;
+  towingAlertRen?: string;
+  towingCondAccAndMec?: any[];
+  getCover: boolean = false;
+  private dialogRef!: MatDialogRef<any>;
+  carsDispatchFollowUpList?: any;
+  expertDelayReason?: any[];
+  attidudeLov?: any[];
+  form2!: FormGroup;
 
   constructor(
     private dataService: DataServiceService,
@@ -76,15 +105,158 @@ export class NewHotlineComponent implements OnInit {
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private dialog: MatDialog,
-    private profileService: LoadingServiceService
+    private profileService: LoadingServiceService // private dialogRef: MatDialogRef<TowingConditionComponent>,
   ) {}
+  ngOnDestroy(): void {}
+  openTowingConditionList() {
+    const dialofRef = this.dialog.open(TowingConditionsHotlineComponent, {
+      data: { towingConditions: this.policyData?.towingCompanyList },
+      width: '1500px',
+      height: '800px',
+    });
+  }
+  selectRow(index: number) {
+    this.selectedRowIndex = index;
+  }
+  openTowConditions() {
+    if (this.policyData) {
+      this.dialogRef = this.dialog.open(this.towConditions, {
+        width: '800px',
+        height: '200px',
+        data: {
+          /* You can pass data to the dialog here */
+        },
+      });
+    }
+  }
+  // openCustomerSatisfaction() {
+  //   if (this.policyData) {
+  //     const dialogRef = this.dialog.open(this.customerSatisfaction, {
+  //       width: '2000px',
+  //       height: '700px',
+  //       data: {
+  //         /* You can pass data to the dialog here */
+  //       },
+  //     });
+  //     // dialogRef.afterOpened().subscribe(() => {
+  //     //   // this.initializeDistibutionLossArrived();
+  //     //   // this.onArrrivedFormChanges();
+  //     //   // this.onComplaintsChange();
+  //     //   // this.expertCheckBoxChangeListener();
+  //     //   // this.towTruckChangeListener();
+  //     //   // this.repairShopChangeListener();
+  //     //   // this.pudChangeListener();
+  //     //   // this.callcenterChangeListener();
+  //     //   // this.getExpertDelayReasonLovFindAll();
+  //     //   // this.getAttitudeLovFindAll();
+  //     //   // const date = this.form.get('distributionLossDistDate')?.value;
+  //     //   // this.formatDateTime(date);
+  //     //   // this.form.get('dispatchFuReasonId')?.setValue('');
+  //     //   // this.form.get('dispatchFuNote')?.setValue('');
+  //     //   // this.form.get('dispatchFuAttitude')?.setValue('');
+  //     //   // this.form.get('dispatchFuComplaintsId')?.setValue('');
+  //     //   // this.form.get('dispatchFuComplaintsNote')?.setValue('');
+  //     //   // const distributionTowArrivedDate = this.form.get(
+  //     //   //   'distributionTowArrivedDate'
+  //     //   // );
+  //     //   // if (!distributionTowArrivedDate?.value) {
+  //     //   //   distributionTowArrivedDate?.setValue(new Date());
+  //     //   // }
+  //     //   // console.log(date);
+  //     // });
+  //   }
+  // }
+  getAttitudeLovFindAll() {
+    this.dataService.getAttitudeLovFindAll().subscribe({
+      next: (data) => {
+        this.attidudeLov = data.data;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+  getExpertDelayReasonLovFindAll() {
+    this.dataService.getExpertDelayReasonLovFindAll().subscribe({
+      next: (res) => {
+        this.expertDelayReason = res.data;
+        // console.log(res);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+  openSuggestDialog(): void {
+    if (this.policyData) {
+      this.dialogRef = this.dialog.open(this.suggestTowCompany, {
+        width: '500px',
+        height: '500px',
+        data: {
+          /* You can pass data to the dialog here */
+        },
+      });
+      this.dialogRef.afterOpened().subscribe(async () => {
+        await this.getCoverByCarId();
+        await this.selectRowTowingCompany(
+          this.selectedRowIndex,
+          this.policyData?.towingCompanyList![0]
+        );
+      });
+    }
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('Dialog result:', result);
+    // });
+  }
+
+  // addCarDispatchFollowUp() {
+  //   this.form2 = this.fb.group({
+  //     dispatchFuArrivedId: [''],
+  //     dispatchFuReasonId: [{ value: '', disabled: true }],
+  //     dispatchFuArrivedDate: [{ value: '', disabled: true }],
+  //     dispatchFuNote: [''],
+  //     dispatchFuAttitude: [''],
+  //     dispatchFuComplaintsId: [''],
+  //     dispatchFuComplaint1Boolean: [{ value: null, disabled: true }],
+  //     dispatchFuComplaint2Boolean: [{ value: null, disabled: true }],
+  //     dispatchFuComplaint3Boolean: [{ value: null, disabled: true }],
+  //     dispatchFuComplaint4Boolean: [{ value: null, disabled: true }],
+  //     dispatchFuComplaint5Boolean: [{ value: null, disabled: true }],
+  //     dispatchFuComplaintsNote: [''],
+  //     dispatchFuNotification: [''],
+  //     dispatchFuType: [''],
+  //     // distributionLossDistDate: [null],
+  //   });
+  // }
+
+  getCoverByCarId() {
+    if (!this.getCover) {
+      const carId = this.policyData?.carId;
+      if (carId != null) {
+        this.coverSubscription = this.dataService
+          .getCoverByCarId(carId)
+          .subscribe({
+            next: (res) => {
+              this.coverByCar = res.data[0];
+              this.getCover = true;
+              // console.log(res);
+            },
+            error: (err) => {
+              this.getCover = false;
+              console.log(err);
+            },
+          });
+      }
+    }
+  }
   async ngOnInit() {
     this.visaForm();
     this.getDico();
     await this.getData();
     this.route.params.subscribe((params) => {
       const notificationId = params['notificationId'];
-      // this.notificationId = notificationId;
+      this.notificationId = notificationId;
       this.getPolicyCarByNotificationId(notificationId);
       this.userRolesService.getUserRoles();
       this.getCompaniesPerUser();
@@ -99,9 +271,28 @@ export class NewHotlineComponent implements OnInit {
       this.getExpCancelReasonLovFindAll();
       this.getExpertDispatchTypeLovFindAll();
       this.profile = this.profileService.getSelectedProfile();
+      this.getTowingNatureLovFindAll();
+      this.getDomainYN();
+      this.getTowCancelReasonLovFindAll();
+      this.getTowDelayReasonLovFindAll();
+      // this.getSupplierGarageLov();
     });
   }
+  private parseDate(dateString: string): Date {
+    return moment(dateString, 'DD/MM/yyyy hh:mm A').toDate();
+  }
 
+  getDomainYN() {
+    this.dataService.getDomainYN().subscribe({
+      next: (data) => {
+        this.domainYn = data.data.filter((item: any) => item.code !== 'ALL');
+        // console.log(this.domainYn);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
   visaForm() {
     this.form = this.fb.group({
       lossTowLossDate: ['', Validators.required],
@@ -129,9 +320,9 @@ export class NewHotlineComponent implements OnInit {
       distributionExpTypeId: [''],
       lossTow2ndExpertId: [''],
       distributionLossDistributionBoolean: [''],
-      distributionLossDistDate: [null],
+      // distributionLossDistDate: [null],
       distributionLossDistUser: [''],
-      distributionLossArrivedBoolean: [''],
+      distributionLossArrivedBoolean: [false],
       distributionLossArrivedDate: [null],
       distributionLossArrivedUser: [''],
       expertMobilePhone: [''],
@@ -152,10 +343,68 @@ export class NewHotlineComponent implements OnInit {
       distributionLossArrived: [''],
       lossTowExpertNamePreferenceById: [''],
       lossTowExpert: [''],
-      carsDispatchFollowUp: [''],
+      // carsDispatchFollowUp: this.fb.array([]),
+      distributionTowNatureId: [''],
+      lossTowRsDesc: [''],
+      towToTownName: [''],
+      towFromTownDescription: [''],
+      towFromTownId: [''],
+      towToTownDescription: [''],
+      towToTownId: [''],
+      distributionTowDistDateBoolean: [''],
+      distributionTowDistDate: [''],
+      distributionTowArrivedUser: [''],
+      delayedTowingTime: [''],
+      distributionTowArrivedDateBoolean: [''],
+      distributionTowArrivedDate: [''],
+      distributionTowDriverName: [''],
+      distributionTowDriverPhone: [''],
+      distributionTowCanceledId: [''],
+      distributionTowDelayId: [''],
+      distributionTowDelayOther: [''],
+      distributionTowDistLifterId: [''],
+      distributionTowTotalKm: [''],
+      distributionTowExtraKm: [''],
+      distributionTowClientCost: [''],
+      distributionTowTotalCost: [''],
+      totaleDurationBetweenTown: [''],
+      lossTowBlockedId: [''],
+      lossTowWheelId: [''],
+      lossTowPickUpId: [''],
+      lossTowOffRoadId: [''],
+      lossTowCarryingGoodId: [''],
+      lossTowLifterId: [''],
+      towingComDesc: [''],
+      distributionLossDistDate: [null],
+      noData: [null],
+      // dispatchFuArrivedId: [''],
+      // dispatchFuReasonId: [{ value: '', disabled: true }],
+      // dispatchFuArrivedDate: [{ value: '', disabled: true }],
+      // dispatchFuNote: [''],
+      // dispatchFuAttitude: [''],
+      // dispatchFuComplaints: [''],
+      // dispatchFuComplaint1: [{ value: null, disabled: true }],
+      // dispatchFuComplaint2: [{ value: null, disabled: true }],
+      // dispatchFuComplaint3: [{ value: null, disabled: true }],
+      // dispatchFuComplaint4: [{ value: null, disabled: true }],
+      // dispatchFuComplaint5: [{ value: null, disabled: true }],
+      // dispatchFuComplaintsNote: [''],
+      // dispatchFuNotification: [''],
+      // dispatchFuType: [''],
     });
-
+    // this.addCarDispatchFollowUp();
+    // this.dispatchFuArrivedTowingChangeListener();
     // this.getTownDesc();
+  }
+  // addCarDispatchFollowUp() {}
+
+  disableLossDate(): boolean {
+    const distributionLossDistDate = this.form.get(
+      'distributionLossDistDate'
+    )?.value;
+    const ccChangeExpDispDate = this.hasPerm('ccChangeExpDispDate');
+    return distributionLossDistDate === null || !ccChangeExpDispDate;
+    // return false;
   }
   async getData(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -176,6 +425,16 @@ export class NewHotlineComponent implements OnInit {
           reject(error); // Reject the promise if there is an error during the service call
         },
       });
+    });
+  }
+  getTowDelayReasonLovFindAll() {
+    this.dataService.getTowDelayReasonLovFindAll().subscribe({
+      next: (data) => {
+        this.towDelayReasonLov = data.data;
+      },
+      error: (error) => {
+        console.log(error);
+      },
     });
   }
   noExpert() {
@@ -208,35 +467,25 @@ export class NewHotlineComponent implements OnInit {
     }
   }
 
-  // getSupplierFindById(event: any) {
-  //   // const expertId = this.form.get('lossTowExpertNamePreferenceById')?.value;
-  //   const lossTowExpertNamePreference = this.form.get(
-  //     'lossTowExpertNamePreference'
-  //   )?.value;
+  dispatchFuArrivedTowingChangeListener() {
+    const distributionTowArrivedDateBoolean = this.form.get(
+      'distributionTowArrivedDateBoolean'
+    )?.value;
 
-  //   this.dataService.getSupplierFindById(event).subscribe({
-  //     next: (result) => {
-  //       if (result.data && !result.data.supplierInactd) {
-  //         this.form.get('lossTowExpert')?.setValue(result.data);
+    if (distributionTowArrivedDateBoolean) {
+      const distributionTowArrivedDate = this.form.get(
+        'distributionTowArrivedDate'
+      );
+      if (!distributionTowArrivedDate?.value) {
+        distributionTowArrivedDate?.setValue(new Date());
+      }
 
-  //         this.form
-  //           .get('lossTowExpertNamePreferenceById')
-  //           ?.setValue(lossTowExpertNamePreference);
-  //         this.form
-  //           .get('lossTowExpertId')
-  //           ?.setValue(lossTowExpertNamePreference);
-  //       } else {
-  //         this.form.get('lossTowExpert')?.setValue(null);
-  //         this.form.get('lossTowExpertNamePreferenceById')?.setValue(null);
-  //         this.form.get('lossTowExpertId')?.setValue(null);
-  //         console.error('No Expert name ');
-  //       }
-
-  //       console.log(result.data);
-  //     },
-  //   });
-  // }
-
+      this.customerSatisfactionDialog();
+    } else {
+      this.form.get('distributionTowArrivedDate')?.setValue(null);
+      this.form.get('distributionTowArrivedUser')?.setValue(null);
+    }
+  }
   lossTowExpertNameValueChangeListener(event: any) {
     const lossTowExpertId = this.form.get('lossTowExpertNamePreference')?.value;
     // if (lossTowExpertId) {
@@ -276,39 +525,39 @@ export class NewHotlineComponent implements OnInit {
   }
   onSubmit() {
     // Enable disabled form controls temporarily
-    const disabledControls = [
-      'distributionTownDescription',
-      'distributionExpCanceledUser',
-      'distributionExpCanceledDate',
-      'distributionLossDistributionBoolean',
-      'distributionLossDistDate',
-      'distributionLossDistUser',
-      'distributionLossArrivedDate',
-      'distributionLossArrivedUser',
-      'distributionExpTypeId',
-      'expertMobilePhone',
-      'distributionExpExpertId',
-      'distributionExpTypeDate',
-      'distributionExpTypeUser',
-      'distributionTema',
-      // Add other control names as needed
-    ];
+    // const disabledControls = [
+    //   'distributionTownDescription',
+    //   'distributionExpCanceledUser',
+    //   'distributionExpCanceledDate',
+    //   'distributionLossDistributionBoolean',
+    //   'distributionLossDistDate',
+    //   'distributionLossDistUser',
+    //   'distributionLossArrivedDate',
+    //   'distributionLossArrivedUser',
+    //   'distributionExpTypeId',
+    //   'expertMobilePhone',
+    //   'distributionExpExpertId',
+    //   'distributionExpTypeDate',
+    //   'distributionExpTypeUser',
+    //   'distributionTema',
+    //   // Add other control names as needed
+    // ];
 
-    disabledControls.forEach((controlName) => {
-      this.form.get(controlName)?.enable();
-      // const distributionTownId = this.form.get('distributionTownId')?.value;
-      // const lossTowExpertId = this.form.get('lossTowExpertId')?.value;
-      // this.form.get('distributionTownName')?.setValue(distributionTownId);
-      // this.form.get('lossTowExpertNamePreference')?.setValue(lossTowExpertId);
-    });
+    // disabledControls.forEach((controlName) => {
+    //   this.form.get(controlName)?.enable();
+    //   // const distributionTownId = this.form.get('distributionTownId')?.value;
+    //   // const lossTowExpertId = this.form.get('lossTowExpertId')?.value;
+    //   // this.form.get('distributionTownName')?.setValue(distributionTownId);
+    //   // this.form.get('lossTowExpertNamePreference')?.setValue(lossTowExpertId);
+    // });
 
     // Log the form value
     console.log(this.form.value);
 
-    // Disable the form controls again
-    disabledControls.forEach((controlName) => {
-      this.form.get(controlName)?.disable();
-    });
+    // // Disable the form controls again
+    // disabledControls.forEach((controlName) => {
+    //   this.form.get(controlName)?.disable();
+    // });
   }
   configList() {
     const codesToFind = [
@@ -391,6 +640,19 @@ export class NewHotlineComponent implements OnInit {
       delayedDispatchTime,
       distributionTema,
       supplierName,
+      lossTowRsDesc,
+      towFromTownDescription,
+      towToTownDescription,
+      distributionTowDistDateBoolean,
+      distributionTowDistDate,
+      distributionTowArrivedUser,
+      delayedTowingTime,
+      distributionTowArrivedDate,
+      distributionTowTotalKm,
+      distributionTowExtraKm,
+      distributionTowClientCost,
+      totaleDurationBetweenTown,
+      towingComDesc,
     } = this.form.controls;
     if (distributionExpCanceledDate) {
       const dateFormat = distributionExpCanceledDate.value;
@@ -429,6 +691,19 @@ export class NewHotlineComponent implements OnInit {
     delayedDispatchTime.disable();
     distributionTema.disable();
     supplierName.disable();
+    lossTowRsDesc.disable();
+    towFromTownDescription.disable();
+    towToTownDescription.disable();
+    distributionTowDistDateBoolean.disable();
+    distributionTowDistDate.disable();
+    distributionTowArrivedUser.disable();
+    delayedTowingTime.disable();
+    distributionTowArrivedDate.disable();
+    distributionTowTotalKm.disable();
+    distributionTowExtraKm.disable();
+    distributionTowClientCost.disable();
+    totaleDurationBetweenTown.disable();
+    towingComDesc.disable();
     // Constants for policy data
     const {
       notificationStatusCode,
@@ -485,7 +760,7 @@ export class NewHotlineComponent implements OnInit {
     });
   }
   private formatDateTime(dateTime: Date): string {
-    const parsedDate = moment(dateTime, 'DD/MM/yyyy hh:mm A').toDate();
+    // const parsedDate = moment(dateTime, 'DD/MM/yyyy HH:mm A').toDate();
     return this.datePipe.transform(
       dateTime,
       this.dateFormat('reportDateTimeFormat')
@@ -495,12 +770,13 @@ export class NewHotlineComponent implements OnInit {
     const distributionLossArrivedBoolean = this.form.get(
       'distributionLossArrivedBoolean'
     )?.value;
+    this.form.get('distributionLossArrivedDate')?.setValue(new Date());
 
     if (distributionLossArrivedBoolean) {
       this.customerSatisfactionDialog();
     } else {
       this.form.get('distributionLossArrivedDate')?.setValue(null);
-      this.form.get('arrivedUserTowingChoice')?.setValue(null);
+      this.form.get('distributionLossArrivedUser')?.setValue(null);
     }
   }
   private patchFormWithPolicyData(): void {
@@ -527,7 +803,20 @@ export class NewHotlineComponent implements OnInit {
       const sysCreatedBy =
         this.policyData?.carsContactsPhoneList![0].sysCreatedBy;
       // this.getSupplierFindById();
-
+      const distributionTowDistDate = this.formatDateTime(
+        this.policyData?.distributionTowDistDate!
+      );
+      const distributionTowArrivedDate = this.formatDateTime(
+        this.policyData?.distributionTowArrivedDate!
+      );
+      this.carsDispatchFollowUpList = this.policyData?.carsDispatchFollowUpList;
+      if (this.disableLossDate()) {
+        this.form.get('distributionLossDistDate')?.disable();
+      }
+      const distributionLossDistDate = this.formatDateTime(
+        this.policyData?.distributionLossDistDate!
+      );
+      // console.log(this.disableLossDate());
       this.form.patchValue({
         ...this.policyData,
         lossTowLossDate: lossDate,
@@ -539,6 +828,9 @@ export class NewHotlineComponent implements OnInit {
         distributionLossArrivedBoolean: distributionLossArrivedBoolean,
         distributionExpTypeDate: distributionExpTypeDate,
         sysCreatedBy: sysCreatedBy,
+        distributionTowDistDate: distributionTowDistDate,
+        distributionTowArrivedDate: distributionTowArrivedDate,
+        // distributionLossDistDate: distributionLossDistDate,
       });
       this.isSystemAdmin();
       // this.getTownById();
@@ -754,58 +1046,38 @@ export class NewHotlineComponent implements OnInit {
     });
   }
   createNoDataDialog() {
-    const dialogData = this.dialog.open(CreateNoDataDialogComponent, {
-      data: {
-        formData: this.formData,
-      },
-      width: '780px',
-      height: '550px',
-    });
-    dialogData.afterClosed().subscribe((data) => {
-      this.formData = data;
-    });
+    if (this.displayName) {
+      const dialogData = this.dialog.open(CreateNoDataDialogComponent, {
+        data: {
+          formData: this.formData,
+          displayname: this.displayName,
+        },
+        width: '780px',
+        height: '550px',
+      });
+      dialogData.afterClosed().subscribe((data) => {
+        if (data !== undefined && data !== null) {
+          this.formData = data;
+          // this.form.get('noData')?.setValue(data);
+        }
+
+        // this.form.get('noData')?.setValue(data);
+        // console.log(this.form.get('noData')?.value);
+      });
+    }
   }
   changeToAvaiDataDialog() {
     // Destructure the relevant properties from this.policyData
-    const {
-      distributionNoDataPlateB,
-      distributionNoDataPlate,
-      distributionNoDataPolicy,
-      distributionNoDataName,
-      distributionNoDataRemarks,
-      distributionNoDataEffDate,
-      distributionNoDataExpDate,
-      distributionNoDataCarBrand,
-      distributionNoDataBroker,
-      insuranceId,
-      lossTowLossDate,
-    } = this.policyData || {};
+    const { insuranceId, lossTowLossDate } = this.policyData || {};
 
-    // Define the data object more concisely
-    const noDataEffDate = this.datePipe.transform(
-      distributionNoDataEffDate,
-      this.dateFormat('reportDateFormat')
-    );
-    const noDataExpDate = this.datePipe.transform(
-      distributionNoDataExpDate,
-      this.dateFormat('reportDateFormat')
-    );
     const dialogData = {
-      distributionNoDataPlateB,
-      distributionNoDataPlate,
-      distributionNoDataPolicy,
-      distributionNoDataName,
-      distributionNoDataRemarks,
-      noDataEffDate,
-      noDataExpDate,
-      distributionNoDataCarBrand,
-      distributionNoDataBroker,
       insuranceId,
       lossTowLossDate,
       changeAvailableData: this.changeAvailableData,
       polserno: this.polserno,
       policyData: this.policySearchData,
       companies: this.companies,
+      createNoData: this.formData,
     };
 
     const dialogRef = this.dialog.open(ChangeToAvailableDataComponent, {
@@ -846,8 +1118,37 @@ export class NewHotlineComponent implements OnInit {
       });
     }
   }
+  getTowFromTownDescription(event: any) {
+    const town1 = this.form.get('fromTowTownName')?.value;
+    if (town1) {
+      this.dataService.getTownFindById(town1).subscribe({
+        next: (res) => {
+          const data = res.data;
+          this.form
+            .get('towFromTownDescription')
+            ?.setValue(data.cazaDescription + ' ' + data.regionDescription);
+          this.form.get('towFromTownId')?.setValue(event);
+        },
+      });
+    }
+  }
+  getTowToTownDescription(event: any) {
+    const town2 = this.form.get('towToTownName')?.value;
+    if (town2) {
+      this.dataService.getTownFindById(town2).subscribe({
+        next: (res) => {
+          const data = res.data;
+          this.form
+            .get('towToTownDescription')
+            ?.setValue(data.cazaDescription + ' ' + data.regionDescription);
+          this.form.get('towToTownId')?.setValue(event);
+        },
+      });
+    }
+  }
   getTownFindById() {
     const town = this.form.get('distributionTownName')?.value;
+
     if (town) {
       this.dataService.getTownFindById(town).subscribe({
         next: (res) => {
@@ -856,8 +1157,8 @@ export class NewHotlineComponent implements OnInit {
           this.form
             .get('distributionTownDescription')
             ?.setValue(data.cazaDescription + ' ' + data.regionDescription);
-          this.form.get('distributionTownNameBind')?.setValue(data.townName);
-          this.form.get('distributionTown')?.setValue(data);
+          // this.form.get('distributionTownNameBind')?.setValue(data.townName);
+          // this.form.get('distributionTown')?.setValue(data);
           this.form.get('distributionTownId')?.setValue(data.townId);
           this.form.get('distributionTownName')?.setValue(data.townName);
 
@@ -1023,18 +1324,164 @@ export class NewHotlineComponent implements OnInit {
       });
     }
   }
-  selectRow(index: number) {
+  selectRowExpert(index: number): void {
     this.selectedRowIndex = index;
   }
+  async getTowingCondAccAndMechCount(companyId: string) {
+    const insuranceId = this.policyData?.insuranceId;
 
+    try {
+      const result = await lastValueFrom(
+        this.dataService.getTowingCondAccAndMechCount(insuranceId!, companyId)
+      );
+
+      this.towingCondAccAndMec = result!.data;
+      // console.log(this.towingCondAccAndMec);
+    } catch (error) {
+      console.error(error);
+      throw error; // Re-throw the error for the calling function to handle
+    }
+  }
+  async selectRowTowingCompany(index: number, selectedRow: any) {
+    this.selectedRowIndex = index;
+    this.selectedTowingCmp = selectedRow;
+
+    const companyId = this.selectedTowingCmp?.supplierId;
+    const natureId = this.policyData?.distributionTowNatureId;
+
+    if (
+      natureId &&
+      natureId !== '1' &&
+      natureId !== '7' &&
+      this.policyData!.insuranceId &&
+      companyId
+    ) {
+      try {
+        await this.getTowingCondAccAndMechCount(companyId);
+
+        if (
+          this.policyData &&
+          this.policyData.towingListCount &&
+          this.towingCondAccAndMec &&
+          this.towingCondAccAndMec.length > 0
+        ) {
+          const obj = this.towingCondAccAndMec[0];
+          console.log(obj);
+          const mech = Number(obj[1]);
+          // console.log(mech);
+          if (mech) {
+            if (mech > this.policyData.towingListCount) {
+              this.towingAlertRen = 'N';
+            } else {
+              this.towingAlertRen = 'Y';
+            }
+            console.log(this.towingAlertRen);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  saveSuggestTowingCmp() {
+    const hasCcTowingMapPermission = this.hasPerm('ccTowingMap');
+
+    if (hasCcTowingMapPermission) {
+      this.loadMapDataFields(); //TODO:
+      this.calculateTowingKmAndCost(); //TODO
+    }
+
+    if (this.policyData?.towingCompanyList) {
+      const selectedTowingCompany = this.selectedTowingCmp?.name;
+      this.form.get('towingComDesc')?.setValue(selectedTowingCompany);
+
+      const user = this.profileService.getUser();
+      const distributionTowDistDateControl = this.form.get(
+        'distributionTowDistDate'
+      );
+      distributionTowDistDateControl?.setValue(new Date());
+
+      const distributionTowDistUserControl = this.form.get(
+        'distributionTowDistUser'
+      );
+      distributionTowDistUserControl?.setValue(user);
+
+      const distributionTowDistDateBooleanControl = this.form.get(
+        'distributionTowDistDateBoolean'
+      );
+      distributionTowDistDateBooleanControl?.setValue(true);
+
+      let reported = null;
+
+      const notificationMatChangeDate = this.policyData
+        ?.notificationMatChangeDate
+        ? new Date(this.policyData.notificationMatChangeDate)
+        : null;
+
+      if (notificationMatChangeDate) {
+        reported = notificationMatChangeDate;
+      } else {
+        reported = new Date(this.policyData.notificationReportedDate!);
+      }
+      this.calculateTowDispatchDelay(reported);
+      if (this.dialogRef) {
+        this.dialogRef.close();
+      }
+    }
+  }
+  calculateTowDispatchDelay(reportedDate: Date) {
+    // Simulate the notificationReportedDate
+    // const notificationReportedDate = this.policyData?.notificationReportedDate!;
+    // console.log(notificationReportedDate);
+    // Convert the notificationReportedDate string to a JavaScript Date object
+    const reported = new Date(reportedDate);
+    // console.log(reported);
+    // Convert the JavaScript Date to a LocalDateTime-like object
+    const localDateTime = {
+      year: reported.getFullYear(),
+      month: reported.getMonth() + 1, // Months are 0-indexed in JavaScript
+      dayOfMonth: reported.getDate(),
+      hour: reported.getHours(),
+      minute: reported.getMinutes(),
+    };
+    // console.log(localDateTime);
+    // Get the current date and time
+    const now = new Date();
+
+    // Calculate the difference in minutes and hours
+    const diffInMinutes = Math.floor(
+      (now.getTime() - reported.getTime()) / (1000 * 60)
+    );
+    const diffInHours = Math.floor(diffInMinutes / 60);
+
+    // Create the delayedDispatchTime string
+    const delayedTowingTime = `${diffInHours} hours, ${diffInMinutes} minutes`;
+    // console.log(delayedTowingTime);
+    this.form.get('delayedTowingTime')?.setValue(delayedTowingTime);
+    // Assign delayedDispatchTime to your Angular property
+    // this.delayedDispatchTime = delayedDispatchTime;
+  }
+  cancel() {
+    this.dialogRef.close();
+  }
+  // console.log(this.selectedTowingCmp);
+  loadMapDataFields() {}
+  calculateTowingKmAndCost() {}
   openDispatchExpertDialog() {
     this.showrelated = 'Y';
     const dialog = this.dialog.open(ExpertDispatchComponent, {
       data: {
+        insuranceId: this.policyData?.insuranceId,
         insuranceDesc: this.policyData?.insuranceDesc,
+        distributionTownId: this.policyData?.distributionTownId,
+        notificationMatDamageId: this.policyData?.notificationMatDamageId,
+        notificationReportedDate: this.policyData?.notificationReportedDate,
+        notificationId: this.notificationId,
+        townTerritoryList: this.policyData?.townTerritoryList,
       },
-      width: '500px',
-      height: '500px',
+      width: '600px',
+      height: '600px',
     });
   }
   customerSatisfactionDialog() {
@@ -1051,6 +1498,8 @@ export class NewHotlineComponent implements OnInit {
           notificationMatDamageDesc: this.policyData?.notificationMatDamageDesc,
           distributionLossDistDate: this.policyData?.distributionLossDistDate,
           carsDispatchFollowUpList: this.policyData?.carsDispatchFollowUpList,
+          notificationId: this.policyData?.notificationId,
+          domainYn: this.domainYn,
           distributionLossArrivedBoolean: this.form.get(
             //check
             'distributionLossArrivedBoolean'
@@ -1076,9 +1525,69 @@ export class NewHotlineComponent implements OnInit {
           this.form
             .get('distributionLossArrivedUser')
             ?.patchValue(data.distributionLossArrivedUser);
-          console.log(data);
+          // const data2 = this.form.get('carsDispatchFollowUp')?.value;
+          // console.log(data2[0]);
+          // this.getPolicyCarByNotificationId(this.policyData?.notificationId!);
+          // console.log(data);
         }
       });
     }
+  }
+  getTowCancelReasonLovFindAll() {
+    this.dataService.getTowCancelReasonLovFindAll().subscribe({
+      next: (res) => {
+        this.towCancelReason = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  dispatchTowingShow(): boolean {
+    return (
+      this.policyData?.notificationMatDamageId === '5' ||
+      this.policyData?.notificationMatDamageId === '6' ||
+      this.policyData?.notificationMatDamageId === '10'
+    );
+  }
+  shouldShowDistributionTowNatureLink(): boolean {
+    return (
+      this.policyData?.distributionTowNatureId !== null ||
+      this.policyData?.distributionTowNatureId !== '0'
+    );
+  }
+  isSuggestLinkDisabled(): boolean {
+    return (
+      this.policyData?.notificationStatusCode === '8' ||
+      (this.policyData?.notificationStatusCode === '9' &&
+        !this.hasPerm('ccSystemAdmin'))
+    );
+  }
+  showRepairShop(): boolean {
+    return (
+      this.policyData?.notificationStatusCode === '8' ||
+      this.policyData?.notificationStatusCode === '9'
+    );
+  }
+  getTowingNatureLovFindAll() {
+    this.dataService.getTowingNatureLovFindAll().subscribe({
+      next: (res) => {
+        this.towNatureLov = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  getSupplierGarageLov() {
+    this.dataService.getSupplierGarageLov().subscribe({
+      next: (res) => {
+        this.supplierGarageLov = res.data;
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

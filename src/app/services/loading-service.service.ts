@@ -41,6 +41,10 @@ export class LoadingServiceService {
     const profile = JSON.parse(selectedProfile!);
     return profile || null;
   }
+  getUser(): string {
+    const user = this.getSelectedProfile();
+    return user.userCode;
+  }
   getCompany(): string | null {
     return this.companySubject.getValue();
   }

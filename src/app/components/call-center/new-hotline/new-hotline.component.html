@@ -1087,7 +1087,7 @@
                           let i = index
                         "
                         [ngClass]="{ 'selected-row': i === selectedRowIndex }"
-                        (click)="selectRow(i)"
+                        (click)="selectRowExpert(i)"
                       >
                         <td>{{ expertUnAvailable.supplierName }}</td>
                         <td>
@@ -1121,6 +1121,983 @@
                       </tr>
                     </ng-template>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab
+      [label]="dico?.dico_towing_dispatch || 'dico_towing_dispatch'"
+      *ngIf="dispatchTowingShow()"
+    >
+      <div class="container-fluid container-class">
+        <div class="panel row">
+          <div class="col-md-12">
+            <div class="grid-container">
+              <div class="row">
+                <div class="col-md-3">
+                  <h3>
+                    {{ dico?.dico_towing_dispatch || "dico_towing_dispatch" }}
+                  </h3>
+                </div>
+                <div
+                  class="col-md-2"
+                  *ngIf="shouldShowDistributionTowNatureLink()"
+                >
+                  <a
+                    class="label-link"
+                    [ngClass]="{
+                      'disable-link': isSuggestLinkDisabled()
+                    }"
+                    (click)="openSuggestDialog()"
+                  >
+                    <img src="./assets/icons/cell.png" alt="" />
+                    {{
+                      dico?.dico_suggest_towing_company ||
+                        "dico_suggest_towing_company"
+                    }}
+                  </a>
+                </div>
+                <ng-template #suggestTowCompany>
+                  <div class="grid-container panel-class-style">
+                    <h2 class="h5">
+                      {{
+                        dico?.dico_suggest_towing_company ||
+                          "dico_suggest_towing_company"
+                      }}
+                    </h2>
+                  </div>
+                  <div class="container p-3">
+                    <div class="panel row">
+                      <table>
+                        <thead [style.position]="'static'">
+                          <tr>
+                            <th>{{ dico?.dico_name || "dico_name" }}</th>
+                            <th *ngIf="showTelIcon === 'true'"></th>
+                            <th *ngIf="policyData?.towingCompanyList">
+                              {{ dico?.dico_bus_phone || "dico_bus_phone" }}
+                            </th>
+                            <th *ngIf="showTelIcon === 'true'"></th>
+                            <th *ngIf="policyData?.towingCompanyList">
+                              {{
+                                dico?.dico_mobile_phone || "dico_mobile_phone"
+                              }}
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let towingCmp of policyData?.towingCompanyList;
+                              let i = index
+                            "
+                            [ngClass]="{
+                              'selected-row': i === selectedRowIndex
+                            }"
+                            (click)="selectRowTowingCompany(i, towingCmp)"
+                          >
+                            <td *ngIf="towingCmp != null">
+                              {{ towingCmp?.name }}
+                            </td>
+                            <td
+                              *ngIf="
+                                showTelIcon === 'true' &&
+                                towingCmp?.supplierBusPhone
+                              "
+                            >
+                              <a
+                                class="label-link"
+                                [href]="
+                                  'tel:' +
+                                  telExtension +
+                                  towingCmp.supplierBusPhone
+                                "
+                              >
+                                <img
+                                  *ngIf="showTelIcon === 'true'"
+                                  src="./assets/icons/phone.png"
+                                  alt=""
+                                  style="height: 15px; width: 15px"
+                              /></a>
+                            </td>
+                            <td *ngIf="towingCmp !== null">
+                              {{ towingCmp?.supplierBusPhone }}
+                            </td>
+                            <td
+                              *ngIf="
+                                showTelIcon === 'true' &&
+                                towingCmp?.supplierMobilePhone
+                              "
+                            >
+                              <a
+                                [href]="
+                                  'tel:' +
+                                  telExtension +
+                                  towingCmp.supplierMobilePhone
+                                "
+                              >
+                                <img
+                                  *ngIf="showTelIcon === 'true'"
+                                  src="./assets/icons/phone.png"
+                                  style="height: 15px; width: 15px"
+                                  alt=""
+                                />
+                              </a>
+                            </td>
+                            <td *ngIf="towingCmp !== null">
+                              {{ towingCmp?.supplierMobilePhone }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <ul>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionBlocked?.code === 'N' &&
+                              form.get('lossTowBlockedId')?.value === 'Y'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_blocked ||
+                                "dico_towing_not_allowed_blocked"
+                            }}
+                          </li>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionWheel?.code === 'N' &&
+                              form.get('lossTowWheelId')?.value === 'Y'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_wheel ||
+                                "dico_towing_not_allowed_wheel"
+                            }}
+                          </li>
+
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionPickUp?.code === 'N' &&
+                              form.get('lossTowPickUpId')?.value === 'Y'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_pick_up ||
+                                "dico_towing_not_allowed_pick_up"
+                            }}
+                          </li>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionOffRoad?.code === 'N' &&
+                              form.get('lossTowOffRoadId')?.value === 'Y'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_offroad ||
+                                "dico_towing_not_allowed_offroad"
+                            }}
+                          </li>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionCarryingGood?.code === 'N' &&
+                              form.get('lossTowCarryingGoodId')?.value === 'Y'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_carrygood ||
+                                "dico_towing_not_allowed_carrygood"
+                            }}
+                          </li>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionLifterAcc?.code === 'N' &&
+                              form.get('lossTowLifterId')?.value === 'Y' &&
+                              form.get('distributionTowNatureId')?.value !=
+                                null &&
+                              form.get('distributionTowNatureId')?.value === '1'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_lifter ||
+                                "dico_towing_not_allowed_lifter"
+                            }}
+                          </li>
+                          <li
+                            class="warning-class"
+                            *ngIf="
+                              selectedTowingCmp?.towingConditionList[0]
+                                ?.towingConditionLifterMech?.code === 'N' &&
+                              form.get('lossTowLifterId')?.value === 'Y' &&
+                              form.get('distributionTowNatureId')?.value !== '1'
+                            "
+                          >
+                            {{
+                              dico?.dico_towing_not_allowed_lifter ||
+                                "dico_towing_not_allowed_lifter"
+                            }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="towingAlertRen === 'Y'">
+                      <div class="col-md-10">
+                        <label class="warning-class">{{
+                          dico?.dico_no_more_towing_mechanical ||
+                            "dico_no_more_towing_mechanical"
+                        }}</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10">
+                        <ul>
+                          <li *ngFor="let towing of policyData?.towingList">
+                            {{ towing }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="container p-3">
+                    <div class="panel row p-3">
+                      <div class="col-md-6">
+                        <div
+                          class="d-flex justify-content-start align-items-center"
+                        >
+                          <label class="me-3">{{
+                            dico?.dico_cover_code || "dico_cover_code"
+                          }}</label>
+
+                          <span>{{ coverByCar?.code }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div
+                          class="d-flex justify-content-start align-items-center"
+                        >
+                          <label class="me-3">{{
+                            dico?.dico_cover_description ||
+                              "dico_cover_description"
+                          }}</label>
+
+                          <span>{{ coverByCar?.description }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="container mt-5">
+                    <div class="row p-3">
+                      <div class="col">
+                        <div
+                          class="d-flex justify-content-end align-items-center"
+                        >
+                          <button
+                            class="button-class me-2"
+                            type="button"
+                            (click)="saveSuggestTowingCmp()"
+                          >
+                            {{ dico?.dico_save || "dico_save" }}
+                          </button>
+                          <button
+                            class="button-class"
+                            type="button"
+                            (click)="cancel()"
+                          >
+                            {{ dico?.dico_cancel || "dico_cancel" }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <ng-template #towConditions>
+                  <div class="grid-container panel-class-style">
+                    <h2 class="h5">
+                      {{ dico?.dico_conditions || "dico_conditions" }}
+                    </h2>
+                  </div>
+                  <div class="grid-container m-3">
+                    <div class="row mb-2">
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_lifter || "dico_lifter"
+                        }}</label>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_blocked || "dico_blocked"
+                        }}</label>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_off_road || "dico_off_road"
+                        }}</label>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_pick_up || "dico_pick_up"
+                        }}</label>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_wheel || "dico_wheel"
+                        }}</label>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="label-form">{{
+                          dico?.dico_carrying_goods || "dico_carrying_goods"
+                        }}</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowLifterId"
+                            class="custom-control-input"
+                            name="lossTowLifterId"
+                            [value]="domain.code"
+                            formControlName="lossTowLifterId"
+                          />
+                          <label class="ms-2" for="lossTowLifterId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowBlockedId"
+                            class="custom-control-input"
+                            name="lossTowBlockedId"
+                            [value]="domain.code"
+                            formControlName="lossTowBlockedId"
+                          />
+                          <label class="ms-2" for="lossTowBlockedId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowOffRoadId"
+                            class="custom-control-input"
+                            name="lossTowOffRoadId"
+                            [value]="domain.code"
+                            formControlName="lossTowOffRoadId"
+                          />
+                          <label class="ms-2" for="lossTowOffRoadId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowPickUpId"
+                            class="custom-control-input"
+                            name="lossTowPickUpId"
+                            [value]="domain.code"
+                            formControlName="lossTowPickUpId"
+                          />
+                          <label class="ms-2" for="lossTowPickUpId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowWheelId"
+                            class="custom-control-input"
+                            name="lossTowWheelId"
+                            [value]="domain.code"
+                            formControlName="lossTowWheelId"
+                          />
+                          <label class="ms-2" for="lossTowWheelId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-check" *ngFor="let domain of domainYn">
+                          <input
+                            type="radio"
+                            id="lossTowCarryingGoodId"
+                            class="custom-control-input"
+                            name="lossTowCarryingGoodId"
+                            [value]="domain.code"
+                            formControlName="lossTowCarryingGoodId"
+                          />
+                          <label class="ms-2" for="lossTowCarryingGoodId">{{
+                            domain.description
+                          }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="container mt-3">
+                    <div class="row p-3">
+                      <div class="col">
+                        <div
+                          class="d-flex justify-content-end align-items-center"
+                        >
+                          <button
+                            class="button-class me-2"
+                            type="button"
+                            (click)="cancel()"
+                          >
+                            OK
+                          </button>
+                          <button
+                            class="button-class"
+                            type="button"
+                            (click)="cancel()"
+                          >
+                            {{ dico?.dico_cancel || "dico_cancel" }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <div class="col-md-2" *ngIf="hasPerm('ccAdmin')">
+                  <a
+                    class="label-link"
+                    [ngClass]="{
+                      'disable-link': isSuggestLinkDisabled()
+                    }"
+                    (click)="openTowConditions()"
+                  >
+                    <img src="./assets/icons/cell.png" alt="" />
+                    {{
+                      dico?.dico_modify_conditions || "dico_modify_conditions"
+                    }}
+                  </a>
+                </div>
+                <div class="col-md-2">
+                  <a class="label-link" (click)="openTowingConditionList()">
+                    <img src="./assets/icons/cell.png" alt="" />
+                    {{
+                      dico?.dico_general_conditions || "dico_general_conditions"
+                    }}
+                  </a>
+                </div>
+                <div class="col-md-2" *ngIf="hasPerm('ccAdmin')">
+                  <a
+                    class="label-link"
+                    [ngClass]="{
+                      'disable-link': isSuggestLinkDisabled()
+                    }"
+                    (click)="customerSatisfactionDialog()"
+                  >
+                    <img src="./assets/icons/cell.png" alt="" />
+                    {{
+                      dico?.dico_customer_satisfaction ||
+                        "dico_customer_satisfaction"
+                    }}
+                  </a>
+                </div>
+              </div>
+
+              <div class="row p-3 mt-3">
+                <div class="col-md-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row">
+                        <div
+                          class="d-flex justify-content-center align-items-center"
+                        >
+                          <div class="col-md-4">
+                            <a
+                              [href]="
+                                'tel:' +
+                                telExtension +
+                                policyData?.expertMobilePhone
+                              "
+                              class="label-link"
+                            >
+                              <img src="./assets/icons/phone.png" alt="" />
+                              {{ dico?.dico_towing || "dico_towing" }}
+                            </a>
+                          </div>
+                          <div class="col-md-2" *ngIf="hasPerm('ccAdmin')">
+                            <img
+                              [matTooltip]="
+                                dico?.dico_add_repair_shop ||
+                                'dico_add_repair_shop'
+                              "
+                              [ngClass]="{
+                                'disable-link': showRepairShop()
+                              }"
+                              style="height: 20px; width: 20px"
+                              src="./assets/icons/add.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="form-label">
+                            {{ dico?.dico_nature || "dico_nature" }}</label
+                          >
+                          <select
+                            name="towNature"
+                            id="towNature"
+                            class="form-select"
+                            formControlName="distributionTowNatureId"
+                          >
+                            <option
+                              *ngFor="let tow of towNatureLov"
+                              [value]="tow.code"
+                            >
+                              {{ tow.description }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="form-label">
+                            {{ dico?.dico_nature || "dico_nature" }}</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="towingComDesc"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="form-label">{{
+                            dico?.dico_repair_shop || "dico_repair_shop"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="lossTowRsDesc"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="form-label">{{
+                            dico?.dico_from_city || "dico_from_city"
+                          }}</label>
+                          <ng-select
+                            appendTo="body"
+                            name="fromTowTownName"
+                            formControlName="fromTowTownName"
+                            [virtualScroll]="true"
+                            (search)="searchForTerritory($event)"
+                            (change)="getTowFromTownDescription($event)"
+                          >
+                            <ng-option
+                              *ngFor="let suggestion of territoryValues"
+                              [value]="suggestion.code"
+                            >
+                              {{ suggestion.description }}</ng-option
+                            >
+                          </ng-select>
+                        </div>
+                        <div class="col-md-6 p-4 mt-2">
+                          <input
+                            type="text"
+                            name="towFromTownDescription"
+                            id="towFromTownDescription"
+                            class="form-control"
+                            formControlName="towFromTownDescription"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="form-label">{{
+                            dico?.dico_to_city || "dico_to_city"
+                          }}</label>
+
+                          <ng-select
+                            appendTo="body"
+                            name="towToTownName"
+                            formControlName="towToTownName"
+                            [virtualScroll]="true"
+                            (search)="searchForTerritory($event)"
+                            (change)="getTowToTownDescription($event)"
+                          >
+                            <ng-option
+                              *ngFor="let suggestion of territoryValues"
+                              [value]="suggestion.code"
+                            >
+                              {{ suggestion.description }}</ng-option
+                            >
+                          </ng-select>
+                        </div>
+                        <div class="col-md-6 p-4 mt-2">
+                          <input
+                            type="text"
+                            name="towToTownDescription"
+                            id="towToTownDescription"
+                            class="form-control"
+                            formControlName="towToTownDescription"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-4">
+                        <div class="col-md-8 d-flex align-items-center">
+                          <label class="me-5 form-check-label">{{
+                            dico?.dico_dispatch || "dico_dispatch"
+                          }}</label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            formControlName="distributionTowDistDateBoolean"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_distribution_tow_dist_date ||
+                              "dico_distribution_tow_dist_date"
+                          }}</label>
+                          <input
+                            type="text"
+                            name="distributionTowDistDate"
+                            id="distributionTowDistDate"
+                            class="form-control"
+                            bsDatepicker
+                            [bsConfig]="{
+                              dateInputFormat: 'DD/MM/YYYY HH:mm A',
+                              containerClass: 'theme-dark-blue',
+                              showWeekNumbers: false
+                            }"
+                            formControlName="distributionTowDistDate"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_sys_created_by || "dico_sys_created_by"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowArrivedUser"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4" *ngIf="hasPerm('ccAdmin')">
+                        <div class="col-md-8 d-flex align-items-center">
+                          <label class="me-5 form-check-label">{{
+                            dico?.dico_arrived || "dico_arrived"
+                          }}</label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            formControlName="distributionTowArrivedDateBoolean"
+                            (change)="dispatchFuArrivedTowingChangeListener()"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_dist_tow_arri_date ||
+                              "dico_dist_tow_arri_date"
+                          }}</label>
+                          <input
+                            type="text"
+                            name="distributionTowArrivedDate"
+                            id="distributionTowArrivedDate"
+                            class="form-control"
+                            bsDatepicker
+                            [bsConfig]="{
+                              dateInputFormat: 'DD/MM/YYYY HH:mm A',
+                              containerClass: 'theme-dark-blue',
+                              showWeekNumbers: false
+                            }"
+                            formControlName="distributionTowArrivedDate"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_sys_created_by || "dico_sys_created_by"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowArrivedUser"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-4">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_delayed_towing_time ||
+                              "dico_delayed_towing_time"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="delayedTowingTime"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_driver_name || "dico_driver_name"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowDriverName"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_driver_phone || "dico_driver_phone"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowDriverPhone"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8 d-flex align-items-center">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_lifter || "dico_lifter"
+                          }}</label>
+                          <div
+                            class="form-check"
+                            *ngFor="let domain of domainYn"
+                          >
+                            <input
+                              type="radio"
+                              id="distributionTowDistLifterId"
+                              class="custom-control-input"
+                              name="distributionTowDistLifterId"
+                              [value]="domain.code"
+                              formControlName="distributionTowDistLifterId"
+                            />
+                            <label
+                              class="ms-2"
+                              for="distributionTowDistLifterId"
+                              >{{ domain.description }}</label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mt-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_cancel_tow || "dico_cancel_tow"
+                          }}</label>
+                          <select
+                            name="towCancelReason"
+                            id="towCancelReason"
+                            formControlName="distributionTowCanceledId"
+                            class="form-select"
+                          >
+                            <option
+                              *ngFor="let tow of towCancelReason"
+                              [value]="tow.code"
+                            >
+                              {{ tow.description }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_delay_reason || "dico_delay_reason"
+                          }}</label>
+                          <select
+                            name="distributionTowDelayId"
+                            id="distributionTowDelayId"
+                            formControlName="distributionTowDelayId"
+                            class="form-select"
+                          >
+                            <option
+                              *ngFor="let tow of towDelayReasonLov"
+                              [value]="tow.code"
+                            >
+                              {{ tow.description }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_note || "dico_note"
+                          }}</label>
+
+                          <textarea
+                            name="note"
+                            id="note"
+                            cols="30"
+                            rows="5"
+                            class="form-control"
+                            formControlName="distributionTowDelayOther"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mt-3">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_total_km || "dico_total_km"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowTotalKm"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_client_cost || "dico_client_cost"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowClientCost"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_extra_km || "dico_extra_km"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowExtraKm"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_total_cost || "dico_total_cost"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="distributionTowTotalCost"
+                          />
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <label class="me-5 form-label">{{
+                            dico?.dico_total_duration_in_hh ||
+                              "dico_total_duration_in_hh"
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="totaleDurationBetweenTown"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,8 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +18,7 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
   templateUrl: './customer-satisfaction-dialog.component.html',
   styleUrls: ['./customer-satisfaction-dialog.component.css'],
 })
-export class CustomerSatisfactionDialogComponent {
+export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
   dico?: any;
   ratingValue: number = 0;
   carPlate?: string;
@@ -41,6 +42,10 @@ export class CustomerSatisfactionDialogComponent {
   custFollowUp?: string;
   formatDistributionLossDistDate?: any;
   distributionLossArrivedUser?: string;
+  attitudeSubs!: Subscription;
+  domainYNSubs!: Subscription;
+  expertDelaySubs!: Subscription;
+  notificationId?: string;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -54,6 +59,10 @@ export class CustomerSatisfactionDialogComponent {
     private userRolesService: UsersRolesService,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
+    this.initialiseData(data);
+  }
+  initialiseData(data: any) {
+    this.domainYn = data.domainYn;
     this.carPlate = data?.carPlate;
     this.brandDesc = data?.brandDescription;
     this.notificationContactName = data?.notificationContactName;
@@ -64,12 +73,27 @@ export class CustomerSatisfactionDialogComponent {
     this.notificationMatDamageDesc = data?.notificationMatDamageDesc;
     this.carsDispatchFollowUpList = data?.carsDispatchFollowUpList;
     this.distributionLossArrivedBoolean = data?.distributionLossArrivedBoolean;
-    this.distributionLossArrivedDate = data?.distributionLossArrivedDate;
+    this.notificationId = data?.notificationId;
+    this.distributionLossArrivedDate = moment(
+      data?.distributionLossArrivedDate,
+      'DD/MM/yyyy hh:mm A'
+    ).toDate();
+
+    // data?.distributionLossArrivedDate,
+
     // console.log(this.distributionLossArrivedDate);
     this.formatDistributionLossDistDate = this.datePipe.transform(
       data.distributionLossDistDate,
       this.dateFormat('reportDateTimeFormat')
     );
+    // console.log(data);
+  }
+  ngOnDestroy(): void {
+    // if (this.attitudeSubs || this.domainYNSubs || this.expertDelaySubs) {
+    //   this.attitudeSubs.unsubscribe();
+    //   this.domainYNSubs.unsubscribe();
+    //   this.expertDelaySubs.unsubscribe();
+    // }
   }
   selectRow(index: number) {
     this.selectedRowIndex = index;
@@ -77,26 +101,26 @@ export class CustomerSatisfactionDialogComponent {
   ngOnInit(): void {
     this.createForm();
     this.getDico();
-    this.getDomainYN();
+    // this.getDomainYN();
     this.getExpertDelayReasonLovFindAll();
     this.getAttitudeLovFindAll();
   }
   disableLossDate(): boolean {
     const distributionLossDistDate = this.formatDistributionLossDistDate;
     const ccChangeExpDispDate = this.hasPerm('ccChangeExpDispDate');
-    // return distributionLossDistDate === null || !ccChangeExpDispDate;
-    return false;
+    return distributionLossDistDate === null || !ccChangeExpDispDate;
+    // return false;
   }
+  private parseDate(dateString: string) {
+    return moment(dateString, 'DD/MM/yyyy hh:mm A').toDate();
+  }
+
   createForm() {
-    const parsedDate = moment(
-      this.formatDistributionLossDistDate,
-      'DD/MM/yyyy hh:mm A'
-    ).toDate();
-    console.log(parsedDate);
+    // console.log(parsedDate);
     this.form = this.formBuilder.group({
       distributionLossDistDate: [
         {
-          value: parsedDate,
+          value: this.parseDate(this.formatDistributionLossDistDate),
           disabled: this.disableLossDate(),
         },
       ],
@@ -104,42 +128,42 @@ export class CustomerSatisfactionDialogComponent {
       dispatchFuReasonId: [{ value: '', disabled: true }],
       dispatchFuArrivedDate: [{ value: '', disabled: true }],
       dispatchFuNote: [''],
-      dispatchFuAttitudeId: [''],
-      dispatchFuComplaintsId: [''],
-      dispatchFuComplaint1Boolean: [{ value: null, disabled: true }],
-      dispatchFuComplaint2Boolean: [{ value: null, disabled: true }],
-      dispatchFuComplaint3Boolean: [{ value: null, disabled: true }],
-      dispatchFuComplaint4Boolean: [{ value: null, disabled: true }],
-      dispatchFuComplaint5Boolean: [{ value: null, disabled: true }],
+      dispatchFuAttitude: [''],
+      dispatchFuComplaints: [''],
+      dispatchFuComplaint1: [{ value: null, disabled: true }],
+      dispatchFuComplaint2: [{ value: null, disabled: true }],
+      dispatchFuComplaint3: [{ value: null, disabled: true }],
+      dispatchFuComplaint4: [{ value: null, disabled: true }],
+      dispatchFuComplaint5: [{ value: null, disabled: true }],
       dispatchFuComplaintsNote: [''],
-      dispatchFuComplaint1: [null],
-      dispatchFuComplaint2: [null],
-      dispatchFuComplaint3: [null],
-      dispatchFuComplaint4: [null],
-      dispatchFuComplaint5: [null],
+      dispatchFuNotification: [''],
+      // distributionLossArrived: [null],
+      dispatchFuType: [''],
     });
-    // console.log(this.disableLossDate());
+    // this.form.get('dispatchFuArrivedDate')?.valueChanges.subscribe((date) => {
+    //   // console.log(date);
+    // });
+    this.onArrrivedFormChanges();
+    this.onComplaintsChange();
 
+    this.initializeDistibutionLossArrived();
+  }
+
+  private initializeDistibutionLossArrived(): void {
     if (this.distributionLossArrivedBoolean) {
       this.form.get('dispatchFuArrivedId')?.setValue('Y');
       if (!this.distributionLossArrivedDate) {
         this.distributionLossArrivedDate = new Date();
       }
-      this.form
+      const date = this.form
         .get('dispatchFuArrivedDate')
         ?.setValue(this.distributionLossArrivedDate);
+      console.log(date);
+      this.form.get('dispatchFuArrivedDate')?.disable();
     } else {
       this.form.get('dispatchFuArrivedId')?.setValue('');
       this.form.get('dispatchFuArrivedDate')?.setValue(null);
     }
-
-    this.onArrrivedFormChanges();
-    this.onComplaintsChange();
-    this.expertCheckBoxChangeListener();
-    this.towTruckChangeListener();
-    this.repairShopChangeListener();
-    this.pudChangeListener();
-    this.callcenterChangeListener();
   }
   private onArrrivedFormChanges() {
     this.form.get('dispatchFuArrivedId')?.valueChanges.subscribe((data) => {
@@ -157,13 +181,13 @@ export class CustomerSatisfactionDialogComponent {
     });
   }
   private onComplaintsChange() {
-    const complaintsIdControl = this.form.get('dispatchFuComplaintsId');
+    const complaintsIdControl = this.form.get('dispatchFuComplaints');
     const complaintControls = [
-      'dispatchFuComplaint1Boolean',
-      'dispatchFuComplaint2Boolean',
-      'dispatchFuComplaint3Boolean',
-      'dispatchFuComplaint4Boolean',
-      'dispatchFuComplaint5Boolean',
+      'dispatchFuComplaint1',
+      'dispatchFuComplaint2',
+      'dispatchFuComplaint3',
+      'dispatchFuComplaint4',
+      'dispatchFuComplaint5',
     ].map((controlName) => this.form.get(controlName));
 
     complaintsIdControl?.valueChanges.subscribe((data) => {
@@ -177,62 +201,7 @@ export class CustomerSatisfactionDialogComponent {
       }
     });
   }
-  expertCheckBoxChangeListener() {
-    this.form
-      .get('dispatchFuComplaint1Boolean')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.form.get('dispatchFuComplaint1')?.setValue('Y');
-        } else {
-          this.form.get('dispatchFuComplaint1')?.setValue('N');
-        }
-      });
-  }
-  towTruckChangeListener() {
-    this.form
-      .get('dispatchFuComplaint2Boolean')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.form.get('dispatchFuComplaint2')?.setValue('Y');
-        } else {
-          this.form.get('dispatchFuComplaint2')?.setValue('N');
-        }
-      });
-  }
-  repairShopChangeListener() {
-    this.form
-      .get('dispatchFuComplaint3Boolean')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.form.get('dispatchFuComplaint3')?.setValue('Y');
-        } else {
-          this.form.get('dispatchFuComplaint3')?.setValue('N');
-        }
-      });
-  }
-  pudChangeListener() {
-    this.form
-      .get('dispatchFuComplaint4Boolean')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.form.get('dispatchFuComplaint4')?.setValue('Y');
-        } else {
-          this.form.get('dispatchFuComplaint4')?.setValue('N');
-        }
-      });
-  }
-  callcenterChangeListener() {
-    this.form
-      .get('dispatchFuComplaint5Boolean')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.form.get('dispatchFuComplaint5')?.setValue('Y');
-        } else {
-          this.form.get('dispatchFuComplaint5')?.setValue('N');
-        }
-      });
-  }
-  save() {}
+
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }
@@ -240,13 +209,12 @@ export class CustomerSatisfactionDialogComponent {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
   }
   getAttitudeLovFindAll() {
-    this.dataService.getAttitudeLovFindAll().subscribe({
+    this.attitudeSubs = this.dataService.getAttitudeLovFindAll().subscribe({
       next: (data) => {
         this.attidudeLov = data.data;
       },
@@ -256,7 +224,7 @@ export class CustomerSatisfactionDialogComponent {
     });
   }
   getDomainYN() {
-    this.dataService.getDomainYN().subscribe({
+    this.domainYNSubs = this.dataService.getDomainYN().subscribe({
       next: (data) => {
         this.domainYn = data.data.filter((item: any) => item.code !== 'ALL');
         // console.log(this.domainYn);
@@ -267,34 +235,44 @@ export class CustomerSatisfactionDialogComponent {
     });
   }
   getExpertDelayReasonLovFindAll() {
-    this.dataService.getExpertDelayReasonLovFindAll().subscribe({
-      next: (res) => {
-        this.expertDelayReason = res.data;
-        // console.log(res);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.expertDelaySubs = this.dataService
+      .getExpertDelayReasonLovFindAll()
+      .subscribe({
+        next: (res) => {
+          this.expertDelayReason = res.data;
+          // console.log(res);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
   dialogCustomerSatisfactionListener() {
     if (this.form.value) {
       this.custFollowUp = 'Y';
-      const parsedDate = moment(
-        this.formatDistributionLossDistDate,
-        'DD/MM/yyyy hh:mm A'
-      ).toDate();
       const descriptionDispatchFuArrivedCheck = this.form.get(
         'dispatchFuArrivedId'
       )?.value;
+      const dispatchFuArrivedDate = this.form.get(
+        'dispatchFuArrivedDate'
+      )?.value;
+
+      const date = this.datePipe.transform(
+        dispatchFuArrivedDate,
+        'yyyy-MM-ddTHH:mm:ss.SSS'
+      );
+      this.form.get('dispatchFuArrivedDate')?.enable();
+      this.form.get('dispatchFuArrivedDate')?.setValue(date);
+      this.form.get('disabledControl')?.disable();
+      this.form.get('dispatchFuType')?.setValue('EXP');
+      this.form.get('dispatchFuNotification')?.setValue(this.notificationId);
+      // const userProfile = this.profileService.getUser();
+
       if (descriptionDispatchFuArrivedCheck === 'Y') {
         const lossDate = this.form.get('distributionLossDistDate')?.value;
         const dispatchFuArrivedDate = this.form.get(
           'dispatchFuArrivedDate'
         )?.value;
-        // console.log(dispatchFuArrivedDate);
-        // console.log(lossDate);
-        // const date = new Date(dispatchFuArrivedDate);
 
         if (!lossDate && dispatchFuArrivedDate) {
           this.distributionLossArrivedBoolean = false;
@@ -311,7 +289,17 @@ export class CustomerSatisfactionDialogComponent {
           );
           return;
         }
+        if (!dispatchFuArrivedDate) {
+          this.alertifyService.error('Kindly add arrived Date');
+          return;
+        }
+        this.distributionLossArrivedBoolean = true;
+        this.form.get('distributionLossArrived')?.setValue('Y');
+      } else {
+        this.distributionLossArrivedBoolean = false;
+        this.distributionLossArrivedUser = '';
       }
+      this.persistDispatchFollowUp();
     }
     this.dialogRef.close({
       customerSatis: this.form.value,
@@ -320,6 +308,21 @@ export class CustomerSatisfactionDialogComponent {
       distributionLossArrivedUser: this.distributionLossArrivedUser,
     });
 
-    // console.log(this.distributionLossArrivedDate);
+    // console.log(this.form.value);
+  }
+
+  persistDispatchFollowUp() {
+    this.dataService.persistDispatchFollowUp(this.form.value).subscribe({
+      next: (res) => {
+        this.alertifyService.dialogAlert(
+          'Your Feedback has been saved successfully',
+          res.title
+        );
+        console.log(res);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

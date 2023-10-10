@@ -199,11 +199,11 @@
                     >
                       <input
                         type="radio"
-                        id="dispatchFuAttitudeId"
+                        id="dispatchFuAttitude"
                         class="custom-control-input"
-                        name="dispatchFuAttitudeId"
+                        name="dispatchFuAttitude"
                         [value]="attidude.code"
-                        formControlName="dispatchFuAttitudeId"
+                        formControlName="dispatchFuAttitude"
                       />
                       <label class="ms-2" for="arrived">{{
                         attidude.description
@@ -232,13 +232,15 @@
                     <div class="form-check" *ngFor="let domain of domainYn">
                       <input
                         type="radio"
-                        id="dispatchFuComplaintsId"
+                        id="dispatchFuComplaints"
                         class="custom-control-input"
-                        name="dispatchFuComplaintsId"
+                        name="dispatchFuComplaints"
                         [value]="domain.code"
-                        formControlName="dispatchFuComplaintsId"
+                        formControlName="dispatchFuComplaints"
                       />
-                      <label class="ms-2">{{ domain.description }}</label>
+                      <label class="ms-2" for="dispatchFuComplaints">{{
+                        domain.description
+                      }}</label>
                     </div>
                   </div>
                 </div>
@@ -246,10 +248,10 @@
                   <div class="form-check">
                     <input
                       type="checkbox"
-                      id="dispatchFuComplaint1Boolean"
+                      id="dispatchFuComplaint1"
                       class="custom-control-input"
-                      name="dispatchFuComplaint1Boolean"
-                      formControlName="dispatchFuComplaint1Boolean"
+                      name="dispatchFuComplaint1"
+                      formControlName="dispatchFuComplaint1"
                     />
                     <label class="ms-2">{{
                       dico?.dico_expert || "dico_expert"
@@ -258,10 +260,10 @@
                   <div class="form-check">
                     <input
                       type="checkbox"
-                      id="dispatchFuComplaint2Boolean"
+                      id="dispatchFuComplaint2"
                       class="custom-control-input"
-                      name="dispatchFuComplaint2Boolean"
-                      formControlName="dispatchFuComplaint2Boolean"
+                      name="dispatchFuComplaint2"
+                      formControlName="dispatchFuComplaint2"
                     />
                     <label class="ms-2">{{
                       dico?.dico_tow_truck || "dico_tow_truck"
@@ -270,10 +272,10 @@
                   <div class="form-check">
                     <input
                       type="checkbox"
-                      id="dispatchFuComplaint3Boolean"
+                      id="dispatchFuComplaint3"
                       class="custom-control-input"
-                      name="dispatchFuComplaint3Boolean"
-                      formControlName="dispatchFuComplaint3Boolean"
+                      name="dispatchFuComplaint3"
+                      formControlName="dispatchFuComplaint3"
                     />
                     <label class="ms-2">{{
                       dico?.dico_repair_shop || "dico_repair_shop"
@@ -282,10 +284,10 @@
                   <div class="form-check">
                     <input
                       type="checkbox"
-                      id="dispatchFuComplaint4Boolean"
+                      id="dispatchFuComplaint4"
                       class="custom-control-input"
-                      name="dispatchFuComplaint4Boolean"
-                      formControlName="dispatchFuComplaint4Boolean"
+                      name="dispatchFuComplaint4"
+                      formControlName="dispatchFuComplaint4"
                     />
                     <label class="ms-2">{{
                       dico?.dico_pud || "dico_pud"
@@ -294,10 +296,10 @@
                   <div class="form-check">
                     <input
                       type="checkbox"
-                      id="dispatchFuComplaint5Boolean"
+                      id="dispatchFuComplaint5"
                       class="custom-control-input"
-                      name="dispatchFuComplaint5Boolean"
-                      formControlName="dispatchFuComplaint5Boolean"
+                      name="dispatchFuComplaint5"
+                      formControlName="dispatchFuComplaint5"
                     />
                     <label class="ms-2">{{
                       dico?.dico_call_center || "dico_call_center"
@@ -372,7 +374,7 @@
                     | date : dateFormat("reportDateTimeFormat")
                 }}
               </td>
-              <td>{{ carsDispatch.delayInMinut }}</td>
+              <td>{{ carsDispatch.delayInMinut }} Min</td>
               <td>
                 {{ carsDispatch.dispatchFuComplaint1 === "Y" ? "Yes" : "No" }}
               </td>

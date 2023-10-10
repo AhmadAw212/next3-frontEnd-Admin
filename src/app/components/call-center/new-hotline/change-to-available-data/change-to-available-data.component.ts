@@ -56,7 +56,7 @@ export class ChangeToAvailableDataComponent implements OnInit {
   ) {
     this.initializeData();
     this.companies = data.companies;
-    // console.log(data);
+    console.log(data.createNoData);
   }
 
   private initializeData() {
@@ -72,40 +72,53 @@ export class ChangeToAvailableDataComponent implements OnInit {
       this.iPolicyType = dataChange.iPolicyType;
       this.searchPolicyData = dataChange.policyData;
     }
-
-    const {
-      distributionNoDataPlateB,
-      distributionNoDataPlate,
-      distributionNoDataName,
-      distributionNoDataPolicy,
-      distributionNoDataRemarks,
-      lossTowLossDate,
-      noDataEffDate,
-      noDataExpDate,
-      distributionNoDataBroker,
-      distributionNoDataCarBrand,
-      insuranceId,
-    } = this.data;
-
-    this.distributionNoDataPlateB = distributionNoDataPlateB;
-    this.distributionNoDataPlate = distributionNoDataPlate;
-    this.distributionNoDataName = distributionNoDataName;
-    this.distributionNoDataPolicy = distributionNoDataPolicy;
-    this.distributionNoDataRemarks = distributionNoDataRemarks;
-    this.distributionNoDataEffDate = noDataEffDate;
-    this.distributionNoDataExpDate = noDataExpDate;
-    this.distributionNoDataBroker = distributionNoDataBroker;
-    this.distributionNoDataCarBrand = distributionNoDataCarBrand;
-    this.insuranceCode = insuranceId;
-
-    if (!dataChange?.iAsOfDate) {
-      this.iAsOfDate = this.datePipe.transform(
+    if (this.data.createNoData) {
+      const {
+        distributionNoDataPlateB,
+        distributionNoDataPlate,
+        distributionNoDataName,
+        distributionNoDataPolicy,
+        distributionNoDataRemarks,
         lossTowLossDate,
-        this.dateFormat('reportDateFormat')
-      )!;
-    }
+        distributionNoDataEffDate,
+        distributionNoDataExpDate,
+        distributionNoDataBroker,
+        distributionNoDataCarBrand,
+        insuranceId,
+      } = this.data.createNoData;
 
-    // Initialize other properties here if needed
+      this.distributionNoDataPlateB = distributionNoDataPlateB;
+      this.distributionNoDataPlate = distributionNoDataPlate;
+      this.distributionNoDataName = distributionNoDataName;
+      this.distributionNoDataPolicy = distributionNoDataPolicy;
+      this.distributionNoDataRemarks = distributionNoDataRemarks;
+      this.distributionNoDataEffDate = distributionNoDataEffDate;
+      // console.log(this.distributionNoDataEffDate);
+      this.distributionNoDataExpDate = distributionNoDataExpDate;
+      // console.log(this.distributionNoDataExpDate);
+      this.distributionNoDataBroker = distributionNoDataBroker;
+      this.distributionNoDataCarBrand = distributionNoDataCarBrand;
+      this.insuranceCode = insuranceId;
+
+      if (!dataChange?.iAsOfDate) {
+        this.iAsOfDate = this.datePipe.transform(
+          lossTowLossDate,
+          this.dateFormat('reportDateFormat')
+        )!;
+      }
+
+      // Initialize other properties here if needed
+    } else {
+      this.distributionNoDataPlateB = '';
+      this.distributionNoDataPlate = '';
+      this.distributionNoDataName = '';
+      this.distributionNoDataPolicy = '';
+      this.distributionNoDataRemarks = '';
+      this.distributionNoDataEffDate = '';
+      this.distributionNoDataExpDate = '';
+      this.distributionNoDataBroker = '';
+      this.distributionNoDataCarBrand = '';
+    }
   }
   toggleFlip() {
     this.isFlipped = !this.isFlipped;

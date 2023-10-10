@@ -77,9 +77,15 @@
         <input
           type="text"
           class="form-control"
-          id="note"
-          name="note"
-          [value]="distributionNoDataEffDate"
+          id="distributionNoDataEffDate"
+          name="distributionNoDataEffDate"
+          bsDatepicker
+          [(ngModel)]="distributionNoDataEffDate"
+          [bsConfig]="{
+            dateInputFormat: 'DD/MM/YYYY',
+            containerClass: 'theme-dark-blue',
+            showWeekNumbers: false
+          }"
           disabled
         />
       </div>
@@ -90,9 +96,15 @@
         <input
           type="text"
           class="form-control"
-          id="note"
-          name="note"
-          [value]="distributionNoDataExpDate"
+          id="distributionNoDataExpDate"
+          name="distributionNoDataExpDate"
+          bsDatepicker
+          [(ngModel)]="distributionNoDataExpDate"
+          [bsConfig]="{
+            dateInputFormat: 'DD/MM/YYYY',
+            containerClass: 'theme-dark-blue',
+            showWeekNumbers: false
+          }"
           disabled
         />
       </div>

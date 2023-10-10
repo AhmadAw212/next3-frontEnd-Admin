@@ -47,6 +47,7 @@ import { CarsPolicyCar } from '../model/cars-policy-car';
 import { Note } from '../model/note';
 import { NotificationSearchCriteria } from '../model/notification-search-criteria';
 import { CarsTowingConditionRequest } from '../model/cars-towing-condition-request';
+import { CarsDispatchFollowUpRequest } from '../model/cars-dispatch-follow-up-request';
 
 interface User {
   username: string;
@@ -1621,7 +1622,9 @@ export class DataServiceService {
 
   getTownFindByName(townName: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/townbyName?townName=${townName}`
+      `${this.userUrl}/call_center/townbyName?townName=${encodeURIComponent(
+        townName
+      )}`
     );
   }
 
@@ -1645,6 +1648,82 @@ export class DataServiceService {
   getAttitudeLovFindAll(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/getAttitudeLovFindAll`
+    );
+  }
+
+  persistDispatchFollowUp(
+    dispatchFollowUp: CarsDispatchFollowUpRequest
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/persist-dispatchFollowup`,
+      dispatchFollowUp
+    );
+  }
+  getFcExpertDispatch(
+    iclaimcompanyid: string,
+    iclaimbrokerid: string,
+    inotificationid: string,
+    icityid: string,
+    idisptype: string,
+    idispanotherexpert: string,
+    iclaimmatdamage: string,
+    iclaimreporteddat: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/FcExpertDispatch?iclaimcompanyid=${iclaimcompanyid}&iclaimbrokerid=${iclaimbrokerid}&inotificationid=${inotificationid}&icityid=${icityid}&idisptype=${idisptype}&idispanotherexpert=${idispanotherexpert}&iclaimmatdamage=${iclaimmatdamage}&iclaimreporteddat=${iclaimreporteddat}`
+    );
+  }
+
+  getVNotificationfindByTeritory(
+    territoryId: string,
+    insuranceId: string,
+    currentNoti: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/vNotifications/${territoryId}?insuranceId=${insuranceId}&currentNoti=${currentNoti}`
+    );
+  }
+  getRelatedTypeLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/relatedType-lov`
+    );
+  }
+
+  getExpertReasonLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/expertReason`
+    );
+  }
+  getTowingNatureLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towingNature`
+    );
+  }
+  getSupplierGarageLov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/call_center/garage-lov`);
+  }
+  getTowCancelReasonLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towcancelReason-lov`
+    );
+  }
+
+  getTowDelayReasonLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towDelayReason-lov`
+    );
+  }
+  getCoverByCarId(carId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getCoverByCarId/${carId}`
+    );
+  }
+  getTowingCondAccAndMechCount(
+    insuranceId: string,
+    companyId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towing-conditions?insuranceId=${insuranceId}&companyId=${companyId}`
     );
   }
 }

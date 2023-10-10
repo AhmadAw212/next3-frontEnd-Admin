@@ -33,6 +33,7 @@ export class TowingConditionComponent implements OnInit, OnDestroy {
   selectedTowingCondition?: any;
   towingListSubscribe?: Subscription;
   selectedPanelIndex: number = 0;
+  edited: boolean = false;
   constructor(
     private dicoService: DicoServiceService,
     private dataService: DataServiceService,
@@ -73,6 +74,7 @@ export class TowingConditionComponent implements OnInit, OnDestroy {
       // towingCompany_id: [''],
       // disabled: [this.towingList && this.towingList.length === 0],
     });
+
     this.towingForm.disable();
   }
 
@@ -103,7 +105,9 @@ export class TowingConditionComponent implements OnInit, OnDestroy {
   }
   companySelected(event: any) {
     this.parentSelectedCompany = event;
+
     this.getTowingCompanyListByCmp();
+
     // console.log(this.parentSelectedCompany);
     // console.log(event);
   }
@@ -126,7 +130,8 @@ export class TowingConditionComponent implements OnInit, OnDestroy {
   getTowingData(towing: any, selectedIndex: number) {
     this.carTowingCompanyId = towing.carTowingCompanyId;
     this.selectedPanelIndex = selectedIndex;
-    console.log(towing);
+
+    // console.log(towing);
     if (
       towing &&
       towing.towingConditionList &&

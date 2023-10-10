@@ -14,11 +14,11 @@ import { SecondExpertDialogComponent } from './new-hotline/second-expert-dialog/
 import { CustomerSatisfactionDialogComponent } from './new-hotline/customer-satisfaction-dialog/customer-satisfaction-dialog.component';
 import { RotationDialogComponent } from './new-hotline/rotation-dialog/rotation-dialog.component';
 import { ExpertDispatchComponent } from './new-hotline/expert-dispatch/expert-dispatch.component';
+import { TowingDispatchTabComponent } from './new-hotline/towing-dispatch-tab/towing-dispatch-tab.component';
+import { TowingConditionsHotlineComponent } from './new-hotline/towing-conditions-hotline/towing-conditions-hotline.component';
 
 @NgModule({
-  declarations: [
-    ExpertDispatchComponent
-  ],
+  declarations: [],
   imports: [CommonModule, CallCenterRoutingModule],
 })
 export class CallCenterModule {}
