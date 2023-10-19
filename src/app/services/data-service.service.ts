@@ -48,6 +48,7 @@ import { Note } from '../model/note';
 import { NotificationSearchCriteria } from '../model/notification-search-criteria';
 import { CarsTowingConditionRequest } from '../model/cars-towing-condition-request';
 import { CarsDispatchFollowUpRequest } from '../model/cars-dispatch-follow-up-request';
+import { TotalLossTowInfoRequest } from '../model/total-loss-tow-info-request';
 
 interface User {
   username: string;
@@ -1724,6 +1725,92 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/towing-conditions?insuranceId=${insuranceId}&companyId=${companyId}`
+    );
+  }
+
+  getCarLocationLovFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/all-Locations`
+    );
+  }
+  getTownFindAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.userUrl}/call_center/all-towns`);
+  }
+  deleteTotalLossTowingRow(totalLossId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/call_center/totalLossTowing/${totalLossId}`
+    );
+  }
+  getGarageSupplierFindAll(
+    garageName: string,
+    homeTownName: string,
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/garage-all?garageName=${garageName}&homeTownName=${homeTownName}&pageSize=${pageSize}&pageNumber=${pageNumber}`
+    );
+  }
+  saveOrUpdateTotalLossTowInfoList(
+    requestList: TotalLossTowInfoRequest[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/saveOrUpdateTotalLossTowInfoList`,
+      requestList
+    );
+  }
+  deleteExpertUnavailable(expertUnavId: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/call_center/deleteExpertUnavailable/${expertUnavId}`
+    );
+  }
+  getFcExpertUnavailable(
+    iclaimid: string,
+    isupplierid: string,
+    ireasonid: string,
+    iremarksid: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getFcExpertUnavailable?iclaimid=${iclaimid}&isupplierid=${isupplierid}&ireasonid=${ireasonid}&iremarksid=${iremarksid}`
+    );
+  }
+  getVNotificationfindByExpertDispatch(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/expert-dispatch`
+    );
+  }
+
+  getVNotificationfindByTowingDispatch(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/towing-dispatch`
+    );
+  }
+  getNotificationFindById(notificationId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getNotificationFindById/${notificationId}`
+    );
+  }
+  getNotificationComplaintsByDepCount(
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getNotificationComplaintsByDepCount?notificationId=${notificationId}`
+    );
+  }
+  getCarsNotificationComplaintsByDep(
+    fromDep: string,
+    notificationId: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/getCarsNotificationComplaintsByDep?fromDep=${fromDep}&notificationId=${notificationId}`
+    );
+  }
+  addNotificationComplaint(
+    carsNotificationComplaints: any
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/common-service/addNotificationComplaint`,
+      carsNotificationComplaints
     );
   }
 }

@@ -3,6 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -23,6 +24,16 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   notificationId?: string;
   notificationMatDamageId?: string;
   notificationReportedDate?: string;
+  oClaim?: any;
+  insuranceDesc?: string;
+  telExtension?: string;
+  showTelIcon?: string;
+  expertReasons?: type[] = [];
+  expertReason: string = '';
+  comments: string = '';
+  expertReasonCode?: string;
+  lossTowId?: string;
+  statusCode?: number;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -38,16 +49,21 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   ) {
     this.territoryId = data.distributionTownId;
     this.insuranceId = data.insuranceId;
+    this.insuranceDesc = data.insuranceDesc;
     this.notificationId = data.notificationId;
     this.notificationMatDamageId = data.notificationMatDamageId;
     this.notificationReportedDate = data.notificationReportedDate;
+    this.telExtension = data.telExtension;
+    this.showTelIcon = data.showTelIcon;
+    this.lossTowId = data.lossTowId;
     console.log(data);
   }
   ngOnDestroy(): void {}
   ngOnInit(): void {
     this.getDico();
-    // this.getVNotificationfindByTeritory();
-    // this.getFcExpertDispatch();
+    this.getVNotificationfindByTeritory();
+    this.getFcExpertDispatch();
+    this.getExpertReasonLovFindAll();
   }
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
@@ -58,7 +74,15 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
       this.dico = data;
     });
   }
+  disableChooseButton(): boolean {
+    return (
+      this.expertReasonCode == null ||
+      this.expertReasonCode === '' ||
+      this.oClaim.oclaimexpert == null
+    );
+  }
   getVNotificationfindByTeritory() {
+    console.log(this.disableChooseButton());
     this.dataService
       .getVNotificationfindByTeritory(
         this.territoryId!,
@@ -75,6 +99,10 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
       });
   }
   getFcExpertDispatch() {
+    const reportedDate = this.datePipe.transform(
+      this.notificationReportedDate,
+      'dd-MMM-yyyy'
+    );
     this.dataService
       .getFcExpertDispatch(
         this.insuranceId!,
@@ -84,10 +112,11 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
         '',
         'N',
         this.notificationMatDamageId!,
-        this.notificationReportedDate!
+        reportedDate!
       )
       .subscribe({
         next: (res) => {
+          this.oClaim = res.data;
           console.log(res);
         },
         error: (err) => {
@@ -109,11 +138,44 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   getExpertReasonLovFindAll() {
     this.dataService.getExpertReasonLovFindAll().subscribe({
       next: (res) => {
+        this.expertReasons = res.data;
         console.log(res);
       },
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+  getFcExpertUnavailable() {
+    const oclaimexpert = this.oClaim!.oclaimexpert;
+    this.dataService
+      .getFcExpertUnavailable(
+        this.lossTowId!,
+        oclaimexpert,
+        this.expertReasonCode!,
+        this.comments
+      )
+      .subscribe({
+        next: (res) => {
+          this.expertReasonCode = '';
+          this.comments = '';
+          // this.statusCode = res.statusCode;
+          this.getFcExpertDispatch();
+
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  dispatchForm(dispatch: boolean) {
+    this.dialogRef.close({
+      dispatch: dispatch,
+      oclaimExpert: this.oClaim.oclaimexpert,
+      oclaimexpertname: this.oClaim.oclaimexpertname,
+      statusCode: this.statusCode,
     });
   }
 }

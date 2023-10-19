@@ -1,0 +1,108 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">{{ dico?.dico_add_repair_shop || "dico_add_repair_shop" }}</h2>
+</div>
+<div class="container">
+  <form (ngSubmit)="getGarageSupplierFindAll()">
+    <div class="row p-2">
+      <div class="col-md-2">
+        <label class="form-label">{{
+          dico?.dico_repair_shop_name || "dico_repair_shop_name"
+        }}</label>
+        <input
+          type="text"
+          name="repairShop"
+          id="repairShop"
+          class="form-control"
+          [(ngModel)]="repairShop"
+        />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">{{
+          dico?.dico_town_name || "dico_town_name"
+        }}</label>
+
+        <input
+          class="form-control"
+          [(ngModel)]="townName"
+          name="townName"
+          id="townName"
+        />
+      </div>
+      <div class="col-md-2 p-4">
+        <button class="button-class" type="submit">
+          {{ dico?.dico_filter || "dico_filter" }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="row p-3">
+    <table class="table table-responsive-sm">
+      <thead>
+        <tr>
+          <th>{{ dico?.dico_repair_shop_name || "dico_repair_shop_name" }}</th>
+          <th>
+            {{ dico?.dico_phone || "dico_phone" }}
+          </th>
+          <th>{{ dico?.dico_town_name || "dico_town_name" }}</th>
+          <th>{{ dico?.dico_caza_name || "dico_caza_name" }}</th>
+          <th>{{ dico?.dico_region || "dico_region" }}</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="repairShopList?.length! > 0; else noData">
+        <tr *ngFor="let repair of repairShopList">
+          <td>{{ repair.supplier_name }}</td>
+          <td>
+            <img
+              src="./assets/icons/phone.png"
+              alt=""
+              [style.height]="'15px'"
+              class="me-1"
+            />
+            <ng-container *ngIf="showTelIcon === 'true'">
+              <a
+                [href]="'tel:' + telExtension + repair.supplier_mobile_phone"
+                >{{ repair.supplier_mobile_phone }}</a
+              >
+            </ng-container>
+            <ng-container *ngIf="showTelIcon !== 'true'">
+              {{ repair.supplier_mobile_phone }}
+            </ng-container>
+          </td>
+          <td>{{ repair.town_name }}</td>
+          <td>{{ repair.caza_description }}</td>
+          <td>{{ repair.region_name }}</td>
+          <td>
+            <button
+              class="button-class"
+              [ngClass]="{
+                'disabled-button':
+                  notificationStatusCode === '8' ||
+                  notificationStatusCode === '9'
+              }"
+              (click)="chooseRepairShop(repair)"
+            >
+              {{ dico?.dico_choose || "dico_choose" }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="8">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+  <div class="row">
+    <app-paginator
+      [totalItems]="totalItems!"
+      [pageSize]="pageSize"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+</div>

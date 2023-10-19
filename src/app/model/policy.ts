@@ -110,7 +110,7 @@ export interface Policy {
   lossTowExpertId?: string;
   distributionLossArrivedBooleanBinding?: string;
   expertUnavailableList?: any;
-  notificationId?: any;
+  notificationId: string;
   distributionTownId?: string;
   townTerritoryList?: any[];
   distributionTowNatureId?: string;
@@ -120,4 +120,7 @@ export interface Policy {
   towingList?: any[];
   towingListCount?: any;
   notificationMatChangeDate?: Date;
+  carsTotallossDispatches?: any[];
+  lossCarId?: string;
+  lossTowId?: string;
 }

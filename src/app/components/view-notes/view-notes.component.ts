@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewNoteDialogComponent } from './view-note-dialog/view-note-dialog.component';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -12,6 +12,8 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
 })
 export class ViewNotesComponent implements OnInit {
   count?: number;
+  @Input() notificationId!: string;
+  @Input() label?: string;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -22,8 +24,11 @@ export class ViewNotesComponent implements OnInit {
   }
   viewNoteDialog() {
     const dialogRef = this.dialog.open(ViewNoteDialogComponent, {
+      data: {
+        notificationId: this.notificationId!,
+      },
       width: '1000px',
-      maxHeight: '600px',
+      maxHeight: '800px',
     });
     dialogRef.afterClosed().subscribe(() => {
       this.getNotificationMessageByDepCount();
@@ -31,19 +36,22 @@ export class ViewNotesComponent implements OnInit {
   }
 
   getNotificationMessageByDepCount() {
-    const profile = this.profileService.getSelectedProfile();
-    const department = profile.code.toUpperCase();
-    // console.log(department);
-    this.dataService
-      .getNotificationMessageByDepCount(department!, '10.9100729')
-      .subscribe({
-        next: (data) => {
-          this.count = data.data;
-          // console.log(data.data);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    // console.log(this.notificationId);
+    if (this.notificationId) {
+      const profile = this.profileService.getSelectedProfile();
+      const department = profile.code.toUpperCase();
+      // console.log(department);
+      this.dataService
+        .getNotificationMessageByDepCount(department!, this.notificationId!)
+        .subscribe({
+          next: (data) => {
+            this.count = data.data;
+            // console.log(data.data);
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+    }
   }
 }

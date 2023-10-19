@@ -1,0 +1,94 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">
+    {{ dico?.dico_tow_cases || "dico_tow_cases" }}
+  </h2>
+</div>
+<div class="container p-2">
+  <div class="panel row m-2">
+    <table>
+      <thead [style.position]="'static'">
+        <tr>
+          <th>{{ dico?.dico_notification || "dico_notification" }}</th>
+          <th>{{ dico?.dico_towing_date || "dico_towing_date" }}</th>
+          <th>{{ dico?.dico_company || "dico_company" }}</th>
+          <th>{{ dico?.dico_from_city || "dico_from_city" }}</th>
+          <th>{{ dico?.dico_to_city || "dico_to_city" }}</th>
+          <th>{{ dico?.dico_insured_name || "dico_insured_name" }}</th>
+          <th>{{ dico?.dico_car_trademark || "dico_car_trademark" }}</th>
+          <th>{{ dico?.dico_dispatch_user || "dico_dispatch_user" }}</th>
+          <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+          <th>{{ dico?.dico_contact_phone || "dico_contact_phone" }}</th>
+
+          <th>{{ dico?.dico_delay_minute || "dico_delay_minute" }}</th>
+
+          <th>{{ dico?.dico_insurance_name || "dico_insurance_name" }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let tow of vNotByTowingDispatch; let i = index"
+          [ngClass]="{
+            'selected-row': i === selectedRowIndex
+          }"
+          (click)="selectTowCase(i, tow)"
+        >
+          <td>
+            {{ tow?.visa }}
+          </td>
+          <td>
+            {{
+              tow?.distributionTowDistDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>
+            {{ tow?.towingCompany }}
+          </td>
+          <td>
+            {{ tow?.towingFromTown }}
+          </td>
+          <td>
+            {{ tow?.towingToTown }}
+          </td>
+          <td>
+            {{ tow?.insuredName }}
+          </td>
+          <td>
+            {{ tow?.carBrandTrademark }}
+          </td>
+          <td>
+            {{ tow?.distributionTowDistUser }}
+          </td>
+          <td>
+            {{ tow?.carPlate }}
+          </td>
+          <td>
+            {{ tow?.contactPhone }}
+          </td>
+          <td>
+            {{ tow?.delayMinute }}
+          </td>
+          <td>
+            {{ tow?.insuranceName }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button
+          class="button-class me-2"
+          type="button"
+          (click)="getNotificationFindById()"
+        >
+          Yes
+        </button>
+        <button class="button-class me-2" type="button">No</button>
+      </div>
+    </div>
+  </div>
+</div>

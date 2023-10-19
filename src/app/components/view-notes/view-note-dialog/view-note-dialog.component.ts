@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { ViewPolicyDialogComponent } from '../../view-policy/view-policy-dialog/view-policy-dialog.component';
@@ -34,6 +34,8 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   department?: string;
   notificationsSubscribtion?: Subscription;
   LossCarDataByNotificationSub?: Subscription;
+  notificationId?: string;
+  @Input() label?: string;
   constructor(
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<ViewNoteDialogComponent>,
@@ -42,8 +44,11 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     private dateFormatService: DateFormatterService,
     private fb: FormBuilder,
     private alertifyService: AlertifyService,
-    private profileService: LoadingServiceService
-  ) {}
+    private profileService: LoadingServiceService,
+    @Inject(MAT_DIALOG_DATA) private data: any
+  ) {
+    this.notificationId = data.notificationId;
+  }
   ngOnDestroy(): void {
     if (this.notificationsSubscribtion || this.LossCarDataByNotificationSub) {
       this.notificationsSubscribtion?.unsubscribe();
@@ -62,7 +67,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
         injuredId: [null],
       }),
       notification: this.fb.group({
-        notificationId: ['10.9100729'],
+        notificationId: [this.notificationId],
       }),
       lossCar: this.fb.group({
         carId: [null],
@@ -220,9 +225,9 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     return value === 'Y' ? true : false;
   }
   getNotificationMessageByDep() {
-    console.log(this.department);
+    // console.log(this.department);
     this.notificationsSubscribtion = this.dataService
-      .getNotificationMessageByDep(this.department!, '10.9100729')
+      .getNotificationMessageByDep(this.department!, this.notificationId!)
       .subscribe({
         next: (data) => {
           this.notes = data.data;
@@ -290,27 +295,29 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     });
   }
   getLossCarDataByNotificationId() {
-    this.LossCarDataByNotificationSub = this.dataService
-      .getLossCarDataByNotificationId('10.9100729')
-      .subscribe({
-        next: (data) => {
-          this.levels = data.data;
-          for (const item of this.levels!) {
-            if (item.ins_TP === 'INSURED' || item.ins_TP === 'TP') {
-              item.id = 'LossCar;' + item.id;
-            } else if (item.ins_TP === 'BODILY') {
-              item.id = 'BodilyInjury;' + item.id;
-            } else if (item.ins_TP === 'MATERIAL DAMAGE') {
-              item.id = 'MaterialDamage;' + item.id;
+    if (this.notificationId) {
+      this.LossCarDataByNotificationSub = this.dataService
+        .getLossCarDataByNotificationId(this.notificationId!)
+        .subscribe({
+          next: (data) => {
+            this.levels = data.data;
+            for (const item of this.levels!) {
+              if (item.ins_TP === 'INSURED' || item.ins_TP === 'TP') {
+                item.id = 'LossCar;' + item.id;
+              } else if (item.ins_TP === 'BODILY') {
+                item.id = 'BodilyInjury;' + item.id;
+              } else if (item.ins_TP === 'MATERIAL DAMAGE') {
+                item.id = 'MaterialDamage;' + item.id;
+              }
             }
-          }
-          // console.log(this.levels);
-        },
-        error: (err) => {
-          this.alertifyService.error(err.error.message);
-          this.close();
-          console.log(err);
-        },
-      });
+            // console.log(this.levels);
+          },
+          error: (err) => {
+            this.alertifyService.error(err.error.message);
+            this.close();
+            console.log(err);
+          },
+        });
+    }
   }
 }

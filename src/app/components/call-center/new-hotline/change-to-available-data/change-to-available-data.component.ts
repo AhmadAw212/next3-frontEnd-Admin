@@ -56,7 +56,6 @@ export class ChangeToAvailableDataComponent implements OnInit {
   ) {
     this.initializeData();
     this.companies = data.companies;
-    console.log(data.createNoData);
   }
 
   private initializeData() {
@@ -72,6 +71,17 @@ export class ChangeToAvailableDataComponent implements OnInit {
       this.iPolicyType = dataChange.iPolicyType;
       this.searchPolicyData = dataChange.policyData;
     }
+    const lossTowLossDate = this.data.lossTowLossDate;
+    const insuranceId = this.data.insuranceId;
+    this.insuranceCode = insuranceId;
+
+    if (!dataChange?.iAsOfDate) {
+      this.iAsOfDate = this.datePipe.transform(
+        lossTowLossDate,
+        this.dateFormat('reportDateFormat')
+      )!;
+    }
+
     if (this.data.createNoData) {
       const {
         distributionNoDataPlateB,
@@ -79,12 +89,10 @@ export class ChangeToAvailableDataComponent implements OnInit {
         distributionNoDataName,
         distributionNoDataPolicy,
         distributionNoDataRemarks,
-        lossTowLossDate,
         distributionNoDataEffDate,
         distributionNoDataExpDate,
         distributionNoDataBroker,
         distributionNoDataCarBrand,
-        insuranceId,
       } = this.data.createNoData;
 
       this.distributionNoDataPlateB = distributionNoDataPlateB;
@@ -98,14 +106,6 @@ export class ChangeToAvailableDataComponent implements OnInit {
       // console.log(this.distributionNoDataExpDate);
       this.distributionNoDataBroker = distributionNoDataBroker;
       this.distributionNoDataCarBrand = distributionNoDataCarBrand;
-      this.insuranceCode = insuranceId;
-
-      if (!dataChange?.iAsOfDate) {
-        this.iAsOfDate = this.datePipe.transform(
-          lossTowLossDate,
-          this.dateFormat('reportDateFormat')
-        )!;
-      }
 
       // Initialize other properties here if needed
     } else {

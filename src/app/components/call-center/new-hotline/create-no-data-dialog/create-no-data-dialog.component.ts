@@ -111,19 +111,14 @@ export class CreateNoDataDialogComponent implements OnInit {
     });
   }
   getNoDataTypeLovFindAll() {
-    // Check if the function has already been called
     if (!this.isGetNoDataTypeCalled) {
-      this.isGetNoDataTypeCalled = true; // Set the flag to true to prevent further calls
       this.dataService.getNoDataTypeLovFindAll().subscribe({
         next: (data) => {
           this.noDataType = data.data;
-
-          // Set the flag to true when data is successfully loaded
+          this.isGetNoDataTypeCalled = true;
         },
         error: (err) => {
           console.log(err);
-
-          // Reset the flag on error, allowing a retry if needed
           this.isGetNoDataTypeCalled = false;
         },
       });

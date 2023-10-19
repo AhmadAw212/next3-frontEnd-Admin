@@ -1,0 +1,98 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">
+    {{ dico?.dico_claims || "dico_claims" }}
+  </h2>
+</div>
+<div class="container p-2">
+  <div class="panel row m-2">
+    <table>
+      <thead [style.position]="'static'">
+        <tr>
+          <th>{{ dico?.dico_notification || "dico_notification" }}</th>
+          <th>{{ dico?.dico_dispatch_date || "dico_dispatch_date" }}</th>
+          <th>{{ dico?.dico_dispatch_user || "dico_dispatch_user" }}</th>
+          <th>{{ dico?.dico_town || "dico_town" }}</th>
+          <th>{{ dico?.dico_expert_name || "dico_expert_name" }}</th>
+          <th>{{ dico?.dico_expert_mobile || "dico_expert_mobile" }}</th>
+          <th>{{ dico?.dico_insured_name || "dico_insured_name" }}</th>
+          <th>
+            {{ dico?.dico_contact_phone_number || "dico_contact_phone_number" }}
+          </th>
+          <th>{{ dico?.dico_car_trademark || "dico_car_trademark" }}</th>
+          <th>{{ dico?.dico_dispatch_user || "dico_dispatch_user" }}</th>
+          <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+          <th>{{ dico?.dico_insurance_name || "dico_insurance_name" }}</th>
+          <th>{{ dico?.dico_mat_damage || "dico_mat_damage" }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let claim of vNotByExpertDispatch; let i = index"
+          [ngClass]="{
+            'selected-row': i === selectedRowIndex
+          }"
+          (click)="selectClaim(i, claim)"
+        >
+          <td>
+            {{ claim?.visa }}
+          </td>
+          <td>
+            {{
+              claim?.distributionLossDistDate
+                | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>
+            {{ claim?.distributionLossDistUser }}
+          </td>
+          <td>
+            {{ claim?.distributionLossTown }}
+          </td>
+          <td>
+            {{ claim?.expertName }}
+          </td>
+          <td>
+            {{ claim?.expertMobile }}
+          </td>
+          <td>
+            {{ claim?.insuredName }}
+          </td>
+          <td>
+            {{ claim?.contactPhone }}
+          </td>
+          <td>
+            {{ claim?.carBrandTrademark }}
+          </td>
+          <td>
+            {{ claim?.distUser }}
+          </td>
+          <td>
+            {{ claim?.carPlate }}
+          </td>
+          <td>
+            {{ claim?.insuranceName }}
+          </td>
+          <td>
+            {{ claim?.notificationMatDamageDesc }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button
+          class="button-class me-2"
+          type="button"
+          (click)="getNotificationFindById()"
+        >
+          Yes
+        </button>
+        <button class="button-class me-2" type="button">No</button>
+      </div>
+    </div>
+  </div>
+</div>

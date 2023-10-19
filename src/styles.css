@@ -145,6 +145,9 @@ table.table thead th {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.icon{
+  height: 15px;width:15px
+}
 .disabled-image {
   filter: grayscale(100%); /* Apply grayscale to make it look disabled */
   opacity: 0.6; /* Reduce opacity for further disabled appearance */

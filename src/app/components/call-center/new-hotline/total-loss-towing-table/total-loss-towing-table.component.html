@@ -1,0 +1,630 @@
+<div class="row">
+  <div class="col-md-10">
+    <h2 class="h5">
+      {{ dico?.dico_total_loss_towing || "dico_total_loss_towing" }}
+    </h2>
+  </div>
+  <div class="col-md-2">
+    <div class="d-flex justify-content-center align-items-center">
+      <button
+        class="button-class me-3"
+        type="button"
+        (click)="updateTotalLossTowList()"
+      >
+        {{ dico?.dico_save || "dico_save" }}
+      </button>
+      <button
+        class="button-class"
+        type="button"
+        (click)="openNewTotalLossTowing()"
+      >
+        {{ dico?.dico_create || "dico_create" }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive p-2">
+  <table class="table">
+    <thead style="position: static; top: 0">
+      <tr>
+        <th colspan="3" class="text-center align-middle">
+          {{ dico?.dico_from_location || "dico_from_location" }}
+        </th>
+        <th colspan="3" class="text-center align-middle">
+          {{ dico?.dico_to_location || "dico_to_location" }}
+        </th>
+        <th colspan="7" class="text-center align-middle">
+          {{ dico?.dico_dispatch || "dico_dispatch" }}
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <thead style="position: static; top: 0">
+      <tr>
+        <th class="text-nowrap">
+          {{ dico?.dico_from_location || "dico_from_location" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_garage_name || "dico_garage_name" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_from_area || "dico_from_area" }}
+        </th>
+
+        <th class="text-nowrap">
+          {{ dico?.dico_from_location || "dico_from_location" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_garage_name || "dico_garage_name" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_to_area || "dico_to_area" }}
+        </th>
+
+        <th class="text-nowrap">
+          {{ dico?.dico_phone_number || "dico_phone_number" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_dispatch || "dico_dispatch" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_dispatch_time || "dico_dispatch_time  " }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_dispatch_user || "dico_dispatch_user" }}
+        </th>
+        <th class="text-nowrap">{{ dico?.dico_arrived || "dico_arrived" }}</th>
+        <th class="text-nowrap">
+          {{ dico?.dico_arrived_date || "dico_arrived_date" }}
+        </th>
+        <th class="text-nowrap">
+          {{ dico?.dico_arrived_user || "dico_arrived_user" }}
+        </th>
+
+        <th class="text-nowrap">{{ dico?.dico_detail || "dico_detail" }}</th>
+        <th class="text-nowrap">
+          {{ dico?.dico_contact_person || "dico_contact_person" }}
+        </th>
+        <th class="text-nowrap">{{ dico?.dico_user || "dico_user" }}</th>
+        <th class="text-nowrap">{{ dico?.dico_date || "dico_date" }}</th>
+        <th class="text-nowrap">
+          {{ dico?.dico_to_follow_up || "dico_to_follow_up" }}
+        </th>
+        <th class="text-nowrap">{{ dico?.dico_done || "dico_done" }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let totalloss of carsTotallossDispatches; let i = index">
+        <td>
+          <select
+            name="totallossTowFromLocationId"
+            id="totallossTowFromLocationId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totallossTowFromLocationId"
+            (ngModelChange)="onInputChange('totallossTowFromLocationId', i)"
+          >
+            <option
+              *ngFor="let carLocation of carLocationLov"
+              [value]="carLocation.code"
+            >
+              {{ carLocation.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="totalLossTowFromRsId"
+            id="totalLossTowFromRsId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totalLossTowFromRsId"
+            (ngModelChange)="onInputChange('totalLossTowFromRsId', i)"
+          >
+            <option
+              *ngFor="let garage of supplierGarageLov"
+              [value]="garage.supplierId"
+            >
+              {{ garage.supplierName }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="totalLossTowFromTownId"
+            id="totalLossTowFromTownId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totalLossTowFromTownId"
+            (ngModelChange)="onInputChange('totalLossTowFromTownId', i)"
+          >
+            <option *ngFor="let garage of townLov" [value]="garage.townId">
+              {{ garage.townName }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="totallossTowToLocationId"
+            id="totallossTowToLocationId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totallossTowToLocationId"
+            (ngModelChange)="onInputChange('totallossTowToLocationId', i)"
+          >
+            <option
+              *ngFor="let carLocation of carLocationLov"
+              [value]="carLocation.code"
+            >
+              {{ carLocation.description }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="totalLossTowToRsId"
+            id="totalLossTowToRsId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totalLossTowToRsId"
+            (ngModelChange)="onInputChange('totalLossTowToRsId', i)"
+          >
+            <option
+              *ngFor="let garage of supplierGarageLov"
+              [value]="garage.supplierId"
+            >
+              {{ garage.supplierName }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            name="totalLossTowToTownId"
+            id="totalLossTowToTownId"
+            class="form-select custom-width"
+            [(ngModel)]="totalloss.totalLossTowToTownId"
+            (ngModelChange)="onInputChange('totalLossTowToTownId', i)"
+          >
+            <option *ngFor="let garage of townLov" [value]="garage.townId">
+              {{ garage.townName }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowPhone"
+            id="totallossTowPhone"
+            [(ngModel)]="totalloss.totallossTowPhone"
+            (ngModelChange)="onInputChange('totallossTowPhone', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="totallossTowDispatchedBoolean"
+            id="totallossTowDispatchedBoolean"
+            [(ngModel)]="totalloss.totallossTowDispatchedBoolean"
+            (ngModelChange)="onInputChange('totallossTowDispatchedBoolean', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowDispatchedDate"
+            id="totallossTowDispatchedDate"
+            [(ngModel)]="totalloss.totallossTowDispatchedDate"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowDispatchedUserName"
+            id="totallossTowDispatchedUserName"
+            [(ngModel)]="totalloss.totallossTowDispatchedUserName"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="totallossTowArrivedBoolean"
+            id="totallossTowArrivedBoolean"
+            [(ngModel)]="totalloss.totallossTowArrivedBoolean"
+            (ngModelChange)="onInputChange('totallossTowArrivedBoolean', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowArrivedDate"
+            id="totallossTowArrivedDate"
+            [(ngModel)]="totalloss.totallossTowArrivedDate"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowArrivedUserName"
+            id="totallossTowArrivedUserName"
+            [(ngModel)]="totalloss.totallossTowArrivedUserName"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowDetail"
+            id="totallossTowDetail"
+            [(ngModel)]="totalloss.totallossTowDetail"
+            (ngModelChange)="onInputChange('totallossTowDetail', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowContactPerson"
+            id="totallossTowContactPerson"
+            [(ngModel)]="totalloss.totallossTowContactPerson"
+            (ngModelChange)="onInputChange('totallossTowContactPerson', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowDispUserName"
+            id="totallossTowDispUserName"
+            [(ngModel)]="totalloss.totallossTowDispUserName"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            class="form-control custom-width"
+            name="totallossTowDispDate"
+            id="totallossTowDispDate"
+            [(ngModel)]="totalloss.sysUpdatedDate"
+            disabled
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="totallossTowToFollowBoolean"
+            id="totallossTowToFollowBoolean"
+            [(ngModel)]="totalloss.totallossTowToFollowBoolean"
+            (ngModelChange)="onInputChange('totallossTowToFollowBoolean', i)"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="totallossTowToFollowDoneBoolean"
+            id="totallossTowToFollowDoneBoolean"
+            [(ngModel)]="totalloss.totallossTowToFollowDoneBoolean"
+            (ngModelChange)="
+              onInputChange('totallossTowToFollowDoneBoolean', i)
+            "
+          />
+        </td>
+        <td>
+          <mat-icon
+            [ngClass]="{ 'disabled-button': disableDeleteTowing() }"
+            *ngIf="hasPerm('ccAdmin')"
+            (click)="deleteTotalLossTowingRow(totalloss.totallossDispatchId)"
+            >delete</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="19">
+          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</div>
+<ng-template #newTotalLossTowing>
+  <div class="grid-container panel-class-style">
+    <h2 class="h5">
+      {{ dico?.dico_total_loss_towing || "dico_total_loss_towing" }}
+    </h2>
+  </div>
+  <form
+    [formGroup]="lossTowForm"
+    (ngSubmit)="saveOrUpdateTotalLossTowInfoList()"
+  >
+    <div class="grid-container m-3">
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <label class="label-color">{{
+            dico?.dico_from_location || "dico_from_location"
+          }}</label>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_from_location || "dico_from_location" }}</label
+            >
+            <select
+              name="totallossTowFromLocationId"
+              id="totallossTowFromLocationId"
+              class="form-select ms-3"
+              formControlName="totallossTowFromLocationId"
+            >
+              <option
+                *ngFor="let carLocation of carLocationLov"
+                [value]="carLocation.code"
+              >
+                {{ carLocation.description }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_garage_name || "dico_garage_name" }}</label
+            >
+            <select
+              name="garageName"
+              id="garageName"
+              class="form-select ms-3"
+              formControlName="totalLossTowFromRsId"
+            >
+              <option
+                *ngFor="let garage of supplierGarageLov"
+                [value]="garage.supplierId"
+              >
+                {{ garage.supplierName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_from_area || "dico_from_area" }}</label
+            >
+            <select
+              name="totalLossTowFromTownId"
+              id="totalLossTowFromTownId"
+              class="form-select ms-3"
+              formControlName="totalLossTowFromTownId"
+            >
+              <option *ngFor="let town of townLov" [value]="town.townId">
+                {{ town.townName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-container m-3">
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <label class="label-color">{{
+            dico?.dico_to_location || "dico_to_location"
+          }}</label>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_to_location || "dico_to_location" }}</label
+            >
+            <select
+              name="totallossTowToLocationId"
+              id="totallossTowToLocationId"
+              class="form-select ms-3"
+              formControlName="totallossTowToLocationId"
+            >
+              <option
+                *ngFor="let carLocation of carLocationLov"
+                [value]="carLocation.code"
+              >
+                {{ carLocation.description }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_garage_name || "dico_garage_name" }}</label
+            >
+            <select
+              name="totalLossTowToRsId"
+              id="totalLossTowToRsId"
+              class="form-select ms-3"
+              formControlName="totalLossTowToRsId"
+            >
+              <option
+                *ngFor="let garage of supplierGarageLov"
+                [value]="garage.supplierId"
+              >
+                {{ garage.supplierName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_to_area || "dico_to_area" }}</label
+            >
+            <select
+              name="totalLossTowToTownId"
+              id="totalLossTowToTownId"
+              class="form-select ms-3"
+              formControlName="totalLossTowToTownId"
+            >
+              <option *ngFor="let town of townLov" [value]="town.townId">
+                {{ town.townName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-container m-3">
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <label class="label-color">{{
+            dico?.dico_dispatch || "dico_dispatch"
+          }}</label>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-5">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_phone_number || "dico_phone_number" }}</label
+            >
+            <input
+              type="text"
+              class="form-control ms-3"
+              name="totallossTowPhone"
+              id="totallossTowPhone"
+              formControlName="totallossTowPhone"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_dispatch || "dico_dispatch" }}</label
+            >
+            <input
+              type="checkbox"
+              class="form-check-input ms-3"
+              name="totallossTowDispatchedBoolean"
+              id="totallossTowDispatchedBoolean"
+              formControlName="totallossTowDispatchedBoolean"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_arrived || "dico_arrived" }}</label
+            >
+            <input
+              type="checkbox"
+              class="form-check-input ms-3"
+              name="totallossTowArrivedBoolean"
+              id="totallossTowArrivedBoolean"
+              formControlName="totallossTowArrivedBoolean"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-container m-3">
+      <div class="row mb-4">
+        <div class="col-md-5">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_detail || "dico_detail" }}</label
+            >
+            <input
+              type="text"
+              class="form-control ms-3"
+              name="totallossTowDetail"
+              id="totallossTowDetail"
+              formControlName="totallossTowDetail"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_contact_person || "dico_contact_person" }}</label
+            >
+            <input
+              type="text"
+              class="form-control ms-3"
+              name="totallossTowContactPerson"
+              id="totallossTowContactPerson"
+              formControlName="totallossTowContactPerson"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_to_follow_up || "dico_to_follow_up" }}</label
+            >
+            <input
+              type="checkbox"
+              class="form-check-input ms-3"
+              name="totallossTowToFollowBoolean"
+              id="totallossTowToFollowBoolean"
+              formControlName="totallossTowToFollowBoolean"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex justify-content-center align-items-center">
+            <label class="text-nowrap">
+              {{ dico?.dico_done || "dico_done" }}</label
+            >
+            <input
+              type="checkbox"
+              class="form-check-input ms-3"
+              name="totallossTowToFollowDoneBoolean"
+              id="totallossTowToFollowDoneBoolean"
+              formControlName="totallossTowToFollowDoneBoolean"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row p-3">
+        <div class="col">
+          <div class="d-flex justify-content-end align-items-center">
+            <button class="button-class me-2" type="submit">
+              {{ dico?.dico_save || "dico_save" }}
+            </button>
+            <button class="button-class" type="button">
+              {{ dico?.dico_cancel || "dico_cancel" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>

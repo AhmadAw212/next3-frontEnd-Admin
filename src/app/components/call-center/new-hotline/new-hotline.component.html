@@ -1,7 +1,114 @@
 <app-login-nav></app-login-nav>
-<app-navbar></app-navbar>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <button type="submit">Save</button>
+  <nav class="navbar navbar-class justify-content-center">
+    <!-- <span class="navbar-brand" style="color: white"></span> -->
+
+    <div class="row ml-auto">
+      <div class="d-flex justify-content-center align-items-end">
+        <div class="col-md-1">
+          <label>
+            <img
+              src="./assets/icons/mail-hover.png"
+              alt=""
+              [matTooltip]="dico?.dico_email || 'dico_email'"
+              (click)="navigateToMail()"
+            />
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label style="color: white; font-weight: bold">
+            <img
+              src="./assets/icons/matrix.png"
+              alt=""
+              class="icon"
+              [matTooltip]="dico?.dico_view_policy || 'dico_view_policy'"
+              (click)="viewPolicy()"
+            />
+            {{ dico?.dico_view_policy || "dico_view_policy" }}
+          </label>
+        </div>
+        <div class="col-md-1" *ngIf="policyData">
+          <app-view-complaints
+            [notificationId]="policyData!.notificationId"
+            [label]="dico?.dico_complaints || 'dico_complaints'"
+          ></app-view-complaints>
+          <!-- <label>
+            <img
+              src="./assets/icons/warning.png"
+              alt=""
+              class="icon"
+              [matTooltip]="dico?.dico_complaints || 'dico_complaints'"
+            />
+          </label> -->
+        </div>
+        <div class="col-md-1" *ngIf="policyData">
+          <label>
+            <app-view-notes
+              [notificationId]="policyData!.notificationId"
+              [label]="dico?.dico_note || 'dico_note'"
+            ></app-view-notes>
+            <!-- <img
+                src="./assets/icons/clock-alarm.png"
+                alt=""
+                class="icon"
+                [matTooltip]="dico?.dico_note || 'dico_note'"
+              /> -->
+          </label>
+        </div>
+
+        <div class="col-md-1">
+          <label>
+            <img
+              src="./assets/icons/search-hover.png"
+              alt=""
+              class="icon"
+              [matTooltip]="dico?.dico_tow_cases || 'dico_tow_cases'"
+              (click)="openTowingDispDialog()"
+            />
+          </label>
+        </div>
+        <div class="col-md-1">
+          <label>
+            <img
+              src="./assets/icons/search.png"
+              alt=""
+              class="icon"
+              [matTooltip]="dico?.dico_claims || 'dico_claims'"
+              (click)="openClaimsDialog()"
+            />
+          </label>
+        </div>
+
+        <div class="col-md-5">
+          <label>
+            <img src="./assets/icons/quick-links.png" alt="" class="icon" />
+            {{ dico?.dico_insurance || "dico_insurance" }}
+            :
+          </label>
+          <span class="ms-2" style="color: white; font-weight: bold">{{
+            policyData?.insuranceDesc
+          }}</span>
+        </div>
+
+        <div class="col-md-4">
+          <label
+            >{{ dico?.dico_notification_number || "dico_notification_number" }}
+            :
+          </label>
+          <span class="ms-2" style="color: white; font-weight: bold">{{
+            policyData?.notificationVisa
+          }}</span>
+        </div>
+
+        <div class="col-md-1">
+          <button class="btn-class ms-2" type="submit">
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <div class="container-fluid container-class">
     <div class="panel row">
       <div class="col-md-3">
@@ -371,7 +478,7 @@
                   class="form-control"
                   bsDatepicker
                   [bsConfig]="{
-                    dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
                     containerClass: 'theme-dark-blue',
                     showWeekNumbers: false
                   }"
@@ -389,7 +496,7 @@
                   id="fromDate"
                   bsDatepicker
                   [bsConfig]="{
-                    dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
+                    dateInputFormat: 'DD/MM/YYYY HH:mm a',
                     containerClass: 'theme-dark-blue',
                     showWeekNumbers: false
                   }"
@@ -562,7 +669,7 @@
                 <label>{{ dico?.dico_expert || "dico_expert" }}</label>
 
                 <ng-select
-                  name="distributionTownName"
+                  name="lossTowExpertNamePreference"
                   formControlName="lossTowExpertNamePreference"
                   [virtualScroll]="true"
                   (search)="getExpertBySupplierNamePreference($event)"
@@ -716,7 +823,7 @@
                       formControlName="distributionTownName"
                       [virtualScroll]="true"
                       (search)="searchForTerritory($event)"
-                      (change)="getTownFindById()"
+                      (change)="getTownFindById($event)"
                     >
                       <ng-option
                         *ngFor="let suggestion of territoryValues"
@@ -769,7 +876,17 @@
                     />
                   </div>
                 </div>
-
+                <div class="row p-3">
+                  <div class="col-md-5">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="distributionExpExpertDesc"
+                      id="distributionExpExpertDesc"
+                      name="distributionExpExpertDesc"
+                    />
+                  </div>
+                </div>
                 <div class="row p-2">
                   <div
                     class="col-md-8 d-flex align-items-center justify-content-start"
@@ -787,17 +904,7 @@
 
                   <!-- <p class="mt-3">{{ policyData?.expertName }}</p> -->
                 </div>
-                <div class="row p-3">
-                  <div class="col-md-5">
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="distributionExpExpertId"
-                      id="distributionExpExpertId2"
-                      name="distributionExpExpertId2"
-                    />
-                  </div>
-                </div>
+
                 <div class="row p-3">
                   <div
                     class="col-md-3"
@@ -869,7 +976,7 @@
                       'dico_customer_satisfaction'
                     "
                     matTooltipPosition="right"
-                    (click)="customerSatisfactionDialog()"
+                    (click)="customerSatisfactionDialog('ED')"
                     style="width: 15px; height: 15px"
                   />
                 </div>
@@ -1007,10 +1114,10 @@
                     <div class="col-md-5">
                       <input
                         type="text"
-                        name="distributionExpExpertId"
-                        id="distributionExpExpertId"
+                        name="distributionExpExpertDesc"
+                        id="distributionExpExpertDesc"
                         class="form-control"
-                        formControlName="distributionExpExpertId"
+                        formControlName="distributionExpExpertDesc"
                       />
                     </div>
                     <div class="col-md-5">
@@ -1105,6 +1212,11 @@
                             [ngClass]="{
                               'disabled-image': disableDeleteExpertUnAvai()
                             }"
+                            (click)="
+                              deleteExpertUnavailable(
+                                expertUnAvailable.expertUnavId
+                              )
+                            "
                             >delete</mat-icon
                           >
                         </td>
@@ -1132,7 +1244,7 @@
       [label]="dico?.dico_towing_dispatch || 'dico_towing_dispatch'"
       *ngIf="dispatchTowingShow()"
     >
-      <div class="container-fluid container-class">
+      <div class="container-fluid container-class" *ngIf="dispatchTowingShow()">
         <div class="panel row">
           <div class="col-md-12">
             <div class="grid-container">
@@ -1618,7 +1730,7 @@
                     [ngClass]="{
                       'disable-link': isSuggestLinkDisabled()
                     }"
-                    (click)="customerSatisfactionDialog()"
+                    (click)="customerSatisfactionDialog('TD')"
                   >
                     <img src="./assets/icons/cell.png" alt="" />
                     {{
@@ -1665,6 +1777,7 @@
                               style="height: 20px; width: 20px"
                               src="./assets/icons/add.png"
                               alt=""
+                              (click)="openRepairShopeDialog()"
                             />
                           </div>
                         </div>
@@ -2098,6 +2211,25 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-container m-3">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <app-total-loss-towing-table
+                    [carsTotallossDispatches]="
+                      policyData?.carsTotallossDispatches
+                    "
+                    [supplierGarageLov]="supplierGarageLov"
+                    [notificationStatusCode]="
+                      policyData?.notificationStatusCode
+                    "
+                    [lossCarId]="lossCarId"
+                  ></app-total-loss-towing-table>
                 </div>
               </div>
             </div>

@@ -69,9 +69,9 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="suppExpert.length > 0; else noData">
         <tr *ngFor="let supp of suppExpert">
-          <td *ngIf="suppExpert.length > 0; else noData">
+          <td>
             <button
               *ngIf="supp.expertBlackList !== 'Y' || hasPerm('ccBLEDispatch')"
               class="button-class"
@@ -82,21 +82,20 @@
           </td>
           <td>{{ supp.supplierName }}</td>
           <td>
-            <img
-              src="./assets/icons/phone.png"
-              alt=""
-              [style.height]="'15px'"
-              class="me-1"
-            />
             <ng-container
               *ngIf="
-                supp.expertBlackList !== 'Y' ||
-                (hasPerm('ccBLEDispatch') && showTelIcon === 'true')
+                (supp.expertBlackList !== 'Y' || hasPerm('ccBLEDispatch')) &&
+                showTelIcon === 'true'
               "
             >
-              <a [href]="'tel:' + telExtension + supp.phone">{{
-                supp.supplierMobilePhone
-              }}</a>
+              <a [href]="'tel:' + telExtension + supp.phone">
+                <img
+                  src="./assets/icons/phone.png"
+                  alt=""
+                  [style.height]="'15px'"
+                  class="me-1"
+                />{{ supp.supplierMobilePhone }}</a
+              >
             </ng-container>
             <ng-container *ngIf="showTelIcon !== 'true'">
               {{ supp.supplierMobilePhone }}

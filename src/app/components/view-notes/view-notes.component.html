@@ -1,6 +1,12 @@
 <div (click)="viewNoteDialog()">
-  <i class="fa fa-bell"></i>
+  <!-- <i class="fa fa-bell"></i> -->
+  <img
+    src="./assets/icons/clock-alarm.png"
+    alt=""
+    class="icon"
+    [matTooltip]="label!"
+  />
   <!-- Alarm icon -->
-  <span class="badge">{{ count }}</span>
+  <span style="color: white">{{ count }}</span>
   <!-- Number beside the icon -->
 </div>

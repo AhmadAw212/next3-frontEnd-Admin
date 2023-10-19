@@ -46,6 +46,9 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
   domainYNSubs!: Subscription;
   expertDelaySubs!: Subscription;
   notificationId?: string;
+  type?: string;
+  distributionTowArrivedDate?: Date;
+  distributionTowDistDate?: any;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -74,6 +77,10 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
     this.carsDispatchFollowUpList = data?.carsDispatchFollowUpList;
     this.distributionLossArrivedBoolean = data?.distributionLossArrivedBoolean;
     this.notificationId = data?.notificationId;
+    this.distributionTowArrivedDate = data?.distributionTowArrivedDate;
+    this.distributionTowDistDate = data?.distributionTowDistDate;
+    console.log(this.distributionTowDistDate);
+    this.type = data.type;
     this.distributionLossArrivedDate = moment(
       data?.distributionLossArrivedDate,
       'DD/MM/yyyy hh:mm A'
@@ -120,7 +127,7 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       distributionLossDistDate: [
         {
-          value: this.parseDate(this.formatDistributionLossDistDate),
+          value: '',
           disabled: this.disableLossDate(),
         },
       ],
@@ -150,16 +157,37 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
   }
 
   private initializeDistibutionLossArrived(): void {
+    if (this.type === 'ED') {
+      this.form
+        .get('distributionLossDistDate')
+        ?.setValue(this.parseDate(this.formatDistributionLossDistDate));
+    } else {
+      this.form
+        .get('distributionLossDistDate')
+        ?.setValue(this.parseDate(this.distributionTowDistDate));
+    }
     if (this.distributionLossArrivedBoolean) {
       this.form.get('dispatchFuArrivedId')?.setValue('Y');
       if (!this.distributionLossArrivedDate) {
         this.distributionLossArrivedDate = new Date();
       }
-      const date = this.form
-        .get('dispatchFuArrivedDate')
-        ?.setValue(this.distributionLossArrivedDate);
-      console.log(date);
-      this.form.get('dispatchFuArrivedDate')?.disable();
+      if (this.type === 'ED') {
+        this.form
+          .get('dispatchFuArrivedDate')
+          ?.setValue(this.distributionLossArrivedDate);
+      } else {
+        if (this.distributionTowArrivedDate) {
+          this.form
+            .get('distributionTowArrivedDate')
+            ?.setValue(this.distributionTowArrivedDate);
+        }
+      }
+      if (this.type === 'ED') {
+        this.form.get('dispatchFuArrivedDate')?.disable();
+      } else {
+        this.form.get('dispatchFuArrivedDate')?.enable();
+      }
+      // console.log(date);
     } else {
       this.form.get('dispatchFuArrivedId')?.setValue('');
       this.form.get('dispatchFuArrivedDate')?.setValue(null);

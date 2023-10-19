@@ -17,6 +17,7 @@ export class LoadingServiceService {
   public company = this.companySubject.asObservable();
   private searchResults: any[] = [];
   private trademark: any;
+  displayName?: string;
   constructor(private dataService: DataServiceService) {}
 
   setLoginInfo(loginInfo: LoginInfo) {
@@ -32,7 +33,23 @@ export class LoadingServiceService {
   setProfileInfo(profileInfo: CoreProfile) {
     this.profileInfoSubject.next(profileInfo);
   }
+  async getData(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.loginInfo$.subscribe({
+        next: (data: any) => {
+          this.displayName = data?.displayName;
 
+          // console.log(displayName);
+          // Assign displayName and other properties as needed
+          resolve();
+        },
+        error: (error: any) => {
+          console.error('Error fetching data:', error);
+          reject(error);
+        },
+      });
+    });
+  }
   getProfileInfo(): CoreProfile | null {
     return this.profileInfoSubject.getValue();
   }
@@ -44,6 +61,10 @@ export class LoadingServiceService {
   getUser(): string {
     const user = this.getSelectedProfile();
     return user.userCode;
+  }
+  getDisplayName(): string {
+    const user = this.getSelectedProfile();
+    return user.displayName;
   }
   getCompany(): string | null {
     return this.companySubject.getValue();
