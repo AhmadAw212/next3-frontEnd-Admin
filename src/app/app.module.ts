@@ -358,6 +358,6 @@ import { GoogleMapComponent } from './components/call-center/google-map/google-m
   ],
   bootstrap: [AppComponent],
 
-  entryComponents: [EditUserDialogComponent],
+  // entryComponents: [EditUserDialogComponent],
 })
 export class AppModule {}
