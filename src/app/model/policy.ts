@@ -123,4 +123,5 @@ export interface Policy {
   carsTotallossDispatches?: any[];
   lossCarId?: string;
   lossTowId?: string;
+  distributionTowTotalCost?: number;
 }

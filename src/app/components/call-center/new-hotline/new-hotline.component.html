@@ -5,34 +5,35 @@
 
     <div class="row ml-auto">
       <div class="d-flex justify-content-center align-items-end">
-        <div class="col-md-1">
-          <label>
-            <img
-              src="./assets/icons/mail-hover.png"
-              alt=""
-              [matTooltip]="dico?.dico_email || 'dico_email'"
-              (click)="navigateToMail()"
-            />
-          </label>
-        </div>
-        <div class="col-md-3">
-          <label style="color: white; font-weight: bold">
-            <img
-              src="./assets/icons/matrix.png"
-              alt=""
-              class="icon"
-              [matTooltip]="dico?.dico_view_policy || 'dico_view_policy'"
-              (click)="viewPolicy()"
-            />
-            {{ dico?.dico_view_policy || "dico_view_policy" }}
-          </label>
-        </div>
-        <div class="col-md-1" *ngIf="policyData">
-          <app-view-complaints
-            [notificationId]="policyData!.notificationId"
-            [label]="dico?.dico_complaints || 'dico_complaints'"
-          ></app-view-complaints>
-          <!-- <label>
+        <ng-container *ngIf="policyData">
+          <div class="col-md-1">
+            <label class="notification-icon">
+              <img
+                src="./assets/icons/mail-hover.png"
+                alt=""
+                [matTooltip]="dico?.dico_email || 'dico_email'"
+                (click)="navigateToMail()"
+              />
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label class="notification-icon">
+              <img
+                src="./assets/icons/matrix.png"
+                alt=""
+                class="icon"
+                [matTooltip]="dico?.dico_view_policy || 'dico_view_policy'"
+                (click)="viewPolicy()"
+              />
+              {{ dico?.dico_view_policy || "dico_view_policy" }}
+            </label>
+          </div>
+          <div class="col-md-1">
+            <app-view-complaints
+              [notificationId]="policyData!.notificationId"
+              [label]="dico?.dico_complaints || 'dico_complaints'"
+            ></app-view-complaints>
+            <!-- <label>
             <img
               src="./assets/icons/warning.png"
               alt=""
@@ -40,71 +41,78 @@
               [matTooltip]="dico?.dico_complaints || 'dico_complaints'"
             />
           </label> -->
-        </div>
-        <div class="col-md-1" *ngIf="policyData">
-          <label>
-            <app-view-notes
-              [notificationId]="policyData!.notificationId"
-              [label]="dico?.dico_note || 'dico_note'"
-            ></app-view-notes>
-            <!-- <img
+          </div>
+          <div class="col-md-1">
+            <label>
+              <app-view-notes
+                [notificationId]="policyData!.notificationId"
+                [label]="dico?.dico_note || 'dico_note'"
+              ></app-view-notes>
+              <!-- <img
                 src="./assets/icons/clock-alarm.png"
                 alt=""
                 class="icon"
                 [matTooltip]="dico?.dico_note || 'dico_note'"
               /> -->
-          </label>
-        </div>
+            </label>
+          </div>
 
-        <div class="col-md-1">
-          <label>
-            <img
-              src="./assets/icons/search-hover.png"
-              alt=""
-              class="icon"
-              [matTooltip]="dico?.dico_tow_cases || 'dico_tow_cases'"
-              (click)="openTowingDispDialog()"
-            />
-          </label>
-        </div>
-        <div class="col-md-1">
-          <label>
-            <img
-              src="./assets/icons/search.png"
-              alt=""
-              class="icon"
-              [matTooltip]="dico?.dico_claims || 'dico_claims'"
-              (click)="openClaimsDialog()"
-            />
-          </label>
-        </div>
+          <div class="col-md-1">
+            <div class="d-flex justify-content-center align-items-center">
+              <label class="notification-icon">
+                <img
+                  src="./assets/icons/search-hover.png"
+                  alt=""
+                  class="icon"
+                  [matTooltip]="dico?.dico_tow_cases || 'dico_tow_cases'"
+                  (click)="openTowingDispDialog()"
+                />
+              </label>
+              <label class="notification-icon">
+                <img
+                  src="./assets/icons/search.png"
+                  alt=""
+                  class="icon"
+                  [matTooltip]="dico?.dico_claims || 'dico_claims'"
+                  (click)="openClaimsDialog()"
+                />
+              </label>
+            </div>
+          </div>
+          <!-- <div class="col-md-1"></div> -->
 
-        <div class="col-md-5">
-          <label>
-            <img src="./assets/icons/quick-links.png" alt="" class="icon" />
-            {{ dico?.dico_insurance || "dico_insurance" }}
-            :
-          </label>
-          <span class="ms-2" style="color: white; font-weight: bold">{{
-            policyData?.insuranceDesc
-          }}</span>
-        </div>
+          <div class="col-md-5">
+            <label>
+              <app-new-notification-related
+                [notificationId]="policyData.notificationId"
+                [label]="
+                  dico?.dico_related_notification || 'dico_related_notification'
+                "
+              ></app-new-notification-related>
+            </label>
+            <span class="ms-2" style="color: white; font-weight: bold">{{
+              policyData.insuranceDesc
+            }}</span>
+          </div>
 
-        <div class="col-md-4">
-          <label
-            >{{ dico?.dico_notification_number || "dico_notification_number" }}
-            :
-          </label>
-          <span class="ms-2" style="color: white; font-weight: bold">{{
-            policyData?.notificationVisa
-          }}</span>
-        </div>
+          <div class="col-md-4">
+            <label
+              >{{
+                dico?.dico_notification_number || "dico_notification_number"
+              }}
+              :
+            </label>
+            <span class="ms-2" style="color: white; font-weight: bold">{{
+              policyData.notificationVisa
+            }}</span>
+          </div>
 
-        <div class="col-md-1">
-          <button class="btn-class ms-2" type="submit">
-            {{ dico?.dico_save || "dico_save" }}
-          </button>
-        </div>
+          <div class="col-md-1">
+            <button class="btn-class ms-2" type="submit">
+              {{ dico?.dico_save || "dico_save" }}
+            </button>
+          </div>
+        </ng-container>
       </div>
     </div>
   </nav>
@@ -1950,7 +1958,7 @@
                           <input
                             type="text"
                             class="form-control"
-                            formControlName="distributionTowArrivedUser"
+                            formControlName="distributionTowDistUser"
                           />
                         </div>
                       </div>
@@ -2190,7 +2198,7 @@
                             dico?.dico_total_cost || "dico_total_cost"
                           }}</label>
                           <input
-                            type="text"
+                            type="number"
                             class="form-control"
                             formControlName="distributionTowTotalCost"
                           />
@@ -2207,6 +2215,20 @@
                             class="form-control"
                             formControlName="totaleDurationBetweenTown"
                           />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-3 w-50">
+                  <div
+                    class="card h-100"
+                    style="background-color: #eff2f5; border-color: #bfc6c9"
+                  >
+                    <div class="card-body">
+                      <div class="row p-3">
+                        <div class="col-md-8">
+                          <app-google-map></app-google-map>
                         </div>
                       </div>
                     </div>

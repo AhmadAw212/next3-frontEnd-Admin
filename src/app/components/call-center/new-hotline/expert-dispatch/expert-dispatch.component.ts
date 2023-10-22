@@ -34,6 +34,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   expertReasonCode?: string;
   lossTowId?: string;
   statusCode?: number;
+  vNotification?: any[];
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -56,7 +57,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     this.telExtension = data.telExtension;
     this.showTelIcon = data.showTelIcon;
     this.lossTowId = data.lossTowId;
-    console.log(data);
+    // console.log(data);
   }
   ngOnDestroy(): void {}
   ngOnInit(): void {
@@ -82,7 +83,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     );
   }
   getVNotificationfindByTeritory() {
-    console.log(this.disableChooseButton());
+    // console.log(this.disableChooseButton());
     this.dataService
       .getVNotificationfindByTeritory(
         this.territoryId!,
@@ -91,6 +92,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
+          this.vNotification = res.data;
           console.log(res);
         },
         error: (err) => {
@@ -117,7 +119,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.oClaim = res.data;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);
@@ -127,7 +129,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   getRelatedTypeLovFindAll() {
     this.dataService.getRelatedTypeLovFindAll().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -139,7 +141,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     this.dataService.getExpertReasonLovFindAll().subscribe({
       next: (res) => {
         this.expertReasons = res.data;
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -162,7 +164,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
           // this.statusCode = res.statusCode;
           this.getFcExpertDispatch();
 
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);

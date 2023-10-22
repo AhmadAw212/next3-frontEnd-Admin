@@ -36,6 +36,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   LossCarDataByNotificationSub?: Subscription;
   notificationId?: string;
   @Input() label?: string;
+  selectedIndex?: number = 0;
   constructor(
     private dataService: DataServiceService,
     private dialogRef: MatDialogRef<ViewNoteDialogComponent>,
@@ -90,7 +91,9 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   }
   clearForm() {
     this.noteForm.enable();
+    this.selectedIndex = -1;
     this.noteForm.patchValue({
+      id: null,
       subject: '',
       text: '',
       msgTypeRelated: null,
@@ -156,8 +159,9 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }
-  selectedNote(note: any) {
+  selectedNote(note: any, selectedIndex: number) {
     this.selectNote = note; // Store the selected row data
+    this.selectedIndex = selectedIndex;
     // console.log(note);
     const createdBy = note.sysCreatedBy;
     if (createdBy !== this.username) {
@@ -208,6 +212,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
       subject: this.selectNote.subject,
       text: this.selectNote.text,
       msgTypeRelated: this.selectNote.msgTypeRelated,
+      id: this.selectNote.id,
     });
   }
   extractValueFromMsgTypeRelated(msgTypeRelated: string) {
@@ -231,6 +236,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.notes = data.data;
+          this.selectedNote(this.notes[0], 0);
           // console.log(this.notes);
         },
         error: (err) => {
@@ -275,21 +281,25 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
 
   // Function to update an existing notification message
   updateNote() {
-    this.noteForm.patchValue({
-      id: this.selectNote?.id,
-    });
+    // Get the 'id' from the form and set it back with a default value if it's empty
+    const id = this.noteForm.get('id')?.value;
+    this.noteForm.get('id')?.setValue(id || null);
 
+    // Prepare the data for the API call
     const formData: any = { ...this.noteForm.value };
     const preparedFormData = this.prepareFormData(formData);
 
+    // Make the API call
     this.dataService.addnote(preparedFormData).subscribe({
       next: (data) => {
         this.alertifyService.success('Note Added successfully');
         this.getNotificationMessageByDep();
-        // console.log(data);
+        // Add more specific actions if needed
       },
       error: (err) => {
-        this.alertifyService.error(err.error.message);
+        // Handle errors more gracefully, e.g., display a user-friendly message
+        this.alertifyService.error(err.error.message || 'An error occurred');
+        // You can log the error for debugging, but consider more user-friendly messaging
         console.log(err);
       },
     });

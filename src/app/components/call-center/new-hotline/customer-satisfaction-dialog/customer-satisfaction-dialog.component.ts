@@ -49,6 +49,8 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
   type?: string;
   distributionTowArrivedDate?: Date;
   distributionTowDistDate?: any;
+  domainYnLov: boolean = false;
+  reasonDelay: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -252,28 +254,36 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
     });
   }
   getDomainYN() {
-    this.domainYNSubs = this.dataService.getDomainYN().subscribe({
-      next: (data) => {
-        this.domainYn = data.data.filter((item: any) => item.code !== 'ALL');
-        // console.log(this.domainYn);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-  getExpertDelayReasonLovFindAll() {
-    this.expertDelaySubs = this.dataService
-      .getExpertDelayReasonLovFindAll()
-      .subscribe({
-        next: (res) => {
-          this.expertDelayReason = res.data;
-          // console.log(res);
+    if (!this.domainYnLov) {
+      this.domainYNSubs = this.dataService.getDomainYN().subscribe({
+        next: (data) => {
+          this.domainYn = data.data.filter((item: any) => item.code !== 'ALL');
+          this.domainYnLov = true;
+          // console.log(this.domainYn);
         },
         error: (error) => {
+          this.domainYnLov = false;
           console.log(error);
         },
       });
+    }
+  }
+  getExpertDelayReasonLovFindAll() {
+    if (!this.reasonDelay) {
+      this.expertDelaySubs = this.dataService
+        .getExpertDelayReasonLovFindAll()
+        .subscribe({
+          next: (res) => {
+            this.expertDelayReason = res.data;
+            this.reasonDelay = true;
+            // console.log(res);
+          },
+          error: (error) => {
+            this.reasonDelay = false;
+            console.log(error);
+          },
+        });
+    }
   }
   dialogCustomerSatisfactionListener() {
     if (this.form.value) {

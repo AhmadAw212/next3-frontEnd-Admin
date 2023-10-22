@@ -6,10 +6,10 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Validators } from 'ngx-editor';
+
 import { Policy } from 'src/app/model/policy';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -99,6 +99,12 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   attidudeLov?: any[];
   form2!: FormGroup;
   lossCarId?: string;
+  milageAcc: number | null = null;
+  milageMech: number | null = null;
+  milagePrivate: number | null = null;
+  milagePublic: number | null = null;
+  clientCost: number | null = null;
+  isPublic: boolean = false;
 
   constructor(
     private dataService: DataServiceService,
@@ -413,6 +419,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       towToTownId: [''],
       distributionTowDistDateBoolean: [''],
       distributionTowDistDate: [''],
+      distributionTowDistUser: [''],
       distributionTowArrivedUser: [''],
       delayedTowingTime: [''],
       distributionTowArrivedDateBoolean: [''],
@@ -426,7 +433,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionTowTotalKm: [''],
       distributionTowExtraKm: [''],
       distributionTowClientCost: [''],
-      distributionTowTotalCost: [''],
+      distributionTowTotalCost: ['', Validators.pattern('^[0-9]*$')],
       totaleDurationBetweenTown: [''],
       lossTowBlockedId: [''],
       lossTowWheelId: [''],
@@ -727,6 +734,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       towToTownDescription,
       distributionTowDistDateBoolean,
       distributionTowDistDate,
+      distributionTowDistUser,
       distributionTowArrivedUser,
       delayedTowingTime,
       distributionTowArrivedDate,
@@ -787,6 +795,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     distributionTowClientCost.disable();
     totaleDurationBetweenTown.disable();
     towingComDesc.disable();
+    distributionTowDistUser.disable();
     // Constants for policy data
     const {
       notificationStatusCode,
@@ -901,6 +910,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       );
       this.lossCarId = this.policyData?.lossCarId;
       const lossTowExpertId = this.policyData?.lossTowExpertId;
+      // const distributionTowTotalCost = parseInt(this.policyData.distributionTowTotalCost)
       // this.notificationId
       // const lossTowExpertNamePreferenceById = this.form
       //   .get('lossTowExpertNamePreferenceById')
@@ -1578,7 +1588,29 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   }
   // console.log(this.selectedTowingCmp);
   loadMapDataFields() {}
-  calculateTowingKmAndCost() {}
+  calculateTowingKmAndCost() {
+    const towingCompany = this.policyData?.towingCompanyList;
+    this.milageAcc = null;
+    this.milageMech = null;
+    this.milagePrivate = null;
+    this.milagePublic = null;
+    this.clientCost = null;
+    this.isPublic = false;
+    const carPlate1 = this.policyData?.carPlate;
+    if (carPlate1 && carPlate1.includes('M')) {
+      this.isPublic = true;
+    }
+    if (towingCompany && towingCompany.length > 0) {
+      const towingConditionList = towingCompany[0].towingConditionList;
+      if (
+        towingCompany &&
+        towingCompany.length > 0 &&
+        towingCompany[0].towingConditionList.length > 0 &&
+        towingCompany[0].towingConditionList[0] != null
+      ) {
+      }
+    }
+  }
   openDispatchExpertDialog() {
     this.showrelated = 'Y';
 
@@ -1690,6 +1722,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         width: '2000px',
         height: '700px',
       });
+
       dialogRef.afterClosed().subscribe((data) => {
         if (data) {
           this.form
@@ -1704,6 +1737,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
           this.form
             .get('distributionLossArrivedUser')
             ?.patchValue(data.distributionLossArrivedUser);
+          this.getPolicyCarByNotificationId(this.notificationId);
           // const data2 = this.form.get('carsDispatchFollowUp')?.value;
           // console.log(data2[0]);
           // this.getPolicyCarByNotificationId(this.policyData?.notificationId!);

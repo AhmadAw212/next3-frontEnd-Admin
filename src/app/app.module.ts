@@ -171,6 +171,8 @@ import { UsersActivityComponent } from './components/call-center/users-activity/
 import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ViewComplaintsComponent } from './components/view-complaints/view-complaints.component';
+import { NewNotificationRelatedComponent } from './components/new-notification-related/new-notification-related.component';
+import { GoogleMapComponent } from './components/call-center/google-map/google-map.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -299,6 +301,8 @@ import { ViewComplaintsComponent } from './components/view-complaints/view-compl
     ClaimsDialogComponent,
     TowCasesDialogComponent,
     ViewComplaintsComponent,
+    NewNotificationRelatedComponent,
+    GoogleMapComponent,
   ],
   imports: [
     BrowserModule,

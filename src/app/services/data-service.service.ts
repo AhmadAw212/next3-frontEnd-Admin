@@ -1813,4 +1813,25 @@ export class DataServiceService {
       carsNotificationComplaints
     );
   }
+  getCarsNotificationRelatedByNotId(notId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/common-service/related/${notId}`
+    );
+  }
+  deleteRelatedNotification(
+    notificationRelatedId: string
+  ): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(
+      `${this.userUrl}/common-service/deleteRelatedNotification/${notificationRelatedId}`
+    );
+  }
+
+  addNewRelatedNotifications(
+    notificationRelatedRequestList: any[]
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/common-service/addNewRelatedNotifications`,
+      notificationRelatedRequestList
+    );
+  }
 }

@@ -1,4 +1,4 @@
-<h2 style="margin: 10px; font-size: large">
+<h2 class="grid-container panel-class-style">
   {{ dico?.dico_note || "dico_note" }}
 </h2>
 
@@ -20,8 +20,9 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let notes of notes"
-          (click)="highlightRow($event); selectedNote(notes)"
+          *ngFor="let notes of notes; let i = index"
+          (click)="selectedNote(notes, i)"
+          [ngClass]="{ 'selected-row': i === selectedIndex }"
         >
           <td>{{ notes?.text }}</td>
           <td>{{ notes?.subject }}</td>

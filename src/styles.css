@@ -136,6 +136,44 @@ th {
 table.table thead th {
   background-color: #025696;
 }
+.notification-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.error-class{
+  /* margin-left: 150px; */
+  color: red;
+  font-size: 12px;
+}
+.invalid-feedback {
+  position: absolute;
+  top: 50%;
+  /* margin-left: 150px; */
+  color: red;
+  font-size: 12px;
+}
+.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.notification-icon .icon {
+  width: 15px; /* Adjust the width to your preference */
+  height: 15px; /* Adjust the height to your preference */
+  margin-right: 8px;
+}
+
+.count-badge {
+ /* Background color for the badge */
+  color: white; /* Text color for the badge */
+  border-radius: 50%; /* Make the badge a circle */
+  padding: 2px 2px; /* Adjust padding for the badge */
+  font-size: 12px; /* Adjust font size */
+}
 .required {
   color: red;
   margin-left: 3px;

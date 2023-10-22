@@ -1,4 +1,4 @@
-<div (click)="viewCompDialog()">
+<div (click)="viewCompDialog()" class="notification-icon">
   <!-- <i class="fa fa-bell"></i> -->
   <img
     src="./assets/icons/warning.png"
@@ -7,11 +7,11 @@
     [matTooltip]="label!"
   />
   <!-- Alarm icon -->
-  <span style="color: white">{{ count }}</span>
+  <span class="count-badge">{{ count }}</span>
   <!-- Number beside the icon -->
 </div>
 <ng-template #complaintDialog>
-  <h2 style="margin: 10px; font-size: large">
+  <h2 class="grid-container panel-class-style">
     {{ dico?.dico_complaints || "dico_complaints" }}
   </h2>
 
@@ -115,7 +115,6 @@
               class="btn btn-primary"
               style="margin-left: 8px"
               [disabled]="!complaintForm.valid"
-              [ngClass]="{ 'disabled-button': !complaintForm.valid }"
             >
               {{ dico?.dico_save || "dico_save" }}
             </button>

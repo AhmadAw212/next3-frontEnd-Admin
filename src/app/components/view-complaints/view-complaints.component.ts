@@ -7,13 +7,13 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialog,
 } from '@angular/material/dialog';
-import { Editor, Validators } from 'ngx-editor';
+import { Editor } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -52,6 +52,9 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
     // @Inject(MAT_DIALOG_DATA) private data: any,
     private dialog: MatDialog
   ) {
+    this.department = this.profileService
+      .getSelectedProfile()
+      .code.toUpperCase();
     // this.buildForm();
   }
   ngOnDestroy(): void {
@@ -146,9 +149,6 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
     }
 
     const carsCompId = this.complaintForm.get('carsCompId')?.value;
-    const department = this.profileService
-      .getSelectedProfile()
-      .code.toUpperCase();
 
     this.complaintForm
       .get('carsCompNotId.notificationId')
@@ -161,7 +161,7 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
       this.complaintForm.get('carsCompId')?.setValue(carsCompId);
     }
 
-    this.complaintForm.get('carsCompFromDep')?.setValue(department);
+    this.complaintForm.get('carsCompFromDep')?.setValue(this.department);
 
     this.dataService
       .addNotificationComplaint(this.complaintForm.value)
