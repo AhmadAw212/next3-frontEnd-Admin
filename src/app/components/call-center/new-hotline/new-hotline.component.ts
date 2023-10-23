@@ -600,11 +600,13 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       'distributionLossDistUser',
       'distributionLossArrivedDate',
       'distributionLossArrivedUser',
+      'notificationReportedDate',
       'distributionExpTypeId',
       'expertMobilePhone',
       'distributionExpExpertDesc',
       'distributionExpTypeDate',
       'distributionExpTypeUser',
+      'lossTowLossDate',
       'delayedDispatchTime',
       'distributionTema',
       'supplierName',
@@ -862,7 +864,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     const distributionLossArrivedBoolean = this.form.get(
       'distributionLossArrivedBoolean'
     )?.value;
+    const user = this.profileService.getUser();
     this.form.get('distributionLossArrivedDate')?.setValue(new Date());
+    this.form.get('distributionLossArrivedUser')?.setValue(user);
 
     if (distributionLossArrivedBoolean) {
       this.customerSatisfactionDialog('ED');
