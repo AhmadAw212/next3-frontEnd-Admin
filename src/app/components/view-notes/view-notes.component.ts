@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewNoteDialogComponent } from './view-note-dialog/view-note-dialog.component';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -10,7 +16,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
   templateUrl: './view-notes.component.html',
   styleUrls: ['./view-notes.component.css'],
 })
-export class ViewNotesComponent implements OnInit {
+export class ViewNotesComponent implements OnInit, OnChanges {
   count?: number;
   @Input() notificationId!: string;
   @Input() label?: string;
@@ -19,6 +25,10 @@ export class ViewNotesComponent implements OnInit {
     private dataService: DataServiceService,
     private profileService: LoadingServiceService
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    // throw new Error('Method not implemented.');
+    this.getNotificationMessageByDepCount();
+  }
   ngOnInit(): void {
     this.getNotificationMessageByDepCount();
   }

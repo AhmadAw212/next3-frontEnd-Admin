@@ -66,8 +66,8 @@
     "zone.js": "~0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.1.2",
-    "@angular/cli": "~15.1.2",
+    "@angular-devkit/build-angular": "^16.2.7",
+    "@angular/cli": "~16.2.7",
     "@angular/compiler-cli": "^16.2.10",
     "@types/canvas-gauges": "^2.1.4",
     "@types/file-saver": "^2.0.5",
