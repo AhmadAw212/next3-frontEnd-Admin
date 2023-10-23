@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -56,6 +57,10 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
       .getSelectedProfile()
       .code.toUpperCase();
     // this.buildForm();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // throw new Error('Method not implemented.');
+    this.getNotificationComplaintsByDepCount();
   }
   ngOnDestroy(): void {
     if (this.LossCarDataByNotificationSub) {

@@ -163,7 +163,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     this.selectNote = note; // Store the selected row data
     this.selectedIndex = selectedIndex;
     // console.log(note);
-    const createdBy = note.sysCreatedBy;
+    const createdBy = note?.sysCreatedBy;
     if (createdBy !== this.username) {
       this.noteForm.disable();
     } else {
@@ -197,22 +197,22 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     // this.isMoreThan24Hours(this.selectNote.sysCreatedDate);
     this.noteForm.patchValue({
       remarkShowToAssessment: this.transformValueFromResponse(
-        this.selectNote.remarkShowToAssessment
+        this.selectNote?.remarkShowToAssessment
       ),
       remarkShowToCallCenter: this.transformValueFromResponse(
-        this.selectNote.remarkShowToCallCenter
+        this.selectNote?.remarkShowToCallCenter
       ),
       remarkShowToClaimResolution: this.transformValueFromResponse(
-        this.selectNote.remarkShowToClaimResolution
+        this.selectNote?.remarkShowToClaimResolution
       ),
       remarkShowToDataManagement: this.transformValueFromResponse(
-        this.selectNote.remarkShowToDataManagement
+        this.selectNote?.remarkShowToDataManagement
       ),
 
-      subject: this.selectNote.subject,
-      text: this.selectNote.text,
-      msgTypeRelated: this.selectNote.msgTypeRelated,
-      id: this.selectNote.id,
+      subject: this.selectNote?.subject,
+      text: this.selectNote?.text,
+      msgTypeRelated: this.selectNote?.msgTypeRelated,
+      id: this.selectNote?.id,
     });
   }
   extractValueFromMsgTypeRelated(msgTypeRelated: string) {

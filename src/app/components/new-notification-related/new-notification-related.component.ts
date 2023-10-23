@@ -32,6 +32,7 @@ export class NewNotificationRelatedComponent implements OnInit {
   selectedRelated?: any;
   isRelatedType: boolean = false;
   notificationRelated: boolean = false;
+  @Input() notificationVisa?: number;
   constructor(
     private dataService: DataServiceService,
     private dicoService: DicoServiceService,
@@ -72,6 +73,15 @@ export class NewNotificationRelatedComponent implements OnInit {
   }
   addNewRelatedNotifications() {
     if (!this.notificationId) {
+      return;
+    }
+    const notificationRelVisa = this.relatedForm.get(
+      'notificationRelVisa'
+    )?.value;
+    if (this.notificationVisa == notificationRelVisa) {
+      this.alertifyService.error(
+        'choose another visa number different than the current one'
+      );
       return;
     }
     if (this.relatedForm.valid) {
