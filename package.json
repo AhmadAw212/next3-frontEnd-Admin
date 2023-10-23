@@ -56,7 +56,7 @@
     "ng-canvas-gauges": "^6.0.4",
     "ng2-charts": "^4.1.1",
     "ng2-google-charts": "^7.0.0",
-    "ngx-bootstrap": "^10.2.0",
+    "ngx-bootstrap": "^11.0.2",
     "ngx-editor": "^15.3.0",
     "ngx-gauge": "^7.1.0",
     "ngx-pagination": "^6.0.3",
