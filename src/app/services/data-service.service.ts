@@ -1834,4 +1834,44 @@ export class DataServiceService {
       notificationRelatedRequestList
     );
   }
+  mergeNotification(mergeNotificationRequest: any): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/mergeNotification`,
+      mergeNotificationRequest
+    );
+  }
+  getFcGetCo(
+    inotificationid: string,
+    iVehCount: number,
+    iCo: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getFcGetCo?inotificationid=${inotificationid}&iVehCount=${iVehCount}&iCo=${iCo}`
+    );
+  }
+  updateLossTowStaffCaseMngr(
+    notificationId: string,
+    user: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/update-caseManager/${notificationId}?user=${user}`
+    );
+  }
+  getDoubleCheckDataByNotification(
+    visaNumber: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/doubleCheck-data/${visaNumber}`
+    );
+  }
+
+  getFcDoubleToCheck(
+    inotificationid: string,
+    ipolcarid: string,
+    ilossdate: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getFcDoubleToCheck?inotificationid=${inotificationid}&ipolcarid=${ipolcarid}&ilossdate=${ilossdate}`
+    );
+  }
 }

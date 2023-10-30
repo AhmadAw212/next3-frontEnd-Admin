@@ -81,7 +81,8 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
     this.notificationId = data?.notificationId;
     this.distributionTowArrivedDate = data?.distributionTowArrivedDate;
     this.distributionTowDistDate = data?.distributionTowDistDate;
-    console.log(this.distributionTowDistDate);
+    this.distributionLossArrivedUser = data?.distributionLossArrivedUser;
+    // console.log(this.distributionTowDistDate);
     this.type = data.type;
     this.distributionLossArrivedDate = moment(
       data?.distributionLossArrivedDate,
@@ -91,12 +92,16 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
     // data?.distributionLossArrivedDate,
 
     // console.log(this.distributionLossArrivedDate);
-    this.formatDistributionLossDistDate = this.datePipe.transform(
-      data.distributionLossDistDate,
-      this.dateFormat('reportDateTimeFormat')
-    );
-    // console.log(data);
+
+    this.formatDistributionLossDistDate = this.formatDistributionLossDistDate
+      ? this.datePipe.transform(
+          data.distributionLossDistDate,
+          this.dateFormat('reportDateTimeFormat')
+        )
+      : '';
+    console.log(this.formatDistributionLossDistDate);
   }
+
   ngOnDestroy(): void {
     // if (this.attitudeSubs || this.domainYNSubs || this.expertDelaySubs) {
     //   this.attitudeSubs.unsubscribe();
@@ -168,6 +173,7 @@ export class CustomerSatisfactionDialogComponent implements OnInit, OnDestroy {
         .get('distributionLossDistDate')
         ?.setValue(this.parseDate(this.distributionTowDistDate));
     }
+
     if (this.distributionLossArrivedBoolean) {
       this.form.get('dispatchFuArrivedId')?.setValue('Y');
       if (!this.distributionLossArrivedDate) {

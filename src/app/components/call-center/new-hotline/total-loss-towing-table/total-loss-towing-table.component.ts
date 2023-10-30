@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -38,6 +38,8 @@ export class TotalLossTowingTableComponent implements OnInit {
   coreUserId?: string;
   userMap = new Map<string, string>();
   @Input() lossCarId?: string;
+  dialogRef?: MatDialogRef<TotalLossTowingTableComponent>;
+  carLocations: boolean = false;
   // @Input() loginInfo?: any;
   constructor(
     private dataService: DataServiceService,
@@ -55,7 +57,7 @@ export class TotalLossTowingTableComponent implements OnInit {
     // console.log(this.userMap.get(this.userInfo!.displayName));
   }
   openNewTotalLossTowing() {
-    this.dialog.open(this.newTotalLossTowing, {
+    this.dialogRef = this.dialog.open(this.newTotalLossTowing, {
       data: {},
       width: '700px',
       height: '600px',
@@ -177,8 +179,10 @@ export class TotalLossTowingTableComponent implements OnInit {
     this.dataService.getCarLocationLovFindAll().subscribe({
       next: (data) => {
         this.carLocationLov = data.data;
+        this.carLocations = true;
       },
       error: (err) => {
+        this.carLocations = false;
         console.log(err);
       },
     });
@@ -225,6 +229,8 @@ export class TotalLossTowingTableComponent implements OnInit {
       .saveOrUpdateTotalLossTowInfoList([this.lossTowForm.value])
       .subscribe({
         next: (data) => {
+          this.dialogRef?.close();
+          this.alertifyService.success(data.message);
           console.log(data);
         },
         error: (err) => {

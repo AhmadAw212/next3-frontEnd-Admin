@@ -1,5 +1,5 @@
 <app-login-nav></app-login-nav>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="saveAction()">
   <nav class="navbar navbar-class justify-content-center">
     <!-- <span class="navbar-brand" style="color: white"></span> -->
 
@@ -628,6 +628,7 @@
                   id="visaNature"
                   class="form-select"
                   formControlName="notificationMatDamageId"
+                  (change)="notificationMatDamageChange()"
                 >
                   <option
                     *ngFor="let nature of natureLov"
@@ -652,7 +653,7 @@
             </div>
             <ng-container
               *ngIf="
-                policyData?.notificationMatDamageId !== '6' &&
+                form.get('notificationMatDamageId')?.value !== '6' &&
                 hasPerm('ccSelfSurvey')
               "
             >
@@ -726,7 +727,7 @@
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab
       [label]="dico?.dico_expert_dispatch || 'dico_expert_dispatch'"
-      *ngIf="policyData?.notificationMatDamageId !== '6'"
+      *ngIf="form.get('notificationMatDamageId')?.value !== '6'"
     >
       <div class="container-fluid container-class">
         <div class="panel row">
@@ -760,7 +761,7 @@
                         dico?.dico_tema_exp_disp || 'dico_tema_exp_disp'
                       "
                       [ngClass]="{
-                        'disabled-image': DisableIcons()
+                        'disabled-image': disableIcons()
                       }"
                       (click)="appExpertDispatch()"
                     />
@@ -774,7 +775,7 @@
                         dico?.dico_dispatch_expert || 'dico_dispatch_expert'
                       "
                       [ngClass]="{
-                        'disabled-image': DisableIcons()
+                        'disabled-image': disableIcons()
                       }"
                       (click)="openDispatchExpertDialog()"
                     />
@@ -800,7 +801,7 @@
                         dico?.dico_bodily_injury || 'dico_bodily_injury'
                       "
                       [ngClass]="{
-                        'disabled-image': DisableIcons()
+                        'disabled-image': disableIcons()
                       }"
                       (click)="addBodilyInjuryDialog()"
                     />
@@ -814,7 +815,7 @@
                         dico?.dico_add_second_expert || 'dico_add_second_expert'
                       "
                       [ngClass]="{
-                        'disabled-image': DisableIcons()
+                        'disabled-image': disableIcons()
                       }"
                       (click)="secondExpertDialog()"
                     />
@@ -874,7 +875,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="distributionExpCanceledUser"
+                      formControlName="distributionExpCanceledUserName"
                     />
                   </div>
                   <div class="col-md-4 p-3 mt-3">
@@ -1034,10 +1035,10 @@
                   <div class="col-md-4">
                     <input
                       type="text"
-                      name="distributionLossDistUser"
-                      id="distributionLossDistUser"
+                      name="distributionLossDistUserName"
+                      id="distributionLossDistUserName"
                       class="form-control"
-                      formControlName="distributionLossDistUser"
+                      formControlName="distributionLossDistUserName"
                     />
                   </div>
                 </div>
@@ -1074,10 +1075,10 @@
                   <div class="col-md-4">
                     <input
                       type="text"
-                      name="distributionLossArrivedUser"
-                      id="distributionLossArrivedUser"
+                      name="distributionLossArrivedUserName"
+                      id="distributionLossArrivedUserName"
                       class="form-control"
-                      formControlName="distributionLossArrivedUser"
+                      formControlName="distributionLossArrivedUserName"
                     />
                   </div>
                   <div class="row mt-5">
@@ -1150,10 +1151,10 @@
                     <div class="col-md-5">
                       <input
                         type="text"
-                        name="distributionExpTypeUser"
-                        id="distributionExpTypeUser"
+                        name="distributionExpTypeUserName"
+                        id="distributionExpTypeUserName"
                         class="form-control"
-                        formControlName="distributionExpTypeUser"
+                        formControlName="distributionExpTypeUserName"
                       />
                     </div>
                   </div>
@@ -1552,7 +1553,7 @@
                   </div>
                 </ng-template>
 
-                <ng-template #towConditions>
+                <!-- <ng-template #towConditions>
                   <div class="grid-container panel-class-style">
                     <h2 class="h5">
                       {{ dico?.dico_conditions || "dico_conditions" }}
@@ -1709,7 +1710,7 @@
                       </div>
                     </div>
                   </div>
-                </ng-template>
+                </ng-template> -->
 
                 <div class="col-md-2" *ngIf="hasPerm('ccAdmin')">
                   <a
@@ -1959,7 +1960,7 @@
                           <input
                             type="text"
                             class="form-control"
-                            formControlName="distributionTowDistUser"
+                            formControlName="distributionTowDistUserName"
                           />
                         </div>
                       </div>
@@ -2005,7 +2006,7 @@
                           <input
                             type="text"
                             class="form-control"
-                            formControlName="distributionTowArrivedUser"
+                            formControlName="distributionTowArrivedUserName"
                           />
                         </div>
                       </div>

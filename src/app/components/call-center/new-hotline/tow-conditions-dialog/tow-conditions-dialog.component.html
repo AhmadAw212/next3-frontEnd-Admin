@@ -1,0 +1,142 @@
+<div class="grid-container panel-class-style">
+  <h2 class="h5">
+    {{ dico?.dico_conditions || "dico_conditions" }}
+  </h2>
+</div>
+<div class="grid-container m-3">
+  <div class="row mb-2">
+    <div class="col-md-2">
+      <label class="label-form">{{ dico?.dico_lifter || "dico_lifter" }}</label>
+    </div>
+    <div class="col-md-2">
+      <label class="label-form">{{
+        dico?.dico_blocked || "dico_blocked"
+      }}</label>
+    </div>
+    <div class="col-md-2">
+      <label class="label-form">{{
+        dico?.dico_off_road || "dico_off_road"
+      }}</label>
+    </div>
+    <div class="col-md-2">
+      <label class="label-form">{{
+        dico?.dico_pick_up || "dico_pick_up"
+      }}</label>
+    </div>
+    <div class="col-md-2">
+      <label class="label-form">{{ dico?.dico_wheel || "dico_wheel" }}</label>
+    </div>
+    <div class="col-md-2">
+      <label class="label-form">{{
+        dico?.dico_carrying_goods || "dico_carrying_goods"
+      }}</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowLifterId"
+          class="custom-control-input"
+          name="lossTowLifterId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowLifterId"
+        />
+        <label class="ms-2" for="lossTowLifterId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowBlockedId"
+          class="custom-control-input"
+          name="lossTowBlockedId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowBlockedId"
+        />
+        <label class="ms-2" for="lossTowBlockedId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowOffRoadId"
+          class="custom-control-input"
+          name="lossTowOffRoadId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowOffRoadId"
+        />
+        <label class="ms-2" for="lossTowOffRoadId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowPickUpId"
+          class="custom-control-input"
+          name="lossTowPickUpId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowPickUpId"
+        />
+        <label class="ms-2" for="lossTowPickUpId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowWheelId"
+          class="custom-control-input"
+          name="lossTowWheelId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowWheelId"
+        />
+        <label class="ms-2" for="lossTowWheelId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-check" *ngFor="let domain of domainYn">
+        <input
+          type="radio"
+          id="lossTowCarryingGoodId"
+          class="custom-control-input"
+          name="lossTowCarryingGoodId"
+          [value]="domain.code"
+          [(ngModel)]="lossTowCarryingGoodId"
+        />
+        <label class="ms-2" for="lossTowCarryingGoodId">{{
+          domain.description
+        }}</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row p-3">
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="button-class me-2" type="button" (click)="save()">
+          OK
+        </button>
+        <button class="button-class" type="button" (click)="cancel()">
+          {{ dico?.dico_cancel || "dico_cancel" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

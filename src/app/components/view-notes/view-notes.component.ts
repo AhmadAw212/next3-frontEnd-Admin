@@ -27,7 +27,7 @@ export class ViewNotesComponent implements OnInit, OnChanges {
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     // throw new Error('Method not implemented.');
-    this.getNotificationMessageByDepCount();
+    // this.getNotificationMessageByDepCount();
   }
   ngOnInit(): void {
     this.getNotificationMessageByDepCount();

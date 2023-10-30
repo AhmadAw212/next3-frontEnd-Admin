@@ -3,6 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { lastValueFrom } from 'rxjs';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,7 +24,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   insuranceId?: string;
   notificationId?: string;
   notificationMatDamageId?: string;
-  notificationReportedDate?: string;
+  notificationReportedDate?: any;
   oClaim?: any;
   insuranceDesc?: string;
   telExtension?: string;
@@ -35,6 +36,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   lossTowId?: string;
   statusCode?: number;
   vNotification?: any[];
+  territoryListId?: string;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -49,6 +51,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     private userRolesService: UsersRolesService
   ) {
     this.territoryId = data.distributionTownId;
+    this.territoryListId = data.townTerritoryList[0].teritory.code;
     this.insuranceId = data.insuranceId;
     this.insuranceDesc = data.insuranceDesc;
     this.notificationId = data.notificationId;
@@ -57,7 +60,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     this.telExtension = data.telExtension;
     this.showTelIcon = data.showTelIcon;
     this.lossTowId = data.lossTowId;
-    // console.log(data);
+    console.log(data);
   }
   ngOnDestroy(): void {}
   ngOnInit(): void {
@@ -86,7 +89,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     // console.log(this.disableChooseButton());
     this.dataService
       .getVNotificationfindByTeritory(
-        this.territoryId!,
+        this.territoryListId!,
         this.insuranceId!,
         this.notificationId!
       )
@@ -100,31 +103,34 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
         },
       });
   }
-  getFcExpertDispatch() {
-    const reportedDate = this.datePipe.transform(
-      this.notificationReportedDate,
-      'dd-MMM-yyyy'
-    );
-    this.dataService
-      .getFcExpertDispatch(
-        this.insuranceId!,
-        '',
-        this.notificationId!,
-        this.territoryId!,
-        '',
-        'N',
-        this.notificationMatDamageId!,
-        reportedDate!
-      )
-      .subscribe({
-        next: (res) => {
-          this.oClaim = res.data;
-          // console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+
+  async getFcExpertDispatch() {
+    try {
+      let parseDate = this.notificationReportedDate
+        ? moment(this.notificationReportedDate, 'DD/MM/YYYY hh:mm A').format(
+            'DD-MM-YYYY'
+          )
+        : '';
+
+      const response = await lastValueFrom(
+        this.dataService.getFcExpertDispatch(
+          this.insuranceId!,
+          '',
+          this.notificationId!,
+          this.territoryId!,
+          '',
+          'N',
+          this.notificationMatDamageId!,
+          parseDate
+        )
+      );
+
+      this.oClaim = response.data;
+      // console.log(response);
+    } catch (error) {
+      console.error('An error occurred:', error);
+      // Handle the error as needed, e.g., show a user-friendly message
+    }
   }
   getRelatedTypeLovFindAll() {
     this.dataService.getRelatedTypeLovFindAll().subscribe({

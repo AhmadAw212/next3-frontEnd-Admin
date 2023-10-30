@@ -51,7 +51,7 @@ export class TowCasesDialogComponent {
       this.dataService.getNotificationFindById(notId).subscribe({
         next: (res) => {
           this.dialogRef.close(res.data);
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           console.log(err);

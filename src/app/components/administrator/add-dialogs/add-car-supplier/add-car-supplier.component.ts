@@ -62,7 +62,7 @@ export class AddCarSupplierComponent implements OnInit {
       fathersName: [''],
       lastname: ['', Validators.required],
       home_building: [''],
-      street: [''],
+      home_street: [''],
       home_phone: [''],
       bus_street: [''],
       bus_phone: [''],

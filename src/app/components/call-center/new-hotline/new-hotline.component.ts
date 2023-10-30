@@ -29,13 +29,23 @@ import { CustomerSatisfactionDialogComponent } from './customer-satisfaction-dia
 import { RotationDialogComponent } from './rotation-dialog/rotation-dialog.component';
 import { ExpertDispatchComponent } from './expert-dispatch/expert-dispatch.component';
 import * as moment from 'moment';
-import { Subscription, lastValueFrom } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  catchError,
+  forkJoin,
+  lastValueFrom,
+  map,
+  of,
+} from 'rxjs';
 import { TowingConditionComponent } from '../towing-condition/towing-condition.component';
 import { TowingConditionsHotlineComponent } from './towing-conditions-hotline/towing-conditions-hotline.component';
 import { RepairShopDialogComponent } from './repair-shop-dialog/repair-shop-dialog.component';
 import { ViewPolicyDialogComponent } from '../../view-policy/view-policy-dialog/view-policy-dialog.component';
 import { ClaimsDialogComponent } from './claims-dialog/claims-dialog.component';
 import { TowCasesDialogComponent } from './tow-cases-dialog/tow-cases-dialog.component';
+import { NotificationRequest } from 'src/app/model/request/notification-request';
+import { TowConditionsDialogComponent } from './tow-conditions-dialog/tow-conditions-dialog.component';
 
 @Component({
   selector: 'app-new-hotline',
@@ -57,6 +67,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   ccRepFlag?: string;
   ccTowFlag?: string;
   [key: string]: any;
+  changeCo: string = 'N';
+  presultdouble1?: string;
   formData?: any;
   changeAvailableData?: any;
   telExtension?: string;
@@ -89,6 +101,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   @ViewChild('towingConditions') towingConditions!: TemplateRef<any>;
   coverByCar?: type;
   selectedTowingCmp?: any;
+  userCode?: string;
   coverSubscription?: Subscription;
   towingAlertRen?: string;
   towingCondAccAndMec?: any[];
@@ -132,12 +145,24 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   }
   openTowConditions() {
     if (this.policyData) {
-      this.dialogRef = this.dialog.open(this.towConditions, {
+      this.dialogRef = this.dialog.open(TowConditionsDialogComponent, {
         width: '800px',
         height: '200px',
         data: {
-          /* You can pass data to the dialog here */
+          domainYn: this.domainYn,
+          lossTowBlockedId: this.form.get('lossTowBlockedId')?.value,
+          lossTowLifterId: this.form.get('lossTowLifterId')?.value,
+          lossTowOffRoadId: this.form.get('lossTowOffRoadId')?.value,
+          lossTowPickUpId: this.form.get('lossTowPickUpId')?.value,
+          lossTowWheelId: this.form.get('lossTowWheelId')?.value,
+          lossTowCarryingGoodId: this.form.get('lossTowCarryingGoodId')?.value,
         },
+      });
+      this.dialogRef.afterClosed().subscribe((res) => {
+        if (res) {
+          // console.log(res);
+          this.form.patchValue(res);
+        }
       });
     }
   }
@@ -150,6 +175,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       });
       dialogRef.afterClosed().subscribe((data) => {
         if (data) {
+          this.notificationId = data.notificationId;
           this.policyData = data;
           this.form.patchValue(data);
           this.patchFormWithPolicyData();
@@ -166,6 +192,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       });
       dialogRef.afterClosed().subscribe((data) => {
         if (data) {
+          this.notificationId = data.notificationId;
           this.policyData = data;
           this.form.patchValue(data);
           this.patchFormWithPolicyData();
@@ -176,7 +203,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
 
   openRepairShopeDialog() {
     if (this.policyData) {
-      this.dialogRef = this.dialog.open(RepairShopDialogComponent, {
+      const dialogRef = this.dialog.open(RepairShopDialogComponent, {
         width: '1100px',
         height: '730px',
         data: {
@@ -185,7 +212,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
           notificationStatusCode: this.policyData?.notificationStatusCode,
         },
       });
-      this.dialogRef.afterClosed().subscribe((data) => {
+      dialogRef.afterClosed().subscribe((data) => {
         if (data) {
           this.form.get('lossTowRsId')?.setValue(data.supplierId);
           this.form.get('lossTowRsDesc')?.setValue(data.supplierName);
@@ -193,43 +220,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       });
     }
   }
-  // openCustomerSatisfaction() {
-  //   if (this.policyData) {
-  //     const dialogRef = this.dialog.open(this.customerSatisfaction, {
-  //       width: '2000px',
-  //       height: '700px',
-  //       data: {
-  //         /* You can pass data to the dialog here */
-  //       },
-  //     });
-  //     // dialogRef.afterOpened().subscribe(() => {
-  //     //   // this.initializeDistibutionLossArrived();
-  //     //   // this.onArrrivedFormChanges();
-  //     //   // this.onComplaintsChange();
-  //     //   // this.expertCheckBoxChangeListener();
-  //     //   // this.towTruckChangeListener();
-  //     //   // this.repairShopChangeListener();
-  //     //   // this.pudChangeListener();
-  //     //   // this.callcenterChangeListener();
-  //     //   // this.getExpertDelayReasonLovFindAll();
-  //     //   // this.getAttitudeLovFindAll();
-  //     //   // const date = this.form.get('distributionLossDistDate')?.value;
-  //     //   // this.formatDateTime(date);
-  //     //   // this.form.get('dispatchFuReasonId')?.setValue('');
-  //     //   // this.form.get('dispatchFuNote')?.setValue('');
-  //     //   // this.form.get('dispatchFuAttitude')?.setValue('');
-  //     //   // this.form.get('dispatchFuComplaintsId')?.setValue('');
-  //     //   // this.form.get('dispatchFuComplaintsNote')?.setValue('');
-  //     //   // const distributionTowArrivedDate = this.form.get(
-  //     //   //   'distributionTowArrivedDate'
-  //     //   // );
-  //     //   // if (!distributionTowArrivedDate?.value) {
-  //     //   //   distributionTowArrivedDate?.setValue(new Date());
-  //     //   // }
-  //     //   // console.log(date);
-  //     // });
-  //   }
-  // }
+
   getAttitudeLovFindAll() {
     this.dataService.getAttitudeLovFindAll().subscribe({
       next: (data) => {
@@ -275,26 +266,6 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     // });
   }
 
-  // addCarDispatchFollowUp() {
-  //   this.form2 = this.fb.group({
-  //     dispatchFuArrivedId: [''],
-  //     dispatchFuReasonId: [{ value: '', disabled: true }],
-  //     dispatchFuArrivedDate: [{ value: '', disabled: true }],
-  //     dispatchFuNote: [''],
-  //     dispatchFuAttitude: [''],
-  //     dispatchFuComplaintsId: [''],
-  //     dispatchFuComplaint1Boolean: [{ value: null, disabled: true }],
-  //     dispatchFuComplaint2Boolean: [{ value: null, disabled: true }],
-  //     dispatchFuComplaint3Boolean: [{ value: null, disabled: true }],
-  //     dispatchFuComplaint4Boolean: [{ value: null, disabled: true }],
-  //     dispatchFuComplaint5Boolean: [{ value: null, disabled: true }],
-  //     dispatchFuComplaintsNote: [''],
-  //     dispatchFuNotification: [''],
-  //     dispatchFuType: [''],
-  //     // distributionLossDistDate: [null],
-  //   });
-  // }
-
   getCoverByCarId() {
     if (!this.getCover) {
       const carId = this.policyData?.carId;
@@ -317,6 +288,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   }
   async ngOnInit(): Promise<void> {
     this.visaForm();
+    // this.onNotificationMatDamageChange();
     await this.getData();
     this.getDico();
     this.route.params.subscribe((params) => {
@@ -335,13 +307,18 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
 
       this.getExpCancelReasonLovFindAll();
       this.getExpertDispatchTypeLovFindAll();
-      this.profile = this.profileService.getSelectedProfile();
+      this.getUserProfileInfo();
       this.getTowingNatureLovFindAll();
       this.getDomainYN();
       this.getTowCancelReasonLovFindAll();
       this.getTowDelayReasonLovFindAll();
       this.getSupplierGarageLov();
     });
+  }
+  getUserProfileInfo() {
+    this.profile = this.profileService.getSelectedProfile();
+    this.userCode = this.profileService.getUser();
+    this.displayName = this.profileService.getDisplayName();
   }
   private parseDate(dateString: string): Date {
     return moment(dateString, 'DD/MM/yyyy hh:mm A').toDate();
@@ -360,16 +337,21 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   }
   visaForm() {
     this.form = this.fb.group({
+      notificationId: [''],
       lossTowLossDate: ['', Validators.required],
       notificationReportedDate: [null, Validators.required],
       lossTowReportedById: ['', Validators.required],
       notificationContactName: [''],
-      lossTowDriverRelationshipId: [''],
+      lossTowDriverRelationshipId: ['', Validators.required],
       lossTowDriverName: [''],
       notificationContactPhone: [''],
-      lossTowNbrVehInvolved: [''],
+      lossTowNbrVehInvolved: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]*$')],
+      ],
       lossTowEreportedById: [''],
       notificationMatDamageId: [''],
+
       sysCreatedBy: [''],
       carSelfSurveyUrl: [''],
       lossTowExpertNamePreference: [''],
@@ -379,6 +361,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionTownDescription: [''],
       supplierName: [''],
       distributionExpCanceledUser: [''],
+      distributionExpCanceledUserName: [''],
       distributionExpCanceledDate: [null],
       lossTowSeverity: [''],
       lossTowBodilyCaseId: [''],
@@ -387,25 +370,29 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionLossDistributionBoolean: [''],
       // distributionLossDistDate: [null],
       distributionLossDistUser: [''],
+      distributionLossDistUserName: [''],
       distributionLossArrivedBoolean: [false],
       distributionLossArrivedDate: [null],
       distributionLossArrivedUser: [''],
+      distributionLossArrivedUserName: [''],
       expertMobilePhone: [''],
       distributionTownId: [''],
       distributionExpExpertId: [''],
       distributionExpTypeDate: [null],
       distributionExpTypeUser: [''],
+      distributionExpTypeUserName: [''],
       // distributionTownNameBind: [''],
       distributionTown: [''],
       // towFromTown : [''],
       fromTowTownName: [''],
       delayedDispatchTime: [''],
+      lossTowStaffCaseMngr: [''],
       lossTowExpertId: [''],
       lossTowExpertMan: [''],
       lossTowExpertRot: [''],
       distributionTema: [''],
-      distributionLossDistribution: [''],
-      distributionLossArrived: [''],
+      // distributionLossDistribution: [''],
+      // distributionLossArrived: [''],
       lossTowExpertNamePreferenceById: [''],
       lossTowExpert: [''],
       // carsDispatchFollowUp: this.fb.array([]),
@@ -420,7 +407,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionTowDistDateBoolean: [''],
       distributionTowDistDate: [''],
       distributionTowDistUser: [''],
+      distributionTowDistUserName: [''],
       distributionTowArrivedUser: [''],
+      distributionTowArrivedUserName: [''],
       delayedTowingTime: [''],
       distributionTowArrivedDateBoolean: [''],
       distributionTowArrivedDate: [''],
@@ -501,9 +490,11 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         'distributionExpExpertDesc',
         'lossTowExpertNamePreference',
         'distributionExpTypeUser',
+        'distributionExpTypeUserName',
         'distributionExpTypeDate',
         'distributionLossDistDate',
         'distributionLossDistUser',
+        'distributionLossDistUserName',
         'lossTowExpertId',
         'distributionLossDistributionBoolean',
         'lossTowNeedExpertReportBoolean',
@@ -511,6 +502,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         'distributionLossArrivedBoolean',
         'distributionLossArrivedDate',
         'distributionLossArrivedUser',
+        'distributionLossArrivedUserName',
       ];
 
       controlsToReset.forEach((controlName) => {
@@ -532,15 +524,30 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       const distributionTowArrivedDate = this.form.get(
         'distributionTowArrivedDate'
       );
+      const distributionTowArrivedUser = this.form.get(
+        'distributionTowArrivedUser'
+      );
+      const distributionTowArrivedUserName = this.form.get(
+        'distributionTowArrivedUserName'
+      );
       // console.log(distributionTowArrivedDate?.value);
       if (!distributionTowArrivedDate?.value) {
-        distributionTowArrivedDate?.setValue(new Date());
+        distributionTowArrivedDate?.setValue(
+          this.datePipe.transform(
+            new Date(),
+            this.dateFormat('reportDateTimeFormat')
+          )
+        );
+        const user = this.profileService.getUser();
+        distributionTowArrivedUser?.setValue(this.userCode);
+        distributionTowArrivedUserName?.setValue(this.displayName);
       }
 
       this.customerSatisfactionDialog('TD');
     } else {
-      this.form.get('distributionTowArrivedDate')?.setValue(null);
-      this.form.get('distributionTowArrivedUser')?.setValue(null);
+      this.form.get('distributionTowArrivedDate')?.setValue('');
+      this.form.get('distributionTowArrivedUser')?.setValue('');
+      this.form.get('distributionTowArrivedUserName')?.setValue('');
     }
   }
   lossTowExpertNameValueChangeListener(event: any) {
@@ -565,12 +572,15 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.form.get('distributionLossDistributionBoolean')?.setValue(false);
       this.form.get('distributionLossDistDate')?.setValue('');
       this.form.get('distributionLossDistUser')?.setValue('');
+      this.form.get('distributionLossDistUserName')?.setValue('');
       this.form.get('distributionLossArrivedBoolean')?.setValue(false);
       this.form.get('distributionLossArrivedDate')?.setValue(null);
       this.form.get('distributionLossArrivedUser')?.setValue('');
+      this.form.get('distributionLossArrivedUserName')?.setValue('');
       this.form.get('distributionExpTypeId')?.setValue('');
       this.form.get('distributionExpTypeDate')?.setValue('');
       this.form.get('distributionExpTypeUser')?.setValue('');
+      this.form.get('distributionExpTypeUserName')?.setValue('');
       this.form.get('expertMobilePhone')?.setValue('');
     }
 
@@ -590,66 +600,354 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       });
     }, 300);
   }
-  onSubmit() {
-    // Enable disabled form controls temporarily
-    const disabledControls = [
-      'distributionExpCanceledUser',
-      'distributionExpCanceledDate',
-      'distributionLossDistributionBoolean',
-      'distributionLossDistDate',
-      'distributionLossDistUser',
-      'distributionLossArrivedDate',
-      'distributionLossArrivedUser',
-      'notificationReportedDate',
-      'distributionExpTypeId',
-      'expertMobilePhone',
-      'distributionExpExpertDesc',
-      'distributionExpTypeDate',
-      'distributionExpTypeUser',
-      'lossTowLossDate',
-      'delayedDispatchTime',
-      'distributionTema',
-      'supplierName',
-      'lossTowRsDesc',
-      'distributionTowDistDateBoolean',
-      'distributionTowDistDate',
-      'distributionTowArrivedUser',
-      'delayedTowingTime',
-      'distributionTowArrivedDate',
-      'distributionTowTotalKm',
-      'distributionTowExtraKm',
-      'distributionTowClientCost',
-      'totaleDurationBetweenTown',
-      // 'towingComDesc',
-      // Add other control names as needed
-    ];
+  notificationMatDamageChange() {
+    const {
+      notificationContactName,
+      lossTowDriverRelationshipId,
+      lossTowDriverName,
+      lossTowNbrVehInvolved,
+      lossTowEreportedById,
+      lossTowExpertNamePreference,
+    } = this.form.controls;
+    // const newValue = (event.target as HTMLInputElement).value;
+    const newValue = this.form.get('notificationMatDamageId')?.value;
+    // const newValue = this.form.get('notificationMatDamageId')?.value;
+    // const oldValue = this.policyData?.notificationMatDamageId;
+    // console.log(newValue);
+    // console.log(oldValue);
+    if (newValue) {
+      if (newValue === '6') {
+        notificationContactName.disable();
+        lossTowDriverRelationshipId.disable();
+        lossTowDriverName.disable();
+        lossTowNbrVehInvolved.disable();
+        lossTowEreportedById.disable();
+        lossTowExpertNamePreference?.disable();
+      } else {
+        notificationContactName.enable();
+        lossTowDriverRelationshipId.enable();
+        lossTowDriverName.enable();
+        lossTowNbrVehInvolved.enable();
+        lossTowEreportedById.enable();
+        lossTowExpertNamePreference?.enable();
+      }
 
-    disabledControls.forEach((controlName) => {
-      this.form.get(controlName)?.enable();
-      // this.form.get('supplierName')?.disable();
-      // this.form.get('fromTowTownName')?.disable();
-      // this.form.get('distributionTownName')?.disable();
-      // this.form.get('distributionExpExpertDesc')?.disable();
-      // this.form.get('lossTowExpertNamePreference')?.disable();
-      // this.form.get('delayedDispatchTime')?.disable();
-      // this.form.get('towToTownName')?.disable();
-    });
+      if (newValue === '5' || newValue === '6' || newValue === '10') {
+        this.openTowConditions();
+      }
 
-    // Log the form value
-    console.log(this.form.value);
+      if (newValue === '5') {
+        this.form.get('distributionTowNatureId')?.setValue('1');
+      } else if (newValue === '6') {
+        this.form.get('distributionTowNatureId')?.setValue('2');
+      } else if (newValue === '10') {
+        this.form.get('distributionTowNatureId')?.setValue('7');
+      }
 
-    // Disable the form controls again
-    disabledControls.forEach((controlName) => {
-      this.form.get(controlName)?.disable();
-      // this.form.get('supplierName')?.enable();
-      // this.form.get('fromTowTownName')?.enable();
-      // this.form.get('distributionTownName')?.enable();
-      // this.form.get('distributionExpExpertDesc')?.enable();
-      // this.form.get('lossTowExpertNamePreference')?.enable();
-      // this.form.get('delayedDispatchTime')?.enable();
-      // this.form.get('towToTownName')?.enable();
-    });
+      if (newValue && newValue === '6') {
+        this.changeCo = 'Y';
+      }
+    }
   }
+  async saveAction() {
+    if (
+      !this.validateDatePair(
+        'distributionLossDistDate',
+        'distributionLossArrivedDate',
+        'Expert Date & Time : Arrived Date is lower than Dispatch Date'
+      )
+    ) {
+      return; // Exit the function if validation fails
+    }
+
+    if (
+      !this.validateDatePair(
+        'distributionTowDistDate',
+        'distributionTowArrivedDate',
+        'Towing Dispatch : Arrived Date is lower than Dispatch Date'
+      )
+    ) {
+      return; // Exit the function if validation fails
+    }
+
+    const lossTowLossDate = this.form.get('lossTowLossDate')?.value;
+    const towToTownName = this.form.get('towToTownName')?.value;
+    const lossTowNbrVehInvolved = this.form.get('lossTowNbrVehInvolved')?.value;
+    const lossTowDriverRelationshipId = this.form.get(
+      'lossTowDriverRelationshipId'
+    )?.value;
+    const notificationMatDamageId = this.form.get(
+      'notificationMatDamageId'
+    )?.value;
+
+    if (!lossTowLossDate) {
+      return this.alertifyService.error('Loss Date is Required');
+    }
+    if (!lossTowNbrVehInvolved) {
+      return this.alertifyService.error('Involved Vehicles is Required');
+    }
+    if (!lossTowDriverRelationshipId) {
+      return this.alertifyService.error('Relation Driver To Owner is Required');
+    }
+    if (
+      !towToTownName &&
+      (notificationMatDamageId === '6' ||
+        notificationMatDamageId === '5' ||
+        notificationMatDamageId === '10')
+    ) {
+      return this.alertifyService.error('To City is Required');
+    }
+
+    const formValues = this.form.getRawValue();
+
+    const extractedValues: NotificationRequest =
+      this.formatNotificationData(formValues);
+
+    if (this.changeCo === 'Y') {
+      const notificationId = this.form.get('notificationId')?.value;
+      const iVehCount = this.form.get('lossTowNbrVehInvolved')?.value;
+      const iCo = this.form.get('lossTowStaffCaseMngr');
+      // console.log(iVehCount);
+      const presultdouble1 = await lastValueFrom(
+        this.getFcGetCo(notificationId, iVehCount!, iCo?.value)
+      ); // Convert Observable to Promise and await the result
+      if (presultdouble1) {
+        iCo?.patchValue(presultdouble1);
+        // Update extractedValues with the new value of iCo
+        extractedValues.lossTowStaffCaseMngr = presultdouble1;
+      }
+      this.updateLossTowStaffCaseMngr(notificationId, presultdouble1!);
+      this.changeCo = 'N';
+    }
+
+    await this.getFcDoubleToCheck().subscribe((presultdouble) => {
+      if (presultdouble === 'NODOUBLE') {
+        // Handle the case where there are no doubles.
+      } else {
+        const notiList: string[] = presultdouble.split(' ');
+        const observables: Observable<string>[] = [];
+
+        for (const noti of notiList) {
+          if (noti) {
+            observables.push(this.getDoubleCheckDataByNotification(noti));
+          }
+        }
+
+        if (observables.length > 0) {
+          forkJoin(observables).subscribe((results) => {
+            const dataDisplay: string[] = [];
+
+            for (const res of results) {
+              if (res) {
+                dataDisplay.push(res);
+              }
+            }
+
+            if (dataDisplay.length > 0) {
+              // Concatenate and display both visa numbers in the same pop-up.
+              const combinedData = dataDisplay.join('<br>');
+              console.log(combinedData);
+              this.alertifyService.dialogAlert(combinedData, 'Check Double');
+            }
+          });
+        }
+      }
+    });
+
+    await this.dataService.mergeNotification(extractedValues).subscribe({
+      next: (res) => {
+        this.alertifyService.success(res.message);
+        this.getPolicyCarByNotificationId(this.notificationId).then(
+          (policyData) => {
+            if (policyData) {
+              if (policyData.policyExpired === 'Y') {
+                this.alertifyService.dialogAlert('Policy expired', 'Expired');
+              }
+              if (policyData.policyDeleted === 'Y') {
+                this.alertifyService.dialogAlert('Policy deleted', 'Deleted');
+              }
+            }
+          }
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+    // Log the extracted values
+    // console.log(extractedValues);
+  }
+
+  getDoubleCheckDataByNotification(noti: string): Observable<string> {
+    // const notificationId = this.form.get('notificationId')?.value;
+    if (noti) {
+      return this.dataService.getDoubleCheckDataByNotification(noti).pipe(
+        map((data) => {
+          // console.log(data.data[0]);
+          return data.data[0];
+        }),
+        catchError((err) => {
+          console.log(err);
+          throw err; // You can handle errors further up the call chain if needed.
+        })
+      );
+    } else {
+      return of();
+    }
+  }
+  updateLossTowStaffCaseMngr(notificationId: string, user: string) {
+    this.dataService
+      .updateLossTowStaffCaseMngr(notificationId, user)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+  getFcGetCo(
+    notificationId: string,
+    iVehCount: number,
+    iCo: string
+  ): Observable<string> {
+    return this.dataService.getFcGetCo(notificationId, iVehCount, iCo).pipe(
+      map((res) => {
+        // this.presultdouble1 = res.data;
+        // console.log(res);
+        return res.data;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err; // You can handle errors further up the call chain if needed.
+      })
+    );
+  }
+
+  validateDatePair(
+    startDateControlName: string,
+    endDateControlName: string,
+    errorMessage: string
+  ) {
+    const startDate = this.form.get(startDateControlName)?.value;
+    const endDate = this.form.get(endDateControlName)?.value;
+    if (startDate && endDate) {
+      const format = 'DD/MM/YYYY hh:mm A';
+      const startMoment = moment(startDate, format);
+      const endMoment = moment(endDate, format);
+      if (endMoment.isBefore(startMoment)) {
+        this.alertifyService.dialogAlert(errorMessage, 'Error');
+        return false; // Validation failed, return false
+      }
+    }
+    return true; // Validation succeeded
+  }
+
+  getFcDoubleToCheck(): Observable<string> {
+    const notificationId = this.form.get('notificationId')?.value;
+    const ipolcarid = this.policyData?.carId!;
+    const lossDate = this.form.get('notificationReportedDate')?.value;
+
+    const notificationReportedDate = this.form.get('notificationReportedDate')
+      ?.value
+      ? moment(lossDate, 'DD/MM/YYYY hh:mm A').format('YYYY-MM-DD HH:mm')
+      : '';
+
+    return this.dataService
+      .getFcDoubleToCheck(notificationId, ipolcarid, notificationReportedDate)
+      .pipe(
+        map((res) => {
+          // console.log(res.data.presultdouble);
+          return res.data.presultdouble;
+        })
+      );
+  }
+  private formatNotificationData(formValues: any): NotificationRequest {
+    const formattedData: NotificationRequest = {
+      notificationId: formValues.notificationId,
+      lossTowLossDate: this.formatDate(formValues.lossTowLossDate),
+      notificationReportedDate: this.formatDate(
+        formValues.notificationReportedDate
+      ),
+      lossTowEreportedById: formValues.lossTowEreportedById,
+      lossTowReportedById: formValues.lossTowReportedById,
+      lossTowStaffCaseMngr: formValues.lossTowStaffCaseMngr,
+      distributionTowDistUser: formValues.distributionTowDistUser,
+      notificationContactName: formValues.notificationContactName,
+      lossTowDriverRelationshipId: formValues.lossTowDriverRelationshipId,
+      lossTowDriverName: formValues.lossTowDriverName,
+      notificationContactPhone: formValues.notificationContactPhone,
+      lossTowNbrVehInvolved: formValues.lossTowNbrVehInvolved,
+      notificationMatDamageId: formValues.notificationMatDamageId,
+
+      carRespReasonCode: formValues.carRespReasonCode,
+      distributionExpCanceledId: formValues.distributionExpCanceledId,
+      distributionExpCanceledUser: formValues.distributionExpCanceledUser,
+      distributionExpCanceledDate: formValues.distributionExpCanceledDate,
+      lossTowSeverity: formValues.lossTowSeverity,
+      lossTowBodilyCaseId: formValues.lossTowBodilyCaseId,
+      distributionExpTypeId: formValues.distributionExpTypeId,
+      lossTow2ndExpertId: formValues.lossTow2ndExpertId,
+      distributionLossDistributionBoolean:
+        formValues.distributionLossDistributionBoolean,
+      distributionLossDistUser: formValues.distributionLossDistUser,
+      distributionLossArrivedBoolean: formValues.distributionLossArrivedBoolean,
+      distributionLossArrivedDate: formValues.distributionLossArrivedDate,
+      distributionLossArrivedUser: formValues.distributionLossArrivedUser,
+      distributionTownId: formValues.distributionTownId,
+      distributionExpExpertId: formValues.distributionExpExpertId,
+      distributionExpTypeDate: formValues.distributionExpTypeDate,
+      distributionExpTypeUser: formValues.distributionExpTypeUser,
+      lossTowExpertId: formValues.lossTowExpertId,
+      lossTowExpertMan: formValues.lossTowExpertMan,
+      lossTowExpertRot: formValues.lossTowExpertRot,
+      distributionTema: formValues.distributionTema,
+      lossTowExpertNamePreferenceById:
+        formValues.lossTowExpertNamePreferenceById,
+      distributionTowNatureId: formValues.distributionTowNatureId,
+      lossTowRsDesc: formValues.lossTowRsDesc,
+      towFromTownId: formValues.towFromTownId,
+      towToTownId: formValues.towToTownId,
+      distributionTowDistDateBoolean: formValues.distributionTowDistDateBoolean,
+      distributionTowDistDate: formValues.distributionTowDistDate,
+      distributionTowArrivedUser: formValues.distributionTowArrivedUser,
+      distributionTowArrivedDateBoolean:
+        formValues.distributionTowArrivedDateBoolean,
+      distributionTowArrivedDate: formValues.distributionTowArrivedDate,
+      distributionTowDriverName: formValues.distributionTowDriverName,
+      distributionTowDriverPhone: formValues.distributionTowDriverPhone,
+      distributionTowCanceledId: formValues.distributionTowCanceledId,
+      distributionTowDelayId: formValues.distributionTowDelayId,
+      distributionTowDelayOther: formValues.distributionTowDelayOther,
+      distributionTowDistLifterId: formValues.distributionTowDistLifterId,
+      distributionTowTotalKm: formValues.distributionTowTotalKm,
+      distributionTowExtraKm: formValues.distributionTowExtraKm,
+      distributionTowClientCost: formValues.distributionTowClientCost,
+      distributionTowTotalCost: formValues.distributionTowTotalCost,
+      totaleDurationBetweenTown: formValues.totaleDurationBetweenTown,
+      lossTowBlockedId: formValues.lossTowBlockedId,
+      lossTowWheelId: formValues.lossTowWheelId,
+      lossTowPickUpId: formValues.lossTowPickUpId,
+      lossTowOffRoadId: formValues.lossTowOffRoadId,
+      lossTowCarryingGoodId: formValues.lossTowCarryingGoodId,
+      lossTowLifterId: formValues.lossTowLifterId,
+      distributionLossDistDate: formValues.distributionLossDistDate,
+      towingComId: formValues.towingComId,
+      lossTowRsId: formValues.lossTowRsId,
+    };
+    return formattedData;
+  }
+  private formatDate(date: any): string {
+    return this.isDateFormatted(date) ? date : this.formatDateTime(date);
+  }
+  private isDateFormatted(dateTime: any) {
+    return (
+      typeof dateTime === 'string' && this.dateFormat('reportDateTimeFormat')
+    );
+  }
+
   configList() {
     const codesToFind = [
       'polserno',
@@ -679,6 +977,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     const distributionExpCanceledUserControl = this.form.get(
       'distributionExpCanceledUser'
     );
+    const distributionExpCanceledUserNameControl = this.form.get(
+      'distributionExpCanceledUserName'
+    )!;
     const distributionExpCanceledDateControl = this.form.get(
       'distributionExpCanceledDate'
     );
@@ -688,7 +989,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionExpCanceledUserControl &&
       distributionExpCanceledDateControl
     ) {
-      distributionExpCanceledUserControl.setValue(user);
+      distributionExpCanceledUserControl.setValue(this.userCode);
+      distributionExpCanceledUserNameControl.setValue(this.displayName);
       const currentDate = new Date();
       const date = this.datePipe.transform(
         currentDate,
@@ -698,8 +1000,22 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionExpCanceledDateControl.setValue(date);
     }
   }
+  // onNotificationMatDamageChange() {
+  //   const {
+  //     notificationContactName,
+  //     lossTowDriverRelationshipId,
+  //     lossTowDriverName,
+  //     lossTowNbrVehInvolved,
+  //     lossTowEreportedById,
+  //     lossTowExpertNamePreference,
+  //   } = this.form.controls;
+  //   this.form.get('notificationMatDamageId')?.valueChanges.subscribe((data) => {
+
+  //   });
+  // }
   isSystemAdmin() {
     // Destructure form controls
+
     const {
       notificationReportedDate,
       notificationMatDamageId,
@@ -713,39 +1029,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       carSelfSurveyUrl,
       lossTowExpertNamePreference,
       lossTowLossDate,
-      distributionTownDescription,
-      distributionExpCanceledUser,
       distributionExpCanceledDate,
-      distributionTownName,
-      distributionLossDistributionBoolean,
-      distributionLossDistDate,
-      distributionLossDistUser,
-      distributionLossArrivedDate,
-      distributionLossArrivedUser,
-      distributionExpTypeId,
-      expertMobilePhone,
-      distributionTownId,
-      distributionExpExpertId,
-      distributionExpTypeDate,
-      distributionExpTypeUser,
-      delayedDispatchTime,
-      distributionTema,
-      supplierName,
-      lossTowRsDesc,
-      towFromTownDescription,
-      towToTownDescription,
-      distributionTowDistDateBoolean,
-      distributionTowDistDate,
-      distributionTowDistUser,
-      distributionTowArrivedUser,
-      delayedTowingTime,
-      distributionTowArrivedDate,
-      distributionTowTotalKm,
-      distributionTowExtraKm,
-      distributionTowClientCost,
-      totaleDurationBetweenTown,
-      distributionExpExpertDesc,
-      towingComDesc,
+      // distributionLossArrived,
     } = this.form.controls;
     if (distributionExpCanceledDate) {
       const dateFormat = distributionExpCanceledDate.value;
@@ -753,56 +1038,58 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         dateFormat,
         this.dateFormat('reportDateTimeFormat')
       );
-
-      // Update the value in the control
       distributionExpCanceledDate.setValue(formattedDate);
     }
 
-    // distributionExpCanceledDate.valueChanges.subscribe((valueChanges) => {
-    //   const format = this.datePipe.transform(
-    //     valueChanges,
-    //     this.dateFormat('reportDateTimeFormat')
-    //   );
-    //   distributionExpCanceledDate.setValue(format);
-    // });
-    // Constants for permissions
     const ccSystemAdmin = this.hasPerm('ccSystemAdmin');
     const ccManager = this.hasPerm('ccManager');
-    distributionTownDescription.disable();
-    distributionExpCanceledUser.disable();
-    distributionExpCanceledDate.disable();
-    distributionLossDistributionBoolean.disable();
-    distributionLossDistDate.disable();
-    distributionLossDistUser.disable();
-    distributionLossArrivedDate.disable();
-    distributionLossArrivedUser.disable();
-    distributionExpTypeId.disable();
-    expertMobilePhone.disable();
-    distributionExpExpertDesc.disable();
-    distributionExpTypeDate?.disable();
-    distributionExpTypeUser?.disable();
-    delayedDispatchTime.disable();
-    distributionTema.disable();
-    supplierName.disable();
-    lossTowRsDesc.disable();
-    towFromTownDescription.disable();
-    towToTownDescription.disable();
-    distributionTowDistDateBoolean.disable();
-    distributionTowDistDate.disable();
-    distributionTowArrivedUser.disable();
-    delayedTowingTime.disable();
-    distributionTowArrivedDate.disable();
-    distributionTowTotalKm.disable();
-    distributionTowExtraKm.disable();
-    distributionTowClientCost.disable();
-    totaleDurationBetweenTown.disable();
-    towingComDesc.disable();
-    distributionTowDistUser.disable();
+
+    const formControlsToDisable = [
+      'distributionTownDescription',
+      'distributionExpCanceledUserName',
+      'distributionExpCanceledDate',
+      'distributionLossDistributionBoolean',
+      'distributionLossDistDate',
+      'distributionLossDistUserName',
+      'distributionLossArrivedUserName',
+      'distributionLossArrivedDate',
+      'distributionLossArrivedUser',
+      'distributionExpTypeId',
+      'expertMobilePhone',
+      'distributionExpExpertDesc',
+      'distributionExpTypeDate',
+      'distributionExpTypeUserName',
+      'delayedDispatchTime',
+      'distributionTema',
+      'supplierName',
+      'lossTowRsDesc',
+      'towFromTownDescription',
+      'towToTownDescription',
+      'distributionTowDistDateBoolean',
+      'distributionTowDistDate',
+      'distributionTowArrivedUserName',
+      'delayedTowingTime',
+      'distributionTowArrivedDate',
+      'distributionTowTotalKm',
+      'distributionTowExtraKm',
+      'distributionTowClientCost',
+      'totaleDurationBetweenTown',
+      'towingComDesc',
+      'distributionTowDistUserName',
+      'lossTowExpert',
+      // Add other control names here
+    ];
+    for (const controlName of formControlsToDisable) {
+      const control = this.form.get(controlName);
+      if (control) {
+        control.disable();
+      }
+    }
     // Constants for policy data
     const {
       notificationStatusCode,
       reportedDay,
-      notificationMatDamageId: policyMatDamageId,
+      // notificationMatDamageId: policyMatDamageId,
     } = this.policyData!;
 
     // Disable controls based on conditions
@@ -814,30 +1101,43 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
 
     if (
-      (notificationStatusCode === '0' && reportedDay === 0) ||
+      (notificationStatusCode !== '0' && reportedDay !== 0) ||
       !ccManager ||
       !ccSystemAdmin
     ) {
-      notificationMatDamageId?.disable();
-      lossTowLossDate?.disable();
+      notificationMatDamageId.disable();
+      lossTowLossDate.disable();
     }
 
-    if (policyMatDamageId === '6') {
-      notificationMatDamageId?.disable();
+    if (notificationMatDamageId.value === '6') {
+      // notificationMatDamageId?.disable();
       notificationContactName?.disable();
       lossTowDriverRelationshipId?.disable();
       lossTowDriverName?.disable();
       lossTowNbrVehInvolved?.disable();
     }
 
-    if (lossTowReportedById?.value !== '6' || policyMatDamageId === '6') {
+    if (
+      lossTowReportedById?.value !== '6' ||
+      notificationMatDamageId.value === '6'
+    ) {
       lossTowEreportedById?.disable();
     }
+    //  else {
+    //   lossTowEreportedById?.enable();
+    // }
 
-    if (
-      policyMatDamageId === '6' ||
-      lossTowExpertNamePreference?.value === ' '
-    ) {
+    this.form
+      .get('lossTowReportedById')
+      ?.valueChanges.subscribe((lossTowReportedBy) => {
+        if (lossTowReportedBy !== '6') {
+          lossTowEreportedById.setValue('');
+          lossTowEreportedById?.disable();
+        } else {
+          lossTowEreportedById?.enable();
+        }
+      });
+    if (lossTowExpertNamePreference?.value === ' ') {
       lossTowExpertNamePreference?.disable();
     }
   }
@@ -853,31 +1153,47 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.dico = data;
     });
   }
-  private formatDateTime(dateTime: Date): string {
-    // const parsedDate = moment(dateTime, 'DD/MM/yyyy HH:mm A').toDate();
-    return this.datePipe.transform(
-      dateTime,
-      this.dateFormat('reportDateTimeFormat')
-    )!;
+  private formatDateTime(dateTime: any) {
+    if (dateTime) {
+      const date = new Date(dateTime);
+      // console.log(date);
+      return this.datePipe.transform(
+        date,
+        this.dateFormat('reportDateTimeFormat')
+      )!;
+    } else {
+      return null;
+    }
   }
   onDistributionTowArived() {
     const distributionLossArrivedBoolean = this.form.get(
       'distributionLossArrivedBoolean'
     )?.value;
     const user = this.profileService.getUser();
-    this.form.get('distributionLossArrivedDate')?.setValue(new Date());
-    this.form.get('distributionLossArrivedUser')?.setValue(user);
+    this.form
+      .get('distributionLossArrivedDate')
+      ?.setValue(
+        this.datePipe.transform(
+          new Date(),
+          this.dateFormat('reportDateTimeFormat')
+        )
+      );
+    this.form.get('distributionLossArrivedUser')?.setValue(this.userCode);
+    this.form
+      .get('distributionLossArrivedUserName')
+      ?.setValue(this.displayName);
 
     if (distributionLossArrivedBoolean) {
       this.customerSatisfactionDialog('ED');
     } else {
       this.form.get('distributionLossArrivedDate')?.setValue(null);
       this.form.get('distributionLossArrivedUser')?.setValue(null);
+      this.form.get('distributionLossArrivedUserName')?.setValue(null);
     }
   }
   private patchFormWithPolicyData(): void {
     if (this.policyData) {
-      const lossDate = this.formatDateTime(this.policyData?.lossTowLossDate!);
+      const lossDate = this.formatDateTime(this.policyData.lossTowLossDate);
       const arrivedDate = this.formatDateTime(
         this.policyData?.distributionLossArrivedDate!
       );
@@ -890,15 +1206,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       const distributionExpTypeDate = this.formatDateTime(
         this.policyData?.distributionExpTypeDate!
       );
-      const distributionLossDistributionBoolean =
-        this.policyData?.distributionLossDistributionBoolean === 'Y'
-          ? true
-          : false;
-      const distributionLossArrivedBoolean =
-        this.policyData?.distributionLossArrivedBoolean === 'Y' ? true : false;
       const sysCreatedBy =
-        this.policyData?.carsContactsPhoneList![0]?.sysCreatedBy;
-      // this.getSupplierFindById();
+        this.policyData?.carsContactsPhoneList?.[0]?.sysCreatedBy;
+
       const distributionTowDistDate = this.formatDateTime(
         this.policyData?.distributionTowDistDate!
       );
@@ -906,40 +1216,27 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         this.policyData?.distributionTowArrivedDate!
       );
       this.carsDispatchFollowUpList = this.policyData?.carsDispatchFollowUpList;
+
       if (this.disableLossDate()) {
         this.form.get('distributionLossDistDate')?.disable();
       }
-      const distributionLossDistDate = this.formatDateTime(
-        this.policyData?.distributionLossDistDate!
-      );
       this.lossCarId = this.policyData?.lossCarId;
       const lossTowExpertId = this.policyData?.lossTowExpertId;
-      // const distributionTowTotalCost = parseInt(this.policyData.distributionTowTotalCost)
-      // this.notificationId
-      // const lossTowExpertNamePreferenceById = this.form
-      //   .get('lossTowExpertNamePreferenceById')
-      //   ?.patchValue(lossTowExpertId);
-      // console.log(lossTowExpertId);
+
       this.form.patchValue({
         ...this.policyData,
         lossTowLossDate: lossDate,
         notificationReportedDate: reportedDate,
         distributionLossDistDate: lossDistDate,
         distributionLossArrivedDate: arrivedDate,
-        distributionLossDistributionBoolean:
-          distributionLossDistributionBoolean,
-        distributionLossArrivedBoolean: distributionLossArrivedBoolean,
         distributionExpTypeDate: distributionExpTypeDate,
         sysCreatedBy: sysCreatedBy,
         distributionTowDistDate: distributionTowDistDate,
         distributionTowArrivedDate: distributionTowArrivedDate,
         lossTowExpertNamePreferenceById: lossTowExpertId,
-        // distributionLossDistDate: distributionLossDistDate,
       });
-      this.isSystemAdmin();
-      // this.getTownById();
     }
-    // console.log(distributionTowArrivedDateBoolean);
+    this.isSystemAdmin();
   }
   shouldDisableNoData(): boolean {
     const hasSuperAdminPermission = this.hasPerm('ccSuperAdmin');
@@ -1016,7 +1313,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       !hasPermission
     );
   }
-  DisableIcons(): boolean {
+  disableIcons() {
     const notificationStatusCode = this.policyData?.notificationStatusCode;
     // const distributionTownNameBind = this.policyData?.distributionTownNameBind;
     const hasSystemAdminPermission = this.hasPerm('ccSystemAdmin');
@@ -1025,9 +1322,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     )?.value;
     // Disable if any of the following conditions are met
     return (
-      (distributionTownNameBind === null ||
-        notificationStatusCode === '8' ||
-        notificationStatusCode === '9') &&
+      !distributionTownNameBind ||
+      notificationStatusCode === '8' ||
+      notificationStatusCode === '9' ||
       !hasSystemAdminPermission
     );
   }
@@ -1042,10 +1339,10 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     )?.value;
     // Disable if any of the following conditions are met
     return (
-      (distributionExpTypeId === 'X' ||
-        distributionTownNameBind === null ||
-        notificationStatusCode === '8' ||
-        notificationStatusCode === '9') &&
+      distributionExpTypeId === 'X' ||
+      distributionTownNameBind === null ||
+      notificationStatusCode === '8' ||
+      notificationStatusCode === '9' ||
       !hasSystemAdminPermission
     );
   }
@@ -1067,6 +1364,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       : true; // Expression 4
   }
   deleteExpertUnavailable(id: string) {
+    // console.log(this.DisableIcons());
     this.alertifyService.confirmDialog(
       'Are you sure you want to delete this resource',
       () => {
@@ -1084,16 +1382,19 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   }
   private async getPolicyCarByNotificationId(
     notificationId: string
-  ): Promise<void> {
+  ): Promise<Policy | null> {
     try {
       const res = await this.dataService
         .getPolicyCarByNotificationId(notificationId)
         .toPromise();
-      this.policyData = res?.data;
+      const policyData = res?.data;
+      this.policyData = policyData;
       this.patchFormWithPolicyData();
       this.configList();
+      return policyData; // Return the policy data
     } catch (err) {
       console.error(err);
+      return null; // Handle errors and return null or an appropriate value
     }
   }
   getReportedByLovFindAll() {
@@ -1118,6 +1419,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       },
     });
   }
+
   getNotificationNatureLovFindAll() {
     this.dataService.getNotificationNatureLovFindAll().subscribe({
       next: (res) => {
@@ -1179,6 +1481,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       dialogData.afterClosed().subscribe((data) => {
         if (data !== undefined && data !== null) {
           this.formData = data;
+          // console.log(data);
         }
       });
     }
@@ -1236,23 +1539,49 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   getTowFromTownDescription(event: any) {
-    const town1 = this.form.get('fromTowTownName')?.value;
-    if (town1) {
-      this.dataService.getTownFindById(town1).subscribe({
+    // const townName = this.form.get('fromTowTownName')?.value;
+    // const townId = this.form.get('fromTowTownId')?.value;
+    const townIdControl = this.form.get('towFromTownId');
+    const townNameControl = this.form.get('fromTowTownName');
+    const town = townIdControl?.value;
+    const townName = townNameControl?.value;
+    if (!townName) {
+      townIdControl?.patchValue('');
+    } else {
+      townIdControl?.setValue(event);
+    }
+    // console.log(event);
+    if (!event) {
+      this.form.get('towFromTownDescription')?.setValue('');
+    } else {
+      this.dataService.getTownFindById(event).subscribe({
         next: (res) => {
           const data = res.data;
-          this.form
-            .get('towFromTownDescription')
-            ?.setValue(data.cazaDescription + ' ' + data.regionDescription);
-          this.form.get('towFromTownId')?.setValue(event);
+          const distributionTownDescriptionControl = this.form.get(
+            'distributionTownDescription'
+          );
+          distributionTownDescriptionControl?.setValue(
+            `${data.cazaDescription} ${data.regionDescription}`
+          );
+          // this.form.get('towFromTownId')?.setValue(event);
         },
       });
     }
   }
   getTowToTownDescription(event: any) {
-    const town2 = this.form.get('towToTownName')?.value;
-    if (town2) {
-      this.dataService.getTownFindById(town2).subscribe({
+    // const town2 = this.form.get('towToTownName')?.value;
+    const townIdControl = this.form.get('towToTownId');
+    const townNameControl = this.form.get('towToTownName');
+    const townName = townNameControl?.value;
+    if (!townName) {
+      townIdControl?.patchValue('');
+    } else {
+      townIdControl?.setValue(event);
+    }
+    if (!event) {
+      this.form.get('towToTownDescription')?.setValue('');
+    } else {
+      this.dataService.getTownFindById(event).subscribe({
         next: (res) => {
           const data = res.data;
           this.form
@@ -1264,28 +1593,43 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   getTownFindById(event: any) {
-    // const town = this.form.get('distributionTownId')?.value;
+    const {
+      distributionTownId,
+      distributionTownName,
+      distributionTownDescription,
+      notificationMatDamageId,
+      fromTowTownName,
+      towFromTownId,
+    } = this.form.controls;
+
+    const town = distributionTownId?.value;
+    const townName = distributionTownName?.value;
+
+    if (!townName) {
+      distributionTownId?.patchValue('');
+    } else {
+      distributionTownId?.setValue(event);
+    }
+
+    if (!event) {
+      distributionTownDescription?.setValue('');
+    }
 
     if (event) {
       this.dataService.getTownFindById(event).subscribe({
         next: (res) => {
           const data = res.data;
 
-          this.form
-            .get('distributionTownDescription')
-            ?.setValue(data.cazaDescription + ' ' + data.regionDescription);
-          // this.form.get('distributionTownNameBind')?.setValue(data.townName);
-          // this.form.get('distributionTown')?.setValue(data);
-          this.form.get('distributionTownId')?.setValue(event);
-          // this.form.get('distributionTownName')?.setValue(data.townName);
+          distributionTownDescription?.setValue(
+            `${data.cazaDescription} ${data.regionDescription}`
+          );
 
           if (
-            this.policyData?.notificationMatDamageId === '5' ||
-            this.policyData?.notificationMatDamageId === '10'
+            notificationMatDamageId?.value === '5' ||
+            notificationMatDamageId?.value === '10'
           ) {
-            // this.form.get('towFromTown')?.setValue(data);
-            this.form.get('fromTowTownName')?.setValue(data.townName);
-            this.form.get('towFromTownId')?.setValue(data.townId);
+            fromTowTownName?.setValue(data.townName);
+            towFromTownId?.setValue(data.townId);
           }
         },
       });
@@ -1307,8 +1651,18 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe((data) => {
         if (data) {
           this.form.get('distributionExpTypeId')?.setValue('1');
-          this.form.get('distributionExpTypeUser')?.setValue(userCode);
-          this.form.get('distributionExpTypeDate')?.setValue(new Date());
+          this.form.get('distributionExpTypeUser')?.setValue(this.userCode);
+          this.form
+            .get('distributionExpTypeUserName')
+            ?.setValue(this.displayName);
+          this.form
+            .get('distributionExpTypeDate')
+            ?.setValue(
+              this.datePipe.transform(
+                new Date(),
+                this.dateFormat('reportDateTimeFormat')
+              )
+            );
           this.form.get('lossTowNeedExpertReportBoolean')?.setValue(true);
           this.form
             .get('lossTowExpertNamePreference')
@@ -1320,29 +1674,65 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
           this.form.get('lossTowExpertId')?.setValue(data.supplierId);
           this.form.get('distributionExpCanceledId')?.setValue(null);
           this.form.get('distributionExpCanceledUser')?.setValue(null);
+          this.form.get('distributionExpCanceledUserName')?.setValue(null);
           this.form.get('distributionExpCanceledDate')?.setValue(null);
           const notificationReportedDate =
             this.policyData?.notificationReportedDate!;
           this.calculateDelay(notificationReportedDate);
           if (data.direction === 'Direct') {
-            this.form.get('distributionLossArrivedDate')?.setValue(new Date());
-            this.form.get('distributionLossArrivedUser')?.setValue(userCode);
+            this.form
+              .get('distributionLossArrivedDate')
+              ?.setValue(
+                this.datePipe.transform(
+                  new Date(),
+                  this.dateFormat('reportDateTimeFormat')
+                )
+              );
+            this.form
+              .get('distributionLossArrivedUser')
+              ?.setValue(this.userCode);
+            this.form
+              .get('distributionLossArrivedName')
+              ?.setValue(this.displayName);
+
             this.form.get('distributionLossArrivedBoolean')?.setValue(true);
-            this.form.get('distributionLossDistDate')?.setValue(new Date());
-            this.form.get('distributionLossDistUser')?.setValue(userCode);
+            this.form
+              .get('distributionLossDistDate')
+              ?.setValue(
+                this.datePipe.transform(
+                  new Date(),
+                  this.dateFormat('reportDateTimeFormat')
+                )
+              );
+            this.form.get('distributionLossDistUser')?.setValue(this.userCode);
+            this.form
+              .get('distributionLossDistUserName')
+              ?.setValue(this.displayName);
             this.form.get('distributionTema')?.setValue('N');
             this.form
               .get('distributionLossDistributionBoolean')
               ?.setValue(true);
           } else {
-            this.form.get('distributionLossDistDate')?.setValue(new Date());
-            this.form.get('distributionLossDistUser')?.setValue(userCode);
+            this.form
+              .get('distributionLossDistDate')
+              ?.setValue(
+                this.datePipe.transform(
+                  new Date(),
+                  this.dateFormat('reportDateTimeFormat')
+                )
+              );
+            this.form.get('distributionLossDistUser')?.setValue(this.userCode);
+            this.form
+              .get('distributionLossDistUserName')
+              ?.setValue(this.displayName);
+
             this.form.get('distributionTema')?.setValue('N');
             this.form
               .get('distributionLossDistributionBoolean')
               ?.setValue(true);
             this.form.get('distributionLossArrivedDate')?.setValue(null);
             this.form.get('distributionLossArrivedUser')?.setValue(null);
+            this.form.get('distributionLossArrivedUserName')?.setValue(null);
             this.form.get('distributionLossArrivedBoolean')?.setValue(false);
           }
           const inOutNetwork = data.expertInOutNet;
@@ -1469,7 +1859,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.selectedTowingCmp = selectedRow;
 
     const companyId = this.selectedTowingCmp?.supplierId;
-    const natureId = this.policyData?.distributionTowNatureId;
+    const natureId = this.form.get('distributionTowNatureId')?.value;
 
     if (
       natureId &&
@@ -1525,12 +1915,16 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       const distributionTowDistDateControl = this.form.get(
         'distributionTowDistDate'
       );
-      distributionTowDistDateControl?.setValue(new Date());
+      distributionTowDistDateControl?.setValue(this.formatDateTime(new Date()));
 
       const distributionTowDistUserControl = this.form.get(
         'distributionTowDistUser'
       );
-      distributionTowDistUserControl?.setValue(user);
+      const distributionTowDistUserNameControl = this.form.get(
+        'distributionTowDistUserName'
+      );
+      distributionTowDistUserControl?.setValue(this.userCode);
+      distributionTowDistUserNameControl?.setValue(this.displayName);
 
       const distributionTowDistDateBooleanControl = this.form.get(
         'distributionTowDistDateBoolean'
@@ -1556,13 +1950,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   calculateTowDispatchDelay(reportedDate: Date) {
-    // Simulate the notificationReportedDate
-    // const notificationReportedDate = this.policyData?.notificationReportedDate!;
-    // console.log(notificationReportedDate);
-    // Convert the notificationReportedDate string to a JavaScript Date object
     const reported = new Date(reportedDate);
-    // console.log(reported);
-    // Convert the JavaScript Date to a LocalDateTime-like object
+
     const localDateTime = {
       year: reported.getFullYear(),
       month: reported.getMonth() + 1, // Months are 0-indexed in JavaScript
@@ -1570,8 +1959,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       hour: reported.getHours(),
       minute: reported.getMinutes(),
     };
-    // console.log(localDateTime);
-    // Get the current date and time
+
     const now = new Date();
 
     // Calculate the difference in minutes and hours
@@ -1622,9 +2010,11 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       data: {
         insuranceId: this.policyData?.insuranceId,
         insuranceDesc: this.policyData?.insuranceDesc,
-        distributionTownId: this.policyData?.distributionTownId,
-        notificationMatDamageId: this.policyData?.notificationMatDamageId,
-        notificationReportedDate: this.policyData?.notificationReportedDate,
+        distributionTownId: this.form.get('distributionTownId')?.value,
+        notificationMatDamageId: this.form.get('notificationMatDamageId')
+          ?.value,
+        notificationReportedDate: this.form.get('notificationReportedDate')
+          ?.value,
         notificationId: this.notificationId,
         townTerritoryList: this.policyData?.townTerritoryList,
         telExtension: this.telExtension,
@@ -1661,11 +2051,27 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.form.get('distributionExpExpertId')?.setValue(oclaimExpert);
     this.form.get('distributionExpExpertDesc')?.setValue(oclaimexpertname);
     this.form.get('distributionExpTypeId')?.setValue('X');
-    this.form.get('distributionExpTypeUser')?.setValue(userCode);
-    this.form.get('distributionExpTypeDate')?.setValue(new Date());
+    this.form.get('distributionExpTypeUser')?.setValue(this.userCode);
+    this.form.get('distributionExpTypeUserName')?.setValue(this.displayName);
+    this.form
+      .get('distributionExpTypeDate')
+      ?.setValue(
+        this.datePipe.transform(
+          new Date(),
+          this.dateFormat('reportDateTimeFormat')
+        )
+      );
     this.form.get('lossTowExpertId')?.setValue(oclaimExpert);
-    this.form.get('distributionLossDistDate')?.setValue(new Date());
-    this.form.get('distributionLossDistUser')?.setValue(userCode);
+    this.form
+      .get('distributionLossDistDate')
+      ?.setValue(
+        this.datePipe.transform(
+          new Date(),
+          this.dateFormat('reportDateTimeFormat')
+        )
+      );
+    this.form.get('distributionLossDistUser')?.setValue(this.userCode);
+    this.form.get('distributionLossDistUserName')?.setValue(this.displayName);
     this.form.get('lossTowExpertNamePreference')?.setValue(oclaimexpertname);
     this.form.get('lossTowExpertNamePreferenceById')?.setValue(oclaimExpert);
     this.form.get('distributionTema')?.setValue('N');
@@ -1685,10 +2091,12 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.form.get('lossTowExpertNamePreference')?.setValue('');
     this.form.get('lossTowExpertNamePreferenceById')?.setValue('');
     this.form.get('distributionExpTypeUser')?.setValue(null);
+    this.form.get('distributionExpTypeUserName')?.setValue(null);
     this.form.get('distributionExpTypeDate')?.setValue(null);
     this.form.get('lossTowExpertId')?.setValue(null);
-    this.form.get('distributionLossDistDate')?.setValue(null);
+    this.form.get('distributionLossDistDate')?.setValue('');
     this.form.get('distributionLossDistUser')?.setValue(null);
+    this.form.get('distributionLossDistUserName')?.setValue(null);
     this.form.get('distributionLossDistributionBoolean')?.setValue(false);
     this.form.get('lossTowNeedExpertReportBoolean')?.setValue(false);
   }
@@ -1699,8 +2107,10 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         data: {
           carPlate: this.policyData?.carPlate,
           brandDescription: this.policyData?.brandDescription,
-          notificationContactName: this.policyData?.notificationContactName,
-          notificationContactPhone: this.policyData?.notificationContactPhone,
+          notificationContactName: this.form.get('notificationContactName')
+            ?.value,
+          notificationContactPhone: this.form.get('notificationContactPhone')
+            ?.value,
           towFromTownDescription: this.policyData?.towFromTownDescription,
           towToTownDescription: this.policyData?.towToTownDescription,
           towingComDesc: this.policyData?.towingComDesc,
@@ -1721,6 +2131,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
           )?.value,
           distributionTowDistDate: this.form.get('distributionTowDistDate')
             ?.value,
+          distributionLossArrivedUser: this.form.get(
+            'distributionLossArrivedUser'
+          )?.value,
           type: type,
         },
         width: '2000px',
@@ -1737,11 +2150,11 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
             ?.patchValue(data.distributionLossArrivedBoolean);
           this.form
             .get('distributionLossArrivedDate')
-            ?.patchValue(data.distributionLossArrivedDate);
+            ?.patchValue(this.formatDateTime(data.distributionLossArrivedDate));
           this.form
             .get('distributionLossArrivedUser')
             ?.patchValue(data.distributionLossArrivedUser);
-          this.getPolicyCarByNotificationId(this.notificationId);
+          this.saveAction();
           // const data2 = this.form.get('carsDispatchFollowUp')?.value;
           // console.log(data2[0]);
           // this.getPolicyCarByNotificationId(this.policyData?.notificationId!);
@@ -1779,17 +2192,20 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     });
   }
   dispatchTowingShow(): boolean {
+    const notificationMatDamageId = this.form.get(
+      'notificationMatDamageId'
+    )?.value;
     return (
-      this.policyData?.notificationMatDamageId === '5' ||
-      this.policyData?.notificationMatDamageId === '6' ||
-      this.policyData?.notificationMatDamageId === '10'
+      notificationMatDamageId === '5' ||
+      notificationMatDamageId === '6' ||
+      notificationMatDamageId === '10'
     );
   }
   shouldShowDistributionTowNatureLink(): boolean {
-    return (
-      this.policyData?.distributionTowNatureId !== null ||
-      this.policyData?.distributionTowNatureId !== '0'
-    );
+    const distributionTowNatureId = this.form.get(
+      'distributionTowNatureId'
+    )?.value;
+    return distributionTowNatureId !== null || distributionTowNatureId !== '0';
   }
   isSuggestLinkDisabled(): boolean {
     return (

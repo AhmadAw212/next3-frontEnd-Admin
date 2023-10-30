@@ -60,7 +60,7 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges): void {
     // throw new Error('Method not implemented.');
-    this.getNotificationComplaintsByDepCount();
+    // this.getNotificationComplaintsByDepCount();
   }
   ngOnDestroy(): void {
     if (this.LossCarDataByNotificationSub) {
