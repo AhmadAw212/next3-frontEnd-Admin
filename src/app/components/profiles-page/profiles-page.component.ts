@@ -90,7 +90,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
             (profile: CoreProfile) =>
               profile.code === 'adm' || profile.code === 'cc'
           );
-        console.log(this.userProfiles);
+        // console.log(this.userProfiles);
       },
       error: (err) => {
         console.log(err);

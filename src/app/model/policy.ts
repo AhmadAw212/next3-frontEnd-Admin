@@ -126,7 +126,7 @@ export interface Policy {
   lossTowId?: string;
   distributionTowTotalCost?: number;
   lossTowBlockedId?: string;
-
+  distributionExpExpertId?: string;
   lossTowLifterId?: string;
   lossTowOffRoadId?: string;
   lossTowPickUpId?: string;

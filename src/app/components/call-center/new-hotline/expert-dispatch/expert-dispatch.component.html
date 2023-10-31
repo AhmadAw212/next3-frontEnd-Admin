@@ -1,155 +1,253 @@
 <div class="grid-container panel-class-style">
   <h2 class="h5">{{ dico?.dico_expert_dispatch || "dico_expert_dispatch" }}</h2>
 </div>
-<div class="container p-3">
-  <div class="panel row m-2">
-    <div class="row p-3">
-      <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center">
-          <label>{{ dico?.dico_insurance || "dico_insurance" }}</label>
-          <input class="form-control ms-4" [value]="insuranceDesc" disabled />
+<ng-container *ngIf="!showVnotifications; else showVNotification">
+  <div class="container p-3">
+    <div class="panel row m-2">
+      <div class="row p-3">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <label>{{ dico?.dico_insurance || "dico_insurance" }}</label>
+            <input class="form-control ms-4" [value]="insuranceDesc" disabled />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- [href]="
+              'tel:' + telExtension + policyData?.notificationContactPhone
+            " -->
+            <label>{{ dico?.dico_phone || "dico_phone" }}</label>
+            <a
+              [href]="'tel:' + telExtension + oClaim?.oclaimexpertmobile"
+              *ngIf="showTelIcon === 'true'"
+            >
+              <img
+                src="./assets/icons/phone.png"
+                [style.height]="'20px'"
+                class="me-1"
+            /></a>
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <!-- [href]="
-            'tel:' + telExtension + policyData?.notificationContactPhone
-          " -->
-          <label>{{ dico?.dico_phone || "dico_phone" }}</label>
-          <a
-            [href]="'tel:' + telExtension + oClaim?.oclaimexpertmobile"
-            *ngIf="showTelIcon === 'true'"
-          >
-            <img
-              src="./assets/icons/phone.png"
-              [style.height]="'20px'"
-              class="me-1"
-          /></a>
-        </div>
-      </div>
-    </div>
 
-    <div class="row p-3">
-      <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center">
-          <label>{{ dico?.dico_expert_name || "dico_expert_name" }}</label>
-          <input
-            class="form-control ms-4"
-            [value]="oClaim?.oclaimexpertname"
-            disabled
-          />
+      <div class="row p-3">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <label>{{ dico?.dico_expert_name || "dico_expert_name" }}</label>
+            <input
+              class="form-control ms-4"
+              [value]="oClaim?.oclaimexpertname"
+              disabled
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <label>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</label>
+            <input
+              class="form-control ms-5"
+              [value]="oClaim?.oclaimexpertmobile"
+              disabled
+            />
+          </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center">
-          <label>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</label>
-          <input
-            class="form-control ms-5"
-            [value]="oClaim?.oclaimexpertmobile"
-            disabled
-          />
-        </div>
-      </div>
-    </div>
 
-    <div class="row p-3">
-      <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center">
-          <label>{{ dico?.dico_status || "dico_status" }}</label>
-          <input
-            class="form-control ms-5"
-            [value]="oClaim?.oclaimexpertstatus"
-            disabled
-          />
+      <div class="row p-3">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <label>{{ dico?.dico_status || "dico_status" }}</label>
+            <input
+              class="form-control ms-5"
+              [value]="oClaim?.oclaimexpertstatus"
+              disabled
+            />
+          </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="d-flex justify-content-between align-items-center">
-          <label>{{ dico?.dico_dispatch || "dico_dispatch" }}</label>
-          <input
-            class="form-control ms-5"
-            [value]="oClaim?.oclaimexpertdisp"
-            disabled
-          />
+        <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <label>{{ dico?.dico_dispatch || "dico_dispatch" }}</label>
+            <input
+              class="form-control ms-5"
+              [value]="oClaim?.oclaimexpertdisp"
+              disabled
+            />
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="container p-3">
-  <div class="panel row m-2">
-    <div class="row p-3">
-      <div class="col-md-6">
-        <label class="mb-0">{{
-          dico?.dico_not_available_reason || "dico_not_available_reason"
-        }}</label>
-      </div>
-    </div>
-    <div class="row p-3">
-      <div class="col-md-7">
-        <div class="d-flex justify-content-between align-items-center">
-          <label class="ms-5">{{ dico?.dico_reasons || "dico_reasons" }}</label>
-          <select
-            name="reasons"
-            id="reasons"
-            class="form-select ms-5"
-            [(ngModel)]="expertReasonCode"
-          >
-            <option *ngFor="let reason of expertReasons" [value]="reason.code">
-              {{ reason.description }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row p-3">
-      <div class="col-md-7">
-        <div class="d-flex justify-content-between align-items-center">
-          <label class="ms-5">{{
-            dico?.dico_comments || "dico_comments"
+  <div class="container p-3">
+    <div class="panel row m-2">
+      <div class="row p-3">
+        <div class="col-md-6">
+          <label class="mb-0">{{
+            dico?.dico_not_available_reason || "dico_not_available_reason"
           }}</label>
-          <input class="form-control ms-4" [(ngModel)]="comments" />
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col-md-7">
+          <div class="d-flex justify-content-between align-items-center">
+            <label class="ms-5">{{
+              dico?.dico_reasons || "dico_reasons"
+            }}</label>
+            <select
+              name="reasons"
+              id="reasons"
+              class="form-select ms-5"
+              [(ngModel)]="expertReasonCode"
+            >
+              <option
+                *ngFor="let reason of expertReasons"
+                [value]="reason.code"
+              >
+                {{ reason.description }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col-md-7">
+          <div class="d-flex justify-content-between align-items-center">
+            <label class="ms-5">{{
+              dico?.dico_comments || "dico_comments"
+            }}</label>
+            <input class="form-control ms-4" [(ngModel)]="comments" />
+          </div>
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col-md-7 ms-5">
+          <div class="d-flex justify-content-center align-items-center">
+            <button
+              class="button-class"
+              type="button"
+              [ngClass]="{ 'disabled-button': disableChooseButton() }"
+              (click)="getFcExpertUnavailable()"
+            >
+              {{
+                dico?.dico_choose_another_expert || "dico_choose_another_expert"
+              }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="container">
     <div class="row p-3">
-      <div class="col-md-7 ms-5">
-        <div class="d-flex justify-content-center align-items-center">
+      <div class="col">
+        <div class="d-flex justify-content-end align-items-center">
           <button
-            class="button-class"
+            class="button-class me-2"
             type="button"
-            [ngClass]="{ 'disabled-button': disableChooseButton() }"
-            (click)="getFcExpertUnavailable()"
+            (click)="dispatchForm(true)"
           >
-            {{
-              dico?.dico_choose_another_expert || "dico_choose_another_expert"
-            }}
+            {{ dico?.dico_dispatch || "dico_dispatch" }}
+          </button>
+          <button
+            class="button-class me-2"
+            type="button"
+            (click)="dispatchForm(false)"
+          >
+            {{ dico?.dico_no_expert || "dico_no_expert" }}
           </button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container">
-  <div class="row p-3">
-    <div class="col">
-      <div class="d-flex justify-content-end align-items-center">
-        <button
-          class="button-class me-2"
-          type="button"
-          (click)="dispatchForm(true)"
+</ng-container>
+<ng-template #showVNotification>
+  <div class="container-fluid p-2">
+    <div class="row p-2">
+      <div class="col-md-3 d-flex align-items-center justify-content-start">
+        <label class="me-3 text-nowrap">{{
+          dico?.dico_expert_name || "dico_expert_name"
+        }}</label>
+        <select
+          name="newRelated"
+          id="newRelated"
+          class="form-select"
+          [(ngModel)]="newRelated"
         >
-          {{ dico?.dico_dispatch || "dico_dispatch" }}
-        </button>
-        <button
-          class="button-class me-2"
-          type="button"
-          (click)="dispatchForm(false)"
-        >
-          {{ dico?.dico_no_expert || "dico_no_expert" }}
-        </button>
+          <option
+            *ngFor="let relatedType of relatedTypes"
+            [value]="relatedType.code"
+          >
+            {{ relatedType.description }}
+          </option>
+        </select>
+        <!-- <input
+          type="text"
+          name="expertName"
+          id="expertName"
+          class="form-control"
+          [(ngModel)]="newRelated"
+        /> -->
+      </div>
+    </div>
+    <div class="panel row m-2">
+      <table>
+        <thead [style.position]="'static'">
+          <tr>
+            <th>{{ dico?.dico_notification || "dico_notification" }}</th>
+            <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+            <th>{{ dico?.dico_car_brand || "dico_car_brand" }}</th>
+            <th>{{ dico?.dico_contact_phone || "dico_contact_phone" }}</th>
+            <th>{{ dico?.dico_delay_minute || "dico_delay_minute" }}</th>
+            <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+            <th>{{ dico?.dico_insured || "dico_insured" }}</th>
+            <th>{{ dico?.dico_dist_loss_town || "dico_dist_loss_town" }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let vNotification of vNotification; let i = index"
+            (click)="selectVNotification(vNotification, i)"
+          >
+            <td>{{ vNotification.visa }}</td>
+            <td>{{ vNotification.carPlate }}</td>
+            <td>{{ vNotification.carBrandTrademark }}</td>
+            <td>{{ vNotification.contactPhone }}</td>
+            <td>{{ vNotification.delayMinute }}</td>
+            <td>{{ vNotification.expertName }}</td>
+            <td>{{ vNotification.insuredName }}</td>
+            <td>{{ vNotification.distributionLossTown }}</td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row p-3">
+      <div class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button
+            class="button-class me-2"
+            type="button"
+            (click)="notRelated()"
+          >
+            {{ dico?.dico_not_related || "dico_not_related" }}
+          </button>
+          <button
+            class="button-class me-2"
+            type="button"
+            (click)="createRelated()"
+          >
+            {{ dico?.dico_create_related || "dico_create_related" }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>

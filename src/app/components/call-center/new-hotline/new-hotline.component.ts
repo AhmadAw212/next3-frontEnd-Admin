@@ -431,7 +431,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       lossTowCarryingGoodId: [''],
       lossTowLifterId: [''],
       towingComDesc: [''],
-      distributionLossDistDate: [null],
+      distributionLossDistDate: [''],
       towingComId: [''],
       lossTowRsId: [''],
       distributionExpExpertDesc: [''],
@@ -503,6 +503,10 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         'distributionLossArrivedDate',
         'distributionLossArrivedUser',
         'distributionLossArrivedUserName',
+        'distributionExpCanceledId',
+        'distributionExpCanceledUserName',
+        'distributionExpCanceledUser',
+        'distributionExpCanceledDate',
       ];
 
       controlsToReset.forEach((controlName) => {
@@ -621,14 +625,14 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         lossTowDriverRelationshipId.disable();
         lossTowDriverName.disable();
         lossTowNbrVehInvolved.disable();
-        lossTowEreportedById.disable();
+        // lossTowEreportedById.disable();
         lossTowExpertNamePreference?.disable();
       } else {
         notificationContactName.enable();
         lossTowDriverRelationshipId.enable();
         lossTowDriverName.enable();
         lossTowNbrVehInvolved.enable();
-        lossTowEreportedById.enable();
+        // lossTowEreportedById.enable();
         lossTowExpertNamePreference?.enable();
       }
 
@@ -1116,27 +1120,20 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       lossTowDriverName?.disable();
       lossTowNbrVehInvolved?.disable();
     }
-
-    if (
-      lossTowReportedById?.value !== '6' ||
-      notificationMatDamageId.value === '6'
-    ) {
+    if (lossTowReportedById?.value !== '6') {
       lossTowEreportedById?.disable();
     }
-    //  else {
-    //   lossTowEreportedById?.enable();
-    // }
-
     this.form
       .get('lossTowReportedById')
       ?.valueChanges.subscribe((lossTowReportedBy) => {
         if (lossTowReportedBy !== '6') {
-          lossTowEreportedById.setValue('');
           lossTowEreportedById?.disable();
+          lossTowEreportedById.setValue('');
         } else {
           lossTowEreportedById?.enable();
         }
       });
+
     if (lossTowExpertNamePreference?.value === ' ') {
       lossTowExpertNamePreference?.disable();
     }
@@ -2004,46 +2001,113 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   openDispatchExpertDialog() {
-    this.showrelated = 'Y';
+    // this.showrelated = 'Y';
+    if (this.policyData) {
+      const dialogRef = this.dialog.open(ExpertDispatchComponent, {
+        data: {
+          insuranceId: this.policyData?.insuranceId,
+          insuranceDesc: this.policyData?.insuranceDesc,
+          distributionTownId: this.form.get('distributionTownId')?.value,
+          notificationMatDamageId: this.form.get('notificationMatDamageId')
+            ?.value,
+          notificationReportedDate: this.form.get('notificationReportedDate')
+            ?.value,
+          notificationId: this.form.get('notificationId')?.value,
+          townTerritoryList: this.policyData?.townTerritoryList,
+          telExtension: this.telExtension,
+          showTelIcon: this.showTelIcon,
+          lossTowId: this.policyData?.lossTowId,
+          notificationVisa: this.policyData?.notificationVisa,
+        },
+        width: '800px',
+        height: '500px',
+      });
 
-    const dialogRef = this.dialog.open(ExpertDispatchComponent, {
-      data: {
-        insuranceId: this.policyData?.insuranceId,
-        insuranceDesc: this.policyData?.insuranceDesc,
-        distributionTownId: this.form.get('distributionTownId')?.value,
-        notificationMatDamageId: this.form.get('notificationMatDamageId')
-          ?.value,
-        notificationReportedDate: this.form.get('notificationReportedDate')
-          ?.value,
-        notificationId: this.notificationId,
-        townTerritoryList: this.policyData?.townTerritoryList,
-        telExtension: this.telExtension,
-        showTelIcon: this.showTelIcon,
-        lossTowId: this.policyData?.lossTowId,
-      },
-      width: '600px',
-      height: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe((data) => {
-      // this.getPolicyCarByNotificationId(this.notificationId!);
-      if (data?.dispatch) {
-        const distributionTownName = this.form.get(
-          'distributionTownName'
-        )?.value;
-        const { oclaimExpert, oclaimexpertname } = data;
-
-        if (distributionTownName && oclaimExpert) {
-          this.handleClaimExpertSelection(oclaimExpert, oclaimexpertname);
-        } else {
-          this.handleClaimExpertDeselection();
-        }
-      } else {
+      dialogRef.afterClosed().subscribe((data) => {
+        // this.getPolicyCarByNotificationId(this.notificationId!);
         if (data) {
-          this.noExpert();
+          if (data?.dispatch) {
+            const distributionTownName = this.form.get(
+              'distributionTownName'
+            )?.value;
+            const { oclaimExpert, oclaimexpertname } = data;
+
+            if (distributionTownName && oclaimExpert) {
+              this.handleClaimExpertSelection(oclaimExpert, oclaimexpertname);
+            } else {
+              this.handleClaimExpertDeselection();
+            }
+          } else {
+            if (data) {
+              this.noExpert();
+            }
+          }
+
+          if (data.createRelated) {
+            console.log(data);
+            // const distributionExpExpertId = this.form.get(
+            //   'distributionExpExpertId'
+            // )?.value;
+            // const distributionExpExpertDesc = this.form.get(
+            //   'distributionExpExpertDesc'
+            // )?.value;
+            // const lossTowExpertId = this.form.get('lossTowExpertId')?.value;
+            // const lossTowExpertNamePreference = this.form.get(
+            //   'lossTowExpertNamePreference'
+            // )?.value;
+            this.form
+              .get('distributionExpExpertId')
+              ?.setValue(data.lossTowExpertId);
+            this.form
+              .get('distributionExpExpertDesc')
+              ?.setValue(data.expertName);
+            this.form.get('distributionExpTypeId')?.setValue('R');
+            this.form.get('distributionExpTypeUser')?.setValue(this.userCode);
+            this.form
+              .get('distributionExpTypeUserName')
+              ?.setValue(this.displayName);
+            this.form
+              .get('distributionExpTypeDate')
+              ?.setValue(
+                this.datePipe.transform(
+                  new Date(),
+                  this.dateFormat('reportDateTimeFormat')
+                )
+              );
+            this.form.get('distributionLossDistUser')?.setValue(this.userCode);
+            this.form
+              .get('distributionLossDistUserName')
+              ?.setValue(this.displayName);
+            this.form
+              .get('distributionLossDistDate')
+              ?.setValue(
+                this.datePipe.transform(
+                  new Date(),
+                  this.dateFormat('reportDateTimeFormat')
+                )
+              );
+            // this.form.get('lossTowExpertId')?.setValue(this.userCode);
+            // const lossTowExpertNamePreference = this.form.get(
+            //   'lossTowExpertNamePreference'
+            // );
+            // if (lossTowExpertNamePreference?.disable) {
+            //   lossTowExpertNamePreference?.enable;
+            // }
+            this.form
+              .get('lossTowExpertNamePreferenceById')
+              ?.setValue(data.lossTowExpertId);
+            this.form
+              .get('lossTowExpertNamePreference')
+              ?.setValue(data.expertName);
+            this.form.get('distributionTema')?.setValue('N');
+            this.form
+              .get('distributionLossDistributionBoolean')
+              ?.setValue(true);
+            this.form.get('lossTowNeedExpertReportBoolean')?.setValue(true);
+          }
         }
-      }
-    });
+      });
+    }
   }
   handleClaimExpertSelection(oclaimExpert: string, oclaimexpertname: string) {
     const userCode = this.profileService.getUser();

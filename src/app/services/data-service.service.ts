@@ -1874,4 +1874,14 @@ export class DataServiceService {
       `${this.userUrl}/call_center/getFcDoubleToCheck?inotificationid=${inotificationid}&ipolcarid=${ipolcarid}&ilossdate=${ilossdate}`
     );
   }
+
+  createRelated(
+    notificationId: string,
+    notificationRelatedVisa: number,
+    relatedTypeLov_code: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/createRelated?notificationId=${notificationId}&notificationRelatedVisa=${notificationRelatedVisa}&relatedTypeLov_code=${relatedTypeLov_code}`
+    );
+  }
 }

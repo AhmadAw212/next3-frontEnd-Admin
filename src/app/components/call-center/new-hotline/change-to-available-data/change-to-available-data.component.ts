@@ -11,6 +11,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
 import { CreateNoDataDialogComponent } from '../create-no-data-dialog/create-no-data-dialog.component';
 import { type } from 'src/app/model/type';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-change-to-available-data',
@@ -38,7 +39,7 @@ export class ChangeToAvailableDataComponent implements OnInit {
   changeData?: any;
   insuranceCode: string = 'ALL';
   companies?: any;
-  isFlipped: boolean = false;
+  isFlipped: boolean[] = [];
   searchPolicyData: any[] = [];
   getInsuranceSubscription?: Subscription;
   polserno?: string;
@@ -120,8 +121,9 @@ export class ChangeToAvailableDataComponent implements OnInit {
       this.distributionNoDataCarBrand = '';
     }
   }
-  toggleFlip() {
-    this.isFlipped = !this.isFlipped;
+
+  toggleFlip(index: number): void {
+    this.isFlipped[index] = !this.isFlipped[index];
   }
   ngOnInit(): void {
     this.getDico();
@@ -171,34 +173,20 @@ export class ChangeToAvailableDataComponent implements OnInit {
     this.dialogRef.close(this.changeData);
   }
   searchPolicy() {
-    let asOfDate: string | null = null;
+    // let asOfDate: string | null = null;
+    console.log(this.iAsOfDate);
+    const parseData = moment(this.iAsOfDate, 'DD/MM/YYYY').format(
+      'DD-MMM-YYYY'
+    );
+    // console.log(parseData);
 
-    // Check if this.iAsOfDate is a valid string
-    if (typeof this.iAsOfDate === 'string') {
-      // Step 1: Parse the initial date string into a JavaScript Date object
-      const initialDateParts = this.iAsOfDate.split('/');
-      if (initialDateParts.length === 3) {
-        const initialDate = new Date(
-          parseInt(initialDateParts[2]), // Year
-          parseInt(initialDateParts[1]) - 1, // Month (0-based index)
-          parseInt(initialDateParts[0]) // Day
-        );
-
-        // Step 2: Format the Date object into 'dd-MMM-YYYY' format
-        asOfDate = this.datePipe.transform(initialDate, 'dd-MMM-yyyy');
-      }
-    } else if (this.iAsOfDate instanceof Date) {
-      // Handle the case where this.iAsOfDate is a Date object
-      asOfDate = this.datePipe.transform(this.iAsOfDate, 'dd-MMM-yyyy');
-    }
-
-    if (asOfDate) {
+    if (parseData) {
       this.dataService
         .searchPolicy(
           this.iSearchBy!,
           this.iSearchValue!,
           this.iPolicyType!,
-          asOfDate,
+          parseData,
           this.insuranceCode!,
           ''
         )
@@ -211,9 +199,6 @@ export class ChangeToAvailableDataComponent implements OnInit {
             console.log(err);
           },
         });
-    } else {
-      // Handle the case where this.iAsOfDate is neither a valid string nor a Date object
-      console.log('Invalid asOfDate format');
     }
   }
 }

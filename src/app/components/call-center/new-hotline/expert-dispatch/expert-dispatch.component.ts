@@ -35,8 +35,15 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   expertReasonCode?: string;
   lossTowId?: string;
   statusCode?: number;
-  vNotification?: any[];
+  vNotification: any[] = [];
   territoryListId?: string;
+  showVnotifications: boolean = false;
+  newRelated: string = '';
+  relatedTypes: type[] = [];
+  notificationVisa?: number;
+  selectedVNotification?: any;
+  selectedIndex: number = 0;
+  // vNotificationsTerr: any[] = [];
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -60,14 +67,16 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
     this.telExtension = data.telExtension;
     this.showTelIcon = data.showTelIcon;
     this.lossTowId = data.lossTowId;
+    this.notificationVisa = data.notificationVisa;
     console.log(data);
   }
   ngOnDestroy(): void {}
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.getDico();
-    this.getVNotificationfindByTeritory();
-    this.getFcExpertDispatch();
+    await this.getVNotificationfindByTeritory();
+    await this.getFcExpertDispatch();
     this.getExpertReasonLovFindAll();
+    this.getRelatedTypeLovFindAll();
   }
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
@@ -85,17 +94,29 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
       this.oClaim.oclaimexpert == null
     );
   }
-  getVNotificationfindByTeritory() {
-    // console.log(this.disableChooseButton());
+  createRelated() {
+    if (!this.newRelated) {
+      return this.alertifyService.error('You must choose type ');
+    }
     this.dataService
-      .getVNotificationfindByTeritory(
-        this.territoryListId!,
-        this.insuranceId!,
-        this.notificationId!
+      .createRelated(
+        this.notificationId!,
+        this.notificationVisa!,
+        this.newRelated
       )
       .subscribe({
         next: (res) => {
-          this.vNotification = res.data;
+          const visa = this.selectedVNotification.visa;
+          const lossTowExpertId = this.selectedVNotification.lossTowExpertId;
+          const expertName = this.selectedVNotification.expertName;
+          const expertId = this.selectedVNotification.expertId;
+          this.dialogRef.close({
+            createRelated: true,
+            visa: visa,
+            lossTowExpertId: lossTowExpertId,
+            expertName: expertName,
+            expertId: expertId,
+          });
           console.log(res);
         },
         error: (err) => {
@@ -103,7 +124,56 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
         },
       });
   }
+  selectVNotification(vNotification: any, index: number) {
+    this.selectedVNotification = vNotification;
+    this.selectedIndex = index;
+    console.log(this.selectedVNotification);
+  }
+  async getVNotificationfindByTeritory() {
+    // console.log(this.disableChooseButton());
+    try {
+      const response = await lastValueFrom(
+        this.dataService.getVNotificationfindByTeritory(
+          this.territoryListId!,
+          this.insuranceId!,
+          this.notificationId!
+        )
+      ).then((res) => {
+        this.vNotification = res.data;
+        // console.log(this.vNotification);
+        // this.vNotification.push({ data: 'data' });
+        if (this.vNotification && this.vNotification.length > 0) {
+          this.showVnotifications = true;
 
+          this.selectVNotification(this.vNotification[0], this.selectedIndex);
+        } else {
+          this.showVnotifications = false;
+        }
+      });
+      console.log(this.showVnotifications);
+    } catch (error) {
+      console.error('An error occurred:', error);
+      // Handle the error as needed, e.g., show a user-friendly message
+    }
+
+    // .subscribe({
+    //   next: (res) => {
+    //     this.vNotification = res.data;
+    //     this.vNotification.push({ data: 'data' });
+    //     if (this.vNotification) {
+    //       this.showVnotifications = true;
+    //     }
+
+    //     console.log(res.data);
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
+  }
+  notRelated() {
+    this.showVnotifications = false;
+  }
   async getFcExpertDispatch() {
     try {
       let parseDate = this.notificationReportedDate
@@ -135,6 +205,7 @@ export class ExpertDispatchComponent implements OnInit, OnDestroy {
   getRelatedTypeLovFindAll() {
     this.dataService.getRelatedTypeLovFindAll().subscribe({
       next: (res) => {
+        this.relatedTypes = res.data;
         // console.log(res);
       },
       error: (err) => {
