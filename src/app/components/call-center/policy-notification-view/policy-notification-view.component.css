@@ -1,0 +1,63 @@
+  .grid-container2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Adjust the column sizes as needed */
+    gap: 5px; /* Adjust the gap between panels */
+  }
+
+  .fixed-container {
+    /* Add styles for the fixed container */
+    position: sticky;
+
+    overflow-x: auto;
+    top: 0;
+    background-color: #f0f0f0; /* Add a background color or any other styling */
+    padding: 20px;
+  }
+
+  .dynamic-container {
+    /* Add styles for the dynamic container */
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+
+  /* Media Query for Mobile Devices */
+  @media (max-width: 767px) {
+    .grid-container2 {
+      grid-template-columns: 1fr; /* Make it a single column layout on small screens */
+    }
+    /* .panel{
+      width: 100%;
+      overflow-x: auto;
+    } */
+    .fixed-container {
+      position: static; /* Remove sticky position on small screens */
+      background-color: inherit; /* Inherit background color */
+      background-color: #f0f0f0;
+    }
+    .dynamic-container{
+        width: 100%;
+        overflow-x: auto;
+
+    }
+
+  }
+
+  @media (max-width: 1080px) {
+    .grid-container2 {
+      grid-template-columns: 1fr; /* Make it a single column layout on small screens */
+    }
+    .flip-card{
+      /* margin-right: 10px; */
+      margin-bottom: 10px;
+    }
+    .fixed-container {
+      position: static; /* Remove sticky position on small screens */
+      background-color: inherit; /* Inherit background color */
+      background-color: #f0f0f0;
+    }
+    .dynamic-container{
+      width: 100%;
+      overflow-x: auto;
+
+  }
+  }

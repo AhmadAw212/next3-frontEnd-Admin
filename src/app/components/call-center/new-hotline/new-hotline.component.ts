@@ -293,18 +293,14 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.getDico();
     this.route.params.subscribe((params) => {
       this.notificationId = params['notificationId'];
-
       this.getPolicyCarByNotificationId(this.notificationId);
       this.userRolesService.getUserRoles();
       this.getCompaniesPerUser();
-
       this.getReportedByLovFindAll();
       this.getRelationToOwnerLovFindAll();
       this.getNotificationNatureLovFindAll();
       this.getEReportedByLovFindAll();
-
       this.carRespReasonCode();
-
       this.getExpCancelReasonLovFindAll();
       this.getExpertDispatchTypeLovFindAll();
       this.getUserProfileInfo();
@@ -359,7 +355,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionExpCanceledId: [''],
       distributionTownName: [''],
       distributionTownDescription: [''],
-      supplierName: [''],
+      lossTow2ndExpertName: [''],
       distributionExpCanceledUser: [''],
       distributionExpCanceledUserName: [''],
       distributionExpCanceledDate: [null],
@@ -435,6 +431,42 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       towingComId: [''],
       lossTowRsId: [''],
       distributionExpExpertDesc: [''],
+      distributionNoDataBoolean: [false],
+      distributionNoDataTypeId: [''],
+      distributionNoDataUser: [''],
+      distributionNoDataDate: [''],
+      distributionNoDataPlateB: [''],
+      distributionNoDataPlate: [''],
+      distributionNoDataPolicy: [''],
+      distributionNoDataEffDate: [''],
+      distributionNoDataExpDate: [''],
+      distributionNoDataName: [''],
+      distributionNoDataCarBrand: [''],
+      distributionNoDataBroker: [''],
+      distributionNoDataRemarks: [''],
+      clientId: [''],
+      policyNumber: [''],
+      policyId: [''],
+      productsType: [''],
+      brokerDesc: [''],
+      policyAmendment: [''],
+      policyEffectiveDate: [''],
+      policyExpiryDate: [''],
+      carYear: [''],
+      policyCar: [''],
+      productsCode: [''],
+      carPlate: [''],
+      carOwnerFirstName: [''],
+      carOwnerFatherName: [''],
+      carOwnerFamilyName: [''],
+      notificationVisa: [''],
+      carDriverFirstName: [''],
+      carDriverFatherName: [''],
+      carDriverFamilyName: [''],
+      carShapeId: [''],
+      policyCarId: [''],
+      // carPlate:[''],
+      // carYear:[''],
       // lossTowRsName: [''],
     });
   }
@@ -555,6 +587,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   lossTowExpertNameValueChangeListener(event: any) {
+    console.log('error');
     const lossTowExpertName = this.form.get(
       'lossTowExpertNamePreference'
     )?.value;
@@ -563,14 +596,14 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     //   ?.setValue(event);
 
     this.form.get('lossTowExpertId')?.setValue(event);
-    this.form.get('lossTowExpertNamePreferenceById')?.setValue(event);
+    // this.form.get('lossTowExpertNamePreferenceById')?.setValue(event);
 
     // if (lossTowExpertId) {
     //   this.getSupplierFindById(event);
     // } else {
     if (!lossTowExpertName) {
       this.form.get('lossTowExpertId')?.setValue('');
-      this.form.get('lossTowExpertNamePreferenceById')?.setValue('');
+      // this.form.get('lossTowExpertNamePreferenceById')?.setValue('');
       this.form.get('distributionExpExpertId')?.setValue('');
       this.form.get('distributionExpExpertDesc')?.setValue('');
       this.form.get('distributionLossDistributionBoolean')?.setValue(false);
@@ -587,7 +620,6 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.form.get('distributionExpTypeUserName')?.setValue('');
       this.form.get('expertMobilePhone')?.setValue('');
     }
-
     // console.log(lossTowExpertId);
     // }
   }
@@ -654,6 +686,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     }
   }
   async saveAction() {
+    // console.log(this.form.value);
     if (
       !this.validateDatePair(
         'distributionLossDistDate',
@@ -677,6 +710,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     const lossTowLossDate = this.form.get('lossTowLossDate')?.value;
     const towToTownName = this.form.get('towToTownName')?.value;
     const lossTowNbrVehInvolved = this.form.get('lossTowNbrVehInvolved')?.value;
+    const fromTowTownName = this.form.get('fromTowTownName')?.value;
     const lossTowDriverRelationshipId = this.form.get(
       'lossTowDriverRelationshipId'
     )?.value;
@@ -693,6 +727,15 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     if (!lossTowDriverRelationshipId) {
       return this.alertifyService.error('Relation Driver To Owner is Required');
     }
+    if (
+      !fromTowTownName &&
+      (notificationMatDamageId === '6' ||
+        notificationMatDamageId === '5' ||
+        notificationMatDamageId === '10')
+    ) {
+      return this.alertifyService.error('From City is Required');
+    }
+
     if (
       !towToTownName &&
       (notificationMatDamageId === '6' ||
@@ -724,6 +767,26 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.changeCo = 'N';
     }
 
+    await this.dataService.mergeNotification(extractedValues).subscribe({
+      next: (res) => {
+        this.alertifyService.success(res.message);
+        this.getPolicyCarByNotificationId(this.notificationId).then(
+          (policyData) => {
+            if (policyData) {
+              if (policyData.policyExpired === 'Y') {
+                this.alertifyService.dialogAlert('Policy expired', 'Expired');
+              }
+              if (policyData.policyDeleted === 'Y') {
+                this.alertifyService.dialogAlert('Policy deleted', 'Deleted');
+              }
+            }
+          }
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
     await this.getFcDoubleToCheck().subscribe((presultdouble) => {
       if (presultdouble === 'NODOUBLE') {
         // Handle the case where there are no doubles.
@@ -750,33 +813,12 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
             if (dataDisplay.length > 0) {
               // Concatenate and display both visa numbers in the same pop-up.
               const combinedData = dataDisplay.join('<br>');
-              console.log(combinedData);
+              // console.log(combinedData);
               this.alertifyService.dialogAlert(combinedData, 'Check Double');
             }
           });
         }
       }
-    });
-
-    await this.dataService.mergeNotification(extractedValues).subscribe({
-      next: (res) => {
-        this.alertifyService.success(res.message);
-        this.getPolicyCarByNotificationId(this.notificationId).then(
-          (policyData) => {
-            if (policyData) {
-              if (policyData.policyExpired === 'Y') {
-                this.alertifyService.dialogAlert('Policy expired', 'Expired');
-              }
-              if (policyData.policyDeleted === 'Y') {
-                this.alertifyService.dialogAlert('Policy deleted', 'Deleted');
-              }
-            }
-          }
-        );
-      },
-      error: (err) => {
-        console.log(err);
-      },
     });
 
     // Log the extracted values
@@ -880,12 +922,22 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       lossTowStaffCaseMngr: formValues.lossTowStaffCaseMngr,
       distributionTowDistUser: formValues.distributionTowDistUser,
       notificationContactName: formValues.notificationContactName,
+      carOwnerFirstName: formValues.carOwnerFirstName,
+      carOwnerFatherName: formValues.carOwnerFatherName,
+      carOwnerFamilyName: formValues.carOwnerFamilyName,
+      carDriverFirstName: formValues.carDriverFirstName,
+      carDriverFatherName: formValues.carDriverFatherName,
+      carDriverFamilyName: formValues.CarDriverFamilyName,
+      carShapeId: formValues.carShapeId,
+      carPlate: formValues.carPlate,
+      carYear: formValues.carYear,
+      policyCarId: formValues.policyCarId,
       lossTowDriverRelationshipId: formValues.lossTowDriverRelationshipId,
       lossTowDriverName: formValues.lossTowDriverName,
       notificationContactPhone: formValues.notificationContactPhone,
       lossTowNbrVehInvolved: formValues.lossTowNbrVehInvolved,
       notificationMatDamageId: formValues.notificationMatDamageId,
-
+      distributionNoDataTypeId: formValues.distributionNoDataTypeId,
       carRespReasonCode: formValues.carRespReasonCode,
       distributionExpCanceledId: formValues.distributionExpCanceledId,
       distributionExpCanceledUser: formValues.distributionExpCanceledUser,
@@ -896,6 +948,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       lossTow2ndExpertId: formValues.lossTow2ndExpertId,
       distributionLossDistributionBoolean:
         formValues.distributionLossDistributionBoolean,
+      policyId: formValues.policyId,
+
       distributionLossDistUser: formValues.distributionLossDistUser,
       distributionLossArrivedBoolean: formValues.distributionLossArrivedBoolean,
       distributionLossArrivedDate: formValues.distributionLossArrivedDate,
@@ -908,8 +962,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       lossTowExpertMan: formValues.lossTowExpertMan,
       lossTowExpertRot: formValues.lossTowExpertRot,
       distributionTema: formValues.distributionTema,
-      lossTowExpertNamePreferenceById:
-        formValues.lossTowExpertNamePreferenceById,
+      // lossTowExpertNamePreferenceById:
+      //   formValues.lossTowExpertNamePreferenceById,
       distributionTowNatureId: formValues.distributionTowNatureId,
       lossTowRsDesc: formValues.lossTowRsDesc,
       towFromTownId: formValues.towFromTownId,
@@ -940,6 +994,18 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       distributionLossDistDate: formValues.distributionLossDistDate,
       towingComId: formValues.towingComId,
       lossTowRsId: formValues.lossTowRsId,
+      distributionNoDataBoolean: formValues.distributionNoDataBoolean,
+      distributionNoDataBroker: formValues.distributionNoDataBroker,
+      distributionNoDataCarBrand: formValues.distributionNoDataCarBrand,
+      distributionNoDataDate: formValues.distributionNoDataDate,
+      distributionNoDataEffDate: formValues.distributionNoDataEffDate,
+      distributionNoDataExpDate: formValues.distributionNoDataExpDate,
+      distributionNoDataName: formValues.distributionNoDataName,
+      distributionNoDataPlate: formValues.distributionNoDataPlate,
+      distributionNoDataPlateB: formValues.distributionNoDataPlateB,
+      distributionNoDataPolicy: formValues.distributionNoDataPolicy,
+      distributionNoDataRemarks: formValues.distributionNoDataRemarks,
+      distributionNoDataUser: formValues.distributionNoDataUser,
     };
     return formattedData;
   }
@@ -1065,7 +1131,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       'distributionExpTypeUserName',
       'delayedDispatchTime',
       'distributionTema',
-      'supplierName',
+      'lossTow2ndExpertName',
       'lossTowRsDesc',
       'towFromTownDescription',
       'towToTownDescription',
@@ -1081,6 +1147,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       'towingComDesc',
       'distributionTowDistUserName',
       'lossTowExpert',
+      'lossTowExpertNamePreference',
       // Add other control names here
     ];
     for (const controlName of formControlsToDisable) {
@@ -1136,6 +1203,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
 
     if (lossTowExpertNamePreference?.value === ' ') {
       lossTowExpertNamePreference?.disable();
+    } else {
+      lossTowExpertNamePreference?.enable();
     }
   }
   hasPerm(role: string): boolean {
@@ -1209,8 +1278,18 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       const distributionTowDistDate = this.formatDateTime(
         this.policyData?.distributionTowDistDate!
       );
+      const distributionNoDataEffDate = this.formatDateTime(
+        this.policyData?.distributionNoDataEffDate!
+      );
+      const distributionNoDataExpDate = this.formatDateTime(
+        this.policyData?.distributionNoDataExpDate!
+      );
+
       const distributionTowArrivedDate = this.formatDateTime(
         this.policyData?.distributionTowArrivedDate!
+      );
+      const distributionNoDataDate = this.formatDateTime(
+        this.policyData?.distributionNoDataDate!
       );
       this.carsDispatchFollowUpList = this.policyData?.carsDispatchFollowUpList;
 
@@ -1231,6 +1310,9 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         distributionTowDistDate: distributionTowDistDate,
         distributionTowArrivedDate: distributionTowArrivedDate,
         lossTowExpertNamePreferenceById: lossTowExpertId,
+        distributionNoDataEffDate: distributionNoDataEffDate,
+        distributionNoDataExpDate: distributionNoDataExpDate,
+        distributionNoDataDate: distributionNoDataDate,
       });
     }
     this.isSystemAdmin();
@@ -1381,9 +1463,10 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     notificationId: string
   ): Promise<Policy | null> {
     try {
-      const res = await this.dataService
-        .getPolicyCarByNotificationId(notificationId)
-        .toPromise();
+      const res = await lastValueFrom(
+        this.dataService.getPolicyCarByNotificationId(notificationId)
+      );
+
       const policyData = res?.data;
       this.policyData = policyData;
       this.patchFormWithPolicyData();
@@ -1466,18 +1549,48 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     });
   }
   createNoDataDialog() {
-    if (this.displayName) {
+    if (this.policyData) {
       const dialogData = this.dialog.open(CreateNoDataDialogComponent, {
         data: {
-          formData: this.formData,
+          distributionNoDataBoolean: this.form.get('distributionNoDataBoolean')
+            ?.value,
+          distributionNoDataBroker: this.form.get('distributionNoDataBroker')
+            ?.value,
+          distributionNoDataCarBrand: this.form.get(
+            'distributionNoDataCarBrand'
+          )?.value,
+          distributionNoDataDate: this.form.get('distributionNoDataDate')
+            ?.value,
+          distributionNoDataEffDate: this.formatDate(
+            this.form.get('distributionNoDataEffDate')?.value
+          ),
+          distributionNoDataExpDate: this.form.get('distributionNoDataExpDate')
+            ?.value,
+          distributionNoDataName: this.form.get('distributionNoDataName')
+            ?.value,
+          distributionNoDataPlate: this.form.get('distributionNoDataPlate')
+            ?.value,
+          distributionNoDataPlateB: this.form.get('distributionNoDataPlateB')
+            ?.value,
+          distributionNoDataPolicy: this.form.get('distributionNoDataPolicy')
+            ?.value,
+          distributionNoDataRemarks: this.form.get('distributionNoDataRemarks')
+            ?.value,
+          distributionNoDataUser: this.form.get('distributionNoDataUser')
+            ?.value,
+          distributionNoDataTypeId: this.form.get('distributionNoDataTypeId')
+            ?.value,
           displayname: this.displayName,
+          userCode: this.userCode,
+          lossTowLossDate: this.form.get('lossTowLossDate')?.value,
         },
         width: '780px',
         height: '550px',
       });
       dialogData.afterClosed().subscribe((data) => {
-        if (data !== undefined && data !== null) {
-          this.formData = data;
+        if (data) {
+          this.form.patchValue(data);
+          // this.formData = data;
           // console.log(data);
         }
       });
@@ -1488,9 +1601,32 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     const { insuranceId, lossTowLossDate } = this.policyData || {};
 
     const dialogData = {
+      notificationId: this.notificationId,
+      policyEffectiveDate: this.policyData?.policyEffectiveDate,
+
       insuranceId,
       lossTowLossDate,
-      changeAvailableData: this.changeAvailableData,
+      distributionNoDataBroker: this.form.get('distributionNoDataBroker')
+        ?.value,
+      distributionNoDataCarBrand: this.form.get('distributionNoDataCarBrand')
+        ?.value,
+      distributionNoDataDate: this.form.get('distributionNoDataDate')?.value,
+      distributionNoDataEffDate: this.formatDate(
+        this.form.get('distributionNoDataEffDate')?.value
+      ),
+      distributionNoDataExpDate: this.form.get('distributionNoDataExpDate')
+        ?.value,
+      distributionNoDataName: this.form.get('distributionNoDataName')?.value,
+      distributionNoDataPlate: this.form.get('distributionNoDataPlate')?.value,
+      distributionNoDataPlateB: this.form.get('distributionNoDataPlateB')
+        ?.value,
+      distributionNoDataPolicy: this.form.get('distributionNoDataPolicy')
+        ?.value,
+      distributionNoDataRemarks: this.form.get('distributionNoDataRemarks')
+        ?.value,
+      distributionNoDataUser: this.form.get('distributionNoDataUser')?.value,
+      distributionNoDataTypeId: this.form.get('distributionNoDataTypeId')
+        ?.value,
       polserno: this.polserno,
       policyData: this.policySearchData,
       companies: this.companies,
@@ -1503,10 +1639,33 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       data: dialogData,
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
+    dialogRef.afterClosed().subscribe(async (data) => {
       // Update this.changeAvailableData only if data is not null or undefined
-      if (data !== undefined && data !== null) {
-        this.changeAvailableData = data;
+      if (data) {
+        // this.changeAvailableData = data;
+        this.form.get('carOwnerFirstName')?.setValue(data.clientFirstname);
+        this.form.get('carOwnerFatherName')?.setValue(data.clientFatherName);
+        this.form.get('carOwnerFamilyName')?.setValue(data.clientLastname);
+        const counter = await this.getCountExistingDataEntry();
+        const distributionNoData = this.form.get(
+          'distributionNoDataBoolean'
+        )?.value;
+        if (distributionNoData == true && counter == 0) {
+          this.form.get('carDriverFirstName')?.setValue(data.clientFirstname);
+          this.form.get('carDriverFatherName')?.setValue(data.clientFatherName);
+          this.form.get('carDriverFamilyName')?.setValue(data.clientLastname);
+        }
+        if (distributionNoData == true) {
+          this.form.get('distributionNoDataBoolean')?.setValue(false);
+        }
+        this.form.get('carShapeId')?.setValue(data.carShapeId);
+        this.form.get('carPlate')?.setValue(data.carPlate);
+        this.form.get('carYear')?.setValue(data.carYear);
+        this.form.get('policyCarId')?.setValue(data.policyCarId);
+
+        // console.log(counter);
+        this.form.patchValue(data);
+        // console.log(data);
       }
     });
   }
@@ -1520,7 +1679,13 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       },
     });
   }
-
+  async getCountExistingDataEntry(): Promise<number> {
+    const notificationVisa = this.form.get('notificationVisa')?.value;
+    const res = await lastValueFrom(
+      this.dataService.getCountExistingDataEntry(notificationVisa)
+    );
+    return res.data;
+  }
   appExpertDispatch() {
     if (this.policyData) {
       this.dialog.open(AppExpertDispatchDialogComponent, {
@@ -1646,9 +1811,11 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
         height: '700px',
       });
       dialogRef.afterClosed().subscribe((data) => {
+        console.log(data);
         if (data) {
           this.form.get('distributionExpTypeId')?.setValue('1');
           this.form.get('distributionExpTypeUser')?.setValue(this.userCode);
+          this.form.get('expertMobilePhone')?.setValue(data.expertMobilePhone);
           this.form
             .get('distributionExpTypeUserName')
             ?.setValue(this.displayName);
@@ -1689,7 +1856,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
               .get('distributionLossArrivedUser')
               ?.setValue(this.userCode);
             this.form
-              .get('distributionLossArrivedName')
+              .get('distributionLossArrivedUserName')
               ?.setValue(this.displayName);
 
             this.form.get('distributionLossArrivedBoolean')?.setValue(true);
@@ -1827,7 +1994,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       });
       dialoRef.afterClosed().subscribe((data) => {
         if (data) {
-          this.form.get('supplierName')?.setValue(data.experName);
+          this.form.get('lossTow2ndExpertName')?.setValue(data.experName);
           this.form.get('lossTow2ndExpertId')?.setValue(data.supplierId);
         }
       });
@@ -2086,16 +2253,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
                   this.dateFormat('reportDateTimeFormat')
                 )
               );
-            // this.form.get('lossTowExpertId')?.setValue(this.userCode);
-            // const lossTowExpertNamePreference = this.form.get(
-            //   'lossTowExpertNamePreference'
-            // );
-            // if (lossTowExpertNamePreference?.disable) {
-            //   lossTowExpertNamePreference?.enable;
-            // }
-            this.form
-              .get('lossTowExpertNamePreferenceById')
-              ?.setValue(data.lossTowExpertId);
+            this.form.get('lossTowExpertId')?.setValue(data.lossTowExpertId);
             this.form
               .get('lossTowExpertNamePreference')
               ?.setValue(data.expertName);
@@ -2137,7 +2295,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.form.get('distributionLossDistUser')?.setValue(this.userCode);
     this.form.get('distributionLossDistUserName')?.setValue(this.displayName);
     this.form.get('lossTowExpertNamePreference')?.setValue(oclaimexpertname);
-    this.form.get('lossTowExpertNamePreferenceById')?.setValue(oclaimExpert);
+    this.form.get('lossTowExpertId')?.setValue(oclaimExpert);
     this.form.get('distributionTema')?.setValue('N');
     this.form.get('distributionLossDistributionBoolean')?.setValue(true);
     this.form.get('lossTowNeedExpertReportBoolean')?.setValue(true);
@@ -2153,7 +2311,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     this.form.get('distributionExpExpertId')?.setValue('');
     this.form.get('distributionExpExpertDesc')?.setValue('');
     this.form.get('lossTowExpertNamePreference')?.setValue('');
-    this.form.get('lossTowExpertNamePreferenceById')?.setValue('');
+    // this.form.get('lossTowExpertNamePreferenceById')?.setValue('');
     this.form.get('distributionExpTypeUser')?.setValue(null);
     this.form.get('distributionExpTypeUserName')?.setValue(null);
     this.form.get('distributionExpTypeDate')?.setValue(null);

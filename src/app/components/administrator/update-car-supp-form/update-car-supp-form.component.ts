@@ -170,6 +170,7 @@ export class UpdateCarSuppFormComponent implements OnInit, OnChanges {
       initialCount: ['', Validators.pattern(/^\d+$/)],
       registration_number: [''],
       tva_number: [''],
+      nContact: [''],
     });
 
     if (this.carSupplierForm) {

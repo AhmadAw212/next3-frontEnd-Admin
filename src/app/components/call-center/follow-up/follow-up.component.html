@@ -281,7 +281,14 @@
     </thead>
     <tbody (click)="highlightRow($event)">
       <tr *ngFor="let list of listData">
-        <td><button class="btn btn-primary">Hotline</button></td>
+        <td>
+          <button
+            class="btn btn-primary"
+            (click)="selectedHotlineUser(list.notificationId)"
+          >
+            Hotline
+          </button>
+        </td>
         <td>{{ list.notification }}</td>
         <td>{{ list.plate }}</td>
         <ng-container

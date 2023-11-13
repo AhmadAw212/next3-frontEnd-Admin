@@ -25,7 +25,7 @@
 </div>
 
 <div class="table-responsive p-2">
-  <table class="table">
+  <table>
     <thead style="position: static; top: 0">
       <tr>
         <th colspan="3" class="text-center align-middle">
@@ -48,56 +48,56 @@
     </thead>
     <thead style="position: static; top: 0">
       <tr>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_from_location || "dico_from_location" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_garage_name || "dico_garage_name" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_from_area || "dico_from_area" }}
         </th>
 
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_from_location || "dico_from_location" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_garage_name || "dico_garage_name" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_to_area || "dico_to_area" }}
         </th>
 
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_phone_number || "dico_phone_number" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_dispatch || "dico_dispatch" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_dispatch_time || "dico_dispatch_time  " }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_dispatch_user || "dico_dispatch_user" }}
         </th>
-        <th class="text-nowrap">{{ dico?.dico_arrived || "dico_arrived" }}</th>
-        <th class="text-nowrap">
+        <th class="">{{ dico?.dico_arrived || "dico_arrived" }}</th>
+        <th class="">
           {{ dico?.dico_arrived_date || "dico_arrived_date" }}
         </th>
-        <th class="text-nowrap">
+        <th class="">
           {{ dico?.dico_arrived_user || "dico_arrived_user" }}
         </th>
 
-        <th class="text-nowrap">{{ dico?.dico_detail || "dico_detail" }}</th>
-        <th class="text-nowrap">
+        <th class="">{{ dico?.dico_detail || "dico_detail" }}</th>
+        <th class="">
           {{ dico?.dico_contact_person || "dico_contact_person" }}
         </th>
-        <th class="text-nowrap">{{ dico?.dico_user || "dico_user" }}</th>
-        <th class="text-nowrap">{{ dico?.dico_date || "dico_date" }}</th>
-        <th class="text-nowrap">
+        <th class="">{{ dico?.dico_user || "dico_user" }}</th>
+        <th class="">{{ dico?.dico_date || "dico_date" }}</th>
+        <th class="">
           {{ dico?.dico_to_follow_up || "dico_to_follow_up" }}
         </th>
-        <th class="text-nowrap">{{ dico?.dico_done || "dico_done" }}</th>
+        <th class="">{{ dico?.dico_done || "dico_done" }}</th>
         <th></th>
       </tr>
     </thead>
@@ -120,6 +120,23 @@
           </select>
         </td>
         <td>
+          <!-- <ng-select
+            appendTo="body"
+            name="totalLossTowFromRsId"
+            id="totalLossTowFromRsId"
+            class="custom-width"
+            [(ngModel)]="totalloss.totalLossTowFromRsId"
+            (ngModelChange)="onInputChange('totalLossTowFromRsId', i)"
+            [virtualScroll]="true"
+            (search)="searchForGarageByName($event)"
+          >
+            <ng-option
+              *ngFor="let suggestion of garageValues"
+              [value]="suggestion.supplierId"
+            >
+              {{ suggestion.supplierName }}</ng-option
+            >
+          </ng-select> -->
           <select
             name="totalLossTowFromRsId"
             id="totalLossTowFromRsId"
@@ -136,6 +153,35 @@
           </select>
         </td>
         <td>
+          <!-- <ng-select
+            [items]="townNameLov"
+            bindValue="townId"
+            bindLabel="townName"
+            appendTo="body"
+            class="custom-width"
+            [virtualScroll]="true"
+            [searchable]="true"
+            (search)="getTownByName($event)"
+            [(ngModel)]="totalloss.totalLossTowFromTownDesc"
+            (ngModelChange)="onInputChange('totalLossTowFromTownDesc', i)"
+          >
+          </ng-select> -->
+          <!-- <ng-select
+            appendTo="body"
+            name="totalLossTowFromTownId"
+            class="custom-width"
+            [virtualScroll]="true"
+            (search)="getTownByName($event)"
+         [(ngModel)]="totalloss.totalLossTowFromTownId"
+            (ngModelChange)="onInputChange('totalLossTowFromTownId', i)"
+          >
+            <ng-option
+              *ngFor="let suggestion of townNameLov"
+              [value]="suggestion.townId"
+            >
+              {{ suggestion.townName }}</ng-option
+            >
+          </ng-select> -->
           <select
             name="totalLossTowFromTownId"
             id="totalLossTowFromTownId"
@@ -165,6 +211,23 @@
           </select>
         </td>
         <td>
+          <!-- <ng-select
+            appendTo="body"
+            name="totalLossTowToRsId"
+            id="totalLossTowToRsId"
+            class="custom-width"
+            [(ngModel)]="totalloss.totalLossTowToRsId"
+            (ngModelChange)="onInputChange('totalLossTowToRsId', i)"
+            [virtualScroll]="true"
+            (search)="searchForGarageByName($event)"
+          >
+            <ng-option
+              *ngFor="let suggestion of garageValues"
+              [value]="suggestion.supplierId"
+            >
+              {{ suggestion.supplierName }}</ng-option
+            >
+          </ng-select> -->
           <select
             name="totalLossTowToRsId"
             id="totalLossTowToRsId"
@@ -181,6 +244,22 @@
           </select>
         </td>
         <td>
+          <!-- <ng-select
+            appendTo="body"
+            name="totalLossTowToTownId"
+            class="custom-width"
+            [virtualScroll]="true"
+            (search)="getTownByName($event)"
+            [(ngModel)]="totalloss.totalLossTowToTownId"
+            (ngModelChange)="onInputChange('totalLossTowToTownId', i)"
+          >
+            <ng-option
+              *ngFor="let suggestion of townNameLov"
+              [value]="suggestion.townId"
+            >
+              {{ suggestion.townName }}</ng-option
+            >
+          </ng-select> -->
           <select
             name="totalLossTowToTownId"
             id="totalLossTowToTownId"
@@ -365,7 +444,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_from_location || "dico_from_location" }}</label
             >
             <select
@@ -383,34 +462,65 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-4">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="me-3">
               {{ dico?.dico_garage_name || "dico_garage_name" }}</label
             >
-            <select
+            <ng-select
+              appendTo="body"
+              name="totalLossTowFromRsId"
+              class="custom-width"
+              formControlName="totalLossTowFromRsId"
+              [virtualScroll]="true"
+              (search)="searchForGarageByName($event)"
+            >
+              <ng-option
+                *ngFor="let suggestion of garageValues"
+                [value]="suggestion.supplierId"
+              >
+                {{ suggestion.supplierName }}</ng-option
+              >
+            </ng-select>
+            <!-- <select
               name="garageName"
               id="garageName"
               class="form-select ms-3"
               formControlName="totalLossTowFromRsId"
+              (search)="searchForGarageByName($event)"
             >
               <option
-                *ngFor="let garage of supplierGarageLov"
+                *ngFor="let garage of garageValues"
                 [value]="garage.supplierId"
               >
                 {{ garage.supplierName }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="me-3">
               {{ dico?.dico_from_area || "dico_from_area" }}</label
             >
-            <select
+            <ng-select
+              appendTo="body"
+              name="totalLossTowFromTownId"
+              class="custom-width"
+              formControlName="totalLossTowFromTownId"
+              [virtualScroll]="true"
+              (search)="getTownByName($event)"
+            >
+              <ng-option
+                *ngFor="let suggestion of townNameLov"
+                [value]="suggestion.townId"
+              >
+                {{ suggestion.townName }}</ng-option
+              >
+            </ng-select>
+            <!-- <select
               name="totalLossTowFromTownId"
               id="totalLossTowFromTownId"
               class="form-select ms-3"
@@ -419,7 +529,7 @@
               <option *ngFor="let town of townLov" [value]="town.townId">
                 {{ town.townName }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
@@ -437,7 +547,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_to_location || "dico_to_location" }}</label
             >
             <select
@@ -455,34 +565,52 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-4">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="me-2">
               {{ dico?.dico_garage_name || "dico_garage_name" }}</label
             >
-            <select
+            <ng-select
+              appendTo="body"
               name="totalLossTowToRsId"
               id="totalLossTowToRsId"
-              class="form-select ms-3"
+              class="custom-width"
               formControlName="totalLossTowToRsId"
+              [virtualScroll]="true"
+              (search)="searchForGarageByName($event)"
             >
-              <option
-                *ngFor="let garage of supplierGarageLov"
-                [value]="garage.supplierId"
+              <ng-option
+                *ngFor="let suggestion of garageValues"
+                [value]="suggestion.supplierId"
               >
-                {{ garage.supplierName }}
-              </option>
-            </select>
+                {{ suggestion.supplierName }}</ng-option
+              >
+            </ng-select>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="me-2">
               {{ dico?.dico_to_area || "dico_to_area" }}</label
             >
-            <select
+            <ng-select
+              appendTo="body"
+              name="totalLossTowToTownId"
+              class="custom-width"
+              formControlName="totalLossTowToTownId"
+              [virtualScroll]="true"
+              (search)="getTownByName($event)"
+            >
+              <ng-option
+                *ngFor="let suggestion of townNameLov"
+                [value]="suggestion.townId"
+              >
+                {{ suggestion.townName }}</ng-option
+              >
+            </ng-select>
+            <!-- <select
               name="totalLossTowToTownId"
               id="totalLossTowToTownId"
               class="form-select ms-3"
@@ -491,7 +619,7 @@
               <option *ngFor="let town of townLov" [value]="town.townId">
                 {{ town.townName }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
@@ -508,7 +636,7 @@
       <div class="row mb-4">
         <div class="col-md-5">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_phone_number || "dico_phone_number" }}</label
             >
             <input
@@ -522,7 +650,7 @@
         </div>
         <div class="col-md-3">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_dispatch || "dico_dispatch" }}</label
             >
             <input
@@ -536,9 +664,7 @@
         </div>
         <div class="col-md-3">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
-              {{ dico?.dico_arrived || "dico_arrived" }}</label
-            >
+            <label class=""> {{ dico?.dico_arrived || "dico_arrived" }}</label>
             <input
               type="checkbox"
               class="form-check-input ms-3"
@@ -554,9 +680,7 @@
       <div class="row mb-4">
         <div class="col-md-5">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
-              {{ dico?.dico_detail || "dico_detail" }}</label
-            >
+            <label class=""> {{ dico?.dico_detail || "dico_detail" }}</label>
             <input
               type="text"
               class="form-control ms-3"
@@ -568,7 +692,7 @@
         </div>
         <div class="col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_contact_person || "dico_contact_person" }}</label
             >
             <input
@@ -584,7 +708,7 @@
       <div class="row mb-4">
         <div class="col-md-3">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
+            <label class="">
               {{ dico?.dico_to_follow_up || "dico_to_follow_up" }}</label
             >
             <input
@@ -598,9 +722,7 @@
         </div>
         <div class="col-md-3">
           <div class="d-flex justify-content-center align-items-center">
-            <label class="text-nowrap">
-              {{ dico?.dico_done || "dico_done" }}</label
-            >
+            <label class=""> {{ dico?.dico_done || "dico_done" }}</label>
             <input
               type="checkbox"
               class="form-check-input ms-3"

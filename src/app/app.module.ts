@@ -173,6 +173,14 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ViewComplaintsComponent } from './components/view-complaints/view-complaints.component';
 import { NewNotificationRelatedComponent } from './components/new-notification-related/new-notification-related.component';
 import { GoogleMapComponent } from './components/call-center/google-map/google-map.component';
+import { DataServiceService } from './services/data-service.service';
+import { AuthService } from './services/auth.service';
+import { PhoneIndexComponent } from './components/common-components/phone-index/phone-index.component';
+import { PhoneIndexTableComponent } from './components/common-components/phone-index/phone-index-table/phone-index-table.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { MatCardModule } from '@angular/material/card';
+import { PolicyNotificationViewComponent } from './components/call-center/policy-notification-view/policy-notification-view.component';
+import { UsersRolesService } from './services/users-roles.service';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -294,7 +302,7 @@ import { GoogleMapComponent } from './components/call-center/google-map/google-m
     CustomerSatisfactionDialogComponent,
     RotationDialogComponent,
     ExpertDispatchComponent,
-
+    PolicyNotificationViewComponent,
     TowingConditionsHotlineComponent,
     RepairShopDialogComponent,
     TotalLossTowingTableComponent,
@@ -303,6 +311,9 @@ import { GoogleMapComponent } from './components/call-center/google-map/google-m
     ViewComplaintsComponent,
     NewNotificationRelatedComponent,
     GoogleMapComponent,
+    PhoneIndexComponent,
+    PhoneIndexTableComponent,
+    BackButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -315,6 +326,7 @@ import { GoogleMapComponent } from './components/call-center/google-map/google-m
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     MatSidenavModule,
+    MatCardModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
@@ -353,7 +365,9 @@ import { GoogleMapComponent } from './components/call-center/google-map/google-m
       useClass: AuthInterceptorInterceptor,
       multi: true,
     },
-
+    DataServiceService,
+    AuthService,
+    UsersRolesService,
     // DataServiceService,
   ],
   bootstrap: [AppComponent],

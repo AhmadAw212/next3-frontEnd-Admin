@@ -41,6 +41,7 @@
           src="./assets/icons/survey-white.png"
           alt=""
           matTooltip="VISA Policy"
+          (click)="navigateToPolicyNotification()"
         />
       </div>
       <div class="icon-class">
@@ -59,6 +60,12 @@
           (click)="NewestAccident()"
         />
       </div>
+
+      <app-back-button
+        targetRoute="/profiles-main/CallCenter"
+        [showBackBtn]="true"
+        class="ms-3"
+      ></app-back-button>
     </form>
   </div>
 </nav>

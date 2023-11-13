@@ -132,4 +132,8 @@ export interface Policy {
   lossTowPickUpId?: string;
   lossTowWheelId?: string;
   lossTowCarryingGoodId?: string;
+
+  distributionNoDataBoolean?: string;
+  distributionNoDataDate?: string;
+  distributionNoDataUser?: string;
 }

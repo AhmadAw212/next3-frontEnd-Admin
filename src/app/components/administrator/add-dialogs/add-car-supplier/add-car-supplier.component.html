@@ -106,7 +106,17 @@
         formControlName="arabic_name"
       />
     </div>
-
+    <div class="form-group">
+      <label for=" nContact">
+        {{ dico?.dico_contact_info || "dico_contact_info" }}:</label
+      >
+      <input
+        type="text"
+        id="nContact"
+        name="nContact"
+        formControlName="nContact"
+      />
+    </div>
     <div class="form-group">
       <label>{{ dico?.dico_Home_City || "dico_Home_City" }}</label>
       <ng-select appendTo="body" formControlName="home_id">

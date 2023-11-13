@@ -1,11 +1,8 @@
-/* .navbar-class{
+.navbar-class {
     background-color: #0674cb;
-    height: 50px;
     padding: 10px;
-    font-size: medium;
-} */
+  }
 
-/* .navigate-btn{
-    float: right; 
-    margin-right: 10px
-} */
+  .navigate-btn {
+    margin-right: 10px;
+  }

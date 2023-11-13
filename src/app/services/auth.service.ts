@@ -26,6 +26,15 @@ interface User {
   providedIn: 'root',
 })
 export class AuthService {
+  getAccessToken() {
+    throw new Error('Method not implemented.');
+  }
+  refreshToken() {
+    throw new Error('Method not implemented.');
+  }
+  setAccessToken(token: any) {
+    throw new Error('Method not implemented.');
+  }
   userProfiles?: CoreProfile[];
   private tokenRefreshed = false;
   private tokenRefreshedSubject = new Subject<boolean>();

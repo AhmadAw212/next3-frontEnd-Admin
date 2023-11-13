@@ -6,8 +6,8 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertifyService } from '../services/alertify.service';
@@ -15,7 +15,9 @@ import { EMPTY } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
-  private refreshingToken = false;
+  private tokenRefreshInProgress = false;
+  private tokenRefreshSubject: Subject<any> = new Subject();
+
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,
@@ -44,14 +46,17 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          if (!this.refreshingToken) {
-            this.refreshingToken = true;
+          if (!this.tokenRefreshInProgress) {
+            this.tokenRefreshInProgress = true;
 
             return this.authService.refreshTokens().pipe(
               switchMap((response: any) => {
-                this.refreshingToken = false;
+                this.tokenRefreshInProgress = false;
                 // Refresh token successful, update the token in local storage
                 localStorage.setItem('token', response.token);
+
+                // Notify other requests that the token has been refreshed
+                this.tokenRefreshSubject.next(response.token);
 
                 // Clone the original request with the updated token and resend it
                 const newRequest = request.clone({
@@ -63,7 +68,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
                 return next.handle(newRequest);
               }),
               catchError((refreshError: any) => {
-                this.refreshingToken = false;
+                this.tokenRefreshInProgress = false;
                 // Refresh token failed or expired as well, logout the user and redirect to login
                 this.authService.logout();
                 this.router.navigate(['/login']);
@@ -75,8 +80,19 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
               })
             );
           } else {
-            // Token refresh is already in progress, return an empty observable to prevent infinite loop
-            return EMPTY;
+            // Token refresh is already in progress, wait for it to complete
+            return this.tokenRefreshSubject.pipe(
+              take(1),
+              switchMap(() => {
+                // Clone the original request with the updated token and resend it
+                const newRequest = request.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                  },
+                });
+                return next.handle(newRequest);
+              })
+            );
           }
         } else {
           // Handle other errors

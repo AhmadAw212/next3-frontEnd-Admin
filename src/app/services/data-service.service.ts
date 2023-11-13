@@ -65,10 +65,6 @@ export class DataServiceService {
   constructor(private http: HttpClient) {}
 
   validateUser(user: User): Observable<ApiResponse> {
-    // const authData = btoa(`${name}:${password}`);
-    // const headers = new HttpHeaders()
-    // .append('Authorization', 'Basic ' + authData)
-    // .append('X-Requested-With', 'XMLHttpRequest');
     return this.http.post<ApiResponse>(
       `${this.userUrl}/basicAuth/validate`,
       user
@@ -103,12 +99,6 @@ export class DataServiceService {
     );
   }
 
-  // addUser(user: CoreUser, file: File): Observable<ApiResponse> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('file', file);
-
-  //   return this.http.post<ApiResponse>(`${this.userUrl}/user/addUser`, user);
-  // }
   addUser(addUserRequest: CoreUser, file?: File): Observable<ApiResponse> {
     const formData = new FormData();
     formData.append('addUserRequest', JSON.stringify(addUserRequest));
@@ -1882,6 +1872,59 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/createRelated?notificationId=${notificationId}&notificationRelatedVisa=${notificationRelatedVisa}&relatedTypeLov_code=${relatedTypeLov_code}`
+    );
+  }
+  getPolicyCarById(carId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/policyCar/${carId}`
+    );
+  }
+
+  getCountExistingDataEntry(notificationVisa: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/count-dataEntry?notificationVisa=${notificationVisa}`
+    );
+  }
+
+  getSupplierGarageLovByName(garageName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/garageLovByName?garageName=${garageName}`
+    );
+  }
+  getTownByName(townName: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/townsByName?townName=${townName}`
+    );
+  }
+  getCarsTotallossDispatchDTO(notificationId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getCarsTotallossDispatchDTO?notificationId=${notificationId}`
+    );
+  }
+  findCarsSuppliersByPhoneIndex(
+    name: string,
+    mobile: string,
+    phone: string,
+    townName: string,
+    supplierInterm: string,
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/cars-supplier/phoneIndex?name=${name}&mobile=${mobile}&phone=${phone}&townName=${townName}&supplierInterm=${supplierInterm}&pageSize=${pageSize}&pageNumber=${pageNumber}`
+    );
+  }
+  getNotificationNatureLovSelected(x: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/selectedNotification-natureLov?x=${x}`
+    );
+  }
+  getInsuranceProductTypes(
+    insurance: string,
+    description: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/insurance-products/${insurance}?description=${description}`
     );
   }
 }
