@@ -1537,6 +1537,11 @@ export class DataServiceService {
       `${this.userUrl}/call_center/relationToOwner-lov`
     );
   }
+  getCoreConfigValueByKey(key: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getCoreConfigValueByKey/${key}`
+    );
+  }
   getNotificationNatureLovFindAll(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/notification-natureLov`

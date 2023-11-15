@@ -1,23 +1,33 @@
   .grid-container2 {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Adjust the column sizes as needed */
+    grid-template-columns: 2fr 2fr; /* Adjust the column sizes as needed */
     gap: 5px; /* Adjust the gap between panels */
-  }
 
+  }
+  td{
+    font-weight: bolder
+  }
+  .grid-container{
+    background-color: #eff2f5;
+    overflow: auto;
+  }
+  .mat-mdc-tab-labels{
+    background-color: black;
+  }
   .fixed-container {
     /* Add styles for the fixed container */
     position: sticky;
 
     overflow-x: auto;
     top: 0;
-    background-color: #f0f0f0; /* Add a background color or any other styling */
+    background-color: white;/* Add a background color or any other styling */
     padding: 20px;
   }
 
   .dynamic-container {
     /* Add styles for the dynamic container */
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: white;
   }
 
   /* Media Query for Mobile Devices */

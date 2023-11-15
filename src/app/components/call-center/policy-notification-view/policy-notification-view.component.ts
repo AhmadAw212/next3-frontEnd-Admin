@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+import { Observable, catchError, lastValueFrom, map } from 'rxjs';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,6 +11,9 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { ViewPolicyDialogComponent } from '../../view-policy/view-policy-dialog/view-policy-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateNoDataDialogComponent } from '../new-hotline/create-no-data-dialog/create-no-data-dialog.component';
 
 @Component({
   selector: 'app-policy-notification-view',
@@ -43,6 +47,24 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   townNameLov: any[] = [];
   reportedByLov: type[] = [];
   relationToDriver: type[] = [];
+  changeSides: boolean = false;
+  showMainContainer?: boolean;
+  policyAmendment?: string;
+  policyCar?: string;
+  polserno?: string;
+  natureLabels: any = {
+    '1': 'Accident',
+    '5': 'Accident+Towing',
+    '2': 'Fire',
+    '10': 'Fire+Towing',
+    '7': 'Previous Damages',
+    '9': 'Recovery',
+    '13': 'Tentative Theft',
+    '3': 'Theft',
+    '6': 'Towing',
+    '4': 'Vandalism',
+    '12': 'Partial Theft',
+  };
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -53,7 +75,8 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     private dateFormatService: DateFormatterService,
     private profileService: LoadingServiceService,
     private userRolesService: UsersRolesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) {
     this.userRolesService.getUserRoles();
     this.cmp = this.profileService.getCompany()!;
@@ -74,6 +97,40 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         bodilyInjury === '11') &&
         this.cmp !== '10')
     );
+  }
+  async policyNotificationInit() {
+    if (this.cmp && this.cmp !== '1') {
+      this.insuranceCode = this.cmp;
+    }
+
+    try {
+      const lossDateAuto = await lastValueFrom(
+        this.getCoreConfigValueByKey('lossDateAuto')
+      );
+      const reportedByAuto = await lastValueFrom(
+        this.getCoreConfigValueByKey('reportedByAuto')
+      );
+      const policySearchChangeSides = await lastValueFrom(
+        this.getCoreConfigValueByKey('policySearchChangeSides')
+      );
+      policySearchChangeSides
+        ? ((this.showMainContainer = true), (this.selectedNature = '1'))
+        : this.showMainContainer;
+      if (lossDateAuto === 'true') {
+        this.myForm.get('lossTowLossDate')?.setValue(new Date());
+      }
+      if (reportedByAuto === 'true') {
+        this.myForm.get('lossTowReportedById')?.setValue('1');
+      }
+      if (policySearchChangeSides === 'true') {
+        this.changeSides = true;
+      }
+      this.myForm.get('notificationReportedDate')?.setValue(new Date());
+      // console.log('Loss Date Auto:', lossDateAuto);
+    } catch (error) {
+      // Handle specific error types if needed
+      console.error('Error in policyNotificationInit:', error);
+    }
   }
   onTabSelected(event: any) {
     this.selectedTabIndex = event.index;
@@ -238,15 +295,22 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     this.getReportedByLovFindAll();
     this.getBodilyInjuryLovFindAll();
     this.getRelationToOwnerLovFindAll();
-
-    // this.getInsuranceProductTypes();
+    this.policyNotificationInit();
+    this.getInsuranceProductTypes();
   }
-
+  getCoreConfigValueByKey(key: string): Observable<string> {
+    return this.dataService.getCoreConfigValueByKey(key).pipe(
+      map((val) => val.data),
+      catchError((err) => {
+        console.error('Error fetching core config value:', err);
+        throw err; // Rethrow the error to propagate it to the subscriber
+      })
+    );
+  }
   getReportedByLovFindAll() {
     this.dataService.getReportedByLovFindAll().subscribe({
       next: (res) => {
         this.reportedByLov = res.data;
-        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -297,7 +361,7 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   }
 
   getInsuranceProductTypes() {
-    if (this.insuranceCode != 'ALL' || this.cmp != '1') {
+    if (this.insuranceCode !== 'ALL' || this.cmp !== '1') {
       this.dataService
         .getInsuranceProductTypes(this.insuranceCode!, '')
         .subscribe({
@@ -354,11 +418,24 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       },
     });
   }
+  createNoDataDialog() {
+    const dialogData = this.dialog.open(CreateNoDataDialogComponent, {
+      data: { userCode: this.profileService.getUser() },
+      width: '780px',
+      height: '550px',
+    });
+    // dialogData.afterClosed().subscribe((data) => {
+    //   if (data) {
+    //     this.form.patchValue(data);
+    //     // this.formData = data;
+    //     // console.log(data);
+    //   }
+    // });
+  }
   getBodilyInjuryLovFindAll() {
     this.dataService.getBodilyInjuryLovFindAll().subscribe({
       next: (res) => {
         this.bodilyInjuriesLov = res.data;
-        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -374,14 +451,36 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   toggleFlip(index: number): void {
     this.isFlipped[index] = !this.isFlipped[index];
   }
-  searchPolicy() {
+  viewPolicyComponent(selectedPolicy: string) {
+    // console.log(selectedPolicy);
+    this.dialog.open(ViewPolicyDialogComponent, {
+      data: {
+        carId: selectedPolicy,
+      },
+      width: '1000px',
+      maxHeight: '600px',
+    });
+  }
+  async searchPolicy() {
     // let asOfDate: string | null = null;
     console.log(this.iAsOfDate);
     const parseData = moment(this.iAsOfDate, 'DD/MM/YYYY').format(
       'DD-MMM-YYYY'
     );
     // console.log(parseData);
-
+    try {
+      this.policyAmendment = await lastValueFrom(
+        this.getCoreConfigValueByKey('policyAmendment')
+      );
+      this.polserno = await lastValueFrom(
+        this.getCoreConfigValueByKey('polserno')
+      );
+      this.policyCar = await lastValueFrom(
+        this.getCoreConfigValueByKey('policyCar')
+      );
+    } catch (error) {
+      console.error('Error in policyNotificationInit:', error);
+    }
     if (parseData) {
       this.dataService
         .searchPolicy(
@@ -395,6 +494,7 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         .subscribe({
           next: (res) => {
             this.searchPolicyData = res.data;
+
             //
           },
           error: (err) => {
@@ -423,10 +523,10 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       this.dico = data;
     });
   }
-  getPolicyCarInfo(policy: any, i: number) {
-    this.isFlipped[i] = true;
+  // getPolicyCarInfo(policy: any, i: number) {
+  //   this.isFlipped[i] = true;
 
-    // this.getNotificationFindById();
-    // console.log(policy);
-  }
+  //   // this.getNotificationFindById();
+  //   // console.log(policy);
+  // }
 }

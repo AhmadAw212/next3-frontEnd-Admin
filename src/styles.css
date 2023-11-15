@@ -417,12 +417,12 @@ tr:nth-child(odd) {
 
 .flip-card-front {
   border: 1px solid #ccc;
-  background-color: #f2f2f2;
+  background-color: white;
 }
 
 .flip-card-back {
  border: 1px solid #ccc;
- background-color: #f2f2f2;
+ background-color: white;
   transform: rotateY(180deg);
 }
 .admin-container {

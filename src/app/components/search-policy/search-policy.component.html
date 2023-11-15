@@ -144,75 +144,89 @@
   class="admin-container container-fluid"
   style="height: 200px; padding: 10px"
 >
-  <app-spinner *ngIf="loading"></app-spinner>
+  <!-- <app-spinner *ngIf="loading"></app-spinner> -->
+  <div class="table-responsive">
+    <table class="table-responsive-sm">
+      <thead style="top: 0">
+        <tr>
+          <th scope="col">
+            {{ dico?.dico_view_policy || "dico_view_policy" }}
+          </th>
+          <th scope="col">{{ dico?.dico_company || "dico_company" }}</th>
+          <th scope="col">
+            {{ dico?.dico_client_name || "dico_client_name" }}
+          </th>
 
-  <table class="table table-responsive-sm">
-    <thead style="top: 0">
-      <tr>
-        <th scope="col">{{ dico?.dico_view_policy || "dico_view_policy" }}</th>
-        <th scope="col">{{ dico?.dico_company || "dico_company" }}</th>
-        <th scope="col">{{ dico?.dico_client_name || "dico_client_name" }}</th>
+          <th scope="col">{{ dico?.dico_plate || "dico_plate" }}</th>
+          <th scope="col">{{ dico?.dico_car_model || "dico_car_model" }}</th>
+          <th scope="col">
+            {{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}
+          </th>
+          <th scope="col">
+            {{ dico?.dico_policy_type || "dico_policy_type" }}
+          </th>
+          <th scope="col">
+            {{
+              dico?.dico_pre_risk_policy_number || "dico_pre_risk_policy_number"
+            }}
+          </th>
+          <th scope="col">
+            {{ dico?.dico_policy_amendment || "dico_policy_amendment" }}
+          </th>
+          <th scope="col">{{ dico?.dico_status || "dico_status" }}</th>
+          <th scope="col">{{ dico?.dico_issue_date || "dico_issue_date" }}</th>
+          <th scope="col">
+            {{ dico?.dico_effective_date || "dico_effective_date" }}
+          </th>
+          <th scope="col">
+            {{ dico?.dico_expiry_date || "dico_expiry_date" }}
+          </th>
+          <th scope="col">
+            {{ dico?.dico_car_chassis || "dico_car_chassis" }}
+          </th>
+          <th scope="col">{{ dico?.dico_branch || "dico_branch" }}</th>
+          <th scope="col">{{ dico?.dico_broker || "dico_broker" }}</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="policyResult?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr *ngFor="let policy of policyResult">
+          <td (click)="viewPolicyComponent(policy.carId!)">
+            <mat-icon>search</mat-icon>
+          </td>
+          <td>{{ policy.insuranceDesc }}</td>
 
-        <th scope="col">{{ dico?.dico_plate || "dico_plate" }}</th>
-        <th scope="col">{{ dico?.dico_car_model || "dico_car_model" }}</th>
-        <th scope="col">
-          {{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}
-        </th>
-        <th scope="col">{{ dico?.dico_policy_type || "dico_policy_type" }}</th>
-        <th scope="col">
-          {{
-            dico?.dico_pre_risk_policy_number || "dico_pre_risk_policy_number"
-          }}
-        </th>
-        <th scope="col">
-          {{ dico?.dico_policy_amendment || "dico_policy_amendment" }}
-        </th>
-        <th scope="col">{{ dico?.dico_status || "dico_status" }}</th>
-        <th scope="col">{{ dico?.dico_issue_date || "dico_issue_date" }}</th>
-        <th scope="col">
-          {{ dico?.dico_effective_date || "dico_effective_date" }}
-        </th>
-        <th scope="col">{{ dico?.dico_expiry_date || "dico_expiry_date" }}</th>
-        <th scope="col">{{ dico?.dico_car_chassis || "dico_car_chassis" }}</th>
-        <th scope="col">{{ dico?.dico_branch || "dico_branch" }}</th>
-        <th scope="col">{{ dico?.dico_broker || "dico_broker" }}</th>
-      </tr>
-    </thead>
-    <tbody
-      *ngIf="policyResult?.length! > 0; else noData"
-      (click)="highlightRow($event)"
-    >
-      <tr *ngFor="let policy of policyResult">
-        <td (click)="viewPolicyComponent(policy.carId!)">
-          <mat-icon>search</mat-icon>
-        </td>
-        <td>{{ policy.insuranceDesc }}</td>
+          <td>{{ policy.clientName }}</td>
+          <td>{{ policy.carPlate }}</td>
+          <td>{{ policy.brandDescription }}</td>
+          <td>{{ policy.carYear }}</td>
+          <td>{{ policy.policyTypeDesc }}</td>
+          <td>{{ policy.policyNumber }}</td>
+          <td>{{ policy.policyAmendment }}</td>
+          <td>{{ policy.amendmentDesc }}</td>
+          <td>
+            {{ policy.policyIssueDate | date : dateFormat("reportDateFormat") }}
+          </td>
+          <td>
+            {{
+              policy.policyEffectiveDate | date : dateFormat("reportDateFormat")
+            }}
+          </td>
+          <td>
+            {{
+              policy.policyExpiryDate | date : dateFormat("reportDateFormat")
+            }}
+          </td>
+          <td>{{ policy.carChassis }}</td>
+          <td>{{ policy.branchDesc }}</td>
+          <td>{{ policy.brokerName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-        <td>{{ policy.clientName }}</td>
-        <td>{{ policy.carPlate }}</td>
-        <td>{{ policy.brandDescription }}</td>
-        <td>{{ policy.carYear }}</td>
-        <td>{{ policy.policyTypeDesc }}</td>
-        <td>{{ policy.policyNumber }}</td>
-        <td>{{ policy.policyAmendment }}</td>
-        <td>{{ policy.amendmentDesc }}</td>
-        <td>
-          {{ policy.policyIssueDate | date : dateFormat("reportDateFormat") }}
-        </td>
-        <td>
-          {{
-            policy.policyEffectiveDate | date : dateFormat("reportDateFormat")
-          }}
-        </td>
-        <td>
-          {{ policy.policyExpiryDate | date : dateFormat("reportDateFormat") }}
-        </td>
-        <td>{{ policy.carChassis }}</td>
-        <td>{{ policy.branchDesc }}</td>
-        <td>{{ policy.brokerName }}</td>
-      </tr>
-    </tbody>
-  </table>
   <ng-template #noData>
     <tr>
       <td colspan="5">

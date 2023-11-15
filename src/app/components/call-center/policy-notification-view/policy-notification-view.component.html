@@ -21,7 +21,7 @@
     </div>
 
     <!-- Submit Button -->
-    <div class="col-md-1">
+    <!-- <div class="col-md-1">
       <div class="submit-button">
         <button
           class="btn btn-primary"
@@ -31,13 +31,13 @@
           Submit
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
-<div class="grid-container2">
+<div class="grid-container2" *ngIf="showMainContainer">
   <!-- Left Panel: Fixed Container -->
-  <div class="fixed-container">
+  <div class="fixed-container" [style.order]="changeSides ? 1 : 2">
     <form>
       <div class="row">
         <div class="grid-container">
@@ -170,178 +170,451 @@
           </div>
         </div>
       </div>
-      <div class="row mt-2">
-        <div class="panel">
-          <div
-            class="flip-card"
-            *ngFor="let policy of searchPolicyData; let i = index"
-          >
+
+      <ng-container *ngIf="hasPerm('ccShowPolicyTable'); else card">
+        <div class="row mt-2">
+          <div class="grid-container">
+            <table class="table table-responsive">
+              <thead style="top: 0">
+                <tr>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_view_policy || "dico_view_policy" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_company || "dico_company" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_client_name || "dico_client_name" }}
+                  </th>
+
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_plate || "dico_plate" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_policy_type || "dico_policy_type" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_car_model || "dico_car_model" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_policy_type || "dico_policy_type" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{
+                      dico?.dico_pre_risk_policy_number ||
+                        "dico_pre_risk_policy_number"
+                    }}
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-nowrap"
+                    *ngIf="policyAmendment === 'true'"
+                  >
+                    {{ dico?.dico_policy_amendment || "dico_policy_amendment" }}
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-nowrap"
+                    *ngIf="polserno === 'true'"
+                  >
+                    {{ dico?.dico_polserno || "dico_polserno" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_status || "dico_status" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_issue_date || "dico_issue_date" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_effective_date || "dico_effective_date" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_expiry_date || "dico_expiry_date" }}
+                  </th>
+                  <th scope="col" class="text-nowrap" *ngIf="showSixthPanel()">
+                    Mech.Tow#
+                  </th>
+                  <th scope="col" class="text-nowrap" *ngIf="showSixthPanel()">
+                    Tow Allowed
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_car_chassis || "dico_car_chassis" }}
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-nowrap"
+                    *ngIf="policyCar === 'true'"
+                  >
+                    {{ dico?.dico_policy_car || "dico_policy_car" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_branch || "dico_branch" }}
+                  </th>
+                  <th scope="col" class="text-nowrap">
+                    {{ dico?.dico_broker || "dico_broker" }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="searchPolicyData?.length! > 0; else noData">
+                <tr *ngFor="let policy of searchPolicyData">
+                  <td class="text-nowrap">
+                    <mat-icon (click)="viewPolicyComponent(policy.carId)"
+                      >search</mat-icon
+                    >
+                  </td>
+                  <td class="text-nowrap">{{ policy.insuranceDesc }}</td>
+
+                  <td class="label-link text-nowrap">
+                    {{ policy.clientName }}
+                  </td>
+                  <td class="text-nowrap">{{ policy.carPlate }}</td>
+                  <td class="text-nowrap">
+                    {{ policy.policyTypeDesc }} - {{ policy.productsCode }}
+                  </td>
+                  <td class="text-nowrap">{{ policy.brandDescription }}</td>
+                  <td class="text-nowrap">{{ policy.carYear }}</td>
+                  <td class="text-nowrap">{{ policy.policyTypeDesc }}</td>
+                  <td class="text-nowrap">{{ policy.policyNumber }}</td>
+                  <td class="text-nowrap" *ngIf="policyAmendment === 'true'">
+                    {{ policy.policyAmendment }}
+                  </td>
+                  <td class="text-nowrap" *ngIf="polserno === 'true'">
+                    {{ policy.policyPolserno }}
+                  </td>
+                  <td class="text-nowrap">{{ policy.amendmentDesc }}</td>
+                  <td class="text-nowrap">
+                    {{
+                      policy.policyIssueDate
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </td>
+                  <td class="text-nowrap">
+                    {{
+                      policy.policyEffectiveDate
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </td>
+                  <td class="text-nowrap">
+                    {{
+                      policy.policyExpiryDate
+                        | date : dateFormat("reportDateFormat")
+                    }}
+                  </td>
+                  <td
+                    class="text-nowrap"
+                    style="font-weight: bolder; color: red"
+                    *ngIf="showSixthPanel()"
+                  >
+                    {{ policy.mechanicalTowCount }}
+                  </td>
+                  <td
+                    class="text-nowrap"
+                    style="font-weight: bolder; color: red"
+                    *ngIf="showSixthPanel()"
+                  >
+                    {{ policy.towAllowed }}
+                  </td>
+                  <td class="text-nowrap">{{ policy.carChassis }}</td>
+                  <td class="text-nowrap" *ngIf="policyCar === 'true'">
+                    {{ policy.policyCar }}
+                  </td>
+                  <td class="text-nowrap">
+                    {{ policy.branchCode }} - {{ policy.branchDesc }}
+                  </td>
+                  <td
+                    class="text-nowrap"
+                    style="font-weight: bolder; color: red"
+                  >
+                    {{ hasPerm("ccBrokerRender") ? policy.brokerName : "****" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-template #noData>
+              <tr>
+                <td colspan="5">
+                  {{
+                    dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                  }}
+                </td>
+              </tr>
+            </ng-template>
             <div
-              class="flip-card-inner"
-              [class.flip]="isFlipped[i]"
-              (click)="toggleFlip(i)"
+              class="row mt-2"
+              *ngIf="insuranceCode !== 'ALL' || cmp !== '1'"
             >
-              <div class="flip-card-front">
-                <!-- Front content goes here -->
-                <div class="front-content" *ngIf="!isFlipped[i]">
-                  <div class="row">
-                    <div class="col-md-7">
-                      <span
-                        class="label-link"
-                        (click)="getPolicyCarInfo(policy, i)"
-                        >{{ policy?.clientName }}</span
-                      >
+              <div class="col-md-3 m-2">
+                <button class="btn-class" (click)="createNoDataDialog()">
+                  {{ dico?.dico_create_no_data || "dico_create_no_data" }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #card>
+        <div class="row mt-2">
+          <div class="panel" style="background-color: #eff2f5">
+            <div
+              class="flip-card"
+              *ngFor="let policy of searchPolicyData; let i = index"
+            >
+              <div class="flip-card-inner" [class.flip]="isFlipped[i]">
+                <div class="flip-card-front">
+                  <!-- Front content goes here -->
+                  <div class="front-content" *ngIf="!isFlipped[i]">
+                    <div class="row">
+                      <div class="col-md-7">
+                        <span class="label-link text-nowrap">{{
+                          policy?.clientName
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-4">
-                      <img src="" alt="" />
+                    <div class="row p-2">
+                      <div class="col-md-4">
+                        <img src="" alt="" />
+                      </div>
+
+                      <div class="col-md-4">
+                        <p>{{ policy?.carPlate }}</p>
+
+                        <p
+                          *ngIf="policy?.trademarkDescription === 'Not Listed'"
+                        >
+                          {{ policy?.brandDescription }}
+                        </p>
+
+                        <p
+                          *ngIf="policy?.trademarkDescription !== 'Not Listed'"
+                        >
+                          {{ policy?.brandDescription }}.{{
+                            policy?.trademarkDescription
+                          }}
+                        </p>
+
+                        <p>
+                          {{ policy?.carYear }}
+                        </p>
+                      </div>
                     </div>
 
-                    <div class="col-md-4">
-                      <p>{{ policy?.carPlate }}</p>
+                    <div class="row p-2">
+                      <div class="col-md-4">
+                        <p>
+                          {{ policy?.policyTypeDesc }} -
+                          {{ policy?.productsCode }}
+                        </p>
+                        <p>
+                          {{ dico?.dico_expiry_date || "dico_expiry_date" }}
+                        </p>
+                        <p>{{ dico?.dico_issue_date || "dico_issue_date" }}</p>
+                        <p *ngIf="polserno === 'true'">Policy Polserno</p>
+                        <p *ngIf="showSixthPanel()">Mech.Tow#</p>
+                        <p>
+                          {{ dico?.dico_policy_number || "dico_policy_number" }}
+                        </p>
+                        <p>
+                          {{
+                            dico?.dico_effective_date || "dico_effective_date"
+                          }}
+                        </p>
+                      </div>
 
-                      <p *ngIf="policy?.trademarkDescription === 'Not Listed'">
-                        {{ policy?.brandDescription }}
-                      </p>
-
-                      <p *ngIf="policy?.trademarkDescription !== 'Not Listed'">
-                        {{ policy?.brandDescription }}.{{
-                          policy?.trademarkDescription
-                        }}
-                      </p>
-
-                      <p>
-                        {{ policy?.carYear }}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="row p-2">
-                    <div class="col-md-4">
-                      <p>
-                        {{ policy?.policyTypeDesc }}-{{ policy?.productsCode }}
-                      </p>
-                      <p>
-                        {{ dico?.dico_expiry_date || "dico_expiry_date" }}
-                      </p>
-                      <p>{{ dico?.dico_issue_date || "dico_issue_date" }}</p>
-                    </div>
-
-                    <div class="col-md-4">
-                      <p>{{ policy?.amendmentDesc }}</p>
-                      <p>
-                        {{
-                          policy?.policyExpiryDate
-                            ? dateFormat("reportDateFormat") !== null
-                              ? (policy?.policyExpiryDate
-                                | date : dateFormat("reportDateFormat"))
+                      <div class="col-md-5">
+                        <p>{{ policy?.amendmentDesc }}</p>
+                        <p>
+                          {{
+                            policy?.policyExpiryDate
+                              ? dateFormat("reportDateFormat") !== null
+                                ? (policy?.policyExpiryDate
+                                  | date : dateFormat("reportDateFormat"))
+                                : "N/A"
                               : "N/A"
-                            : "N/A"
-                        }}
-                      </p>
-                      <p>
-                        {{
-                          policy?.policyIssueDate
-                            ? dateFormat("reportDateFormat") !== null
-                              ? (policy?.policyIssueDate
-                                | date : dateFormat("reportDateFormat"))
+                          }}
+                        </p>
+                        <p>
+                          {{
+                            policy?.policyIssueDate
+                              ? dateFormat("reportDateFormat") !== null
+                                ? (policy?.policyIssueDate
+                                  | date : dateFormat("reportDateFormat"))
+                                : "N/A"
                               : "N/A"
-                            : "N/A"
-                        }}
-                      </p>
+                          }}
+                        </p>
 
-                      <p>
-                        {{
-                          policy?.policyPolserno !== null
-                            ? policy?.policyPolserno
-                            : "N/A"
-                        }}
-                      </p>
+                        <p *ngIf="polserno === 'true'">
+                          {{
+                            policy?.policyPolserno !== null
+                              ? policy?.policyPolserno
+                              : "N/A"
+                          }}
+                        </p>
+                        <p
+                          *ngIf="showSixthPanel()"
+                          style="font-weight: bolder; color: red"
+                        >
+                          {{ policy.mechanicalTowCount }}
+                        </p>
+                        <p>
+                          {{ policy.policyNumber }}
+                        </p>
+                        <p>
+                          {{
+                            policy?.policyEffectiveDate
+                              ? dateFormat("reportDateFormat") !== null
+                                ? (policy?.policyEffectiveDate
+                                  | date : dateFormat("reportDateFormat"))
+                                : "N/A"
+                              : "N/A"
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row" style="float: right">
+                      <div class="col-md-3">
+                        <img
+                          src="./assets/icons/matrix.png"
+                          [matTooltip]="
+                            dico?.dico_view_policy || 'dico?.dico_view_policy'
+                          "
+                          alt=""
+                          srcset=""
+                          (click)="viewPolicyComponent(policy.carId)"
+                        />
+                      </div>
+                      <div class="col-md-3 ms-2">
+                        <img
+                          src="./assets/icons/flip_icon.png"
+                          style="height: 14px; width: 14px"
+                          alt=""
+                          srcset=""
+                          (click)="toggleFlip(i)"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="flip-card-back">
-                <!-- Back content goes here -->
-                <div class="back-content" *ngIf="isFlipped[i]">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <span class="label-color">{{ policy?.clientName }}</span>
+                <div class="flip-card-back">
+                  <!-- Back content goes here -->
+                  <div class="back-content" *ngIf="isFlipped[i]">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <span class="label-link text-nowrap">{{
+                          policy?.clientName
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_policy_number || "dico_policy_number"
-                      }}</label>
-                      <p class="ms-4">{{ policy?.policyNumber }}</p>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_policy_amendment || "dico_policy_amendment"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.policyAmendment }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_policy_amendment || "dico_policy_amendment"
-                      }}</label>
-                      <p class="ms-4">
-                        {{
-                          policy?.policyAmendment === 0
-                            ? policy?.policyCar
-                            : policy?.policyAmendment
-                        }}
-                      </p>
+                    <div class="row p-2" *ngIf="policyCar === 'true'">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_policy_car || "dico_policy_car"
+                        }}</label>
+                        <p class="ms-4">
+                          {{ policyCar }}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_car_chassis || "dico_car_chassis"
-                      }}</label>
-                      <p class="ms-4">{{ policy?.carChassis }}</p>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_policy_status || "dico_policy_status"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.amendmentDesc }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_branch || "dico_branch"
-                      }}</label>
-                      <p class="ms-4">
-                        {{ policy?.branchCode }} - {{ policy?.branchDesc }}
-                      </p>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_car_chassis || "dico_car_chassis"
+                        }}</label>
+                        <p class="ms-4">{{ policy?.carChassis }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_broker_name || "dico_broker_name"
-                      }}</label>
-                      <p class="ms-4">{{ policy?.brokerName }}</p>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_branch || "dico_branch"
+                        }}</label>
+                        <p class="ms-4">
+                          {{ policy?.branchCode }} - {{ policy?.branchDesc }}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row p-2">
-                    <div class="col-md-8 d-flex justify-content-between">
-                      <label class="text-nowrap">{{
-                        dico?.dico_effective_date || "dico_effective_date"
-                      }}</label>
-                      <p class="ms-4">
-                        {{
-                          policy?.policyEffectiveDate
-                            | date : dateFormat("reportDateFormat")
-                        }}
-                      </p>
+                    <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_broker_name || "dico_broker_name"
+                        }}</label>
+                        <p class="ms-4" style="font-weight: bolder; color: red">
+                          {{
+                            hasPerm("ccBrokerRender")
+                              ? policy?.brokerName
+                              : "****"
+                          }}
+                        </p>
+                      </div>
                     </div>
+                    <div class="row" style="float: right">
+                      <div class="col-md-3 ms-2">
+                        <img
+                          src="./assets/icons/flip_icon.png"
+                          style="height: 14px; width: 14px"
+                          alt=""
+                          srcset=""
+                          (click)="toggleFlip(i)"
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="row p-2">
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <label class="text-nowrap">{{
+                          dico?.dico_effective_date || "dico_effective_date"
+                        }}</label>
+                        <p class="ms-4">
+                          {{
+                            policy?.policyEffectiveDate
+                              | date : dateFormat("reportDateFormat")
+                          }}
+                        </p>
+                      </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="row mt-2" *ngIf="insuranceCode !== 'ALL' || cmp !== '1'">
+          <div class="col-md-3 m-2">
+            <button class="btn-class" (click)="createNoDataDialog()">
+              {{ dico?.dico_create_no_data || "dico_create_no_data" }}
+            </button>
+          </div>
+        </div>
+      </ng-template>
     </form>
   </div>
 
   <!-- Right Panel: Dynamic Container -->
-  <div class="dynamic-container">
+  <div class="dynamic-container" [style.order]="changeSides ? 2 : 1">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <label class="label-color">{{ natureLabels[selectedNature] }}</label>
+      </div>
+    </div>
     <mat-tab-group (selectedTabChange)="onTabSelected($event)">
       <mat-tab *ngFor="let item of filteredData">
         <ng-template mat-tab-label>{{ item.description }}</ng-template>
@@ -436,7 +709,7 @@
                     formControlName="lossTowLossDate"
                     bsDatepicker
                     [bsConfig]="{
-                      dateInputFormat: 'DD/MM/YYYY',
+                      dateInputFormat: 'DD/MM/YYYY HH:mm A',
                       containerClass: 'theme-dark-blue',
                       showWeekNumbers: false
                     }"
@@ -456,7 +729,7 @@
                     formControlName="notificationReportedDate"
                     bsDatepicker
                     [bsConfig]="{
-                      dateInputFormat: 'DD/MM/YYYY',
+                      dateInputFormat: 'DD/MM/YYYY HH:mm A',
                       containerClass: 'theme-dark-blue',
                       showWeekNumbers: false
                     }"
