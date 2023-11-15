@@ -1,13 +1,24 @@
 <nav class="navbar navbar-class navbar-expand-lg">
   <span style="color: white; height: 30px" (click)="goBack()">{{ title }}</span>
-  <!-- <app-view-policy class="navigate-btn" *ngIf="viewPolicy"></app-view-policy> -->
-  <app-data-entry-button
-    class="navigate-btn"
-    *ngIf="showDataEntryButton"
-  ></app-data-entry-button>
-  <app-send-email-button
-    class="navigate-btn"
-    *ngIf="sendEmailButton"
-  ></app-send-email-button>
-  <app-view-notes class="navigate-btn" *ngIf="note"></app-view-notes>
+
+  <div class="ms-auto">
+    <!-- Use ml-auto to push items to the right -->
+    <app-data-entry-button
+      class="navigate-btn"
+      *ngIf="showDataEntryButton"
+    ></app-data-entry-button>
+    <app-send-email-button
+      class="navigate-btn"
+      *ngIf="sendEmailButton"
+    ></app-send-email-button>
+    <app-view-notes class="navigate-btn" *ngIf="note"></app-view-notes>
+    <button
+      class="btn-class navigate-btn"
+      (click)="back()"
+      *ngIf="showBackBtn"
+      type="button"
+    >
+      Back
+    </button>
+  </div>
 </nav>

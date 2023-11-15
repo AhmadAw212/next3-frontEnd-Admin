@@ -8,6 +8,15 @@ export interface NotificationRequest {
   lossTowStaffCaseMngr?: string;
   lossTowDriverName?: string;
   notificationContactPhone?: string;
+  policyNumber?: string;
+  policyId?: string;
+  productsType?: string;
+  brokerDesc?: string;
+  policyAmendment?: string;
+  policyEffectiveDate?: string;
+  policyExpiryDate?: string;
+  carYear?: string;
+  carPlate?: string;
   lossTowNbrVehInvolved?: string;
   notificationMatDamageId?: string;
   carRespReasonCode?: string;
@@ -64,4 +73,26 @@ export interface NotificationRequest {
   distributionLossDistDate?: string;
   towingComId?: string;
   lossTowRsId?: string;
+  distributionNoDataBoolean?: string;
+  distributionNoDataBroker?: string;
+  distributionNoDataCarBrand?: string;
+  distributionNoDataDate?: string;
+  distributionNoDataEffDate?: string;
+  distributionNoDataExpDate?: string;
+  distributionNoDataName?: string;
+  distributionNoDataPlate?: string;
+  distributionNoDataPlateB?: string;
+  distributionNoDataPolicy?: string;
+  distributionNoDataRemarks?: string;
+  distributionNoDataUser?: string;
+  distributionNoDataTypeId?: string;
+  carOwnerFirstName?: string;
+  carOwnerFatherName?: string;
+  carOwnerFamilyName?: string;
+  carDriverFirstName?: string;
+  carDriverFatherName?: string;
+  carDriverFamilyName?: string;
+  carShapeId?: string;
+
+  policyCarId?: string;
 }

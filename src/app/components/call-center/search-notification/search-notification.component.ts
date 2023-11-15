@@ -90,7 +90,9 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
         return 'black';
     }
   }
-
+  navigateToPolicyNotification() {
+    this.router.navigate(['profiles-main/CallCenter/policyNotification']);
+  }
   dateFormat(dateId: string) {
     return this.dateFormatService.getDateFormat(dateId);
   }

@@ -10,7 +10,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { CreateNoDataDialogComponent } from '../create-no-data-dialog/create-no-data-dialog.component';
 import { type } from 'src/app/model/type';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, lastValueFrom, map } from 'rxjs';
 import * as moment from 'moment';
 
 @Component({
@@ -43,6 +43,10 @@ export class ChangeToAvailableDataComponent implements OnInit {
   searchPolicyData: any[] = [];
   getInsuranceSubscription?: Subscription;
   polserno?: string;
+  notificationId?: string;
+  policyEffectiveDate?: any;
+  lossTowLossDate?: any;
+  policyResult?: any;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -57,33 +61,24 @@ export class ChangeToAvailableDataComponent implements OnInit {
   ) {
     this.initializeData();
     this.companies = data.companies;
+    this.notificationId = data.notificationId;
+    this.policyEffectiveDate = data.policyEffectiveDate;
+    this.lossTowLossDate = data.lossTowLossDate;
+    console.log(this.policyEffectiveDate, this.notificationId);
   }
 
   private initializeData() {
-    const dataChange = this.data.changeAvailableData;
+    // const dataChange = this.data;
     this.polserno = this.data.polserno;
-
-    if (dataChange) {
-      this.iSearchValue = dataChange.iSearchValue;
-      this.iSearchBy = dataChange.iSearchBy;
-      this.iAsOfDate =
-        dataChange.iAsOfDate ||
-        this.datePipe.transform(this.data, 'reportDateFormat');
-      this.iPolicyType = dataChange.iPolicyType;
-      this.searchPolicyData = dataChange.policyData;
-    }
-    const lossTowLossDate = this.data.lossTowLossDate;
+    this.iSearchValue = this.data.distributionNoDataPlate;
+    // const lossTowLossDate = dataChange.lossTowLossDate
+    this.iAsOfDate = this.datePipe.transform(
+      this.data.lossTowLossDate,
+      this.dateFormat('reportDateFormat')
+    );
     const insuranceId = this.data.insuranceId;
     this.insuranceCode = insuranceId;
-
-    if (!dataChange?.iAsOfDate) {
-      this.iAsOfDate = this.datePipe.transform(
-        lossTowLossDate,
-        this.dateFormat('reportDateFormat')
-      )!;
-    }
-
-    if (this.data.createNoData) {
+    if (this.data) {
       const {
         distributionNoDataPlateB,
         distributionNoDataPlate,
@@ -94,7 +89,7 @@ export class ChangeToAvailableDataComponent implements OnInit {
         distributionNoDataExpDate,
         distributionNoDataBroker,
         distributionNoDataCarBrand,
-      } = this.data.createNoData;
+      } = this.data;
 
       this.distributionNoDataPlateB = distributionNoDataPlateB;
       this.distributionNoDataPlate = distributionNoDataPlate;
@@ -109,19 +104,54 @@ export class ChangeToAvailableDataComponent implements OnInit {
       this.distributionNoDataCarBrand = distributionNoDataCarBrand;
 
       // Initialize other properties here if needed
-    } else {
-      this.distributionNoDataPlateB = '';
-      this.distributionNoDataPlate = '';
-      this.distributionNoDataName = '';
-      this.distributionNoDataPolicy = '';
-      this.distributionNoDataRemarks = '';
-      this.distributionNoDataEffDate = '';
-      this.distributionNoDataExpDate = '';
-      this.distributionNoDataBroker = '';
-      this.distributionNoDataCarBrand = '';
     }
   }
 
+  async getPolicyCarById(carId: string): Promise<any> {
+    try {
+      const res = await lastValueFrom(this.dataService.getPolicyCarById(carId));
+      this.policyResult = res.data;
+      return this.policyResult;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+  getPolicyCarInfo(policy: any, i: number) {
+    this.isFlipped[i] = true;
+    this.getPolicyCarById(policy.carId).then((res) => {
+      this.dialogRef.close(res);
+      // console.log(res);
+    });
+    // this.getNotificationFindById();
+    // console.log(policy);
+  }
+  getNotificationFindById() {
+    const notId = this.notificationId;
+    const policyEffectiveDate = moment(
+      this.policyEffectiveDate,
+      'YYYY-MM-DDTHH:mm:ss'
+    );
+    const lossTowLossDate = moment(this.lossTowLossDate, 'YYYY-MM-DDTHH:mm:ss');
+
+    if (policyEffectiveDate.isAfter(lossTowLossDate)) {
+      this.alertifyService.dialogAlert(
+        'Loss Date Is Before Policy Effective Date',
+        'Error'
+      );
+    }
+    if (notId) {
+      this.dataService.getNotificationFindById(notId).subscribe({
+        next: (res) => {
+          // this.dialogRef.close(res.data);
+          // console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+  }
   toggleFlip(index: number): void {
     this.isFlipped[index] = !this.isFlipped[index];
   }
@@ -193,7 +223,7 @@ export class ChangeToAvailableDataComponent implements OnInit {
         .subscribe({
           next: (res) => {
             this.searchPolicyData = res.data;
-            console.log(res);
+            // console.log(res);
           },
           error: (err) => {
             console.log(err);

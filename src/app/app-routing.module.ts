@@ -8,6 +8,7 @@ import { AuthGuard } from './shared/auth.guard';
 import { DataEntryViewComponent } from './components/data-entry-view/data-entry-view.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { NewHotlineComponent } from './components/call-center/new-hotline/new-hotline.component';
+import { PhoneIndexComponent } from './components/common-components/phone-index/phone-index.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -51,6 +52,11 @@ const routes: Routes = [
   {
     path: 'dataEntryView/:notificationId',
     component: DataEntryViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'phoneIndex',
+    component: PhoneIndexComponent,
     canActivate: [AuthGuard],
   },
   {

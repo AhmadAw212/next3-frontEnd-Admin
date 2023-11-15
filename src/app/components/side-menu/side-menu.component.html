@@ -36,6 +36,13 @@
         >
           {{ dico?.dico_search_policy || "dico_search_policy" }}
         </a>
+        <a
+          mat-list-item
+          routerLink="/phoneIndex"
+          *ngIf="hasPerm('ccPhoneIndex')"
+        >
+          {{ dico?.dico_phone_index || "dico_phone_index" }}
+        </a>
 
         <mat-expansion-panel
           style="background-color: rgb(237, 243, 245)"

@@ -54,6 +54,7 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
     this.telExtension = data.telExtension;
     this.showTelIcon = data.showTelIcon;
     this.insuranceCompany = data.insuranceId;
+
     // console.log(data);
   }
   ngOnDestroy(): void {
@@ -143,7 +144,7 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
       });
   }
   chooseExpert(expert: any) {
-    // console.log(expert);
+    console.log(expert);
     if (expert) {
       this.supplierId = expert.supplierId;
       this.supplierName = expert.supplierName;
@@ -151,6 +152,7 @@ export class ChooseManuallyComponent implements OnInit, OnDestroy {
         supplierId: this.supplierId,
         supplierName: this.supplierName,
         expertInOutNet: this.inOutNetworks,
+        expertMobilePhone: expert.supplierMobilePhone,
         direction: 'Direct',
       });
     }

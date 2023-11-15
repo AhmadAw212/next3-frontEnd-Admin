@@ -449,43 +449,49 @@
 
   <div class="section">
     <div class="panel" *ngIf="policyData">
-      <table>
-        <thead style="position: static">
-          <tr>
-            <th>{{ dico?.dico_cover || "dico_cover" }}</th>
-            <th>{{ dico?.dico_description || "dico_description" }}</th>
-            <th>{{ dico?.dico_sum_insured || "dico_sum_insured" }}</th>
-            <th>{{ dico?.dico_deductible_per || "dico_deductible_per" }}</th>
-            <th>{{ dico?.dico_deductible_2 || "dico_deductible_2" }}</th>
-            <th>
-              {{ dico?.dico_cover_limit_claim || "dico_cover_limit_claim" }}
-            </th>
-            <th>
-              {{ dico?.dico_cover_count_limit || "dico_cover_count_limit" }}
-            </th>
-            <th>{{ dico?.dico_deductible_type || "dico_deductible_type" }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let cover of policyCoverlist">
-            <td>{{ cover.policyCoversCover }}</td>
-            <td>{{ cover.coverDescription }}</td>
-            <td>{{ cover.policyCoversSumInsured }}</td>
-            <td>{{ cover.policyCoversDeductible100 }}</td>
-            <td>{{ cover.policyCoversDeductible }}</td>
-            <td>{{ cover.policyCoversLimitClaim }}</td>
-            <td>{{ cover.policyCoversCountLimit }}</td>
-            <td>{{ cover.policyCoversPercentage }}</td>
-          </tr>
-        </tbody>
-        <ng-template #noData>
-          <tr>
-            <td colspan="9">
-              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-            </td>
-          </tr>
-        </ng-template>
-      </table>
+      <div class="table-responsive">
+        <table>
+          <thead style="position: static">
+            <tr>
+              <th>{{ dico?.dico_cover || "dico_cover" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+              <th>{{ dico?.dico_sum_insured || "dico_sum_insured" }}</th>
+              <th>{{ dico?.dico_deductible_per || "dico_deductible_per" }}</th>
+              <th>{{ dico?.dico_deductible_2 || "dico_deductible_2" }}</th>
+              <th>
+                {{ dico?.dico_cover_limit_claim || "dico_cover_limit_claim" }}
+              </th>
+              <th>
+                {{ dico?.dico_cover_count_limit || "dico_cover_count_limit" }}
+              </th>
+              <th>
+                {{ dico?.dico_deductible_type || "dico_deductible_type" }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cover of policyCoverlist">
+              <td>{{ cover.policyCoversCover }}</td>
+              <td>{{ cover.coverDescription }}</td>
+              <td>{{ cover.policyCoversSumInsured }}</td>
+              <td>{{ cover.policyCoversDeductible100 }}</td>
+              <td>{{ cover.policyCoversDeductible }}</td>
+              <td>{{ cover.policyCoversLimitClaim }}</td>
+              <td>{{ cover.policyCoversCountLimit }}</td>
+              <td>{{ cover.policyCoversPercentage }}</td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
     </div>
   </div>
 

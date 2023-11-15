@@ -24,7 +24,7 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 })
 export class TotalLossTowingTableComponent implements OnInit {
   dico?: any;
-  @Input() carsTotallossDispatches?: any[];
+  carsTotallossDispatches?: any[];
   carLocationLov?: type[] = [];
   @Input() supplierGarageLov?: any[] = [];
   @Input() notificationStatusCode?: string;
@@ -38,9 +38,14 @@ export class TotalLossTowingTableComponent implements OnInit {
   coreUserId?: string;
   userMap = new Map<string, string>();
   @Input() lossCarId?: string;
+  garageValues: any[] = [];
   dialogRef?: MatDialogRef<TotalLossTowingTableComponent>;
   carLocations: boolean = false;
+  private searchTimer: any;
+  townNameLov: any[] = [];
   // @Input() loginInfo?: any;
+  @Input() notificationId?: string;
+  townIdToDescMap = new Map<string, string>();
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -56,6 +61,7 @@ export class TotalLossTowingTableComponent implements OnInit {
   ) {
     // console.log(this.userMap.get(this.userInfo!.displayName));
   }
+
   openNewTotalLossTowing() {
     this.dialogRef = this.dialog.open(this.newTotalLossTowing, {
       data: {},
@@ -74,11 +80,39 @@ export class TotalLossTowingTableComponent implements OnInit {
     this.getDico();
     this.getCarLocationLovFindAll();
     this.getTownFindAll();
-    this.arrivedDateFormat();
+
+    this.getCarsTotallossDispatch();
+  }
+
+  searchForGarageByName(event: any) {
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      this.dataService.getSupplierGarageLovByName(event.term).subscribe({
+        next: (res) => {
+          this.garageValues = res.data;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }, 300);
+  }
+  getTownByName(event: any) {
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      this.dataService.getTownByName(event.term).subscribe({
+        next: (res) => {
+          this.townNameLov = res.data;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }, 300);
   }
   lossTow() {
-    const totalLossTowCarId =
-      this.carsTotallossDispatches![0]?.totalLossTowCarId;
+    // const totalLossTowCarId =
+    // this.carsTotallossDispatches![0]?.totalLossTowCarId;
     this.lossTowForm = this.fb.group({
       totallossTowFromLocationId: [''], // Add initial values if needed
       totalLossTowFromRsId: [''],
@@ -128,13 +162,13 @@ export class TotalLossTowingTableComponent implements OnInit {
       };
     });
   }
-
   onInputChange(fieldName: string, rowIndex: number) {
     const row = this.carsTotallossDispatches![rowIndex];
     const rowId = row.totallossDispatchId;
     const existingChangeIndex = this.changesArray.findIndex(
       (change) => change.totalLossTowDispatchId === rowId
     );
+
     const changedData = {
       totallossTowFromLocationId: row.totallossTowFromLocationId,
       totalLossTowFromRsId: row.totalLossTowFromRsId,
@@ -152,6 +186,7 @@ export class TotalLossTowingTableComponent implements OnInit {
       totalLossTowCarId: this.lossCarId,
       // totalLossTowDispatchId: row.totallossDispatchId,
     };
+
     if (existingChangeIndex !== -1) {
       this.changesArray[existingChangeIndex][fieldName] = row[fieldName];
     } else {
@@ -162,7 +197,30 @@ export class TotalLossTowingTableComponent implements OnInit {
       });
     }
 
-    console.log(this.changesArray);
+    // console.log(this.changesArray);
+  }
+  getCarsTotallossDispatch() {
+    this.dataService
+      .getCarsTotallossDispatchDTO(this.notificationId!)
+      .subscribe({
+        next: (res) => {
+          this.carsTotallossDispatches = res.data;
+          this.arrivedDateFormat();
+
+          // Assuming your response is stored in a variable called 'response'
+          for (const item of res.data) {
+            this.townIdToDescMap.set(
+              item.totalLossTowFromTownDesc,
+              item.totalLossTowFromTownId
+            );
+          }
+
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -203,7 +261,8 @@ export class TotalLossTowingTableComponent implements OnInit {
       () => {
         this.dataService.deleteTotalLossTowingRow(id).subscribe({
           next: (data) => {
-            this.alertifyService.error(data.message!);
+            this.getCarsTotallossDispatch();
+            this.alertifyService.error(data.title);
           },
           error: (err) => {
             this.alertifyService.error(err.error.message);
@@ -212,17 +271,25 @@ export class TotalLossTowingTableComponent implements OnInit {
       }
     );
   }
+  // fromTownChange(event: any,i:number) {
+  //   if (event) {
+  //    this.carsTotallossDispatches![i].totalLossTowFromTownId = event
+  //   }
+  // }
   updateTotalLossTowList() {
-    this.dataService
-      .saveOrUpdateTotalLossTowInfoList(this.changesArray)
-      .subscribe({
-        next: (data) => {
-          this.alertifyService.success(data.message);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    if (this.changesArray && this.changesArray.length > 0) {
+      this.dataService
+        .saveOrUpdateTotalLossTowInfoList(this.changesArray)
+        .subscribe({
+          next: (data) => {
+            this.getCarsTotallossDispatch();
+            this.alertifyService.success(data.message);
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+    }
   }
   saveOrUpdateTotalLossTowInfoList() {
     this.dataService
@@ -230,8 +297,9 @@ export class TotalLossTowingTableComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.dialogRef?.close();
+          this.getCarsTotallossDispatch();
           this.alertifyService.success(data.message);
-          console.log(data);
+          // console.log(data);
         },
         error: (err) => {
           console.log(err);

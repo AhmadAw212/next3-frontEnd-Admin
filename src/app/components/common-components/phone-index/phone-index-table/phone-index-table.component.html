@@ -1,0 +1,103 @@
+<mat-card class="container mt-3">
+  <mat-card-content>
+    <div class="container-fluid">
+      <div class="table-responsive p-3">
+        <table class="">
+          <thead style="top: 0">
+            <!-- <tr (keyup.enter)="getCallCenterListBeanByTypeWithSearch()"> -->
+
+            <tr (keyup.enter)="findCarsSuppliersByPhoneIndex()">
+              <th>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-control"
+                  placeholder="Search By Name"
+                  [(ngModel)]="name"
+                />
+              </th>
+              <th>
+                <!-- <div><input type="text" /></div> -->
+
+                <input
+                  type="text"
+                  id="mobile"
+                  name="mobile"
+                  class="form-control"
+                  placeholder="Search By Mobile"
+                  [(ngModel)]="mobile"
+                />
+              </th>
+              <th>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  class="form-control"
+                  placeholder="Search By Phone"
+                  [(ngModel)]="phone"
+                />
+              </th>
+
+              <th>
+                <input
+                  type="text"
+                  id="townName"
+                  name="townName"
+                  class="form-control"
+                  placeholder="Search By Town"
+                  [(ngModel)]="townName"
+                />
+              </th>
+
+              <th>
+                <input
+                  type="text"
+                  id="type"
+                  name="type"
+                  class="form-control"
+                  placeholder="Search By Type"
+                  [(ngModel)]="type"
+                />
+              </th>
+            </tr>
+            <tr>
+              <th>{{ dico?.dico_name || "dico_name" }}</th>
+              <th>{{ dico?.dico_mobile || "dico_mobile" }}</th>
+              <th>{{ dico?.dico_phone || "dico_phone" }}</th>
+              <th>{{ dico?.dico_town_name || "dico_town_name" }}</th>
+              <th>{{ dico?.dico_type || "dico_type" }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expert of phoneIndex">
+              <td>{{ expert.name }}</td>
+              <td>{{ expert.mobile }}</td>
+              <td>{{ expert.phone }}</td>
+              <td>{{ expert.townName }}</td>
+              <td>{{ expert.supplierInterm }}</td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+      <div class="row">
+        <app-paginator
+          [totalItems]="totalItems!"
+          [pageSize]="pageSize"
+          [totalPages]="totalPages"
+          (pageChange)="onPageChange($event)"
+        ></app-paginator>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

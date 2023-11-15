@@ -86,6 +86,7 @@ export class AddCarSupplierComponent implements OnInit {
       initialCount: ['', Validators.pattern(/^\d+$/)],
       registration_number: [''],
       tva_number: [''],
+      nContact: [''],
     });
   }
   getTitleLov() {

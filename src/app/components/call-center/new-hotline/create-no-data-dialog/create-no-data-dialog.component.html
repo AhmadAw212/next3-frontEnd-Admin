@@ -116,6 +116,7 @@
               id="distributionNoDataEffDate"
               name="distributionNoDataEffDate"
               class="form-control"
+              (bsValueChange)="changeDateFormat($event)"
               formControlName="distributionNoDataEffDate"
               bsDatepicker
               [bsConfig]="{
@@ -135,6 +136,7 @@
               id="distributionNoDataExpDate"
               name="distributionNoDataExpDate"
               formControlName="distributionNoDataExpDate"
+              (bsValueChange)="changeDateFormat2($event)"
               bsDatepicker
               [bsConfig]="{
                 dateInputFormat: 'DD/MM/YYYY',

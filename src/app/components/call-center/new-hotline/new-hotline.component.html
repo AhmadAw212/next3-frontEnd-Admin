@@ -1,12 +1,22 @@
 <app-login-nav></app-login-nav>
 <form [formGroup]="form" (ngSubmit)="saveAction()">
-  <nav class="navbar navbar-class justify-content-center">
-    <!-- <span class="navbar-brand" style="color: white"></span> -->
+  <nav class="navbar navbar-expand-lg navbar-class">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="row ml-auto">
-      <div class="d-flex justify-content-center align-items-end">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <ng-container *ngIf="policyData">
-          <div class="col-md-1">
+          <li class="nav-item">
             <label class="notification-icon">
               <img
                 src="./assets/icons/mail-hover.png"
@@ -15,8 +25,8 @@
                 (click)="navigateToMail()"
               />
             </label>
-          </div>
-          <div class="col-md-2">
+          </li>
+          <li class="nav-item">
             <label class="notification-icon">
               <img
                 src="./assets/icons/matrix.png"
@@ -27,61 +37,44 @@
               />
               {{ dico?.dico_view_policy || "dico_view_policy" }}
             </label>
-          </div>
-          <div class="col-md-1">
+          </li>
+          <li class="nav-item">
             <app-view-complaints
               [notificationId]="policyData!.notificationId"
               [label]="dico?.dico_complaints || 'dico_complaints'"
             ></app-view-complaints>
-            <!-- <label>
-            <img
-              src="./assets/icons/warning.png"
-              alt=""
-              class="icon"
-              [matTooltip]="dico?.dico_complaints || 'dico_complaints'"
-            />
-          </label> -->
-          </div>
-          <div class="col-md-1">
+          </li>
+          <li class="nav-item">
             <label>
               <app-view-notes
                 [notificationId]="policyData!.notificationId"
                 [label]="dico?.dico_note || 'dico_note'"
               ></app-view-notes>
-              <!-- <img
-                src="./assets/icons/clock-alarm.png"
+            </label>
+          </li>
+          <li class="nav-item">
+            <label class="notification-icon">
+              <img
+                src="./assets/icons/search-hover.png"
                 alt=""
                 class="icon"
-                [matTooltip]="dico?.dico_note || 'dico_note'"
-              /> -->
+                [matTooltip]="dico?.dico_tow_cases || 'dico_tow_cases'"
+                (click)="openTowingDispDialog()"
+              />
             </label>
-          </div>
-
-          <div class="col-md-1">
-            <div class="d-flex justify-content-center align-items-center">
-              <label class="notification-icon">
-                <img
-                  src="./assets/icons/search-hover.png"
-                  alt=""
-                  class="icon"
-                  [matTooltip]="dico?.dico_tow_cases || 'dico_tow_cases'"
-                  (click)="openTowingDispDialog()"
-                />
-              </label>
-              <label class="notification-icon">
-                <img
-                  src="./assets/icons/search.png"
-                  alt=""
-                  class="icon"
-                  [matTooltip]="dico?.dico_claims || 'dico_claims'"
-                  (click)="openClaimsDialog()"
-                />
-              </label>
-            </div>
-          </div>
-          <!-- <div class="col-md-1"></div> -->
-
-          <div class="col-md-5">
+          </li>
+          <li class="nav-item">
+            <label class="notification-icon">
+              <img
+                src="./assets/icons/search.png"
+                alt=""
+                class="icon"
+                [matTooltip]="dico?.dico_claims || 'dico_claims'"
+                (click)="openClaimsDialog()"
+              />
+            </label>
+          </li>
+          <li class="nav-item">
             <label>
               <app-new-notification-related
                 [notificationId]="policyData.notificationId"
@@ -91,30 +84,33 @@
                 [notificationVisa]="policyData.notificationVisa"
               ></app-new-notification-related>
             </label>
-            <span class="ms-2" style="color: white; font-weight: bold">{{
-              policyData.insuranceDesc
-            }}</span>
-          </div>
-
-          <div class="col-md-4">
-            <label
-              >{{
+            <span class="ms-2" style="color: white; font-weight: bold">
+              {{ policyData.insuranceDesc }}
+            </span>
+          </li>
+          <li class="nav-item">
+            <label>
+              {{
                 dico?.dico_notification_number || "dico_notification_number"
-              }}
-              :
+              }}:
             </label>
-            <span class="ms-2" style="color: white; font-weight: bold">{{
-              policyData.notificationVisa
-            }}</span>
-          </div>
-
-          <div class="col-md-1">
+            <span class="ms-2" style="color: white; font-weight: bold">
+              {{ policyData.notificationVisa }}
+            </span>
+          </li>
+          <li class="nav-item">
             <button class="btn-class ms-2" type="submit">
               {{ dico?.dico_save || "dico_save" }}
             </button>
-          </div>
+          </li>
+          <li class="nav-item">
+            <app-back-button
+              targetRoute="/profiles-main/CallCenter"
+              [showBackBtn]="true"
+            ></app-back-button>
+          </li>
         </ng-container>
-      </div>
+      </ul>
     </div>
   </nav>
 
@@ -136,15 +132,15 @@
                 <label>{{
                   dico?.dico_policy_number || "dico_policy_number"
                 }}</label>
-                <p>{{ policyData?.policyNumber }}</p>
+                <span>{{ form.get("policyNumber")?.value }}</span>
               </div>
               <div class="col-md-4">
                 <label>{{ dico?.dico_endorsment || "dico_endorsment" }}</label>
                 <p>
                   {{
-                    policyData?.policyAmendment === 0
+                    form.get("policyAmendment")?.value === 0
                       ? policyData?.policyCar
-                      : policyData?.policyAmendment
+                      : form.get("policyAmendment")?.value
                   }}
                 </p>
               </div>
@@ -161,7 +157,7 @@
                   <label
                     >{{ dico?.dico_broker_name || "dico_broker_name" }}
                   </label>
-                  <p>{{ policyData?.brokerDesc }}</p>
+                  <p>{{ form.get("brokerDesc")?.value }}</p>
                 </div>
                 <div class="col-md-4">
                   <label>{{
@@ -178,7 +174,7 @@
                 </label>
                 <p>
                   {{
-                    policyData?.policyEffectiveDate
+                    form.get("policyEffectiveDate")?.value
                       | date : dateFormat("reportDateFormat")
                   }}
                 </p>
@@ -189,7 +185,7 @@
                 }}</label>
                 <p>
                   {{
-                    policyData?.policyExpiryDate
+                    form.get("policyExpiryDate")?.value
                       | date : dateFormat("reportDateFormat")
                   }}
                 </p>
@@ -203,8 +199,8 @@
                   >{{ dico?.dico_policy_type || "dico_policy_type" }}
                 </label>
                 <p>
-                  {{ policyData?.productsType }} -
-                  {{ policyData?.productsCode }}
+                  {{ form.get("productsType")?.value }} -
+                  {{ form.get("productsCode")?.value }}
                 </p>
               </div>
 
@@ -213,14 +209,14 @@
                 <label
                   >{{ dico?.dico_policy_type || "dico_policy_type" }}
                 </label>
-                <p>{{ policyData?.productsType }}</p>
+                <p>{{ form.get("productsType")?.value }}</p>
               </div>
               <!-- *ngIf="coreConfig.policyInfoTypeShow ==='CODE' " -->
               <div class="col-md-4" *ngIf="policyInfoTypeShow === 'CODE'">
                 <label
                   >{{ dico?.dico_policy_type || "dico_policy_type" }}
                 </label>
-                <p>{{ policyData?.productsCode }}</p>
+                <p>{{ form.get("productsCode")?.value }}</p>
               </div>
 
               <!-- *ngIf="coreConfig.ccRepFlag ==='true' " -->
@@ -376,12 +372,12 @@
             <div class="row p-3">
               <div class="col-md-4">
                 <img src="./assets/icons/number.png" alt="" />
-                <p>{{ policyData?.carPlate }}</p>
+                <p>{{ form.get("carPlate")?.value }}</p>
               </div>
 
               <div class="col-md-4">
                 <label>{{ dico?.dico_car_yom || "dico_car_yom" }}</label>
-                <p>{{ policyData?.carYear }}</p>
+                <p>{{ form.get("carYear")?.value }}</p>
               </div>
             </div>
 
@@ -908,7 +904,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="supplierName"
+                      formControlName="lossTow2ndExpertName"
                     />
                   </div>
 
@@ -1176,7 +1172,7 @@
                     }}</span>
                   </div>
                 </div>
-                <div class="row p-3">
+                <div class="table-responsive p-2">
                   <table>
                     <thead [style.position]="'static'">
                       <tr>
@@ -2245,13 +2241,11 @@
               <div class="container">
                 <div class="row">
                   <app-total-loss-towing-table
-                    [carsTotallossDispatches]="
-                      policyData?.carsTotallossDispatches
-                    "
                     [supplierGarageLov]="supplierGarageLov"
                     [notificationStatusCode]="
                       policyData?.notificationStatusCode
                     "
+                    [notificationId]="notificationId"
                     [lossCarId]="lossCarId"
                   ></app-total-loss-towing-table>
                 </div>

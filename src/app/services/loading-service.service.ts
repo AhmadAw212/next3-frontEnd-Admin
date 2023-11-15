@@ -67,7 +67,8 @@ export class LoadingServiceService {
     return user.displayName;
   }
   getCompany(): string | null {
-    return this.companySubject.getValue();
+    const user = this.getSelectedProfile();
+    return user.companyId;
   }
   setCompany(company: string) {
     this.companySubject.next(company);

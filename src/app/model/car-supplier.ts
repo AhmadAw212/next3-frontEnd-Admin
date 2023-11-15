@@ -19,6 +19,7 @@ export interface CarSupplier {
   business_district_desc?: string;
   business_sector_desc?: string;
   business_city_desc?: string;
+  nContact?: string;
   // bus_street: string;
   business_caza: string;
   business_region: string;

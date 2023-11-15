@@ -10,6 +10,7 @@ import { NotificationDetailsComponent } from './notification-details/notificatio
 import { CommonModule } from '@angular/common';
 import { TowingConditionComponent } from './towing-condition/towing-condition.component';
 import { UsersActivityComponent } from './users-activity/users-activity.component';
+import { PolicyNotificationViewComponent } from './policy-notification-view/policy-notification-view.component';
 
 const routes: Routes = [
   {
@@ -49,12 +50,17 @@ const routes: Routes = [
   {
     path: 'profiles-main/CallCenter/towingCondition',
     component: TowingConditionComponent,
-
     canActivate: [AuthGuard],
   },
   {
     path: 'profiles-main/CallCenter/usersActivity',
     component: UsersActivityComponent,
+
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profiles-main/CallCenter/policyNotification',
+    component: PolicyNotificationViewComponent,
 
     canActivate: [AuthGuard],
   },

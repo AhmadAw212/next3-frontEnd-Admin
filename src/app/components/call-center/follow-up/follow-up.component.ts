@@ -16,7 +16,7 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GaugesDataList } from 'src/app/model/gauges-data-list';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -75,6 +75,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private profileService: LoadingServiceService
   ) {
@@ -140,6 +141,10 @@ export class FollowUpComponent implements OnInit, OnDestroy {
 
     this.selectedRow = clickedRow.parentNode as HTMLElement;
     this.selectedRow.classList.add('highlight');
+  }
+  selectedHotlineUser(notificationId: string) {
+    // console.log(notificationId);
+    this.router.navigate(['hotline/', notificationId]);
   }
   onCompanyChange(event: any) {
     this.selectedCompany = event;
