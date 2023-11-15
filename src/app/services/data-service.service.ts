@@ -59,6 +59,7 @@ interface User {
 })
 export class DataServiceService {
   userUrl = environment.userUrl;
+  loginUrl = environment.loginUrl;
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
   updatedCarSupp = new Subject<CarSupplier>();
@@ -70,13 +71,13 @@ export class DataServiceService {
     // .append('Authorization', 'Basic ' + authData)
     // .append('X-Requested-With', 'XMLHttpRequest');
     return this.http.post<ApiResponse>(
-      `${this.userUrl}/basicAuth/validate`,
+      `${this.loginUrl}/basicAuth/validate`,
       user
     );
   }
 
   loginUserInfo(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.userUrl}/basicAuth/loginInfo`);
+    return this.http.get<ApiResponse>(`${this.loginUrl}/basicAuth/loginInfo`);
   }
 
   Dico(local: string): Observable<ApiResponse> {
@@ -1081,13 +1082,13 @@ export class DataServiceService {
     );
   }
   refreshToken(refreshToken: any): Observable<any> {
-    return this.http.post<any>(`${this.userUrl}/refresh/refreshtoken`, {
+    return this.http.post<any>(`${this.loginUrl}/refresh/refreshtoken`, {
       refreshToken: refreshToken,
     });
   }
 
   logout(): Observable<any> {
-    return this.http.post<any>(`${this.userUrl}/refresh/signout`, {});
+    return this.http.post<any>(`${this.loginUrl}/refresh/signout`, {});
   }
 
   getCarProductReserve(productId: string): Observable<ApiResponse> {
