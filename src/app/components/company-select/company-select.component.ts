@@ -37,7 +37,7 @@ export class CompanySelectComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.getCompaniesPerUser().subscribe(() => {
-      const company = this.companyService.getCompany();
+      const company = this.companyService.getCompanySelected();
       if (company) {
         this.selectedCompany = company;
       } else if (this.companies!.length <= 2) {

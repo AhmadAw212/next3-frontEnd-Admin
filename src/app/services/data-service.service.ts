@@ -49,6 +49,7 @@ import { NotificationSearchCriteria } from '../model/notification-search-criteri
 import { CarsTowingConditionRequest } from '../model/cars-towing-condition-request';
 import { CarsDispatchFollowUpRequest } from '../model/cars-dispatch-follow-up-request';
 import { TotalLossTowInfoRequest } from '../model/total-loss-tow-info-request';
+import { PolicyNotificationRequest } from '../model/request/policy-notification-request';
 
 interface User {
   username: string;
@@ -1931,6 +1932,101 @@ export class DataServiceService {
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.userUrl}/call_center/insurance-products/${insurance}?description=${description}`
+    );
+  }
+  NewPolicyNotificationResponse(
+    addPolicyNotificationRequest: PolicyNotificationRequest
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/policy-notification`,
+      addPolicyNotificationRequest
+    );
+  }
+  checkValidations(
+    polCarId: string,
+    lossDate: string,
+    insCmp: string,
+    amendment: number,
+    polserno: string,
+    policyExpiryDate: string,
+    notificationMatDamageCode: string,
+    policyType: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/checkValidations?polCarId=${polCarId}&lossDate=${lossDate}&insCmp=${insCmp}&amendment=${amendment}&polserno=${polserno}&policyExpiryDate=${policyExpiryDate}&notificationMatDamageCode=${notificationMatDamageCode}&policyType=${policyType}`
+    );
+  }
+  checkBlackListInOutExist(
+    type: string,
+    plate: string,
+    clientId: string,
+    brokerId: string,
+    policyNumber: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/checkBlackListInOutExist?type=${type}&plate=${plate}&clientId=${clientId}&brokerId=${brokerId}&policyNumber=${policyNumber}`
+    );
+  }
+
+  getPolicyNotiRequiresFieldsByCmp(
+    company: string,
+    fromPage: string,
+    nature: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/policyNotification-requiredFields?company=${company}&fromPage=${fromPage}&nature=${nature}`
+    );
+  }
+
+  vfollowupDrawer(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/vfollowupDrawer`
+    );
+  }
+  getPendingDispatchCount(company: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/get-pending-dispatch-expert-count?company=${company}`
+    );
+  }
+  getPendingDispatchExpertBeanCount(company: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/pending-dispatch-count/${company}`
+    );
+  }
+  getPendingDispatchBean(
+    company: string,
+    username: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getPendingDispatchBean?company=${company}&username=${username}`
+    );
+  }
+  getPendingDispatchExpertBean(
+    company: string,
+    username: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getPendingDispatchExpertBean?company=${company}&username=${username}`
+    );
+  }
+  getTemaExpertDispatchFailedList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getTemaExpertDispatchFailedList`
+    );
+  }
+  getTemaExpertDelayArrivalList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getTemaExpertDelayArrivalList`
+    );
+  }
+  getTemaExpertArrivedCustFollowUp(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getTemaExpertArrivedCustFollowUp`
+    );
+  }
+  getTemaExpertLateCloseCaseList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/getTemaExpertLateCloseCaseList`
     );
   }
 }

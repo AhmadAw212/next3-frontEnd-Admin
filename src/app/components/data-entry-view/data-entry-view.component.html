@@ -1,5 +1,10 @@
 <app-login-nav></app-login-nav>
-<app-navbar [title]="navBarTitle" [showDataEntryButton]="false"> </app-navbar>
+<app-navbar
+  [title]="navBarTitle"
+  [showDataEntryButton]="false"
+  [showBackBtn]="true"
+>
+</app-navbar>
 <div class="top-container container-class">
   <div class="container-fluid">
     <div class="dialog-content">
@@ -106,7 +111,7 @@
         <div class="row">
           <div class="col">
             <div class="side-menu">
-              <table class="table table-bordered">
+              <table class="table-bordered">
                 <thead style="position: static">
                   <tr>
                     <th>

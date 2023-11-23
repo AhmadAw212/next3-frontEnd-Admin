@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
 import { AlertifyService } from '../services/alertify.service';
 import { EMPTY } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private tokenRefreshInProgress = false;
   private tokenRefreshSubject: Subject<any> = new Subject();
-
+  private logoutInProgress = false; // New flag to track logout process
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,
@@ -51,7 +52,6 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
 
             return this.authService.refreshTokens().pipe(
               switchMap((response: any) => {
-                this.tokenRefreshInProgress = false;
                 // Refresh token successful, update the token in local storage
                 localStorage.setItem('token', response.token);
 
@@ -65,10 +65,14 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
                   },
                 });
 
-                return next.handle(newRequest);
+                return next.handle(newRequest).pipe(
+                  finalize(() => {
+                    // Reset the flag after the request is complete (whether successful or not)
+                    this.tokenRefreshInProgress = false;
+                  })
+                );
               }),
               catchError((refreshError: any) => {
-                this.tokenRefreshInProgress = false;
                 // Refresh token failed or expired as well, logout the user and redirect to login
                 this.authService.logout();
                 this.router.navigate(['/login']);
@@ -99,7 +103,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           return throwError(() =>
             this.alertifyService.dialogAlert(
               error.error.message,
-              error.error.error
+              error.error.title
             )
           );
         }

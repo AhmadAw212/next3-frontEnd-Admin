@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PolicyNotificationViewComponent } from './policy-notification-view/policy-notification-view.component';
 import { SearchPolicyComponent } from '../search-policy/search-policy.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CallCenterDrawerComponent } from './call-center-drawer/call-center-drawer.component';
 
 @NgModule({
   declarations: [TowConditionsDialogComponent],

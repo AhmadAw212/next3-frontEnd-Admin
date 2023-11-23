@@ -1,6 +1,111 @@
 <app-login-nav></app-login-nav>
 
-<nav class="navbar navbar-class navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-class">
+  <div [ngStyle]="{ display: screenWidth! > 840 ? 'none' : 'block' }">
+    <button
+      type="button"
+      mat-raised-button
+      color="accent"
+      (click)="sidenav.toggle()"
+      class="menu-button"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <form
+      class="d-flex align-items-center justify-content-center"
+      (ngSubmit)="searchNotification()"
+    >
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <div class="d-flex justify-content-center align-items-center">
+            <label style="white-space: nowrap" class="me-4"
+              >{{ dico?.dico_search_by || "dico_search_by" }}:</label
+            >
+            <select
+              class="form-select"
+              id="type"
+              name="type"
+              [(ngModel)]="selectedValue"
+            >
+              <option *ngFor="let item of searchTypes" [value]="item.code">
+                {{ item.description }}
+              </option>
+            </select>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="d-flex justify-content-center align-items-center">
+            <label style="white-space: nowrap" class="me-4"
+              >{{ dico?.dico_search_value || "dico_search_value" }}:</label
+            >
+            <input
+              id="value"
+              name="value"
+              type="text"
+              class="form-control me-2"
+              [(ngModel)]="value"
+            />
+          </div>
+        </li>
+        <li class="nav-item">
+          <button class="btn-class" type="submit">
+            {{ dico?.dico_search || "dico_search" }}
+          </button>
+        </li>
+        <li class="nav-item">
+          <img
+            src="./assets/icons/survey-white.png"
+            alt=""
+            matTooltip="VISA Policy"
+            class="icon"
+            (click)="navigateToPolicyNotification()"
+          />
+        </li>
+        <li class="nav-item">
+          <img
+            src="./assets/icons/towing-white.png"
+            alt=""
+            class="icon"
+            matTooltip="Newest Towing"
+            (click)="NewestTowing()"
+          />
+        </li>
+        <li class="nav-item">
+          <img
+            src="./assets/icons/accident-nature-white.png"
+            alt=""
+            matTooltip="Newest Accident"
+            class="icon-class"
+            (click)="NewestAccident()"
+          />
+        </li>
+        <li class="nav-item">
+          <app-back-button
+            targetRoute="/profiles-main/CallCenter"
+            [showBackBtn]="true"
+            class="ms-3"
+          ></app-back-button>
+        </li>
+      </ul>
+    </form>
+  </div>
+</nav>
+
+<!-- <nav class="navbar navbar-class navbar-expand-lg">
   <span class="navbar-brand" (click)="goBack()" style="color: white">{{
     title
   }}</span>
@@ -68,162 +173,181 @@
       ></app-back-button>
     </form>
   </div>
-</nav>
+</nav> -->
 
-<mat-sidenav-container class="Background container-fluid">
-  <mat-sidenav #sidenav mode="side" opened [style.width]="'330px'">
-    <div class="row mt-4 ms-1">
-      <div class="col-md-20">
-        <mat-nav-list>
-          <mat-expansion-panel
-            class="panel-margin"
-            style="background-color: rgb(237, 243, 245)"
-            *ngFor="let notification of notificationData; let i = index"
-            [ngClass]="{ 'selected-title': selectedPanelIndex === i }"
-          >
-            <mat-expansion-panel-header
-              (click)="togglePanelContent(notification, i)"
+<div class="flex-container">
+  <mat-sidenav-container class="Background container-fluid">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [opened]="screenWidth! > 840"
+      [mode]="screenWidth! > 840 ? 'side' : 'over'"
+    >
+      <div class="row mt-4 ms-1">
+        <div class="col-lg-15">
+          <mat-nav-list>
+            <mat-expansion-panel
+              class="panel-margin"
+              style="background-color: rgb(237, 243, 245)"
+              *ngFor="let notification of notificationData; let i = index"
+              [ngClass]="{ 'selected-title': selectedPanelIndex === i }"
             >
-              <mat-panel-title
-                class="label"
-                [style.color]="
-                  getNotificationColor(notification.notificationNature!)
-                "
+              <mat-expansion-panel-header
+                (click)="togglePanelContent(notification, i)"
               >
-                {{ notification.notification }}
-              </mat-panel-title>
-              <img
-                [src]="notification.companyLogo"
-                alt=""
-                style="width: 60px; margin-right: 20px"
-              />
-            </mat-expansion-panel-header>
-            <mat-list class="list">
-              <mat-list-item>
-                <img src="./assets/icons/accident-date-blue-24.png" alt="" />
-                {{
-                  notification.accidentDate
-                    | date : dateFormat("reportDateTimeFormat")
-                }}</mat-list-item
-              >
-              <mat-list-item>
-                <img src="./assets/icons/accident-nature-blue.png" alt="" />
-
-                {{ notification.notificationNature }}
-              </mat-list-item>
-              <mat-list-item>
-                <ng-container
-                  *ngIf="notification.notificationStatusCode === '9'"
-                >
-                  <img src="./assets/icons/" alt="" />
-                </ng-container>
-                <ng-container
-                  *ngIf="notification.notificationStatusCode === '8'"
-                >
-                  <img src="./assets/icons/status-closed-blue-24.png" alt="" />
-                </ng-container>
-                <ng-container
-                  *ngIf="notification.notificationStatusCode === '0'"
-                >
-                  <img src="./assets/icons/status-new-blue-24.png" alt="" />
-                </ng-container>
-                <ng-container
-                  *ngIf="
-                    notification.notificationStatusCode === '1' ||
-                    notification.notificationStatusCode === '2'
+                <mat-panel-title
+                  class="label"
+                  [style.color]="
+                    getNotificationColor(notification.notificationNature!)
                   "
                 >
-                  <img src="./assets/icons/status-opened-blue-24.png" alt="" />
+                  {{ notification.notification }}
+                </mat-panel-title>
+                <img
+                  [src]="notification.companyLogo"
+                  alt=""
+                  style="width: 60px; margin-right: 20px"
+                />
+              </mat-expansion-panel-header>
+              <mat-list class="list">
+                <mat-list-item>
+                  <img src="./assets/icons/accident-date-blue-24.png" alt="" />
+                  {{
+                    notification.accidentDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}</mat-list-item
+                >
+                <mat-list-item>
+                  <img src="./assets/icons/accident-nature-blue.png" alt="" />
+
+                  {{ notification.notificationNature }}
+                </mat-list-item>
+                <mat-list-item>
+                  <ng-container
+                    *ngIf="notification.notificationStatusCode === '9'"
+                  >
+                    <img src="./assets/icons/" alt="" />
+                  </ng-container>
+                  <ng-container
+                    *ngIf="notification.notificationStatusCode === '8'"
+                  >
+                    <img
+                      src="./assets/icons/status-closed-blue-24.png"
+                      alt=""
+                    />
+                  </ng-container>
+                  <ng-container
+                    *ngIf="notification.notificationStatusCode === '0'"
+                  >
+                    <img src="./assets/icons/status-new-blue-24.png" alt="" />
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      notification.notificationStatusCode === '1' ||
+                      notification.notificationStatusCode === '2'
+                    "
+                  >
+                    <img
+                      src="./assets/icons/status-opened-blue-24.png"
+                      alt=""
+                    />
+                  </ng-container>
+                  {{ notification.notificationStatusDesc }}
+                </mat-list-item>
+                <ng-container
+                  *ngFor="let car of notification.callCenterSearchCarsList"
+                >
+                  <mat-list-item
+                    *ngIf="
+                      (car.sequence === 0 &&
+                        notification.notificationMatDamage === '5') ||
+                      notification.notificationMatDamage === '6' ||
+                      notification.notificationMatDamage === '10'
+                    "
+                  >
+                    <img src="./assets/icons/tow_tr.png" alt="" />
+                    Towing from: {{ car.fromTown }}
+                    <!-- Display other properties of the selected car object if needed -->
+                  </mat-list-item>
                 </ng-container>
-                {{ notification.notificationStatusDesc }}
-              </mat-list-item>
-              <ng-container
-                *ngFor="let car of notification.callCenterSearchCarsList"
-              >
+                <ng-container
+                  *ngFor="let car of notification.callCenterSearchCarsList"
+                >
+                  <mat-list-item
+                    *ngIf="
+                      (car.sequence === 0 &&
+                        notification.notificationMatDamage === '5') ||
+                      notification.notificationMatDamage === '6' ||
+                      notification.notificationMatDamage === '10'
+                    "
+                  >
+                    <ng-container>
+                      <img src="./assets/icons/tow_tr.png" alt="" />
+                      Towing to:
+                      {{ car.toTown }}
+                    </ng-container>
+                  </mat-list-item>
+                </ng-container>
+
                 <mat-list-item
                   *ngIf="
-                    (car.sequence === 0 &&
-                      notification.notificationMatDamage === '5') ||
+                    notification.notificationMatDamage === '5' ||
                     notification.notificationMatDamage === '6' ||
                     notification.notificationMatDamage === '10'
                   "
                 >
                   <img src="./assets/icons/tow_tr.png" alt="" />
-                  Towing from: {{ car.fromTown }}
-                  <!-- Display other properties of the selected car object if needed -->
+                  Towing count : {{ notification.towingCount }}
                 </mat-list-item>
-              </ng-container>
-              <ng-container
-                *ngFor="let car of notification.callCenterSearchCarsList"
-              >
+
                 <mat-list-item
-                  *ngIf="
-                    (car.sequence === 0 &&
-                      notification.notificationMatDamage === '5') ||
-                    notification.notificationMatDamage === '6' ||
-                    notification.notificationMatDamage === '10'
-                  "
+                  class="custom-list-item"
+                  [matMenuTriggerFor]="carMenu"
                 >
-                  <ng-container>
-                    <img src="./assets/icons/tow_tr.png" alt="" />
-                    Towing to:
-                    {{ car.toTown }}
-                  </ng-container>
-                </mat-list-item>
-              </ng-container>
+                  <img src="./assets/icons/car-count-blue-24.png" alt="" />
 
-              <mat-list-item
-                *ngIf="
-                  notification.notificationMatDamage === '5' ||
-                  notification.notificationMatDamage === '6' ||
-                  notification.notificationMatDamage === '10'
-                "
-              >
-                <img src="./assets/icons/tow_tr.png" alt="" />
-                Towing count : {{ notification.towingCount }}
-              </mat-list-item>
+                  {{ notification.carCount }} Cars
 
-              <mat-list-item
-                class="custom-list-item"
-                [matMenuTriggerFor]="carMenu"
-              >
-                <img src="./assets/icons/car-count-blue-24.png" alt="" />
-
-                {{ notification.carCount }} Cars
-
-                <mat-menu #carMenu="matMenu">
-                  <ng-container *ngIf="notification?.callCenterSearchCarsList">
-                    <button
-                      [style.margin]="'10px'"
-                      [style.width]="'250px'"
-                      mat-menu-item
-                      class="custom-list-item"
-                      *ngFor="let car of notification.callCenterSearchCarsList"
+                  <mat-menu #carMenu="matMenu">
+                    <ng-container
+                      *ngIf="notification?.callCenterSearchCarsList"
                     >
-                      {{ car.insuredTp }} - {{ car.plate }} -
-                      {{ car.carMakeModel }}
-                    </button>
-                  </ng-container>
-                </mat-menu>
-                <img src="./assets/icons/dropdown_n_hc.png" alt="" />
-              </mat-list-item>
+                      <button
+                        [style.margin]="'10px'"
+                        [style.width]="'250px'"
+                        mat-menu-item
+                        class="custom-list-item"
+                        *ngFor="
+                          let car of notification.callCenterSearchCarsList
+                        "
+                      >
+                        {{ car.insuredTp }} - {{ car.plate }} -
+                        {{ car.carMakeModel }}
+                      </button>
+                    </ng-container>
+                  </mat-menu>
+                  <img src="./assets/icons/dropdown_n_hc.png" alt="" />
+                </mat-list-item>
 
-              <mat-list-item>
-                <img src="./assets/icons/hostpital-blue-24.png" alt="" />
-                {{ notification.injuryCount }}
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-nav-list>
+                <mat-list-item>
+                  <img src="./assets/icons/hostpital-blue-24.png" alt="" />
+                  {{ notification.injuryCount }}
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-nav-list>
+        </div>
       </div>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content *ngIf="showPanelContent">
-    <div class="component-content">
-      <app-notification-details
-        [selectedNotification]="selectedNotification"
-        [showTrademark]="showTrademark"
-      ></app-notification-details>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav>
+
+    <mat-sidenav-content *ngIf="notificationData?.length! > 0">
+      <div class="component-content">
+        <app-notification-details
+          [selectedNotification]="selectedNotification"
+          [showTrademark]="showTrademark"
+        ></app-notification-details>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <app-call-center-drawer></app-call-center-drawer>
+</div>

@@ -73,6 +73,9 @@ export class LoadingServiceService {
   setCompany(company: string) {
     this.companySubject.next(company);
   }
+  getCompanySelected(): string | null {
+    return this.companySubject.getValue();
+  }
   clearCompany() {
     this.companySubject.next(null);
   }
@@ -118,5 +121,14 @@ export class LoadingServiceService {
     });
 
     saveAs(excelBlob, fileName);
+  }
+  private navbarVisible = new BehaviorSubject<boolean>(true);
+
+  getNavbarVisibility() {
+    return this.navbarVisible.asObservable();
+  }
+
+  setNavbarVisibility(isVisible: boolean) {
+    this.navbarVisible.next(isVisible);
   }
 }

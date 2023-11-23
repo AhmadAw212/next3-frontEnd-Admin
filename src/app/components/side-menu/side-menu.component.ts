@@ -22,16 +22,24 @@ export class SideMenuComponent implements OnInit {
     private dicoService: DicoServiceService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
+  }
   // ngOnDestroy(): void {
   //   throw new Error('Method not implemented.');
   // }
   searchIcon = faSearch;
+  screenWidth?: number;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   @Input() dico?: any;
   isLoading: boolean = false;
   @Input() callCenter: boolean = false;
+
   isOpened: boolean = false;
   toggleMenu() {
     this.sidenav.toggle();

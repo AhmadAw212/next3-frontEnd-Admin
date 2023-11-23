@@ -1,9 +1,5 @@
 <app-login-nav></app-login-nav>
-<app-navbar
-  [title]="'Add New Notification'"
-  [showBackBtn]="true"
-  targetRoute="profiles-main/CallCenter/searchNotification"
-></app-navbar>
+<app-navbar [title]="'Add New Notification'" [showBackBtn]="true"></app-navbar>
 <div class="grid-container m-2">
   <div class="row">
     <!-- Select Dropdown -->
@@ -174,7 +170,7 @@
       <ng-container *ngIf="hasPerm('ccShowPolicyTable'); else card">
         <div class="row mt-2">
           <div class="grid-container">
-            <table class="table table-responsive">
+            <table class="table-responsive">
               <thead style="top: 0">
                 <tr>
                   <th scope="col" class="text-nowrap">
@@ -267,7 +263,10 @@
                   </td>
                   <td class="text-nowrap">{{ policy.insuranceDesc }}</td>
 
-                  <td class="label-link text-nowrap">
+                  <td
+                    class="label-link text-nowrap"
+                    (click)="selectedPolicyNotification(policy)"
+                  >
                     {{ policy.clientName }}
                   </td>
                   <td class="text-nowrap">{{ policy.carPlate }}</td>
@@ -369,9 +368,11 @@
                   <div class="front-content" *ngIf="!isFlipped[i]">
                     <div class="row">
                       <div class="col-md-7">
-                        <span class="label-link text-nowrap">{{
-                          policy?.clientName
-                        }}</span>
+                        <span
+                          class="label-link text-nowrap"
+                          (click)="selectedPolicyNotification(policy)"
+                          >{{ policy?.clientName }}</span
+                        >
                       </div>
                     </div>
                     <div class="row p-2">
@@ -504,9 +505,11 @@
                   <div class="back-content" *ngIf="isFlipped[i]">
                     <div class="row">
                       <div class="col-md-8">
-                        <span class="label-link text-nowrap">{{
-                          policy?.clientName
-                        }}</span>
+                        <span
+                          class="label-link text-nowrap"
+                          (click)="selectedPolicyNotification(policy)"
+                          >{{ policy?.clientName }}</span
+                        >
                       </div>
                     </div>
                     <div class="row p-2">
@@ -709,7 +712,7 @@
                     formControlName="lossTowLossDate"
                     bsDatepicker
                     [bsConfig]="{
-                      dateInputFormat: 'DD/MM/YYYY HH:mm A',
+                      dateInputFormat: 'DD/MM/YYYY HH:mm a',
                       containerClass: 'theme-dark-blue',
                       showWeekNumbers: false
                     }"
@@ -729,7 +732,7 @@
                     formControlName="notificationReportedDate"
                     bsDatepicker
                     [bsConfig]="{
-                      dateInputFormat: 'DD/MM/YYYY HH:mm A',
+                      dateInputFormat: 'DD/MM/YYYY HH:mm a',
                       containerClass: 'theme-dark-blue',
                       showWeekNumbers: false
                     }"
@@ -895,3 +898,141 @@
     </mat-tab-group>
   </div>
 </div>
+<ng-template #expiredPop>
+  <div class="popup-container">
+    <h2>{{ title }}</h2>
+    <p>{{ expiredMessage }}</p>
+    <p>
+      {{
+        hasPerm("ccExpPolPrevDamage")
+          ? "Do You Want To Proceed"
+          : "Previous Damage Is Not Allowed"
+      }}
+    </p>
+    <div class="button-bar">
+      <button
+        *ngIf="hasPerm('ccExpPolPrevDamage')"
+        class="btn-class"
+        (click)="onConfirm()"
+      >
+        {{ hasPerm("ccExpPolPrevDamage") ? "Proceed" : "OK" }}
+      </button>
+      <button (click)="onCancel()" class="btn-class">
+        {{ hasPerm("ccExpPolPrevDamage") ? "Cancel" : "OK" }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #deletedPop>
+  <div class="popup-container">
+    <h2>{{ title }}</h2>
+    <p>{{ deleteMessage }}</p>
+    <p>
+      {{
+        hasPerm("ccDeletedPolNoti")
+          ? "Deleted Policy! Do You Want To Proceed"
+          : "Deleted Policy!"
+      }}
+    </p>
+    <div class="button-bar">
+      <button
+        *ngIf="hasPerm('ccDeletedPolNoti')"
+        class="btn-class"
+        (click)="onConfirm()"
+      >
+        {{ hasPerm("ccDeletedPolNoti") ? "Proceed" : "OK" }}
+      </button>
+      <button (click)="onCancel()" class="btn-class">
+        {{ hasPerm("ccDeletedPolNoti") ? "Cancel" : "OK" }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #canceledPop>
+  <div class="popup-container">
+    <h2>{{ title }}</h2>
+    <p>{{ canceledMessage }}</p>
+    <p>
+      {{
+        hasPerm("ccCanceledPolNoti")
+          ? "Canceled Policy! Do You Want To Proceed"
+          : "Canceled Policy!"
+      }}
+    </p>
+    <div class="button-bar">
+      <button
+        *ngIf="hasPerm('ccCanceledPolNoti')"
+        class="btn-class"
+        (click)="onConfirm()"
+      >
+        {{ hasPerm("ccCanceledPolNoti") ? "Proceed" : "OK" }}
+      </button>
+      <button (click)="onCancel()" class="btn-class">
+        {{ hasPerm("ccCanceledPolNoti") ? "Cancel" : "OK" }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mechTowPop>
+  <div class="popup-container">
+    <h2>Confirmation</h2>
+    <!-- <p>{{ mechTowMessage }}</p> -->
+    <p>Mechanical Towing : {{ mechTow }} , Do You Want To Proceed?</p>
+    <div class="button-bar">
+      <button class="btn-class" (click)="onConfirm()">Yes</button>
+      <button (click)="onCancel()" class="btn-class">NO</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #blackListPop>
+  <div class="popup-container">
+    <h2>Confirmation</h2>
+
+    <p style="font-weight: bold; font-size: medium; color: Red">
+      {{
+        hasPerm("ccBlackListClient")
+          ? "Do You Want To Proceed ?"
+          : "You Are Not Allowed To Open This Case"
+      }}
+    </p>
+    <div class="button-bar">
+      <button
+        *ngIf="hasPerm('ccBlackListClient')"
+        class="btn-class"
+        (click)="onConfirm()"
+      >
+        {{ hasPerm("ccBlackListClient") ? "Proceed" : "OK" }}
+      </button>
+      <button (click)="onCancel()" class="btn-class">
+        {{ hasPerm("ccBlackListClient") ? "Cancel" : "OK" }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmPop>
+  <div class="popup-container">
+    <h2>{{ title }}</h2>
+    <p>
+      You Choose {{ policyTypeDesc }} Policy , Are You Sure You Want To Proceed
+      ?
+    </p>
+    <!-- <p>Are you sure you want to create New {{ dico?.dico_notification }}</p> -->
+    <div class="button-bar">
+      <button class="btn-class" (click)="onConfirm()">Yes</button>
+      <button (click)="onCancel()" class="btn-class">NO</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #confirmPopUp>
+  <div class="popup-container">
+    <h2>Confirmation</h2>
+    <!-- <p>{{ confirmMessage }}</p> -->
+    <p>Are you sure you want to create New {{ dico?.dico_notification }}</p>
+    <div class="button-bar">
+      <button class="btn-class" (click)="onConfirm()">Yes</button>
+      <button (click)="onCancel()" class="btn-class">NO</button>
+    </div>
+  </div>
+</ng-template>

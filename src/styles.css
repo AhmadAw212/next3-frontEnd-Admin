@@ -10,13 +10,19 @@ html, body {
   font-size: 11px;
   font-weight: normal;
   font-family: 'Open Sans 300', sans-serif;
- background-color:  #f5f5f5 !important;
+ /* background-color:  #f5f5f5 !important; */
   /* max-height: 766px; */
   /* min-height: 766px; */
 }
 /* table tbody tr .ng-star-inserted  {
   background-color: transparent;
 } */
+.arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin-top: 140px;
+}
 
 table thead {
   position: sticky;
@@ -186,6 +192,9 @@ table.table thead th {
 .icon{
   height: 15px;width:15px
 }
+.icon-class{
+  height: 25px;width:25px
+}
 .disabled-image {
   filter: grayscale(100%); /* Apply grayscale to make it look disabled */
   opacity: 0.6; /* Reduce opacity for further disabled appearance */
@@ -260,7 +269,7 @@ label{
 }
 .label-color{
   color: #0674CB !important;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: bold;
 }
 .panel-item {
@@ -403,6 +412,59 @@ tr:nth-child(odd) {
 
 .flip-card .flip-card-inner.flip {
   transform: rotateY(180deg);
+}
+/* Add styles for the popup container */
+.popup-container {
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Style for the heading */
+.popup-container h2 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+/* Style for the message */
+.popup-container p {
+  color: #555;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* Style for the button bar */
+.button-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-item {
+  margin-right: 10px; /* Adjust the value to control the spacing */
+  padding: 5px 5px; /* Add padding to the menu items */
+   /* Add a border around the menu items */
+}
+.notification-icon {
+  padding: 5px; /* Adjust the value to control the spacing */
+}
+
+/* Style for the buttons */
+.mat-raised-button {
+  min-width: 120px;
+}
+
+/* Style for the cancel button */
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Hover effect for the buttons */
+.mat-raised-button:hover {
+  background-color: #1565c0;
+  color: #fff;
 }
 
 .flip-card-front,
@@ -773,8 +835,8 @@ tr:nth-child(odd) {
   background-color: #278bd8;
 }
 .Background {
-  background-color: #e7e7e7;
-  height: 100%
+  /* background-color: #e7e7e7; */
+  height: 100vh
 
 }
 .admin-button button {

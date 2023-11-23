@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLanguageComponent } from '../add-dialogs/add-language/add-language.component';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -11,12 +11,13 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-language-config',
   templateUrl: './language-config.component.html',
   styleUrls: ['./language-config.component.css'],
 })
-export class LanguageConfigComponent implements OnInit {
+export class LanguageConfigComponent implements OnInit, OnDestroy {
   key: string = '';
   value: string = '';
   resourceData?: ResourceBundle[] = [];
@@ -27,6 +28,7 @@ export class LanguageConfigComponent implements OnInit {
   isLoading: boolean = false;
   dico?: any;
   dateFormats?: any;
+  unsubscribeSearch?: Subscription;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -37,6 +39,11 @@ export class LanguageConfigComponent implements OnInit {
     private datePipe: DatePipe,
     private userRolesService: UsersRolesService
   ) {}
+  ngOnDestroy(): void {
+    if (this.unsubscribeSearch) {
+      this.unsubscribeSearch.unsubscribe();
+    }
+  }
 
   ngOnInit(): void {
     // this.dateFormatterService();
@@ -146,19 +153,21 @@ export class LanguageConfigComponent implements OnInit {
 
   resourceBundleSearch() {
     this.isLoading = true;
-    this.dataService.resourceBundleSearch(this.key, this.value).subscribe({
-      next: (data) => {
-        this.resourceData = data.data;
-        // console.log(data);
-      },
-      error: (err) => {
-        this.alertifyService.error(err.error.message);
-      },
-      complete: () => {
-        console.log('HTTP request completed');
-        this.isLoading = false;
-      },
-    });
+    this.unsubscribeSearch = this.dataService
+      .resourceBundleSearch(this.key, this.value)
+      .subscribe({
+        next: (data) => {
+          this.resourceData = data.data;
+          // console.log(data);
+        },
+        error: (err) => {
+          this.alertifyService.error(err.error.message);
+        },
+        complete: () => {
+          console.log('HTTP request completed');
+          this.isLoading = false;
+        },
+      });
   }
 
   deleteResource(id: string) {

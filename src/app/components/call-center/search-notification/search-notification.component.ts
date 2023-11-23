@@ -7,6 +7,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
+import { UsersRolesService } from 'src/app/services/users-roles.service';
 interface NotificationType {
   code: string;
   description: string;
@@ -38,30 +39,68 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   lastNotification: string = '';
   isNewestTowing?: boolean = false;
   username?: string;
+  screenWidth?: number;
+  pendingDispatchCount!: number;
+  pendingDispatchExpertCount!: number;
   constructor(
     private router: Router,
     private dicoService: DicoServiceService,
     private dataService: DataServiceService,
     private profileService: LoadingServiceService,
     private dateFormatService: DateFormatterService,
-    private companyLogoService: LoadingServiceService
+    private companyLogoService: LoadingServiceService,
+    private userRoles: UsersRolesService
   ) {
+    // set screenWidth on page load
+    this.userRoles.getUserRoles();
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
     const profile = this.profileService.getSelectedProfile();
     this.company = profile.companyId;
     this.username = profile.userCode;
   }
-
+  getPendingDispatchCount() {
+    this.dataService.getPendingDispatchCount(this.company!).subscribe({
+      next: (data) => {
+        this.pendingDispatchCount = data.data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  getPendingDispatchExpertBean() {
+    this.dataService
+      .getPendingDispatchExpertBeanCount(this.company!)
+      .subscribe({
+        next: (data) => {
+          this.pendingDispatchExpertCount = data.data;
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
   ngOnDestroy(): void {
     if (this.notificationSubscription) {
       this.notificationSubscription.unsubscribe();
     }
+    // this.companyLogoService.setNavbarVisibility(true);
   }
 
   ngOnInit(): void {
     this.getDico().subscribe(() => {
       this.initializeSearchTypes();
-      this.getUserLastNotification();
     });
+    this.getUserLastNotification();
+    this.companyLogoService.setNavbarVisibility(false);
+    // this.getPendingDispatchCount();
+    // this.getPendingDispatchExpertBean();
   }
   getSearchData() {
     const search = this.profileService.getSearchResults();
@@ -173,7 +212,9 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
           this.notificationData = res.data.callCenterSearchMainBeanList.map(
             (data: SearchNotification) => ({
               ...data,
-              companyLogo: `data:image/jpeg;base64,${data.companyLogo}`,
+              companyLogo: data?.companyLogo
+                ? `data:image/jpeg;base64,${data?.companyLogo}`
+                : '',
             })
           );
 

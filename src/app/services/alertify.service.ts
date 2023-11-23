@@ -30,7 +30,16 @@ export class AlertifyService {
       })
       .show();
   }
-
+  ConfirmationDialog(title: string, message: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      alertify.confirm(
+        title,
+        message,
+        () => resolve(true), // User clicked 'OK'
+        () => resolve(false) // User clicked 'Cancel'
+      );
+    });
+  }
   dialogAlert(message: string, title: string) {
     alertify
       .alert()

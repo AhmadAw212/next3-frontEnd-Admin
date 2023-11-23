@@ -49,7 +49,7 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   noDataFollowUp!: ElementRef;
   @ViewChild('notificationComplaints', { static: true })
   notificationComplaints!: ElementRef;
-  selectedCompany: any;
+  selectedCompany: any = 'ALL';
 
   constructor(
     private dataService: DataServiceService,
@@ -130,7 +130,6 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onCompanyChange(event: any) {
     this.selectedCompany = event;
-    this;
     this.getGaugesValuesCC(event);
   }
   createAndDrawGauge(

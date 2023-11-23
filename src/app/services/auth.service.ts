@@ -159,7 +159,7 @@ export class AuthService {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        this.alertifyService.dialogAlert('Session Timeout', 'Timeout');
+        console.log(err);
       },
     });
   }

@@ -1,6 +1,7 @@
 export interface Policy {
   brandId?: string;
   policyType?: string;
+  policyPolserno?: string;
   carTrademarkDesc?: string;
   policyEffectiveDate?: string;
   policyExpiryDate?: string;
@@ -36,7 +37,7 @@ export interface Policy {
   trademarkDescription?: string;
   trademarkDescription2?: string;
   mechanicalTowCount?: number;
-  policyInsuranceId?: number;
+  policyInsuranceId?: string;
   policyProductsId?: string;
   brandDescription?: string;
   brandDescription2?: string;

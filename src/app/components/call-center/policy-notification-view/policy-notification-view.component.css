@@ -7,6 +7,10 @@
   td{
     font-weight: bolder
   }
+  .button-bar {
+    display: flex;
+    justify-content: space-between;
+  }
   .grid-container{
     background-color: #eff2f5;
     overflow: auto;

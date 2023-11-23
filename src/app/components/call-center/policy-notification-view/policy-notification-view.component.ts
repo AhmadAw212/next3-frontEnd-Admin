@@ -1,8 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Observable, catchError, lastValueFrom, map } from 'rxjs';
+import { Policy } from 'src/app/model/policy';
 import { type } from 'src/app/model/type';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,7 +22,6 @@ import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { ViewPolicyDialogComponent } from '../../view-policy/view-policy-dialog/view-policy-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { CreateNoDataDialogComponent } from '../new-hotline/create-no-data-dialog/create-no-data-dialog.component';
 
 @Component({
@@ -52,6 +61,26 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   policyAmendment?: string;
   policyCar?: string;
   polserno?: string;
+  title?: string;
+  expiredMessage?: string;
+  deleteMessage?: string;
+  canceledMessage?: string;
+  mechTowMessage?: string;
+  confirmMessage?: string;
+  mechTow?: string;
+  policyTypeDesc?: string;
+  policyExpiryDateFormated?: string;
+  requiredFieldsNames?: any[] = [];
+  selectedPolicy?: Policy;
+  @ViewChild('expiredPop') expiredPop!: TemplateRef<any>;
+  @ViewChild('deletedPop') deletedPop!: TemplateRef<any>;
+  @ViewChild('canceledPop') canceledPop!: TemplateRef<any>;
+  @ViewChild('mechTowPop') mechTowPop!: TemplateRef<any>;
+  @ViewChild('blackListPop') blackListPop!: TemplateRef<any>;
+  @ViewChild('confirmPop') confirmPop!: TemplateRef<any>;
+  @ViewChild('confirmPopUp') confirmPopUp!: TemplateRef<any>;
+  private dialogRef!: MatDialogRef<any>;
+  requiredFieldsResponse: any[] = [];
   natureLabels: any = {
     '1': 'Accident',
     '5': 'Accident+Towing',
@@ -76,17 +105,172 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     private profileService: LoadingServiceService,
     private userRolesService: UsersRolesService,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     this.userRolesService.getUserRoles();
     this.cmp = this.profileService.getCompany()!;
-    // console.log(this.cmp);
   }
   onDistributionTownIdChanged() {
     const townNameValue = this.myForm.get('distributionTownName')?.value;
     if (this.selectedNature === '5' || this.selectedNature === '10') {
-      this.myForm.get('fromTowTownName')?.setValue(townNameValue);
+      //TODO check the following from Tow Town Name
+      // this.myForm.get('fromTowTownName')?.setValue(townNameValue);
     }
+  }
+  openExpiredPop(title: string, message: string) {
+    this.title = title;
+    this.expiredMessage = message;
+    this.dialogRef = this.dialog.open(this.expiredPop, {
+      data: {
+        title,
+        message,
+      },
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.addPolicyNotification();
+      }
+    });
+  }
+  async onMechTowPopConfirm() {
+    const ccValidateBlackListClient = await lastValueFrom(
+      this.getCoreConfigValueByKey('ccValidateBlackListClient')
+    );
+    if (ccValidateBlackListClient === 'true') {
+      this.checkBlackListInOuClient();
+    } else {
+      this.checkValidations();
+    }
+  }
+  async checkMechTowCount() {
+    if (
+      this.selectedNature &&
+      (this.selectedNature === '5' ||
+        this.selectedNature === '6' ||
+        this.selectedNature === '10')
+    ) {
+      if (this.mechTow && Number(this.mechTow) > 2) {
+        this.openMechTowPop();
+      }
+    }
+
+    const ccValidateBlackListClient = await lastValueFrom(
+      this.getCoreConfigValueByKey('ccValidateBlackListClient')
+    );
+    if (ccValidateBlackListClient === 'true') {
+      this.checkBlackListInOuClient();
+    } else {
+      this.checkValidations();
+    }
+  }
+  async checkBlackListInOuClient() {
+    const policyClientId: string = this.selectedPolicy?.policyClientId!;
+    const policyBrokerId: string = this.selectedPolicy?.policyBrokerId!;
+    const carPlate: string = this.selectedPolicy?.carPlate!;
+    const policyNumber: string = this.selectedPolicy?.policyNumber!;
+    const policyNumStr = null;
+    if (policyNumber) {
+      let policyNumStr = policyNumber;
+    }
+
+    const blackListIn: number = await lastValueFrom(
+      this.checkBlackListInOutExist(
+        'IN',
+        carPlate,
+        policyClientId,
+        policyBrokerId,
+        policyNumStr!
+      )
+    );
+    const blackListOut: number = await lastValueFrom(
+      this.checkBlackListInOutExist(
+        'OU',
+        carPlate,
+        policyClientId,
+        policyBrokerId,
+        policyNumStr!
+      )
+    );
+
+    if (blackListIn !== blackListOut) {
+      this.openBlackListPop();
+    }
+    this.checkValidations();
+  }
+  checkBlackListInOutExist(
+    type: string,
+    plateNum: string,
+    clientId: string,
+    brokerId: string,
+    policyNumStr: string
+  ): Observable<number> {
+    return this.dataService
+      .checkBlackListInOutExist(
+        type,
+        plateNum,
+        clientId,
+        brokerId,
+        policyNumStr
+      )
+      .pipe(
+        map((res) => {
+          return res.data;
+        }),
+        catchError((err) => {
+          throw console.error(err);
+        })
+      );
+  }
+  openBlackListPop() {
+    this.dialogRef = this.dialog.open(this.blackListPop, {
+      data: {},
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.checkValidations();
+      }
+    });
+  }
+  openCanceledPop(title: string, message: string) {
+    this.title = title;
+    this.canceledMessage = message;
+    this.dialogRef = this.dialog.open(this.canceledPop, {
+      data: {
+        title,
+        message,
+      },
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.addPolicyNotification();
+      }
+    });
+  }
+  openMechTowPop() {
+    this.dialogRef = this.dialog.open(this.mechTowPop, {
+      data: {},
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.onMechTowPopConfirm();
+      }
+    });
+  }
+  openDeletedPop(title: string, message: string) {
+    this.title = title;
+    this.deleteMessage = message;
+    this.dialogRef = this.dialog.open(this.deletedPop, {
+      data: {
+        title,
+        message,
+      },
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.addPolicyNotification();
+      }
+    });
   }
   disablePolicyType(): boolean {
     const bodilyInjury = this.myForm.get('lossTowBodilyCaseId')?.value;
@@ -97,6 +281,13 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         bodilyInjury === '11') &&
         this.cmp !== '10')
     );
+  }
+  onConfirm() {
+    this.dialogRef.close(true);
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
   async policyNotificationInit() {
     if (this.cmp && this.cmp !== '1') {
@@ -126,18 +317,19 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         this.changeSides = true;
       }
       this.myForm.get('notificationReportedDate')?.setValue(new Date());
-      // console.log('Loss Date Auto:', lossDateAuto);
+      this.getRequiredFields();
     } catch (error) {
-      // Handle specific error types if needed
       console.error('Error in policyNotificationInit:', error);
     }
+  }
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss')!;
   }
   onTabSelected(event: any) {
     this.selectedTabIndex = event.index;
 
     const selectedCode = this.filteredData[this.selectedTabIndex].code;
     this.selectedNature = selectedCode;
-    // console.log('Selected Code:', this.selectedNature);
   }
   createForm() {
     this.myForm = this.fb.group({
@@ -148,13 +340,237 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       notificationReportedDate: [''],
       lossTowReportedById: [''],
       lossTowDriverRelationshipId: [''],
+      notificationMatDamageCode: [''],
       lossTowDriverName: [''],
       notificationContactName: [''],
       notificationContactPhone: [''],
       towToTownName: [''],
+      policyCarId: [''],
+      insurance: [''],
+      userCompany: [this.cmp],
+      distributionNoDataTypeId: [''],
+      distributionNoDataBoolean: [false],
+      distributionNoDataUser: [''],
+      distributionNoDataDate: [''],
+      distributionNoDataPlateB: [''],
+      distributionNoDataPlate: [''],
+      distributionNoDataPolicy: [''],
+      distributionNoDataEffDate: [''],
+      distributionNoDataExpDate: [''],
+      distributionNoDataName: [''],
+      distributionNoDataCarBrand: [''],
+      distributionNoDataBroker: [''],
+      distributionNoDataRemarks: [''],
     });
   }
 
+  getRequiredFields() {
+    this.dataService
+      .getPolicyNotiRequiresFieldsByCmp(this.cmp, 'HOTREQ', this.selectedNature)
+      .subscribe({
+        next: (res) => {
+          this.requiredFieldsResponse = res.data;
+          const requiredFieldNames = this.requiredFieldsResponse.map(
+            (item) => item.val1
+          );
+          const requiredFieldsName = this.requiredFieldsResponse.map(
+            (item) => item.val3
+          );
+          this.requiredFieldsNames?.push(requiredFieldsName);
+
+          this.setRequiredFields(requiredFieldNames);
+
+          console.log(this.requiredFieldsNames);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+  setRequiredFields(fieldNames: string[]) {
+    // Create an object with each field set to required or not based on the fieldNames array
+    const formControlsConfig: { [key: string]: any } = {};
+    Object.keys(this.myForm.controls).forEach((controlName) => {
+      formControlsConfig[controlName] = [
+        this.myForm.controls[controlName].value,
+      ];
+      if (fieldNames.includes(controlName)) {
+        formControlsConfig[controlName].push(Validators.required);
+      }
+    });
+
+    // Re-create the form with the updated validation settings
+    this.myForm = this.fb.group(formControlsConfig);
+  }
+  async selectedPolicyNotification(selectedPolicy: any) {
+    if (!this.myForm.valid) {
+      return this.alertifyService.error(
+        this.requiredFieldsNames + 'are missing.'
+      );
+    }
+    this.myForm.get('policyCarId')?.setValue(selectedPolicy.carId);
+    this.selectedPolicy = selectedPolicy;
+    this.mechTow = selectedPolicy.mechanicalTowCount;
+    this.policyTypeDesc = selectedPolicy.policyTypeDesc;
+
+    // const lossTowLossDate = this.formatDate(
+    //   this.myForm.get('lossTowLossDate')?.value
+    // );
+    const formatDate = moment(
+      selectedPolicy.policyExpiryDate,
+      'YYYY-MM-DDTHH:mm:ss'
+    ).format('DD-MMM-YYYY');
+
+    this.policyExpiryDateFormated = formatDate;
+
+    const confirmMessageOnPolicyNotification = await lastValueFrom(
+      this.getCoreConfigValueByKey('confirmMessageOnPolicyNotification')
+    );
+    const validateMechTow = await lastValueFrom(
+      this.getCoreConfigValueByKey('validateMechTow')
+    );
+    const ccValidateBlackListClient = await lastValueFrom(
+      this.getCoreConfigValueByKey('ccValidateBlackListClient')
+    );
+    try {
+      if (confirmMessageOnPolicyNotification === 'true') {
+        this.openConfirmPopUp();
+      } else if (validateMechTow === 'true') {
+        this.checkMechTowCount();
+      } else if (ccValidateBlackListClient === 'true') {
+        this.checkBlackListInOuClient();
+      } else {
+        this.checkValidations();
+      }
+    } catch (error) {
+      console.error('Error in selectedPolicyNotification:', error);
+    }
+  }
+  openConfirmPop(title: string, message: string) {
+    this.title = title;
+    this.confirmMessage = message;
+    this.dialogRef = this.dialog.open(this.confirmPop, {
+      data: {
+        title,
+        message,
+      },
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.addPolicyNotification();
+      }
+    });
+  }
+  openConfirmPopUp() {
+    this.dialogRef = this.dialog.open(this.confirmPopUp, {
+      data: {},
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.checkValidations();
+      }
+    });
+  }
+
+  async onConfirmMessagePopUp() {
+    const validateMechTow = await lastValueFrom(
+      this.getCoreConfigValueByKey('validateMechTow')
+    );
+    const ccValidateBlackListClient = await lastValueFrom(
+      this.getCoreConfigValueByKey('ccValidateBlackListClient')
+    );
+    if (validateMechTow === 'true') {
+      this.checkMechTowCount();
+    } else if (ccValidateBlackListClient === 'true') {
+      this.checkBlackListInOuClient();
+    } else {
+      this.checkValidations();
+    }
+  }
+
+  checkValidations() {
+    const ExpiryFormatDate = moment(
+      this.selectedPolicy?.policyExpiryDate,
+      'YYYY-MM-DDTHH:mm:ss'
+    ).format('DD-MMM-YYYY');
+    const carId = this.selectedPolicy!.carId!;
+    const lossDateFormatted = this.formatDate(
+      this.myForm.get('lossTowLossDate')?.value
+    );
+    const policyInsuranceId = this.selectedPolicy!.policyInsuranceId!;
+    const policyAmendment = this.selectedPolicy!.policyAmendment!;
+    const policyPolserno = this.selectedPolicy!.policyPolserno!;
+    const policyType = this.selectedPolicy!.policyType!;
+    if (this.myForm.valid) {
+      this.dataService
+        .checkValidations(
+          carId!,
+          lossDateFormatted,
+          policyInsuranceId,
+          policyAmendment,
+          policyPolserno,
+          ExpiryFormatDate,
+          this.selectedNature,
+          policyType
+        )
+        .subscribe({
+          next: (res) => this.handleValidationResponse(res),
+          error: (err) => console.log(err),
+        });
+    }
+  }
+  private handleValidationResponse(res: any): void {
+    if (res.data.valid) {
+      this.addPolicyNotification();
+    } else {
+      this.handleInvalidValidation(res.data);
+    }
+    console.log(res);
+  }
+
+  private handleInvalidValidation(data: any): void {
+    switch (data.title) {
+      case 'expiredPOP':
+        this.openExpiredPop('Confirmation', data.message);
+        break;
+      case 'deletedPOP':
+        this.openDeletedPop('Confirmation', data.message);
+        break;
+      case 'canceledPOP':
+        this.openCanceledPop('Confirmation', data.message);
+        break;
+      case 'confirmPop':
+        this.openConfirmPop('Confirmation', data.message);
+        break;
+      default:
+        break;
+    }
+  }
+
+  addPolicyNotification() {
+    this.myForm.get('notificationMatDamageCode')?.setValue(this.selectedNature);
+    this.myForm.get('insurance')?.setValue(this.insuranceCode);
+    const date1 = this.formatDate(this.myForm.get('lossTowLossDate')?.value);
+    const date2 = this.formatDate(
+      this.myForm.get('notificationReportedDate')?.value
+    );
+
+    const formatedDates = {
+      ...this.myForm.value,
+      lossTowLossDate: date1,
+      notificationReportedDate: date2,
+    };
+    this.dataService.NewPolicyNotificationResponse(formatedDates).subscribe({
+      next: (res) => {
+        const notificationId = res.data.notificationId;
+        this.router.navigate(['/hotline', notificationId]);
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   showPanelOne() {
     const selectedNaturesForBodilyInjury = new Set([
       '1',
@@ -286,6 +702,7 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.createForm();
+
     this.getDico();
     this.policySearchLov();
     this.getPolicyTypeLovFindAll();
@@ -303,7 +720,7 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       map((val) => val.data),
       catchError((err) => {
         console.error('Error fetching core config value:', err);
-        throw err; // Rethrow the error to propagate it to the subscriber
+        throw err;
       })
     );
   }
@@ -335,7 +752,6 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         this.filteredData = this.notificationNatureLov.filter((item) =>
           ['1', '5', '6', '7'].includes(item.code)
         );
-        // console.log(this.filteredData);
       },
       error: (err) => {
         console.log(err);
@@ -354,7 +770,6 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     }
   }
 
-  //TODO
   loadMap() {}
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -424,13 +839,36 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       width: '780px',
       height: '550px',
     });
-    // dialogData.afterClosed().subscribe((data) => {
-    //   if (data) {
-    //     this.form.patchValue(data);
-    //     // this.formData = data;
-    //     // console.log(data);
-    //   }
-    // });
+    dialogData.afterClosed().subscribe((data) => {
+      if (data) {
+        this.myForm.patchValue(data);
+        this.myForm.get('policyCarId')?.setValue(null);
+        const parseData = data.distributionNoDataDate;
+        const parseData1 = data.distributionNoDataEffDate;
+        const parseData2 = data.distributionNoDataExpDate;
+        if (parseData) {
+          const date1 = moment(parseData, 'DD/MM/YYYY HH:mm:ss A').format(
+            'YYYY-MM-DDTHH:mm:ss'
+          );
+          this.myForm.get('distributionNoDataDate')?.setValue(date1);
+          console.log(date1);
+        }
+        if (parseData1) {
+          const date2 = moment(parseData1, 'DD/MM/YYYY HH:mm:ss A').format(
+            'YYYY-MM-DDTHH:mm:ss'
+          );
+          this.myForm.get('distributionNoDataEffDate')?.setValue(date2);
+        }
+        if (parseData2) {
+          const date3 = moment(parseData2, 'DD/MM/YYYY HH:mm:ss A').format(
+            'YYYY-MM-DDTHH:mm:ss'
+          );
+          this.myForm.get('distributionNoDataExpDate')?.setValue(date3);
+        }
+
+        this.addPolicyNotification();
+      }
+    });
   }
   getBodilyInjuryLovFindAll() {
     this.dataService.getBodilyInjuryLovFindAll().subscribe({
@@ -442,17 +880,11 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
       },
     });
   }
-  // onTabChange(event: any): void {
-  //   // Check the selected tab index and decide when to load dynamic content
-  //   if (event.index === 1 && !this.loadDynamicTab) {
-  //     this.loadDynamicTab = true;
-  //   }
-  // }
+
   toggleFlip(index: number): void {
     this.isFlipped[index] = !this.isFlipped[index];
   }
   viewPolicyComponent(selectedPolicy: string) {
-    // console.log(selectedPolicy);
     this.dialog.open(ViewPolicyDialogComponent, {
       data: {
         carId: selectedPolicy,
@@ -462,12 +894,10 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     });
   }
   async searchPolicy() {
-    // let asOfDate: string | null = null;
-    console.log(this.iAsOfDate);
     const parseData = moment(this.iAsOfDate, 'DD/MM/YYYY').format(
       'DD-MMM-YYYY'
     );
-    // console.log(parseData);
+
     try {
       this.policyAmendment = await lastValueFrom(
         this.getCoreConfigValueByKey('policyAmendment')
@@ -494,8 +924,6 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
         .subscribe({
           next: (res) => {
             this.searchPolicyData = res.data;
-
-            //
           },
           error: (err) => {
             console.log(err);
@@ -518,15 +946,8 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
   }
-  // getPolicyCarInfo(policy: any, i: number) {
-  //   this.isFlipped[i] = true;
-
-  //   // this.getNotificationFindById();
-  //   // console.log(policy);
-  // }
 }

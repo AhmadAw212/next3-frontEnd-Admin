@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { TowingConditionComponent } from './towing-condition/towing-condition.component';
 import { UsersActivityComponent } from './users-activity/users-activity.component';
 import { PolicyNotificationViewComponent } from './policy-notification-view/policy-notification-view.component';
+import { PhoneIndexComponent } from '../common-components/phone-index/phone-index.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,33 @@ const routes: Routes = [
         component: FollowUpComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'phoneIndex',
+        component: PhoneIndexComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'usersActivity',
+        component: UsersActivityComponent,
+
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'towingCondition',
+        component: TowingConditionComponent,
+        canActivate: [AuthGuard],
+      },
+      // {
+      //   path: 'searchNotification',
+      //   component: SearchNotificationComponent,
+      //   children: [
+      //     {
+      //       path: 'notification-details',
+      //       component: NotificationDetailsComponent,
+      //     },
+      //   ],
+      //   canActivate: [AuthGuard],
+      // },
     ],
   },
 
@@ -47,17 +75,17 @@ const routes: Routes = [
     ],
     canActivate: [AuthGuard],
   },
-  {
-    path: 'profiles-main/CallCenter/towingCondition',
-    component: TowingConditionComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'profiles-main/CallCenter/usersActivity',
-    component: UsersActivityComponent,
+  // {
+  //   path: 'profiles-main/CallCenter/towingCondition',
+  //   component: TowingConditionComponent,
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'profiles-main/CallCenter/usersActivity',
+  //   component: UsersActivityComponent,
 
-    canActivate: [AuthGuard],
-  },
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'profiles-main/CallCenter/policyNotification',
     component: PolicyNotificationViewComponent,

@@ -5,10 +5,10 @@
   <div class="section">
     <div class="panel row">
       <div
-        class="column col-md-6 col-lg-3"
+        class="col-lg-4 col-md-6 col-sm-6"
         [ngClass]="{ 'hidden-gauge': expertToDispatchCount <= 0 }"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -19,14 +19,16 @@
               }}</a
             >
           </label>
-          <canvas #expertToDispatch></canvas>
         </div>
+
+        <canvas #expertToDispatch></canvas>
       </div>
+
       <div
         [ngClass]="{ 'hidden-gauge': expertAllCount <= 0 }"
-        class="column col-md-6 col-lg-3"
+        class="col-lg-4 col-md-6 col-sm-6"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -36,15 +38,15 @@
               {{ dico?.dico_expert_follow_up || "dico_expert_follow_up" }}
             </a>
           </label>
-          <canvas #expertFollowUp></canvas>
         </div>
+        <canvas #expertFollowUp></canvas>
       </div>
 
       <div
-        class="column col-md-6 col-lg-3"
+        class="col-lg-4 col-md-6 col-sm-6"
         [ngClass]="{ 'hidden-gauge': towingAllCount <= 0 }"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -53,15 +55,15 @@
               >{{ dico?.dico_towing_follow_up || "dico_towing_follow_up" }}</a
             >
           </label>
-          <canvas #towingFollowUp></canvas>
         </div>
+        <canvas #towingFollowUp></canvas>
       </div>
 
       <div
-        class="column col-md-6 col-lg-3"
+        class="col-lg-4 col-md-6 col-sm-6"
         [ngClass]="{ 'hidden-gauge': towingToDispatchCount <= 0 }"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -72,8 +74,8 @@
               }}</a
             >
           </label>
-          <canvas #towingToDispatch></canvas>
         </div>
+        <canvas #towingToDispatch></canvas>
       </div>
     </div>
   </div>
@@ -81,10 +83,10 @@
   <div class="section">
     <div class="panel row">
       <div
-        class="column col-md-6 col-lg-3"
+        class="col-lg-4 col-md-6 col-sm-6"
         [ngClass]="{ 'hidden-gauge': noDataAllCount <= 0 }"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -93,8 +95,9 @@
               >{{ dico?.dico_no_data_follow_up || "dico_no_data_follow_up" }}</a
             >
           </label>
-          <canvas #noDataFollowUp></canvas>
-
+        </div>
+        <canvas #noDataFollowUp></canvas>
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -107,10 +110,10 @@
       </div>
 
       <div
-        class="column col-md-6 col-lg-2"
+        class="col-lg-4 col-md-6 col-sm-6"
         [ngClass]="{ 'hidden-gauge': notificationComplaintsCount <= 0 }"
       >
-        <div class="panel-item">
+        <div class="row">
           <label class="gauge-label">
             <a
               routerLink="/profiles-main/CallCenter/followUp"
@@ -122,8 +125,9 @@
               {{ dico?.dico_complaints || "dico_complaints" }}</a
             >
           </label>
-          <canvas #notificationComplaints></canvas>
         </div>
+
+        <canvas #notificationComplaints></canvas>
       </div>
     </div>
   </div>

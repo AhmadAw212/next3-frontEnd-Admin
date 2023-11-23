@@ -1,0 +1,564 @@
+<div class="container-box">
+  <div class="box">
+    <div class="flex-container">
+      <ul>
+        <ng-container *ngFor="let item of menuItems">
+          <li
+            (click)="onItemClick(item.key)"
+            *ngIf="item.permission ? hasPerm(item.permission) : true"
+            [class.selected]="selectedItem === item.key"
+          >
+            <img
+              [src]="item.icon"
+              alt="{{ item.altText }}"
+              [matTooltip]="
+                item.tooltip +
+                (item.count !== undefined ? ' ' + item.count : '')
+              "
+            />
+          </li>
+        </ng-container>
+      </ul>
+      <!-- Add a new container beside the existing ones -->
+      <div class="side-container" [hidden]="!showSideContainer">
+        <div class="content-container" [class.open]="showSideContainer">
+          <ng-container *ngIf="hasPerm('ccTemaAdmin')">
+            <div *ngIf="selectedItem === 'element1'">
+              <h2 class="h3-header">
+                {{ dico?.dico_notification || "dico_notification" }}
+              </h2>
+
+              <table class="table-responsive">
+                <thead style="top: 0">
+                  <tr>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_notification || "dico_notification" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_delay_minute || "dico_delay_minute" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_user || "dico_user" }}
+                    </th>
+
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_type || "dico_type" }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="vfollowupDrawer?.length! > 0; else noData">
+                  <tr *ngFor="let followUp of vfollowupDrawer">
+                    <td
+                      class="text-nowrap label-link"
+                      (click)="selectedNotification(followUp.notId)"
+                    >
+                      {{ followUp.visa }}
+                    </td>
+
+                    <td class="label-link text-nowrap">
+                      {{ followUp.delayMinute }}
+                    </td>
+
+                    <td class="text-nowrap">
+                      {{ followUp.distUser }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{ followUp.notType }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ng-template #noData>
+                <tr>
+                  <td colspan="5">
+                    {{
+                      dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                        "BASIC_NO_DATA_TO_DISPLAY"
+                    }}
+                  </td>
+                </tr>
+              </ng-template>
+            </div>
+          </ng-container>
+          <div *ngIf="selectedItem === 'element2'">
+            <div class="row">
+              <h2 class="h3-header">
+                {{
+                  dico?.dico_pending_dispatch_towing ||
+                    "dico_pending_dispatch_towing"
+                }}
+              </h2>
+            </div>
+            <div class="row">
+              <div
+                class="d-flex justify-content-between align-items-center p-2"
+              >
+                <label for="">{{ dico?.dico_user || "dico_user" }}</label>
+                <div class="col-md-3">
+                  <select
+                    name="user"
+                    id="user"
+                    class="form-select"
+                    [(ngModel)]="userSelection"
+                  >
+                    <option value="ALL">ALL</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn-class" (click)="getPendingDispatchBean()">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table-responsive">
+                <thead style="top: 0">
+                  <tr>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_notification || "dico_notification" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_client_name || "dico_client_name" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_status || "dico_status" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_user || "dico_user" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_date || "dico_date" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_pending_time || "dico_pending_time" }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="pendingDispatchData?.length! > 0; else noData">
+                  <tr *ngFor="let followUp of pendingDispatchData">
+                    <td
+                      class="text-nowrap label-link"
+                      (click)="selectedNotification(followUp.notificationId)"
+                    >
+                      {{ followUp.notificationVisa }}
+                    </td>
+
+                    <td class="label-link text-nowrap">
+                      {{ followUp.clientFullNameFromNotification }}
+                    </td>
+
+                    <td class="text-nowrap">
+                      {{ followUp.notificationsStatusDescription }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{ followUp.sysCreatedBy }}
+                    </td>
+
+                    <td class="text-nowrap">
+                      {{ followUp.sysCreatedDate }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{ followUp.pendingTime }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ng-template #noData>
+                <tr>
+                  <td colspan="6">
+                    {{
+                      dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                        "BASIC_NO_DATA_TO_DISPLAY"
+                    }}
+                  </td>
+                </tr>
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="selectedItem === 'element3'">
+            <div class="row">
+              <h2 class="h3-header">
+                {{
+                  dico?.dico_pending_dispatch_expert ||
+                    "dico_pending_dispatch_expert"
+                }}
+              </h2>
+            </div>
+            <div class="row">
+              <div
+                class="d-flex justify-content-between align-items-center p-2"
+              >
+                <label for="">{{ dico?.dico_user || "dico_user" }}</label>
+                <div class="col-md-3">
+                  <select
+                    name="user"
+                    id="user"
+                    class="form-select"
+                    [(ngModel)]="userExpertSelection"
+                  >
+                    <option value="ALL">ALL</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <button
+                    class="btn-class"
+                    (click)="getPendingDispatchExpertBean()"
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table-responsive">
+                <thead style="top: 0">
+                  <tr>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_notification || "dico_notification" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_client_name || "dico_client_name" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_status || "dico_status" }}
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_user || "dico_user" }}
+                    </th>
+
+                    <th scope="col" class="text-nowrap">
+                      {{ dico?.dico_pending_time || "dico_pending_time" }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  *ngIf="pendingDispatchExpertData?.length! > 0; else noData"
+                >
+                  <tr *ngFor="let followUp of pendingDispatchExpertData">
+                    <td
+                      class="text-nowrap label-link"
+                      (click)="selectedNotification(followUp.notificationId)"
+                    >
+                      {{ followUp.notificationVisa }}
+                    </td>
+
+                    <td class="label-link text-nowrap">
+                      {{ followUp.clientFullNameFromNotification }}
+                    </td>
+
+                    <td class="text-nowrap">
+                      {{ followUp.notificationsStatusDescription }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{ followUp.sysCreatedBy }}
+                    </td>
+
+                    <td class="text-nowrap">
+                      {{ followUp.pendingTime }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ng-template #noData>
+                <tr>
+                  <td colspan="6">
+                    {{
+                      dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                        "BASIC_NO_DATA_TO_DISPLAY"
+                    }}
+                  </td>
+                </tr>
+              </ng-template>
+            </div>
+          </div>
+          <ng-container *ngIf="hasPerm('ccTemaAdmin')">
+            <div *ngIf="selectedItem === 'element4'">
+              <div class="row">
+                <h2 class="h3-header">
+                  {{ dico?.dico_failed_dispatch || "dico_failed_dispatch" }}
+                </h2>
+              </div>
+              <div class="row">
+                <table class="table-responsive">
+                  <thead style="top: 0">
+                    <tr>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_notification || "dico_notification" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_insurance || "dico_insurance" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_failed_desc || "dico_failed_desc" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_expert || "dico_expert" }}
+                      </th>
+
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_user || "dico_user" }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngIf="
+                      temaExpertDispatchFailedList?.length! > 0;
+                      else noData
+                    "
+                  >
+                    <tr *ngFor="let followUp of temaExpertDispatchFailedList">
+                      <td
+                        class="text-nowrap label-link"
+                        (click)="selectedNotification(followUp.carsTemaNotId)"
+                      >
+                        {{ followUp.carsTemaNotVisa }}
+                      </td>
+
+                      <td class="label-link text-nowrap">
+                        {{ followUp.carsTemaCmp }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaDescription }}
+                      </td>
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaExpName }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.sysCreatedBy }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ng-template #noData>
+                  <tr>
+                    <td colspan="6">
+                      {{
+                        dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                          "BASIC_NO_DATA_TO_DISPLAY"
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="hasPerm('ccTemaAdmin')">
+            <div *ngIf="selectedItem === 'element5'">
+              <div class="row">
+                <h2 class="h3-header">
+                  {{ dico?.dico_expert_late || "dico_expert_late" }}
+                </h2>
+              </div>
+              <div class="row">
+                <table class="table-responsive">
+                  <thead style="top: 0">
+                    <tr>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_notification || "dico_notification" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_insurance || "dico_insurance" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_failed_desc || "dico_failed_desc" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_expert || "dico_expert" }}
+                      </th>
+
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_user || "dico_user" }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngIf="temaExpertDelayArrivalList?.length! > 0; else noData"
+                  >
+                    <tr *ngFor="let followUp of temaExpertDelayArrivalList">
+                      <td
+                        class="text-nowrap label-link"
+                        (click)="selectedNotification(followUp.carsTemaNotId)"
+                      >
+                        {{ followUp.carsTemaNotVisa }}
+                      </td>
+
+                      <td class="label-link text-nowrap">
+                        {{ followUp.carsTemaCmp }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaDescription }}
+                      </td>
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaExpName }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.sysCreatedBy }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ng-template #noData>
+                  <tr>
+                    <td colspan="6">
+                      {{
+                        dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                          "BASIC_NO_DATA_TO_DISPLAY"
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="hasPerm('ccTemaAdmin')">
+            <div *ngIf="selectedItem === 'element6'">
+              <div class="row">
+                <h2 class="h3-header">Customer Follow Up</h2>
+              </div>
+              <div class="row">
+                <table class="table-responsive">
+                  <thead style="top: 0">
+                    <tr>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_notification || "dico_notification" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_insurance || "dico_insurance" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_failed_desc || "dico_failed_desc" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_expert || "dico_expert" }}
+                      </th>
+
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_user || "dico_user" }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngIf="
+                      temaExpertArrivedCustFollowUp?.length! > 0;
+                      else noData
+                    "
+                  >
+                    <tr *ngFor="let followUp of temaExpertArrivedCustFollowUp">
+                      <td
+                        class="text-nowrap label-link"
+                        (click)="selectedNotification(followUp.carsTemaNotId)"
+                      >
+                        {{ followUp.carsTemaNotVisa }}
+                      </td>
+
+                      <td class="label-link text-nowrap">
+                        {{ followUp.carsTemaCmp }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaDescription }}
+                      </td>
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaExpName }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.sysCreatedBy }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ng-template #noData>
+                  <tr>
+                    <td colspan="6">
+                      {{
+                        dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                          "BASIC_NO_DATA_TO_DISPLAY"
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="hasPerm('ccTemaAdmin')">
+            <div *ngIf="selectedItem === 'element7'">
+              <div class="row">
+                <h2 class="h3-header">Need To Close</h2>
+              </div>
+              <div class="row">
+                <table class="table-responsive">
+                  <thead style="top: 0">
+                    <tr>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_notification || "dico_notification" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_insurance || "dico_insurance" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_failed_desc || "dico_failed_desc" }}
+                      </th>
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_expert || "dico_expert" }}
+                      </th>
+
+                      <th scope="col" class="text-nowrap">
+                        {{ dico?.dico_user || "dico_user" }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngIf="
+                      temaExpertLateCloseCaseList?.length! > 0;
+                      else noData
+                    "
+                  >
+                    <tr *ngFor="let followUp of temaExpertLateCloseCaseList">
+                      <td
+                        class="text-nowrap label-link"
+                        (click)="selectedNotification(followUp.carsTemaNotId)"
+                      >
+                        {{ followUp.carsTemaNotVisa }}
+                      </td>
+
+                      <td class="label-link text-nowrap">
+                        {{ followUp.carsTemaCmp }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaDescription }}
+                      </td>
+                      <td class="text-nowrap">
+                        {{ followUp.carsTemaExpName }}
+                      </td>
+
+                      <td class="text-nowrap">
+                        {{ followUp.sysCreatedBy }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ng-template #noData>
+                  <tr>
+                    <td colspan="6">
+                      {{
+                        dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                          "BASIC_NO_DATA_TO_DISPLAY"
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -766,27 +766,6 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.updateLossTowStaffCaseMngr(notificationId, presultdouble1!);
       this.changeCo = 'N';
     }
-
-    await this.dataService.mergeNotification(extractedValues).subscribe({
-      next: (res) => {
-        this.alertifyService.success(res.message);
-        this.getPolicyCarByNotificationId(this.notificationId).then(
-          (policyData) => {
-            if (policyData) {
-              if (policyData.policyExpired === 'Y') {
-                this.alertifyService.dialogAlert('Policy expired', 'Expired');
-              }
-              if (policyData.policyDeleted === 'Y') {
-                this.alertifyService.dialogAlert('Policy deleted', 'Deleted');
-              }
-            }
-          }
-        );
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
     await this.getFcDoubleToCheck().subscribe((presultdouble) => {
       if (presultdouble === 'NODOUBLE') {
         // Handle the case where there are no doubles.
@@ -819,6 +798,26 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
           });
         }
       }
+    });
+    await this.dataService.mergeNotification(extractedValues).subscribe({
+      next: (res) => {
+        this.alertifyService.success(res.message);
+        this.getPolicyCarByNotificationId(this.notificationId).then(
+          (policyData) => {
+            if (policyData) {
+              if (policyData.policyExpired === 'Y') {
+                this.alertifyService.dialogAlert('Policy expired', 'Expired');
+              }
+              if (policyData.policyDeleted === 'Y') {
+                this.alertifyService.dialogAlert('Policy deleted', 'Deleted');
+              }
+            }
+          }
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
 
     // Log the extracted values

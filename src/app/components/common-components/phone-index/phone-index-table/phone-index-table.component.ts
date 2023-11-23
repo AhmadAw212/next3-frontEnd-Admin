@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -14,7 +15,7 @@ import { LoadingServiceService } from 'src/app/services/loading-service.service'
   templateUrl: './phone-index-table.component.html',
   styleUrls: ['./phone-index-table.component.css'],
 })
-export class PhoneIndexTableComponent {
+export class PhoneIndexTableComponent implements OnInit, OnDestroy {
   dico?: any;
   pageSize: number = 10;
   pageNumber: number = 1;
@@ -26,6 +27,7 @@ export class PhoneIndexTableComponent {
   townName?: string = '';
   type?: string = '';
   phoneIndex?: any[] = [];
+  phoneIndexSubscribe?: Subscription;
   constructor(
     private dataService: DataServiceService,
     private alertifyService: AlertifyService,
@@ -37,6 +39,11 @@ export class PhoneIndexTableComponent {
     private dateFormatService: DateFormatterService,
     private profileService: LoadingServiceService
   ) {}
+  ngOnDestroy(): void {
+    if (this.phoneIndexSubscribe) {
+      this.phoneIndexSubscribe.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.getDico();
     this.findCarsSuppliersByPhoneIndex();
@@ -54,7 +61,7 @@ export class PhoneIndexTableComponent {
     this.findCarsSuppliersByPhoneIndex();
   }
   findCarsSuppliersByPhoneIndex() {
-    this.dataService
+    this.phoneIndexSubscribe = this.dataService
       .findCarsSuppliersByPhoneIndex(
         this.name!,
         this.mobile!,

@@ -50,15 +50,25 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: '',
+    loadChildren: () =>
+      import('./components/data-mgmt/data-mgmt.module').then(
+        (m) => m.DataMgmtModule
+      ),
+
+    canActivate: [AuthGuard],
+  },
+
+  {
     path: 'dataEntryView/:notificationId',
     component: DataEntryViewComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'phoneIndex',
-    component: PhoneIndexComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'phoneIndex',
+  //   component: PhoneIndexComponent,
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'sendEmail/:carId',
     component: SendEmailComponent,

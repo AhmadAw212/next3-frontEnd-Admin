@@ -11,6 +11,7 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 })
 export class CallCenterComponent implements OnInit {
   title = 'Call Center Main';
+
   constructor(
     private userRolesService: UsersRolesService,
     private userIdlesService: UsersIdleService,
@@ -20,6 +21,7 @@ export class CallCenterComponent implements OnInit {
   ngOnInit(): void {
     this.userRolesService.getUserRoles();
     this.companyService.clearSearchResults();
+
     // this.userIdlesService.initializeIdleService();
   }
 }

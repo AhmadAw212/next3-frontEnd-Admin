@@ -181,6 +181,8 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
 import { MatCardModule } from '@angular/material/card';
 import { PolicyNotificationViewComponent } from './components/call-center/policy-notification-view/policy-notification-view.component';
 import { UsersRolesService } from './services/users-roles.service';
+import { DataMgmtMainPageComponent } from './components/data-mgmt/data-mgmt-main-page/data-mgmt-main-page.component';
+import { CallCenterDrawerComponent } from './components/call-center/call-center-drawer/call-center-drawer.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -314,6 +316,8 @@ import { UsersRolesService } from './services/users-roles.service';
     PhoneIndexComponent,
     PhoneIndexTableComponent,
     BackButtonComponent,
+    DataMgmtMainPageComponent,
+    CallCenterDrawerComponent,
   ],
   imports: [
     BrowserModule,
