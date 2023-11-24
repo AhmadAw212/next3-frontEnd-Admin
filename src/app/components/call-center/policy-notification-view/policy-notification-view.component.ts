@@ -365,8 +365,14 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   }
 
   getRequiredFields() {
+    const locale = localStorage.getItem('selectedLanguage')!;
     this.dataService
-      .getPolicyNotiRequiresFieldsByCmp(this.cmp, 'HOTREQ', this.selectedNature)
+      .getPolicyNotiRequiresFieldsByCmp(
+        this.cmp,
+        'HOTREQ',
+        this.selectedNature,
+        locale
+      )
       .subscribe({
         next: (res) => {
           this.requiredFieldsResponse = res.data;
@@ -380,7 +386,7 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
 
           this.setRequiredFields(requiredFieldNames);
 
-          console.log(this.requiredFieldsNames);
+          // console.log(this.requiredFieldsNames);
         },
         error: (err) => {
           console.log(err);
@@ -404,8 +410,9 @@ export class PolicyNotificationViewComponent implements OnInit, OnChanges {
   }
   async selectedPolicyNotification(selectedPolicy: any) {
     if (!this.myForm.valid) {
-      return this.alertifyService.error(
-        this.requiredFieldsNames + 'are missing.'
+      return this.alertifyService.dialogAlert(
+        this.requiredFieldsNames + ' Are Required.',
+        'Required Fields'
       );
     }
     this.myForm.get('policyCarId')?.setValue(selectedPolicy.carId);

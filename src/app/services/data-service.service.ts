@@ -1444,8 +1444,9 @@ export class DataServiceService {
     cmp: string,
     value: string
   ): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getCallCenterSearchMainByParam?type=${type}&cmp=${cmp}&value=${value}`
+    return this.http.post<ApiResponse>(
+      `${this.userUrl}/call_center/getCallCenterSearchMainByParam?type=${type}&cmp=${cmp}&value=${value}`,
+      null
     );
   }
 
@@ -1971,10 +1972,11 @@ export class DataServiceService {
   getPolicyNotiRequiresFieldsByCmp(
     company: string,
     fromPage: string,
-    nature: string
+    nature: string,
+    locale: string
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/policyNotification-requiredFields?company=${company}&fromPage=${fromPage}&nature=${nature}`
+      `${this.userUrl}/call_center/policyNotification-requiredFields?company=${company}&fromPage=${fromPage}&nature=${nature}&locale=${locale}`
     );
   }
 
@@ -1985,12 +1987,12 @@ export class DataServiceService {
   }
   getPendingDispatchCount(company: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/get-pending-dispatch-expert-count?company=${company}`
+      `${this.userUrl}/call_center/pending-dispatch-count/${company}`
     );
   }
   getPendingDispatchExpertBeanCount(company: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/pending-dispatch-count/${company}`
+      `${this.userUrl}/call_center/get-pending-dispatch-expert-count?company=${company}`
     );
   }
   getPendingDispatchBean(

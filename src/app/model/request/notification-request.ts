@@ -11,6 +11,7 @@ export interface NotificationRequest {
   policyNumber?: string;
   policyId?: string;
   productsType?: string;
+  policyType?: string;
   brokerDesc?: string;
   policyAmendment?: string;
   policyEffectiveDate?: string;

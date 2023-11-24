@@ -92,19 +92,21 @@
   }
   @media (max-width: 767px) {
     .flex-container {
-      flex-direction: column;
+      flex-direction: row;
     }
   
     .box {
-      width: 100%; /* Full width on smaller screens */
+      width: 100%; 
     }
   
+
     .side-container {
-      width: 100%; /* Full width on smaller screens */
+      width:auto; /* Full width on smaller screens */
       height: auto; /* Auto height to accommodate content */
     }
   
     .content-container {
+
       padding: 10px; /* Adjust padding for smaller screens */
     }
   }

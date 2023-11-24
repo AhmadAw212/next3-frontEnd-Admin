@@ -53,7 +53,7 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
       icon: './assets/icons/exp_follow_up.png',
       altText: 'Icon for Element 3',
       tooltip: 'Pending Expert',
-      count: '',
+      count: 0,
     },
     {
       key: 'element4',
@@ -98,7 +98,7 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     this.dataService.getPendingDispatchCount(this.company!).subscribe({
       next: (data) => {
         this.pendingDispatchCount = data.data;
-        this.setCount('element2', data.data); // Update count for Element 3
+        this.setCount('element2', this.pendingDispatchCount); // Update count for Element 3
         if (this.pendingDispatchCount && this.pendingDispatchCount > 0) {
           this.showSideContainer = true;
           this.selectedItem = 'element2';
@@ -134,7 +134,7 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
             this.selectedItem = 'element3';
             this.showSideContainer = true;
           }
-          console.log(data);
+          console.log(data.data);
         },
         error: (err) => {
           console.log(err);
@@ -155,8 +155,8 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getDico();
-    this.getPendingDispatchCount();
     this.getPendingDispatchExpertBeanCount();
+    this.getPendingDispatchCount();
     this.pollData();
   }
   initializeData() {
@@ -184,13 +184,13 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     if (this.selectedItem === item) {
       // If the clicked item is the currently selected one, toggle the side container
       this.showSideContainer = !this.showSideContainer;
+    } else {
+      // If a different item is clicked, update the selected item and open the side container
+      this.selectedItem = item;
+      this.showSideContainer = true;
 
       if (this.selectedItem === 'element1') {
         this.getVfollowupDrawer();
-      } else if (this.selectedItem === 'element2') {
-        this.getPendingDispatchBean();
-      } else if (this.selectedItem === 'element3') {
-        this.getPendingDispatchExpertBean();
       } else if (this.selectedItem === 'element4') {
         this.getTemaExpertDispatchFailedList();
       } else if (this.selectedItem === 'element5') {
@@ -200,10 +200,6 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
       } else if (this.selectedItem === 'element7') {
         this.getTemaExpertLateCloseCaseList();
       }
-    } else {
-      // If a different item is clicked, update the selected item and open the side container
-      this.selectedItem = item;
-      this.showSideContainer = true;
     }
   }
   selectedNotification(selectedNotId: string) {

@@ -8,6 +8,7 @@
 
   .gauge-label {
     margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+    margin-left: 55px;
   }
 
   /* .gauge-label a:hover {

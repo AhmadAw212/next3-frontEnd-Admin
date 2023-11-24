@@ -927,6 +927,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       carDriverFirstName: formValues.carDriverFirstName,
       carDriverFatherName: formValues.carDriverFatherName,
       carDriverFamilyName: formValues.CarDriverFamilyName,
+      policyType: formValues.productsType,
       carShapeId: formValues.carShapeId,
       carPlate: formValues.carPlate,
       carYear: formValues.carYear,

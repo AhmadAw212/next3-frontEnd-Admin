@@ -68,7 +68,7 @@ padding-right: 10px
     border-style: outset;
     border-width: medium;
      width:500px;
-     height: 500px;
+     /* height: 500px; */
      background: rgb(239,242,245);
      float: left;
      /* margin-left: 9px; */
