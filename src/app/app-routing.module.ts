@@ -74,11 +74,6 @@ const routes: Routes = [
     component: SendEmailComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'hotline/:notificationId',
-    component: NewHotlineComponent,
-    canActivate: [AuthGuard],
-  },
 ];
 
 @NgModule({

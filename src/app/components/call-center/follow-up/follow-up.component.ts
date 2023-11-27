@@ -65,6 +65,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   totalItems?: number;
   isUsingSearchCriteria?: boolean;
   @Output() companyChange = new EventEmitter<string>();
+  profileId!: string;
   constructor(
     private dialog: MatDialog,
     private dataService: DataServiceService,
@@ -97,6 +98,7 @@ export class FollowUpComponent implements OnInit, OnDestroy {
     // this.createForm();
     this.route.queryParams.subscribe((params) => {
       this.paramValue = params['code'];
+      this.profileId = params['profileId'];
       // this.selectedCompany = params['selectedCompany'];
       // this.profileService.setCompany(this.selectedCompany!);
     });
@@ -144,7 +146,8 @@ export class FollowUpComponent implements OnInit, OnDestroy {
   }
   selectedHotlineUser(notificationId: string) {
     // console.log(notificationId);
-    this.router.navigate(['hotline/', notificationId]);
+    const componentRoute = `profiles-main/CallCenter/hotline/${this.profileId}/${notificationId}`;
+    this.router.navigateByUrl(componentRoute);
   }
   onCompanyChange(event: any) {
     this.selectedCompany = event;

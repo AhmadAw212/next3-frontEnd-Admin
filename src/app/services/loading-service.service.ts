@@ -15,8 +15,6 @@ export class LoadingServiceService {
   public profileInfo$ = this.profileInfoSubject.asObservable();
   private companySubject = new BehaviorSubject<string | null>(null);
   public company = this.companySubject.asObservable();
-  private searchValueSubject = new BehaviorSubject<string | null>(null);
-  public searchValue = this.companySubject.asObservable();
   private searchResults: any[] = [];
   private trademark: any;
   displayName?: string;
@@ -74,12 +72,6 @@ export class LoadingServiceService {
   }
   setCompany(company: string) {
     this.companySubject.next(company);
-  }
-  setSearchValue(value: string) {
-    this.searchValueSubject.next(value);
-  }
-  getSearchValue() {
-    this.searchValueSubject.getValue();
   }
   getCompanySelected(): string | null {
     return this.companySubject.getValue();

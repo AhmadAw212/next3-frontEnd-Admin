@@ -183,6 +183,7 @@ import { PolicyNotificationViewComponent } from './components/call-center/policy
 import { UsersRolesService } from './services/users-roles.service';
 import { DataMgmtMainPageComponent } from './components/data-mgmt/data-mgmt-main-page/data-mgmt-main-page.component';
 import { CallCenterDrawerComponent } from './components/call-center/call-center-drawer/call-center-drawer.component';
+import { ProfilesNavComponent } from './components/commonComponents/profiles-nav/profiles-nav.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
@@ -318,6 +319,7 @@ import { CallCenterDrawerComponent } from './components/call-center/call-center-
     BackButtonComponent,
     DataMgmtMainPageComponent,
     CallCenterDrawerComponent,
+    ProfilesNavComponent,
   ],
   imports: [
     BrowserModule,

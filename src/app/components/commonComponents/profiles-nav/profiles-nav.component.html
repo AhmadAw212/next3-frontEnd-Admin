@@ -1,0 +1,31 @@
+<!-- <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a
+    mat-tab-link
+    *ngFor="let profile of userProfiles; let i = index"
+    (click)="navigateToProfile(profile)"
+    [routerLink]="profileLink(profile)"
+    [active]="activeLink === profileLink(profile)"
+  >
+    <img [src]="profile.logo" class="icon me-3" alt="" srcset="" />
+    {{ profile.description }}
+  </a>
+</nav>
+
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel> -->
+<!-- <div [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div> -->
+<div class="dropdown">
+  <!-- <button class="dropbtn">Navigate To</button> -->
+  <mat-icon class="dropbtn">menu</mat-icon>
+  <div class="dropdown-content">
+    <a
+      *ngFor="let profile of userProfiles; let i = index"
+      (click)="navigateToProfile(profile)"
+      [routerLink]="profileLink(profile)"
+    >
+      <img [src]="profile.logo" class="icon me-3" alt="" srcset="" />
+      {{ profile.description }}
+    </a>
+  </div>
+</div>

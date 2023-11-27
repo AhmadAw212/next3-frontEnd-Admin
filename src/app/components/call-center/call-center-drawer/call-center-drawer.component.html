@@ -24,9 +24,12 @@
         <div class="content-container" [class.open]="showSideContainer">
           <ng-container *ngIf="hasPerm('ccTemaAdmin')">
             <div *ngIf="selectedItem === 'element1'">
-              <h2 class="h3-header">
-                {{ dico?.dico_notification || "dico_notification" }}
-              </h2>
+              <div class="row">
+                <h2 class="h3-header">
+                  {{ dico?.dico_notification || "dico_notification" }}
+                </h2>
+              </div>
+
               <div class="row grid-container">
                 <div class="table-responsive">
                   <table>
@@ -81,6 +84,14 @@
                   </ng-template>
                 </div>
               </div>
+              <div class="row grid-container">
+                <app-paginator
+                  [totalItems]="totalItems!"
+                  [pageSize]="pageSize"
+                  [totalPages]="totalPages"
+                  (pageChange)="onPageChange($event)"
+                ></app-paginator>
+              </div>
             </div>
           </ng-container>
           <div *ngIf="selectedItem === 'element2'">
@@ -105,11 +116,11 @@
                     class="form-select"
                     [(ngModel)]="userSelection"
                   >
-                    <option value="ALL">ALL</option>
+                    <option value="All">ALL</option>
                     <option value=""></option>
                   </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <button class="btn-class" (click)="getPendingDispatchBean()">
                     Search
                   </button>
@@ -150,7 +161,7 @@
                         {{ followUp.visa }}
                       </td>
 
-                      <td class="label-link text-nowrap">
+                      <td class="text-nowrap">
                         {{ followUp.clientFullNameFromNotification }}
                       </td>
 
@@ -162,7 +173,10 @@
                       </td>
 
                       <td class="text-nowrap">
-                        {{ followUp.sysCreatedDate }}
+                        {{
+                          followUp.sysCreatedDate
+                            | date : dateFormat("reportDateTimeFormat")
+                        }}
                       </td>
                       <td class="text-nowrap">
                         {{ followUp.pendingTime }}
@@ -181,6 +195,14 @@
                   </tr>
                 </ng-template>
               </div>
+            </div>
+            <div class="row grid-container">
+              <app-paginator
+                [totalItems]="totalItems!"
+                [pageSize]="pageSize"
+                [totalPages]="totalPages"
+                (pageChange)="onPageChangePendingTowing($event)"
+              ></app-paginator>
             </div>
           </div>
           <div *ngIf="selectedItem === 'element3'">
@@ -204,7 +226,7 @@
                     class="form-select"
                     [(ngModel)]="userExpertSelection"
                   >
-                    <option value="ALL">ALL</option>
+                    <option value="All">ALL</option>
                     <option value=""></option>
                   </select>
                 </div>
@@ -282,6 +304,14 @@
                 </ng-template>
               </div>
             </div>
+            <div class="row">
+              <app-paginator
+                [totalItems]="totalItems!"
+                [pageSize]="pageSize"
+                [totalPages]="totalPages"
+                (pageChange)="onPageChangePendingExpert($event)"
+              ></app-paginator>
+            </div>
           </div>
           <ng-container *ngIf="hasPerm('ccTemaAdmin')">
             <div *ngIf="selectedItem === 'element4'">
@@ -355,6 +385,14 @@
                     </tr>
                   </ng-template>
                 </div>
+              </div>
+              <div class="row">
+                <app-paginator
+                  [totalItems]="totalItems!"
+                  [pageSize]="pageSize"
+                  [totalPages]="totalPages"
+                  (pageChange)="onPageChangeFailedDispatch($event)"
+                ></app-paginator>
               </div>
             </div>
           </ng-container>
@@ -432,6 +470,14 @@
                   </ng-template>
                 </div>
               </div>
+              <div class="row grid-container">
+                <app-paginator
+                  [totalItems]="totalItems!"
+                  [pageSize]="pageSize"
+                  [totalPages]="totalPages"
+                  (pageChange)="onPageChangeExpertLate($event)"
+                ></app-paginator>
+              </div>
             </div>
           </ng-container>
           <ng-container *ngIf="hasPerm('ccTemaAdmin')">
@@ -507,6 +553,14 @@
                   </ng-template>
                 </div>
               </div>
+              <div class="row grid-container">
+                <app-paginator
+                  [totalItems]="totalItems!"
+                  [pageSize]="pageSize"
+                  [totalPages]="totalPages"
+                  (pageChange)="onPageChangeCustFollow($event)"
+                ></app-paginator>
+              </div>
             </div>
           </ng-container>
           <ng-container *ngIf="hasPerm('ccTemaAdmin')">
@@ -579,6 +633,14 @@
                     </tr>
                   </ng-template>
                 </div>
+              </div>
+              <div class="row grid-container">
+                <app-paginator
+                  [totalItems]="totalItems!"
+                  [pageSize]="pageSize"
+                  [totalPages]="totalPages"
+                  (pageChange)="onPageChangeNeedToClose($event)"
+                ></app-paginator>
               </div>
             </div>
           </ng-container>

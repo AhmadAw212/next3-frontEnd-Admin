@@ -56,12 +56,12 @@
   </mat-tab>
   <mat-tab [label]="dico?.dico_search || 'dico_search'">
     <div class="grid-container container-fluid mt-5">
-      <div class="row">
-        <div class="col-md-10 mx-auto">
-          <form
-            class="d-flex align-items-center justify-content-center"
-            (ngSubmit)="getUserActivityOpenedNotifications()"
-          >
+      <form
+        class="d-flex align-items-center justify-content-start"
+        (ngSubmit)="getUserActivityOpenedNotifications()"
+      >
+        <div class="row">
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label
               for="fromDate"
               class="label-class mb-0 me-2"
@@ -80,7 +80,9 @@
                 containerClass: 'theme-dark-blue'
               }"
             />
+          </div>
 
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label
               for="toDate"
               class="label-class mb-0 ms-2 me-2"
@@ -99,7 +101,8 @@
                 containerClass: 'theme-dark-blue'
               }"
             />
-
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label
               for="users"
               class="label-class mb-0 ms-2 me-2"
@@ -117,6 +120,8 @@
                 {{ user.d }}
               </option>
             </select>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label
               for="type"
               class="label-class mb-0 ms-2 me-2"
@@ -133,7 +138,8 @@
                 {{ item.description }}
               </option>
             </select>
-
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label
               for="type"
               class="label-class mb-0 ms-2 me-2"
@@ -152,8 +158,9 @@
                 {{ item.companyName }}
               </option>
             </select>
-
-            <div class="btn-group">
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="btn-group m-3">
               <button type="submit" class="btn-class ms-2">
                 {{ dico?.dico_search || "dico_search" }}
               </button>
@@ -165,93 +172,96 @@
                 {{ dico?.dico_extract_to_excel || "dico_extract_to_excel" }}
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
+
     <div class="container-fluid">
-      <div class="row">
-        <table class="table table-responsive-sm">
-          <thead class="text-nowrap">
-            <tr>
-              <th>{{ dico?.dico_type || "dico_type" }}</th>
-              <th>{{ dico?.dico_notification || "dico_notification" }}</th>
+      <div class="row grid-container">
+        <div class="table-responsive">
+          <table>
+            <thead class="text-nowrap" style="position: static">
+              <tr>
+                <th>{{ dico?.dico_type || "dico_type" }}</th>
+                <th>{{ dico?.dico_notification || "dico_notification" }}</th>
 
-              <th>
-                {{ dico?.dico_insured_tp || "dico_insured_tp" }}
-              </th>
+                <th>
+                  {{ dico?.dico_insured_tp || "dico_insured_tp" }}
+                </th>
 
-              <th>
-                {{ dico?.dico_brand_trademark || "dico_brand_trademark" }}
-              </th>
-              <th>{{ dico?.dico_plate || "dico_plate" }}</th>
-              <th>{{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}</th>
-              <th>{{ dico?.dico_owner_name || "dico_owner_name" }}</th>
-              <th>
-                {{ dico?.dico_notification_date || "dico_notification_date" }}
-              </th>
-              <th>{{ dico?.dico_nature || "dico_nature" }}</th>
-              <th>{{ dico?.dico_expert_name || "dico_expert_name" }}</th>
-              <th>
-                {{ dico?.dico_accident_location || "dico_accident_location" }}
-              </th>
-              <th>{{ dico?.dico_policy_type || "dico_policy_type" }}</th>
-              <th>{{ dico?.dico_cars_count || "dico_cars_count" }}</th>
-              <th>{{ dico?.dico_injury_count || "dico_injury_count" }}</th>
-              <th>{{ dico?.dico_user_name || "dico_user_name" }}</th>
-              <ng-container *ngIf="userCompany === '1'">
-                <th>{{ dico?.dico_ins_company || "dico_ins_company" }}</th>
-              </ng-container>
-              <th>{{ dico?.dico_note || "dico_note" }}</th>
-            </tr>
-          </thead>
-          <tbody
-            *ngIf="userActivity?.length! > 0; else noData"
-            (click)="highlightRow($event)"
-          >
-            <tr *ngFor="let user of userActivity">
-              <td>{{ user.type }}</td>
-              <td>{{ user.notification }}</td>
-              <td>{{ user.insuredTp }}</td>
-              <td>{{ user.brandTrademark }}</td>
-              <td>{{ user.plate }}</td>
-              <td>{{ user.yom }}</td>
-              <td>{{ user.ownerName }}</td>
-              <td>
-                {{
-                  user.notificationDate
-                    | date : dateFormat("reportDateTimeFormat")
-                }}
-              </td>
-              <td>{{ user.notificationNature }}</td>
-              <!-- <td>{{ user.notificationStatus }}</td> -->
-              <td>{{ user.expertName }}</td>
-              <td>{{ user.accidentLocation }}</td>
-              <td>{{ user.policyType }}</td>
-              <td>{{ user.carsCount }}</td>
-              <td>{{ user.injuryCount }}</td>
-              <td>{{ user.userName }}</td>
-              <ng-container *ngIf="userCompany === '1'">
-                <td>{{ user.insCompany }}</td>
-              </ng-container>
-              <td>{{ user.notes }}</td>
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="18">
-                {{
-                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
-                }}
-              </td>
-            </tr>
-          </ng-template>
-        </table>
-        <app-paginator
-          [totalItems]="totalItems!"
-          [pageSize]="pageSize"
-          (pageChange)="onPageChange($event)"
-        ></app-paginator>
+                <th>
+                  {{ dico?.dico_brand_trademark || "dico_brand_trademark" }}
+                </th>
+                <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+                <th>{{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}</th>
+                <th>{{ dico?.dico_owner_name || "dico_owner_name" }}</th>
+                <th>
+                  {{ dico?.dico_notification_date || "dico_notification_date" }}
+                </th>
+                <th>{{ dico?.dico_nature || "dico_nature" }}</th>
+                <th>{{ dico?.dico_expert_name || "dico_expert_name" }}</th>
+                <th>
+                  {{ dico?.dico_accident_location || "dico_accident_location" }}
+                </th>
+                <th>{{ dico?.dico_policy_type || "dico_policy_type" }}</th>
+                <th>{{ dico?.dico_cars_count || "dico_cars_count" }}</th>
+                <th>{{ dico?.dico_injury_count || "dico_injury_count" }}</th>
+                <th>{{ dico?.dico_user_name || "dico_user_name" }}</th>
+                <ng-container *ngIf="userCompany === '1'">
+                  <th>{{ dico?.dico_ins_company || "dico_ins_company" }}</th>
+                </ng-container>
+                <th>{{ dico?.dico_note || "dico_note" }}</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngIf="userActivity?.length! > 0; else noData"
+              (click)="highlightRow($event)"
+            >
+              <tr *ngFor="let user of userActivity">
+                <td>{{ user.type }}</td>
+                <td>{{ user.notification }}</td>
+                <td>{{ user.insuredTp }}</td>
+                <td>{{ user.brandTrademark }}</td>
+                <td>{{ user.plate }}</td>
+                <td>{{ user.yom }}</td>
+                <td>{{ user.ownerName }}</td>
+                <td>
+                  {{
+                    user.notificationDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}
+                </td>
+                <td>{{ user.notificationNature }}</td>
+                <!-- <td>{{ user.notificationStatus }}</td> -->
+                <td>{{ user.expertName }}</td>
+                <td>{{ user.accidentLocation }}</td>
+                <td>{{ user.policyType }}</td>
+                <td>{{ user.carsCount }}</td>
+                <td>{{ user.injuryCount }}</td>
+                <td>{{ user.userName }}</td>
+                <ng-container *ngIf="userCompany === '1'">
+                  <td>{{ user.insCompany }}</td>
+                </ng-container>
+                <td>{{ user.notes }}</td>
+              </tr>
+            </tbody>
+            <ng-template #noData>
+              <tr>
+                <td colspan="18">
+                  {{
+                    dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </table>
+          <app-paginator
+            [totalItems]="totalItems!"
+            [pageSize]="pageSize"
+            (pageChange)="onPageChange($event)"
+          ></app-paginator>
+        </div>
       </div>
     </div>
   </mat-tab>

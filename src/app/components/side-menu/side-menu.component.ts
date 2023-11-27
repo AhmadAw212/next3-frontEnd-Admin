@@ -34,6 +34,7 @@ export class SideMenuComponent implements OnInit {
   // }
   searchIcon = faSearch;
   screenWidth?: number;
+  profileId!: string;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   @Input() dico?: any;
@@ -45,6 +46,11 @@ export class SideMenuComponent implements OnInit {
     this.sidenav.toggle();
   }
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.profileId = params['profileId'];
+      // this.userRolesService.getUserRoles(this.profileId);
+      // console.log(this.profileId);
+    });
     this.getDico();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

@@ -28,7 +28,7 @@ export class LoginNavComponent implements OnInit {
   logo?: string;
   userPic!: string;
   @Input() dico?: any;
-
+  @Input() showNav: boolean = false;
   private loginInfoSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public loginInfo$: Observable<any> = this.loginInfoSubject.asObservable();
   constructor(
@@ -47,6 +47,7 @@ export class LoginNavComponent implements OnInit {
     this.loadLoginData();
     this.dateFormatterService();
     this.getDico();
+
     // this.userRolesService.getUserRoles();
     // this.userIdlesService.initializeIdleService();
   }

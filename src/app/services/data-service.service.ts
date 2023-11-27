@@ -1980,9 +1980,12 @@ export class DataServiceService {
     );
   }
 
-  vfollowupDrawer(): Observable<ApiResponse> {
+  vfollowupDrawer(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/vfollowupDrawer`
+      `${this.userUrl}/call_center/vfollowupDrawer?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
   getPendingDispatchCount(company: string): Observable<ApiResponse> {
@@ -1997,38 +2000,54 @@ export class DataServiceService {
   }
   getPendingDispatchBean(
     company: string,
-    username: string
+    username: string,
+    pageSize: number,
+    pageNumber: number
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getPendingDispatchBean?company=${company}&username=${username}`
+      `${this.userUrl}/call_center/getPendingDispatchBean?company=${company}&username=${username}&pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
   getPendingDispatchExpertBean(
     company: string,
-    username: string
+    username: string,
+    pageSize: number,
+    pageNumber: number
   ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getPendingDispatchExpertBean?company=${company}&username=${username}`
+      `${this.userUrl}/call_center/getPendingDispatchExpertBean?company=${company}&username=${username}&pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
-  getTemaExpertDispatchFailedList(): Observable<ApiResponse> {
+  getTemaExpertDispatchFailedList(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getTemaExpertDispatchFailedList`
+      `${this.userUrl}/call_center/getTemaExpertDispatchFailedList?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
-  getTemaExpertDelayArrivalList(): Observable<ApiResponse> {
+  getTemaExpertDelayArrivalList(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getTemaExpertDelayArrivalList`
+      `${this.userUrl}/call_center/getTemaExpertDelayArrivalList?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
-  getTemaExpertArrivedCustFollowUp(): Observable<ApiResponse> {
+  getTemaExpertArrivedCustFollowUp(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getTemaExpertArrivedCustFollowUp`
+      `${this.userUrl}/call_center/getTemaExpertArrivedCustFollowUp?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
-  getTemaExpertLateCloseCaseList(): Observable<ApiResponse> {
+  getTemaExpertLateCloseCaseList(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${this.userUrl}/call_center/getTemaExpertLateCloseCaseList`
+      `${this.userUrl}/call_center/getTemaExpertLateCloseCaseList?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
 }

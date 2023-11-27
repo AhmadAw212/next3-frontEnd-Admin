@@ -1,0 +1,93 @@
+/* Drop-down text link styling */
+.dropbtn {
+    background: none;
+    color: #3498db; /* Use a link color */
+    padding: 14px 20px; /* Adjust padding for a better visual balance */
+    /* font-size: 13px; */
+    font-weight: bold; /* Make the text bold for a more prominent look */
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* Remove default underline */
+    position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions for color and background */
+    margin-left: 30px;
+    padding-bottom: 20px;
+
+  }
+  
+  /* Add an underline element */
+  /* .dropbtn::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; 
+    background-color: #3498db; 
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out; 
+  }
+   */
+
+
+  /* .dropbtn:hover::after {
+    transform: scaleX(1); 
+  }
+   */
+  /* Dropdown container styling */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    flex-wrap: wrap;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 1000px; /* Increase the minimum width to accommodate larger size */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    transform: scaleY(0.8);
+    transform-origin: top;
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  /* Dropdown link styling */
+  .dropdown-content a {
+    color: #333;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    flex: 1 1 calc(33.33% - 40px); /* Adjust the width to make three items fit on a line */
+    box-sizing: border-box; /* Include padding and border in the total width */
+  }
+  
+  /* Hover effect on dropdown links */
+  .dropdown-content a:hover {
+    background-color: #ddd;
+    color: #2980b9;
+  }
+  
+  /* Show dropdown content on hover */
+  .dropdown:hover .dropdown-content {
+    display: flex; /* Change display to flex to avoid flickering on hover */
+    opacity: 1; /* Make the dropdown visible on hover */
+    transform: scaleY(1); /* Scale the dropdown to be visible on hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow on hover for enhanced depth */
+  }
+  @media screen and (max-width: 768px) {
+    .dropdown-content {
+        display: none;
+        flex-direction: column;
+    min-width: 200px; 
+    }
+  }
+    
+  

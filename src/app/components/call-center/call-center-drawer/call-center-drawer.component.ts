@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, interval, switchMap } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -32,7 +33,12 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
   temaExpertArrivedCustFollowUp: any[] = [];
   temaExpertLateCloseCaseList: any[] = [];
   company: string;
+  profileId!: string;
   private intervalId: any;
+  totalItems!: number;
+  pageSize: number = 10;
+  pageNumber: number = 1;
+  totalPages!: number;
   menuItems = [
     {
       key: 'element1',
@@ -93,7 +99,41 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     // Clear the interval when the component is destroyed to prevent memory leaks
     clearInterval(this.intervalId);
   }
-
+  onPageChange(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getVfollowupDrawer();
+  }
+  onPageChangePendingTowing(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getPendingDispatchBean();
+  }
+  onPageChangePendingExpert(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getPendingDispatchExpertBean();
+  }
+  onPageChangeFailedDispatch(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getTemaExpertDispatchFailedList();
+  }
+  onPageChangeExpertLate(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getTemaExpertDelayArrivalList();
+  }
+  onPageChangeCustFollow(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getTemaExpertArrivedCustFollowUp();
+  }
+  onPageChangeNeedToClose(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getTemaExpertLateCloseCaseList();
+  }
   getPendingDispatchCount() {
     this.dataService.getPendingDispatchCount(this.company!).subscribe({
       next: (data) => {
@@ -149,9 +189,13 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     private dateFormatService: DateFormatterService,
     private alertifyService: AlertifyService,
     private profileService: LoadingServiceService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.company = this.profileService.getCompany()!;
+    this.route.params.subscribe((param) => {
+      this.profileId = param['profileId'];
+    });
   }
   ngOnInit() {
     this.getDico();
@@ -203,7 +247,9 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     }
   }
   selectedNotification(selectedNotId: string) {
-    this.router.navigate(['hotline', selectedNotId]);
+    const componentRoute = `profiles-main/CallCenter/hotline/${this.profileId}/${selectedNotId}`;
+    this.router.navigateByUrl(componentRoute);
+    // this.router.navigate(['hotline', selectedNotId]);
   }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
@@ -218,87 +264,104 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
     });
   }
   getTemaExpertDispatchFailedList() {
-    this.dataService.getTemaExpertDispatchFailedList().subscribe({
-      next: (data) => {
-        this.temaExpertDispatchFailedList = data.data;
-        this.setCount('element4', this.temaExpertDispatchFailedList.length);
-        if (
-          this.temaExpertDispatchFailedList &&
-          this.temaExpertDispatchFailedList.length > 0
-        ) {
-          this.showSideContainer = true;
-          this.selectedItem = 'element4';
-        }
+    this.dataService
+      .getTemaExpertDispatchFailedList(this.pageSize, this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          this.temaExpertDispatchFailedList = data.data;
+          this.pageSize = data.data.totalPages;
+          this.totalItems = data.data.totalItems;
+          this.setCount('element4', this.temaExpertDispatchFailedList.length);
+          if (
+            this.temaExpertDispatchFailedList &&
+            this.temaExpertDispatchFailedList.length > 0
+          ) {
+            this.showSideContainer = true;
+            this.selectedItem = 'element4';
+          }
 
-        // console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+          // console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   getTemaExpertDelayArrivalList() {
-    this.dataService.getTemaExpertDelayArrivalList().subscribe({
-      next: (data) => {
-        this.temaExpertDelayArrivalList = data.data;
-        this.setCount('element5', this.temaExpertDelayArrivalList.length);
-        if (
-          this.temaExpertDelayArrivalList &&
-          this.temaExpertDelayArrivalList.length > 0
-        ) {
-          this.showSideContainer = true;
-          this.selectedItem = 'element5';
-        }
-        // console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.dataService
+      .getTemaExpertDelayArrivalList(this.pageSize, this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          this.temaExpertDelayArrivalList = data.data;
+          this.pageSize = data.data.totalPages;
+          this.totalItems = data.data.totalItems;
+          this.setCount('element5', this.temaExpertDelayArrivalList.length);
+          if (
+            this.temaExpertDelayArrivalList &&
+            this.temaExpertDelayArrivalList.length > 0
+          ) {
+            this.showSideContainer = true;
+            this.selectedItem = 'element5';
+          }
+          // console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   getTemaExpertArrivedCustFollowUp() {
-    this.dataService.getTemaExpertArrivedCustFollowUp().subscribe({
-      next: (data) => {
-        this.temaExpertArrivedCustFollowUp = data.data;
-        this.setCount('element6', this.temaExpertArrivedCustFollowUp.length);
-        if (
-          this.temaExpertArrivedCustFollowUp &&
-          this.temaExpertArrivedCustFollowUp.length > 0
-        ) {
-          this.selectedItem = 'element6';
-          this.showSideContainer = true;
-        }
-        // console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.dataService
+      .getTemaExpertArrivedCustFollowUp(this.pageSize, this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          this.temaExpertArrivedCustFollowUp = data.data;
+          this.pageSize = data.data.totalPages;
+          this.totalItems = data.data.totalItems;
+          this.setCount('element6', this.temaExpertArrivedCustFollowUp.length);
+          if (
+            this.temaExpertArrivedCustFollowUp &&
+            this.temaExpertArrivedCustFollowUp.length > 0
+          ) {
+            this.selectedItem = 'element6';
+            this.showSideContainer = true;
+          }
+          // console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   getTemaExpertLateCloseCaseList() {
-    this.dataService.getTemaExpertLateCloseCaseList().subscribe({
-      next: (data) => {
-        this.temaExpertLateCloseCaseList = data.data;
-        this.setCount('element7', this.temaExpertLateCloseCaseList.length);
-        if (
-          this.temaExpertLateCloseCaseList &&
-          this.temaExpertLateCloseCaseList.length > 0
-        ) {
-          this.selectedItem = 'element7';
-          this.showSideContainer = true;
-        }
-        // console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.dataService
+      .getTemaExpertLateCloseCaseList(this.pageSize, this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          this.temaExpertLateCloseCaseList = data.data;
+          this.pageSize = data.data.totalPages;
+          this.totalItems = data.data.totalItems;
+          this.setCount('element7', this.temaExpertLateCloseCaseList.length);
+          if (
+            this.temaExpertLateCloseCaseList &&
+            this.temaExpertLateCloseCaseList.length > 0
+          ) {
+            this.selectedItem = 'element7';
+            this.showSideContainer = true;
+          }
+          // console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   getVfollowupDrawer() {
-    this.dataService.vfollowupDrawer().subscribe({
+    this.dataService.vfollowupDrawer(this.pageSize, this.pageNumber).subscribe({
       next: (data) => {
         this.vfollowupDrawer = data.data;
-
+        this.pageSize = data.data.totalPages;
+        this.totalItems = data.data.totalItems;
         if (this.vfollowupDrawer && this.vfollowupDrawer.length > 0) {
           this.selectedItem = 'element1';
           this.showSideContainer = true;
@@ -313,11 +376,18 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
   getPendingDispatchBean() {
     const company = this.profileService.getCompany()!;
     this.dataService
-      .getPendingDispatchBean(company, this.userSelection)
+      .getPendingDispatchBean(
+        company,
+        this.userSelection,
+        this.pageSize,
+        this.pageNumber
+      )
       .subscribe({
         next: (res) => {
-          this.pendingDispatchData = res.data.notResponseList;
+          this.pendingDispatchData = res.data.notResponseList.data;
           this.pendingDispatchCount = res.data.pendingDispatchCount;
+          this.pageSize = res.data.notResponseList.totalPages;
+          this.totalItems = res.data.notResponseList.totalItems;
           if (this.pendingDispatchCount && this.pendingDispatchCount > 0) {
             this.showSideContainer = true;
             this.selectedItem = 'element2';
@@ -333,11 +403,19 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
   getPendingDispatchExpertBean() {
     const company = this.profileService.getCompany()!;
     this.dataService
-      .getPendingDispatchExpertBean(company, this.userExpertSelection)
+      .getPendingDispatchExpertBean(
+        company,
+        this.userExpertSelection,
+        this.pageSize,
+        this.pageNumber
+      )
       .subscribe({
         next: (res) => {
           this.pendingDispatchExpertData = res.data.notResponseList;
           this.pendingDispatchExpertCount = res.data.pendingDispatchCount;
+          this.pageSize = res.data.notResponseList.totalPages;
+          this.totalItems = res.data.notResponseList.totalItems;
+
           if (
             this.pendingDispatchExpertCount &&
             this.pendingDispatchExpertCount > 0

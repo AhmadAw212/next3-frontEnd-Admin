@@ -282,12 +282,10 @@
     <tbody (click)="highlightRow($event)">
       <tr *ngFor="let list of listData">
         <td>
-          <button
-            class="btn btn-primary"
-            (click)="selectedHotlineUser(list.notificationId)"
-          >
-            Hotline
-          </button>
+          <app-new-hotline-btn
+            [buttonText]="dico?.dico_hotline || 'dico_hotline '"
+            [notificationId]="list.notificationId"
+          ></app-new-hotline-btn>
         </td>
         <td>{{ list.notification }}</td>
         <td>{{ list.plate }}</td>

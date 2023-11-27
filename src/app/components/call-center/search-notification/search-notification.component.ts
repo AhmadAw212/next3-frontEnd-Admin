@@ -8,6 +8,7 @@ import { DateFormatterService } from 'src/app/services/date-formatter.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { LoadingServiceService } from 'src/app/services/loading-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { Location } from '@angular/common';
 interface NotificationType {
   code: string;
   description: string;
@@ -49,7 +50,8 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
     private profileService: LoadingServiceService,
     private dateFormatService: DateFormatterService,
     private companyLogoService: LoadingServiceService,
-    private userRoles: UsersRolesService
+    private userRoles: UsersRolesService,
+    private location: Location
   ) {
     // set screenWidth on page load
     this.userRoles.getUserRoles();
@@ -143,6 +145,9 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
   // navigateToDetails(notification: SearchNotification) {
 
   // }
+  back(): void {
+    this.location.back();
+  }
   getDico() {
     // this.dicoService.getDico();
     return this.dicoService.dico.pipe(

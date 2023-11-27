@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { CoreProfile } from 'src/app/model/core-profile';
 import { Role } from 'src/app/model/role';
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -18,6 +18,7 @@ export class AdminPageComponent implements OnInit {
   userRoles?: Role;
   navBarTitle = 'Administrator';
   dico?: any;
+  showBackButton: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dicoService: DicoServiceService,
@@ -28,6 +29,7 @@ export class AdminPageComponent implements OnInit {
   ngOnInit(): void {
     this.getDico();
     this.userRolesService.getUserRoles();
+
     // this.userIdlesService.initializeIdleService();
   }
   // hasPerm(role: string): boolean {

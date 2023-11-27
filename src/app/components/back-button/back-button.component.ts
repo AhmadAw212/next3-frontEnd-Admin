@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-back-button',
@@ -7,14 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./back-button.component.css'],
 })
 export class BackButtonComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private location: Location) {}
   @Input() targetRoute?: string;
   @Input() showBackBtn: boolean = false;
-  goBack(): void {
-    if (this.targetRoute) {
-      this.router.navigate([this.targetRoute]);
-    } else {
-      this.router.navigate(['/']); // Fallback to the root route if no target route is specified.
-    }
+  back(): void {
+    this.location.back();
   }
 }

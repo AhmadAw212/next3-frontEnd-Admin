@@ -25,10 +25,7 @@
   </button>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <form
-      class="d-flex align-items-center justify-content-center"
-      (ngSubmit)="searchNotification()"
-    >
+    <form (ngSubmit)="searchNotification()">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
           <div class="d-flex justify-content-center align-items-center">
@@ -94,17 +91,15 @@
           />
         </li>
         <li class="nav-item">
-          <app-back-button
-            targetRoute="/profiles-main/CallCenter"
-            [showBackBtn]="true"
-            class="ms-3"
-          ></app-back-button>
+          <button class="btn-class ms-2" (click)="back()" type="button">
+            Back
+          </button>
         </li>
       </ul>
     </form>
   </div>
 </nav>
-
+<!-- <app-profiles-nav></app-profiles-nav> -->
 <!-- <nav class="navbar navbar-class navbar-expand-lg">
   <span class="navbar-brand" (click)="goBack()" style="color: white">{{
     title
