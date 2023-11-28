@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -364,7 +368,7 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
   ],
   providers: [
     // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },d
-
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
