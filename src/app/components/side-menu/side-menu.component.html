@@ -14,6 +14,20 @@
       <!-- <hr class="hr" /> -->
       <mat-nav-list>
         <a
+        mat-list-item
+        routerLink="/profiles-main/DataManagement/reception"
+        *ngIf="hasPerm('dmReception')"
+      >
+        {{ dico?.dico_reception || "dico_reception" }}
+      </a>
+        <a
+        mat-list-item
+        routerLink="/profiles-main/DataManagement/dataEntry"
+        *ngIf="hasPerm('dmDataEntry')"
+      >
+        {{ dico?.dico_data_entry || "dico_data_entry" }}
+      </a>
+        <a
           mat-list-item
           routerLink="/profiles-main/CallCenter/searchNotification"
           *ngIf="hasPerm('ccSearchNotification')"
