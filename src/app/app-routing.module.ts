@@ -50,6 +50,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'profiles-main/DataManagement',
+    loadChildren: () =>
+      import('./components/data-mgmt/data-mgmt.module').then(
+        (m) => m.DataMgmtModule
+      ),
+
+    canActivate: [AuthGuard],
+  },
+  {
     path: '',
     loadChildren: () =>
       import('./components/data-mgmt/data-mgmt.module').then(
