@@ -235,14 +235,24 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
 
       if (this.selectedItem === 'element1') {
         this.getVfollowupDrawer();
+        this.pageSize = 10;
+        this.pageNumber = 1;
       } else if (this.selectedItem === 'element4') {
         this.getTemaExpertDispatchFailedList();
+        this.pageSize = 10;
+        this.pageNumber = 1;
       } else if (this.selectedItem === 'element5') {
         this.getTemaExpertDelayArrivalList();
+        this.pageSize = 10;
+        this.pageNumber = 1;
       } else if (this.selectedItem === 'element6') {
         this.getTemaExpertArrivedCustFollowUp();
+        this.pageSize = 10;
+        this.pageNumber = 1;
       } else if (this.selectedItem === 'element7') {
         this.getTemaExpertLateCloseCaseList();
+        this.pageSize = 10;
+        this.pageNumber = 1;
       }
     }
   }

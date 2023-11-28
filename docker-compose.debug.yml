@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  next3frontendadmin:
+    image: next3frontendadmin
+    build:
+      context: .
+      dockerfile: ./Dockerfile

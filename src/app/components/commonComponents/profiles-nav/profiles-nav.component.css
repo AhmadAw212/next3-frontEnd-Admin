@@ -82,7 +82,7 @@
     transform: scaleY(1); /* Scale the dropdown to be visible on hover */
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow on hover for enhanced depth */
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1080px) {
     .dropdown-content {
         display: none;
         flex-direction: column;
