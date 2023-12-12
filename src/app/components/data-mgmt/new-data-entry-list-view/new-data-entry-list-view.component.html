@@ -1,0 +1,133 @@
+<div class="h3-header">
+  <h3>
+    {{ getTableTitle() }}
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('dmExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+
+<div class="grid-container container-fluid">
+  <!-- <app-spinner *ngIf="isLoading"></app-spinner> -->
+  <div class="table-responsive">
+    <table>
+      <thead style="top: 0">
+        <tr>
+          <th *ngIf="type !== 'SC'"></th>
+          <th class="header-label">
+            {{ dico?.dico_notification || "dico_notification" }}
+          </th>
+          <th>{{ dico?.dico_insured_tp || "dico_insured_tp" }}</th>
+
+          <th>
+            {{ dico?.dico_owner_name || "dico_owner_name" }}
+          </th>
+
+          <th>
+            {{ dico?.dico_policy_type || "dico_policy_type" }}
+          </th>
+
+          <th>{{ dico?.dico_dispatched_date || "dico_dispatched_date" }}</th>
+
+          <th>{{ dico?.dico_accident_town || "dico_accident_town" }}</th>
+
+          <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+
+          <th>{{ dico?.dico_brand_trademark || "dico_brand_trademark" }}</th>
+
+          <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+
+          <th>{{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}</th>
+
+          <th>{{ dico?.dico_ins_company || "dico_ins_company" }}</th>
+
+          <th *ngIf="type !== 'SC' && type !== 'TPINS'">
+            {{ dico?.dico_no_days || "dico_no_days" }}
+          </th>
+          <th *ngIf="type !== 'SC'">
+            {{ dico?.dico_reception_date || "dico_reception_date" }}
+          </th>
+          <th *ngIf="type === 'SC'">
+            {{ dico?.dico_document || "dico_document" }}
+          </th>
+
+          <th>
+            {{ dico?.dico_user_name || "dico_user_name" }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let list of dataEntryList">
+          <td *ngIf="type !== 'SC'">
+            <button class="button-class">
+              {{ dico?.dico_data_entry || "dico_data_entry" }}
+            </button>
+          </td>
+          <td class="text-nowrap">{{ list.notification }}</td>
+          <td class="text-nowrap">{{ list.insuredTp }}</td>
+
+          <td class="text-nowrap">{{ list.ownerName }}</td>
+
+          <td class="text-nowrap">
+            {{ list.policyType }}
+          </td>
+
+          <td class="text-nowrap">
+            {{ list.dispDateTime | date : dateFormat("reportDateTimeFormat") }}
+          </td>
+
+          <td class="text-nowrap">{{ list.accidentTown }}</td>
+
+          <td class="text-nowrap">{{ list.expert }}</td>
+
+          <td class="text-nowrap">
+            {{ list.brandTradeMark }}
+          </td>
+
+          <td class="text-nowrap">
+            {{ list.plate }}
+          </td>
+
+          <td class="text-nowrap">
+            {{ list.yom }}
+          </td>
+
+          <td class="text-nowrap">
+            {{ list.insCompany }}
+          </td>
+
+          <td *ngIf="type !== 'SC' && type !== 'TPINS'" class="text-nowrap">
+            {{ list.noDays }}
+          </td>
+          <td class="text-nowrap" *ngIf="type !== 'SC'">
+            {{ list.receptionDate | date : dateFormat("reportDateTimeFormat") }}
+          </td>
+          <td *ngIf="type === 'SC'" class="text-nowrap">{{ list.doc }}</td>
+
+          <td class="text-nowrap">{{ list.userName }}</td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+
+  <div class="row grid-container">
+    <app-paginator
+      [totalItems]="totalItems!"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+</div>

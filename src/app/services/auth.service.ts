@@ -67,13 +67,16 @@ export class AuthService {
           }
         } else if (result.statusCode === 423) {
           this.alertifyService.error(result.message);
+        } else if (result.statusCode === 401) {
+          this.alertifyService.error(result.message);
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         // let errorMessage = 'An error occurred';
-        // if (err.error.status === 401) {
-        //   errorMessage = 'Incorrect username or password';
+        if (err.error.status === 401) {
+          this.alertifyService.error(err.error.message);
+        }
         //   // Send the error message here
         //   this.alertifyService.error(errorMessage);
         // } else if (err.error.status === 500) {

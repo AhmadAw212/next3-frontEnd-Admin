@@ -14,6 +14,7 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
   styleUrls: ['./side-menu.component.css'],
 })
 export class SideMenuComponent implements OnInit {
+  @Input() showSurveyReq: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
@@ -51,19 +52,21 @@ export class SideMenuComponent implements OnInit {
       // this.userRolesService.getUserRoles(this.profileId);
       // console.log(this.profileId);
     });
+    // this.router.events
+    //   .pipe(filter((event) => event instanceof NavigationEnd))
+    //   .subscribe(() => {});
     this.getDico();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.sidenav.opened) {
-          this.isOpened = true;
+          this.isOpened = this.route.firstChild !== null;
+          console.log(this.isOpened);
           this.sidenav.close();
-        } else {
-          this.isOpened = false;
-          this.sidenav.open();
         }
       });
   }
+
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }

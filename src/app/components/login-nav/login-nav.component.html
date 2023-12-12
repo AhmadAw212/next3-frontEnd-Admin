@@ -1,8 +1,9 @@
 <nav class="navbar-class-login">
   <div class="navbar-left">
     <a routerLink="/profiles-main"><img [src]="logo" alt="Logo" /></a>
-
-    <app-profiles-nav></app-profiles-nav>
+    <ng-container *ngIf="showProfilesNav">
+      <app-profiles-nav></app-profiles-nav>
+    </ng-container>
   </div>
   <div class="navbar-right">
     <span class="navbar-date">

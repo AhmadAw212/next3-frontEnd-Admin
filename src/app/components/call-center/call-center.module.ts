@@ -8,6 +8,10 @@ import { PolicyNotificationViewComponent } from './policy-notification-view/poli
 import { SearchPolicyComponent } from '../search-policy/search-policy.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CallCenterDrawerComponent } from './call-center-drawer/call-center-drawer.component';
+// import { GaugeComponentComponent } from '../shared/gauge-component/gauge-component.component';
+import { SharedModule } from '../shared/shared.module';
+import { GaugesComponent } from './gauges/gauges.component';
+// import { CompanySelectComponent } from '../shared/company-select/company-select.component';
 
 @NgModule({
   declarations: [TowConditionsDialogComponent],
@@ -17,6 +21,8 @@ import { CallCenterDrawerComponent } from './call-center-drawer/call-center-draw
     ReactiveFormsModule,
     FormsModule,
     MatTabsModule,
+    SharedModule,
   ],
+  exports: [],
 })
 export class CallCenterModule {}

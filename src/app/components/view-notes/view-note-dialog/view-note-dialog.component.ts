@@ -9,6 +9,7 @@ import { Editor, Toolbar, Validators } from 'ngx-editor';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-note-dialog',
@@ -37,18 +38,21 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
   notificationId?: string;
   @Input() label?: string;
   selectedIndex?: number = 0;
+  private dialogRef!: MatDialogRef<any>;
   constructor(
     private dataService: DataServiceService,
-    private dialogRef: MatDialogRef<ViewNoteDialogComponent>,
+    // private dialogRef: MatDialogRef<ViewNoteDialogComponent>,
     private dicoService: DicoServiceService,
     private loginDataService: LoadingServiceService,
     private dateFormatService: DateFormatterService,
     private fb: FormBuilder,
     private alertifyService: AlertifyService,
     private profileService: LoadingServiceService,
+    private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
-    this.notificationId = data.notificationId;
+    this.notificationId =
+      data.notificationId ?? this.route.snapshot.params['notificationId'];
   }
   ngOnDestroy(): void {
     if (this.notificationsSubscribtion || this.LossCarDataByNotificationSub) {
@@ -167,7 +171,7 @@ export class ViewNoteDialogComponent implements OnInit, OnDestroy {
     if (createdBy !== this.username) {
       this.noteForm.disable();
     } else {
-      this.isFormDisabled = this.isMoreThan24Hours(note.sysCreatedDate);
+      this.isFormDisabled = this.isMoreThan24Hours(note?.sysCreatedDate);
       if (this.isFormDisabled) {
         this.noteForm.disable();
       } else {

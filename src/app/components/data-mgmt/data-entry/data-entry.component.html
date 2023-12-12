@@ -1,0 +1,29 @@
+<div class="container-fluid mt-3">
+  <div class="card h-100">
+    <div class="card-body">
+      <div class="row p-2">
+        <label for="" class="label-color">{{
+          dico?.dico_search_list || "dico_search_list"
+        }}</label>
+      </div>
+      <div class="row p-3">
+        <div class="d-flex">
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label for="company" class="form-label">
+              {{ dico?.dico_document_type || "dico_document_type" }}</label
+            >
+
+            <select id="insurance" name="insurance" class="form-select">
+              <option></option>
+            </select>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6 ms-2">
+            <button class="button-class">
+              {{ dico?.dico_search_list || "dico_search_list" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

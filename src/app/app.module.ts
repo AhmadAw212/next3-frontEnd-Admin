@@ -173,7 +173,7 @@ import { AddTowingCompanyComponent } from './components/call-center/towing-condi
 import { TowingConditionComponent } from './components/call-center/towing-condition/towing-condition.component';
 import { UsersActivityComponent } from './components/call-center/users-activity/users-activity.component';
 import { CompaniesDropdownComponent } from './components/companies-dropdown/companies-dropdown.component';
-import { PaginatorComponent } from './components/paginator/paginator.component';
+import { PaginatorComponent } from './components/shared/paginator/paginator.component';
 import { ViewComplaintsComponent } from './components/view-complaints/view-complaints.component';
 import { NewNotificationRelatedComponent } from './components/new-notification-related/new-notification-related.component';
 import { GoogleMapComponent } from './components/call-center/google-map/google-map.component';
@@ -187,13 +187,21 @@ import { PolicyNotificationViewComponent } from './components/call-center/policy
 import { UsersRolesService } from './services/users-roles.service';
 import { DataMgmtMainPageComponent } from './components/data-mgmt/data-mgmt-main-page/data-mgmt-main-page.component';
 import { CallCenterDrawerComponent } from './components/call-center/call-center-drawer/call-center-drawer.component';
-import { ProfilesNavComponent } from './components/commonComponents/profiles-nav/profiles-nav.component';
+// import { ProfilesNavComponent } from './components/common-components/profiles-nav/profiles-nav.component';
+
+import { DataMgmtModule } from './components/data-mgmt/data-mgmt.module';
+import { CallCenterModule } from './components/call-center/call-center.module';
+import { ProfilesNavComponent } from './components/common-components/profiles-nav/profiles-nav.component';
+import { DataMgmtGaugesComponent } from './components/data-mgmt/data-mgmt-main-page/data-mgmt-gauges/data-mgmt-gauges.component';
+import { SharedModule } from './components/shared/shared.module';
+import { SurveyModule } from './components/survey/survey.module';
+import { SurveyMainPageComponent } from './components/survey/survey-main-page/survey-main-page.component';
 @NgModule({
   declarations: [
     SpinnerComponent,
     AppComponent,
-    NavbarComponent,
-    SideMenuComponent,
+    // NavbarComponent,
+    // SideMenuComponent,
     AddUserComponent,
     EditUserComponent,
     EditUserDialogComponent,
@@ -204,7 +212,7 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     LoginPageComponent,
     AdminPageComponent,
     ProfilesPageComponent,
-    LoginNavComponent,
+    // LoginNavComponent,
     ChangePassDialogComponent,
     CoreConfigurationComponent,
     AddConfigDialogComponent,
@@ -256,15 +264,15 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     CarApprovalTypeComponent,
     AddApprovalTypeComponent,
     TownTerritoryComponent,
-    DataEntryButtonComponent,
+    // DataEntryButtonComponent,
     DataEntryViewComponent,
     NearRegionTerritoryComponent,
     AddNearRegionTerritoryComponent,
     DataEntryDetailsComponent,
     BodilyInjuryComponent,
     MaterialDamageComponent,
-    SendEmailComponent,
-    SendEmailButtonComponent,
+    // SendEmailComponent,
+    // SendEmailButtonComponent,
     UpdateDocumentComponent,
     CarProductsReserveComponent,
     AddProductReserveComponent,
@@ -281,8 +289,8 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     AddCarCellSetupComponent,
     AddbrandMatchingComponent,
     CarsPolicyCarComponent,
-    ViewNotesComponent,
-    ViewNoteDialogComponent,
+    // ViewNotesComponent,
+    // ViewNoteDialogComponent,
     CallCenterComponent,
     SearchPolicyComponent,
     AppContentComponent,
@@ -304,7 +312,7 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     AppExpertDispatchDialogComponent,
     ChooseManuallyComponent,
     AddBodilyInjuryDialogComponent,
-    PaginatorComponent,
+    // PaginatorComponent,
     SecondExpertDialogComponent,
     CustomerSatisfactionDialogComponent,
     RotationDialogComponent,
@@ -323,19 +331,22 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     BackButtonComponent,
     DataMgmtMainPageComponent,
     CallCenterDrawerComponent,
-    ProfilesNavComponent,
+    // ProfilesNavComponent,
+    DataMgmtGaugesComponent,
+    // SurveyMainPageComponent,
+    // SideMenuComponent,
   ],
   imports: [
     BrowserModule,
     Ng2GoogleChartsModule,
     NgxGaugeModule,
-    MatTooltipModule,
+    // MatTooltipModule,
     CommonModule,
     MatMenuModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
-    MatSidenavModule,
+    // MatSidenavModule,
     MatCardModule,
     MatAutocompleteModule,
     MatDatepickerModule,
@@ -344,9 +355,13 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     MatNativeDateModule,
     MatToolbarModule,
     MatDatepickerModule,
+    DataMgmtModule,
+    CallCenterModule,
+    SharedModule,
     MatNativeDateModule,
-    MatListModule,
-    MatIconModule,
+    // MatListModule,
+    // MatIconModule,
+    SurveyModule,
     MatSelectModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -358,12 +373,12 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     MatPaginatorModule,
     MatTabsModule,
     MatTableModule,
-    NgSelectModule,
+    // NgSelectModule,
     NgxPaginationModule,
-    MatExpansionModule,
+    // MatExpansionModule,
     FontAwesomeModule,
     MatProgressSpinnerModule,
-    NgxEditorModule,
+    // NgxEditorModule,
     NgChartsModule,
   ],
   providers: [
@@ -381,6 +396,8 @@ import { ProfilesNavComponent } from './components/commonComponents/profiles-nav
     // DataServiceService,
   ],
   bootstrap: [AppComponent],
+
+  // exports: [CompanySelectComponent],
 
   // entryComponents: [EditUserDialogComponent],
 })

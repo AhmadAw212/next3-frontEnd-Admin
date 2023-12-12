@@ -97,6 +97,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   towDelayReasonLov: type[] = [];
   @ViewChild('suggestTowCompany') suggestTowCompany!: TemplateRef<any>;
   @ViewChild('towConditions') towConditions!: TemplateRef<any>;
+  @ViewChild('checkDouble') checkDouble!: TemplateRef<any>;
+  checkDoubleData: any[] = [];
   // @ViewChild('customerSatisfaction') customerSatisfaction!: TemplateRef<any>;
   @ViewChild('towingConditions') towingConditions!: TemplateRef<any>;
   coverByCar?: type;
@@ -118,7 +120,7 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
   milagePublic: number | null = null;
   clientCost: number | null = null;
   isPublic: boolean = false;
-
+  policydataSubscribe?: Subscription;
   constructor(
     private dataService: DataServiceService,
     private fb: FormBuilder,
@@ -132,7 +134,11 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     private profileService: LoadingServiceService, // private dialogRef: MatDialogRef<TowingConditionComponent>,
     private router: Router
   ) {}
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.policydataSubscribe) {
+      this.policydataSubscribe.unsubscribe();
+    }
+  }
   openTowingConditionList() {
     const dialofRef = this.dialog.open(TowingConditionsHotlineComponent, {
       data: { towingConditions: this.policyData?.towingCompanyList },
@@ -711,6 +717,8 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     const towToTownName = this.form.get('towToTownName')?.value;
     const lossTowNbrVehInvolved = this.form.get('lossTowNbrVehInvolved')?.value;
     const fromTowTownName = this.form.get('fromTowTownName')?.value;
+    const notificationId = this.form.get('notificationId')?.value;
+    const policyCarId = this.form.get('policyCarId')?.value;
     const lossTowDriverRelationshipId = this.form.get(
       'lossTowDriverRelationshipId'
     )?.value;
@@ -766,44 +774,60 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
       this.updateLossTowStaffCaseMngr(notificationId, presultdouble1!);
       this.changeCo = 'N';
     }
-    await this.getFcDoubleToCheck().subscribe((presultdouble) => {
-      if (presultdouble === 'NODOUBLE') {
-        // Handle the case where there are no doubles.
-      } else {
-        const notiList: string[] = presultdouble.split(' ');
-        const observables: Observable<string>[] = [];
 
-        for (const noti of notiList) {
-          if (noti) {
-            observables.push(this.getDoubleCheckDataByNotification(noti));
-          }
-        }
+    // await this.getFcDoubleToCheck().subscribe((presultdouble) => {
+    //   if (presultdouble === 'NODOUBLE') {
+    //     // Handle the case where there are no doubles.
+    //   } else {
+    //     const notiList: string[] = presultdouble.split(' ');
+    //     const observables: Observable<string>[] = [];
 
-        if (observables.length > 0) {
-          forkJoin(observables).subscribe((results) => {
-            const dataDisplay: string[] = [];
+    //     for (const noti of notiList) {
+    //       if (noti) {
+    //         observables.push(this.getDoubleCheckDataByNotification(noti));
+    //       }
+    //     }
 
-            for (const res of results) {
-              if (res) {
-                dataDisplay.push(res);
-              }
-            }
+    //     if (observables.length > 0) {
+    //       forkJoin(observables).subscribe((results) => {
+    //         const dataDisplay: string[] = [];
 
-            if (dataDisplay.length > 0) {
-              // Concatenate and display both visa numbers in the same pop-up.
-              const combinedData = dataDisplay.join('<br>');
-              // console.log(combinedData);
-              this.alertifyService.dialogAlert(combinedData, 'Check Double');
-            }
-          });
-        }
-      }
-    });
+    //         for (const res of results) {
+    //           if (res) {
+    //             dataDisplay.push(res);
+    //           }
+    //         }
+
+    //         if (dataDisplay.length > 0) {
+    //           // Concatenate and display both visa numbers in the same pop-up.
+    //           const combinedData = dataDisplay.join('<br>');
+    //           // console.log(combinedData);
+    //           this.alertifyService.dialogAlert(combinedData, 'Check Double');
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
+
     await this.dataService.mergeNotification(extractedValues).subscribe({
       next: (res) => {
         this.alertifyService.success(res.message);
         this.getPolicyCarByNotificationId(this.notificationId).then(
           (policyData) => {
+            const lossDate = this.form.get('notificationReportedDate')?.value;
+            const notificationReportedDate = this.form.get(
+              'notificationReportedDate'
+            )?.value
+              ? moment(lossDate, 'DD/MM/YYYY hh:mm A').format(
+                  'YYYY-MM-DD HH:mm'
+                )
+              : '';
+
+            this.getNoDoubleCheck(
+              policyData?.notificationId!,
+              policyData?.carId!,
+              notificationReportedDate!
+            );
             if (policyData) {
               if (policyData.policyExpired === 'Y') {
                 this.alertifyService.dialogAlert('Policy expired', 'Expired');
@@ -823,7 +847,28 @@ export class NewHotlineComponent implements OnInit, OnDestroy {
     // Log the extracted values
     // console.log(extractedValues);
   }
-
+  getNoDoubleCheck(notification: string, ipolcarid: string, ilossdate: string) {
+    this.dataService
+      .noDoubleCheck(notification, ipolcarid, ilossdate)
+      .subscribe((next) => {
+        this.checkDoubleData = next.data;
+        this.dialog.open(this.checkDouble);
+        // console.log(next);
+      });
+  }
+  closeDialog() {
+    this.dialogRef.close();
+  }
+  openCheckDoublePop() {
+    this.dialogRef = this.dialog.open(this.checkDouble, {
+      data: {},
+    });
+    this.dialogRef.afterClosed().subscribe((res) => {
+      // if (res) {
+      //   this.addPolicyNotification();
+      // }
+    });
+  }
   getDoubleCheckDataByNotification(noti: string): Observable<string> {
     // const notificationId = this.form.get('notificationId')?.value;
     if (noti) {

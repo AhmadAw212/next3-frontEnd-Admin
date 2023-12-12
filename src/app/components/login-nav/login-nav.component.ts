@@ -31,6 +31,7 @@ export class LoginNavComponent implements OnInit {
   @Input() showNav: boolean = false;
   private loginInfoSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public loginInfo$: Observable<any> = this.loginInfoSubject.asObservable();
+  @Input() showProfilesNav: boolean = true;
   constructor(
     private router: Router,
     private dialog: MatDialog,

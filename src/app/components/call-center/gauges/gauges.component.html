@@ -21,7 +21,11 @@
           </label>
         </div>
 
-        <canvas #expertToDispatch></canvas>
+        <app-gauge-component
+          *ngIf="expertToDispatchCount > 0"
+          [maxValue]="expertToDispatchCount"
+          [value]="expertToDispatchCount"
+        ></app-gauge-component>
       </div>
 
       <div
@@ -39,7 +43,12 @@
             </a>
           </label>
         </div>
-        <canvas #expertFollowUp></canvas>
+        <app-gauge-component
+          *ngIf="expertAllCount > 0"
+          [maxValue]="expertAllCount"
+          [value]="expertOverDue"
+        ></app-gauge-component>
+        <!-- <canvas #expertFollowUp></canvas> -->
       </div>
 
       <div
@@ -56,7 +65,12 @@
             >
           </label>
         </div>
-        <canvas #towingFollowUp></canvas>
+        <app-gauge-component
+          *ngIf="towingAllCount > 0"
+          [maxValue]="towingAllCount"
+          [value]="towingOverDue"
+        ></app-gauge-component>
+        <!-- <canvas #towingFollowUp></canvas> -->
       </div>
 
       <div
@@ -75,7 +89,12 @@
             >
           </label>
         </div>
-        <canvas #towingToDispatch></canvas>
+        <app-gauge-component
+          *ngIf="towingToDispatchCount > 0"
+          [maxValue]="towingToDispatchCount"
+          [value]="towingToDispatchCount"
+        ></app-gauge-component>
+        <!-- <canvas #towingToDispatch></canvas> -->
       </div>
     </div>
   </div>
@@ -96,7 +115,12 @@
             >
           </label>
         </div>
-        <canvas #noDataFollowUp></canvas>
+        <app-gauge-component
+          *ngIf="noDataAllCount > 0"
+          [maxValue]="noDataAllCount"
+          [value]="noDataPolicyFound"
+        ></app-gauge-component>
+        <!-- <canvas #noDataFollowUp></canvas> -->
         <div class="row">
           <label class="gauge-label">
             <a
@@ -126,8 +150,12 @@
             >
           </label>
         </div>
-
-        <canvas #notificationComplaints></canvas>
+        <app-gauge-component
+          *ngIf="notificationComplaintsCount > 0"
+          [maxValue]="notificationComplaintsCount"
+          [value]="notificationComplaintsCount"
+        ></app-gauge-component>
+        <!-- <canvas #notificationComplaints></canvas> -->
       </div>
     </div>
   </div>

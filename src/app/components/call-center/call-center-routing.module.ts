@@ -16,7 +16,7 @@ import { NewHotlineComponent } from './new-hotline/new-hotline.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'profiles-main/CallCenter',
     component: CallCenterComponent,
     canActivate: [AuthGuard],
     data: { showBackButton: false },

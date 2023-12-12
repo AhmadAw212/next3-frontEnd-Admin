@@ -237,6 +237,12 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
         this.getVfollowupDrawer();
         this.pageSize = 10;
         this.pageNumber = 1;
+      } else if (this.selectedItem === 'element2') {
+        this.pageSize = 10;
+        this.pageNumber = 1;
+      } else if (this.selectedItem === 'element3') {
+        this.pageSize = 10;
+        this.pageNumber = 1;
       } else if (this.selectedItem === 'element4') {
         this.getTemaExpertDispatchFailedList();
         this.pageSize = 10;
@@ -394,10 +400,10 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.pendingDispatchData = res.data.notResponseList.data;
-          this.pendingDispatchCount = res.data.pendingDispatchCount;
-          this.pageSize = res.data.notResponseList.totalPages;
-          this.totalItems = res.data.notResponseList.totalItems;
+          this.pendingDispatchData = res.data?.notResponseList.data;
+          this.pendingDispatchCount = res.data?.pendingDispatchCount;
+          this.pageSize = res.data.notResponseList?.totalPages;
+          this.totalItems = res.data.notResponseList?.totalItems;
           if (this.pendingDispatchCount && this.pendingDispatchCount > 0) {
             this.showSideContainer = true;
             this.selectedItem = 'element2';
@@ -421,10 +427,10 @@ export class CallCenterDrawerComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          this.pendingDispatchExpertData = res.data.notResponseList;
-          this.pendingDispatchExpertCount = res.data.pendingDispatchCount;
-          this.pageSize = res.data.notResponseList.totalPages;
-          this.totalItems = res.data.notResponseList.totalItems;
+          this.pendingDispatchExpertData = res.data?.notResponseList;
+          this.pendingDispatchExpertCount = res.data?.pendingDispatchCount;
+          this.pageSize = res.data.notResponseList?.totalPages;
+          this.totalItems = res.data.notResponseList?.totalItems;
 
           if (
             this.pendingDispatchExpertCount &&

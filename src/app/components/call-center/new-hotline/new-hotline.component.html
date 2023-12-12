@@ -2276,3 +2276,15 @@
     </mat-tab-group>
   </ng-container>
 </form>
+
+<ng-template #checkDouble>
+  <div class="popup-container">
+    <div class="grid-container panel-class-style">
+      <h2 class="h5">Check Double</h2>
+    </div>
+    <p *ngFor="let check of checkDoubleData">{{ check.checkVisa }}</p>
+    <div class="button-bar">
+      <button class="btn-class" (click)="closeDialog()">OK</button>
+    </div>
+  </div>
+</ng-template>

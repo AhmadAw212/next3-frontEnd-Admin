@@ -16,7 +16,7 @@ const routes: Routes = [
   // { path: '**', redirectTo: 'login', pathMatch: 'full' },
   // { path: '', component: AppComponent },
   {
-    path: 'profiles-main',
+    path: '',
     loadChildren: () =>
       import('./components/profiles-page/profiles.module').then(
         (m) => m.ProfilesModule
@@ -24,22 +24,22 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'profiles-main/Administrator',
+    path: '',
     loadChildren: () =>
       import('./components/administrator/admin.module').then(
         (m) => m.AdminModule
       ),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'profiles-main/CallCenter',
-    loadChildren: () =>
-      import('./components/call-center/call-center.module').then(
-        (m) => m.CallCenterModule
-      ),
+  // {
+  //   path: 'profiles-main/CallCenter',
+  //   loadChildren: () =>
+  //     import('./components/call-center/call-center.module').then(
+  //       (m) => m.CallCenterModule
+  //     ),
 
-    canActivate: [AuthGuard],
-  },
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: '',
     loadChildren: () =>
@@ -49,15 +49,15 @@ const routes: Routes = [
 
     canActivate: [AuthGuard],
   },
-  {
-    path: 'profiles-main/DataManagement',
-    loadChildren: () =>
-      import('./components/data-mgmt/data-mgmt.module').then(
-        (m) => m.DataMgmtModule
-      ),
+  // {
+  //   path: 'profiles-main/DataManagement',
+  //   loadChildren: () =>
+  //     import('./components/data-mgmt/data-mgmt.module').then(
+  //       (m) => m.DataMgmtModule
+  //     ),
 
-    canActivate: [AuthGuard],
-  },
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: '',
     loadChildren: () =>

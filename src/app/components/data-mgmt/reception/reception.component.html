@@ -1,30 +1,1102 @@
-<div class="grid-container mt-3">
-  <div class="row m-4">
-    <div class="col-md-6 col-lg-5 col-sm-6">
-      <div class="panel">
-        <div class="row">
-          <label for="">Batch Information</label>
-        </div>
-        <div class="row p-3">
-          <div class="col-md-6 col-lg-5 col-sm-6">
-            <label for="">dico_batch_number</label>
-            <input type="text" name="" id="" />
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row">
+            <h5 class="card-title label-color">Batch Information</h5>
+          </div>
+          <div class="row p-3" *ngIf="batchReception === 'true'">
+            <div class="col-lg-5 col-md-8 col-sm-8">
+              <label for="dico_batch_number1" class="form-label">
+                {{ dico?.dico_batch_number || "dico_batch_number" }}</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="dico_batch_number1"
+                name="dico_batch_number1"
+                [(ngModel)]="generatedBatchNum"
+              />
+            </div>
+
+            <div class="col-lg-6 col-md-5 col-sm-6 p-4 mt-1">
+              <button class="button-class" (click)="createNewBatch()">
+                {{ dico?.dico_create_new_batch || "dico_create_new_batch" }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-lg-5 col-sm-6">
-      <div class="panel">
-        <div class="row">
-          <label for="">Batch Information</label>
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row">
+            <h5 class="card-title label-color">Search Information</h5>
+          </div>
+          <div class="row p-3">
+            <div class="col-lg-6 col-md-5 col-sm-8">
+              <label for="dico_batch_number1" class="form-label">
+                {{ dico?.dico_value || "dico_value" }}</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="dico_batch_number2"
+                name="dico_batch_number2"
+                [(ngModel)]="notificationValue"
+              />
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-8 p-4 mt-1">
+              <button
+                class="button-class"
+                (click)="getVLossCarUploadedByVisa('Visa')"
+              >
+                {{ dico?.dico_notification || "dico_notification" }}
+              </button>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-8 p-4 mt-1">
+              <button
+                class="button-class"
+                (click)="getVLossCarUploadedByPlate('Plate')"
+              >
+                {{ dico?.dico_plate || "dico_plate" }}
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="row p-3">
-          <div class="col-md-6 col-lg-5 col-sm-6">
-            <label for="">dico_batch_number</label>
-            <input type="text" name="" id="" />
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row">
+            <h5 class="card-title label-color">Print Information</h5>
+          </div>
+          <div class="row p-3">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              *ngIf="batchReception === 'true'"
+            >
+              <button class="button-class mb-2" (click)="openPrintBatch()">
+                <img
+                  class="icon"
+                  src="./assets/icons/barcode.png"
+                  alt=""
+                  srcset=""
+                />
+                {{ dico?.dico_print_batch || "dico_print_batch" }}
+              </button>
+            </div>
+
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              *ngIf="batchReception === 'true'"
+            >
+              <button class="button-class mb-2" (click)="openFileSent()">
+                <img
+                  class="icon"
+                  src="./assets/icons/barcode.png"
+                  alt=""
+                  srcset=""
+                />
+                {{ dico?.dico_file_sent || "dico_file_sent" }}
+              </button>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              *ngIf="batchReception === 'true'"
+            >
+              <button class="button-class mb-2" (click)="opencheckInBatch()">
+                {{ dico?.dico_check_in_batch || "dico_check_in_batch" }}
+              </button>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              *ngIf="claimLabelRecep === 'true'"
+            >
+              <button class="button-class mb-2">
+                <img
+                  class="icon"
+                  src="./assets/icons/barcode.png"
+                  alt=""
+                  srcset=""
+                />
+                <a
+                  style="text-decoration: none; color: white"
+                  routerLink="/profiles-main/DataManagement/claimLabel"
+                >
+                  {{ dico?.dico_claim_label || "dico_claim_label" }}</a
+                >
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div class="container-fluid mt-3">
+  <div class="card h-100">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table>
+          <thead style="top: 0">
+            <tr>
+              <th></th>
+              <th class="header-label">
+                {{ dico?.dico_insurance || "dico_insurance" }}
+              </th>
+              <th></th>
+              <th class="header-label">
+                {{ dico?.dico_notification || "dico_notification" }}
+              </th>
+              <th>{{ dico?.dico_insured_tp || "dico_insured_tp" }}</th>
+
+              <th>
+                {{ dico?.dico_owner_name || "dico_owner_name" }}
+              </th>
+
+              <th>
+                {{ dico?.dico_brand_trademark || "dico_brand_trademark" }}
+              </th>
+              <th>
+                {{ dico?.dico_pre_risk_plate || "dico_pre_risk_plate" }}
+              </th>
+
+              <th>{{ dico?.dico_pre_risk_year || "dico_pre_risk_year" }}</th>
+              <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+              <th>{{ dico?.dico_nature || "dico_nature" }}</th>
+              <th>{{ dico?.dico_status || "dico_status" }}</th>
+
+              <!-- <th>{{ dico?.dico_status_code || "dico_status_code" }}</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let list of VLossCarUploadedByVisa; let i = index"
+              [ngClass]="{
+                'selected-class': i === selectedRowIndex
+              }"
+            >
+              <td>
+                <img
+                  *ngIf="list.notificationNature !== '6'"
+                  src="./assets/icons/flip_down.png"
+                  class="icon"
+                  alt=""
+                  (click)="onSelectVlossCar(list, i)"
+                />
+              </td>
+              <td>
+                <img
+                  [src]="'data:image/jpeg;base64,' + list?.companyLogo"
+                  alt=""
+                  class="company-logo-table"
+                />
+              </td>
+              <td>
+                <img
+                  src="assets/icons/add.png"
+                  [ngClass]="{ 'disabled-image': list.vehseq !== '0' }"
+                  alt=""
+                  (click)="openAddTpp(list)"
+                  class="icon"
+                  *ngIf="list.notificationNature !== '6' && list.vehseq === '0'"
+                />
+              </td>
+              <td class="text-nowrap">{{ list.visa }}</td>
+              <td class="text-nowrap">
+                {{ list.recDesc }}
+              </td>
+              <td class="text-nowrap">{{ list.ownerName }}</td>
+
+              <td class="text-nowrap">{{ list.brandTrademark }}</td>
+
+              <td class="text-nowrap">
+                {{ list.plate }}
+              </td>
+
+              <td class="text-nowrap">
+                {{ list.yom }}
+              </td>
+
+              <td class="text-nowrap">{{ list.expert }}</td>
+
+              <td class="text-nowrap">{{ list.notificationNatureDesc }}</td>
+
+              <td class="text-nowrap">
+                {{ list.notificationStatus }}
+              </td>
+
+              <!-- <td class="text-nowrap">
+                {{ list.yom }}
+              </td> -->
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+
+    <div class="row grid-container">
+      <app-paginator
+        [totalItems]="totalItems!"
+        [pageSize]="pageSize"
+        (pageChange)="onPageChange($event)"
+      ></app-paginator>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="renderedCar">
+  <div class="container-fluid mt-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row p-2">
+          <label class="label-form label-color">General Information</label>
+        </div>
+        <div class="row p-2">
+          <div
+            class="col-lg-2 col-md-4 col-sm-6"
+            *ngIf="fillingListRecep === 'true'"
+          >
+            <button class="button-class">
+              <img
+                class="icon"
+                src="./assets/icons/barcode.png"
+                alt=""
+                srcset=""
+              />
+              {{ dico?.dico_print_filling_list || "dico_print_filling_list" }}
+            </button>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6" *ngIf="serialRecep == 'true'">
+            <button
+              class="button-class"
+              [disabled]="
+                serial != null ||
+                notificationStatusCode === '8' ||
+                notificationStatusCode === '9'
+              "
+            >
+              {{ dico?.dico_get_serial || "dico_get_serial" }}
+            </button>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6" *ngIf="serialRecep == 'true'">
+            <label>{{ dico?.dico_serial || "dico_serial" }}</label>
+            <span>{{ serial }}</span>
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">Type / Model</label>
+            <p>{{ selectedVlossCar.recDesc }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_owner || "dico_owner"
+            }}</label>
+            <p>{{ selectedVlossCar.ownerName }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_car_model || "dico_car_model"
+            }}</label>
+            <p>{{ selectedVlossCar.brandTrademark }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_plate || "dico_plate"
+            }}</label>
+            <p>{{ selectedVlossCar.plate }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_pre_risk_year || "dico_pre_risk_year"
+            }}</label>
+            <p>{{ selectedVlossCar.yom }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_claim_officer || "dico_claim_officer"
+            }}</label>
+            <p>{{ claimOfficerName }}</p>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+            <label class="form-label">{{
+              dico?.dico_assessor || "dico_assessor"
+            }}</label>
+            <p>{{ assessorName }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <button class="button-class">
+              {{ dico?.dico_publish || "dico_publish" }}
+            </button>
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="grid-container">
+            <div class="row p-2 mb-3">
+              <label class="label-color">
+                {{ dico?.dico_document_info || "dico_document_info" }}
+              </label>
+            </div>
+            <div class="row p-2" *ngIf="vehSeq === '0'">
+              <div class="col-md-2">
+                <button class="button-class" (click)="erSecondCopyAction()">
+                  Expert Report Second Copy
+                </button>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-md-2">
+                <label>{{ dico?.dico_document || "dico_document" }}</label>
+                <ng-multiselect-dropdown
+                  [settings]="dropdownSettings"
+                  [data]="allDocumentByType"
+                  [(ngModel)]="selectedDocument"
+                  (ngModelChange)="onDocumentsValueChange()"
+                >
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">{{
+                  dico?.dico_type || "dico_type"
+                }}</label>
+                <select
+                  name="type"
+                  id="type"
+                  class="form-select"
+                  [(ngModel)]="selectedtype"
+                >
+                  <option
+                    *ngFor="let type of documentTypes"
+                    [value]="type.code"
+                  >
+                    {{ type.description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label>Garage/Supplier Name</label>
+                <ng-select
+                  name="surveyor"
+                  [virtualScroll]="true"
+                  (search)="getSupplierNameReception($event)"
+                >
+                  <ng-option
+                    *ngFor="let suggestion of suppliersNames"
+                    [value]="suggestion.supplierId"
+                  >
+                    {{ suggestion.supplierFamilyName }}</ng-option
+                  >
+                </ng-select>
+              </div>
+
+              <div class="col-md-2" *ngIf="branchReception === 'true'">
+                <label class="form-label">Branch</label>
+                <select
+                  name="Branch"
+                  id="Branch"
+                  class="form-select"
+                  [(ngModel)]="garageSupplierName"
+                >
+                  <option *ngFor="let branch of branches" [value]="branch.code">
+                    {{ branch.description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="grid-container">
+            <div class="row p-2">
+              <label class="form-label label-color">{{
+                dico?.dico_survey_info || "dico_survey_info"
+              }}</label>
+            </div>
+            <div class="row p-2">
+              <div class="col-md-2">
+                <label>{{
+                  dico?.dico_surveyor_name || "dico_surveyor_name"
+                }}</label>
+                <ng-select
+                  name="surveyor"
+                  [virtualScroll]="true"
+                  (search)="getSurveyorByName($event)"
+                >
+                  <ng-option
+                    *ngFor="let suggestion of surveyors"
+                    [value]="suggestion.supplierId"
+                  >
+                    {{ suggestion.supplierName }}</ng-option
+                  >
+                </ng-select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">{{
+                  dico?.dico_surveyor_place || "dico_surveyor_place"
+                }}</label>
+                <select
+                  name="surveyorPlace"
+                  id="surveyorPlace"
+                  class="form-select"
+                >
+                  <option
+                    *ngFor="let place of surveyorPlaces"
+                    [value]="place.code"
+                  >
+                    {{ place.description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Area</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label>Location</label>
+                <ng-select
+                  name="surveyor"
+                  [virtualScroll]="true"
+                  (search)="getTownFindByName($event)"
+                >
+                  <ng-option
+                    *ngFor="let suggestion of townsByName"
+                    [value]="suggestion.townId"
+                  >
+                    {{ suggestion.townName }}</ng-option
+                  >
+                </ng-select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Damage Type</label>
+                <select name="DamageType" id="DamageType" class="form-select">
+                  <option
+                    *ngFor="let damage of damageTypes"
+                    [value]="damage.code"
+                  >
+                    {{ damage.description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row p-2" *ngIf="typeOfRec === 'Car'">
+              <div class="col-md-2">
+                <label class="form-label">{{
+                  dico?.dico_survey_sheet || "dico_survey_sheet"
+                }}</label>
+                <input
+                  type="checkbox"
+                  name="surveySheet"
+                  id="surveySheet"
+                  class="ms-2 m-2"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="grid-container">
+            <div class="row p-2">
+              <label class="label-color">Upload Documents</label>
+            </div>
+            <div class="row p-2">
+              <div class="col-md-1">
+                <input
+                  type="file"
+                  multiple
+                  id="image"
+                  (change)="handleImageUpload($event)"
+                />
+              </div>
+            </div>
+            <div class="row p-2">
+              <div *ngFor="let attachment of attachments; let i = index">
+                <div class="row">
+                  <label class="file-name"
+                    >File Name : {{ attachment.name }}</label
+                  >
+                  <label class="file-type"
+                    >File Type : {{ attachment.type }}</label
+                  >
+                  <span
+                    style="color: red; font-weight: bold"
+                    class=""
+                    (click)="deleteAttachment(attachment)"
+                    ><mat-icon>close</mat-icon></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table>
+            <thead style="top: 0">
+              <tr>
+                <th class="header-label">Selected</th>
+
+                <th class="header-label">
+                  {{ dico?.dico_document || "dico_document" }}
+                </th>
+                <th>{{ dico?.dico_type || "dico_type" }}</th>
+
+                <th>
+                  {{ dico?.dico_sent_date || "dico_sent_date" }}
+                </th>
+
+                <th *ngIf="filesent === 'true'">
+                  {{ dico?.dico_sent_user || "dico_sent_user" }}
+                </th>
+                <th>
+                  {{ dico?.dico_check_in_date || "dico_check_in_date" }}
+                </th>
+
+                <th *ngIf="filesent === 'true'">
+                  {{ dico?.dico_check_in_user || "dico_check_in_user" }}
+                </th>
+                <th>{{ dico?.dico_received_date || "dico_received_date" }}</th>
+                <th>{{ dico?.dico_received_user || "dico_received_user" }}</th>
+                <th>{{ dico?.dico_scanned_date || "dico_scanned_date" }}</th>
+                <th>{{ dico?.dico_scanned_user || "dico_scanned_user" }}</th>
+                <th>{{ dico?.dico_batch_number || "dico_batch_number" }}</th>
+                <th>
+                  {{ dico?.dico_batch_files_count || "dico_batch_files_count" }}
+                </th>
+                <th>{{ dico?.dico_delete || "dico_delete" }}</th>
+                <th>Delete Images</th>
+                <!-- <th>{{ dico?.dico_status_code || "dico_status_code" }}</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let list of filesSent; let i = index"
+                (click)="selectedFileSent(list, i)"
+                [ngClass]="{
+                  'selected-class': i === selecteedFileIndex
+                }"
+              >
+                <td class="text-nowrap">
+                  <input
+                    type="checkbox"
+                    name="selected"
+                    id="selected"
+                    [checked]="list.filesId === selectedFile?.filesId"
+                    [disabled]="true"
+                  />
+                </td>
+                <td class="text-nowrap">{{ list.documentType }}</td>
+                <td class="text-nowrap">{{ list.filesDocumentTypeDesc }}</td>
+
+                <td class="text-nowrap">
+                  {{
+                    list.filesSentDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}
+                </td>
+
+                <td class="text-nowrap">
+                  {{ list.filesSentUser }}
+                </td>
+
+                <td class="text-nowrap">
+                  {{
+                    list.filesCheckedDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}
+                </td>
+
+                <td class="text-nowrap">{{ list.filesCheckedUser }}</td>
+                <td class="text-nowrap">
+                  {{
+                    list.filesReceivedDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}
+                </td>
+
+                <td class="text-nowrap">
+                  {{ list.filesReceivedUser }}
+                </td>
+                <td class="text-nowrap">
+                  {{
+                    list.filesScannedDate
+                      | date : dateFormat("reportDateTimeFormat")
+                  }}
+                </td>
+                <td class="text-nowrap">
+                  {{ list.filesScannedUser }}
+                </td>
+                <td class="text-nowrap">
+                  {{ list.filesBatchNum }}
+                </td>
+                <td class="text-nowrap">
+                  {{ list.filesBatchCount }}
+                </td>
+
+                <td>
+                  <mat-icon
+                    [ngClass]="{
+                      disabled:
+                        list.filesDocumentId === 'RSS' ||
+                        list.filesDocumentTypeId === 'TRS' ||
+                        list.filesDocumentTypeId === 'IRS' ||
+                        list.filesId !== selectedFile?.filesId
+                    }"
+                    >delete</mat-icon
+                  >
+                </td>
+                <td>
+                  <button
+                    [disabled]="
+                      list.filesScannedUser == null ||
+                      list.filesId !== selectedFile?.filesId
+                    "
+                    class="button-class"
+                  >
+                    To Delete
+                  </button>
+                </td>
+
+                <!-- <td class="text-nowrap">
+                  {{ list.yom }}
+                </td> -->
+              </tr>
+            </tbody>
+            <ng-template #noData>
+              <tr>
+                <td colspan="9">
+                  {{
+                    dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </table>
+          <app-paginator
+            [totalItems]="totalFilesItems!"
+            [pageSize]="filespageSize"
+            (pageChange)="onPageChangeFiles($event)"
+          ></app-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row p-2">
+          <div class="col-md-3">
+            <button class="button-class">
+              {{ dico?.dico_save || "dico_save" }}
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead style="top: 0">
+              <tr>
+                <th class="header-label">
+                  {{ dico?.dico_survey_resurvey || "dico_survey_resurvey" }}
+                </th>
+
+                <th class="header-label">
+                  {{ dico?.dico_survey_date || "dico_survey_date" }}
+                </th>
+                <th>{{ dico?.dico_surveyor_name || "dico_surveyor_name" }}</th>
+
+                <th>
+                  {{ dico?.dico_survey_place || "dico_survey_place" }}
+                </th>
+
+                <th>Damage Type</th>
+                <th>Survey Pic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let list of surveyListByCarId; let i = index">
+                <td class="text-nowrap">{{ list.surveyResurvey }}</td>
+                <td class="text-nowrap">
+                  {{ list.surveyDate | date : dateFormat("reportDateFormat") }}
+                </td>
+                <td class="text-nowrap">
+                  <select
+                    name="surveyorId"
+                    id="surveyorId"
+                    class="form-select"
+                    [disabled]="!hasPerm('dmChangeSurveyInfo')"
+                    [(ngModel)]="list.surveyorId"
+                  >
+                    <option
+                      *ngFor="let item of surveyorsList"
+                      [value]="item.supplierId"
+                    >
+                      {{ item.supplierName }}
+                    </option>
+                  </select>
+                </td>
+                <!-- <td class="text-nowrap">{{ list.surveyPlaceTransient }}</td> -->
+                <td class="text-nowrap">
+                  <select
+                    name="surveyorPlace"
+                    id="surveyorPlace"
+                    class="form-select"
+                    [disabled]="!hasPerm('dmChangeSurveyInfo')"
+                    [(ngModel)]="list.surveyPlaceTransient"
+                  >
+                    <option
+                      *ngFor="let item of surveyorPlaces"
+                      [value]="item.code"
+                    >
+                      {{ item.description }}
+                    </option>
+                  </select>
+                </td>
+                <td class="text-nowrap">
+                  <select
+                    name="damageType"
+                    id="damageType"
+                    class="form-select"
+                    [(ngModel)]="list.surveyDamageType"
+                  >
+                    <option
+                      *ngFor="let item of damageTypes"
+                      [value]="item.code"
+                    >
+                      {{ item.description }}
+                    </option>
+                  </select>
+                </td>
+                <td class="text-nowrap">
+                  <input
+                    type="checkbox"
+                    name="surveyPicBoolean"
+                    id="surveyPicBoolean"
+                    [(ngModel)]="list.surveyPicBoolean"
+                    *ngIf="typeOfRec === 'CAR'"
+                  />
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #noData>
+              <tr>
+                <td colspan="9">
+                  {{
+                    dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </table>
+          <app-paginator
+            [totalItems]="totalSurveyItems!"
+            [pageSize]="surveyPageSize"
+            (pageChange)="onPageChangeSurvey($event)"
+          ></app-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #printBatch>
+  <div class="grid-container panel-class-style">
+    <button class="close-button" (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 class="h5">Print File Sent</h2>
+  </div>
+  <div class="grid-container m-2">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="" class="form-label">{{
+          dico?.dico_batch_number || "dico_batch_number"
+        }}</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-3 p-4">
+        <button class="button-class">
+          <img
+            [matTooltip]="'File Sent'"
+            class="icon m-1"
+            src="./assets/icons/pdf.png"
+            alt=""
+            srcset=""
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #fileSentReport>
+  <div class="grid-container panel-class-style">
+    <button class="close-button" (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 class="h5">Print File Sent</h2>
+  </div>
+  <div class="grid-container m-2">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="" class="form-label">{{
+          dico?.dico_batch_number || "dico_batch_number"
+        }}</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-3 p-4">
+        <button class="button-class">
+          <img
+            [matTooltip]="'File Sent'"
+            class="icon m-1"
+            src="./assets/icons/pdf.png"
+            alt=""
+            srcset=""
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #checkInBatch>
+  <div class="grid-container m-2 panel-class-style">
+    <button class="close-button" (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 class="h5">
+      {{ dico?.dico_check_in_batch || "dico_check_in_batch" }}
+    </h2>
+  </div>
+  <div class="grid-container m-2">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="" class="form-label">{{
+          dico?.dico_batch_number || "dico_batch_number"
+        }}</label>
+        <input type="text" class="form-control" [(ngModel)]="checkInBatchNum" />
+      </div>
+      <div class="col-md-5 p-4">
+        <button class="button-class" (click)="checkInDocumentByBatchNum()">
+          Check In
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgPop>
+  <div class="popup-container">
+    <h2>{{ msgPopNote }}</h2>
+    <p>Only authorized person are allowed to add from Data Entry</p>
+
+    <div class="button-bar">
+      <button class="btn-class" (click)="onConfirm()">OK</button>
+      <button (click)="onCancel()" class="btn-class">Cancel</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #addTpLossCar>
+  <div class="grid-container m-2 panel-class-style">
+    <button class="close-button" (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 class="h5">{{ dico?.dico_add_tp || "dico_add_tp" }}</h2>
+  </div>
+  <div class="grid-container m-2">
+    <form [formGroup]="addTpForm" (ngSubmit)="addTpLossCarSubmit()">
+      <div class="row">
+        <div class="col-md-7 mb-3">
+          <img
+            [src]="'data:image/jpeg;base64,' + companyLogo"
+            alt=""
+            style="width: 50px; height: 50px"
+          />
+        </div>
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="visa" class="form-label">{{
+          dico?.dico_notification || "dico_notification"
+        }}</label>
+        <input
+          type="number"
+          name="visa"
+          id="visa"
+          class="form-control"
+          formControlName="visa"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="firstName" class="form-label">{{
+          dico?.dico_firstname || "dico_firstname"
+        }}</label>
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          class="form-control"
+          formControlName="carOwnerFirstName"
+        />
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="fatherName" class="form-label">{{
+          dico?.dico_fathername || "dico_fathername"
+        }}</label>
+        <input
+          type="text"
+          name="fatherName"
+          id="fatherName"
+          class="form-control"
+          formControlName="carOwnerFatherName"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="familyName" class="form-label">{{
+          dico?.dico_familyname || "dico_familyname"
+        }}</label>
+        <input
+          type="text"
+          name="familyName"
+          id="familyName"
+          class="form-control"
+          formControlName="carOwnerFamilyName"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="platePrefix" class="form-label">{{
+          dico?.dico_plate_char || "dico_plate_char"
+        }}</label>
+        <input
+          type="text"
+          name="platePrefix"
+          id="platePrefix"
+          class="form-control"
+          formControlName="carPlateChar"
+        />
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="PlateNum" class="form-label">{{
+          dico?.dico_plate_number || "dico_plate_number"
+        }}</label>
+        <input
+          type="number"
+          name="PlateNum"
+          id="PlateNum"
+          class="form-control"
+          formControlName="carPlateNum"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="carBrand" class="form-label">{{
+          dico?.dico_car_brand || "dico_car_brand"
+        }}</label>
+        <ng-select
+          name="surveyor"
+          [virtualScroll]="true"
+          (search)="getCarBrandFindByDescription($event)"
+          (change)="onBrandSelectionChange($event)"
+          formControlName="carCarBrand"
+        >
+          <ng-option
+            *ngFor="let suggestion of brandsDesc"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="model" class="form-label">{{
+          dico?.dico_car_trademark || "dico_car_trademark"
+        }}</label>
+        <ng-select
+          name="carTrademark"
+          [virtualScroll]="true"
+          (search)="getCarTrademarkDescription($event)"
+          (change)="onTrademarkSelectionChange($event)"
+          formControlName="carCarTrademark"
+        >
+          <ng-option
+            *ngFor="let suggestion of tradeMarkDesc"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="subModel" class="form-label">{{
+          dico?.dico_shape || "dico_shape"
+        }}</label>
+        <ng-select
+          name="carShape"
+          [virtualScroll]="true"
+          (search)="
+            getCarShapeIdByBrandIdAndTradeMarkIdAndShapeDescription($event)
+          "
+          formControlName="carCarShape"
+        >
+          <ng-option
+            *ngFor="let suggestion of shapeDescList"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+        <!-- <input
+          type="text"
+          name="subModel"
+          id="subModel"
+          class="form-control"
+          formControlName="carCarShape"
+        /> -->
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="yom" class="form-label">{{
+          dico?.dico_pre_risk_year || "dico_pre_risk_year"
+        }}</label>
+        <input
+          type="number"
+          name="yom"
+          id="yom"
+          class="form-control"
+          formControlName="carYearManfact"
+        />
+      </div>
+
+      <button type="submit" class="button-class">Save</button>
+    </form>
+  </div>
+</ng-template>

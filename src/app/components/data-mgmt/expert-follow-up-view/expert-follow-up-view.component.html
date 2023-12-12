@@ -1,0 +1,207 @@
+<div class="h3-header m-3">
+  <h3>
+    Expert Follow Up
+
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('dmExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<div class="grid-container m-3 section">
+  <div class="row">
+    <div class="col-lg-2 col-md-5 col-sm-5">
+      <label for="" class="form-label label-color">{{
+        dico?.dico_search || "dico_search"
+      }}</label>
+    </div>
+    <div class="row p-3">
+      <div class="col-lg-2 col-md-5 col-sm-6">
+        <label class="form-label">{{
+          dico?.dico_insurance || "dico_insurance"
+        }}</label>
+
+        <select
+          id="insurance"
+          name="insurance"
+          class="form-select"
+          [(ngModel)]="company"
+          [disabled]="companies?.length! <= 1"
+        >
+          <option *ngFor="let company of companies" [value]="company.companyId">
+            {{ company.companyName }}
+          </option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-5 col-sm-5">
+        <label for="expert">{{ dico?.dico_expert || "dico_expert" }}</label>
+        <ng-select
+          name="expertName"
+          [virtualScroll]="true"
+          [(ngModel)]="selectedExpert"
+          (search)="getExpertBySupplierNamePreference($event)"
+        >
+          <ng-option
+            *ngFor="let suggestion of supplierExperts"
+            [value]="suggestion.supplierId"
+          >
+            {{ suggestion.supplierFamilyName }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="col-lg-2 col-md-5 col-sm-5">
+        <label for="fromDate" class="form-label">{{
+          dico?.dico_from_date || "dico_from_date"
+        }}</label>
+        <input
+          type="text"
+          name="fromDate"
+          id="fromDate"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{
+            dateInputFormat: 'DD/MM/YYYY',
+            containerClass: 'theme-dark-blue',
+            showWeekNumbers: false
+          }"
+          [(ngModel)]="fromDate"
+        />
+        <!-- <input type="text" class="form-control" /> -->
+      </div>
+      <div class="col-lg-2 col-md-5 col-sm-5">
+        <label for="" class="form-label">{{
+          dico?.dico_to_date || "dico_to_date"
+        }}</label>
+        <input
+          type="text"
+          name="toDate"
+          id="toDate"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{
+            dateInputFormat: 'DD/MM/YYYY',
+            containerClass: 'theme-dark-blue',
+            showWeekNumbers: false
+          }"
+          [(ngModel)]="toDate"
+        />
+      </div>
+      <div class="col-lg-2 col-md-5 col-sm-5 p-4">
+        <button class="button-class" (click)="getExpertFollowUpList()">
+          {{ dico?.dico_search || "dico_search" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-container m-3 section">
+  <div class="row">
+    <div class="table-responsive">
+      <table>
+        <thead style="top: 0">
+          <tr>
+            <th></th>
+            <th class="header-label">
+              {{ dico?.dico_notification || "dico_notification" }}
+            </th>
+
+            <th>{{ dico?.dico_plate || "dico_plate" }}</th>
+
+            <th>{{ dico?.dico_expert || "dico_expert" }}</th>
+            <th>
+              {{ dico?.dico_expert_disp_date || "dico_expert_disp_date" }}
+            </th>
+            <th>{{ dico?.dico_accident_caza || "dico_accident_caza" }}</th>
+
+            <th>
+              {{ dico?.dico_owner_name || "dico_owner_name" }}
+            </th>
+            <th>{{ dico?.dico_brand_trademark || "dico_brand_trademark" }}</th>
+            <th>{{ dico?.dico_reported_date || "dico_reported_date" }}</th>
+            <th>{{ dico?.dico_accident_date || "dico_accident_date" }}</th>
+            <th>
+              {{
+                dico?.dico_pre_risk_policy_number ||
+                  "dico_pre_risk_policy_number"
+              }}
+            </th>
+            <th>{{ dico?.dico_operator || "dico_operator" }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of expertFollowUpList">
+            <td>
+              <button
+                class="button-class"
+                (click)="navigateToNotes(list.notificationId)"
+              >
+                Go To Notes
+              </button>
+            </td>
+            <td class="text-nowrap">{{ list.notification }}</td>
+
+            <td class="text-nowrap">{{ list.plate }}</td>
+
+            <td class="text-nowrap">
+              {{ list.expert }}
+            </td>
+
+            <td class="text-nowrap">
+              {{
+                list.dispDateTime | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+
+            <td class="text-nowrap">{{ list.accidentCaza }}</td>
+
+            <td class="text-nowrap">{{ list.owner }}</td>
+
+            <td class="text-nowrap">
+              {{ list.brandTradeMark }}
+            </td>
+
+            <td class="text-nowrap">
+              {{
+                list.reportedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+
+            <td class="text-nowrap">
+              {{
+                list.accidentDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+
+            <td class="text-nowrap">
+              {{ list.policyNumber }}
+            </td>
+
+            <td class="text-nowrap">
+              {{ list.username }}
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noData>
+          <tr>
+            <td colspan="9">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+
+    <div class="row grid-container">
+      <app-paginator
+        [totalItems]="totalItems!"
+        [pageSize]="pageSize"
+        (pageChange)="onPageChange($event)"
+      ></app-paginator>
+    </div>
+  </div>
+</div>

@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { ProfilesPageComponent } from './profiles-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'profiles-main',
     component: ProfilesPageComponent,
     canActivate: [AuthGuard],
   },
@@ -15,7 +16,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [CommonModule, RouterModule],
 })
 export class ProfilesModule {}

@@ -2050,4 +2050,14 @@ export class DataServiceService {
       `${this.userUrl}/call_center/getTemaExpertLateCloseCaseList?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
   }
+
+  noDoubleCheck(
+    inotificationid: string,
+    ipolcarid: string,
+    ilossdate: string
+  ): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.userUrl}/call_center/noDoubleCheck?inotificationid=${inotificationid}&ipolcarid=${ipolcarid}&ilossdate=${ilossdate}`
+    );
+  }
 }

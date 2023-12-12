@@ -2,7 +2,7 @@
 .dropbtn {
     background: none;
     color: #3498db; /* Use a link color */
-    padding: 14px 20px; /* Adjust padding for a better visual balance */
+    /* Adjust padding for a better visual balance */
     /* font-size: 13px; */
     font-weight: bold; /* Make the text bold for a more prominent look */
     border: none;

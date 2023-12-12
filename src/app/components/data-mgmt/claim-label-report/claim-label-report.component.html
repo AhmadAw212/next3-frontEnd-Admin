@@ -1,0 +1,159 @@
+<div class="h3-header m-3">
+  <h3>Print Claim Label</h3>
+</div>
+<div class="container-fluid mt-3">
+  <div class="card h-100">
+    <div class="card-body">
+      <div class="row p-3">
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="company" class="form-label">
+            {{ dico?.dico_company || "dico_company" }}</label
+          >
+
+          <select
+            id="insurance"
+            name="insurance"
+            class="form-select"
+            [(ngModel)]="company"
+            [disabled]="companies?.length! <= 1"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyId"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="status" class="form-label">
+            {{ dico?.dico_status || "dico_status" }}</label
+          >
+
+          <select name="status" id="status" class="form-select">
+            <option *ngFor="let status of statusValues" [value]="status.code">
+              {{ status.description }}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="notification" class="form-label">
+            {{ dico?.dico_notification || "dico_notification" }}</label
+          >
+          <div class="d-flex">
+            <input
+              type="text"
+              class="form-control"
+              id="notification"
+              name="notification"
+            />
+            <img src="./assets/icons/add.png" class="icon ms-3 m-2" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="fromDate" class="form-label">
+            {{ dico?.dico_from_date || "dico_from_date" }}</label
+          >
+
+          <input
+            type="text"
+            class="form-control"
+            name="fromDate"
+            id="fromDate"
+            bsDatepicker
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY',
+              containerClass: 'theme-dark-blue',
+              showWeekNumbers: false
+            }"
+          />
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="fromDate" class="form-label">
+            {{ dico?.dico_to_date || "dico_to_date" }}</label
+          >
+
+          <input
+            type="text"
+            class="form-control"
+            name="toDate"
+            id="toDate"
+            bsDatepicker
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY',
+              containerClass: 'theme-dark-blue',
+              showWeekNumbers: false
+            }"
+          />
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <label for="orderBy" class="form-label">
+            {{ dico?.dico_order_by || "dico_order_by" }}</label
+          >
+          <select name="status" id="status" class="form-select">
+            <option *ngFor="let order of orderValues" [value]="order.code">
+              {{ order.description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row p-3">
+        <div class="col-md-1">
+          <button class="button-class">
+            <img src="./assets/icons/pdf.png" class="icon" alt="" srcset="" />
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button class="button-class">
+            {{ dico?.dico_extract_to_excel || "dico_extract_to_excel" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3">
+  <div class="card h-100">
+    <div class="card-body">
+      <div class="row p-3">
+        <div class="col-md-3">
+          <div class="table-responsive">
+            <table>
+              <thead style="top: 0">
+                <tr>
+                  <th class="header-label">
+                    {{ dico?.dico_notification || "dico_notification" }}
+                  </th>
+                  <th class="header-label">
+                    {{ dico?.dico_delete || "dico_delete" }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td><mat-icon>delete</mat-icon></td>
+                </tr>
+              </tbody>
+              <ng-template #noData>
+                <tr>
+                  <td colspan="9">
+                    {{
+                      dico?.BASIC_NO_DATA_TO_DISPLAY ||
+                        "BASIC_NO_DATA_TO_DISPLAY"
+                    }}
+                  </td>
+                </tr>
+              </ng-template>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

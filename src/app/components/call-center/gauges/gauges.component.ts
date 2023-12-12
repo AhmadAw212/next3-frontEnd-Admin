@@ -60,65 +60,65 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {}
 
-  createGauge(maxValue: number, value: number, target: HTMLElement): any {
-    const tickCount = 7; // Set the desired number of major ticks
-    const tickStep = maxValue / (tickCount - 1); // Calculate tick step based on tick count
+  // createGauge(maxValue: number, value: number, target: HTMLElement): any {
+  //   const tickCount = 7; // Set the desired number of major ticks
+  //   const tickStep = maxValue / (tickCount - 1); // Calculate tick step based on tick count
 
-    const majorTicks = [];
-    for (let i = 0; i < tickCount; i++) {
-      majorTicks.push((i * tickStep).toFixed(1));
-    }
+  //   const majorTicks = [];
+  //   for (let i = 0; i < tickCount; i++) {
+  //     majorTicks.push((i * tickStep).toFixed(1));
+  //   }
 
-    // majorTicks.push(maxValue.toString()); // Include the incoming max value
+  //   // majorTicks.push(maxValue.toString()); // Include the incoming max value
 
-    return new Gauge.RadialGauge({
-      renderTo: target,
-      // Other gauge configuration options here
-      value: value,
-      maxValue: maxValue,
-      majorTicks: majorTicks,
-      // minorTicks: 2,
-      strokeTicks: true,
-      valueText: (value * 1).toLocaleString(),
-      highlights: [
-        {
-          from: 0,
-          to: maxValue * 0.3,
-          color: 'rgb(0, 231, 0)', // Green for values 0 to 30% of max
-        },
-        {
-          from: maxValue * 0.3,
-          to: maxValue * 0.7,
-          color: 'rgba(255, 165, 0, .75)', // Orange for values 30% to 70% of max
-        },
-        {
-          from: maxValue * 0.7,
-          to: maxValue,
-          color: 'rgb(255, 33, 33)', // Red for values 70% to max
-        },
-      ],
-      colorPlate: '#fff',
-      borderShadowWidth: 1,
-      borders: true,
-      needleType: 'arrow',
-      colorNeedleEnd: 'rgb(49, 56, 66)',
-      colorNeedle: 'rgb(49, 56, 66)',
-      needleWidth: 4,
-      colorValueText: 'rgb(51, 51, 51)',
-      fontValueWeight: 'bold',
-      fontValueSize: 35,
-      // colorValueBoxShadow: 'rgb(49, 56, 66)',
-      // colorValueTextShadow: 'rgb(188, 199, 210)',
-      colorValueBoxBackground: 'white',
-      needleCircleSize: 7,
-      needleCircleOuter: true,
-      needleCircleInner: true,
-      animationDuration: 500,
-      animationRule: 'bounce',
-      width: 242,
-      height: 180,
-    });
-  }
+  //   return new Gauge.RadialGauge({
+  //     renderTo: target,
+  //     // Other gauge configuration options here
+  //     value: value,
+  //     maxValue: maxValue,
+  //     majorTicks: majorTicks,
+  //     // minorTicks: 2,
+  //     strokeTicks: true,
+  //     valueText: (value * 1).toLocaleString(),
+  //     highlights: [
+  //       {
+  //         from: 0,
+  //         to: maxValue * 0.3,
+  //         color: 'rgb(0, 231, 0)', // Green for values 0 to 30% of max
+  //       },
+  //       {
+  //         from: maxValue * 0.3,
+  //         to: maxValue * 0.7,
+  //         color: 'rgba(255, 165, 0, .75)', // Orange for values 30% to 70% of max
+  //       },
+  //       {
+  //         from: maxValue * 0.7,
+  //         to: maxValue,
+  //         color: 'rgb(255, 33, 33)', // Red for values 70% to max
+  //       },
+  //     ],
+  //     colorPlate: '#fff',
+  //     borderShadowWidth: 1,
+  //     borders: true,
+  //     needleType: 'arrow',
+  //     colorNeedleEnd: 'rgb(49, 56, 66)',
+  //     colorNeedle: 'rgb(49, 56, 66)',
+  //     needleWidth: 4,
+  //     colorValueText: 'rgb(51, 51, 51)',
+  //     fontValueWeight: 'bold',
+  //     fontValueSize: 35,
+  //     // colorValueBoxShadow: 'rgb(49, 56, 66)',
+  //     // colorValueTextShadow: 'rgb(188, 199, 210)',
+  //     colorValueBoxBackground: 'white',
+  //     needleCircleSize: 7,
+  //     needleCircleOuter: true,
+  //     needleCircleInner: true,
+  //     animationDuration: 500,
+  //     animationRule: 'bounce',
+  //     width: 242,
+  //     height: 180,
+  //   });
+  // }
 
   ngOnDestroy(): void {
     if (this.subscribtion) {
@@ -132,65 +132,65 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCompany = event;
     this.getGaugesValuesCC(event);
   }
-  createAndDrawGauge(
-    maxValue: number,
-    value: number,
-    target: HTMLElement
-  ): void {
-    const gauge = this.createGauge(maxValue, value, target);
-    gauge.draw();
-  }
-  updateExpertFollowUpGauge(): void {
-    if (this.expertToDispatchCount > 0) {
-      const expertDispatchCount = this.expertToDispatch.nativeElement;
-      this.createAndDrawGauge(
-        this.expertToDispatchCount,
-        this.expertToDispatchCount,
-        expertDispatchCount
-      );
-    }
-    if (this.expertAllCount > 0) {
-      const expertAllCount = this.expertFollowUp.nativeElement;
-      this.createAndDrawGauge(
-        this.expertAllCount,
-        this.expertOverDue,
-        expertAllCount
-      );
-    }
-    if (this.towingAllCount > 0) {
-      const towingAllCount = this.towingFollowUp.nativeElement;
-      this.createAndDrawGauge(
-        this.towingAllCount,
-        this.towingOverDue,
-        towingAllCount
-      );
-    }
-    if (this.towingToDispatchCount > 0) {
-      const towingToDispatchCount = this.towingToDispatch.nativeElement;
-      this.createAndDrawGauge(
-        this.towingToDispatchCount,
-        this.towingToDispatchCount,
-        towingToDispatchCount
-      );
-    }
-    if (this.noDataAllCount > 0) {
-      const noDataAllCount = this.noDataFollowUp.nativeElement;
-      this.createAndDrawGauge(
-        this.noDataAllCount,
-        this.noDataPolicyFound,
-        noDataAllCount
-      );
-    }
-    if (this.notificationComplaintsCount > 0) {
-      const notificationComplaintsCount =
-        this.notificationComplaints.nativeElement;
-      this.createAndDrawGauge(
-        this.notificationComplaintsCount,
-        this.notificationComplaintsCount,
-        notificationComplaintsCount
-      );
-    }
-  }
+  // createAndDrawGauge(
+  //   maxValue: number,
+  //   value: number,
+  //   target: HTMLElement
+  // ): void {
+  //   const gauge = this.createGauge(maxValue, value, target);
+  //   gauge.draw();
+  // }
+  // updateExpertFollowUpGauge(): void {
+  //   if (this.expertToDispatchCount > 0) {
+  //     const expertDispatchCount = this.expertToDispatch.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.expertToDispatchCount,
+  //       this.expertToDispatchCount,
+  //       expertDispatchCount
+  //     );
+  //   }
+  //   if (this.expertAllCount > 0) {
+  //     const expertAllCount = this.expertFollowUp.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.expertAllCount,
+  //       this.expertOverDue,
+  //       expertAllCount
+  //     );
+  //   }
+  //   if (this.towingAllCount > 0) {
+  //     const towingAllCount = this.towingFollowUp.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.towingAllCount,
+  //       this.towingOverDue,
+  //       towingAllCount
+  //     );
+  //   }
+  //   if (this.towingToDispatchCount > 0) {
+  //     const towingToDispatchCount = this.towingToDispatch.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.towingToDispatchCount,
+  //       this.towingToDispatchCount,
+  //       towingToDispatchCount
+  //     );
+  //   }
+  //   if (this.noDataAllCount > 0) {
+  //     const noDataAllCount = this.noDataFollowUp.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.noDataAllCount,
+  //       this.noDataPolicyFound,
+  //       noDataAllCount
+  //     );
+  //   }
+  //   if (this.notificationComplaintsCount > 0) {
+  //     const notificationComplaintsCount =
+  //       this.notificationComplaints.nativeElement;
+  //     this.createAndDrawGauge(
+  //       this.notificationComplaintsCount,
+  //       this.notificationComplaintsCount,
+  //       notificationComplaintsCount
+  //     );
+  //   }
+  // }
   handleGaugesValuesResponse(gaugesValues: CallCenterGauges) {
     ({
       expertToDispatchCount: this.expertToDispatchCount,
@@ -203,13 +203,15 @@ export class GaugesComponent implements OnInit, OnDestroy, AfterViewInit {
       expertOverDue: this.expertOverDue,
       notificationComplaintsCount: this.notificationComplaintsCount,
     } = gaugesValues);
-    this.updateExpertFollowUpGauge();
   }
 
   getGaugesValuesCC(companyId: string): void {
     this.subscribtion = this.dataService.getGaugesValues(companyId).subscribe({
       next: (res) => {
         this.handleGaugesValuesResponse(res.data);
+        // this.expertToDispatchCount = res.data.expertToDispatchCount;
+        // console.log(res.data.expertToDispatchCount);
+        // this.updateExpertFollowUpGauge();
       },
       error: (err) => {
         console.log(err);

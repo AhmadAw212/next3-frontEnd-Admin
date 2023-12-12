@@ -117,6 +117,10 @@ th {
   max-width: 300px;
   max-height: 300px;
 }
+.company-logo-table{
+  width:25px;
+  height:auto !important;
+}
 .select-class-schedule{
   width: 150px;
   padding: 5px;
@@ -190,10 +194,12 @@ table.table thead th {
   cursor: not-allowed;
 }
 .icon{
-  height: 15px;width:15px
+  height: 15px;width:15px;
+  cursor: pointer;
 }
 .icon-class{
-  height: 25px;width:25px
+  height: 25px;width:25px;
+  cursor: pointer;
 }
 .disabled-image {
   filter: grayscale(100%); /* Apply grayscale to make it look disabled */
@@ -255,28 +261,62 @@ label{
 }
 .button-class {
   text-decoration: none;
-  cursor: default;
-  display: block;
-  white-space: nowrap;
-  padding: 5px 8px 4px 8px;
+  display: inline-block;
+  /* white-space: nowrap; */
+  padding: 5px 8px; /* Adjusted padding to maintain the same height */
   color: #ffffff;
-  min-width: 38px;
+  min-width: 50px;
   text-align: center;
-  background-color: #0674cb;
-  border: 0;
-  border-radius: 0;
-  text-shadow: 0 0 0 #ffffff;
+  background-color: #3498db;
+  border: 2px solid #2980b9;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.button-class:disabled {
+  background-color: #bdc3c7; /* Change the background color for disabled state */
+  border-color: #bdc3c7; /* Change the border color for disabled state */
+  cursor: not-allowed; /* Change cursor to indicate the button is not clickable */
+  /* Add any other styles for the disabled state */
+}
+.card-body{
+  background-color: rgb(239,242,245);
+}
+.disabled {
+  color: #bdc3c7; /* Change the background color for disabled state */
+  border-color: #bdc3c7; /* Change the border color for disabled state */
+  cursor: not-allowed; /* Change cursor to indicate the button is not clickable */
+  /* Add any other styles for the disabled state */
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333; /* You can adjust the color as needed */
+}
+.button-class:hover {
+  background-color: #2980b9;
+  border-color: #1f669a;
+  color: #ffffff;
 }
 .label-color{
   color: #0674CB !important;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: bold;
 }
 .panel-item {
   margin-bottom: 10px;
 
 }
-
+.selected-class {
+  background-color: #e0f2db !important; /* You can change this to your desired highlight color */
+  font-weight: bold;
+}
 .admin-container app-spinner {
   position: absolute;
   top: 40%;
@@ -293,9 +333,23 @@ label{
 .mat-tab-group {
   margin-bottom: 48px;
 }
-
+.multiselect-dropdown .dropdown-btn {
+  display: inline-block;
+  border: 1px solid #adadad;
+  background-color: white;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border-radius: 4px;
+}
 td {
-  /* padding: 2px; */
+  padding: 2px;
   text-align: left;
   /* width: 100px; */
   border: 1px solid rgb(237, 220, 220); /* Add this line */
@@ -408,6 +462,21 @@ tr:nth-child(odd) {
   transform-origin: center;
 
   
+}
+
+.gauge-label {
+  margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  margin-left: 55px;
+}
+
+/* .gauge-label a:hover {
+  text-decoration: underline;
+} */
+.row{
+border: none;
+}
+.company-dropdown{
+margin: 20px;
 }
 
 .flip-card .flip-card-inner.flip {

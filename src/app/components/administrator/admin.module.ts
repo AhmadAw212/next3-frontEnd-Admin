@@ -25,7 +25,7 @@ import { TownTerritoryComponent } from './town-territory/town-territory.componen
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'profiles-main/Administrator',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
     data: { showBackButton: false },

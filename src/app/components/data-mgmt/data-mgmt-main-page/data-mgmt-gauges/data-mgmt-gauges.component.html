@@ -1,0 +1,491 @@
+<div class="dialog-content">
+  <!-- <app-company-select
+    (companyChanged)="onCompanyChange($event)"
+  ></app-company-select> -->
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab
+      [label]="dico?.dico_data_entry || 'dico_data_entry'"
+      *ngIf="hasPerm('dmToDoList')"
+    >
+      <div class="grid-container">
+        <div class="section">
+          <label class="p-4">
+            {{ dico?.dico_data_entry || "dico_data_entry" }}</label
+          >
+          <div class="panel row">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': expDecDECount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{
+                      type: 'DE',
+                      nature: 'Expert Report+Declaration'
+                    }"
+                    class="label-link"
+                    >{{
+                      dico?.dico_expert_report_declaration ||
+                        "dico_expert_report_declaration"
+                    }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="expDecDECount > 0"
+                [maxValue]="expDecDECount"
+                [value]="expDecDECount"
+              ></app-gauge-component>
+            </div>
+
+            <div
+              [ngClass]="{ 'hidden-gauge': expDECount <= 0 }"
+              class="col-lg-4 col-md-6 col-sm-6"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'DE', nature: 'Expert Report' }"
+                    class="label-link"
+                  >
+                    {{ dico?.dico_expert_report || "dico_expert_report" }}
+                  </a>
+                </label>
+              </div>
+              <app-gauge-component
+                *ngIf="expDECount > 0"
+                [maxValue]="expDECount"
+                [value]="expDECount"
+              ></app-gauge-component>
+            </div>
+
+            <div
+              [ngClass]="{ 'hidden-gauge': decDECount <= 0 }"
+              class="col-lg-4 col-md-6 col-sm-6"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'DE', nature: 'Declaration' }"
+                    class="label-link"
+                  >
+                    {{ dico?.dico_declaration || "dico_declaration" }}
+                  </a>
+                </label>
+              </div>
+              <app-gauge-component
+                *ngIf="decDECount > 0"
+                [maxValue]="decDECount"
+                [value]="decDECount"
+              ></app-gauge-component>
+              <!-- <canvas #expertFollowUp></canvas> -->
+            </div>
+            <div
+              [ngClass]="{
+                'hidden-gauge':
+                  invoiceDECount <= 0 || deInvoiceChecking !== 'true'
+              }"
+              class="col-lg-4 col-md-6 col-sm-6"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'DE', nature: 'Invoice' }"
+                    class="label-link"
+                  >
+                    {{ dico?.dico_invoice || "dico_invoice" }}
+                  </a>
+                </label>
+              </div>
+              <app-gauge-component
+                *ngIf="invoiceDECount > 0 && deInvoiceChecking === 'true'"
+                [maxValue]="invoiceDECount"
+                [value]="invoiceDECount"
+              ></app-gauge-component>
+              <!-- <canvas #expertFollowUp></canvas> -->
+            </div>
+            <div
+              [ngClass]="{
+                'hidden-gauge':
+                  personalInfDECount <= 0 || dePersonalInformation !== 'true'
+              }"
+              class="col-lg-4 col-md-6 col-sm-6"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{
+                      type: 'DE',
+                      nature: 'Personal Information'
+                    }"
+                    class="label-link"
+                  >
+                    {{
+                      dico?.dico_personal_information ||
+                        "dico_personal_information"
+                    }}
+                  </a>
+                </label>
+              </div>
+              <app-gauge-component
+                *ngIf="
+                  personalInfDECount > 0 && dePersonalInformation === 'true'
+                "
+                [maxValue]="personalInfDECount"
+                [value]="personalInfDECount"
+              ></app-gauge-component>
+              <!-- <canvas #expertFollowUp></canvas> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab
+      [label]="dico?.dico_document_reception || 'dico_document_reception'"
+      *ngIf="hasPerm('dmToDoList') && dmDocReceptionToDo === 'true'"
+    >
+      <div class="grid-container">
+        <div class="section">
+          <label class="p-4">
+            {{
+              dico?.dico_document_reception || "dico_document_reception"
+            }}</label
+          >
+          <div class="panel row">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': expDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <span>{{
+                    dico?.dico_expert_report || "dico_expert_report"
+                  }}</span>
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="expDRCount > 0"
+                [maxValue]="expDRCount"
+                [value]="expDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': expDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'DE' }"
+                    class="label-link"
+                    >{{ dico?.dico_expert_report || "dico_expert_report" }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="expDRCount > 0"
+                [maxValue]="expDRCount"
+                [value]="expDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': decDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/CallCenter/followUp"
+                    [queryParams]="{ type: 'DE' }"
+                    class="label-link"
+                    >{{ dico?.dico_declaration || "dico_declaration" }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="decDRCount > 0"
+                [maxValue]="decDRCount"
+                [value]="decDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': decDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <span>{{
+                    dico?.dico_declaration || "dico_declaration"
+                  }}</span>
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="decDRCount > 0"
+                [maxValue]="decDRCount"
+                [value]="decDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': legalDocDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <span>{{
+                    dico?.dico_legal_documents || "dico_legal_documents"
+                  }}</span>
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="legalDocDRCount > 0"
+                [maxValue]="legalDocDRCount"
+                [value]="legalDocDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': invoiceDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <span>{{ dico?.dico_invoice || "dico_invoice" }}</span>
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="invoiceDRCount > 0"
+                [maxValue]="invoiceDRCount"
+                [value]="invoiceDRCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': subrogationDRCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <span>{{
+                    dico?.dico_subrogation || "dico_subrogation"
+                  }}</span>
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="subrogationDRCount > 0"
+                [maxValue]="subrogationDRCount"
+                [value]="subrogationDRCount"
+              ></app-gauge-component>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab
+      [label]="dico?.dico_scanning || 'dico_scanning'"
+      *ngIf="hasPerm('dmToDoList')"
+    >
+      <div class="grid-container">
+        <div class="section">
+          <label class="p-4">
+            {{ dico?.dico_scanning || "dico_scanning" }}</label
+          >
+          <div class="panel row">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': expScCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'SC', nature: 'Expert Report' }"
+                    class="label-link"
+                    >{{ dico?.dico_expert_report || "dico_expert_report" }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="expScCount > 0"
+                [maxValue]="expScCount"
+                [value]="expScCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': decScCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'SC', nature: 'Declaration' }"
+                    class="label-link"
+                    >{{ dico?.dico_declaration || "dico_declaration" }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="decScCount > 0"
+                [maxValue]="decScCount"
+                [value]="decScCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{
+                'hidden-gauge': invoiceScCount <= 0 || dmShowInvoive !== 'true'
+              }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'SC', nature: 'Invoice' }"
+                    class="label-link"
+                    >{{ dico?.dico_invoice || "dico_invoice" }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="invoiceScCount > 0 && dmShowInvoive === 'true'"
+                [maxValue]="invoiceScCount"
+                [value]="invoiceScCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': otherDocScCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'SC', nature: 'Other Doc.' }"
+                    class="label-link"
+                    >{{
+                      dico?.dico_other_documents || "dico_other_documents"
+                    }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="otherDocScCount > 0"
+                [maxValue]="otherDocScCount"
+                [value]="otherDocScCount"
+              ></app-gauge-component>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab
+      [label]="dico?.dico_follow_up || 'dico_follow_up'"
+      *ngIf="hasPerm('dmFollowUpList')"
+    >
+      <div class="grid-container">
+        <div class="section">
+          <label class="p-4">
+            {{ dico?.dico_follow_up || "dico_follow_up" }}</label
+          >
+          <div class="panel row">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': tpInsFollowUpCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{ type: 'TPINS', nature: null }"
+                    class="label-link"
+                    >{{
+                      dico?.dico_tp_ins_follow_up || "dico_tp_ins_follow_up"
+                    }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="tpInsFollowUpCount > 0"
+                [maxValue]="tpInsFollowUpCount"
+                [value]="tpInsFollowUpCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{ 'hidden-gauge': dobFollowUpCount <= 0 }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/dataEntryList"
+                    [queryParams]="{
+                      type: 'DOB',
+                      nature: null
+                    }"
+                    class="label-link"
+                    >{{
+                      dico?.dico_date_of_birth_follow_up ||
+                        "dico_date_of_birth_follow_up"
+                    }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="dobFollowUpCount > 0"
+                [maxValue]="dobFollowUpCount"
+                [value]="dobFollowUpCount"
+              ></app-gauge-component>
+            </div>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              [ngClass]="{
+                'hidden-gauge': expertFollowUpCount <= 0
+              }"
+            >
+              <div class="row">
+                <label class="gauge-label">
+                  <a
+                    routerLink="/profiles-main/DataManagement/expertFollowUp"
+                    class="label-link"
+                    >{{
+                      dico?.dico_expert_report_not_rec ||
+                        "dico_expert_report_not_rec"
+                    }}</a
+                  >
+                </label>
+              </div>
+
+              <app-gauge-component
+                *ngIf="expertFollowUpCount > 0"
+                [maxValue]="expertFollowUpCount"
+                [value]="expertFollowUpCount"
+              ></app-gauge-component>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
