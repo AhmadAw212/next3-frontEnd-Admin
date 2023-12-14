@@ -82,48 +82,104 @@ export class CoreDomainValueComponent implements OnInit {
       });
   }
 
+  // onTdBlur(
+  //   event: FocusEvent,
+  //   domainValue: CoreDomainValue,
+  //   property: keyof CoreDomainValue
+  // ) {
+  //   const tdElement = event.target as HTMLTableCellElement;
+  //   const newValue = tdElement.innerText.trim();
+
+  //   // Use object destructuring to extract properties and exclude the unwanted ones
+  //   const {
+  //     sysCreatedBy,
+  //     sysUpdatedBy,
+  //     sysCreatedDate,
+  //     sysUpdatedDate,
+  //     ...restOfDomainValue
+  //   } = domainValue;
+
+  //   // Check if any value has changed
+  //   if (newValue !== domainValue[property]) {
+  //     const updatedDomainValue: CoreDomainValue = {
+  //       ...restOfDomainValue, // Spread the rest of the properties
+  //       [property]: newValue,
+  //     };
+
+  //     const updatedDomainValues = this.updatedDomainValues ?? [];
+
+  //     // Find the index of the domainValue in the updated list
+  //     const index = updatedDomainValues.findIndex(
+  //       (item) => item.id === domainValue.id
+  //     );
+
+  //     if (index !== -1) {
+  //       updatedDomainValues[index] = updatedDomainValue; // Update the existing item
+  //     } else {
+  //       updatedDomainValues.push(updatedDomainValue); // Add the updated item
+  //     }
+
+  //     console.log(updatedDomainValues);
+  //     this.updatedDomainValues = [...updatedDomainValues]; // Ensure immutability
+  //   }
+  // }
+
   onTdBlur(
     event: FocusEvent,
-    domainValue: CoreDomainValue,
-    property: keyof CoreDomainValue
+    domain: CoreDomainValue,
+    property:
+      | 'code'
+      | 'description'
+      | 'val1'
+      | 'val2'
+      | 'val3'
+      | 'val4'
+      | 'val5'
+      | 'val6'
+      | 'val7'
+      | 'val8'
+      | 'val9'
+      | 'val10'
+      | 'val11'
   ) {
     const tdElement = event.target as HTMLTableCellElement;
+    const oldValue = domain[property];
     const newValue = tdElement.innerText.trim();
+    const updatedDomainValues = this.updatedDomainValues ?? [];
 
-    // Use object destructuring to extract properties and exclude the unwanted ones
-    const {
-      sysCreatedBy,
-      sysUpdatedBy,
-      sysCreatedDate,
-      sysUpdatedDate,
-      ...restOfDomainValue
-    } = domainValue;
+    const index = updatedDomainValues.findIndex(
+      (item) => item.id === domain.id
+    );
+    if (index !== -1) {
+      updatedDomainValues.splice(index, 1);
+    }
 
-    // Check if any value has changed
-    if (newValue !== domainValue[property]) {
-      const updatedDomainValue: CoreDomainValue = {
-        ...restOfDomainValue, // Spread the rest of the properties
-        [property]: newValue,
-      };
-
-      const updatedDomainValues = this.updatedDomainValues ?? [];
-
-      // Find the index of the domainValue in the updated list
-      const index = updatedDomainValues.findIndex(
-        (item) => item.id === restOfDomainValue.id
-      );
-
-      if (index !== -1) {
-        updatedDomainValues[index] = updatedDomainValue; // Update the existing item
-      } else {
-        updatedDomainValues.push(updatedDomainValue); // Add the updated item
-      }
-
-      this.updatedDomainValues = [...updatedDomainValues]; // Ensure immutability
+    // const sysActiveFlag = domain.sysActiveFlag ?? false;
+    if (oldValue !== newValue) {
+      domain[property] = newValue;
+      this.updatedDomainValues?.push({
+        id: domain.id,
+        code: domain.code,
+        description: domain.description,
+        val1: domain.val1,
+        val2: domain.val2,
+        val3: domain.val3,
+        val4: domain.val4,
+        val5: domain.val5,
+        val6: domain.val6,
+        val7: domain.val7,
+        val8: domain.val8,
+        val9: domain.val9,
+        val10: domain.val10,
+        val11: domain.val11,
+        coreDomainId: domain.coreDomainId,
+      });
+      console.log(this.updatedDomainValues);
     }
   }
+
   onCheckboxChange(domainValue: CoreDomainValue) {
-    const sysActiveFlag = domainValue.sysActiveFlag ?? false;
+    // const sysActiveFlag = domainValue.sysActiveFlag ?? false;
     const updatedDomainValues = this.updatedDomainValues ?? [];
     const index = updatedDomainValues.findIndex(
       (item) => item.id === domainValue.id
@@ -148,9 +204,8 @@ export class CoreDomainValueComponent implements OnInit {
       val10: domainValue.val10,
       val11: domainValue.val11,
       coreDomainId: domainValue.coreDomainId,
-      sysActiveFlag,
     });
-    console.log(this.updatedDomainValues);
+    // console.log(this.updatedDomainValues);
   }
 
   openAddDomainValueDialog() {
@@ -198,19 +253,17 @@ export class CoreDomainValueComponent implements OnInit {
   }
 
   updateDomainValue() {
-    if (this.updatedDomainValues?.length) {
-      this.dataService
-        .updateCoreDomainValue(this.updatedDomainValues)
-        .subscribe({
-          next: (res) => {
-            this.alertifyService.success(res.message!);
-            this.updatedDomainValues = [];
-            console.log(res);
-          },
-          error: (err) => {
-            this.alertifyService.error(err.error.message);
-          },
-        });
-    }
+    this.dataService
+      .updateCoreDomainValue(this.updatedDomainValues!)
+      .subscribe({
+        next: (res) => {
+          this.alertifyService.success(res.message!);
+          this.updatedDomainValues = [];
+          // console.log(res);
+        },
+        error: (err) => {
+          this.alertifyService.error(err.error.message);
+        },
+      });
   }
 }

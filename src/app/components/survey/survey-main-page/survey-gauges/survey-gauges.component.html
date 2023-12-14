@@ -1,1 +1,63 @@
-<p>survey-gauges works!</p>
+<div class="dialog-content">
+  <div class="select-container">
+    <span>{{ dico?.dico_company || "dico_company" }}:</span>
+    <select
+      id="company"
+      name="company"
+      required
+      class="company-select select-class"
+      [(ngModel)]="company"
+      [disabled]="companies.length! <= 1"
+      (ngModelChange)="getSurveyMainPageBean()"
+    >
+      <option *ngFor="let company of companies" [value]="company.companyId">
+        {{ company.companyName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="section">
+    <label class="p-4 label-color">
+      {{ dico?.dico_my_surveys || "dico_my_surveys" }}</label
+    >
+    <div class="panel row">
+      <div
+        class="col-lg-4 col-md-6 col-sm-6"
+        [ngClass]="{ 'hidden-gauge': mySurveyAllCounts <= 0 }"
+      >
+        <div class="row">
+          <!-- <label class="gauge-label">
+            <a
+              routerLink="/profiles-main/DataManagement/dataEntryList"
+              [queryParams]="{
+                type: 'DE',
+                nature: 'Expert Report+Declaration'
+              }"
+              class="label-link"
+              >{{
+                dico?.dico_expert_report_declaration ||
+                  "dico_expert_report_declaration"
+              }}</a
+            >
+          </label> -->
+        </div>
+
+        <app-gauge-component
+          *ngIf="mySurveyPending > 0"
+          [maxValue]="mySurveyAllCounts"
+          [value]="mySurveyPending"
+        ></app-gauge-component>
+      </div>
+      <div
+        class="col-lg-4 col-md-6 col-sm-6"
+        [ngClass]="{ 'hidden-gauge': vipCounts <= 0 }"
+      >
+        <app-gauge-component
+          *ngIf="vipCounts > 0"
+          [maxValue]="vipCounts"
+          [value]="vipCounts"
+        ></app-gauge-component>
+      </div>
+    </div>
+  </div>
+</div>

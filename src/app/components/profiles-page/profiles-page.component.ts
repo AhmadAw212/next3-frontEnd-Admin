@@ -86,13 +86,7 @@ export class ProfilesPageComponent implements OnInit, OnDestroy {
               logo: `data:image/jpeg;base64,${profile.logo}`,
             };
           })
-          .filter(
-            (profile: CoreProfile) =>
-              profile.code === 'adm' ||
-              profile.code === 'cc' ||
-              profile.code === 'dm' ||
-              profile.code === 'ds'
-          );
+          .filter((profile: CoreProfile) => profile.code === 'adm');
         // console.log(this.userProfiles);
       },
       error: (err) => {

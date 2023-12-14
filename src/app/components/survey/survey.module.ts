@@ -8,9 +8,10 @@ import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { LoginNavComponent } from '../login-nav/login-nav.component';
 import { SurveyGaugesComponent } from './survey-main-page/survey-gauges/survey-gauges.component';
+import { RequestSurveyComponent } from './request-survey/request-survey.component';
 
 @NgModule({
-  declarations: [SurveyMainPageComponent, SurveyGaugesComponent],
+  declarations: [SurveyMainPageComponent, SurveyGaugesComponent, RequestSurveyComponent],
   imports: [CommonModule, SurveyRoutingModule, SharedModule],
   exports: [],
 })

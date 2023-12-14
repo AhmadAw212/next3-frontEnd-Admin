@@ -391,10 +391,6 @@ export class ReceptionComponent {
     }, 500);
   }
   getCarBrandFindByDescription(event: any) {
-    // this.addTpForm
-    //   .get('carBrandId')
-    //   ?.setValue();
-    // console.log((event.target as HTMLInputElement)?.value);
     clearTimeout(this.searchTimer);
     if (event.term) {
       this.searchTimer = setTimeout(() => {
@@ -411,6 +407,22 @@ export class ReceptionComponent {
       }, 500);
     }
   }
+
+  // // Function to handle input changes
+  // onInputChange(value: Event, selectedBrand: Brands) {
+  //   console.log((value.target as HTMLInputElement).value);
+  //   this.addTpForm
+  //     .get('carCarBrand')
+  //     ?.setValue((value.target as HTMLInputElement).value);
+  //   this.addTpForm.get('carBrandId')?.setValue(selectedBrand.id);
+  //   // this.addTpForm.get('carBrandId')?.setValue(selectedBrand.id);
+
+  //   // this.selectedBrandId = selectedId;
+  // }
+  // onSuggestionItemClick(selectedId: string) {
+  //   // Do something with the selected ID, e.g., update a variable, emit an event, etc.
+  //   console.log('Selected ID:', selectedId);
+  // }
   onBrandSelectionChange(selectedBrandCode: any) {
     const carBrandIdControl = this.addTpForm.get('carBrandId');
     const carCarTrademarkControl = this.addTpForm.get('carCarTrademark');

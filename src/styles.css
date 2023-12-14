@@ -262,7 +262,7 @@ label{
 .button-class {
   text-decoration: none;
   display: inline-block;
-  /* white-space: nowrap; */
+  white-space: nowrap;
   padding: 5px 8px; /* Adjusted padding to maintain the same height */
   color: #ffffff;
   min-width: 50px;

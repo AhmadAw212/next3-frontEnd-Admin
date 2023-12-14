@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SurveyMainPageComponent } from './survey-main-page/survey-main-page.component';
 import { AuthGuard } from 'src/app/shared/auth.guard';
 import { SurveyGaugesComponent } from './survey-main-page/survey-gauges/survey-gauges.component';
+import { RequestSurveyComponent } from './request-survey/request-survey.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
       {
         path: '',
         component: SurveyGaugesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'surveyRequest',
+        component: RequestSurveyComponent,
         canActivate: [AuthGuard],
       },
     ],
