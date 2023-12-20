@@ -27,7 +27,7 @@ export class CarSublinesComponent implements OnInit {
   reportDateTimeFormat?: string;
   updatedSublineValue?: CarSublines[] = [];
   selectedRow!: HTMLElement;
-  isLoading?: boolean = false;
+  isLoading: boolean = false;
   dateFormats?: any;
   dico?: any;
   constructor(

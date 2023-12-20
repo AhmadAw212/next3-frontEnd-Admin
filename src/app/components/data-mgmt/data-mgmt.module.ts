@@ -21,6 +21,8 @@ import { DataEntryComponent } from './data-entry/data-entry.component';
     NewDataEntryListViewComponent,
     ExpertFollowUpViewComponent,
     ClaimLabelReportComponent,
+    DataMgmtGaugesComponent,
+    DataMgmtMainPageComponent,
     // DataEntryComponent,
   ],
   imports: [

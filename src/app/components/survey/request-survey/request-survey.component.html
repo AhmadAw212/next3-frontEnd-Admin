@@ -1,5 +1,6 @@
-<div class="h3-header m-3">
+<div class="h3-header m-3 d-flex align-items-center justify-content-between">
   <h3>{{ dico?.dico_search || "dico_search" }}</h3>
+  <button class="button-class" (click)="searchSurvey()">Search</button>
 </div>
 <div class="container-fluid mt-3">
   <div class="row">
@@ -13,20 +14,26 @@
           </div>
           <div class="row p-3">
             <div class="col-md-4 col-sm-4">
-              <label for="" class="form-label"> Search Value </label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="col-md-4 col-sm-4">
-              <label for="" class="form-label"> Search By </label>
+              <label class="form-label"> Search By </label>
 
-              <select name="searchBy" id="searchBy" class="form-select">
+              <select
+                name="searchBy"
+                id="searchBy"
+                class="form-select"
+                [(ngModel)]="lossCarSearchCode"
+              >
                 <option *ngFor="let type of searchTypes" [value]="type.code">
                   {{ type.description }}
                 </option>
               </select>
             </div>
             <div class="col-md-4 col-sm-4">
-              <button class="button-class m-4">Search</button>
+              <label class="form-label"> Search Value </label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="lossCarSearchValue"
+              />
             </div>
           </div>
           <div class="row p-2">
@@ -66,14 +73,14 @@
           </div>
           <div class="row p-2">
             <div class="col-md-4">
-              <label for="" class="form-label"
+              <label class="form-label"
                 >{{ dico?.dico_company || "dico_company" }}
               </label>
               <select
                 id="company"
                 name="company"
                 class="form-select"
-                [(ngModel)]="company"
+                [(ngModel)]="insuranceId"
                 [disabled]="companies.length! <= 1"
               >
                 <option
@@ -95,6 +102,7 @@
                 id="fromDate"
                 class="form-control"
                 bsDatepicker
+                [(ngModel)]="fromDate"
                 [bsConfig]="{
                   dateInputFormat: 'DD/MM/YYYY',
                   containerClass: 'theme-dark-blue',
@@ -104,7 +112,7 @@
             </div>
 
             <div class="col-md-4">
-              <label for="" class="form-label">{{
+              <label class="form-label">{{
                 dico?.dico_to_date || "dico_to_date"
               }}</label>
               <input
@@ -113,6 +121,7 @@
                 id="toDate"
                 class="form-control"
                 bsDatepicker
+                [(ngModel)]="toDate"
                 [bsConfig]="{
                   dateInputFormat: 'DD/MM/YYYY',
                   containerClass: 'theme-dark-blue',
@@ -150,7 +159,7 @@
               <ng-select
                 name="surveyor"
                 [virtualScroll]="true"
-                [(ngModel)]="surveyorName"
+                [(ngModel)]="supplierId"
                 [appendTo]="'body'"
                 (search)="getSurveyorsName($event)"
                 [disabled]="isSurveyRequestInformationIncluded ? false : true"
@@ -173,6 +182,7 @@
               <input
                 type="checkbox"
                 class="m-1 ms-4 form-check-input"
+                [(ngModel)]="vip"
                 [disabled]="isSurveyRequestInformationIncluded ? false : true"
               />
             </div>
@@ -183,8 +193,14 @@
                 id=""
                 class="form-select"
                 [disabled]="isSurveyRequestInformationIncluded ? false : true"
+                [(ngModel)]="surveyStatus"
               >
-                <option value=""></option>
+                <option
+                  *ngFor="let status of surveyStatusOptions"
+                  [value]="status.value"
+                >
+                  {{ status.label }}
+                </option>
               </select>
             </div>
           </div>
@@ -197,17 +213,18 @@
       <div class="card h-100">
         <div class="card-body">
           <div class="row p-2">
-            <label for="" class="label-color">Search Result </label>
+            <label class="label-color">Search Result </label>
           </div>
 
           <div class="table-responsive">
             <table>
               <thead style="top: 0">
                 <tr>
+                  <th></th>
                   <th class="header-label">
                     {{ dico?.dico_insurance || "dico_insurance" }}
                   </th>
-                  <th></th>
+
                   <th></th>
                   <th class="header-label">
                     {{ dico?.dico_notification || "dico_notification" }}
@@ -218,6 +235,9 @@
 
                   <th>
                     {{ dico?.dico_brand || "dico_brand" }}
+                  </th>
+                  <th>
+                    {{ dico?.dico_trademark || "dico_trademark" }}
                   </th>
 
                   <th>
@@ -255,6 +275,7 @@
                       src="./assets/icons/flip_down.png"
                       class="icon"
                       alt=""
+                      (click)="onSelectSurvey(list, i)"
                     />
                   </td>
                   <td>
@@ -267,41 +288,43 @@
                   <td>
                     <img
                       src="assets/icons/add.png"
-                      [ngClass]="{
-                        'disabled-image': list.insured !== 'Insured'
-                      }"
                       alt=""
                       class="icon"
-                      *ngIf="list.insured !== 'Insured'"
+                      *ngIf="list.insured === 'Insured'"
+                      (click)="openAddTpp(list)"
                     />
                   </td>
-                  <td class="text-nowrap">{{ list.visa }}</td>
-                  <td class="text-nowrap">
-                    {{ list.recDesc }}
-                  </td>
-                  <td class="text-nowrap">{{ list.ownerName }}</td>
-
-                  <td class="text-nowrap">{{ list.brandTrademark }}</td>
-
+                  <td class="text-nowrap">{{ list.notification }}</td>
                   <td class="text-nowrap">
                     {{ list.plate }}
                   </td>
+                  <td class="text-nowrap">{{ list.brand }}</td>
+                  <td class="text-nowrap">{{ list.trademark }}</td>
+
+                  <td class="text-nowrap">{{ list.yearOfMark }}</td>
 
                   <td class="text-nowrap">
-                    {{ list.yom }}
+                    {{ list.fullName }}
                   </td>
-
-                  <td class="text-nowrap">{{ list.expert }}</td>
-
-                  <td class="text-nowrap">{{ list.notificationNatureDesc }}</td>
 
                   <td class="text-nowrap">
-                    {{ list.notificationStatus }}
+                    {{ list.garageName }}
                   </td>
 
-                  <!-- <td class="text-nowrap">
-                              {{ list.yom }}
-                            </td> -->
+                  <td class="text-nowrap">{{ list.townName }}</td>
+
+                  <td class="text-nowrap">{{ list.surveyStatus }}</td>
+
+                  <td class="text-nowrap">
+                    {{ list.productType }}
+                  </td>
+                  <td class="text-nowrap">
+                    {{ list.insured }}
+                  </td>
+
+                  <td class="text-nowrap">
+                    {{ list.surveysCount }}
+                  </td>
                 </tr>
               </tbody>
               <ng-template #noData>
@@ -315,35 +338,271 @@
                 </tr>
               </ng-template>
             </table>
+            <app-paginator
+              [totalItems]="totalItems"
+              [totalPages]="totalPages"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+            ></app-paginator>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<div class="container-fluid mt-3">
-  <div class="card h-100">
-    <div class="card-body">
-      <div class="row" style="float: right">
-        <div class="col-md-12 col-sm-4">
-          <button class="button-class ms-2 mb-2 mb-md-0">
+<ng-container *ngIf="render">
+  <!-- <div class="container-fluid mt-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2 col-sm-3">
+            <img
+              [src]="'data:image/jpeg;base64,' + selectedSurvey.companyLogo"
+              alt=""
+              style="width: 70px; height: 50px"
+            />
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <label>{{ dico?.dico_notification || "dico_notification" }}</label>
+            <p>{{ selectedSurvey.notification }}</p>
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <label>{{ dico?.dico_plate || "dico_plate" }}</label>
+            <p>{{ selectedSurvey.plate }}</p>
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <label>Test</label>
+            <p>Testing</p>
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <label>Test</label>
+            <p>Testing</p>
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <label>Test</label>
+            <p>Testing</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <div class="col-md-15">
+        <div style="float: right">
+          <button class="button-class ms-2">
             {{ dico?.dico_save || "dico_save" }}
           </button>
-          <button class="button-class ms-2 mb-2 mb-md-0">
+          <button class="button-class ms-2 m-2">
             {{ dico?.dico_send_mail || "dico_send_mail" }}
           </button>
-          <button class="button-class ms-2 mb-2 mb-md-0">
+          <button class="button-class ms-2 m-2">
             {{ dico?.dico_add_survey_request || "dico_add_survey_request" }}
           </button>
-          <button class="button-class ms-2 mb-2 mb-md-0">
+          <button class="button-class ms-2 m-2">
             {{ dico?.dico_survey_bill || "dico_survey_bill" }}
           </button>
+
+          <app-view-notes class="button-class ms-2 m-2"></app-view-notes>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row p-2">
+              <h5 class="card-title label-color">
+                {{ dico?.dico_type || "dico_type" }}
+              </h5>
+            </div>
+            <div class="row p-2">
+              <div class="col-lg-5 col-md-8 col-sm-8" style="width: 400px">
+                <table>
+                  <thead style="top: 0">
+                    <tr>
+                      <th class="p-2">survey/resurvey</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="p-2">test</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row p-2">
+              <div class="col-md-4">
+                <h5 class="card-title label-color">
+                  {{ dico?.dico_request || "dico_request" }}
+                </h5>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">Test</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_request_date || "dico_request_date"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_garage_name || "dico_garage_name"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_town || "dico_town"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_type || "dico_type"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 m-4">
+                <label class="form-label">{{
+                  dico?.dico_vip || "dico_vip"
+                }}</label>
+                <input type="checkbox" class="form-check-input ms-3" />
+              </div>
+            </div>
+
+            <div class="row p-3">
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_address || "dico_address"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_note || "dico_note"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_phone_number || "dico_phone_number"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_req_user || "dico_req_user"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+
+            <div class="row p-3">
+              <div class="col-lg-2 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_request_cancel || "dico_request_cancel"
+                }}</label>
+                <input type="checkbox" class="form-check-input ms-3" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_cancel_reason || "dico_cancel_reason"
+                }}</label>
+
+                <select name="cancelReas" id="cancelReas" class="form-select">
+                  <option value=""></option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_note || "dico_note"
+                }}</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_cancel_user || "dico_cancel_user"
+                }}</label>
+
+                <select name="cancelUser" id="cancelUser" class="form-select">
+                  <option value=""></option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label">{{
+                  dico?.dico_cancel_date || "dico_cancel_date"
+                }}</label>
+
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row p-2">
+              <h5 class="card-title label-color">
+                {{ dico?.dico_dispatch || "dico_dispatch" }}
+              </h5>
+            </div>
+            <div class="row p-3">
+              <div class="col-lg-8 col-md-8 col-sm-8">
+                <label class="form-label">{{
+                  dico?.dico_surveyor_name || "dico_surveyor_name"
+                }}</label>
+
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-lg-8 col-md-8 col-sm-8">
+                <label class="form-label">{{
+                  dico?.dico_survey_cost || "dico_survey_cost"
+                }}</label>
+
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-lg-8 col-md-8 col-sm-8">
+                <label class="form-label">{{
+                  dico?.dico_dispatch_date || "dico_dispatch_date"
+                }}</label>
+
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-lg-8 col-md-8 col-sm-8">
+                <label class="form-label">{{
+                  dico?.dico_dispatch_note || "dico_dispatch_note"
+                }}</label>
+
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
 <ng-template #surveyListExcel>
   <div class="grid-container panel-class-style">
     <button class="close-button" (click)="onNoClick()">
@@ -356,7 +615,7 @@
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-3">
-            <label for="" class="form-label"
+            <label class="form-label"
               >{{ dico?.dico_company || "dico_company" }}
             </label>
             <select
@@ -486,7 +745,7 @@
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-3">
-            <label for="" class="form-label"
+            <label class="form-label"
               >{{ dico?.dico_company || "dico_company" }}
             </label>
             <select
@@ -605,7 +864,7 @@
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-3">
-            <label for="" class="form-label"
+            <label class="form-label"
               >{{ dico?.dico_company || "dico_company" }}
             </label>
             <select
@@ -685,7 +944,9 @@
           </div>
 
           <div class="col-md-3 mt-4">
-            <button class="button-class">Excel</button>
+            <button class="button-class" (click)="getSurveyCheckingList()">
+              Excel
+            </button>
           </div>
         </div>
       </div>
@@ -705,7 +966,7 @@
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-3">
-            <label for="" class="form-label"
+            <label class="form-label"
               >{{ dico?.dico_company || "dico_company" }}
             </label>
             <select
@@ -792,5 +1053,183 @@
         </div>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #addTpLossCar>
+  <div class="grid-container m-2 panel-class-style">
+    <button class="close-button" (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 class="h5">{{ dico?.dico_add_tp || "dico_add_tp" }}</h2>
+  </div>
+  <div class="grid-container m-2">
+    <form [formGroup]="addTpForm" (ngSubmit)="addTpLossCarSubmit()">
+      <div class="row">
+        <div class="col-md-7 mb-3">
+          <img
+            [src]="'data:image/jpeg;base64,' + companyLogo"
+            alt=""
+            style="width: 50px; height: 50px"
+          />
+        </div>
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="visa" class="form-label">{{
+          dico?.dico_notification || "dico_notification"
+        }}</label>
+        <input
+          type="number"
+          name="visa"
+          id="visa"
+          class="form-control"
+          formControlName="visa"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="firstName" class="form-label">{{
+          dico?.dico_firstname || "dico_firstname"
+        }}</label>
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          class="form-control"
+          formControlName="carOwnerFirstName"
+        />
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="fatherName" class="form-label">{{
+          dico?.dico_fathername || "dico_fathername"
+        }}</label>
+        <input
+          type="text"
+          name="fatherName"
+          id="fatherName"
+          class="form-control"
+          formControlName="carOwnerFatherName"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="familyName" class="form-label">{{
+          dico?.dico_familyname || "dico_familyname"
+        }}</label>
+        <input
+          type="text"
+          name="familyName"
+          id="familyName"
+          class="form-control"
+          formControlName="carOwnerFamilyName"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="platePrefix" class="form-label">{{
+          dico?.dico_plate_char || "dico_plate_char"
+        }}</label>
+        <input
+          type="text"
+          name="platePrefix"
+          id="platePrefix"
+          class="form-control"
+          formControlName="carPlateChar"
+        />
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="PlateNum" class="form-label">{{
+          dico?.dico_plate_number || "dico_plate_number"
+        }}</label>
+        <input
+          type="number"
+          name="PlateNum"
+          id="PlateNum"
+          class="form-control"
+          formControlName="carPlateNum"
+        />
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="carBrand" class="form-label">{{
+          dico?.dico_car_brand || "dico_car_brand"
+        }}</label>
+        <ng-select
+          name="surveyor"
+          [virtualScroll]="true"
+          (search)="getCarBrandFindByDescription($event)"
+          (change)="onBrandSelectionChange($event)"
+          formControlName="carCarBrand"
+        >
+          <ng-option
+            *ngFor="let suggestion of brandsDesc"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="model" class="form-label">{{
+          dico?.dico_car_trademark || "dico_car_trademark"
+        }}</label>
+        <ng-select
+          name="carTrademark"
+          [virtualScroll]="true"
+          (search)="getCarTrademarkDescription($event)"
+          (change)="onTrademarkSelectionChange($event)"
+          formControlName="carCarTrademark"
+        >
+          <ng-option
+            *ngFor="let suggestion of tradeMarkDesc"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+      </div>
+
+      <div class="col-md-7 mb-3">
+        <label for="subModel" class="form-label">{{
+          dico?.dico_shape || "dico_shape"
+        }}</label>
+        <ng-select
+          name="carShape"
+          [virtualScroll]="true"
+          (search)="
+            getCarShapeIdByBrandIdAndTradeMarkIdAndShapeDescription($event)
+          "
+          formControlName="carCarShape"
+        >
+          <ng-option
+            *ngFor="let suggestion of shapeDescList"
+            [value]="suggestion.code"
+          >
+            {{ suggestion.description }}</ng-option
+          >
+        </ng-select>
+        <!-- <input
+            type="text"
+            name="subModel"
+            id="subModel"
+            class="form-control"
+            formControlName="carCarShape"
+          /> -->
+      </div>
+      <div class="col-md-7 mb-3">
+        <label for="yom" class="form-label">{{
+          dico?.dico_pre_risk_year || "dico_pre_risk_year"
+        }}</label>
+        <input
+          type="number"
+          name="yom"
+          id="yom"
+          class="form-control"
+          formControlName="carYearManfact"
+        />
+      </div>
+
+      <button type="submit" class="button-class">Save</button>
+    </form>
   </div>
 </ng-template>

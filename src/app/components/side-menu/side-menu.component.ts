@@ -61,8 +61,10 @@ export class SideMenuComponent implements OnInit {
       .subscribe(() => {
         if (this.sidenav.opened) {
           this.isOpened = this.route.firstChild !== null;
-          console.log(this.isOpened);
+          // console.log(this.isOpened);
           this.sidenav.close();
+        } else {
+          this.sidenav.open();
         }
       });
   }

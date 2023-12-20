@@ -28,6 +28,7 @@ export class CarsReportListComponent implements OnInit {
   isLoading: boolean = false;
   dateFormats?: any;
   dico?: any;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -126,6 +127,7 @@ export class CarsReportListComponent implements OnInit {
   }
 
   searchCarReport() {
+    this.loading = true;
     this.dataService.searchCarReportList(this.role!, this.sql!).subscribe({
       next: (res) => {
         this.carReport = res.data;
@@ -133,6 +135,9 @@ export class CarsReportListComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

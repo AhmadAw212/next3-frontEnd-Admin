@@ -37,6 +37,7 @@ export class EditUserComponent implements OnInit {
   selectedRole: string = '';
   username: string = '';
   name: string = '';
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -181,6 +182,7 @@ export class EditUserComponent implements OnInit {
 
   userSearch() {
     this.showProfileList = false;
+    this.loading = true;
     if (this.selectedRole === null) {
       this.selectedRole = '';
     }
@@ -194,6 +196,9 @@ export class EditUserComponent implements OnInit {
         error: (err) => {
           // this.authService.logout();
           console.log(err);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
   }

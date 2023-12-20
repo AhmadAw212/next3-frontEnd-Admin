@@ -25,6 +25,35 @@ import { DataEntryButtonComponent } from '../data-entry-button/data-entry-button
 import { DataEntryComponent } from '../data-mgmt/data-entry/data-entry.component';
 import { ViewNoteDialogComponent } from '../view-notes/view-note-dialog/view-note-dialog.component';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CompaniesDropdownComponent } from '../companies-dropdown/companies-dropdown.component';
+import { NgChartsModule } from 'ng2-charts';
+import { MatDialogModule } from '@angular/material/dialog';
+import {
+  NgxMatNativeDateModule,
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu';
+import { CompanySelectComponent } from '../company-select/company-select.component';
+import { GoogleMapComponent } from '../call-center/google-map/google-map.component';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { BackButtonComponent } from '../back-button/back-button.component';
+import { CreateNoDataDialogComponent } from '../call-center/new-hotline/create-no-data-dialog/create-no-data-dialog.component';
+import { ChangePassDialogComponent } from '../administrator/change-pass-dialog/change-pass-dialog.component';
+import { ViewPolicyComponent } from '../view-policy/view-policy.component';
+import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/view-policy-dialog.component';
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
 
@@ -42,9 +71,21 @@ import { RouterModule } from '@angular/router';
     DataEntryButtonComponent,
     DataEntryComponent,
     ViewNoteDialogComponent,
+    SpinnerComponent,
+    // GoogleMapComponent,
+    CompanySelectComponent,
+    CompaniesDropdownComponent,
+    BackButtonComponent,
+    ChangePassDialogComponent,
+    // CreateNoDataDialogComponent,
+    ViewPolicyComponent,
+    ViewPolicyDialogComponent,
   ],
   imports: [
     CommonModule,
+    NgxPaginationModule,
+    MatTabsModule,
+    Ng2GoogleChartsModule,
     MatPaginatorModule,
     NgSelectModule,
     BsDatepickerModule,
@@ -56,13 +97,36 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     MatListModule,
     NgxEditorModule,
+    MatDialogModule,
+    HttpClientModule,
+    MatMenuModule,
     RouterModule,
+    NgChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   exports: [
     GaugeComponentComponent,
+    CompaniesDropdownComponent,
     PaginatorComponent,
     MatPaginatorModule,
+    MatTabsModule,
+    NgChartsModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatCardModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    NgxMatNativeDateModule,
+    MatInputModule,
+    MatNativeDateModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    MatSliderModule,
+    Ng2GoogleChartsModule,
     NgSelectModule,
     BsDatepickerModule,
     MatTooltipModule,
@@ -70,6 +134,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MatExpansionModule,
     MatSidenavModule,
+    NgxPaginationModule,
     FormsModule,
     MatListModule,
     NgxEditorModule,
@@ -78,11 +143,18 @@ import { RouterModule } from '@angular/router';
     LoginNavComponent,
     NavbarComponent,
     SideMenuComponent,
+    CompanySelectComponent,
+    // GoogleMapComponent,
     ProfilesNavComponent,
     ViewNotesComponent,
     DataEntryButtonComponent,
     DataEntryComponent,
     ViewNoteDialogComponent,
+    BackButtonComponent,
+    SpinnerComponent,
+    ViewPolicyComponent,
+    ViewPolicyDialogComponent,
+    // CreateNoDataDialogComponent,
   ],
 })
 export class SharedModule {}

@@ -33,8 +33,9 @@
 .profile-box h2 {
   font-size: 12px; /* Decreased font size */
   margin-top: 10px;
-  color: #333;
+  /* color: #333; */
 }
+
 
 @media (max-width: 767px) {
   .profile-box {

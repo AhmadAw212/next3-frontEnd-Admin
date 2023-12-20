@@ -2,15 +2,10 @@
   <mat-sidenav
     #sidenav
     mode="side"
-    [opened]="screenWidth! > 1500"
-    [mode]="screenWidth! > 1500 ? 'side' : 'over'"
+    [opened]="screenWidth! > 840"
+    [mode]="screenWidth! > 840 ? 'side' : 'over'"
   >
     <div class="row-class mt-3 ms-2">
-      <div class="col">{{ dico?.dico_menu || "dico_menu" }}</div>
-
-      <div class="col-12">
-        <hr class="hr" />
-      </div>
       <!-- <hr class="hr" /> -->
       <mat-nav-list>
         <a
@@ -70,10 +65,7 @@
           {{ dico?.dico_phone_index || "dico_phone_index" }}
         </a>
 
-        <mat-expansion-panel
-          style="background-color: rgb(237, 243, 245)"
-          *ngIf="hasPerm('admUserManagment')"
-        >
+        <mat-expansion-panel *ngIf="hasPerm('admUserManagment')">
           <mat-expansion-panel-header>
             <mat-panel-title class="list-class">
               {{ dico?.dico_user_management || "dico_user_management" }}
@@ -100,7 +92,6 @@
         <br />
         <!-- <hr class="hr" /> -->
         <mat-expansion-panel
-          style="background-color: rgb(237, 243, 245)"
           *ngIf="
             hasPerm('admCoreConfiguration') ||
             hasPerm('admCoreResourceBundle') ||
@@ -162,7 +153,6 @@
             <hr class="hr" />
           </div> -->
         <mat-expansion-panel
-          style="background-color: rgb(237, 243, 245)"
           *ngIf="
             hasPerm('admCarsBrand') ||
             hasPerm('admCarsCovers') ||

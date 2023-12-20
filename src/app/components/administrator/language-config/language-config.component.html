@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_language_configuration || "dico_language_configuration" }}
 
@@ -12,110 +12,142 @@
     </button>
   </h3>
 </div>
-<div class="admin-container container-fluid">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div class="user-inputs">
-    <form (ngSubmit)="resourceBundleSearch()">
-      <label>{{ dico?.dico_resource_key || "dico_resource_key" }}:</label>
-      <input type="text" id="key" name="key" [(ngModel)]="key" />
 
-      <label>{{ dico?.dico_resource_value || "dico_resource_value" }}:</label>
-      <input type="text" id="value" name="value" [(ngModel)]="value" />
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 300px; overflow: auto">
+    <div class="card-body">
+      <form (ngSubmit)="resourceBundleSearch()">
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_resource_key || "dico_resource_key" }}:</label
+            >
+            <input
+              type="text"
+              id="key"
+              name="key"
+              [(ngModel)]="key"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_resource_value || "dico_resource_value" }}:</label
+            >
+            <input
+              type="text"
+              id="value"
+              name="value"
+              [(ngModel)]="value"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button type="submit" class="button-class">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
 
-      <button type="submit" class="btn btn-primary">
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-      </button>
-    </form>
-    <div class="btn-group">
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="openCoreConfigDialog()"
-        *ngIf="hasPerm('admAddData')"
-      >
-        {{ dico?.dico_add || "dico_add" }}
-      </button>
-      <button
-        type="button"
-        (click)="updateResouce()"
-        class="btn btn-primary"
-        *ngIf="hasPerm('admUpdateData')"
-        style="margin-left: 8px"
-      >
-        {{ dico?.dico_save || "dico_save" }}
-      </button>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              class="button-class"
+              (click)="openCoreConfigDialog()"
+              *ngIf="hasPerm('admAddData')"
+            >
+              {{ dico?.dico_add || "dico_add" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              (click)="updateResouce()"
+              class="button-class"
+              *ngIf="hasPerm('admUpdateData')"
+            >
+              {{ dico?.dico_save || "dico_save" }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_locale || "dico_locale" }}</th>
+              <th>{{ dico?.dico_resource_key || "dico_resource_key" }}</th>
+              <th style="width: 150px">
+                {{ dico?.dico_resource_value || "dico_resource_value" }}
+              </th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_updated_by || "dico_updated_by" }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody
+            *ngIf="resourceData!.length > 0; else noData"
+            (click)="highlightRow($event)"
+          >
+            <tr *ngFor="let resource of resourceData; trackBy: trackLangById">
+              <td>{{ resource.id }}</td>
+              <td>
+                {{ resource.locale }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, resource, 'resourceKey')"
+              >
+                {{ resource.resourceKey }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, resource, 'resourceValue')"
+                style="max-width: 200px"
+              >
+                {{ resource.resourceValue }}
+              </td>
+              <td>
+                {{
+                  resource.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ resource.sysCreatedBy }}</td>
+              <td>
+                {{
+                  resource.sysUpdatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ resource.sysUpdatedBy }}</td>
+              <td>
+                <mat-icon
+                  (click)="deleteResource(resource.id!)"
+                  *ngIf="hasPerm('admDeleteData')"
+                  >delete</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
     </div>
   </div>
-
-  <table class="table-responsive-sm">
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_id || "dico_id" }}</th>
-        <th>{{ dico?.dico_locale || "dico_locale" }}</th>
-        <th>{{ dico?.dico_resource_key || "dico_resource_key" }}</th>
-        <th style="width: 150px">
-          {{ dico?.dico_resource_value || "dico_resource_value" }}
-        </th>
-        <th>
-          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th>
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th>{{ dico?.dico_updated_by || "dico_updated_by" }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody
-      *ngIf="resourceData!.length > 0; else noData"
-      (click)="highlightRow($event)"
-    >
-      <tr *ngFor="let resource of resourceData; trackBy: trackLangById">
-        <td>{{ resource.id }}</td>
-        <td>
-          {{ resource.locale }}
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, resource, 'resourceKey')"
-        >
-          {{ resource.resourceKey }}
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, resource, 'resourceValue')"
-          style="max-width: 200px"
-        >
-          {{ resource.resourceValue }}
-        </td>
-        <td>
-          {{
-            resource.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ resource.sysCreatedBy }}</td>
-        <td>
-          {{
-            resource.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ resource.sysUpdatedBy }}</td>
-        <td>
-          <mat-icon
-            (click)="deleteResource(resource.id!)"
-            *ngIf="hasPerm('admDeleteData')"
-            >delete</mat-icon
-          >
-        </td>
-      </tr>
-    </tbody>
-    <ng-template #noData>
-      <tr>
-        <td colspan="9">
-          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-        </td>
-      </tr>
-    </ng-template>
-  </table>
 </div>

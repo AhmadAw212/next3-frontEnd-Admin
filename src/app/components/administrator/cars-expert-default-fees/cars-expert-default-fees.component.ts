@@ -26,6 +26,7 @@ export class CarsExpertDefaultFeesComponent implements OnInit {
   companies?: CompanyBranchList[];
   isLoading?: boolean = false;
   currency?: any;
+
   updatedExpertFees: ExpertDefaultFees[] = [];
   constructor(
     private dataService: DataServiceService,
@@ -150,6 +151,7 @@ export class CarsExpertDefaultFeesComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       },
       complete: () => {
         this.isLoading = false;

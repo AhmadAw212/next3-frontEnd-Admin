@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_car_supplier || "dico_car_supplier" }}
 
@@ -13,74 +13,100 @@
   </h3>
 </div>
 
-<div class="admin-container container-fluid" style="height: 200px">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div class="user-inputs">
-    <form (ngSubmit)="searchCarSupplier()">
-      <label for="name"
-        >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
-      >
-      <input type="text" id="name" name="name" [(ngModel)]="name" />
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 300px; overflow: auto">
+    <div class="card-body">
+      <form (ngSubmit)="searchCarSupplier()">
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="name"
+              >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="name"
+              name="name"
+              [(ngModel)]="name"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="type"
+              >{{ dico?.dico_type || "dico_type" }} :</label
+            >
+            <select
+              id="type"
+              name="type"
+              class="input-dropdown"
+              class="form-select"
+              [(ngModel)]="selectedType"
+            >
+              <option *ngFor="let type of suppType" [value]="type.code">
+                {{ type.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="mobile"
+              >{{ dico?.dico_mobile_number || "dico_mobile_number" }}:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="mobile"
+              name="mobile"
+              [(ngModel)]="mobile"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2 mt-4">
+            <button class="button-class" type="submit">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              class="button-class"
+              type="button"
+              (click)="openAddSupplierDialog()"
+              *ngIf="hasPerm('admAddData')"
+            >
+              {{ dico?.dico_add_supplier_1 || "dico_add_supplier_1" }}
+            </button>
+          </div>
+        </div>
+      </form>
 
-      <label for="type">{{ dico?.dico_type || "dico_type" }} :</label>
-      <select
-        id="type"
-        name="type"
-        class="input-dropdown"
-        [(ngModel)]="selectedType"
-      >
-        <option *ngFor="let type of suppType" [value]="type.code">
-          {{ type.description }}
-        </option>
-      </select>
-
-      <label for="mobile"
-        >{{ dico?.dico_mobile_number || "dico_mobile_number" }}:</label
-      >
-      <input type="text" id="mobile" name="mobile" [(ngModel)]="mobile" />
-
-      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
-    </form>
-    <div class="admin-button">
-      <button
-        type="button"
-        (click)="openAddSupplierDialog()"
-        *ngIf="hasPerm('admAddData')"
-      >
-        {{ dico?.dico_add_supplier_1 || "dico_add_supplier_1" }}
-      </button>
-    </div>
-  </div>
-
-  <table class="responsive-table" id="table">
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_name || "dico_name" }}</th>
-        <th>{{ dico?.dico_interm || "dico_interm" }}</th>
-        <th>{{ dico?.dico_num || "dico_num" }}</th>
-        <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
-        <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
-        <th>{{ dico?.dico_tva_num || "dico_tva_num" }}</th>
-        <th>{{ dico?.dico_grade || "dico_grade" }}</th>
-        <th>
-          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th>
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-        <!-- <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th> -->
-      </tr>
-    </thead>
-    <tbody *ngIf="carSupplier?.length! > 0; else noData">
-      <tr
-        *ngFor="let supplier of carSupplier; trackBy: trackSupplierById"
-        (click)="highlightRow($event); showSuppList(supplier)"
-      >
-        <td>{{ supplier.fullName }}</td>
-        <td>
-          <!-- <select
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_name || "dico_name" }}</th>
+              <th>{{ dico?.dico_interm || "dico_interm" }}</th>
+              <th>{{ dico?.dico_num || "dico_num" }}</th>
+              <th>{{ dico?.dico_bus_phone || "dico_bus_phone" }}</th>
+              <th>{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}</th>
+              <th>{{ dico?.dico_tva_num || "dico_tva_num" }}</th>
+              <th>{{ dico?.dico_grade || "dico_grade" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <!-- <th>{{ dico?.dico_deactivate_user || "dico_deactivate_user" }}</th> -->
+            </tr>
+          </thead>
+          <tbody *ngIf="carSupplier?.length! > 0; else noData">
+            <tr
+              *ngFor="let supplier of carSupplier; trackBy: trackSupplierById"
+              (click)="highlightRow($event); showSuppList(supplier)"
+            >
+              <td>{{ supplier.fullName }}</td>
+              <td>
+                <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.interm"
                 disabled
@@ -89,17 +115,17 @@
                   {{ type.description }}
                 </option>
               </select> -->
-          {{ supplier.intermDesc }}
-        </td>
+                {{ supplier.intermDesc }}
+              </td>
 
-        <td>{{ supplier.number }}</td>
+              <td>{{ supplier.number }}</td>
 
-        <td>{{ supplier.bus_phone }}</td>
-        <td>{{ supplier.mobile_number }}</td>
-        <td>{{ supplier.tva_number }}</td>
+              <td>{{ supplier.bus_phone }}</td>
+              <td>{{ supplier.mobile_number }}</td>
+              <td>{{ supplier.tva_number }}</td>
 
-        <td>
-          <!-- <select
+              <td>
+                <!-- <select
                 class="input-dropdown"
                 [(ngModel)]="supplier.grade_id"
                 disabled
@@ -108,41 +134,49 @@
                   {{ grade.description }}
                 </option>
               </select> -->
-          {{ supplier.gradeDesc }}
-        </td>
+                {{ supplier.gradeDesc }}
+              </td>
 
-        <td>
-          {{
-            supplier.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ supplier.sysCreatedBy }}</td>
-        <td>
-          {{
-            supplier.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ supplier.sysUpdatedBy }}</td>
-        <!-- <td>
+              <td>
+                {{
+                  supplier.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ supplier.sysCreatedBy }}</td>
+              <td>
+                {{
+                  supplier.sysUpdatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ supplier.sysUpdatedBy }}</td>
+              <!-- <td>
               <button>{{ dico?.dico_deactivate || "dico_deactivate" }}</button>
             </td> -->
-      </tr>
-    </tbody>
-  </table>
-  <ng-template #noData>
-    <tr>
-      <td colspan="5">
-        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-      </td>
-    </tr>
-  </ng-template>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
+          </tr>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="admin-container container-fluid" *ngIf="showMoreInfo">
-  <app-update-car-supp-form
-    [supplierType]="suppType"
-    [selectedSupplier]="selectedSupplier"
-    (supplierUpdated)="handleSupplierUpdated($event)"
-    [showDetails]="showMoreInfo"
-  ></app-update-car-supp-form>
+<div class="container-fluid mt-3" *ngIf="showMoreInfo">
+  <div class="card" style="max-height: 300px; overflow: auto">
+    <div class="card-body">
+      <app-update-car-supp-form
+        [supplierType]="suppType"
+        [selectedSupplier]="selectedSupplier"
+        (supplierUpdated)="handleSupplierUpdated($event)"
+        [showDetails]="showMoreInfo"
+      ></app-update-car-supp-form>
+    </div>
+  </div>
 </div>

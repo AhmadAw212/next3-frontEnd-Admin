@@ -31,6 +31,7 @@ export class CoreDomainComponent implements OnInit {
   selectedRow!: HTMLElement;
   isLoading?: boolean = false;
   dico?: any;
+  loading: boolean = false;
   dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
@@ -231,6 +232,7 @@ export class CoreDomainComponent implements OnInit {
   }
 
   getDomainValuesData(id: string, domain: CoreDomain) {
+    this.loading = true;
     // console.log(domain);
     this.showDomainValue = true;
     this.domain = domain;
@@ -242,12 +244,16 @@ export class CoreDomainComponent implements OnInit {
       error: (err) => {
         this.alertifyService.error(err.error.message);
       },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
   coreDomainSearch() {
+    this.loading = true;
     this.showDomainValue = false;
-    this.isLoading = true;
+
     this.dataService.coreDomainSearch(this.code, this.description).subscribe({
       next: (res) => {
         this.domainData = res.data;
@@ -256,7 +262,7 @@ export class CoreDomainComponent implements OnInit {
         this.alertifyService.error(err.error.message);
       },
       complete: () => {
-        this.isLoading = false;
+        this.loading = false;
       },
     });
   }

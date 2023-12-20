@@ -24,16 +24,21 @@ export class ProfilesNavComponent {
       next: (profiles) => {
         // this.userProfiles = profiles.data;
         this.activeLink = profiles.data.code;
-        this.userProfiles = profiles.data
-          .map((profile: CoreProfile) => {
-            // console.log(`data:image/jpeg;base64,${profile.logo}`);
-            return {
-              ...profile,
-              logo: `data:image/jpeg;base64,${profile.logo}`,
-            };
-          })
-          .filter((profile: CoreProfile) => profile.code === 'adm');
-        console.log(this.userProfiles);
+        this.userProfiles = profiles.data.map((profile: CoreProfile) => {
+          // console.log(`data:image/jpeg;base64,${profile.logo}`);
+          return {
+            ...profile,
+            logo: `data:image/jpeg;base64,${profile.logo}`,
+          };
+        });
+        // .filter(
+        //   (profile: CoreProfile) =>
+        //     profile.code === 'adm' ||
+        //     profile.code === 'cc' ||
+        //     profile.code === 'dm' ||
+        //     profile.code === 'ds'
+        // );
+        // console.log(this.userProfiles);
       },
       error: (err) => {
         console.log(err);

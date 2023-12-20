@@ -24,6 +24,7 @@ export class UserProfilesComponent implements OnInit, OnChanges {
   showRoleList = false;
   @Input() selectedUser?: CoreUser;
   selectedProfile?: Profiles;
+  loading: boolean = false;
   dico?: any;
   constructor(
     private dataService: DataServiceService,
@@ -59,6 +60,7 @@ export class UserProfilesComponent implements OnInit, OnChanges {
   }
 
   getProfiles() {
+    this.loading = true;
     const userName = this.selectedUser?.userName!;
     this.dataService.getUserProfiles(userName).subscribe({
       next: (res: ApiResponse) => {
@@ -67,6 +69,9 @@ export class UserProfilesComponent implements OnInit, OnChanges {
       error: (err) => {
         // this.authService.logout();
         console.log(err.error);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

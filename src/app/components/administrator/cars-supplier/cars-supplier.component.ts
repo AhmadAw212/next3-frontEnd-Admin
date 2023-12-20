@@ -192,6 +192,7 @@ export class CarsSupplierComponent implements OnInit {
   }
 
   searchCarSupplier() {
+    this.isLoading = true;
     this.dataService
       .findCarSupplier(this.name!, this.selectedType!, this.mobile!)
       .subscribe({
@@ -201,6 +202,7 @@ export class CarsSupplierComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;

@@ -8,7 +8,7 @@
     border: none;
     cursor: pointer;
     text-decoration: none; /* Remove default underline */
-    position: relative;
+    /* position: relative; */
     transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions for color and background */
     margin-left: 30px;
     padding-bottom: 20px;
@@ -45,6 +45,7 @@
   .dropdown-content {
     display: none;
     flex-wrap: wrap;
+
     position: absolute;
     background-color: #f9f9f9;
     min-width: 1000px; /* Increase the minimum width to accommodate larger size */
@@ -55,6 +56,7 @@
     opacity: 0;
     transform: scaleY(0.8);
     transform-origin: top;
+
     transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   }
   
@@ -65,7 +67,7 @@
     text-decoration: none;
     display: block;
     transition: background-color 0.3s ease, color 0.3s ease;
-    flex: 1 1 calc(33.33% - 40px); /* Adjust the width to make three items fit on a line */
+    flex: 1 1 calc(20% - 20px); /* Adjust the width to make three items fit on a line */
     box-sizing: border-box; /* Include padding and border in the total width */
   }
   

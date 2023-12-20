@@ -37,6 +37,7 @@ export class CarsCoverComponent implements OnInit {
   dateFormats?: any;
   selectedCover?: CarCover;
   showRiskCover?: boolean = false;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -159,6 +160,7 @@ export class CarsCoverComponent implements OnInit {
   }
 
   searchCarCover() {
+    this.loading = true;
     this.dataService
       .searchCarCover(this.company!, this.code!, this.description!)
       .subscribe({
@@ -168,6 +170,9 @@ export class CarsCoverComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
   }

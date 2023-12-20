@@ -31,6 +31,7 @@ export class CarShapeComponent implements OnInit {
   @Output() sendShapeId = new EventEmitter<string>();
   selectedShapeId?: string;
   dateFormats?: any;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -119,6 +120,7 @@ export class CarShapeComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   searchCarInfo(shapeId: string, selectedCarShapeId: CarShape) {
+    this.loading = true;
     this.showCarInfo = true;
     this.selectedShape = selectedCarShapeId;
     this.dataService.getcarInfo(shapeId).subscribe({
@@ -129,11 +131,15 @@ export class CarShapeComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
   searchCarShape() {
     const trademarkId = this.selectedTrademark?.id!;
+    this.loading = true;
     this.dataService.searchCarShape(trademarkId).subscribe({
       next: (res) => {
         this.carShape = res.data.map((res: CarShape) => {
@@ -146,6 +152,9 @@ export class CarShapeComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

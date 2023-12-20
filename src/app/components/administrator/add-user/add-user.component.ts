@@ -87,7 +87,11 @@ export class AddUserComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       userName: [
         '',
-        [Validators.required, Validators.minLength(2), this.uppercaseValidator],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          this.uppercaseValidator.bind(this),
+        ],
       ],
       email: ['', [Validators.required, Validators.email]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -135,6 +139,7 @@ export class AddUserComponent implements OnInit {
       userEmailSignature: [''],
     });
   }
+
   uppercaseValidator(control: AbstractControl): { [key: string]: any } | null {
     const value: string = control.value;
 
@@ -160,14 +165,26 @@ export class AddUserComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     this.file = file;
+    for (const controlName in this.userForm.controls) {
+      if (this.userForm.controls.hasOwnProperty(controlName)) {
+        const control = this.userForm.get(controlName);
+
+        // Check if the control is invalid
+        if (control?.invalid) {
+          console.log(`${controlName} field is invalid.`);
+        }
+      }
+    }
     // this.contentType = file.type;
     // this.fileName = file.name;
     // this.filePath = event.target.value;
   }
   addUser(): void {
     if (this.userForm.valid) {
+      this.isLoading = true;
       const formData = { ...this.userForm.value };
       // const wrappedValue = `<div><p>${formData.userEmailSignature}</p></div>`;
+      // Iterate through all form controls
 
       // formData.userEmailSignature = wrappedValue;
 
@@ -178,7 +195,11 @@ export class AddUserComponent implements OnInit {
           } else this.alertify.success(res.message!);
         },
         error: (err) => {
-          this.alertify.error(err.error.message);
+          console.error(err);
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
     }

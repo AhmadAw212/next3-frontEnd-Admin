@@ -61,7 +61,7 @@ export class CarsBrandComponent implements OnInit {
   }
   selectTrademarkId(data: string) {
     this.selectedTrademarkId = data;
-    console.log(this.selectedTrademarkId);
+    // console.log(this.selectedTrademarkId);
   }
 
   exportToExcel() {
@@ -154,6 +154,7 @@ export class CarsBrandComponent implements OnInit {
   }
 
   carsTrademarkSearch(id: string, brand: CarsBrand) {
+    this.isLoading = true;
     if (brand.carBrandId !== this.carBrandData?.carBrandId) {
       this.showTrademark = false;
     }
@@ -172,6 +173,9 @@ export class CarsBrandComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

@@ -1,214 +1,257 @@
-<h3 class="h3-header">
+<h3 class="h3-header m-3">
   {{ dico?.dico_expert_config || "dico_expert_config" }}
 </h3>
-<div class="admin-container container-fluid" style="height: 150px">
-  <div class="form-container">
-    <form (ngSubmit)="expertSearch()">
-      <div class="form-row">
-        <div class="form-field">
-          <label>{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label>
-          <ng-select
-            appendTo="body"
-            name="supplierName"
-            (search)="searchSupplierByName($event)"
-            (change)="onSupplierChange()"
-            [(ngModel)]="selectedSupplier"
-          >
-            <ng-option *ngFor="let expert of expertSupplier" [value]="expert">{{
-              expert.fullName
-            }}</ng-option>
-          </ng-select>
-        </div>
-        <div class="form-field">
-          <label for="group">{{ dico?.dico_group || "dico_group" }}:</label>
-          <select name="group" id="group" [(ngModel)]="group">
-            <option *ngFor="let group of expGroup" [value]="group.code">
-              {{ group.description }}
-            </option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label
-            >{{ dico?.dico_bodily_injuries || "dico_bodily_injuries" }}:</label
-          >
-          <select
-            name="bodilyInjury"
-            id="bodilyInjury"
-            [(ngModel)]="bodilyInjury"
-          >
-            <option *ngFor="let yn of domainYN" [value]="yn.code">
-              {{ yn.description }}
-            </option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="vip">{{ dico?.dico_vip || "dico_vip" }}:</label>
-          <select name="vip" id="vip" [(ngModel)]="vipCode">
-            <option *ngFor="let yn of domainYN" [value]="yn.code">
-              {{ yn.description }}
-            </option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="exclusive"
-            >{{ dico?.dico_exclusive || "dico_exclusive" }}:</label
-          >
-          <select name="exclusive" id="exclusive" [(ngModel)]="exclusiveCode">
-            <option *ngFor="let yn of domainYN" [value]="yn.code">
-              {{ yn.description }}
-            </option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="insurance"
-            >{{ dico?.dico_insurance || "dico_insurance" }}:</label
-          >
-          <select
-            id="insurance"
-            name="insurance"
-            required
-            [(ngModel)]="insuranceId"
-          >
-            <option *ngFor="let company of companies" [value]="company.code">
-              {{ company.description }}
-            </option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>{{ dico?.dico_territory || "dico_territory" }}:</label>
-          <ng-select
-            appendTo="body"
-            name="territory"
-            id="territory"
-            (search)="territoryAddress($event)"
-            [(ngModel)]="territoryCode"
-          >
-            <ng-option
-              *ngFor="let territory of terrAddress"
-              [value]="territory.code"
-              >{{ territory.description }}</ng-option
+<div class="container-fluid mt-3">
+  <div class="card">
+    <div class="card-body">
+      <form (ngSubmit)="expertSearch()">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_supplier_name || "dico_supplier_name" }}:</label
             >
-          </ng-select>
+            <ng-select
+              appendTo="body"
+              name="supplierName"
+              (search)="searchSupplierByName($event)"
+              (change)="onSupplierChange()"
+              [(ngModel)]="selectedSupplier"
+            >
+              <ng-option
+                *ngFor="let expert of expertSupplier"
+                [value]="expert"
+                >{{ expert.fullName }}</ng-option
+              >
+            </ng-select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="group"
+              >{{ dico?.dico_group || "dico_group" }}:</label
+            >
+            <select
+              class="form-select"
+              name="group"
+              id="group"
+              [(ngModel)]="group"
+            >
+              <option *ngFor="let group of expGroup" [value]="group.code">
+                {{ group.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{
+                dico?.dico_bodily_injuries || "dico_bodily_injuries"
+              }}:</label
+            >
+            <select
+              name="bodilyInjury"
+              id="bodilyInjury"
+              [(ngModel)]="bodilyInjury"
+              class="form-select"
+            >
+              <option *ngFor="let yn of domainYN" [value]="yn.code">
+                {{ yn.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="vip"
+              >{{ dico?.dico_vip || "dico_vip" }}:</label
+            >
+            <select
+              class="form-select"
+              name="vip"
+              id="vip"
+              [(ngModel)]="vipCode"
+            >
+              <option *ngFor="let yn of domainYN" [value]="yn.code">
+                {{ yn.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="exclusive"
+              >{{ dico?.dico_exclusive || "dico_exclusive" }}:</label
+            >
+            <select
+              class="form-select"
+              name="exclusive"
+              id="exclusive"
+              [(ngModel)]="exclusiveCode"
+            >
+              <option *ngFor="let yn of domainYN" [value]="yn.code">
+                {{ yn.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="insurance"
+              >{{ dico?.dico_insurance || "dico_insurance" }}:</label
+            >
+            <select
+              class="form-select"
+              id="insurance"
+              name="insurance"
+              required
+              [(ngModel)]="insuranceId"
+            >
+              <option *ngFor="let company of companies" [value]="company.code">
+                {{ company.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_territory || "dico_territory" }}:</label
+            >
+            <ng-select
+              appendTo="body"
+              name="territory"
+              id="territory"
+              (search)="territoryAddress($event)"
+              [(ngModel)]="territoryCode"
+            >
+              <ng-option
+                *ngFor="let territory of terrAddress"
+                [value]="territory.code"
+                >{{ territory.description }}</ng-option
+              >
+            </ng-select>
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2 p-4">
+            <button type="submit" class="button-class">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
         </div>
-        <div class="form-field">
-          <button type="submit" class="btn btn-primary">
-            {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-          </button>
+      </form>
+      <div class="disabled-inputs">
+        <label class="form-label">{{
+          dico?.dico_supplier_details || "dico_supplier_details"
+        }}</label>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="fullName"
+            >{{ dico?.dico__full_name || "dico__full_name" }}:</label
+          >
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            [(ngModel)]="fullName"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="firstName"
+            >{{ dico?.dico_first_name || "dico_first_name" }}:</label
+          >
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            [(ngModel)]="firstName"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label"
+            >{{ dico?.dico_father_name || "dico_father_name" }}:</label
+          >
+          <input
+            type="text"
+            id="fatherName "
+            name="fatherName"
+            [(ngModel)]="fatherName"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="prefixFamily"
+            >{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label
+          >
+          <input
+            type="text"
+            id="prefixFamily"
+            name="prefixFamily"
+            [(ngModel)]="prefixFamily"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="familyName"
+            >{{ dico?.dico_family_name || "dico_family_name" }}:</label
+          >
+          <input
+            type="text"
+            id="familyName"
+            name="familyName"
+            [(ngModel)]="familyName"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="arabicName"
+            >{{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label
+          >
+          <input
+            type="text"
+            id="arabicName"
+            name="arabicName"
+            [(ngModel)]="arabicName"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="mobilePhone"
+            >{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label
+          >
+          <input
+            type="text"
+            id="mobilePhone"
+            name="mobilePhone"
+            [(ngModel)]="mobilePhone"
+            [disabled]="true"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+          <label class="form-label" for="sms"
+            >{{ dico?.dico_sms || "dico_sms" }}:</label
+          >
+          <input
+            type="checkbox"
+            id="sms"
+            name="sms"
+            [(ngModel)]="sms"
+            [disabled]="true"
+          />
         </div>
       </div>
-    </form>
-  </div>
-
-  <div class="disabled-inputs">
-    <label>{{ dico?.dico_supplier_details || "dico_supplier_details" }}</label>
-
-    <div class="form-field">
-      <label for="fullName"
-        >{{ dico?.dico__full_name || "dico__full_name" }}:</label
-      >
-      <input
-        type="text"
-        id="fullName"
-        name="fullName"
-        [(ngModel)]="fullName"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="firstName"
-        >{{ dico?.dico_first_name || "dico_first_name" }}:</label
-      >
-      <input
-        type="text"
-        id="fullName"
-        name="fullName"
-        [(ngModel)]="firstName"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label>{{ dico?.dico_father_name || "dico_father_name" }}:</label>
-      <input
-        type="text"
-        id="fatherName "
-        name="fatherName"
-        [(ngModel)]="fatherName"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="prefixFamily"
-        >{{ dico?.dico_prefix_fam || "dico_prefix_fam" }}:</label
-      >
-      <input
-        type="text"
-        id="prefixFamily"
-        name="prefixFamily"
-        [(ngModel)]="prefixFamily"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="familyName"
-        >{{ dico?.dico_family_name || "dico_family_name" }}:</label
-      >
-      <input
-        type="text"
-        id="familyName"
-        name="familyName"
-        [(ngModel)]="familyName"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="arabicName"
-        >{{ dico?.dico_arabic_name || "dico_arabic_name" }}:</label
-      >
-      <input
-        type="text"
-        id="arabicName"
-        name="arabicName"
-        [(ngModel)]="arabicName"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="mobilePhone"
-        >{{ dico?.dico_mobile_phone || "dico_mobile_phone" }}:</label
-      >
-      <input
-        type="text"
-        id="mobilePhone"
-        name="mobilePhone"
-        [(ngModel)]="mobilePhone"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="sms">{{ dico?.dico_sms || "dico_sms" }}:</label>
-      <input
-        type="checkbox"
-        id="sms"
-        name="sms"
-        [(ngModel)]="sms"
-        [disabled]="true"
-      />
     </div>
   </div>
+
+  <app-expert-search-results
+    [expertSearchResult]="expertSearchResult"
+    [expGroup]="expGroup"
+    [selectedSupplier]="selectedSupplier"
+    [isLoading]="isLoading"
+    (showcompany)="onShowCompany($event)"
+    [showExpertCompany]="showExpertCompany"
+  ></app-expert-search-results>
 </div>
-
-<app-expert-search-results
-  [expertSearchResult]="expertSearchResult"
-  [expGroup]="expGroup"
-  [selectedSupplier]="selectedSupplier"
-  [isLoading]="isLoading"
-  (showcompany)="onShowCompany($event)"
-  [showExpertCompany]="showExpertCompany"
-></app-expert-search-results>

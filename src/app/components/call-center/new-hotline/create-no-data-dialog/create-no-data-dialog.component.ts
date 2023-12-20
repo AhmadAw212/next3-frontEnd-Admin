@@ -159,7 +159,7 @@ export class CreateNoDataDialogComponent implements OnInit {
           const formattedDate = this.datePipe.transform(
             new Date(),
             this.dateFormat('reportDateTimeFormat')
-          ); // Change the format as needed
+          );
           this.myForm.get('distributionNoDataDate')?.setValue(formattedDate);
 
           this.myForm.get('distributionNoDataUser')?.setValue(this.userCode);
@@ -174,7 +174,6 @@ export class CreateNoDataDialogComponent implements OnInit {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
@@ -199,10 +198,6 @@ export class CreateNoDataDialogComponent implements OnInit {
       this.dateFormat('reportDateTimeFormat')
     );
     this.distributionNoDataEffDate = date;
-    // this.myForm.get('distributionNoDataEffDate')?.setValue(date);
-
-    // const date2 = this.myForm.get('distributionNoDataEffDate')?.value;
-    // console.log(date2);
   }
   changeDateFormat2(event: any) {
     const date = this.datePipe.transform(
@@ -210,7 +205,6 @@ export class CreateNoDataDialogComponent implements OnInit {
       this.dateFormat('reportDateTimeFormat')
     );
     this.distributionNoDataExpDate = date;
-    // this.myForm.get('distributionNoDataEffDate')?.setValue(date);
   }
   save() {
     const rawValue = {
@@ -221,6 +215,5 @@ export class CreateNoDataDialogComponent implements OnInit {
     };
     console.log(rawValue);
     this.dialogRef.close(rawValue);
-    // console.log(this.myForm.value);
   }
 }

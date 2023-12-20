@@ -15,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [ProfilesPageComponent],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [CommonModule, RouterModule],
 })

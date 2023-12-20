@@ -31,6 +31,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   updatedRegion?: NearRegionTerritory[] = [];
   dico?: any;
   dateFormats?: any;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dateFormatService: DateFormatterService,
@@ -168,6 +169,7 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
   }
   getRegionTerritory() {
     const regionCode = this.selectedRegion?.code!;
+    this.loading = true;
     this.dataService.getNearRegionTerritory(regionCode).subscribe({
       next: (res) => {
         this.nearRegion = res.data.data;
@@ -175,6 +177,9 @@ export class NearRegionTerritoryComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

@@ -148,6 +148,7 @@ export class CarBrokerComponent implements OnInit {
           // console.log(this.brokers);
         },
         error: (err) => {
+          this.isLoading = false;
           console.log(err);
         },
         complete: () => {

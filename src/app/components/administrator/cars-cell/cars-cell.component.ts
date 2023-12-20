@@ -151,6 +151,7 @@ export class CarsCellComponent implements OnChanges, OnInit {
 
   getCarsCell() {
     this.showCellSetup = false;
+    this.isLoading = true;
     const id = this.selectedCase?.id!;
     this.dataService.getCarsCells(id).subscribe({
       next: (res) => {
@@ -158,6 +159,10 @@ export class CarsCellComponent implements OnChanges, OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

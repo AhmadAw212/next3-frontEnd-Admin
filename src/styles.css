@@ -25,7 +25,7 @@ html, body {
 }
 
 table thead {
-  position: sticky;
+  /* position: sticky; */
   /* top:0 */
   top: 42px;
   /* z-index: 1; */
@@ -90,7 +90,7 @@ th {
 }
 
 .car-logo-container {
-  position: relative;
+  /* position: relative; */
   display: inline-block;
   cursor: pointer;
 }
@@ -212,7 +212,7 @@ table.table thead th {
     /* margin-right: 10px; */
     /* margin-left: 10px; */
     padding: 5px;
-    background-color: #025696;
+    background-color: #0674cb;
     color: #fff;
     /* text-transform: uppercase; */
     /* font-size: 11px; */
@@ -319,8 +319,17 @@ label{
 }
 .admin-container app-spinner {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+}
+
+.container-fluid app-spinner {
+  position: absolute;
   top: 40%;
   left: 50%;
+  z-index: 99999;
   transform: translate(-50%, -50%);
 }
 .preview-logo{
@@ -865,11 +874,11 @@ margin: 20px;
 .user-inputs {
   display: flex;
   justify-content:space-around;
-  position: sticky;
+  /* position: sticky; */
   background-color:white;
   padding: 8px;
   top: 0;
-  z-index: 1;
+  /* z-index: 1; */
   
 }
 .user-inputs .input-dropdown {
@@ -1053,69 +1062,3 @@ button.is-disabled {
 } */
 
 
-/* .pagination-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  .page-size-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    font-size: 14px;
-  }
-  
-  .page-size-wrapper label {
-    margin-right: 10px;
-  }
-  
-  .paginator-wrapper {
-    padding: 0 10px;
-    margin-top: 10px;
-  }
-  
-  .pagination-previous,
-  .pagination-next,
-  .pagination-page,
-  .pagination-first,
-  .pagination-last {
-    margin: 0 5px;
-    padding: 3px 8px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 3px;
-  }
-  
-  .pagination-previous,
-  .pagination-next {
-    font-weight: bold;
-  }
-  
-  .pagination-page.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .pagination-page.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  #max-size-select {
-    border-radius: 3px;
-  }
-  
-  #max-size-select option:checked {
-    font-weight: bold;
-    background-color: #007bff;
-    color: #fff;
-  } */

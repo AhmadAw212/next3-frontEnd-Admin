@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_core_configuration || "dico_core_configuration" }}
 
@@ -12,118 +12,143 @@
     </button>
   </h3>
 </div>
-<div class="admin-container container-fluid">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div class="user-inputs">
-    <form (ngSubmit)="coreConfigSearch()">
-      <label for="inputId">{{ dico?.dico_id || "dico_id" }}:</label>
-      <input type="text" id="inputId" [(ngModel)]="id" name="id" />
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card h-100">
+    <div class="card-body">
+      <form (ngSubmit)="coreConfigSearch()" class="mt-3">
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="inputId"
+              >{{ dico?.dico_id || "dico_id" }}:</label
+            >
+            <input
+              type="text"
+              id="inputId"
+              [(ngModel)]="id"
+              name="id"
+              class="form-control"
+            />
+          </div>
 
-      <label for="inputDescription"
-        >{{ dico?.dico_description || "dico_description" }}:</label
-      >
-      <input
-        type="text"
-        id="inputDescription"
-        [(ngModel)]="description"
-        name="description"
-      />
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label for="inputDescription" class="form-label"
+              >{{ dico?.dico_description || "dico_description" }}:</label
+            >
+            <input
+              type="text"
+              id="inputDescription"
+              [(ngModel)]="description"
+              name="description"
+              class="form-control"
+            />
+          </div>
 
-      <button type="submit" class="btn btn-primary">
-        {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-      </button>
-    </form>
-    <div class="btn-group">
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="openCoreConfigDialog()"
-        *ngIf="hasPerm('admAddData')"
-      >
-        {{ dico?.dico_add || "dico_add" }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-primary"
-        style="margin-left: 8px"
-        (click)="editConfig()"
-        *ngIf="hasPerm('admUpdateData')"
-      >
-        {{ dico?.dico_save || "dico_save" }}
-      </button>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button type="submit" class="button-class">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
+          <div class="col-md-2 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              class="button-class"
+              (click)="openCoreConfigDialog()"
+              *ngIf="hasPerm('admAddData')"
+            >
+              {{ dico?.dico_add || "dico_add" }}
+            </button>
+          </div>
+          <div class="col-md-2 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              class="button-class"
+              (click)="editConfig()"
+              *ngIf="hasPerm('admUpdateData')"
+            >
+              {{ dico?.dico_save || "dico_save" }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_config_key || "dico_config_key" }}</th>
+              <th>{{ dico?.dico_config_value || "dico_config_value" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody
+            *ngIf="configData!.length > 0; else noData"
+            (click)="highlightRow($event)"
+          >
+            <tr *ngFor="let config of configData; trackBy: trackConfigById">
+              <td>{{ config.id }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, config, 'configKey')"
+              >
+                {{ config.configKey }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, config, 'configValue')"
+              >
+                {{ config.configValue }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, config, 'description')"
+              >
+                {{ config.description }}
+              </td>
+              <td>
+                {{
+                  config.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ config.sysCreatedBy }}</td>
+              <td>
+                {{
+                  config.sysUpdatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ config.sysUpdatedBy }}</td>
+
+              <td>
+                <mat-icon
+                  (click)="deleteConfig(config.id!)"
+                  *ngIf="hasPerm('admDeleteData')"
+                  >delete</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="9">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
     </div>
   </div>
-
-  <table class="table-responsive-sm">
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_id || "dico_id" }}</th>
-        <th>{{ dico?.dico_config_key || "dico_config_key" }}</th>
-        <th>{{ dico?.dico_config_value || "dico_config_value" }}</th>
-        <th>{{ dico?.dico_description || "dico_description" }}</th>
-        <th>
-          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th>
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody
-      *ngIf="configData!.length > 0; else noData"
-      (click)="highlightRow($event)"
-    >
-      <tr *ngFor="let config of configData; trackBy: trackConfigById">
-        <td>{{ config.id }}</td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, config, 'configKey')"
-        >
-          {{ config.configKey }}
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, config, 'configValue')"
-        >
-          {{ config.configValue }}
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, config, 'description')"
-        >
-          {{ config.description }}
-        </td>
-        <td>
-          {{
-            config.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ config.sysCreatedBy }}</td>
-        <td>
-          {{
-            config.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
-          }}
-        </td>
-        <td>{{ config.sysUpdatedBy }}</td>
-
-        <td>
-          <mat-icon
-            (click)="deleteConfig(config.id!)"
-            *ngIf="hasPerm('admDeleteData')"
-            >delete</mat-icon
-          >
-        </td>
-      </tr>
-    </tbody>
-    <ng-template #noData>
-      <tr>
-        <td colspan="9">
-          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-        </td>
-      </tr>
-    </ng-template>
-  </table>
 </div>

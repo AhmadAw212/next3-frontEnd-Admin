@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_expert_default_fees || "dico_expert_default_fees" }}
     <button
@@ -11,7 +11,7 @@
     </button>
   </h3>
 </div>
-<div class="select-container">
+<div class="container-fluid d-flex justify-content-end align-items-center">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
     id="bodyTypeNew"
@@ -27,123 +27,136 @@
   </select>
 </div>
 
-<div class="admin-container container-fluid">
-  <div class="user-inputs">
-    <button
-      type="submit"
-      class="btn btn-primary"
-      (click)="getCarExpertDefaultFees()"
-    >
-      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-    </button>
-    <div class="btn-group">
-      <button
-        class="btn btn-primary"
-        type="button"
-        *ngIf="hasPerm('admAddData')"
-        (click)="openAddExpertFeesDialog()"
-      >
-        {{ dico?.dico_add || "dico_add" }}
-      </button>
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 300px; overflow: auto">
+    <div class="card-body">
+      <div class="row p-2">
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            type="submit"
+            class="button-class"
+            (click)="getCarExpertDefaultFees()"
+          >
+            {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+          </button>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            class="button-class"
+            type="button"
+            *ngIf="hasPerm('admAddData')"
+            (click)="openAddExpertFeesDialog()"
+          >
+            {{ dico?.dico_add || "dico_add" }}
+          </button>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            class="button-class"
+            type="button"
+            *ngIf="hasPerm('admUpdateData')"
+            (click)="updateExpertFees()"
+          >
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
+      </div>
 
-      <button
-        class="btn btn-primary"
-        type="button"
-        style="margin-left: 8px"
-        *ngIf="hasPerm('admUpdateData')"
-        (click)="updateExpertFees()"
-      >
-        {{ dico?.dico_save || "dico_save" }}
-      </button>
+      <table class="table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">{{ dico?.dico_id || "dico_id" }}</th>
+            <th scope="col">
+              {{ dico?.dico_from_hour || "dico_from_hour" }}
+            </th>
+
+            <th scope="col">{{ dico?.dico_to_hour || "dico_to_hour" }}</th>
+            <th scope="col">{{ dico?.dico_currency || "dico_currency" }}</th>
+            <th scope="col">
+              {{
+                dico?.dico_default_access_fees_amount ||
+                  "dico_default_access_fees_amount"
+              }}
+            </th>
+            <th scope="col">
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
+            <th scope="col">
+              {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+            </th>
+            <th scope="col">
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
+            <th scope="col">
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="expertDefaultFees?.length! > 0; else noData"
+          (click)="highlightRow($event)"
+        >
+          <tr *ngFor="let cover of expertDefaultFees; trackBy: trackCoverById">
+            <td>{{ cover.id }}</td>
+            <td>
+              {{ cover.fromHour }}
+            </td>
+
+            <td>
+              {{ cover.toHour }}
+            </td>
+            <td>
+              <select
+                id="currency"
+                name="currency"
+                class="select-class"
+                [(ngModel)]="cover.currency"
+                (change)="onDropdownChange($event, cover, 'currency')"
+              >
+                <option *ngFor="let type of currency" [value]="type.code">
+                  {{ type.description }}
+                </option>
+              </select>
+            </td>
+            <td
+              contenteditable="true"
+              (blur)="onTdBlur($event, cover, 'defaultAccessFessAmount')"
+            >
+              {{ cover.defaultAccessFessAmount }}
+            </td>
+
+            <td>
+              {{
+                cover.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+            <td>{{ cover.sysCreatedBy }}</td>
+            <td>
+              {{
+                cover.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+            <td>{{ cover.sysUpdatedBy }}</td>
+
+            <td>
+              <mat-icon
+                *ngIf="hasPerm('admDeleteData')"
+                (click)="deleteCarCover(cover.id!)"
+                >delete</mat-icon
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noData>
+        <tr>
+          <td colspan="5">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
     </div>
   </div>
-
-  <table class="table-responsive">
-    <thead>
-      <tr>
-        <th scope="col">{{ dico?.dico_id || "dico_id" }}</th>
-        <th scope="col">{{ dico?.dico_from_hour || "dico_from_hour" }}</th>
-
-        <th scope="col">{{ dico?.dico_to_hour || "dico_to_hour" }}</th>
-        <th scope="col">{{ dico?.dico_currency || "dico_currency" }}</th>
-        <th scope="col">
-          {{
-            dico?.dico_default_access_fees_amount ||
-              "dico_default_access_fees_amount"
-          }}
-        </th>
-        <th scope="col">
-          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-        </th>
-        <th scope="col">
-          {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
-        </th>
-        <th scope="col">
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th scope="col">
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody
-      *ngIf="expertDefaultFees?.length! > 0; else noData"
-      (click)="highlightRow($event)"
-    >
-      <tr *ngFor="let cover of expertDefaultFees; trackBy: trackCoverById">
-        <td>{{ cover.id }}</td>
-        <td>
-          {{ cover.fromHour }}
-        </td>
-
-        <td>
-          {{ cover.toHour }}
-        </td>
-        <td>
-          <select
-            id="currency"
-            name="currency"
-            class="select-class"
-            [(ngModel)]="cover.currency"
-            (change)="onDropdownChange($event, cover, 'currency')"
-          >
-            <option *ngFor="let type of currency" [value]="type.code">
-              {{ type.description }}
-            </option>
-          </select>
-        </td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, cover, 'defaultAccessFessAmount')"
-        >
-          {{ cover.defaultAccessFessAmount }}
-        </td>
-
-        <td>
-          {{ cover.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ cover.sysCreatedBy }}</td>
-        <td>
-          {{ cover.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ cover.sysUpdatedBy }}</td>
-
-        <td>
-          <mat-icon
-            *ngIf="hasPerm('admDeleteData')"
-            (click)="deleteCarCover(cover.id!)"
-            >delete</mat-icon
-          >
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <ng-template #noData>
-    <tr>
-      <td colspan="5">
-        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-      </td>
-    </tr>
-  </ng-template>
 </div>

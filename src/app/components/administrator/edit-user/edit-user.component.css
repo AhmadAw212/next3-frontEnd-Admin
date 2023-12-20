@@ -13,13 +13,13 @@
 } */
 
 /* Style for the form elements */
-form {
+/* form {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 
   
-}
+} */
 
 .user-label{
   margin-top: 15px;

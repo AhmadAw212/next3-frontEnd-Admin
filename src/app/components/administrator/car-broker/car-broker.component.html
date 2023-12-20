@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_broker_configuration || "dico_broker_configuration" }}
 
@@ -12,7 +12,7 @@
     </button>
   </h3>
 </div>
-<div class="select-container">
+<div class="container-fluid d-flex justify-content-end align-items-center">
   <span>{{ dico?.dico_company || "dico_company" }}:</span>
   <select
     id="bodyTypeNew"
@@ -27,154 +27,185 @@
     </option>
   </select>
 </div>
+<app-spinner *ngIf="isLoading"></app-spinner>
 
-<div class="form-tab">
-  <div class="admin-container container-fluid">
-    <app-spinner *ngIf="isLoading"></app-spinner>
-    <div class="user-inputs">
+<div class="container-fluid mt-3">
+  <div class="card" style="overflow: auto">
+    <div class="card-body">
       <form (ngSubmit)="searchCarBroker()">
-        <label for="number">{{ dico?.dico_number || "dico_number" }}:</label>
-        <input type="text" id="number" name="number" [(ngModel)]="number" />
-
-        <label for="description"
-          >{{ dico?.dico_description || "dico_description" }}:</label
-        >
-        <input
-          type="text"
-          id="description"
-          name="description"
-          [(ngModel)]="description"
-        />
-
-        <button type="submit">
-          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-        </button>
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="number"
+              >{{ dico?.dico_number || "dico_number" }}:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="number"
+              name="number"
+              [(ngModel)]="number"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="description"
+              >{{ dico?.dico_description || "dico_description" }}:</label
+            >
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="form-control"
+              [(ngModel)]="description"
+            />
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button type="submit" class="button-class">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              class="button-class"
+              (click)="openAddBrokerDialog()"
+              *ngIf="hasPerm('admAddData')"
+            >
+              {{ dico?.dico_add_broker || "dico_add_broker" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              class="button-class"
+              *ngIf="hasPerm('admUpdateData')"
+              (click)="updateBroker()"
+            >
+              {{ dico?.dico_update_broker || "dico_update_broker" }}
+            </button>
+          </div>
+        </div>
       </form>
-      <div class="admin-button">
-        <button
-          type="button"
-          (click)="openAddBrokerDialog()"
-          *ngIf="hasPerm('admAddData')"
-        >
-          {{ dico?.dico_add_broker || "dico_add_broker" }}
-        </button>
-        <button
-          type="button"
-          style="margin-left: 8px"
-          *ngIf="hasPerm('admUpdateData')"
-          (click)="updateBroker()"
-        >
-          {{ dico?.dico_update_broker || "dico_update_broker" }}
-        </button>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_number || "dico_number" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+              <th>{{ dico?.dico_description2 || "dico_description2" }}</th>
+              <th>{{ dico?.dico_contact_info || "dico_contact_info" }}</th>
+              <th>{{ dico?.dico_email || "dico_email" }}</th>
+              <th>{{ dico?.dico_home_phone || "dico_home_phone" }}</th>
+              <th>{{ dico?.dico_reference || "dico_reference" }}</th>
+              <th>{{ dico?.dico_referal || "dico_referal" }}</th>
+              <th>{{ dico?.dico_referal_note || "dico_referal_note" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody
+            *ngIf="brokers.length > 0; else noData"
+            (click)="highlightRow($event)"
+          >
+            <tr *ngFor="let broker of brokers; trackBy: trackBrokerById">
+              <td>{{ broker.id }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'number')"
+              >
+                {{ broker.number }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'description')"
+              >
+                {{ broker.description }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'description2')"
+              >
+                {{ broker.description2 }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'contactInfo')"
+              >
+                {{ broker.contactInfo }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'email')"
+              >
+                {{ broker.email }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'telephone')"
+              >
+                {{ broker.telephone }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'reference')"
+              >
+                {{ broker.reference }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'referal')"
+              >
+                {{ broker.referal }}
+              </td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, broker, 'referalNote')"
+              >
+                {{ broker.referalNote }}
+              </td>
+              <td>
+                {{
+                  broker.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ broker.sysCreatedBy }}</td>
+              <td>
+                {{
+                  broker.sysUpdatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ broker.sysUpdatedBy }}</td>
+
+              <td>
+                <mat-icon
+                  *ngIf="hasPerm('admDeleteData')"
+                  (click)="deleteBroker(broker.id!)"
+                  >delete</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="5">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
       </div>
     </div>
-
-    <table class="responsive-table">
-      <thead>
-        <tr>
-          <th>{{ dico?.dico_id || "dico_id" }}</th>
-          <th>{{ dico?.dico_number || "dico_number" }}</th>
-          <th>{{ dico?.dico_description || "dico_description" }}</th>
-          <th>{{ dico?.dico_description2 || "dico_description2" }}</th>
-          <th>{{ dico?.dico_contact_info || "dico_contact_info" }}</th>
-          <th>{{ dico?.dico_email || "dico_email" }}</th>
-          <th>{{ dico?.dico_home_phone || "dico_home_phone" }}</th>
-          <th>{{ dico?.dico_reference || "dico_reference" }}</th>
-          <th>{{ dico?.dico_referal || "dico_referal" }}</th>
-          <th>{{ dico?.dico_referal_note || "dico_referal_note" }}</th>
-          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
-          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
-          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody
-        *ngIf="brokers.length > 0; else noData"
-        (click)="highlightRow($event)"
-      >
-        <tr *ngFor="let broker of brokers; trackBy: trackBrokerById">
-          <td>{{ broker.id }}</td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'number')"
-          >
-            {{ broker.number }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'description')"
-          >
-            {{ broker.description }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'description2')"
-          >
-            {{ broker.description2 }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'contactInfo')"
-          >
-            {{ broker.contactInfo }}
-          </td>
-          <td contenteditable="true" (blur)="onTdBlur($event, broker, 'email')">
-            {{ broker.email }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'telephone')"
-          >
-            {{ broker.telephone }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'reference')"
-          >
-            {{ broker.reference }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'referal')"
-          >
-            {{ broker.referal }}
-          </td>
-          <td
-            contenteditable="true"
-            (blur)="onTdBlur($event, broker, 'referalNote')"
-          >
-            {{ broker.referalNote }}
-          </td>
-          <td>
-            {{
-              broker.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
-            }}
-          </td>
-          <td>{{ broker.sysCreatedBy }}</td>
-          <td>
-            {{
-              broker.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
-            }}
-          </td>
-          <td>{{ broker.sysUpdatedBy }}</td>
-
-          <td>
-            <mat-icon
-              *ngIf="hasPerm('admDeleteData')"
-              (click)="deleteBroker(broker.id!)"
-              >delete</mat-icon
-            >
-          </td>
-        </tr>
-      </tbody>
-      <ng-template #noData>
-        <tr>
-          <td colspan="5">
-            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-          </td>
-        </tr>
-      </ng-template>
-    </table>
   </div>
 </div>

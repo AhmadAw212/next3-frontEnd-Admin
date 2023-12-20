@@ -25,6 +25,7 @@ export class CoreDomainValueComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
   @Input() dico?: any;
+  loading: boolean = false;
   dateFormats?: any;
   constructor(
     private dataService: DataServiceService,
@@ -69,15 +70,19 @@ export class CoreDomainValueComponent implements OnInit {
 
   domainValueSearch() {
     const id = this.domain?.id!;
+    this.loading = true;
     this.dataService
       .coreDomainValueSearch(id, this.code!, this.description!)
       .subscribe({
         next: (res) => {
           this.domainValues = res.data;
-          console.log(res);
+          // console.log(res);
         },
         error: (err) => {
           this.alertifyService.error(err.error.message);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
   }
@@ -224,6 +229,7 @@ export class CoreDomainValueComponent implements OnInit {
   }
 
   getDomainValuesData(id: string) {
+    this.loading = true;
     this.dataService.coreDomainValue(id).subscribe({
       next: (res) => {
         this.domainValues = res.data;
@@ -231,6 +237,9 @@ export class CoreDomainValueComponent implements OnInit {
       error: (err) => {
         this.alertifyService.error(err.error.message);
         // console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

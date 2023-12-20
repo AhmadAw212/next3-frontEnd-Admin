@@ -34,7 +34,7 @@ export class CarInfoComponent implements OnInit {
   selectedRow!: HTMLElement;
   dateFormats?: any;
   @Input() dico?: any;
-
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -286,6 +286,7 @@ export class CarInfoComponent implements OnInit {
 
   searchCarInfo() {
     const shapeId = this.selectedShape?.carShapeId!;
+    this.loading = true;
     this.dataService.getcarInfo(shapeId).subscribe({
       next: (res) => {
         this.carInfo = res.data;
@@ -293,6 +294,9 @@ export class CarInfoComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

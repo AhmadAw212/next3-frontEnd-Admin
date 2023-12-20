@@ -1,142 +1,172 @@
-<div class="user-inputs">
+<app-spinner *ngIf="loading"></app-spinner>
+<ng-container *ngIf="domainValues">
   <form (ngSubmit)="domainValueSearch()">
-    <label>{{ dico?.dico_code || "dico_code" }}:</label>
-    <input type="text" id="code" name="code" [(ngModel)]="code" />
-
-    <label>{{ dico?.dico_description || "dico_description" }}:</label>
-    <input type="text" id="value" name="value" [(ngModel)]="description" />
-
-    <button type="submit" class="btn btn-primary">
-      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-    </button>
-  </form>
-  <div class="btn-group">
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="openAddDomainValueDialog()"
-      *ngIf="hasPerm('admAddData')"
-    >
-      {{ dico?.dico_add || "dico_add" }}
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      style="margin-left: 8px"
-      (click)="updateDomainValue()"
-      *ngIf="hasPerm('admUpdateData')"
-    >
-      {{ dico?.dico_save || "dico_save" }}
-    </button>
-  </div>
-</div>
-
-<table class="table-responsive">
-  <thead>
-    <tr>
-      <th>{{ dico?.dico_id || "dico_id" }}</th>
-      <th>{{ dico?.dico_code || "dico_code" }}</th>
-      <th>{{ dico?.dico_description || "dico_description" }}</th>
-      <th>{{ dico?.dico_val_1 || "dico_val_1" }}</th>
-      <th>{{ dico?.dico_val_2 || "dico_val_2" }}</th>
-      <th>{{ dico?.dico_val_3 || "dico_val_3" }}</th>
-      <th>{{ dico?.dico_val_4 || "dico_val_4" }}</th>
-      <th>{{ dico?.dico_val_5 || "dico_val_5" }}</th>
-      <th>{{ dico?.dico_val_6 || "dico_val_6" }}</th>
-      <th>{{ dico?.dico_val_7 || "dico_val_7" }}</th>
-      <th>{{ dico?.dico_val_8 || "dico_val_8" }}</th>
-      <th>{{ dico?.dico_val_9 || "dico_val_9" }}</th>
-      <th>{{ dico?.dico_val_10 || "dico_val_10" }}</th>
-      <th>{{ dico?.dico_val_11 || "dico_val_11" }}</th>
-      <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
-      <th>
-        {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
-      </th>
-      <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
-      <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-      <!-- <th>{{ dico?.dico_active || "dico_active" }}</th> -->
-      <th></th>
-    </tr>
-  </thead>
-  <tbody
-    *ngIf="domainValues?.length! > 0; else noData"
-    (click)="highlightRow($event)"
-  >
-    <tr *ngFor="let domain of domainValues; trackBy: trackDomainById">
-      <td>{{ domain.id }}</td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'code')">
-        {{ domain.code }}
-      </td>
-      <td
-        contenteditable="true"
-        (blur)="onTdBlur($event, domain, 'description')"
-      >
-        {{ domain.description }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val1')">
-        {{ domain.val1 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val2')">
-        {{ domain.val2 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val3')">
-        {{ domain.val3 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val4')">
-        {{ domain.val4 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val5')">
-        {{ domain.val5 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val6')">
-        {{ domain.val6 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val7')">
-        {{ domain.val7 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val8')">
-        {{ domain.val8 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val9')">
-        {{ domain.val9 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val10')">
-        {{ domain.val10 }}
-      </td>
-      <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val11')">
-        {{ domain.val11 }}
-      </td>
-
-      <td>
-        {{ domain.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
-      </td>
-      <td>{{ domain.sysCreatedBy }}</td>
-      <td>
-        {{ domain.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
-      </td>
-      <td>{{ domain.sysUpdatedBy }}</td>
-
-      <!-- <td>
+    <div class="row p-2">
+      <div class="col-md-4 col-sm-6 col-lg-2">
+        <label class="form-label">{{ dico?.dico_code || "dico_code" }}:</label>
         <input
-          type="checkbox"
-          [(ngModel)]="domain.sysActiveFlag"
-          (change)="onCheckboxChange(domain)"
+          class="form-control"
+          type="text"
+          id="code"
+          name="code"
+          [(ngModel)]="code"
         />
-      </td> -->
-      <td>
-        <mat-icon
-          *ngIf="hasPerm('admDeleteData')"
-          (click)="deleteDomainValue(domain.id!)"
-          >delete</mat-icon
+      </div>
+      <div class="col-md-4 col-sm-6 col-lg-2">
+        <label class="form-label"
+          >{{ dico?.dico_description || "dico_description" }}:</label
         >
-      </td>
-    </tr>
-  </tbody>
-  <ng-template #noData>
-    <tr>
-      <td colspan="9">
-        {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-      </td>
-    </tr>
-  </ng-template>
-</table>
+        <input
+          class="form-control"
+          type="text"
+          id="value"
+          name="value"
+          [(ngModel)]="description"
+        />
+      </div>
+      <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+        <button type="submit" class="button-class">
+          {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+        </button>
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+        <button
+          type="button"
+          class="button-class"
+          (click)="openAddDomainValueDialog()"
+          *ngIf="hasPerm('admAddData')"
+        >
+          {{ dico?.dico_add || "dico_add" }}
+        </button>
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+        <button
+          type="button"
+          class="button-class"
+          (click)="openAddDomainValueDialog()"
+          *ngIf="hasPerm('admAddData')"
+        >
+          {{ dico?.dico_add || "dico_add" }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ dico?.dico_id || "dico_id" }}</th>
+          <th>{{ dico?.dico_code || "dico_code" }}</th>
+          <th>{{ dico?.dico_description || "dico_description" }}</th>
+          <th>{{ dico?.dico_val_1 || "dico_val_1" }}</th>
+          <th>{{ dico?.dico_val_2 || "dico_val_2" }}</th>
+          <th>{{ dico?.dico_val_3 || "dico_val_3" }}</th>
+          <th>{{ dico?.dico_val_4 || "dico_val_4" }}</th>
+          <th>{{ dico?.dico_val_5 || "dico_val_5" }}</th>
+          <th>{{ dico?.dico_val_6 || "dico_val_6" }}</th>
+          <th>{{ dico?.dico_val_7 || "dico_val_7" }}</th>
+          <th>{{ dico?.dico_val_8 || "dico_val_8" }}</th>
+          <th>{{ dico?.dico_val_9 || "dico_val_9" }}</th>
+          <th>{{ dico?.dico_val_10 || "dico_val_10" }}</th>
+          <th>{{ dico?.dico_val_11 || "dico_val_11" }}</th>
+          <th>{{ dico?.dico_sys_created_date || "dico_sys_created_date" }}</th>
+          <th>
+            {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+          </th>
+          <th>{{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}</th>
+          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+          <!-- <th>{{ dico?.dico_active || "dico_active" }}</th> -->
+          <th></th>
+        </tr>
+      </thead>
+      <tbody
+        *ngIf="domainValues?.length! > 0; else noData"
+        (click)="highlightRow($event)"
+      >
+        <tr *ngFor="let domain of domainValues; trackBy: trackDomainById">
+          <td>{{ domain.id }}</td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'code')">
+            {{ domain.code }}
+          </td>
+          <td
+            contenteditable="true"
+            (blur)="onTdBlur($event, domain, 'description')"
+          >
+            {{ domain.description }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val1')">
+            {{ domain.val1 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val2')">
+            {{ domain.val2 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val3')">
+            {{ domain.val3 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val4')">
+            {{ domain.val4 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val5')">
+            {{ domain.val5 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val6')">
+            {{ domain.val6 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val7')">
+            {{ domain.val7 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val8')">
+            {{ domain.val8 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val9')">
+            {{ domain.val9 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val10')">
+            {{ domain.val10 }}
+          </td>
+          <td contenteditable="true" (blur)="onTdBlur($event, domain, 'val11')">
+            {{ domain.val11 }}
+          </td>
+
+          <td>
+            {{
+              domain.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>{{ domain.sysCreatedBy }}</td>
+          <td>
+            {{
+              domain.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+            }}
+          </td>
+          <td>{{ domain.sysUpdatedBy }}</td>
+
+          <!-- <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="domain.sysActiveFlag"
+              (change)="onCheckboxChange(domain)"
+            />
+          </td> -->
+          <td>
+            <mat-icon
+              *ngIf="hasPerm('admDeleteData')"
+              (click)="deleteDomainValue(domain.id!)"
+              >delete</mat-icon
+            >
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noData>
+        <tr>
+          <td colspan="9">
+            {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+</ng-container>

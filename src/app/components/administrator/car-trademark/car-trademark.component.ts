@@ -32,6 +32,7 @@ export class CarTrademarkComponent implements OnInit {
   @Input() dico?: any;
   dateFormats?: any;
   selectedTrademarkId?: string;
+  loading: boolean = false;
   @Output() sendTrademarkId = new EventEmitter<string>();
 
   selectedShapeId?: string;
@@ -132,6 +133,7 @@ export class CarTrademarkComponent implements OnInit {
     this.selectedRow.classList.add('highlight');
   }
   searchCarShape(trademarkId: string, tradeMark: CarTrademark) {
+    this.loading = true;
     this.showCarShape = true;
     this.selectedTrademark = tradeMark;
     this.dataService.searchCarShape(trademarkId).subscribe({
@@ -147,10 +149,14 @@ export class CarTrademarkComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
   carTrademarkSearch() {
+    this.loading = true;
     this.showCarShape = false;
     const id = this.carBrand?.carBrandId!;
     this.dataService
@@ -167,6 +173,9 @@ export class CarTrademarkComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
   }

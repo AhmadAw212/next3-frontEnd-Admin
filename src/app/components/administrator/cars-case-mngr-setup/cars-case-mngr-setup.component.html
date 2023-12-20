@@ -1,4 +1,4 @@
-<div class="h3-header">
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_case_mngr_setup || "dico_case_mngr_setup" }}
 
@@ -12,95 +12,117 @@
     </button>
   </h3>
 </div>
-<div class="admin-container container-fluid" style="height: 250px">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div class="user-inputs">
-    <button type="submit" (click)="getCaseMngrSetup()">
-      {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-    </button>
-    <div class="admin-button">
-      <button
-        type="button"
-        *ngIf="hasPerm('admAddData')"
-        (click)="openAddCoverRiskDialog()"
-      >
-        {{ dico?.dico_add || "dico_add" }}
-      </button>
-      <button
-        type="button"
-        style="margin-left: 8px"
-        *ngIf="hasPerm('admUpdateData')"
-        (click)="updateCaseMngr()"
-      >
-        {{ dico?.dico_save || "dico_save" }}
-      </button>
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 250px; overflow: auto">
+    <div class="card-body">
+      <div class="row p-2">
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            type="submit"
+            (click)="getCaseMngrSetup()"
+            class="button-class"
+          >
+            {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+          </button>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            class="button-class"
+            type="button"
+            *ngIf="hasPerm('admAddData')"
+            (click)="openAddCoverRiskDialog()"
+          >
+            {{ dico?.dico_add || "dico_add" }}
+          </button>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+          <button
+            class="button-class"
+            type="button"
+            *ngIf="hasPerm('admUpdateData')"
+            (click)="updateCaseMngr()"
+          >
+            {{ dico?.dico_save || "dico_save" }}
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_cell || "dico_cell" }}</th>
+              <th>{{ dico?.dico_type || "dico_type" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              (click)="highlightRow($event); showCell(case)"
+              *ngFor="let case of caseMngrSetup"
+            >
+              <td>{{ case.id }}</td>
+              <td>{{ case.cmsCell }}</td>
+              <td>{{ case.cmsType }}</td>
+              <td
+                contenteditable="true"
+                (blur)="onTdBlur($event, case, 'description')"
+              >
+                {{ case.description }}
+              </td>
+              <td>
+                {{
+                  case.sysCreatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ case.sysCreatedBy }}</td>
+              <td>
+                {{
+                  case.sysUpdatedDate
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ case.sysUpdatedBy }}</td>
+              <td>
+                <mat-icon
+                  *ngIf="hasPerm('admDeleteData')"
+                  (click)="deleteCaseMngr(case.id!)"
+                  >delete</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="5">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
     </div>
   </div>
-
-  <table class="responsive-table">
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_id || "dico_id" }}</th>
-        <th>{{ dico?.dico_cell || "dico_cell" }}</th>
-        <th>{{ dico?.dico_type || "dico_type" }}</th>
-        <th>{{ dico?.dico_description || "dico_description" }}</th>
-        <th>
-          {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-        <th>
-          {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-        </th>
-        <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        (click)="highlightRow($event); showCell(case)"
-        *ngFor="let case of caseMngrSetup"
-      >
-        <td>{{ case.id }}</td>
-        <td>{{ case.cmsCell }}</td>
-        <td>{{ case.cmsType }}</td>
-        <td
-          contenteditable="true"
-          (blur)="onTdBlur($event, case, 'description')"
-        >
-          {{ case.description }}
-        </td>
-        <td>
-          {{ case.sysCreatedDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ case.sysCreatedBy }}</td>
-        <td>
-          {{ case.sysUpdatedDate | date : dateFormat("reportDateTimeFormat") }}
-        </td>
-        <td>{{ case.sysUpdatedBy }}</td>
-        <td>
-          <mat-icon
-            *ngIf="hasPerm('admDeleteData')"
-            (click)="deleteCaseMngr(case.id!)"
-            >delete</mat-icon
-          >
-        </td>
-      </tr>
-    </tbody>
-    <ng-template #noData>
-      <tr>
-        <td colspan="5">
-          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-        </td>
-      </tr>
-    </ng-template>
-  </table>
-</div>
-
-<div *ngIf="showCarsCell">
-  <app-cars-cell
-    [dico]="dico"
-    [selectedCase]="selectedCaseMngr"
-    [dateFormats]="dateFormats"
-    [showCellSetup]="showCarsCell"
-  ></app-cars-cell>
+  <div *ngIf="showCarsCell">
+    <app-cars-cell
+      [dico]="dico"
+      [selectedCase]="selectedCaseMngr"
+      [dateFormats]="dateFormats"
+      [showCellSetup]="showCarsCell"
+    ></app-cars-cell>
+  </div>
 </div>

@@ -121,12 +121,17 @@ export class CarsCellSetupComponent implements OnChanges, OnInit {
 
   getCellSetup() {
     const setupId = this.selectedCell?.managerSetup_id!;
+    this.isLoading = true;
     this.dataService.getCellSetup(setupId).subscribe({
       next: (res) => {
         this.cellSetup = res.data;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

@@ -22,6 +22,63 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { ExpertConfigComponent } from './expert-config/expert-config.component';
 import { LanguageConfigComponent } from './language-config/language-config.component';
 import { TownTerritoryComponent } from './town-territory/town-territory.component';
+import { SharedModule } from '../shared/shared.module';
+import { EditUserDialogComponent } from './update-dialogs/edit-user-dialog/edit-user-dialog.component';
+import { CarApprovalTypeComponent } from './car-approval-type/car-approval-type.component';
+import { UserProfilesComponent } from './user-profiles/user-profiles.component';
+import { UserRolesComponent } from './user-roles/user-roles.component';
+import { AddProfileDialogComponent } from './add-dialogs/add-profile-dialog/add-profile-dialog.component';
+import { CopyProfileComponent } from './copy-profile/copy-profile.component';
+import { AddConfigDialogComponent } from './add-dialogs/add-config-dialog/add-config-dialog.component';
+import { AddLanguageComponent } from './add-dialogs/add-language/add-language.component';
+import { AddDocumentDialogComponent } from './add-dialogs/add-document-dialog/add-document-dialog.component';
+import { AddDomainDialogComponent } from './add-dialogs/add-domain-dialog/add-domain-dialog.component';
+import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/view-policy-dialog.component';
+import { ViewPolicyComponent } from '../view-policy/view-policy.component';
+import { AddBranchComponent } from './add-dialogs/add-branch/add-branch.component';
+import { AddBrokerComponent } from './add-dialogs/add-broker/add-broker.component';
+import { AddCarBrandDialogComponent } from './add-dialogs/add-car-brand-dialog/add-car-brand-dialog.component';
+import { AddCarClientComponent } from './add-dialogs/add-car-client/add-car-client.component';
+import { AddCarCoverComponent } from './add-dialogs/add-car-cover/add-car-cover.component';
+import { AddCarInfoComponent } from './add-dialogs/add-car-info/add-car-info.component';
+import { AddCarProductComponent } from './add-dialogs/add-car-product/add-car-product.component';
+import { AddCarSublineComponent } from './add-dialogs/add-car-subline/add-car-subline.component';
+import { AddCarSupplierComponent } from './add-dialogs/add-car-supplier/add-car-supplier.component';
+import { AddDomainValueDialogComponent } from './add-dialogs/add-domain-value-dialog/add-domain-value-dialog.component';
+import { AddExpertCompanyComponent } from './add-dialogs/add-expert-company/add-expert-company.component';
+import { AddExpertComponent } from './add-dialogs/add-expert/add-expert.component';
+import { AddReportListComponent } from './add-dialogs/add-report-list/add-report-list.component';
+import { AddShapeDialogComponent } from './add-dialogs/add-shape-dialog/add-shape-dialog.component';
+import { AddTrademarkDialogComponent } from './add-dialogs/add-trademark-dialog/add-trademark-dialog.component';
+import { AddbrandMatchingComponent } from './car-brand-matching/addbrand-matching/addbrand-matching.component';
+import { CarBrandMatchingComponent } from './car-brand-matching/car-brand-matching.component';
+import { CarInfoComponent } from './car-info/car-info.component';
+import { AddProductReserveComponent } from './car-products-reserve/add-product-reserve/add-product-reserve.component';
+import { CarProductsReserveComponent } from './car-products-reserve/car-products-reserve.component';
+import { AddRiskCoverComponent } from './car-risk-cover/add-risk-cover/add-risk-cover.component';
+import { CarRiskCoverComponent } from './car-risk-cover/car-risk-cover.component';
+import { CarShapeComponent } from './car-shape/car-shape.component';
+import { CarTrademarkComponent } from './car-trademark/car-trademark.component';
+import { AddCaseMngrSetupComponent } from './cars-case-mngr-setup/add-case-mngr-setup/add-case-mngr-setup.component';
+import { AddCarCellSetupComponent } from './cars-cell-setup/add-car-cell-setup/add-car-cell-setup.component';
+import { CarsCellSetupComponent } from './cars-cell-setup/cars-cell-setup.component';
+import { AddCellComponent } from './cars-cell/add-cell/add-cell.component';
+import { CarsCellComponent } from './cars-cell/cars-cell.component';
+import { AddExpertFeesComponent } from './cars-expert-default-fees/add-expert-fees/add-expert-fees.component';
+import { CoreDomainValueComponent } from './core-domain-value/core-domain-value.component';
+import { ExpertCompanyListComponent } from './expert-config/expert-company-list/expert-company-list.component';
+import { ExpertSearchResultsComponent } from './expert-config/expert-search-results/expert-search-results.component';
+import { AddNearRegionTerritoryComponent } from './near-region-territory/add-near-region-territory/add-near-region-territory.component';
+import { NearRegionTerritoryComponent } from './near-region-territory/near-region-territory.component';
+import { UpdateCarSuppFormComponent } from './update-car-supp-form/update-car-supp-form.component';
+import { UpdateCarCoverComponent } from './update-dialogs/update-car-cover/update-car-cover.component';
+import { UpdateCarDialogComponent } from './update-dialogs/update-car-dialog/update-car-dialog.component';
+import { UpdateDocumentComponent } from './update-dialogs/update-document/update-document.component';
+import { UpdateShapeDialogComponent } from './update-dialogs/update-shape-dialog/update-shape-dialog.component';
+import { UpdateTrademarkDialogComponent } from './update-dialogs/update-trademark-dialog/update-trademark-dialog.component';
+import { AddApprovalTypeComponent } from './add-dialogs/add-approval-type/add-approval-type.component';
+import { CarsPolicyCarComponent } from './cars-policy-car/cars-policy-car.component';
+import { UpdateCompanyListComponent } from './expert-config/update-company-list/update-company-list.component';
 
 const routes: Routes = [
   {
@@ -149,8 +206,83 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  declarations: [
+    AdminPageComponent,
+    AddUserComponent,
+    EditUserComponent,
+    EditUserDialogComponent,
+    CarApprovalTypeComponent,
+    UserProfilesComponent,
+    UserRolesComponent,
+    CoreConfigurationComponent,
+    AddProfileDialogComponent,
+    CopyProfileComponent,
+    AddConfigDialogComponent,
+    LanguageConfigComponent,
+    AddLanguageComponent,
+    CoreDocumentComponent,
+    AddDocumentDialogComponent,
+    CoreDomainComponent,
+    AddDomainDialogComponent,
+    CoreDomainValueComponent,
+    AddDomainValueDialogComponent,
+    CarsBrandComponent,
+    AddCarBrandDialogComponent,
+    UpdateCarDialogComponent,
+    CarTrademarkComponent,
+    UpdateCompanyListComponent,
+    AddTrademarkDialogComponent,
+    UpdateTrademarkDialogComponent,
+    CarShapeComponent,
+    AddShapeDialogComponent,
+    UpdateShapeDialogComponent,
+    CarInfoComponent,
+    CarsPolicyCarComponent,
+    CarsClientComponent,
+    AddCarInfoComponent,
+    CarsCoverComponent,
+    AddCarCoverComponent,
+    UpdateCarCoverComponent,
+    CarProductsComponent,
+    AddCarProductComponent,
+    CarSublinesComponent,
+    AddCarSublineComponent,
+    AddCarClientComponent,
+    CarsReportListComponent,
+    AddReportListComponent,
+    CarsSupplierComponent,
+    UpdateCarSuppFormComponent,
+    AddCarSupplierComponent,
+    ExpertConfigComponent,
+    ExpertSearchResultsComponent,
+    AddExpertComponent,
+    BranchConfigComponent,
+    AddBranchComponent,
+    ExpertCompanyListComponent,
+    AddExpertCompanyComponent,
+    CarBrokerComponent,
+    AddBrokerComponent,
+    NearRegionTerritoryComponent,
+    AddNearRegionTerritoryComponent,
+    UpdateDocumentComponent,
+    CarProductsReserveComponent,
+    AddProductReserveComponent,
+    CarBrandMatchingComponent,
+    CarRiskCoverComponent,
+    AddRiskCoverComponent,
+    CarsExpertDefaultFeesComponent,
+    AddExpertFeesComponent,
+    CarsCaseMngrSetupComponent,
+    AddCaseMngrSetupComponent,
+    CarsCellComponent,
+    AddCellComponent,
+    TownTerritoryComponent,
+    AddApprovalTypeComponent,
+    CarsCellSetupComponent,
+    AddCarCellSetupComponent,
+    AddbrandMatchingComponent,
+  ],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [CommonModule, RouterModule],
 })
 export class AdminModule {}

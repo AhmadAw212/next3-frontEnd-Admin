@@ -1,136 +1,164 @@
-<div class="form-tab">
-  <div class="h3-header">
-    <h3>
-      {{ dico?.dico_trademark || "dico_trademark" }}
+<div class="h3-header m-3">
+  <h3>
+    {{ dico?.dico_trademark || "dico_trademark" }}
 
-      <button
-        type="button"
-        (click)="exportToExcel()"
-        *ngIf="hasPerm('admExportToFile')"
-        class="export-excel btn btn-primary"
-      >
-        {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
-      </button>
-    </h3>
-  </div>
-  <div class="admin-container container-fluid" style="height: 200px">
-    <div class="user-inputs">
+    <button
+      type="button"
+      (click)="exportToExcel()"
+      *ngIf="hasPerm('admExportToFile')"
+      class="export-excel btn btn-primary"
+    >
+      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
+    </button>
+  </h3>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 200px; overflow: auto">
+    <div class="card-body">
       <form (ngSubmit)="carTrademarkSearch()">
-        <label for="code">{{ dico?.dico_code || "dico_code" }}:</label>
-        <input type="text" id="code" name="code" [(ngModel)]="code" />
-
-        <label for="description"
-          >{{ dico?.dico_description || "dico_description" }}:</label
-        >
-        <input
-          type="text"
-          id="description"
-          name="description"
-          [(ngModel)]="description"
-        />
-
-        <button type="submit">{{ dico?.dico_search || "dico_search" }}</button>
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="code"
+              >{{ dico?.dico_code || "dico_code" }}:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="code"
+              name="code"
+              [(ngModel)]="code"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label" for="description"
+              >{{ dico?.dico_description || "dico_description" }}:</label
+            >
+            <input
+              type="text"
+              id="description"
+              class="form-control"
+              name="description"
+              [(ngModel)]="description"
+            />
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button class="button-class" type="submit">
+              {{ dico?.dico_search || "dico_search" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              class="button-class"
+              type="button"
+              (click)="openAddCarTrademarkDialog(false)"
+              *ngIf="hasPerm('admAddData')"
+            >
+              {{ dico?.dico_add || "dico_add" }}
+            </button>
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button
+              type="button"
+              (click)="openAddCarTrademarkDialog(true)"
+              *ngIf="hasPerm('admAddData')"
+              class="button-class"
+            >
+              {{ dico?.dico_add_not_listed || "dico_add_not_listed" }}
+            </button>
+          </div>
+        </div>
       </form>
-      <div class="admin-button">
-        <button
-          type="button"
-          (click)="openAddCarTrademarkDialog(false)"
-          *ngIf="hasPerm('admAddData')"
-        >
-          {{ dico?.dico_add || "dico_add" }}
-        </button>
-        <button
-          type="button"
-          (click)="openAddCarTrademarkDialog(true)"
-          *ngIf="hasPerm('admAddData')"
-          style="margin-left: 5px"
-        >
-          {{ dico?.dico_add_not_listed || "dico_add_not_listed" }}
-        </button>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_id || "dico_id" }}</th>
+              <th>{{ dico?.dico_code || "dico_code" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+              <!-- <th>Brand</th> -->
+              <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
+              <th>
+                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
+              <th>
+                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+              </th>
+              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody
+            *ngIf="carTrademark?.length! > 0; else noData"
+            (click)="highlightRow($event)"
+          >
+            <tr
+              *ngFor="
+                let trademark of carTrademark;
+                trackBy: trackTrademarkById
+              "
+              (click)="
+                searchCarShape(trademark.id, trademark);
+                saveTrademarkId(trademark)
+              "
+            >
+              <td>{{ trademark.id }}</td>
+              <td>{{ trademark.code }}</td>
+              <td>{{ trademark.description }}</td>
+              <!-- <td>{{ trademark.carBrandId }}</td> -->
+              <td>
+                <div class="car-logo-container">
+                  <img [src]="trademark.logo" class="car-logo" />
+                  <div class="car-logo-dialog">
+                    <img [src]="trademark.logo" class="car-logo-dialog-image" />
+                  </div>
+                </div>
+              </td>
+              <td>
+                {{
+                  trademark.created_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ trademark.createdBy }}</td>
+              <td>
+                {{
+                  trademark.updated_date
+                    | date : dateFormat("reportDateTimeFormat")
+                }}
+              </td>
+              <td>{{ trademark.updatedBy }}</td>
+              <td>
+                <mat-icon
+                  (click)="deleteTrademark(trademark.id)"
+                  *ngIf="hasPerm('admDeleteData')"
+                  >delete</mat-icon
+                >
+              </td>
+              <td>
+                <mat-icon
+                  *ngIf="hasPerm('admUpdateData')"
+                  (click)="updateTrademarkDialog(trademark)"
+                  >edit</mat-icon
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noData>
+          <tr>
+            <td colspan="5">
+              {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
+            </td>
+          </tr>
+        </ng-template>
       </div>
     </div>
-
-    <table class="responsive-table">
-      <thead>
-        <tr>
-          <th>{{ dico?.dico_id || "dico_id" }}</th>
-          <th>{{ dico?.dico_code || "dico_code" }}</th>
-          <th>{{ dico?.dico_description || "dico_description" }}</th>
-          <!-- <th>Brand</th> -->
-          <th>{{ dico?.dico_car_logo || "dico_car_logo" }}</th>
-          <th>
-            {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-          </th>
-          <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-          <th>
-            {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-          </th>
-          <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody
-        *ngIf="carTrademark?.length! > 0; else noData"
-        (click)="highlightRow($event)"
-      >
-        <tr
-          *ngFor="let trademark of carTrademark; trackBy: trackTrademarkById"
-          (click)="
-            searchCarShape(trademark.id, trademark); saveTrademarkId(trademark)
-          "
-        >
-          <td>{{ trademark.id }}</td>
-          <td>{{ trademark.code }}</td>
-          <td>{{ trademark.description }}</td>
-          <!-- <td>{{ trademark.carBrandId }}</td> -->
-          <td>
-            <div class="car-logo-container">
-              <img [src]="trademark.logo" class="car-logo" />
-              <div class="car-logo-dialog">
-                <img [src]="trademark.logo" class="car-logo-dialog-image" />
-              </div>
-            </div>
-          </td>
-          <td>
-            {{
-              trademark.created_date | date : dateFormat("reportDateTimeFormat")
-            }}
-          </td>
-          <td>{{ trademark.createdBy }}</td>
-          <td>
-            {{
-              trademark.updated_date | date : dateFormat("reportDateTimeFormat")
-            }}
-          </td>
-          <td>{{ trademark.updatedBy }}</td>
-          <td>
-            <mat-icon
-              (click)="deleteTrademark(trademark.id)"
-              *ngIf="hasPerm('admDeleteData')"
-              >delete</mat-icon
-            >
-          </td>
-          <td>
-            <mat-icon
-              *ngIf="hasPerm('admUpdateData')"
-              (click)="updateTrademarkDialog(trademark)"
-              >edit</mat-icon
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <ng-template #noData>
-      <tr>
-        <td colspan="5">
-          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-        </td>
-      </tr>
-    </ng-template>
   </div>
 </div>
-
 <div *ngIf="showCarShape">
   <app-car-shape
     [carShape]="carShape"

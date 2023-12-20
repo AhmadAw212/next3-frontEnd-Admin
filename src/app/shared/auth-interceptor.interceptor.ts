@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { AlertifyService } from '../services/alertify.service';
 import { EMPTY } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { ApiResponse } from '../model/api-response';
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
@@ -47,6 +48,16 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
+          // if (
+          //   error.error &&
+          //   error.error.statusCode === 401 &&
+          //   error.error.message
+          // ) {
+          //   const errorMessage = error.error.message;
+
+          //   // Handle the specific error message (e.g., show an alert)
+          //   this.alertifyService.dialogAlert(errorMessage, 'Unauthorized');
+          // }
           if (!this.tokenRefreshInProgress) {
             this.tokenRefreshInProgress = true;
 
@@ -74,7 +85,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
               }),
               catchError((refreshError: any) => {
                 // Refresh token failed or expired as well, logout the user and redirect to login
-                this.authService.logout();
+                // this.authService.logout();
                 this.router.navigate(['/login']);
                 // this.alertifyService.dialogAlert(
                 //   'Session expired. Please log in again.',

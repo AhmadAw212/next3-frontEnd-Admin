@@ -64,7 +64,7 @@ export class ChangeToAvailableDataComponent implements OnInit {
     this.notificationId = data.notificationId;
     this.policyEffectiveDate = data.policyEffectiveDate;
     this.lossTowLossDate = data.lossTowLossDate;
-    console.log(this.policyEffectiveDate, this.notificationId);
+    // console.log(this.policyEffectiveDate, this.notificationId);
   }
 
   private initializeData() {

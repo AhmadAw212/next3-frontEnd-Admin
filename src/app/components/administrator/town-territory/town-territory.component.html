@@ -1,4 +1,5 @@
-<div class="h3-header">
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="h3-header m-3">
   <h3>
     {{ dico?.dico_near_region_territory || "dico_near_region_territory" }}
 
@@ -12,46 +13,75 @@
     </button>
   </h3>
 </div>
-<div class="admin-container container-fluid" style="height: 250px">
-  <app-spinner *ngIf="isLoading"></app-spinner>
-  <div class="user-inputs">
-    <form (ngSubmit)="searchTownTerritory()">
-      <label>{{ dico?.dico_code || "dico_code" }}:</label>
-      <input type="text" id="key" name="key" [(ngModel)]="code" />
 
-      <label>{{ dico?.dico_description || "dico_description" }}:</label>
-      <input type="text" id="value" name="value" [(ngModel)]="description" />
+<div class="container-fluid mt-3">
+  <div class="card" style="max-height: 250px; overflow: auto">
+    <div class="card-body">
+      <form (ngSubmit)="searchTownTerritory()">
+        <div class="row p-2">
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_code || "dico_code" }}:</label
+            >
+            <input
+              type="text"
+              id="key"
+              name="key"
+              [(ngModel)]="code"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4 col-sm-6 col-lg-2">
+            <label class="form-label"
+              >{{ dico?.dico_description || "dico_description" }}:</label
+            >
+            <input
+              type="text"
+              id="value"
+              name="value"
+              [(ngModel)]="description"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-3 col-sm-6 col-lg-1 mt-4">
+            <button type="submit" class="button-class">
+              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
+            </button>
+          </div>
+        </div>
+      </form>
 
-      <button type="submit">{{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}</button>
-    </form>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ dico?.dico_code || "dico_code" }}</th>
+              <th>{{ dico?.dico_description || "dico_description" }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              (click)="highlightRow($event); showNearTerritory(townTerritory)"
+              *ngFor="let townTerritory of townTerritory"
+            >
+              <td>{{ townTerritory.code }}</td>
+              <td>{{ townTerritory.description }}</td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr>
+              <td colspan="5">
+                {{
+                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
+                }}
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+    </div>
   </div>
-
-  <table class="responsive-table">
-    <thead>
-      <tr>
-        <th>{{ dico?.dico_code || "dico_code" }}</th>
-        <th>{{ dico?.dico_description || "dico_description" }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        (click)="highlightRow($event); showNearTerritory(townTerritory)"
-        *ngFor="let townTerritory of townTerritory"
-      >
-        <td>{{ townTerritory.code }}</td>
-        <td>{{ townTerritory.description }}</td>
-      </tr>
-    </tbody>
-    <ng-template #noData>
-      <tr>
-        <td colspan="5">
-          {{ dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY" }}
-        </td>
-      </tr>
-    </ng-template>
-  </table>
 </div>
-
 <div *ngIf="showNearTerr">
   <app-near-region-territory
     [selectedRegion]="selectedRegion"

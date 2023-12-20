@@ -67,6 +67,13 @@ const routes: Routes = [
 
     canActivate: [AuthGuard],
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./components/survey/survey.module').then((m) => m.SurveyModule),
+
+    canActivate: [AuthGuard],
+  },
 
   {
     path: 'dataEntryView/:notificationId',
