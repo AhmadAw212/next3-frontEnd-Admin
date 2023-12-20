@@ -29,30 +29,31 @@ export class AddCarClientComponent implements OnInit {
     this.insuranceId = this.data.insuranceId;
     this.titleLov = this.data.title;
     this.genderList = this.data.gender;
-    console.log(data);
+    // console.log(data);
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      insuranceId: this.insuranceId,
-      num1: ['', Validators.required],
-      num2: ['0', [Validators.required, Validators.pattern(/^\d+$/)]], // Only accept numbers
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      fatherName: ['', Validators.required],
-      prefixFamily: ['', Validators.required],
-      busPhone: ['', Validators.required],
-      mobilePhone: ['', Validators.required],
-      titre: ['', [Validators.required, Validators.maxLength(2)]],
-      gender: ['', [Validators.required, Validators.maxLength(1)]],
-      broker: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      indic1: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      indic2: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      clientVip: ['', Validators.required],
-      description: ['', Validators.required],
-      this: this.getDico(),
-    });
+    this.getDico(),
+      (this.form = this.formBuilder.group({
+        insuranceId: this.insuranceId,
+        num1: ['', Validators.required],
+        num2: ['0', [Validators.required, Validators.pattern(/^\d+$/)]], // Only accept numbers
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        fatherName: ['', Validators.required],
+        prefixFamily: ['', Validators.required],
+        busPhone: ['', Validators.required],
+        mobilePhone: ['', Validators.required],
+        titre: ['', [Validators.required, Validators.maxLength(2)]],
+        gender: ['', [Validators.required, Validators.maxLength(1)]],
+        broker: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+        indic1: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+        indic2: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+        clientVip: ['', Validators.required],
+        description: ['', Validators.required],
+      }));
   }
+
   getDico() {
     this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
