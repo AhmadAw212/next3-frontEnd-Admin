@@ -35,18 +35,18 @@ export class AddProductReserveComponent implements OnInit {
       carsInsuranceCode: this.selectedProduct?.insuranceId,
       productsResAsOfDate: ['', Validators.required],
       productsResInsured: [
-        '0',
+        0,
         [Validators.required, Validators.pattern(/^\d+$/)],
       ],
       productsResBodily: [
-        '0',
+        0,
         [Validators.required, Validators.pattern(/^\d+$/)],
       ],
       productsResMaterial: [
-        '0',
+        0,
         [Validators.required, Validators.pattern(/^\d+$/)],
       ],
-      productsResTp: ['0', [Validators.required, Validators.pattern(/^\d+$/)]],
+      productsResTp: [0, [Validators.required, Validators.pattern(/^\d+$/)]],
       productsResActive: [''],
     });
   }
