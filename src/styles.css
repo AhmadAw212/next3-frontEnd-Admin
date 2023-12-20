@@ -632,6 +632,15 @@ margin: 20px;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
+.dialog input[type="number"]{
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
 .dialog input[type="datetime-local"]{
   width: 100%;
   padding: 8px;
@@ -784,11 +793,11 @@ margin: 20px;
   padding: 8px;
 }
 
-.form-group {
+/* .form-group {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
-}
+} */
 .label {
   font-weight: bold;
   margin-bottom: 5px;
