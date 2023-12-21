@@ -74,7 +74,7 @@ export class AuthService {
       error: (err) => {
         console.error(err);
         // let errorMessage = 'An error occurred';
-        if (err.error.status === 401) {
+        if (err?.error?.status === 401) {
           this.alertifyService.error(err.error.message);
         }
         //   // Send the error message here
