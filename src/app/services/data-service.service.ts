@@ -73,6 +73,9 @@ export class DataServiceService {
       user
     );
   }
+  // validateUser(user: User): Observable<ApiResponse> {
+  //   return this.http.post<ApiResponse>(`${this.authUrl}/login`, user);
+  // }
 
   loginUserInfo(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.loginUrl}/basicAuth/loginInfo`);
