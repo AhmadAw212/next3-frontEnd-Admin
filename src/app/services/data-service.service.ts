@@ -61,14 +61,17 @@ interface User {
 export class DataServiceService {
   userUrl = environment.userUrl;
   loginUrl = environment.loginUrl;
-  authUrl = environment.authUrl;
+  // authUrl = environment.authUrl;
   getUsers = new Subject<CoreUser>();
   getUserRole = new Subject<Role>();
   updatedCarSupp = new Subject<CarSupplier>();
   constructor(private http: HttpClient) {}
 
   validateUser(user: User): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.authUrl}/login`, user);
+    return this.http.post<ApiResponse>(
+      `${this.loginUrl}/basicAuth/validate`,
+      user
+    );
   }
 
   loginUserInfo(): Observable<ApiResponse> {
