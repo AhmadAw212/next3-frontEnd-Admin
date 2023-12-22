@@ -56,7 +56,8 @@ import { ViewPolicyComponent } from '../view-policy/view-policy.component';
 import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/view-policy-dialog.component';
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
-
+import { ButtonModule } from 'primeng/button';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 @NgModule({
   declarations: [
     GaugeComponentComponent,
@@ -90,6 +91,7 @@ import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/vie
     NgSelectModule,
     BsDatepickerModule,
     MatTooltipModule,
+    TieredMenuModule,
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
@@ -100,6 +102,7 @@ import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/vie
     MatDialogModule,
     HttpClientModule,
     MatMenuModule,
+    ButtonModule,
     RouterModule,
     NgChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
@@ -117,10 +120,12 @@ import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/vie
     MatAutocompleteModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    ButtonModule,
     MatInputModule,
     MatNativeDateModule,
     HttpClientModule,
     MatToolbarModule,
+    TieredMenuModule,
     MatDatepickerModule,
     MatSelectModule,
     NgxMatDatetimePickerModule,

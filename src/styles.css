@@ -1,8 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+
 @import "~alertifyjs/build/css/alertify.min.css";
 @import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 
 html, body {
   height: 100%;
@@ -10,13 +11,8 @@ html, body {
   font-size: 11px;
   font-weight: normal;
   font-family: 'Open Sans 300', sans-serif;
- /* background-color:  #f5f5f5 !important; */
-  /* max-height: 766px; */
-  /* min-height: 766px; */
 }
-/* table tbody tr .ng-star-inserted  {
-  background-color: transparent;
-} */
+
 .arrow {
   position: absolute;
   display: flex;
@@ -25,11 +21,11 @@ html, body {
 }
 
 table thead {
-  /* position: sticky; */
-  /* top:0 */
+ 
+ 
   top: 42px;
-  /* z-index: 1; */
-  /* background-color: #f2f2f2; */
+ 
+ 
   
 }
 
@@ -43,8 +39,8 @@ table thead {
 .bs-datepicker-body table thead {
   top: 0;
   position: relative;
-  /* z-index: 0; */
-  /* background-color:#1884d7; */
+ 
+ 
 }
 table tr.highlight{
   background-color: #e0f2db;
@@ -58,12 +54,7 @@ th {
 }
 
 
-/* .form-tab {
-  border: 1px solid #ccc;
-  padding: 10px;
-  background-color: #fff;
-  margin-top: 25px;
-} */
+
 
 tr.selected {
   background-color: #e0f2db;
@@ -76,7 +67,7 @@ table {
 }
 .export-excel{
   float: right;
-  /* margin: 5px; */
+ 
 }
 th {
   background-color: #025696;
@@ -85,12 +76,12 @@ th {
   text-align: left;
   border-right: 1px solid white
 
-  /* font-size:medium ; */
-  /* font-weight:normal; */
+ 
+ 
 }
 
 .car-logo-container {
-  /* position: relative; */
+ 
   display: inline-block;
   cursor: pointer;
 }
@@ -99,10 +90,10 @@ th {
   display: none;
   position: absolute;
   top: -50px;
-  /* left: 50%; */
+ 
   transform: translateX(-30%);
   z-index: 1;
-  /* padding: 8px; */
+ 
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -136,8 +127,8 @@ th {
   align-items: center;
 }
 .car-logo {
-  /* max-height: 70px; */
-  /* max-width: 70px; */
+ 
+ 
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   height: auto;
@@ -152,14 +143,14 @@ table.table thead th {
   cursor: pointer;
 }
 .error-class{
-  /* margin-left: 150px; */
+ 
   color: red;
   font-size: 12px;
 }
 .invalid-feedback {
   position: absolute;
   top: 50%;
-  /* margin-left: 150px; */
+ 
   color: red;
   font-size: 12px;
 }
@@ -172,17 +163,17 @@ table.table thead th {
 }
 
 .notification-icon .icon {
-  width: 15px; /* Adjust the width to your preference */
-  height: 15px; /* Adjust the height to your preference */
+  width: 15px;
+  height: 15px;
   margin-right: 8px;
 }
 
 .count-badge {
- /* Background color for the badge */
-  color: white; /* Text color for the badge */
-  border-radius: 50%; /* Make the badge a circle */
-  padding: 2px 2px; /* Adjust padding for the badge */
-  font-size: 12px; /* Adjust font size */
+
+  color: white;
+  border-radius: 50%;
+  padding: 2px 2px;
+  font-size: 12px;
 }
 .required {
   color: red;
@@ -202,30 +193,28 @@ table.table thead th {
   cursor: pointer;
 }
 .disabled-image {
-  filter: grayscale(100%); /* Apply grayscale to make it look disabled */
-  opacity: 0.6; /* Reduce opacity for further disabled appearance */
-  pointer-events: none; /* Disable pointer events on the image */
+  filter: grayscale(100%);
+  opacity: 0.6;
+  pointer-events: none;
 }
 .h3-header{
-    /* margin: 0; */
+   
     margin-top: 5px;
-    /* margin-right: 10px; */
-    /* margin-left: 10px; */
+   
+   
     padding: 5px;
     background-color: #0674cb;
     color: #fff;
-    /* text-transform: uppercase; */
-    /* font-size: 11px; */
-    /* font-weight: normal; */
+   
+   
+   
 }
 .grid-container {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
 }
-/* .admin-container {
-  position: relative;
-} */
+
 .dialog-content {
   padding: 10px;
 }
@@ -263,7 +252,7 @@ label{
   text-decoration: none;
   display: inline-block;
   white-space: nowrap;
-  padding: 5px 8px; /* Adjusted padding to maintain the same height */
+  padding: 5px 8px;
   color: #ffffff;
   min-width: 50px;
   text-align: center;
@@ -275,19 +264,19 @@ label{
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 .button-class:disabled {
-  background-color: #bdc3c7; /* Change the background color for disabled state */
-  border-color: #bdc3c7; /* Change the border color for disabled state */
-  cursor: not-allowed; /* Change cursor to indicate the button is not clickable */
-  /* Add any other styles for the disabled state */
+  background-color: #bdc3c7;
+  border-color: #bdc3c7;
+  cursor: not-allowed;
+ 
 }
 .card-body{
   background-color: rgb(239,242,245);
 }
 .disabled {
-  color: #bdc3c7; /* Change the background color for disabled state */
-  border-color: #bdc3c7; /* Change the border color for disabled state */
-  cursor: not-allowed; /* Change cursor to indicate the button is not clickable */
-  /* Add any other styles for the disabled state */
+  color: #bdc3c7;
+  border-color: #bdc3c7;
+  cursor: not-allowed;
+ 
 }
 .close-button {
   position: absolute;
@@ -297,7 +286,7 @@ label{
   border: none;
   cursor: pointer;
   font-size: 16px;
-  color: #333; /* You can adjust the color as needed */
+  color: #333;
 }
 .button-class:hover {
   background-color: #2980b9;
@@ -314,7 +303,7 @@ label{
 
 }
 .selected-class {
-  background-color: #e0f2db !important; /* You can change this to your desired highlight color */
+  background-color: #e0f2db !important;
   font-weight: bold;
 }
 .admin-container app-spinner {
@@ -360,19 +349,17 @@ label{
 td {
   padding: 2px;
   text-align: left;
-  /* width: 100px; */
-  border: 1px solid rgb(237, 220, 220); /* Add this line */
+ 
+  border: 1px solid rgb(237, 220, 220);
 }
-/* tr:hover {
-  background-color: #f5f5f5;
-} */
+
 
 
 
 .sidenav-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Make the container fill the viewport height */
+  height: 100vh;
 }
 
 .row-class {
@@ -380,7 +367,7 @@ td {
   background-color: #eff2f5;
   color: #252525;
   border: 1px solid #ccc
-  /* width: 230px; */
+ 
 }
 
 .col {
@@ -390,7 +377,7 @@ td {
 }
 
 .component-content {
-  /* display: flex; */
+ 
   margin-left: 20px;
 }
 
@@ -406,16 +393,16 @@ td {
 }
 
 .btn {
-  /* display: flex; */
+ 
   align-items: center;
   color: #333;
-  /* font-size: 13px; */
+ 
 
 }
 
 .hr {
   border-top: 1px solid #ccc;
-  /* margin: 10px 0; */
+ 
 }
 
 .list-class{
@@ -429,15 +416,9 @@ tr:nth-child(even):hover {
 table .highlight {
   background-color: #e0f2db;
 }
-/* .component-content table {
-  width: 100%;
-} */
-/* table tr.highlight{
-  background-color: #e0f2db;
-} */
- /* tr:nth-child(odd):hover {
-  background-color: #a19e9ec3
-} */
+
+
+
 table th {
   border: 1px solid white;
 }
@@ -474,13 +455,11 @@ tr:nth-child(odd) {
 }
 
 .gauge-label {
-  margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  margin-bottom: 10px;
   margin-left: 55px;
 }
 
-/* .gauge-label a:hover {
-  text-decoration: underline;
-} */
+
 .row{
 border: none;
 }
@@ -491,7 +470,7 @@ margin: 20px;
 .flip-card .flip-card-inner.flip {
   transform: rotateY(180deg);
 }
-/* Add styles for the popup container */
+
 .popup-container {
   max-width: 400px;
   padding: 20px;
@@ -500,46 +479,46 @@ margin: 20px;
   background-color: #fff;
 }
 
-/* Style for the heading */
+
 .popup-container h2 {
   color: #333;
   font-size: 1.5em;
   margin-bottom: 15px;
 }
 
-/* Style for the message */
+
 .popup-container p {
   color: #555;
   font-size: 1.2em;
   margin-bottom: 20px;
 }
 
-/* Style for the button bar */
+
 .button-bar {
   display: flex;
   justify-content: space-between;
 }
 .nav-item {
-  margin-right: 10px; /* Adjust the value to control the spacing */
-  padding: 5px 5px; /* Add padding to the menu items */
-   /* Add a border around the menu items */
+  margin-right: 10px;
+  padding: 5px 5px;
+  
 }
 .notification-icon {
-  padding: 5px; /* Adjust the value to control the spacing */
+  padding: 5px;
 }
 
-/* Style for the buttons */
+
 .mat-raised-button {
   min-width: 120px;
 }
 
-/* Style for the cancel button */
+
 .cancel-button {
   background-color: #ccc;
   color: #333;
 }
 
-/* Hover effect for the buttons */
+
 .mat-raised-button:hover {
   background-color: #1565c0;
   color: #fff;
@@ -567,28 +546,22 @@ margin: 20px;
 }
 .admin-container {
   background-color: #f5f5f5;
-  /* padding: 10px; */
+ 
   margin: 10px;
-  /* width: 1100px; */
+ 
   border: 1px solid gray;
   height: 500px;
   overflow-y: scroll;
   overflow-x: scroll;
 }
-/* @media (max-width: 756px) {
-  .admin-container {
-    margin: 5px;
-    padding: 5px;
-    height: auto;
-  }
-} */
+
 .admin-button {
   text-align: right;
   
-  /* margin: 10px; */
-  /* padding: 10px; */
-  /* margin-top: 2px; */
-  /* margin-right: 8px; */
+ 
+ 
+ 
+ 
 }
 
 .dialog {
@@ -742,7 +715,7 @@ margin: 20px;
 .dialog select {
   width: 100%;
   padding: 8px;
-  /* font-size: 16px; */
+ 
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -759,7 +732,7 @@ margin: 20px;
 }
 .company-select{
   padding: 5px;
-  /* margin: 5px; */
+ 
   border: 1px solid #ccc;
 
 }
@@ -768,22 +741,25 @@ margin: 20px;
   color: black;
 }
 .label-link{
-  margin-bottom: 10px; /* Add some spacing between the label and the gauge */
+  margin-bottom: 10px;
   color: #0674CB !important;
   font-size: 13px;
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
 }
+.p-submenu-list{
+  text-decoration: none !important;
+}
 .label-link:hover {
   text-decoration: underline;
 }
 .select-container {
-    /* width: 10%; */
+   
     display: flex;
     align-items: center;
-    /* margin-bottom: 10px; */
-    /* margin-right: 8px; */
+   
+   
 
 
     float: right;
@@ -793,11 +769,7 @@ margin: 20px;
   padding: 8px;
 }
 
-/* .form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-} */
+
 .label {
   font-weight: bold;
   margin-bottom: 5px;
@@ -854,22 +826,22 @@ margin: 20px;
 }
 .navbar-class{
   background-color: #0674cb;
-  /* height: 40px; */
-  /* padding: 20px; */
+ 
+ 
   font-size: small;
 }
 
 .btn {
-  /* display: flex; */
+ 
   align-items: center;
   color: #333;
-  /* font-size: 13px; */
+ 
 
 }
 
 .hr {
   border-top: 1px solid #ccc;
-  /* margin: 10px 0; */
+ 
 }
 
 .list-class{
@@ -883,18 +855,18 @@ margin: 20px;
 .user-inputs {
   display: flex;
   justify-content:space-around;
-  /* position: sticky; */
+ 
   background-color:white;
   padding: 8px;
   top: 0;
-  /* z-index: 1; */
+ 
   
 }
 .user-inputs .input-dropdown {
   margin-right: 20px;
-  /* padding: 5px; */
+ 
   font-size: 14px;
-  /* width: 200px; */
+ 
   border-radius: 4px;
 }
 .user-inputs label {
@@ -911,18 +883,12 @@ margin: 20px;
   border: none;
   padding: 5px 16px;
 }
-/* 
- button {
-  background-color: #1884d7;
-  color: white;
-  border: none;
-  padding: 5px 16px;
-} */
+
  button:hover {
   background-color: #278bd8;
 }
 .Background {
-  /* background-color: #e7e7e7; */
+ 
   height: 100vh
 
 }
@@ -936,126 +902,25 @@ margin: 20px;
   background-color: #f5f5f5;
 }
 
-/* @media(max-width:1300px) {
-  .user-inputs input {
-    margin: 5px;
 
-  }
-  .user-inputs {
-    flex: 0 0 50%;
-  }
-  .admin-button {
-    text-align: right;
-    margin-top: 5px;
-    margin-right: 5px;
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .admin-button button {
-    display: block;
-    margin: 5px ;
-  }
-} */
 
 @media (max-width: 768px) {
-  /* .admin-container {
-    margin: 10px;
-    width: 100%;
-    height: auto;
-    overflow-y: visible;
-    overflow-x: visible;
-  }
+ 
 
-  .user-inputs {
-    display: flex;
-    justify-content: space-around;
-    position: sticky;
-    background-color: #ffffffc9;
-    padding: 8px;
-    top: 0;
-    z-index: 1;
-    flex-wrap: wrap;
-  } */
+ 
 
-  /* .user-inputs .input-dropdown {
-    margin-right: 20px;
-    margin-bottom: 5px;
-    padding: 5px;
-    font-size: 14px;
-    width: 200px;
-    border-radius: 4px;
-  } */
+ 
 
-  /* .user-inputs label {
-    margin-right: 5px;
-  }
+ 
 
-  .user-inputs input {
-    margin-right: 5px;
-    margin-bottom: 5px;
-  }
-
-  .user-inputs button {
-    background-color: #1884d7;
-    color: white;
-    border: none;
-    padding: 5px 16px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-  }
-
-  .table-container {
-    overflow-x: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th{
-    display: none
-  }
-
-  td {
-    display: block;
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  td[data-label]::before {
-    content: attr(data-label);
-    font-weight: bold;
-    margin-right: 10px;
-  } */
-
-  /* th {
-    position: sticky;
-    top: 0;
-    background-color: #025696;
-    color: white;
-    padding: 8px;
-    text-align: left;
-    border-right: 1px solid white;
-  } */
-
-  /* td {
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box;
-  } */
+ 
 }
 .btn {
     color: black;
     font-weight: bold;
     font-style: italic;
 }
-/* 
-.DateTime{
-    margin-left: 1150px;
-    margin-top: -30px;
-} */
+
 
 
 button.is-disabled {
@@ -1065,9 +930,6 @@ button.is-disabled {
 
 
 
-/* .rounded{
-    font-weight: bold;
-    color: black;
-} */
+
 
 

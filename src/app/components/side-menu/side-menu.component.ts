@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +16,26 @@ import { UsersRolesService } from 'src/app/services/users-roles.service';
 })
 export class SideMenuComponent implements OnInit {
   @Input() showSurveyReq: boolean = false;
+  selectedCity?: any;
+  items = [
+    {
+      label: 'File',
+      items: [
+        { label: 'New', icon: 'pi pi-fw pi-plus' },
+        { label: 'Open', icon: 'pi pi-fw pi-folder' },
+        { separator: true },
+        { label: 'Quit', icon: 'pi pi-fw pi-times' },
+      ],
+    },
+    {
+      label: 'Edit',
+      items: [
+        { label: 'Undo', icon: 'pi pi-fw pi-refresh' },
+        { label: 'Redo', icon: 'pi pi-fw pi-replay' },
+      ],
+    },
+  ];
+
   constructor(
     private dataService: DataServiceService,
     private authService: AuthService,
@@ -26,13 +47,10 @@ export class SideMenuComponent implements OnInit {
   ) {
     this.screenWidth = window.innerWidth;
     window.onresize = () => {
-      // set screenWidth on screen size change
       this.screenWidth = window.innerWidth;
     };
   }
-  // ngOnDestroy(): void {
-  //   throw new Error('Method not implemented.');
-  // }
+
   searchIcon = faSearch;
   screenWidth?: number;
   profileId!: string;
@@ -49,19 +67,15 @@ export class SideMenuComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.profileId = params['profileId'];
-      // this.userRolesService.getUserRoles(this.profileId);
-      // console.log(this.profileId);
     });
-    // this.router.events
-    //   .pipe(filter((event) => event instanceof NavigationEnd))
-    //   .subscribe(() => {});
+
     this.getDico();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.sidenav.opened) {
           this.isOpened = this.route.firstChild !== null;
-          // console.log(this.isOpened);
+
           this.sidenav.close();
         } else {
           this.sidenav.open();
@@ -73,7 +87,6 @@ export class SideMenuComponent implements OnInit {
     return this.userRolesService.hasPermission(role);
   }
   getDico() {
-    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });
