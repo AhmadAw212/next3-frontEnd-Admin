@@ -14,7 +14,7 @@ html, body {
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
 
-  /* font-family: 'Open Sans 300', sans-serif; */
+
 }
  .ui-button.rounded-button {
   border-radius: 2rem;
