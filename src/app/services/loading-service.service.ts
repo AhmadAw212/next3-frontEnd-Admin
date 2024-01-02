@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginInfo } from '../model/login-info';
 import { CoreProfile } from '../model/core-profile';
 import { DataServiceService } from './data-service.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { DOCUMENT } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,8 +19,40 @@ export class LoadingServiceService {
   private searchResults: any[] = [];
   private trademark: any;
   displayName?: string;
-  constructor(private dataService: DataServiceService) {}
+  constructor(
+    private dataService: DataServiceService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
+  // private theme = {
+  //   sceneName: 'Blue Marble',
+  //   colorScheme: 'light',
+  //   colorSchemeColor: '#EFEFEF',
+  //   menuTheme: 'light',
+  //   menuThemeColor: '#ffffff',
+  //   componentTheme: 'blue',
+  //   componentThemeColor: '#0d6efd',
+  //   topbarTheme: 'blue',
+  //   topbarThemeColor: '#1565C0',
+  //   menuMode: 'static',
+  //   cardColor: '#ffffff',
+  // };
 
+  // getTheme() {
+  //   return this.theme;
+  // }
+
+  // updateTheme(newTheme: any) {
+  //   this.theme = { ...this.theme, ...newTheme };
+  // }
+  switchTheme(theme: string) {
+    let themeLink = this.document.getElementById(
+      'app-theme'
+    ) as HTMLLinkElement;
+
+    if (themeLink) {
+      themeLink.href = theme + '.css';
+    }
+  }
   setLoginInfo(loginInfo: LoginInfo) {
     this.loginInfoSubject.next(loginInfo);
   }

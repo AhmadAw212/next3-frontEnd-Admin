@@ -1,4 +1,20 @@
 <app-login-nav></app-login-nav>
-<app-navbar [title]="navBarTitle" [showBackBtn]="showBackButton"></app-navbar>
-<!-- <app-profiles-nav></app-profiles-nav> -->
-<app-side-menu></app-side-menu>
+<app-navbar
+  [title]="navBarTitle"
+  [showBackBtn]="showBackButton"
+  [items]="items!"
+  [breadcrumbItems]="breadcrumbItems"
+></app-navbar>
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
+<!-- <app-side-menu ></app-side-menu> -->
+<p-toast [life]="8000"></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>

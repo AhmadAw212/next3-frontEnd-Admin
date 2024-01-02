@@ -79,127 +79,115 @@ import { UpdateTrademarkDialogComponent } from './update-dialogs/update-trademar
 import { AddApprovalTypeComponent } from './add-dialogs/add-approval-type/add-approval-type.component';
 import { CarsPolicyCarComponent } from './cars-policy-car/cars-policy-car.component';
 import { UpdateCompanyListComponent } from './expert-config/update-company-list/update-company-list.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 const routes: Routes = [
   {
     path: 'profiles-main/Administrator',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
-    data: { showBackButton: false },
+
     children: [
       {
-        path: 'addUser',
+        path: 'userManagement/addUser',
         component: AddUserComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'editUser',
+        path: 'userManagement/editUser',
         component: EditUserComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'coreConfig',
+        path: 'userManagement/approval',
+        component: CarApprovalTypeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'systemConfiguration/coreConfig',
         component: CoreConfigurationComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'languageConfig',
+        path: 'systemConfiguration/languageConfig',
         component: LanguageConfigComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'coreDocument',
+        path: 'systemConfiguration/coreDocument',
         component: CoreDocumentComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'coreDomain',
+        path: 'systemConfiguration/coreDomain',
         component: CoreDomainComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carsBrand',
+        path: 'tables/carsBrand',
         component: CarsBrandComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carsClient',
+        path: 'tables/carsClient',
         component: CarsClientComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carCovers',
+        path: 'tables/carCovers',
         component: CarsCoverComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carProducts',
+        path: 'tables/carProducts',
         component: CarProductsComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carSublines',
+        path: 'tables/carSublines',
         component: CarSublinesComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carReportList',
+        path: 'tables/carReportList',
         component: CarsReportListComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carSupplier',
+        path: 'tables/carSupplier',
         component: CarsSupplierComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'expertConfig',
+        path: 'tables/expertConfig',
         component: ExpertConfigComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'branchConfig',
+        path: 'tables/branchConfig',
         component: BranchConfigComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carBroker',
+        path: 'tables/carBroker',
         component: CarBrokerComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carTerritoryTown',
+        path: 'tables/carTerritoryTown',
         component: TownTerritoryComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carsExpertDefaultFees',
+        path: 'tables/carsExpertDefaultFees',
         component: CarsExpertDefaultFeesComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
       {
-        path: 'carsCaseMngrSetup',
+        path: 'tables/carsCaseMngrSetup',
         component: CarsCaseMngrSetupComponent,
         canActivate: [AuthGuard],
-        data: { showBackButton: true },
       },
     ],
   },
@@ -284,5 +272,6 @@ const routes: Routes = [
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [CommonModule, RouterModule],
+  providers: [MessageService, ConfirmationService],
 })
 export class AdminModule {}

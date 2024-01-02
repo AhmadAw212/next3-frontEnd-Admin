@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
 import { UsersIdleService } from 'src/app/services/users-idle.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 // import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -26,13 +27,17 @@ export class UserProfilesComponent implements OnInit, OnChanges {
   selectedProfile?: Profiles;
   loading: boolean = false;
   dico?: any;
+  addProfileDialog: boolean = false;
+  nonGrantedProfile?: Profiles[];
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
     private alertify: AlertifyService,
     private authService: AuthService,
     private dicoService: DicoServiceService,
-    private userRolesService: UsersRolesService
+    private userRolesService: UsersRolesService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
   ngOnInit(): void {
     this.getDico();
@@ -40,11 +45,58 @@ export class UserProfilesComponent implements OnInit, OnChanges {
     // this.userRolesService.getUserRoles();
   }
 
+  openNew() {
+    // this.product = {};
+    // this.submitted = false;
+    this.addProfileDialog = true;
+    this.getNonGrantedUserProfiles();
+  }
+  hideDialog() {
+    this.addProfileDialog = false;
+    // this.submitted = false;
+  }
+  addProfile(userId: string, profId: string) {
+    this.dataService.grantProfileToUser(userId, profId).subscribe({
+      next: (res) => {
+        // this.selectedProfile = profId;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Profile Added Successfully',
+          life: 3000,
+        });
+        this.addProfileDialog = false;
+        this.getProfiles();
+        // this.alertifyService.success('Profile Added Successfully');
+        // this.dialogRef.close(res.data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // onCancel(): void {
+  //   this.dialogRef.close();
+  // }
   ngOnChanges() {
     this.getProfiles();
     this.showRoleList = false;
   }
-
+  getNonGrantedUserProfiles() {
+    const userName = this.selectedUser?.userName;
+    this.dataService.getNonGrantedUserProfiles(userName!).subscribe({
+      next: (profiles) => {
+        this.nonGrantedProfile = profiles.data;
+        // if (this.nonGrantedProfile!.length > 0) {
+        //   this.selectedProfile = this.nonGrantedProfile![0]?.code;
+        // }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   hasPerm(role: string): boolean {
     return this.userRolesService.hasPermission(role);
   }

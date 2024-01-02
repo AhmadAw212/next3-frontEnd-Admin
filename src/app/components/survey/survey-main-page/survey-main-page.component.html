@@ -1,3 +1,27 @@
 <app-login-nav></app-login-nav>
-<app-navbar [title]="'Survey'"></app-navbar>
-<app-side-menu [showSurveyReq]="true"></app-side-menu>
+<app-navbar [title]="'Survey'" [items]="items"></app-navbar>
+<div class="content">
+  <!-- Your main content goes here -->
+  <router-outlet></router-outlet>
+</div>
+<!-- <app-side-menu [items]="items"></app-side-menu> -->
+<!-- <p-splitter
+  [panelSizes]="[5, 75]"
+  styleClass="mb-5"
+  [style]="{ height: '100vh' }"
+  [layout]="screenWidth! < 1500 ? 'vertical' : 'horizontal'"
+>
+  <ng-template pTemplate>
+    <p-tieredMenu
+      [style]="{ width: '200px' }"
+      [model]="items"
+      appendTo="body"
+      class="p-3"
+    ></p-tieredMenu>
+  </ng-template>
+  <ng-template pTemplate>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </ng-template>
+</p-splitter> -->

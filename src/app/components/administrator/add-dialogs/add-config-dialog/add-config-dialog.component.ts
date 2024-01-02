@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import { MessageService } from 'primeng/api';
 import { ConfigData } from 'src/app/model/config-data';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,7 +26,8 @@ export class AddConfigDialogComponent implements OnInit {
     private authService: AuthService,
     private dialogRef: MatDialogRef<AddConfigDialogComponent>,
     private dicoService: DicoServiceService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,12 @@ export class AddConfigDialogComponent implements OnInit {
 
     this.dataService.addConfig(this.configurationForm.value).subscribe({
       next: (data) => {
-        this.alertifyService.success(data.title);
+        // this.alertifyService.success(data.title);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Configuration Added Successfully',
+          detail: data.title,
+        });
         this.dialogRef.close(data.data);
         // console.log(data);
       },

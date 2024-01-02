@@ -1,15 +1,16 @@
-/* Improved Side Menu Style */
+
 
 .mat-sidenav {
-  width: 240px;
+  width: 220px;
   background-color: #ffffff;
   border-style: none;
- /* Add subtle box shadow */
+  z-index: 1002; 
+
 }
 
 :host ::ng-deep .mat-drawer-inner-container {
   background-color: #f5f5f5 !important;
-  padding: 5px;
+ 
 }
 
 :host ::ng-deep .mat-drawer-content {
@@ -26,12 +27,12 @@
   border: 1px solid #BFC6C9;
   background-color: #eff2f5;
   color: #252525;
-  margin: 0; /* Remove margin */
-  padding: 10px; /* Add padding */
+  margin: 0;
+  padding: 10px;
 }
 
 .col {
-  margin-top: 10px; /* Adjust margin for consistency */
+  margin-top: 10px;
   margin-left: 10px;
   font-weight: bold;
 }
@@ -54,12 +55,49 @@
 .btn {
   align-items: center;
   color: #333;
-  font-size: 14px; /* Adjust font size */
+  font-size: 14px;
 }
 
 .hr {
   border-top: 1px solid #ccc;
   margin: 10px 0;
+}
+
+
+
+/* :host ::ng-deep .p-submenu-list {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 100;
+
+}
+:host ::ng-deep .p-menuitem-link{
+  text-decoration: none;
+}
+:host ::ng-deep .p-splitter-gutter{
+  display: none;
+} */
+/* :host ::ng-deep .p-tieredmenu {
+  width: 200px;
+} */
+.layout-config .layout-config-content-wrapper .layout-config-button {
+  display: block;
+  /* position: absolute; */
+  width: 52px;
+  height: 40px;
+  line-height: 52px;
+  text-align: center;
+  top: 200px;
+  position: fixed;
+  top: 50%;
+  z-index: 1000;
+  overflow: hidden;
+  cursor: pointer;
+  outline: 0 none;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f
 }
 
 .list-class {
@@ -69,8 +107,8 @@
 
 @media screen and (max-width: 1000px) {
   .mat-sidenav {
-    width: 100%; /* Full width on smaller screens */
+    width: 100%;
     padding: 10px;
-    box-shadow: none; /* Remove box shadow */
+    box-shadow: none;
   }
 }

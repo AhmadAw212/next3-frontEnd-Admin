@@ -15,6 +15,7 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DicoServiceService } from 'src/app/services/dico-service.service';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-user-roles',
@@ -31,12 +32,15 @@ export class UserRolesComponent implements OnInit, OnChanges {
   rolesPage: number = 1;
   maxSizeValue = 10;
   dico?: any;
+  loading: boolean = false;
   constructor(
     private dataService: DataServiceService,
     private alertify: AlertifyService,
     private authService: AuthService,
     private dicoService: DicoServiceService,
-    private userRolesService: UsersRolesService
+    private userRolesService: UsersRolesService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
   ngOnInit(): void {
     this.getDico();
@@ -70,17 +74,23 @@ export class UserRolesComponent implements OnInit, OnChanges {
     );
   }
 
-  oncheckboxchange(role: Role) {
-    const roles = (role.granted = role.granted);
-    console.log(roles);
-  }
+  // oncheckboxchange(role: Role) {
+  //   const roles = (role.granted = role.granted);
+  //   console.log(roles);
+  // }
 
   updateRoles() {
     const userId = this.selectedUser?.userName!;
     const profileId = this.selectedProfile!;
+    // console.log(profileId);
+
     this.dataService.updateRoles(userId, profileId).subscribe({
       next: (roles) => {
-        this.alertify.success(roles.message!);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Roles Updated Successfully',
+          detail: roles.title,
+        });
         // console.log(roles.data);
       },
       error: (err) => {
@@ -100,10 +110,9 @@ export class UserRolesComponent implements OnInit, OnChanges {
     const profile = this.selectedProfile?.code!;
     const userName = this.selectedUser?.userName!;
     const companyId = this.selectedUser?.companyId!;
-
-    this.alertify.confirmDialog(
-      'Are you sure you want to override the existing roles ?',
-      () => {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
         this.dataService
           .getProfileDefaultAccessRoles(userName, companyId, profile)
           .subscribe({
@@ -128,7 +137,7 @@ export class UserRolesComponent implements OnInit, OnChanges {
               console.log(err);
             },
           });
-      }
-    );
+      },
+    });
   }
 }

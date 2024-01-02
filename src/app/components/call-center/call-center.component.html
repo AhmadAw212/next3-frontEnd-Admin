@@ -1,4 +1,13 @@
 <app-login-nav></app-login-nav>
-<app-navbar [title]="title" [showBackBtn]="showBackButton"></app-navbar>
+<app-navbar
+  [title]="title"
+  [showBackBtn]="showBackButton"
+  [items]="items"
+></app-navbar>
+<div class="content">
+  <!-- Your main content goes here -->
+  <router-outlet></router-outlet>
+</div>
 <!-- <app-profiles-nav></app-profiles-nav> -->
-<app-side-menu></app-side-menu>
+<!-- <app-side-menu [items]="items"></app-side-menu> -->
+<!-- <app-side-menu [items]="items"></app-side-menu> -->

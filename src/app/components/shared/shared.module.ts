@@ -57,7 +57,32 @@ import { ViewPolicyDialogComponent } from '../view-policy/view-policy-dialog/vie
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
 // import { GaugeComponentComponent } from './gauge-component/gauge-component.component';
 import { ButtonModule } from 'primeng/button';
+import { SlideMenuModule } from 'primeng/slidemenu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { SidebarModule } from 'primeng/sidebar';
+import { SplitterModule } from 'primeng/splitter';
+import { PanelModule } from 'primeng/panel';
+import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { MenuModule } from 'primeng/menu';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ToolbarModule } from 'primeng/toolbar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {
+  InputGroupAddon,
+  InputGroupAddonModule,
+} from 'primeng/inputgroupaddon';
+import { DropdownModule } from 'primeng/dropdown';
+
 @NgModule({
   declarations: [
     GaugeComponentComponent,
@@ -73,6 +98,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     DataEntryComponent,
     ViewNoteDialogComponent,
     SpinnerComponent,
+
     // GoogleMapComponent,
     CompanySelectComponent,
     CompaniesDropdownComponent,
@@ -88,13 +114,32 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     MatTabsModule,
     Ng2GoogleChartsModule,
     MatPaginatorModule,
+    InputTextModule,
+    MegaMenuModule,
+    DialogModule,
+    PanelModule,
+    BreadcrumbModule,
     NgSelectModule,
+    InputGroupModule,
+    PanelMenuModule,
+    ConfirmDialogModule,
     BsDatepickerModule,
+    AutoCompleteModule,
     MatTooltipModule,
+    TabMenuModule,
+    SidebarModule,
+    InputGroupAddonModule,
+    ToastModule,
+    MenuModule,
     TieredMenuModule,
+    CheckboxModule,
     MatIconModule,
+    ToolbarModule,
+    SplitterModule,
     ReactiveFormsModule,
+    TableModule,
     FormsModule,
+    ProgressSpinnerModule,
     MatExpansionModule,
     MatSidenavModule,
     MatListModule,
@@ -104,22 +149,42 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     MatMenuModule,
     ButtonModule,
     RouterModule,
+    SlideMenuModule,
+    DropdownModule,
     NgChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   exports: [
     GaugeComponentComponent,
+
     CompaniesDropdownComponent,
     PaginatorComponent,
     MatPaginatorModule,
     MatTabsModule,
+    ConfirmDialogModule,
+    DialogModule,
+    MegaMenuModule,
+    MenuModule,
     NgChartsModule,
+    InputTextModule,
+    CheckboxModule,
     MatDialogModule,
     MatMenuModule,
+    SidebarModule,
+    ToolbarModule,
     MatCardModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    PanelModule,
+    ToastModule,
+    TabMenuModule,
+    ProgressSpinnerModule,
+    TableModule,
+    BreadcrumbModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    SlideMenuModule,
     ButtonModule,
     MatInputModule,
     MatNativeDateModule,
@@ -127,6 +192,8 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     MatToolbarModule,
     TieredMenuModule,
     MatDatepickerModule,
+    SplitterModule,
+    AutoCompleteModule,
     MatSelectModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
@@ -143,6 +210,8 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     FormsModule,
     MatListModule,
     NgxEditorModule,
+    PanelMenuModule,
+    DropdownModule,
     RouterModule,
     NgMultiSelectDropDownModule,
     LoginNavComponent,

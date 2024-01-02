@@ -30,7 +30,63 @@
           dico?.BASIC_CHANGE_PWD || "BASIC_CHANGE_PWD"
         }}</a>
         <a (click)="logout()">{{ dico?.BASIC_LOGOUT || "BASIC_LOGOUT" }}</a>
+        <a (click)="openThemeSideBar()" style="cursor: pointer">Change Theme</a>
       </div>
     </div>
   </div>
 </nav>
+<p-sidebar
+  [(visible)]="displaySidebar"
+  [style]="{ width: '300px' }"
+  position="right"
+>
+  <ng-template pTemplate="header"> <h3>Change Theme</h3></ng-template>
+  <ng-template pTemplate="content">
+    <div
+      class="theme-picker flex align-items-center justify-content-center flex-wrap"
+    >
+      <a (click)="changeTheme('lara-light-blue')" class="theme-option">
+        <span class="color-ball" style="background-color: #1884d7"></span>
+        Saga Blue
+      </a>
+      <a (click)="changeTheme('saga-blue')" class="theme-option">
+        <span class="color-ball" style="background-color: #2196f3"></span>
+        Saga Blue
+      </a>
+      <a (click)="changeTheme('md-light-indigo')" class="theme-option">
+        <span class="color-ball" style="background-color: #3f51b5"></span> Saga
+        Blue md-light-indigo
+      </a>
+      <a (click)="changeTheme('bootstrap4-light-purple')" class="theme-option">
+        <span class="color-ball" style="background-color: #883cae"></span> Saga
+        Blue bootstrap4-light-purple
+      </a>
+      <a (click)="changeTheme('lara-light-indigo')" class="theme-option">
+        <span class="color-ball" style="background-color: #6366f1"></span> Saga
+        Blue lara-light-indigo
+      </a>
+      <a (click)="changeTheme('vela-blue')" class="theme-option vela">
+        <span class="color-ball" style="background-color: #64b5f6"></span>
+        Saga Blue vela-blue
+        <!-- <i class="pi pi-palette theme-icon"></i> Saga Blue vela-blue -->
+      </a>
+      <a (click)="changeTheme('arya-blue')" class="theme-option arya">
+        <span class="color-ball" style="background-color: #64b5f6"></span> Saga
+        Blue arya-blue
+      </a>
+
+      <a (click)="changeTheme('md-dark-indigo')" class="theme-option arya">
+        <span class="color-ball" style="background-color: #9fa8da"></span> Saga
+        Blue md-dark-indigo
+      </a>
+
+      <a
+        (click)="changeTheme('bootstrap4-dark-purple')"
+        class="theme-option vela"
+      >
+        <span class="color-ball" style="background-color: #c298d8"></span> Saga
+        Blue bootstrap4-dark-purple
+      </a>
+    </div>
+  </ng-template>
+</p-sidebar>

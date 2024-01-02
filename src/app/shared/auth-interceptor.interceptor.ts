@@ -85,8 +85,8 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
               }),
               catchError((refreshError: any) => {
                 // Refresh token failed or expired as well, logout the user and redirect to login
-                // this.authService.logout();
-                this.router.navigate(['/login']);
+                this.authService.logout();
+                // this.router.navigate(['/login']);
                 // this.alertifyService.dialogAlert(
                 //   'Session expired. Please log in again.',
                 //   'Timeout'

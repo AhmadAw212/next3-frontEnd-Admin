@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 
 import {
   CommonModule,
@@ -59,6 +62,7 @@ import { SharedModule } from './components/shared/shared.module';
     MatProgressSpinnerModule,
   ],
   providers: [
+    // provideClientHydration(),
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     DatePipe,
     {

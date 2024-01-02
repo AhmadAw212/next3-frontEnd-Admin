@@ -20,50 +20,52 @@
 
   
 } */
-
-.user-label{
+:host ::ng-deep  .p-autocomplete-panel {
+  width:400px
+}
+/* .user-label{
   margin-top: 15px;
 }
+ */
 
 
-
-input[type="text"]
+/* input[type="text"]
 {
   margin-top: 10px;
   padding: 5px;
   width: 200px;
-}
+} */
 ng-select{
   padding: 5px;
   width: 200px;
 }
-button[type="submit"] {
-  /* padding: 10px 20px; */
-  /* background-color: #007bff; */
+/* button[type="submit"] {
+
   color: #fff;
   border: none;
   cursor: pointer;
   margin-top: 10px;
-}
+} */
 
-button[type="submit"]:hover {
+/* button[type="submit"]:hover {
   background-color: #0056b3;
-}
+} */
 
 /* Optional: Additional styles for ng-select dropdown */
 
-  tr.selected {
+  /* tr.selected {
     background-color: #e0f2db;
   }
-  
+  .background{
+    background-color: blue;
+  } */
 
-   .table-btn{
+   /* .table-btn{
     background-color: #1884d7;
     color: white;
     border: none;
-    /* padding: 1px; */
-    /* margin: 1px; */
-  }
+
+  } */
   
    /* .form-tab h3 {
     display: block;

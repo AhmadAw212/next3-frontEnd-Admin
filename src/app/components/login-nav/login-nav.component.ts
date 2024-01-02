@@ -32,6 +32,7 @@ export class LoginNavComponent implements OnInit {
   private loginInfoSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public loginInfo$: Observable<any> = this.loginInfoSubject.asObservable();
   @Input() showProfilesNav: boolean = true;
+  displaySidebar: boolean = false;
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -51,6 +52,16 @@ export class LoginNavComponent implements OnInit {
 
     // this.userRolesService.getUserRoles();
     // this.userIdlesService.initializeIdleService();
+  }
+  changeTheme(theme: string) {
+    this.loginDataService.switchTheme(theme);
+  }
+
+  ngOnDestroy() {
+    this.displaySidebar = false;
+  }
+  openThemeSideBar() {
+    this.displaySidebar = true;
   }
   private loadLoginData() {
     const storedLoginData = this.loginDataService.getLoginInfo();
@@ -88,7 +99,7 @@ export class LoginNavComponent implements OnInit {
     return this.dateFormatService.getDateFormat(dateId);
   }
   getDico() {
-    this.dicoService.getDico();
+    // this.dicoService.getDico();
     this.dicoService.dico.subscribe((data) => {
       this.dico = data;
     });

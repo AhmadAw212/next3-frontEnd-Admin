@@ -149,7 +149,7 @@ export class SearchNotificationComponent implements OnInit, OnDestroy {
     this.location.back();
   }
   getDico() {
-    // this.dicoService.getDico();
+    this.dicoService.getDico();
     return this.dicoService.dico.pipe(
       tap((res) => {
         this.dico = res;

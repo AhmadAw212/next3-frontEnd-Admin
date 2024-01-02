@@ -1,90 +1,101 @@
-<div class="role-list">
-  <div class="buttons-container">
-    <button
-      class="default-access-btn"
-      (click)="getProfileDefaultAccessRoles()"
-      *ngIf="hasPerm('admUpdateData')"
-    >
-      {{ dico?.dico_default_access || "dico_default_access" }}
-    </button>
-  </div>
-  <div class="search-container">
-    <input
-      type="text"
-      id="role-code-search"
-      name="role-code-search"
-      placeholder="Search by Code"
-      [(ngModel)]="roleCodeFilter"
-    />
+<div class="card">
+  <div class="card-body">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="right">
+        <button
+          pButton
+          pRipple
+          (click)="getProfileDefaultAccessRoles()"
+          [label]="dico?.dico_default_access || 'dico_default_access'"
+          *ngIf="hasPerm('admUpdateData')"
+        ></button>
 
-    <input
-      type="text"
-      id="role-desc-search"
-      name="role-desc-search"
-      placeholder="Search by Desc"
-      [(ngModel)]="roleDescFilter"
-    />
-    <button
-      class="save-role-btn"
-      aria-label="Save Changes"
-      (click)="updateRoles()"
-      *ngIf="hasPerm('admUpdateData')"
+        <button
+          pButton
+          pRipple
+          [label]="dico?.dico_save || 'dico_save'"
+          (click)="updateRoles()"
+          *ngIf="hasPerm('admUpdateData')"
+          class="ms-2"
+        ></button>
+      </ng-template>
+      <ng-template pTemplate="left"></ng-template>
+    </p-toolbar>
+    <p-table
+      [value]="roles!"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [loading]="loading"
+      selectionMode="single"
+      [rowHover]="true"
+      [paginator]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     >
-      {{ dico?.dico_save || "dico_save" }}
-    </button>
-  </div>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            <div class="flex justify-content-between align-items-center">
+              {{ dico?.dico_role || "dico_role" }}
+              {{ dico?.dico_code || "dico_code" }}
+              <p-sortIcon field="id"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="id"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="description">
+            <div class="flex justify-content-between align-items-center">
+              {{ dico?.dico_role || "dico_role" }}
+              {{ dico?.dico_description || "dico_description" }}
+              <p-sortIcon field="description"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="description"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <!-- <th>
+            {{ dico?.dico_role || "dico_role" }}
+            {{ dico?.dico_code || "dico_code" }}
+          </th> -->
+          <!-- <th>
+            {{ dico?.dico_role || "dico_role" }}
+            {{ dico?.dico_description || "dico_description" }}
+          </th> -->
 
-  <table>
-    <thead>
-      <tr>
-        <th>
-          {{ dico?.dico_role || "dico_role" }}
-          {{ dico?.dico_code || "dico_code" }}
-        </th>
-        <th>
-          {{ dico?.dico_role || "dico_role" }}
-          {{ dico?.dico_description || "dico_description" }}
-        </th>
-        <th>{{ dico?.dico_selected || "dico_selected" }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let role of filteredRoles!
-            | paginate
-              : {
-                  itemsPerPage: maxSizeValue,
-                  currentPage: rolesPage,
-                  totalItems: filteredRoles?.length
-                }
-        "
-      >
-        <td>{{ role.id }}</td>
-        <td>{{ role.description }}</td>
-        <td>
-          <input type="checkbox" [(ngModel)]="role.granted" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="pagination-wrapper">
-    <div class="page-size-wrapper">
-      <label for="max-size-select">Max Size:</label>
-      <select
-        id="max-size-select"
-        [(ngModel)]="maxSizeValue"
-        aria-label="Select max page size"
-      >
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-      </select>
-    </div>
-    <div class="paginator-wrapper">
-      <pagination-controls
-        (pageChange)="rolesPage = $event"
-      ></pagination-controls>
-    </div>
+          <th pSortableColumn="granted">
+            <div class="flex justify-content-between align-items-center">
+              {{ dico?.dico_selected || "dico_selected" }}
+              <p-sortIcon field="granted"></p-sortIcon>
+              <p-columnFilter
+                type="boolean"
+                field="granted"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <!-- <th>{{ dico?.dico_selected || "dico_selected" }}</th> -->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-role>
+        <tr [pSelectableRow]="role">
+          <td>{{ role.id }}</td>
+          <td>{{ role.description }}</td>
+          <td>
+            <p-checkbox [binary]="true" [(ngModel)]="role.granted"></p-checkbox>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

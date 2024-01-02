@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable, catchError, map, of, switchMap } from 'rxjs';
-import jwt_decode from 'jwt-decode';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { AlertifyService } from '../services/alertify.service';
 import { TokenPayload } from '../model/token-payload';
 import { AuthService } from '../services/auth.service';
@@ -9,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard  {
+export class AuthGuard {
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -27,9 +32,9 @@ export class AuthGuard  {
     const token = localStorage.getItem('token');
 
     if (token) {
-      const decodedToken: TokenPayload = jwt_decode(token);
+      const decodedToken: JwtPayload = jwtDecode(token);
 
-      if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
+      if (decodedToken && decodedToken.exp! * 1000 > Date.now()) {
         // Token is valid, allow access
         return true;
       } else {

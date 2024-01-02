@@ -1,8 +1,25 @@
 .navbar-class {
-    background-color: #0674cb;
+  background: var(--primary-color) !important;
+  color: var(--text-color) !important;
     padding: 10px;
   }
 
   .navigate-btn {
     margin-right: 10px;
+  }
+  :host ::ng-deep .p-menuitem-icon{
+    color: white !important;
+  }
+  :host ::ng-deep .mat-mdc-tooltip-trigger{
+    color: white !important;
+  }
+  /* :host ::ng-deep .p-icon-wrapper{
+    color: white !important;
+  } */
+
+
+  .mat-mdc-tooltip-trigger{
+    /* color: white; */
+    /* height: 20px;
+    width: 15px; */
   }

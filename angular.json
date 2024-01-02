@@ -36,8 +36,51 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
               "./node_modules/material-icons/iconfont/material-icons.css",
-              "./node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-              "./node_modules/primeng/resources/primeng.min.css",
+              {
+                "input": "src/themes/theme-saga-blue.css",
+                "bundleName": "saga-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-vela-blue.css",
+                "bundleName": "vela-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-arya-blue.css",
+                "bundleName": "arya-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-md-light-indigo.css",
+                "bundleName": "md-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-md-dark-indigo.css",
+                "bundleName": "md-dark-indigo",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-bootstrap4-light-purple.css",
+                "bundleName": "bootstrap4-light-purple",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-bootstrap4-dark-purple.css",
+                "bundleName": "bootstrap4-dark-purple",
+                "inject": false
+              },
+              {
+                "input": "src/themes/lara-light-indigo.css",
+                "bundleName": "lara-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "src/themes/lara-light-blue.css",
+                "bundleName": "lara-light-blue",
+                "inject": false
+              },
               "./node_modules/primeicons/primeicons.css"
               
             ],

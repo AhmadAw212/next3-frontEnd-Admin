@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { UsersRolesService } from 'src/app/services/users-roles.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-core-configuration',
   templateUrl: './core-configuration.component.html',
@@ -35,7 +36,8 @@ export class CoreConfigurationComponent implements OnInit {
     private dateFormatService: DateFormatterService,
     private dicoService: DicoServiceService,
     private datePipe: DatePipe,
-    private userRolesService: UsersRolesService
+    private userRolesService: UsersRolesService,
+    private messageService: MessageService
   ) {}
   highlightRow(event: Event) {
     const clickedRow = event.target as HTMLElement;
@@ -152,6 +154,11 @@ export class CoreConfigurationComponent implements OnInit {
       this.dataService.editConfig(this.updatedConfigValues).subscribe({
         next: (res) => {
           this.alertifyService.success(res.title!);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Configuration Edited Successfully',
+            detail: res.title,
+          });
           // console.log(res);
         },
         error: (err) => {
@@ -168,7 +175,11 @@ export class CoreConfigurationComponent implements OnInit {
         const config = [configId];
         this.dataService.deleteConfig(config).subscribe({
           next: (res) => {
-            this.alertifyService.error(res.title);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Configuration Deleted Successfully',
+              detail: res.title,
+            });
             this.coreConfigSearch();
             // console.log(res);
           },
@@ -186,6 +197,7 @@ export class CoreConfigurationComponent implements OnInit {
     this.dataService.coreConfigSearch(this.id, this.description).subscribe({
       next: (data) => {
         this.configData = data.data;
+
         // console.log(this.configData);
       },
       error: (err) => {

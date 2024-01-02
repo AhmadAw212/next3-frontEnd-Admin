@@ -1,182 +1,239 @@
-<!-- <app-spinner *ngIf="!dico"></app-spinner> -->
-
-<div class="h3-header m-3">
-  <h3>
-    {{ dico?.dico_edit_user || "dico_dico_edit_user" }}
-    <button
-      type="button"
-      (click)="exportToExcel()"
-      class="export-excel btn btn-primary"
-      *ngIf="hasPerm('admExportToFile')"
-    >
-      {{ dico?.dico_export_to_excel || "dico_export_to_excel" }}
-    </button>
-  </h3>
-</div>
-<app-spinner *ngIf="loading"></app-spinner>
 <div class="container-fluid mt-3">
-  <div class="card" style="max-height: 300px; overflow: auto">
+  <div class="card">
     <div class="card-body">
       <form (ngSubmit)="userSearch()">
-        <div class="row p-2">
-          <div class="col-md-6 col-sm-6 col-lg-3">
-            <label for="user-code" class="user-label"
-              >{{ dico?.dico_user_code || "dico_user_code" }}:</label
-            >
-            <!-- or you can user [(ngModel)]="userCode" -->
-            <input
-              type="text"
-              id="user-code"
-              name="user-code"
-              [(ngModel)]="username"
-              class="form-control"
-            />
+        <div class="row p-2 flex flex-wrap gap-3 justify-content-start">
+          <div class="col-md-6 col-sm-6 col-lg-2">
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-user"></i>
+              </p-inputGroupAddon>
+              <input
+                pInputText
+                [placeholder]="dico?.dico_user_code || 'dico_user_code'"
+                [(ngModel)]="username"
+                id="user-name"
+                name="user-name"
+              />
+            </p-inputGroup>
           </div>
-          <div class="col-md-6 col-sm-6 col-lg-3">
-            <label for="user-name" class="user-label"
-              >{{ dico?.dico_display_name || "dico_display_name" }}:
-            </label>
-            <input
-              type="text"
-              id="user-name"
-              name="user-name"
-              [(ngModel)]="name"
-              class="form-control"
-            />
+          <div class="col-md-6 col-sm-6 col-lg-2">
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-user"></i>
+              </p-inputGroupAddon>
+              <input
+                pInputText
+                [placeholder]="dico?.dico_display_name || 'dico_display_name'"
+                [(ngModel)]="name"
+                id="user-code"
+                name="user-code"
+              />
+            </p-inputGroup>
           </div>
-          <div class="col-md-6 col-sm-6 col-lg-3">
-            <label class="user-label" for="role"
-              >{{ dico?.dico_role || "dico_role" }}:
-            </label>
-            <ng-select
-              appendTo="body"
-              name="supplierName"
-              (search)="searchRoles($event)"
+          <div class="col-md-6 col-sm-6 col-lg-2">
+            <p-autoComplete
               [(ngModel)]="selectedRole"
-            >
-              <ng-option *ngFor="let role of roles" [value]="role.code">{{
-                role.description
-              }}</ng-option>
-            </ng-select>
+              [suggestions]="roles!"
+              (completeMethod)="searchRoles($event)"
+              field="description"
+              appendTo="body"
+              name="roles"
+              class="p-inputtext-sm"
+              [virtualScroll]="true"
+              [placeholder]="dico?.dico_role || 'dico_role'"
+              [virtualScrollItemSize]="30"
+              [styleClass]=""
+            ></p-autoComplete>
           </div>
-          <div class="col-md-6 col-sm-6 col-lg-3 mt-5">
-            <button type="submit" class="button-class">
-              {{ dico?.BASIC_SEARCH || "BASIC_SEARCH" }}
-            </button>
+          <div class="col-md-6 col-sm-8 col-lg-2">
+            <p-button
+              [label]="dico?.BASIC_SEARCH || 'BASIC_SEARCH'"
+              [loading]="loading"
+              type="submit"
+              [rounded]="true"
+            ></p-button>
           </div>
         </div>
       </form>
-
-      <div class="table-responsive">
-        <table>
-          <thead style="top: 55px">
-            <tr>
-              <th>{{ dico?.dico_code || "dico_code" }}</th>
-              <th>{{ dico?.dico_display_name || "dico_display_name" }}</th>
-              <th>{{ dico?.dico_email || "dico.dico_email" }}</th>
-              <th>{{ dico?.dico_company || "dico.dico_company" }}</th>
-              <th>{{ dico?.dico_active || "dico.dico_active" }}</th>
-              <th>
-                {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
-              </th>
-              <th>{{ dico?.dico_sys_created_by || "dico_sys_created_by" }}</th>
-              <th>
-                {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
-              </th>
-              <th>{{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody *ngIf="users!.length > 0; else noData">
-            <tr
-              *ngFor="let user of users!"
-              (click)="showProfList(user); highlightRow($event)"
-            >
-              <td>{{ user.userName }}</td>
-              <td>{{ user.displayName }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.companyDescription }}</td>
-              <td>
-                <input type="checkbox" [checked]="user.active" disabled />
-              </td>
-              <td>
-                {{
-                  user.sysCreatedDate
-                    | date : dateFormat("reportDateTimeFormat")
-                }}
-              </td>
-              <td>{{ user.sysCreatedBy }}</td>
-              <td>
-                {{
-                  user.sysUpdatedDate
-                    | date : dateFormat("reportDateTimeFormat")
-                }}
-              </td>
-              <td>{{ user.sysUpdatedBy }}</td>
-              <td>
-                <button
-                  type="submit"
-                  class="table-btn"
-                  (click)="editUserStatus(user.userName, user.active)"
-                  *ngIf="user.active == 1; else activateUser"
-                >
-                  {{ dico?.dico_deactivate_user || "dico_deactivate_user" }}
-                </button>
-                <ng-template #activateUser
-                  ><button
-                    type="submit"
-                    class="table-btn"
-                    (click)="editUserStatus(user.userName, user.active!)"
-                  >
-                    {{ dico?.dico_reactivate_user || "dico_reactivate_user" }}
-                  </button></ng-template
-                >
-              </td>
-              <td>
-                <button
-                  type="submit"
-                  class="table-btn"
-                  (click)="resetPassword(user.userName)"
-                >
-                  {{ dico?.dico_reset_password || "dico_reset_password" }}
-                </button>
-              </td>
-              <td (click)="openDialog(user)">
-                <span class="material-icons" *ngIf="hasPerm('admUpdateData')"
-                  >edit</span
-                >
-              </td>
-            </tr>
-          </tbody>
-          <ng-template #noData>
-            <tr>
-              <td colspan="15">
-                {{
-                  dico?.BASIC_NO_DATA_TO_DISPLAY || "BASIC_NO_DATA_TO_DISPLAY"
-                }}
-              </td>
-            </tr>
-          </ng-template>
-        </table>
-      </div>
     </div>
   </div>
 </div>
-<mat-tab-group *ngIf="showProfileList">
-  <mat-tab label="Profiles">
-    <div class="container-fluid mt-3">
-      <div class="card">
-        <div class="card-body">
-          <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
-        </div>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="Car Approval Type"
-    ><app-car-approval-type></app-car-approval-type>
-  </mat-tab>
-</mat-tab-group>
+<div class="container-fluid mt-3">
+  <div class="card">
+    <div class="card-body">
+      <p-toolbar>
+        <ng-template pTemplate="right">
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-file-excel"
+            (click)="exportToExcel()"
+            class="p-button-success"
+            pTooltip="XLS"
+            tooltipPosition="bottom"
+          ></button>
+        </ng-template>
+        <ng-template pTemplate="left"></ng-template>
+      </p-toolbar>
 
-<!-- </ul> -->
+      <p-table
+        [value]="users!"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]="loading"
+        selectionMode="single"
+        [(selection)]="selectedUser"
+        [rowHover]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <!-- [tableStyle]="{ 'min-width': '50rem' }" -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th pSortableColumn="userName" style="min-width: 14rem">
+              <div class="flex justify-content-between align-items-center">
+                {{ dico?.dico_code || "dico_code" }}
+                <p-sortIcon field="userName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="userName"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <!-- <th>{{ dico?.dico_code || "dico_code" }}</th> -->
+            <th pSortableColumn="displayName" style="min-width: 14rem">
+              <div class="flex justify-content-between align-items-center">
+                {{ dico?.dico_display_name || "dico_display_name" }}
+                <p-sortIcon field="displayName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="displayName"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="email" style="min-width: 14rem">
+              <div class="flex justify-content-between align-items-center">
+                {{ dico?.dico_email || "dico.dico_email" }}
+                <p-sortIcon field="email"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="email"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="companyDescription" style="min-width: 14rem">
+              <div class="flex justify-content-between align-items-center">
+                {{ dico?.dico_company || "dico.dico_company" }}
+                <p-sortIcon field="companyDescription"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="companyDescription"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="active" style="min-width: 14rem">
+              <div class="flex justify-content-between align-items-center">
+                {{ dico?.dico_active || "dico.dico_active" }}
+                <p-sortIcon field="active"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="active"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th>
+              {{ dico?.dico_sys_created_date || "dico_sys_created_date" }}
+            </th>
+            <th>
+              {{ dico?.dico_sys_created_by || "dico_sys_created_by" }}
+            </th>
+            <th>
+              {{ dico?.dico_sys_updated_date || "dico_sys_updated_date" }}
+            </th>
+            <th>
+              {{ dico?.dico_sys_updated_by || "dico_sys_updated_by" }}
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user>
+          <tr [pSelectableRow]="user" (click)="showProfList(user)">
+            <td>
+              <i
+                #btn
+                class="material-icons"
+                (click)="
+                  menu.toggle($event);
+                  $event.stopPropagation();
+                  getUserData(user)
+                "
+                style="cursor: pointer"
+              >
+                menu
+              </i>
+
+              <p-tieredMenu
+                #menu
+                [model]="tieredMenuItems"
+                [popup]="true"
+                [appendTo]="'body'"
+              ></p-tieredMenu>
+            </td>
+            <td>{{ user.userName }}</td>
+            <td>{{ user.displayName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.companyDescription }}</td>
+            <td>
+              <p-checkbox
+                [binary]="true"
+                [(ngModel)]="user.active"
+                [disabled]="true"
+              ></p-checkbox>
+            </td>
+            <td>
+              {{
+                user.sysCreatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+            <td>{{ user.sysCreatedBy }}</td>
+            <td>
+              {{
+                user.sysUpdatedDate | date : dateFormat("reportDateTimeFormat")
+              }}
+            </td>
+            <td>{{ user.sysUpdatedBy }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="10">No Data found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3" *ngIf="showProfileList">
+  <div class="card">
+    <div class="card-body">
+      <app-user-profiles [selectedUser]="selectedUser"></app-user-profiles>
+    </div>
+  </div>
+</div>

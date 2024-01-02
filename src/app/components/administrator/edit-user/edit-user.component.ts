@@ -16,6 +16,10 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { DatePipe } from '@angular/common';
 import { type } from 'src/app/model/type';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { MenuItem, MessageService } from 'primeng/api';
+import { LoadingServiceService } from 'src/app/services/loading-service.service';
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -31,13 +35,16 @@ export class EditUserComponent implements OnInit {
   reportDateTimeFormat?: string;
   selectedRow!: HTMLElement;
   dateFormats?: any;
-  userName?: string = '';
+  userName: string = '';
   private searchTimer: any;
-  roles?: type[];
-  selectedRole: string = '';
+  roles: type[] = [];
+  selectedRole!: type;
   username: string = '';
   name: string = '';
   loading: boolean = false;
+  tieredMenuItems!: MenuItem[];
+  user: any;
+
   constructor(
     private dataService: DataServiceService,
     private dialog: MatDialog,
@@ -47,7 +54,9 @@ export class EditUserComponent implements OnInit {
     private userRolesService: UsersRolesService,
     private dicoService: DicoServiceService,
     private dateFormatService: DateFormatterService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private messageService: MessageService,
+    private loadingService: LoadingServiceService
   ) {
     this.userName = this.selectedUser?.userName!;
   }
@@ -55,8 +64,33 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.subscribedUsers();
     this.getDico();
-    // this.dateFormatterService();
-    // this.userRolesService.getUserRoles();
+
+    this.setTieredMenuItems(); // Call a new method to set menu items
+  }
+  setTieredMenuItems() {
+    this.tieredMenuItems = [
+      {
+        label:
+          this.user?.active === true ? 'Deactivate User' : 'Reactivate User',
+        icon: this.user?.active === true ? 'pi pi-times' : 'pi pi-check',
+        command: () => {
+          const activeStat = this.user?.active == false ? 1 : 0;
+          console.log(activeStat);
+          this.editUserStatus(this.user.userName, activeStat);
+        },
+      },
+      {
+        label: 'Reset Password',
+        icon: 'pi pi-refresh',
+        // Add command if needed
+      },
+      {
+        label: 'Edit User',
+        icon: 'pi pi-user-edit',
+        command: () => this.openDialog(this.user),
+        // Add command if needed
+      },
+    ];
   }
   highlightRow(event: Event) {
     const clickedField = event.target as HTMLElement;
@@ -69,6 +103,7 @@ export class EditUserComponent implements OnInit {
     this.selectedRow = clickedRow;
     this.selectedRow.classList.add('highlight');
   }
+
   exportToExcel() {
     const data = this.users?.map((user) => {
       return {
@@ -124,21 +159,25 @@ export class EditUserComponent implements OnInit {
       this.dico = data;
     });
   }
-  searchRoles(event: any) {
-    clearTimeout(this.searchTimer);
-    this.searchTimer = setTimeout(() => {
-      const name = event.term;
-      this.dataService.searchRoles(name).subscribe({
-        next: (res) => {
-          this.roles = res.data;
-          // console.log(res);
-        },
-        error: (err) => {
-          this.alertify.error(err.error.message);
-          console.log(err);
-        },
-      });
-    }, 300);
+
+  getUserData(user: any) {
+    this.user = user;
+    this.setTieredMenuItems();
+    // console.log(user);
+  }
+  searchRoles(event: AutoCompleteCompleteEvent) {
+    const name = event.query;
+
+    this.dataService.searchRoles(name).subscribe({
+      next: (res) => {
+        this.roles = res.data;
+        // console.log(res);
+      },
+      error: (err) => {
+        this.alertify.error(err.error.message);
+        console.log(err);
+      },
+    });
   }
 
   hasPerm(role: string): boolean {
@@ -183,11 +222,9 @@ export class EditUserComponent implements OnInit {
   userSearch() {
     this.showProfileList = false;
     this.loading = true;
-    if (this.selectedRole === null) {
-      this.selectedRole = '';
-    }
+    const selectedRoleCode = this.selectedRole ? this.selectedRole.code : '';
     this.dataService
-      .userSearch(this.username!, this.name!, this.selectedRole!)
+      .userSearch(this.username!, this.name!, selectedRoleCode!)
       .subscribe({
         next: (res) => {
           this.users = res.data;
@@ -195,6 +232,7 @@ export class EditUserComponent implements OnInit {
         },
         error: (err) => {
           // this.authService.logout();
+          this.loading = false;
           console.log(err);
         },
         complete: () => {
@@ -204,10 +242,16 @@ export class EditUserComponent implements OnInit {
   }
 
   editUserStatus(userId: string, active: number) {
-    const activeStat = active === 0 ? 1 : 0;
-    this.dataService.editUserStatus(userId, activeStat).subscribe({
+    // const activeStat = active === 0 ? 1 : 0;
+    this.dataService.editUserStatus(userId, active).subscribe({
       next: (res) => {
-        this.alertify.success(res.title!);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'User Status Updated',
+          detail: res.title,
+        });
+
+        // this.alertify.success(res.title!);
         this.userSearch();
       },
       error: (err) => {

@@ -20,17 +20,35 @@ export class AppComponent implements OnInit {
   dateFormats?: any;
   dico?: any;
   private idleServiceInitialized = false;
+  theme: any;
   constructor(
     private authService: AuthService,
     private userIdlesService: UsersIdleService,
     private dicoService: DicoServiceService,
-    private dateFormatService: DateFormatterService
+    private dateFormatService: DateFormatterService,
+    private themeService: LoadingServiceService
   ) {}
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
       this.userIdlesService.initializeIdleService();
     }
+    // this.theme = this.themeService.getTheme();
   }
+  // changeTheme() {
+  //   this.themeService.updateTheme({ colorSchemeColor: '#000000' });
+  //   this.theme = this.themeService.getTheme();
+  // }
+  // changeTheme(themeName: string): void {
+  //   this.themeService.changeTheme(themeName);
+  //   this.updateThemeOnDOM(themeName);
+  // }
+
+  // private updateThemeOnDOM(themeName: string): void {
+  //   const themeLink = document.getElementById('theme-css') as HTMLLinkElement;
+  //   if (themeLink) {
+  //     themeLink.href = `node_modules/primeng/resources/themes/${themeName}/theme.css`;
+  //   }
+  // }
   // ngOnDestroy(): void {
   //   // Clear local storage data when the AppComponent is destroyed (i.e., on logout).
   //   if (!this.authService.isAuthenticated()) {

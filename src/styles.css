@@ -2,83 +2,103 @@
 @import "~alertifyjs/build/css/alertify.min.css";
 @import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-@import "primeng/resources/themes/lara-light-blue/theme.css";
+/* @import "primeng/resources/themes/lara-light-blue/theme.css"; */
 @import "primeng/resources/primeng.css";
 
 html, body {
   height: 100%;
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: normal;
-  font-family: 'Open Sans 300', sans-serif;
+  background-color: var(--surface-ground) !important;
+  color: var(--text-color) !important;
+  font-family: var(--font-family) !important;
+
+  /* font-family: 'Open Sans 300', sans-serif; */
+}
+ .ui-button.rounded-button {
+  border-radius: 2rem;
+}
+button{
+  border-radius: var(--bs-border-radius) !important;
+}
+.card {
+  background-color: var(--surface-card) !important; 
+  /* padding: 1.5rem; */
+  -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  border-radius: 4px;
+  /* margin: 2rem; */
+  border-radius: var(--border-radius);
+  border: 1px solid var(--surface-border);
 }
 
-.arrow {
+
+ .p-menuitem-link{
+  text-decoration: none;
+}
+.p-splitter-gutter{
+  display: none;
+}
+/* .arrow {
   position: absolute;
   display: flex;
   align-items: center;
   margin-top: 140px;
+} */
+.p-breadcrumb{
+  background-color: transparent !important;
+  border-style: none;
+  color: white;
+  padding: 0;
+ 
+  margin-top: 10px;
+
 }
 
-table thead {
- 
- 
-  top: 42px;
- 
- 
-  
+.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text{
+  color: white;
 }
+.p-megamenu {
+padding: 0;
+border-style: none;
 
-.container-class{
+
+}
+.p-megamenu-horizontal{
+  color: white;
+}
+a{
+  color:  var(--text-color) !important;
+  text-decoration: none !important;
+}
+.p-sidebar .p-sidebar-header  .p-sidebar-content{
+overflow-y: auto;
+}
+.p-menuitem-link{
+  color: white;
+}
+/* .container-class{
   border-color: #bfc6c9; 
   background-color: #ffffff
 }
 .panel-class-style{
   background-color: #eff2f5; border-color: #bfc6c9
 }
-.bs-datepicker-body table thead {
-  top: 0;
-  position: relative;
- 
- 
-}
-table tr.highlight{
-  background-color: #e0f2db;
-}
-table tr.highlight:hover{
-  background-color: #e0f2db;
-}
-th {
-  background-color: #f2f2f2;
-  color: #444;
-}
+ */
 
 
 
 
-tr.selected {
-  background-color: #e0f2db;
-}
 
-table {
-  border-collapse: collapse;
-  width: 100%;
 
-}
-.export-excel{
+
+
+/* .export-excel{
   float: right;
  
 }
-th {
-  background-color: #025696;
-  color: white;
-  padding: 3px;
-  text-align: left;
-  border-right: 1px solid white
 
- 
- 
-}
 
 .car-logo-container {
  
@@ -134,9 +154,7 @@ th {
   height: auto;
   width: 25px;
 }
-table.table thead th {
-  background-color: #025696;
-}
+
 .notification-icon {
   display: flex;
   align-items: center;
@@ -168,8 +186,9 @@ table.table thead th {
   margin-right: 8px;
 }
 
-.count-badge {
 
+
+.count-badge {
   color: white;
   border-radius: 50%;
   padding: 2px 2px;
@@ -270,7 +289,11 @@ label{
  
 }
 .card-body{
-  background-color: rgb(239,242,245);
+ 
+}
+.p-panel .p-panel-header{
+  background: #0674cb;
+  color: white;
 }
 .disabled {
   color: #bdc3c7;
@@ -404,35 +427,18 @@ td {
   border-top: 1px solid #ccc;
  
 }
-
+.p-button {
+    border-radius: 1rem !important;
+}
 .list-class{
  font-size: 12px;
  font-weight: bold;
 }
-tr:nth-child(even):hover {
-  background-color: #e5e1e1c3;
-
-}
-table .highlight {
-  background-color: #e0f2db;
+.button {
+  border-radius: 2rem;
 }
 
 
-
-table th {
-  border: 1px solid white;
-}
-
-table td {
-  border: 1px solid white;
-}
-tr:nth-child(even) {
-  background-color: #fffafaae;
-}
-
-tr:nth-child(odd) {
-  background-color: rgba(184, 181, 181, 0.634);
-}
 .hidden-gauge {
   display: none;
 }
@@ -826,8 +832,6 @@ margin: 20px;
 }
 .navbar-class{
   background-color: #0674cb;
- 
- 
   font-size: small;
 }
 
@@ -884,9 +888,7 @@ margin: 20px;
   padding: 5px 16px;
 }
 
- button:hover {
-  background-color: #278bd8;
-}
+
 .Background {
  
   height: 100vh
@@ -930,6 +932,6 @@ button.is-disabled {
 
 
 
-
+ */
 
 

@@ -1,8 +1,22 @@
-<nav class="navbar navbar-class navbar-expand-lg" *ngIf="navbarVisible">
-  <span style="color: white; height: 30px" (click)="goBack()">{{ title }}</span>
+<nav class="navbar navbar-class navbar-expand" *ngIf="navbarVisible">
+  <i
+    [matTooltip]="'menu'"
+    class="pi pi-cog material-icons"
+    (click)="toggleSidebar()"
+  ></i>
+  <p-sidebar
+    [(visible)]="sidebarVisible"
+    position="left"
+    [style]="{ width: '300px' }"
+  >
+    <p-panelMenu [model]="items" [style]="{ width: '250px' }"></p-panelMenu>
+  </p-sidebar>
 
+  <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
+
+  <!-- 
   <div class="ms-auto">
-    <!-- Use ml-auto to push items to the right -->
+
     <app-data-entry-button
       class="navigate-btn"
       *ngIf="showDataEntryButton"
@@ -21,4 +35,30 @@
       Back
     </button>
   </div>
+</nav>
+
+<!-- <p-splitter>
+  <div class="panel-1">
+    <nav class="navbar navbar-class navbar-expand-lg">
+      <i
+        [matTooltip]="'menu'"
+        class="pi pi-cog material-icons"
+        (click)="toggleSidebar()"
+      ></i>
+      <p-sidebar
+        [(visible)]="sidebarVisible"
+        position="left"
+        [style]="{ width: '300px' }"
+      >
+        <p-panelMenu [model]="items" [style]="{ width: '250px' }"></p-panelMenu>
+      </p-sidebar>
+    </nav>
+  </div>
+
+  <div class="panel-2">
+    <nav class="navbar navbar-class navbar-expand-lg">
+      <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+    </nav>
+  </div>
+</p-splitter> -->
 </nav>
